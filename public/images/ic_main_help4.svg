@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+    <defs>
+        <style>
+            .cls-2,.cls-5{fill:none;stroke-width:1.75px}.cls-2{stroke:#222}.cls-5{stroke:#5865f5;stroke-miterlimit:10}
+        </style>
+    </defs>
+    <g id="Icon_feather-camera" transform="translate(0 -4.512)">
+        <path id="사각형_48" fill="rgba(255,255,255,0)" d="M0 0H56V56H0z" transform="translate(0 4.512)"/>
+        <g id="그룹_3468" transform="translate(-293 -741.768)">
+            <g id="그룹_3460" transform="translate(299 754)">
+                <path id="패스_142" d="M339 758.993h-16.062l-2.5-4.993h-12.3l-2.533 4.993H299V784h40z" class="cls-2" transform="translate(-299 -754)"/>
+                <path id="선_27" d="M0 0L0.084 25.655" class="cls-2" transform="translate(31.198 4.28)"/>
+            </g>
+            <path id="패스_143" fill="none" stroke="#222" stroke-linejoin="round" stroke-width="1.75px" d="M316.75 779.417a6 6 0 1 1 6-6 6 6 0 0 1-6 6z" transform="translate(-2.322 -2.878)"/>
+        </g>
+        <g id="그룹_3495" transform="translate(-432 -372.488)">
+            <circle id="타원_72" cx="11" cy="11" r="11" fill="#f4f4f4" transform="translate(465 404)"/>
+            <path id="선_29" d="M0 0L0 2.571" class="cls-5" transform="translate(476 406)"/>
+            <path id="선_30" d="M0 0L0 2.571" class="cls-5" transform="translate(476 421.429)"/>
+            <path id="선_31" d="M0 0L2.571 0" class="cls-5" transform="translate(467 415)"/>
+            <path id="선_32" d="M0 0L2.571 0" class="cls-5" transform="translate(482.429 415)"/>
+            <path id="선_33" d="M1.818 0L0 1.818" class="cls-5" transform="translate(480.228 408.953)"/>
+            <path id="선_34" d="M1.818 0L0 1.818" class="cls-5" transform="translate(469.953 419.228)"/>
+            <path id="선_35" d="M0 0L1.818 1.818" class="cls-5" transform="translate(469.953 408.953)"/>
+            <path id="선_36" d="M0 0L1.818 1.818" class="cls-5" transform="translate(480.228 419.228)"/>
+            <circle id="타원_70" cx="6.429" cy="6.429" r="6.429" class="cls-5" transform="translate(469.571 408.571)"/>
+            <circle id="타원_71" cx="2" cy="2" r="2" class="cls-5" transform="translate(474 413)"/>
+        </g>
+    </g>
+</svg>

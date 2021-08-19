@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke:#5865f5;stroke-linejoin:round;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="ic_step1" transform="translate(-277.5 -476)">
+        <path id="area" fill="none" d="M0 0H64V64H0z" transform="translate(277.5 476)"/>
+        <g id="그룹_4852" transform="translate(2 6)">
+            <path id="패스_660" d="M293.072 521.381a15.886 15.886 0 0 1 28.986 0" class="cls-2" transform="translate(0 -3.102)"/>
+            <circle id="타원_776" cx="7.94" cy="7.94" r="7.94" class="cls-2" transform="translate(299.625 493.019)"/>
+        </g>
+        <path id="패스_661" fill="none" stroke="#191919" stroke-linejoin="round" stroke-width="2px" d="M331.5 508a22 22 0 1 1-22-22 21.913 21.913 0 0 1 22 22z"/>
+    </g>
+</svg>

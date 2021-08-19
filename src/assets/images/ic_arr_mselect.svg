@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="5.714" viewBox="0 0 10 5.714">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #666;
+      }
+    </style>
+  </defs>
+  <path id="Icon_material-keyboard-arrow-down" data-name="Icon material-keyboard-arrow-down" class="cls-1" d="M1.175,0,5,3.532,8.825,0,10,1.087,5,5.714,0,1.087Z"/>
+</svg>

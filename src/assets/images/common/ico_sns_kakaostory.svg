@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+    <defs>
+        <filter id="3r6gy944la" width="12.124" height="22.728" x="21.625" y="19" filterUnits="userSpaceOnUse">
+            <feOffset dy="1"/>
+            <feGaussianBlur result="blur"/>
+            <feFlood flood-color="#f8dc01"/>
+            <feComposite in2="blur" operator="in"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g transform="translate(0 -936)">
+        <circle cx="28" cy="28" r="28" fill="#fee500" transform="translate(0 936)"/>
+        <g filter="url(#3r6gy944la)" transform="matrix(1, 0, 0, 1, 0, 936)">
+            <g fill="#fff">
+                <path d="M360.586 212.277l-.072-.07-3.38-3.298-.108-.106.124-.086c.958-.67 1.826-1.557 2.51-2.565.756-1.117 1.265-2.338 1.514-3.632l-5.228-.001h-.125v-11.685h11.874v8.465c0 5.19-2.626 10.021-7.025 12.923l-.084.055z" transform="translate(-334.07 -171.71)"/>
+                <path fill="#cdaa14" d="M355.946 190.959v11.435l5.378.001c-.513 2.911-2.283 5.153-4.102 6.424l3.38 3.298c4.201-2.772 6.968-7.468 6.968-12.817v-8.341h-11.624m-.25-.25h12.124v8.59c0 5.233-2.647 10.102-7.081 13.027l-.168.11-3.74-3.649.247-.173c.946-.661 1.803-1.537 2.478-2.532.718-1.06 1.21-2.215 1.465-3.437l-5.325-.001v-11.935z" transform="translate(-334.07 -171.71)"/>
+            </g>
+        </g>
+    </g>
+</svg>

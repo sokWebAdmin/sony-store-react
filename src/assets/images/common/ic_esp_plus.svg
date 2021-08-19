@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23">
+    <defs>
+        <style>
+            .cls-2{fill:#666}
+        </style>
+    </defs>
+    <g id="ic__" transform="translate(22.369 3)">
+        <g id="타원_91" fill="none" stroke="#666" transform="translate(-22.369 -3)">
+            <circle cx="11.5" cy="11.5" r="11.5" stroke="none"/>
+            <circle cx="11.5" cy="11.5" r="11"/>
+        </g>
+        <g id="_" transform="translate(-12 3)">
+            <path id="사각형_354" d="M0 0H1V9H0z" class="cls-2" transform="translate(0.631 1)"/>
+            <path id="사각형_692" d="M0 0H1V9H0z" class="cls-2" transform="translate(5.631 5) rotate(90)"/>
+        </g>
+    </g>
+</svg>

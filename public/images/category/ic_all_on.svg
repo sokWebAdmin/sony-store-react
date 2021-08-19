@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #e70000;
+        opacity: 0;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="m-category_viewall_on" transform="translate(-730 -737)">
+    <rect id="area80x80" class="cls-1" width="80" height="80" transform="translate(730 737)"/>
+    <path id="_" data-name="+" class="cls-2" d="M-9918.412,11004v-20.587H-9939v-2.2h20.587V10960h2.2v21.217H-9895v2.2h-21.215V11004Z" transform="translate(10686.999 -10204.998)"/>
+  </g>
+</svg>

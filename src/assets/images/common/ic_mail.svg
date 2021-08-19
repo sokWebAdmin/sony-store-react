@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="145.5" height="144" viewBox="0 0 145.5 144">
+    <defs>
+        <style>
+            .cls-2,.cls-3,.cls-5{fill:none}.cls-2,.cls-3{stroke:#222}.cls-2,.cls-3,.cls-5{stroke-width:3px}.cls-3,.cls-5{stroke-linejoin:round}.cls-5{stroke:#5865f5}
+        </style>
+    </defs>
+    <g id="ic_mail" transform="translate(-264 -658)">
+        <path id="bg" fill="rgba(160,160,160,0)" d="M0 0H144V144H0z" transform="translate(264 658)"/>
+        <g id="그룹_4018" transform="translate(-21 .83)">
+            <g id="그룹_4015" transform="translate(-470 -98.954)">
+                <path id="패스_455" d="M786.646 793.125H780v76.553h94v-76.553h-6.172" class="cls-2" transform="translate(0 5.091)"/>
+                <path id="선_115" d="M0 0L38.994 32.812" class="cls-3" transform="translate(835.005 841.957)"/>
+                <path id="선_116" d="M0 33.52L39.662 0" class="cls-3" transform="translate(780 841.248)"/>
+                <path id="패스_456" d="M780 795.188l38.012 38.39a13.2 13.2 0 0 0 18.861-.1L874 795.188" class="cls-2" transform="translate(0 5.966)"/>
+                <path id="패스_457" d="M786 810.39v-29.265h76.909v29.265" class="cls-2" transform="translate(2.545)"/>
+                <path id="선_117" d="M0 0L33.422 0" class="cls-3" transform="translate(810.289 808.233)"/>
+                <path id="선_118" d="M0 0L16.711 0" class="cls-3" transform="translate(818.645 819.722)"/>
+            </g>
+            <g id="그룹_4017" transform="translate(-328.589 212.422)">
+                <circle id="타원_161" cx="27" cy="27" r="27" fill="#fff" stroke="#222" stroke-linejoin="round" stroke-width="3px" transform="translate(703.589 526.749)"/>
+                <path id="선_119" d="M0 0L22.737 0" class="cls-5" transform="rotate(45 -297.456 1145.05)"/>
+                <path id="선_120" d="M0 22.737L0 0" class="cls-5" transform="rotate(45 -289.417 1164.458)"/>
+            </g>
+        </g>
+    </g>
+</svg>

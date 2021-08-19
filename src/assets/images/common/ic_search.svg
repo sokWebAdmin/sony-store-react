@@ -1,0 +1,17 @@
+<svg id="ic_search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: rgba(0,0,0,0);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <rect id="bg" class="cls-1" width="24" height="24"/>
+  <g id="search-line" transform="translate(1 1)">
+    <path id="패스_97" data-name="패스 97" class="cls-2" d="M19.362,17.83,24,22.468,22.468,24,17.83,19.362a9.749,9.749,0,1,1,1.531-1.531Zm-2.172-.8a7.578,7.578,0,1,0-.162.162l.162-.162Z" transform="translate(-2 -2)"/>
+  </g>
+</svg>

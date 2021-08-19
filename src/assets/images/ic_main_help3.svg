@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke-width:1.75px;stroke:#222;stroke-miterlimit:10}
+        </style>
+    </defs>
+    <g id="Icon_feather-phone-call" transform="translate(0 -6555.012)">
+        <path id="사각형_47" fill="rgba(255,255,255,0)" d="M0 0H56V56H0z" transform="translate(0 6555.012)"/>
+        <g id="그룹_3492" transform="translate(-327 6303.285)">
+            <path id="패스_172" d="M150.087 311.168V308.9c0-6.021 6.38-10.9 14.249-10.9h11.5c7.87 0 14.249 4.881 14.249 10.9v2.268" class="cls-2" transform="translate(184.913 -9.27)"/>
+            <path id="패스_173" fill="none" stroke="#222" stroke-width="1.75px" d="M12.512.75a12.512 12.512 0 0 1 12.512 12.512v5.482A11.122 11.122 0 0 1 13.9 29.865h-2.78A11.122 11.122 0 0 1 0 18.744v-5.482A12.512 12.512 0 0 1 12.512.75z" transform="rotate(180 183.756 144.805)"/>
+            <path id="패스_168" d="M340 270.379v-1.559a15.171 15.171 0 0 1 15.249-15.092h1.386a15.171 15.171 0 0 1 15.249 15.092v1.365" class="cls-2" transform="translate(-.942)"/>
+            <path id="사각형_251" d="M4 0h1.488v8.232H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z" class="cls-2" transform="translate(337 269.868)"/>
+            <path id="사각형_252" d="M4 0h1.488v8.232H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z" class="cls-2" transform="rotate(180 186.5 139.05)"/>
+            <path id="패스_169" d="M354.151 303.709A17.151 17.151 0 0 1 337 286.558v-2.243" class="cls-2" transform="translate(0 -9.982)"/>
+            <path id="패스_170" fill="none" stroke="#000" stroke-width="1.75px" d="M342.488 269.868h9.078l3.667-3.667 3.667 3.667h8.827"/>
+            <path id="패스_171" fill="none" stroke="#5865f5" stroke-miterlimit="10" stroke-width="1.75px" d="M249 502c2.956 0 5.352 2.686 5.352 6s-2.4 6-5.352 6" transform="rotate(90 417.136 445.864)"/>
+        </g>
+    </g>
+</svg>

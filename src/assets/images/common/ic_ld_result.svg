@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <defs>
+        <style>
+            .cls-4{fill:none;stroke-miterlimit:10;stroke:#5865f5;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="ID_Find_Icon" transform="translate(-928 -597)">
+        <g id="그룹_4983" transform="translate(305 82)">
+            <g id="패스_878" fill="none" stroke="none" stroke-miterlimit="10">
+                <path d="M631 515v64h48v-48l-15-16z"/>
+                <path fill="#222" d="M633 517v60h44v-45.21L663.134 517H633m-2-2h33l15 16v48h-48v-64z"/>
+            </g>
+            <g id="그룹_4981">
+                <path id="패스_879" fill="#222" d="M679 532h-16v-17l2 2v13h12z"/>
+            </g>
+            <g id="그룹_4982">
+                <path id="패스_880" d="M644 559c0-5.523 4.925-10 11-10s11 4.477 11 10" class="cls-4"/>
+                <circle id="타원_787" cx="5" cy="5" r="5" class="cls-4" transform="translate(650 536)"/>
+            </g>
+        </g>
+    </g>
+</svg>

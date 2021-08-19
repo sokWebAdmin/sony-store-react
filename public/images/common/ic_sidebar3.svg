@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:2px}.cls-3{fill:#fff}
+        </style>
+    </defs>
+    <g id="ic_talk" transform="translate(-16 -16)">
+        <path id="bg" fill="rgba(255,255,255,0)" d="M0 0H32V32H0z" transform="translate(16 16)"/>
+        <g id="그룹_3633" transform="translate(2 2)">
+            <g id="그룹_112" transform="translate(20.301 20.301)">
+                <path id="패스_28" d="M242.619 416.892a13.989 13.989 0 1 1 12.647-7.986l-4.4-1.468a25.127 25.127 0 0 0 1.489-4.788l3.781.242" class="cls-2" transform="translate(-232.921 -393.192)"/>
+                <path id="패스_29" d="M229.92 406.587l4.591-1.532a26.192 26.192 0 0 1-1.554-5l-3.946.251" class="cls-2" transform="translate(-232.912 -390.381)"/>
+            </g>
+            <g id="그룹_113" transform="translate(18.652 19)">
+                <path id="사각형_135" d="M0 0H2V2H0z" class="cls-3" transform="translate(6.348 10)"/>
+                <path id="사각형_136" d="M0 0H2V2H0z" class="cls-3" transform="translate(10.348 10)"/>
+                <path id="사각형_137" d="M0 0H2V2H0z" class="cls-3" transform="translate(14.348 10)"/>
+            </g>
+        </g>
+    </g>
+</svg>

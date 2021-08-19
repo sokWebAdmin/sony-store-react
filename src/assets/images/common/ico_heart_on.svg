@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #000222;
+        opacity: 0;
+      }
+
+      .cls-2 {
+        fill: #e70000;
+      }
+    </style>
+  </defs>
+  <g id="ic_like_full_" data-name="ic_like(full)" transform="translate(96 -720)">
+    <rect id="사각형_850" data-name="사각형 850" class="cls-1" width="40" height="40" transform="translate(-96 720)"/>
+    <path id="패스_926" data-name="패스 926" class="cls-2" d="M-70.637,729.238a6.512,6.512,0,0,0-4.693,2.007l-.67.692-.67-.692a6.512,6.512,0,0,0-4.693-2.007,6.511,6.511,0,0,0-4.693,2.007,7.011,7.011,0,0,0,0,9.691l.67.692,9.386,9.69,9.386-9.69.67-.692a7.011,7.011,0,0,0,0-9.691,6.511,6.511,0,0,0-4.693-2.007Z"/>
+  </g>
+</svg>

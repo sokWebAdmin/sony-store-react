@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="ic_menu" width="28" height="28" viewBox="0 0 28 28">
+    <defs>
+        <style>
+            .cls-2{fill:#fff}
+        </style>
+    </defs>
+    <path id="bg" fill="rgba(0,0,0,0)" d="M0 0H28V28H0z"/>
+    <g id="그룹_3447" transform="translate(1.166 5.833)">
+        <path id="사각형_159" d="M0 0H25.667V2.333H0z" class="cls-2" transform="translate(0 18.667)"/>
+        <path id="사각형_160" d="M0 0H18.667V2.333H0z" class="cls-2" transform="translate(7 9.333)"/>
+        <path id="사각형_158" d="M0 0H25.667V2.333H0z" class="cls-2"/>
+    </g>
+</svg>

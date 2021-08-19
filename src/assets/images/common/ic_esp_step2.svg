@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <defs>
+        <style>
+            .cls-2,.cls-3{fill:none;stroke:#191919;stroke-miterlimit:10;stroke-width:2px}.cls-3{stroke:#5865f5}
+        </style>
+    </defs>
+    <g id="ic_step2" transform="translate(-199 -476)">
+        <path id="area" fill="none" d="M0 0H64V64H0z" transform="translate(199 476)"/>
+        <g id="그룹_4854">
+            <path id="패스_662" d="M241 488a4 4 0 0 1-4 4h-12a4 4 0 0 1-4-4h-8v44h36v-44z" class="cls-2"/>
+            <path id="패스_663" d="M221 484v4a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-4z" class="cls-2"/>
+        </g>
+        <path id="선_127" d="M0 0L15 0" class="cls-2" transform="translate(229 502)"/>
+        <path id="선_128" d="M0 0L15 0" class="cls-2" transform="translate(229 512)"/>
+        <path id="선_129" d="M0 0L15 0" class="cls-2" transform="translate(229 522)"/>
+        <path id="패스_664" d="M217.172 510.172L220 513l4.243-4.243" class="cls-3"/>
+        <path id="패스_665" d="M217.172 498.293l2.828 2.828 4.243-4.243" class="cls-3" transform="translate(0 2)"/>
+        <path id="패스_666" d="M217.172 522.293l2.828 2.828 4.243-4.243" class="cls-3" transform="translate(0 -2)"/>
+    </g>
+</svg>

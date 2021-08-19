@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+    <defs>
+        <style>
+            .cls-5{fill:none;stroke-width:2px}.cls-3{fill:#222}.cls-5{stroke-linejoin:round;stroke:#5865f5}
+        </style>
+    </defs>
+    <g id="ic_blank" transform="translate(-933 -975)">
+        <path id="사각형_628" fill="#fff" d="M0 0H56V56H0z" opacity="0.004" transform="translate(933 975)"/>
+        <g id="그룹_3895" transform="translate(635.75 503)">
+            <g id="list">
+                <path id="사각형_1481" fill="none" stroke="#222" stroke-width="2px" d="M0 0H42V45H0z" transform="translate(304.25 476)"/>
+                <path id="사각형_1482" d="M0 0H28V2H0z" class="cls-3" transform="translate(311.25 484)"/>
+                <path id="사각형_1483" d="M0 0H28V2H0z" class="cls-3" transform="translate(311.25 494)"/>
+                <path id="사각형_1484" d="M0 0H12V2H0z" class="cls-3" transform="translate(311.25 504)"/>
+            </g>
+            <g id="그룹_3891" transform="translate(325.25 500)">
+                <circle id="타원_145" cx="13" cy="13" r="13" fill="#fff" stroke="#222" stroke-linejoin="round" stroke-width="2px"/>
+                <path id="선_105" d="M0 0L11.556 0" class="cls-5" transform="translate(8.915 8.914) rotate(45)"/>
+                <path id="선_106" d="M0 11.556L0 0" class="cls-5" transform="translate(17.086 8.914) rotate(45)"/>
+            </g>
+        </g>
+    </g>
+</svg>
