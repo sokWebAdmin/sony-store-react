@@ -178,7 +178,7 @@ export default function Products({match}) {
                                                 ( product.badge == "event" ? <span className={`badge__text badge__text__event`}>EVENT</span> : <span className={`badge__text badge__text__hot`}>HOT</span> )
                                         )}
                                         <div className="product__pic">
-                                        <a href="#" className="product__pic__link">
+                                        <a href="/product-view/1" className="product__pic__link">
                                             {
                                                 product.images && product.images.map((image, imageIndex)=>{
                                                     return (
@@ -202,7 +202,7 @@ export default function Products({match}) {
                                                 })
                                             }
                                         </div>
-                                        <a href="#" className="product__title">
+                                        <a href="/product-view/1" className="product__title">
                                         <strong className="product__title__name">{product.title}</strong>
                                         { product.badge_label !== "" && (
                                             product.badge_label == "reserve" ?     
@@ -214,7 +214,7 @@ export default function Products({match}) {
                                         )}
                                         
                                         </a>
-                                        <a href="#" className="product__info">
+                                        <a href="/product-view/1" className="product__info">
                                             {product.info}
                                         </a>
                                         <div className="product__price">

@@ -13,6 +13,9 @@ import ProductList from './pages/Products/ProductList'
 import DetailList from './pages/Products/DetailList'
 import ProductView from "./pages/Products/ProductView";
 
+//recommend
+import Recommend from "./pages/recommend/Recommend";
+
 //api
 import { sampleApi } from "./api/sample";
 
@@ -59,6 +62,10 @@ const App = (props) => {
 
                   {/* 세부분류 상품목록 */}
                   <Route exact path="/products/:type/:detail_type" component={DetailList} />
+
+                  {/* 추천상품 */}
+                  <Route exact path="/recommend" component={Recommend} />
+
                   {/* 푸터 */}
                   <Footer />
                 </div>

@@ -18,20 +18,31 @@ import "swiper/swiper.scss"
 import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/css/contents.css"
-import "../../assets/css/product.module.css"
+// import "../../assets/css/contents.css"
+// import "../../assets/css/product.css"
 
 //context
 import GlobalContext from '../../context/global.context';
 
 //util
 import { wonComma } from '../../utils/utils';
+import {useWindowSize} from '../../utils/utils'
 
 //image
 
 export default function ProductView({match}) {
 
+  const {onChangeGlobal} = useContext(GlobalContext)
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  const size = useWindowSize();
+
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
+
+  useEffect(()=>{
+    const header = document.getElementsByClassName("header").clientHeight;
+    setHeaderHeight(header);
+  },[])
 
     return (
       <>        
@@ -39,9 +50,11 @@ export default function ProductView({match}) {
 
 <div className="product_view_wrap" style={{backgroundColor:"#fff"}}>
         <div className="product_view_main">
-          <div className="prd_main_slider">
+          <div className="prd_main_slider" style={size.width > 1280 && ( size.height - headerHeight < 500 ? {height: "500px"} : {height: `${size.height}px`} ), {marginTop : (headerHeight/2)*-1}}>
             <div className="view_slider swiper-container">
               <Swiper className="swiper-wrapper"
+                loop={true}
+                slidesPerView={1}
                 pagination={{ 
                   el: '.preview-image-pagination',
                   clickable: true,
