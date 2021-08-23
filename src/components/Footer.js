@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Link } from "react-router-dom";
 
 //img
@@ -8,9 +8,12 @@ import youtube from "../assets/images/common/ic_youtube.svg";
 import blog from "../assets/images/common/ic_blog.svg";
 
 import sidebar1 from "../assets/images/common/ic_sidebar1.svg";
-
+import InsurePop from "./InsurePop";
 
 export default function Footer() {
+
+  const [isPop, setPop] = useState(false);
+
   return (
     <>
         <footer className="footer">
@@ -78,10 +81,10 @@ export default function Footer() {
         </div>
         <div className="footer__legal">
           <div className="footer__legal__links">
-            <a href="/footer/terms.html" className="footer__legal__link">이용약관</a>
-            <a href="/footer/policy.html" className="footer__legal__link privacy">개인정보처리방침</a>
-            <a href="javascript:openModal('modal__customer__insurance');" className="footer__legal__link" data-modal-target="modal__customer__insurance">소비자 피해 보상보험</a>
-            <a href="/footer/siteMap.html" className="footer__legal__link">사이트맵</a>
+            <a href="/footer/terms" className="footer__legal__link">이용약관</a>
+            <a href="/footer/policy" className="footer__legal__link privacy">개인정보처리방침</a>
+            <a  onClick={()=>{setPop(true)}} className="footer__legal__link" data-modal-target="modal__customer__insurance" style={{cursor:"pointer"}}>소비자 피해 보상보험</a>
+            <a href="/footer/siteMap" className="footer__legal__link">사이트맵</a>
           </div>
           <div className="footer__legal__warning">
             <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
@@ -99,6 +102,11 @@ export default function Footer() {
         </address>
       </div>
     </footer>
+
+    {
+      isPop === true && 
+      <InsurePop setPop={setPop} />
+    }
     </>
   );
 }

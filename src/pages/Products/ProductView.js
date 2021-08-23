@@ -18,8 +18,8 @@ import "swiper/swiper.scss"
 import { sampleApi } from "../../api/sample";
 
 //css
-// import "../../assets/css/contents.css"
-// import "../../assets/css/product.css"
+import "../../assets/css/contents.css"
+import "../../assets/css/product.css"
 
 //context
 import GlobalContext from '../../context/global.context';
@@ -47,10 +47,12 @@ export default function ProductView({match}) {
     return (
       <>        
       <SEOHelmet title={"상품 상세"} />
-
+      
+      {
+        headerHeight != 0 &&
 <div className="product_view_wrap" style={{backgroundColor:"#fff"}}>
         <div className="product_view_main">
-          <div className="prd_main_slider" style={size.width > 1280 && ( size.height - headerHeight < 500 ? {height: "500px"} : {height: `${size.height}px`} ), {marginTop : (headerHeight/2)*-1}}>
+          <div className="prd_main_slider" style={size.width > 1280 && ( size.height - headerHeight < 500 ? {height: "500px", marginTop : (headerHeight/2)*-1} : {height: `${size.height}px`, marginTop : (headerHeight/2)*-1} )}>
             <div className="view_slider swiper-container">
               <Swiper className="swiper-wrapper"
                 loop={true}
@@ -275,10 +277,10 @@ export default function ProductView({match}) {
                   <div className="result_btn_box">
                     <ul>
                       <li className="like"><a href="#" className="btn_icon">찜하기</a></li>
-                      <li className="cart"><a href="#" className="btn_icon" data-popup="popup_cart">장바구니</a></li>
+                      <li className="cart"><a href="/cart" className="btn_icon" data-popup="popup_cart">장바구니</a></li>
                       <li className="gift"><a href="#" className="btn_icon" data-popup="popup_gift">선물</a></li>
                       <li className="final">
-                        <a href="#" className="btn_style direct" style={{backgroundColor: '#000'}}>바로 구매하기</a>
+                        <a href="/order/step/1" className="btn_style direct" style={{backgroundColor: '#000'}}>바로 구매하기</a>
                         <a href="#" className="btn_style disabled" style={{display: 'none', backgroundColor: '#ddd'}}>품절</a>
                         <a href="#" className="btn_style reservation" style={{display: 'none', backgroundColor: '#5865F5'}}>예약구매</a>
                         {/*
@@ -306,8 +308,26 @@ export default function ProductView({match}) {
         <div className="product_cont first recommend">
           <div className="slide_box together_prd_slider swiper-container">
             <h2 className="title">함께 구매하시면 좋은 추천 제품</h2>
-            <ul className="product_List swiper-wrapper">
-              <li className="swiper-slide">
+            <Swiper className="swiper-wrapper product_List"
+            slidesPerView={2}
+            spaceBetween={10}
+            navigation={{
+              nextEl : '.swiper-button-next',
+              prevEl : '.swiper-button-prev',
+            }}
+            breakpointsInverse={true}
+            breakpoints={{
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 10
+                },
+                1200: {
+                  slidesPerView: 4,
+                  spaceBetween: 24,
+                }
+            }}
+            >
+              <SwiperSlide className="swiper-slide">
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
@@ -334,8 +354,8 @@ export default function ProductView({match}) {
                   </div>
                   {/*// 상품 이름*/}
                 </div>
-              </li>
-              <li className="swiper-slide">
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide">
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
@@ -364,8 +384,8 @@ export default function ProductView({match}) {
                   </div>
                   {/*// 상품 이름*/}
                 </div>
-              </li>
-              <li className="swiper-slide">
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide">
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
@@ -393,8 +413,8 @@ export default function ProductView({match}) {
                   </div>
                   {/*// 상품 이름*/}
                 </div>
-              </li>
-              <li className="swiper-slide">
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide">
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
@@ -422,8 +442,8 @@ export default function ProductView({match}) {
                   </div>
                   {/*// 상품 이름*/}
                 </div>
-              </li>
-              <li className="swiper-slide">
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide">
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
@@ -451,8 +471,8 @@ export default function ProductView({match}) {
                   </div>
                   {/*// 상품 이름*/}
                 </div>
-              </li>
-              <li className="swiper-slide">
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide">
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
@@ -480,8 +500,8 @@ export default function ProductView({match}) {
                   </div>
                   {/*// 상품 이름*/}
                 </div>
-              </li>
-            </ul>
+              </SwiperSlide>
+            </Swiper>
             <div className="swiper-button-next">다음</div>
             <div className="swiper-button-prev">이전</div>
           </div>
@@ -491,38 +511,42 @@ export default function ProductView({match}) {
           {/* 기획전 이벤트 배너 */}
           {/* 기획전 슬라이드 */}
           <div className="exhibitions_slider swiper-container">
-            <ul className="swiper-wrapper">
-              <li className="swiper-slide">
-                <div className="exhibitions_box">
+          <Swiper className="swiper-wrapper"
+          navigation={{
+            nextEl : '.banner-next',
+            prevEl : '.banner-prev',
+          }}>
+              <SwiperSlide className="swiper-slide">
+                <div className="exhibitions_box" style={{background: `url("/images/product/banner_thumb_01.png") no-repeat center top`}}>
                   <img className="bg_img" src="/images/product/banner_thumb_01.png" alt="" />{/* 슬라이드 배경 */}
                   <div className="txt_box">
                     <span className="tag" style={{color: '#5865f5'}}>기획전</span>
                     <p className="tit">원핸드 컴팩트 풀프레임<br />G 렌즈 예약판매</p>
                   </div>
                 </div>
-              </li>
-              <li className="swiper-slide">
-                <div className="exhibitions_box">
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide">
+              <div className="exhibitions_box" style={{background: `url("/images/product/banner_thumb_01.png") no-repeat center top`}}>
                   <img className="bg_img" src="/images/product/banner_thumb_01.png" alt="" />
                   <div className="txt_box">
                     <span className="tag" style={{color: '#5865f5'}}>기획전</span>
                     <p className="tit">원핸드 컴팩트 풀프레임<br />G 렌즈 예약판매</p>
                   </div>
                 </div>
-              </li>
-              <li className="swiper-slide">
-                <div className="exhibitions_box">
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide">
+              <div className="exhibitions_box" style={{background: `url("/images/product/banner_thumb_01.png") no-repeat center top`}}>
                   <img className="bg_img" src="/images/product/banner_thumb_01.png" alt="" />
                   <div className="txt_box">
                     <span className="tag" style={{color: '#5865f5'}}>기획전</span>
                     <p className="tit">원핸드 컴팩트 풀프레임<br />G 렌즈 예약판매</p>
                   </div>
                 </div>
-              </li>
-            </ul>
+              </SwiperSlide>
+            </Swiper>
             <div className="arrow_btn">
-              <a className="arrow swiper-button-prev"><img src="/images/common/arrow_19_34.png" alt="이전" /></a>
-              <a className="arrow swiper-button-next"><img src="/images/common/arrow_19_34.png" alt="다음" /></a>
+              <a className="arrow swiper-button-prev banner-prev"><img src="/images/common/arrow_19_34.png" alt="이전" /></a>
+              <a className="arrow swiper-button-next banner-next"><img src="/images/common/arrow_19_34.png" alt="다음" /></a>
             </div>
             <div className="swiper-pagination" />
           </div>
@@ -563,7 +587,7 @@ export default function ProductView({match}) {
           <div className="detail_info_zone tab_ui_info">
             {/* 제품 개요 */}
             <div className="detail_info tab_ui_inner view">
-              <iframe className="iframe_prd" src="../../html/product/productIframe.html" frameBorder={0} />
+              <iframe className="iframe_prd" src="./testIframe.html" frameBorder={0} />
             </div>
             {/* 제품 상세 */}
             <div className="detail_info tab_ui_inner">
@@ -759,6 +783,7 @@ export default function ProductView({match}) {
           </div>
         </div>
       </div>
+      }
       </>  
     )
 }

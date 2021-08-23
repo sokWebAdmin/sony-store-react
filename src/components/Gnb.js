@@ -40,7 +40,7 @@ export default function Gnb() {
                     <a href="#">스토어 추천 제품</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a href="/recommend/recommend.html">추천 제품</a>
+                        <a href="/recommend">추천 제품</a>
                         </li>
                     </ul>
                     </li>
@@ -78,7 +78,7 @@ export default function Gnb() {
                         onMouseLeave={()=>{
                             setSubMenu3(false)
                         }}>
-                    <a href="#">기획전</a>
+                    <a href="/event/list">기획전</a>
                     <ul className="gnb__menu__secondary">
                         <li>
                         <a href="#">소니스토어 단독</a>
@@ -93,7 +93,7 @@ export default function Gnb() {
                         <a href="#">정품 등록 이벤트</a>
                         </li>
                         <li>
-                        <a href="#">LIVE ON</a>
+                        <a href="/event/live-on">LIVE ON</a>
                         </li>
                     </ul>
                     </li>
@@ -121,7 +121,7 @@ export default function Gnb() {
                     <a href="#">고객 서비스</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a href="#">FAQ&amp;공지사항</a>
+                        <a href="/faq">FAQ&amp;공지사항</a>
                         </li>
                         <li>
                         <a href="https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa">정품등록 안내</a>
@@ -130,13 +130,13 @@ export default function Gnb() {
                         <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
                         </li>
                         <li>
-                        <a href="#">구매 상담</a>
+                        <a href="/purchase-consulting">구매 상담</a>
                         </li>
                         <li>
-                        <a href="#">직영점 안내</a>
+                        <a href="/store-info">직영점 안내</a>
                         </li>
                         <li>
-                        <a href="#">동영상 강좌</a>
+                        <a href="/video-course">동영상 강좌</a>
                         </li>
                     </ul>
                     </li>

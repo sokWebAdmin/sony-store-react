@@ -133,7 +133,9 @@ export default function cart() {
       </div>
       <div className="button_wrap">
         <a href="#" className="button button_negative">쇼핑 계속 하기</a>
-        <button type="submit" className="button button_positive popup_comm_btn" data-popup-name="login_chk_order">구매하기</button>
+        <button type="submit" className="button button_positive popup_comm_btn" data-popup-name="login_chk_order" onClick={()=>{
+          window.location.href='/order/step/1'
+        }}>구매하기</button>
       </div>
       <div className="acc acc_ui_zone acc_faq acc_cart">
         <div className="acc_item on">

@@ -42,6 +42,29 @@ import withdrawComplete from "./pages/mypage/withdrawComplete";
 import orderAgree from "./pages/order/orderAgree";
 import orderComplete from "./pages/order/orderComplete";
 import cart from "./pages/order/cart";
+import cartEmpty from "./pages/order/cartEmpty";
+import orderStep1 from "./pages/order/orderStep1";
+import orderStep2 from "./pages/order/orderStep2";
+import orderStep3 from "./pages/order/orderStep3";
+
+//event
+import liveon from "./pages/event/liveon";
+import eventList from "./pages/event/eventList"
+import refurbish from "./pages/event/refurbish"
+import employee from "./pages/event/employee"
+import asc from "./pages/event/asc"
+import refined from "./pages/event/refined"
+
+//member
+import join from "./pages/member/join"
+import joinStep from "./pages/member/joinStep"
+import login from "./pages/member/login"
+import pwSearch from "./pages/member/pwSearch"
+
+//footer
+import policy from "./pages/footer/policy"
+import terms from "./pages/footer/terms"
+import sitemap from "./pages/footer/sitemap"
 
 //api
 import { sampleApi } from "./api/sample";
@@ -93,10 +116,6 @@ const App = (props) => {
                   {/* 추천상품 */}
                   <Route exact path="/recommend" component={Recommend} />
 
-
-                  {/* errorServer */}
-                  <Route exact path="/error-server" component={ErrorServer} />
-
                   {/* 고객지원  */}
                   <Route exact path="/agreement" component={Agreement} />
                   <Route exact path="/faq" component={Faq} />
@@ -122,9 +141,33 @@ const App = (props) => {
                   <Route exact path="/order/agree" component={orderAgree} />
                   <Route exact path="/order/complete" component={orderComplete} />
                   <Route exact path="/cart" component={cart} />
+                  <Route exact path="/cart-empty" component={cartEmpty} />
+                  <Route exact path="/order/step/1" component={orderStep1} />
+                  <Route exact path="/order/step/2" component={orderStep2} />
+                  <Route exact path="/order/step/3" component={orderStep3} />
 
-                  {/* 404 */}
+                {/* 이벤트  */}
+                <Route exact path="/event/live-on" component={liveon} />
+                <Route exact path="/event/list" component={eventList} />
+                <Route exact path="/event/refurbish" component={refurbish} />
+                <Route exact path="/event/employee" component={employee} />
+                <Route exact path="/event/asc" component={asc} />
+                <Route exact path="/event/refined" component={refined} />
+
+                {/* member  */}
+                <Route exact path="/member/join" component={join} />
+                <Route exact path="/member/joinStep" component={joinStep} />
+                <Route exact path="/member/login" component={login} />
+                <Route exact path="/member/pw-search" component={pwSearch} />
+
+                {/* Footer  */}
+                <Route exact path="/footer/policy" component={policy} />
+                <Route exact path="/footer/terms" component={terms} />
+                <Route exact path="/footer/sitemap" component={sitemap} />
+
+                  {/* error */}
                   <Route exact path="/404" component={Error404} />
+                  <Route exact path="/error-server" component={ErrorServer} />
 
 
                   {/* 푸터 */}
