@@ -7,7 +7,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/css/category.css"
+import "../../assets/scss/category.scss"
 
 //context
 import GlobalContext from '../../context/global.context';

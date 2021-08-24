@@ -7,7 +7,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/css/contents.css"
+import "../../assets/scss/contents.scss"
 
 export default function sitemap() {
 

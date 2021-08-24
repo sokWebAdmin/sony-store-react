@@ -1,0 +1,693 @@
+@import "./import/variables";
+
+/* event 기획전 */
+//liveon
+.container.full .content.liveon,
+.container.full .content.employee {
+  @include under-pc {
+    margin: 0;
+  }
+}
+//임직원몰
+.event_header {
+  min-height: 400px;
+  background-color: #000;
+  &_inner {
+    margin: 0 auto;
+    padding: 112px 0;    
+    width: 1200px;
+    height: 100%;
+    background: url(../images/event/bg_employee_pc.png) no-repeat 0 0;
+    background-position: 100% 0;
+    &.refurbish {
+      background: url(../images/event/bg_refurbish_pc.png) no-repeat 0 0;
+      background-position: 100% 10px;
+    }
+    &.refined {
+      background: url(../images/event/bg_refined_pc.png) no-repeat 0 0;
+      background-position: 100% 0;
+    }    
+  }
+  &_title {
+    margin-bottom: 24px;
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 60px;
+  }
+  &_desc {
+    margin-bottom: 48px;
+    font-size: 16px;
+    color: #fff;
+    line-height: 24px;
+    .block {
+      display: block;
+    }    
+  }
+  &_link {
+    font-size: 16px;
+    color: #fff;
+    a:after {
+      display: inline-block;
+      margin: 2px 0 0 8px;
+      width: 18px;
+      height: 18px;
+      background: url(../images/event/arr_link.svg) no-repeat 0 0;
+      content: '';
+      vertical-align: top;
+    }
+  }
+  @include under-pc {
+    min-height: 620px;
+    &_inner {
+      padding: 80px 0 338px;
+      width: auto;
+      background-position: 50% 100%;
+      text-align: center;
+      &.refurbish {
+        width: auto;
+        background-position: 50% 235px;
+      }
+      &.refined {
+        padding: 80px 0 360px;
+        width: auto;
+        background-position: 50% 100%;
+      }  
+    } 
+  }
+  @include only-mo {
+    min-height: 290px;
+    &_inner {
+      padding: 32px 0 144px;
+      background: url(../images/event/bg_employee_mo.png) no-repeat 0 0;
+      background-position: 50% 100%;
+      background-size: 200px 65%;  
+      &.refurbish {
+        background: url(../images/event/bg_refurbish_mo.png) no-repeat 0 0;
+        background-position: 50% 90px;
+        background-size: contain; 
+      }
+      &.refined {
+        padding: 32px 0 162px;
+        background: url(../images/event/bg_refined_mo.png) no-repeat 0 0;
+        background-position: 50% 100%;
+        background-size: 200px 65%;  
+      }      
+    }
+    &_title {
+      font-size: 28px;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    &_desc {
+      margin-bottom: 16px;
+      padding: 0 20px;
+      font-size: 12px;
+      line-height: 18px;
+      .block {
+        display: inline;
+      }
+    }
+    &_link {
+      font-size: 12px;
+      line-height: 18px;
+      a:after {
+        margin: 4px 0 0 4px;
+        width: 12px;
+        height: 12px;
+        background-size: cover;
+      }
+    }
+  }  
+}
+.event_tablist {
+  padding: 80px 0 144px 0;
+  .tab_ui {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    @include under-pc {
+      width: calc(100% - 24px);
+    }
+    @include only-mo {
+      width: calc(100% - 24px);
+      margin-right: 0;
+    }
+  }
+  @include under-pc {
+    padding: 40px 0 104px;
+  }
+  @include only-mo {
+    padding: 12px 0 64px;
+    &.type1 {
+      padding-top: 40px;
+    }
+  }
+}
+.employee_prd {
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+  .section_top {
+    margin: 80px 0 24px;
+  }
+  @include under-pc {
+    width: calc(100% - 48px);
+    .section_top {
+      margin: 64px 0 24px;
+    }    
+  }
+  @include only-mo {
+    .section_top {
+      margin: 40px 0 24px;
+    }        
+  }
+}
+//임직원몰 아용규정
+.popup_empolyee {
+  .foot_cont li {
+    &:first-child {
+      .Fh5_tit {
+        margin-top: 0 !important;
+      }
+    }
+    .mt {
+      margin-top: 25px;
+    }
+  }
+}
+//정품등록 특가몰
+.refind {
+  .event_tablist + .employee_prd {
+    margin-top: 40px;
+  }
+}
+.popup_refurbish {
+  .list_dot li {
+    font-size: 16px;
+    color: #444;
+    line-height: 27px;
+    @include only-mo {
+      font-size: 14px;
+      line-height: 24px;
+    }
+  }
+}
+//liveon
+.event_video {
+  position: relative;
+  &_bgbox {
+    padding-bottom: 332px;
+    background: url(../images/event/event_bg_liveon_pc.jpg) no-repeat 0 0;
+    background-position: 50%;
+    width: 100%;
+    //min-height: 1250px; 
+    z-index: -1;
+    background-size: cover;
+  }
+  &_inner {
+    position: relative;
+    margin: 0 auto;
+    width: 1200px;
+    text-align: center;
+    &:first-of-type {
+      padding-top: 80px;
+    }
+    &.prd_inner {
+      margin-top: -320px;
+    }
+  }
+  &_badge {
+    display: inline-block;
+    padding: 7px 0;
+    width: 108px;
+    height: 30px;
+    background: #e70000;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 16px;
+    letter-spacing: -0.4px;
+    line-height: 100%;
+    font-weight: 700;
+    box-sizing: border-box;
+    vertical-align: top;
+    &:before {
+      display: inline-block;
+      margin-right: 8px;
+      width: 14px;
+      height: 15px;
+      content: '';
+      background: url(../images/event/ic_arr_badge.svg) no-repeat 0 0;
+      vertical-align: top;
+    }
+  }
+  &_title {
+    margin-top: 12px;
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+  }
+  &_desc {
+    margin-top: 4px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+  }
+  &_share {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    text-indent: -9999em;
+    border-radius: 50%;
+    background-color:rgba(255, 255, 255, 0.2);
+    a {
+      position: relative;
+      display: block;
+      height: 100%;      
+      &:before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        background: url(../images/event/ic_share.svg) no-repeat 0 0;
+        transform: translate(-50%,-50%);
+        content: '';
+      }
+    }
+  }
+  &_playbox {
+    width: 100%;
+    margin: 80px auto 0;
+    padding: 0 60px;
+    box-sizing: border-box;
+    .video_container {
+      position: relative;
+      width: 100%;
+      height: auto;
+      padding-bottom: 56.25%;
+    }
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+  }
+  .event_prd {
+    padding-bottom: 160px;
+    &_title {
+      margin: 64px 0 40px;      
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+    }
+  }
+  @include under-pc {
+    &_bgbox {
+      padding-bottom: 321px;
+      background: url(../images/event/event_bg_liveon_tb.jpg) no-repeat 0 0;
+      background-position: 50%;
+      background-size: cover;
+    }
+    &_inner {
+      width: 100%;
+      max-width: 100%;
+    }
+    &_share {
+      right: 24px;
+    }
+    &_playbox {
+      padding: 0;
+    }
+    .event_prd {
+      margin: 0 24px;
+      padding-bottom: 120px;
+    }
+  }
+  @include only-mo {
+    &_bgbox {
+      padding-bottom: 148px;
+      background: url(../images/event/event_bg_liveon_mo.jpg) no-repeat 0 0;
+      background-position: 50%;
+      background-size: cover;
+    }    
+    &_inner {
+      &.prd_inner {
+        margin-top: -147px;
+      }
+      &:first-of-type {
+        padding-top: 40px;
+      }
+    }
+    &_badge {
+      padding: 3px 0;
+      width: 75px;
+      height: 20px;
+      font-size: 12px;
+      &:before {
+        margin: 2px 4px 0 0;
+        background-size: 7px 8px;
+        width: 7px;
+        height: 8px;
+      }
+    }
+    &_title {
+      margin-top: 17px;
+      font-size: 28px;
+      line-height: 40px;
+      .block {
+        display: block;
+      }
+    }
+    &_desc {
+      font-size: 12px;
+      line-height: 18px;
+    }
+    &_share {
+      top: 16px;
+      right: 16px;
+      width: 24px;
+      height: 24px;
+      a:before {
+        width: 13px;
+        height: 13px;
+        background-size: cover;
+      }
+    }
+    .event_video_playbox {
+      margin: 40px auto 0;
+    }
+    .event_prd {
+      padding-bottom: 80px;      
+      &_title {
+        margin: 40px 0 24px;        
+        font-size: 18px;
+        line-height: 24px;
+      }
+    }
+  }
+  @include under-pc {
+    .btn_area {
+      .btn_more {
+        padding: 16px 0;
+      }
+    }    
+    .button_wrap {
+      margin-top: 48px;
+      .button {
+        min-width: 200px;
+        height: 64px;
+        font-size: 18px;
+      }
+    }
+  }
+  @include only-mo {
+    .button_wrap {
+      margin-top: 64px;
+      .button {
+        min-width: 148px;
+        height: 48px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+//event_prd
+.event_prd_list {
+  display: flex;
+  flex-wrap: wrap;
+  .product {
+    position: relative;
+    float: left;
+    width: calc((100% - 48px) / 3);
+    margin-top: 0;
+    margin-bottom: 64px;
+    margin-left: 24px;
+    padding: 0;
+    background-color: #fff;
+    text-align: left;
+  }
+  .product:nth-child(4n+1) {
+    margin-left: 24px
+  }
+  .product:nth-child(3n+1) {
+    margin-left: 0
+  }
+  .badge_txt {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 7px 13px;
+    border: 1px solid #e70000;
+    color: #e70000;
+    font-size: 16px;
+    z-index: 1;
+    font-weight: 700;
+    line-height: 1;
+    .unit {
+      font-size: 14px;
+    }
+  }
+  .badge_state {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 5px;
+    color: #fff;
+    font-size: 14px;
+    z-index: 2;
+    .txt {
+      font-size: 12px;
+    }
+    &.state_a {
+      background-color: #c55aff;
+    }
+    &.state_b {
+      background-color: #39bfc9;
+    }
+    &.state_c {
+      background-color: #e70000;
+    }        
+  }
+  .product_pic {
+    position: relative;
+    .product_link {
+      display: block;
+      overflow: hidden;
+      position: relative;
+      padding-top: 100%;
+      background-color: #f4f7fa;
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        -webkit-transition: opacity .4s cubic-bezier(0.65, 0, 0.35, 1),-webkit-transform .2s cubic-bezier(0.33, 1, 0.68, 1) .2s;
+        transition: opacity .4s cubic-bezier(0.65, 0, 0.35, 1),-webkit-transform .2s cubic-bezier(0.33, 1, 0.68, 1) .2s;
+        transition: opacity .4s cubic-bezier(0.65, 0, 0.35, 1),transform .2s cubic-bezier(0.33, 1, 0.68, 1) .2s;
+        transition: opacity .4s cubic-bezier(0.65, 0, 0.35, 1),transform .2s cubic-bezier(0.33, 1, 0.68, 1) .2s,-webkit-transform .2s cubic-bezier(0.33, 1, 0.68, 1) .2s;
+        z-index: 2;
+      }
+    }
+    .sold_out {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(244,247,250,.6);
+      z-index: 2;
+      span {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 16px;
+        color: #000;
+        font-weight: 700;
+        text-align: center;
+        transform: translate(-50%,-50%);
+      }
+    }
+  }
+  .product_name {
+    margin-top: 24px;
+    &_title {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 18px;
+      color: #222;
+      font-weight: 700;
+      line-height: 24px;
+      word-break: break-all;
+    }
+    &_desc {
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      height: 3em;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+    }
+    &_price {
+      .original {
+        font-size: 16px;
+        height: 21px;
+        color: #bbb;
+        text-decoration:line-through;
+        .unit {
+          font-size: 14px;
+        }
+      }
+      .sale {
+        margin-top: 2px;
+        font-size: 18px;
+        font-weight: 700;
+        color: $primary-color;
+        .unit {
+          font-size: 16px;
+        }
+      }
+    }
+    .product_btn_wrap {
+      margin-top: 27px;
+      .button {
+        padding: 8px 16px;
+        min-width: auto;
+        height: auto;
+        font-size: 14px;
+        &.button_positive {
+          border: 1px solid #222;
+        }
+        &.button_primary {
+          border: 1px solid $primary-color;
+        }
+        &.view:after {
+          content: '';
+        }
+        &:after {
+          content: '하기';
+        }      
+      }
+      .ico {
+        display: inline-block;
+        margin-right: 8px;
+        width: 14px;
+        height: 14px;
+        vertical-align: top;
+        &.gift {
+          background: url(../images/event/ic_prd_gift.svg) no-repeat 0 0;
+        }
+        &.search {
+          background: url(../images/event/ic_prd_search.svg) no-repeat 0 0;
+        }        
+      }
+    }
+  }
+  @include under-pc {
+    .product {
+      width: calc((100% - 16px) / 2);
+      margin-right: 0;
+    }
+    .product:nth-child(-n+2) {
+      margin-top: 0;
+    }
+    .product:nth-child(even) {
+      margin-left: 16px;
+    }
+    .product:nth-child(odd) {
+      margin-left: 0;
+    }
+    .product_btn_wrap {
+      .button + button {
+        margin-left: 2px;
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .product {
+      margin-bottom: 40px;
+    }
+    .badge_txt {
+      top: 10px;
+      right: 10px;
+      padding: 0;
+      font-size: 10px;
+      border: 0;
+      .unit {
+        font-size: 10px;
+      }
+    }
+    .badge_state {
+      padding: 4px;
+      top: 8px;
+      left: 8px;
+      font-size: 10px;
+    }
+    .product_pic {
+      .sold_out {
+        span {
+          font-size: 14px;
+        }
+      }
+     }
+    .product_name {
+      &_title {
+        font-size: 14px;
+        line-height: 22px;
+      }
+      &_desc {
+        margin-bottom: 15px;
+        font-size: 12px;
+        line-height: 18px;
+      }
+      &_price {
+        .original {
+          font-size: 12px;
+          .unit {
+            font-size: 12px;
+          }
+        }
+        .sale {
+          margin-top: 0;
+          font-size: 14px;
+          .unit {
+            font-size: 12px;
+          }
+        }
+      }
+      .product_btn_wrap {
+        .button {
+          padding: 8px 10px;
+          font-size: 14px;
+          &:after {
+            content: '';
+          }
+          +.button {
+            margin-left: 1px;
+          }
+        }
+        .button_secondary {
+          padding: 8px;
+          font-size: 0;
+        }
+        .ico {
+          text-indent: initial;
+          margin-right: 0;
+          background-size: cover;
+        }
+      }  
+    }
+  }
+}

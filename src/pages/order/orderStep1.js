@@ -7,8 +7,8 @@ import SEOHelmet from '../../components/SEOHelmet';
 import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/css/contents.css"
-import "../../assets/css/order.css"
+import "../../assets/scss/contents.scss"
+import "../../assets/scss/order.scss"
 
 export default function orderStep1() {
 

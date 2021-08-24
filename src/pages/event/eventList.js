@@ -18,8 +18,8 @@ import "swiper/swiper.scss"
 
 
 //css
-import "../../assets/css/contents.css"
-import "../../assets/css/event.css"
+import "../../assets/scss/contents.scss"
+import "../../assets/scss/event.scss"
 
 export default function eventList() {
 

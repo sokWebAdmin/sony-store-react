@@ -18,8 +18,8 @@ import "swiper/swiper.scss"
 import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/css/contents.css"
-import "../../assets/css/product.css"
+import "../../assets/scss/contents.scss"
+import "../../assets/scss/product.scss"
 
 //context
 import GlobalContext from '../../context/global.context';

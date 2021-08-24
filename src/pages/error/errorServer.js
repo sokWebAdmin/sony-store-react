@@ -7,7 +7,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/css/contents.css"
+import "../../assets/scss/contents.scss"
 
 //img
 import errorLogo from '../../assets/images/common/ic_server.svg';

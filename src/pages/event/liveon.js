@@ -7,9 +7,9 @@ import SEOHelmet from '../../components/SEOHelmet';
 import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/css/contents.css"
-import "../../assets/css/event.css"
-import "../../assets/css/liveon.css"
+import "../../assets/scss/contents.scss"
+import "../../assets/scss/event.scss"
+import "../../assets/scss/liveon.scss"
 
 export default function liveon() {
 

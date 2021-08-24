@@ -8,8 +8,8 @@ import SEOHelmet from '../../components/SEOHelmet';
 import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/css/contents.css"
-import "../../assets/css/recommend.css"
+import "../../assets/scss/contents.scss"
+import "../../assets/scss/recommend.scss"
 
 //context
 import GlobalContext from '../../context/global.context';

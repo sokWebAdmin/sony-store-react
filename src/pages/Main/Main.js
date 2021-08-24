@@ -19,7 +19,7 @@ import "swiper/swiper.scss"
 import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/css/main.css"
+import "../../assets/scss/main.scss"
 
 //utils
 import {useWindowSize} from '../../utils/utils'

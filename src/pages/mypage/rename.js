@@ -7,8 +7,8 @@ import SEOHelmet from '../../components/SEOHelmet';
 import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/css/contents.css"
-import "../../assets/css/mypage.css"
+import "../../assets/scss/contents.scss"
+import "../../assets/scss/mypage.scss"
 
 export default function rename() {
 

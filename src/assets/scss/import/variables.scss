@@ -1,0 +1,149 @@
+// global variables
+$font-family: "SSTPro", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$primary-color: #5865f5;
+$secondary-color: #f00;
+$primary-font-color: #000;
+$secondary-font-color: #f00;
+$primary-bg-color: #000;
+$secondary-bg-color: #f00;
+$lite-gray-bg-color: #fbfbfb;
+$path-common: "/dist/images/common/";
+
+@mixin sr-only {
+  position: absolute;
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+}
+
+@mixin ir {
+  font: 0/0 a;
+  text-shadow: none;
+  color: transparent;
+}
+
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+// require: width
+@mixin ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// require: height, line-height
+@mixin ellipsis2 {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+// require: height, line-height
+@mixin ellipsis3 {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+// break points
+$pc-max-width:  1920px;
+$pc-width:      1366px;
+$tab-width:     1280px;
+$mo-width:      640px;
+$mo-min-width:  360px;
+
+// responsive
+@mixin only-pc {
+  @media screen and (min-width: #{$tab-width + 1px}) {
+    @content;
+  }
+}
+@mixin large-pc {
+  @media screen and (min-width: #{$pc-width + 1px}) and (max-width: 1920px) {
+    @content;
+  }
+}
+@mixin small-pc {
+  @media screen and (min-width: #{$tab-width + 1px}) and (max-width: #{$pc-width}) {
+    @content;
+  }
+}
+@mixin under-pc {
+  @media screen and (max-width: #{$tab-width}) {
+    @content;
+  }
+}
+@mixin only-tab {
+  @media screen and (min-width: #{$mo-width + 1px}) and (max-width: #{$tab-width}) {
+    @content;
+  }
+}
+@mixin only-mo {
+  @media screen and (max-width: #{$mo-width}) {
+    @content;
+  }
+}
+@mixin small-mo {
+  @media screen and (max-width: #{$mo-min-width}) {
+    @content;
+  }
+}
+
+// get viewport
+@function get-vw($target) { 
+  $vw-context: (1000*.01) * 1px;
+  @return ($target/$vw-context) * 1vw;
+}
+
+// flexable value
+@function between($from, $to, $fromWidth, $toWidth) {
+  $slope: ($to - $from) / ($toWidth - $fromWidth);
+  $base: $from - $slope * $fromWidth;
+
+  @return calc(#{$base} + #{100vw * $slope});
+}
+@function between-pc-main($from, $to) {
+  $slope: ($to - $from) / ($pc-width - $pc-max-width);
+  $base: $from - $slope * $pc-max-width;
+
+  @return calc(#{$base} + #{100vw * $slope});
+}
+@function between-tab($from, $to) {
+  $slope: ($to - $from) / ($mo-width - $tab-width);
+  $base: $from - $slope * $tab-width;
+
+  @return calc(#{$base} + #{100vw * $slope});
+}
+@function between-mo($from, $to) {
+  $slope: ($to - $from) / ($mo-min-width - $mo-width);
+  $base: $from - $slope * $mo-width;
+
+  @return calc(#{$base} + #{100vw * $slope});
+}
+
+// easing
+$easeInCubic:     cubic-bezier(0.32, 0, 0.67, 0);
+$easeOutCubic:    cubic-bezier(0.33, 1, 0.68, 1);
+$easeInOutCubic:  cubic-bezier(0.65, 0, 0.35, 1);
+$easeInQuart:     cubic-bezier(0.5, 0, 0.75, 0);
+$easeOutQuart:    cubic-bezier(0.25, 1, 0.5, 1);
+$easeInOutQuart:  cubic-bezier(0.76, 0, 0.24, 1);
+$easeInExpo:      cubic-bezier(0.7, 0, 0.84, 0);
+$easeOutExpo:     cubic-bezier(0.16, 1, 0.3, 1);
+$easeInOutExpo:   cubic-bezier(0.87, 0, 0.13, 1);
