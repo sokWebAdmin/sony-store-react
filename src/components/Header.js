@@ -18,6 +18,7 @@ export default function Header() {
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
 
+  const [sideBarOpen, setMobileSideBarOpen] = useState(false);
   const [isLoggedIn, setLoggedIn] = useState(false);
 
   const onClickLogout = () => {
@@ -27,7 +28,7 @@ export default function Header() {
 
   return (
     <>
-      <header id="header" className="header">
+      <header id="header" className={`header ${sideBarOpen == true && "header--active"}`}>
         <div className="header__wrapper">
             <h1 className="header__logo"><a href="/"><img src={logo} alt="SONY" /></a></h1>
             <div className="header__menu">
@@ -38,8 +39,12 @@ export default function Header() {
                   setInfoOpen(!isInfoOpen)
                 }} /></a>
                 <a href="cart" className="btn btn__cart"><img src={cart} alt="장바구니" /></a>
-                <button type="button" className="btn btn__mo btn__menu__open"><img src={menu} alt="메뉴 열기" /></button>
-                <button type="button" className="btn btn__mo btn__mo__hidden btn__menu__close"><img src={close} alt="메뉴 닫기" /></button>
+                <button type="button" className="btn btn__mo btn__menu__open" onClick={()=>{
+                  setMobileSideBarOpen(true)
+                }}><img src={menu} alt="메뉴 열기" /></button>
+                <button type="button" className="btn btn__mo btn__mo__hidden btn__menu__close" onClick={()=>{
+                  setMobileSideBarOpen(false)
+                }}><img src={close} alt="메뉴 닫기" /></button>
             </div>
         
             <div className="header__inner">

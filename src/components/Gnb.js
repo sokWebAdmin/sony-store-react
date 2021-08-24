@@ -10,6 +10,9 @@ export default function Gnb() {
     const [subMenu4, setSubMenu4] = useState(false); 
     const [subMenu5, setSubMenu5] = useState(false); 
 
+
+    const [mSubMenu, setMSubMenu] = useState(''); 
+  
     const mouseOver = (onoff) => {
         if(onoff){
             setHovering(true);
@@ -29,7 +32,7 @@ export default function Gnb() {
                         mouseOver(false)
                     }}
                 >
-                    <li className={`${subMenu1 ? "active" : ""}`}
+                    <li className={`${subMenu1 ? "active" : ""} ${mSubMenu == 1 ? "mo--active" : ""}`}
                         onMouseOver={()=>{
                             setSubMenu1(true)
                         }}
@@ -37,7 +40,9 @@ export default function Gnb() {
                             setSubMenu1(false)
                         }}
                     >
-                    <a href="#">스토어 추천 제품</a>
+                    <a href="#" onClick={()=>{
+                        setMSubMenu(1)
+                    }}>스토어 추천 제품</a>
                     <ul className="gnb__menu__secondary">
                         <li>
                         <a href="/recommend">추천 제품</a>
@@ -45,13 +50,17 @@ export default function Gnb() {
                     </ul>
                     </li>
                     
-                    <li className={`${subMenu2 ? "active" : ""}`}
+                    <li className={`${subMenu2 ? "active" : ""} ${mSubMenu == 2 ? "mo--active" : ""}`}
                         onMouseOver={()=>{
                             setSubMenu2(true)
                         }}
                         onMouseLeave={()=>{
                             setSubMenu2(false)
-                        }}>
+                        }}
+                        onClick={()=>{
+                            setMSubMenu(2)
+                        }}
+                        >
                     <a href="/products/all">제품</a>
                     <ul className="gnb__menu__secondary">
                         <li>
@@ -72,12 +81,16 @@ export default function Gnb() {
                     </ul>
                     </li>
 
-                    <li className={`${subMenu3 ? "active" : ""}`} onMouseOver={()=>{
+                    <li className={`${subMenu3 ? "active" : ""} ${mSubMenu == 3 ? "mo--active" : ""}`} onMouseOver={()=>{
                             setSubMenu3(true)
                         }}
                         onMouseLeave={()=>{
                             setSubMenu3(false)
-                        }}>
+                        }}
+                        onClick={()=>{
+                            setMSubMenu(3)
+                        }}
+                        >
                     <a href="/event/list">기획전</a>
                     <ul className="gnb__menu__secondary">
                         <li>
@@ -98,12 +111,16 @@ export default function Gnb() {
                     </ul>
                     </li>
 
-                    <li className={`${subMenu4 ? "active" : ""}`} onMouseOver={()=>{
+                    <li className={`${subMenu4 ? "active" : ""} ${mSubMenu == 4 ? "mo--active" : ""}`} onMouseOver={()=>{
                             setSubMenu4(true)
                         }}
                         onMouseLeave={()=>{
                             setSubMenu4(false)
-                        }}>
+                        }}
+                        onClick={()=>{
+                            setMSubMenu(4)
+                        }}
+                        >
                     <a href="#">멤버십</a>
                     <ul className="gnb__menu__secondary">
                         <li>
@@ -112,12 +129,16 @@ export default function Gnb() {
                     </ul>
                     </li>
                     
-                    <li className={`${subMenu5 ? "active" : ""}`} onMouseOver={()=>{
+                    <li className={`${subMenu5 ? "active" : ""} ${mSubMenu == 5 ? "mo--active" : ""}`} onMouseOver={()=>{
                             setSubMenu5(true)
                         }}
                         onMouseLeave={()=>{
                             setSubMenu5(false)
-                        }}>
+                        }}
+                        onClick={()=>{
+                            setMSubMenu(5)
+                        }}
+                        >
                     <a href="#">고객 서비스</a>
                     <ul className="gnb__menu__secondary">
                         <li>
