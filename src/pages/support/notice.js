@@ -63,13 +63,13 @@ export default function Notice() {
             <p className="txt">감사합니다.</p>
           </div>
           <div className="btn_article">
-            <a href="../../html/support/noticeList.html" className="button button_positive" type="button">목록</a>
+            <a href="/notice-list" className="button button_positive" type="button">목록</a>
           </div>
         </div>
       </div>
       {/* // e : [공지사항] type1 : 안내 */}
       {/* [공지사항] type2 : 당첨자 발표  */}
-      <div className="notice_detail">
+      {/* <div className="notice_detail">
         <div className="notice_detail_head">
           <p className="tit">[당첨자 발표]<br className="pc_none" />6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</p>
         </div>
@@ -113,10 +113,10 @@ export default function Notice() {
             </div>
           </div>
           <div className="btn_article">
-            <a href="../../html/support/notice.html" className="button button_positive" type="button">목록</a>
+            <a href="/notice-list" className="button button_positive" type="button">목록</a>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* // e: [공지사항] type2 : 당첨자 발표  */}
     </div>
   </div>

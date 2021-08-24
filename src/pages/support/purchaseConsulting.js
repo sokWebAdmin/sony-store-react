@@ -16,7 +16,7 @@ export default function purchaseConsulting() {
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
         <div className="container">
-  <div className="content">
+  <div className="content" style={{padding: `120px 0 160px`}}>
     <div className="support_head">
       <h1 className="support_head_title">구매상담 안내</h1>
       <p className="support_head_desc">소니스토어에서 필요하신 상품과 연락처를 알려주시면 담당자가 친절하고 신속하게 상담해 드리겠습니다.</p>

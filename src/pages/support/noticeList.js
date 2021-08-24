@@ -25,10 +25,10 @@ export default function Notice() {
       <div className="tab_link_zone">
         <ul className="tab_link_inner">
           <li className="tabs">
-            <a href="../../html/support/faq.html" className="tab_btn" title="FAQ 보기"><span className="tit">FAQ</span></a>
+            <a href="/faq" className="tab_btn" title="FAQ 보기"><span className="tit">FAQ</span></a>
           </li>
           <li className="tabs on">
-            <a href="../../html/support/noticeList.html" className="tab_btn" title="공지사항 보기"><span className="tit">공지사항</span></a>
+            <a href="/notice-list" className="tab_btn" title="공지사항 보기"><span className="tit">공지사항</span></a>
           </li>
         </ul>
       </div>

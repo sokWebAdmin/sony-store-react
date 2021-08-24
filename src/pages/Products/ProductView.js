@@ -331,7 +331,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                    <a href="#none">
+                    <a href="/product-view/1">
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_06.png" alt="" />
@@ -343,7 +343,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                      <a href="#none">
+                    <a href="/product-view/1">
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임</p>
                       </a>
@@ -359,7 +359,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                    <a href="#none">
+                  <a href="/product-view/1">
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_05.png" alt="" />
@@ -371,7 +371,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                      <a href="#none">
+                    <a href="/product-view/1">
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임 G 렌즈원핸드 컴팩트 풀프레임 G 렌즈
                           원핸드 컴팩트 풀프레임
@@ -389,7 +389,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                    <a href="#none">
+                  <a href="/product-view/1">
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_04.png" alt="" />
@@ -401,7 +401,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                      <a href="#none">
+                    <a href="/product-view/1">
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임 G 렌즈
                           원핸드 컴팩트 풀프레임</p>
@@ -418,7 +418,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                    <a href="#none">
+                  <a href="/product-view/1">
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_03.png" alt="" />
@@ -430,7 +430,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                      <a href="#none">
+                    <a href="/product-view/1">
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임 G 렌즈
                           원핸드 컴팩트 풀프레임</p>
@@ -447,7 +447,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                    <a href="#none">
+                  <a href="/product-view/1">
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_02.png" alt="" />
@@ -459,7 +459,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                      <a href="#none">
+                    <a href="/product-view/1">
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임 G 렌즈
                           원핸드 컴팩트 풀프레임</p>
@@ -488,7 +488,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                      <a href="#none">
+                    <a href="/product-view/1">
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임 G 렌즈
                           원핸드 컴팩트 풀프레임</p>
