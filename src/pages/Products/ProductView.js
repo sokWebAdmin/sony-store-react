@@ -49,10 +49,10 @@ export default function ProductView({match}) {
       <SEOHelmet title={"상품 상세"} />
       
       {
-        headerHeight != 0 &&
+        (headerHeight != 0 || size.height < 1280) && 
 <div className="product_view_wrap" style={{backgroundColor:"#fff"}}>
         <div className="product_view_main">
-          <div className="prd_main_slider" style={size.width > 1280 && ( size.height - headerHeight < 500 ? {height: "500px", marginTop : (headerHeight/2)*-1} : {height: `${size.height}px`, marginTop : (headerHeight/2)*-1} )}>
+          <div className="prd_main_slider" style={size.width > 1280 ? ( size.height - headerHeight < 500 ? {height: "500px", marginTop : (headerHeight/2)*-1} : {height: `${size.height}px`, marginTop : (headerHeight/2)*-1} ) : {display: "block"}}>
             <div className="view_slider swiper-container">
               <Swiper className="swiper-wrapper"
                 loop={true}
