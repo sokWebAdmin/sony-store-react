@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -10,9 +10,17 @@ import {loginApi} from "../../api/auth";
 import "../../assets/scss/contents.scss"
 
 //utils
-import {emptyCheck} from '../../utils/utils'
+import {emptyCheck, tokenValidation} from '../../utils/utils'
+
+//lib
+import Cookies from "js-cookie";
+
+//context
+import GlobalContext from '../../context/global.context';
 
 export default function Login() {
+  const {onChangeGlobal, shopByToken} = useContext(GlobalContext)
+
   const [tabState, setTabState] = useState("member");
   const [isPwVisible, setPwVisible] = useState(false);
 
@@ -23,7 +31,10 @@ export default function Login() {
   //validation
   const [isEmail, setIsEmail] = useState(false);
   const [isPw, setIsPw] = useState(false);
-  
+
+  //cookie
+  const [saveEmail, setSaveEmail] = useState(true);
+
   //action
   const _loginApi = async (email, password) => {
     let validation = true
@@ -50,16 +61,41 @@ export default function Login() {
         }
       }else if(response.status == 200){
         //success
+        /**
+         * token
+         */
+
+        /**
+         * final
+         */
+
+        if(saveEmail === true){
+          Cookies.set("sony_email", email);
+        }else{
+          Cookies.remove("sony_email");
+        }
 
       }
     }
     
   }
 
+  //componentDidMount
+  useEffect(()=>{
+    //로그인 상태인 경우, 메인화면으로 자동 이동처리
+    console.log(shopByToken)
+    if(shopByToken !== undefined && shopByToken !== ''){
+      //valid check
+      if(tokenValidation(shopByToken)){
+       window.location.replace("/"); 
+      }
+    }
+  },[shopByToken])
+
 
     return (
         <>
-        <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <SEOHelmet title={"로그인"} />
         <div className="contents">
           <div className="container" id="container"> 
             <div className="login">
@@ -109,7 +145,13 @@ export default function Login() {
                 </div>
                 <div className="find_box">
                   <div className="check">
-                    <input type="checkbox" className="inp_check" id="chk01" />
+                    <input type="checkbox" className="inp_check" id="chk01" checked={saveEmail} onChange={(e)=>{
+                      if(e.target.checked == true){
+                        setSaveEmail(true);
+                      }else{
+                        setSaveEmail(false);
+                      }
+                    }}/>
                     <label htmlFor="chk01">이메일 아이디 저장</label>
                   </div>
                   <ul className="user_menu">

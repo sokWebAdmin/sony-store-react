@@ -46,3 +46,15 @@ export function useWindowSize() {
     }
     return result;
   }
+
+  export async function tokenValidation(token){
+    //validation token
+    /**
+     * if(서버측에서 체크 , 성공){
+     *  return true
+     * } else{
+     *  쿠키에서 삭제 후 return false
+     * }
+     */
+    return true;
+  }
