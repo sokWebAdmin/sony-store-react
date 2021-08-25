@@ -38,3 +38,11 @@ export function useWindowSize() {
   export function wonComma(price) {
       return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
+
+  export function emptyCheck(value){
+    let result = false;
+    if(value === undefined || value === ""){
+      result = true;
+    }
+    return result;
+  }
