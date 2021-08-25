@@ -30,16 +30,28 @@ export default function Login() {
     if(emptyCheck(email)){
       setIsEmail(true)
       validation = false;
-    } 
+    } else{
+      setIsEmail(false)
+    }
     
     if(emptyCheck(password)){
       setIsPw(true)
       validation = false;
+    } else{
+      setIsPw(false)
     }
 
     if(validation == true){
       const response = await loginApi(email, password);
-      console.log(response);
+      if(response.status == 400) {
+        //issue
+        if(response.data.code == "M0019"){
+          alert("아이디/비밀번호를 다시 확인해주세요.");
+        }
+      }else if(response.status == 200){
+        //success
+
+      }
     }
     
   }

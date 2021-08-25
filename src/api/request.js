@@ -1,10 +1,12 @@
 import axios from "axios";
+import {isMobile} from 'react-device-detect';
+
 
 const SERVER = "https://alpha-api.e-ncp.com/";
 const version = "1.0";
-const clientId = "D8vhQpkQR0DIYHxkbpbv7A==";
-//키 변경 필수
-const platform = "MOBILE_WEB";
+const clientId = "MzuMctQTZBXWmdTlujFy3Q==";
+//SonyStore ALPHA
+const platform =  isMobile ? "MOBILE_WEB" : "PC";
 // API request 모듈
 const request = async (url, method, headers = {}, query, requestBody) => {
   let Address = SERVER + url;
