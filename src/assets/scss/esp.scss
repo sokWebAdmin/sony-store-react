@@ -2,7 +2,9 @@
 @import url("./common.css");
 @import "./import/variables";
 
-//연장서비스플랜 esp 
+.esp {
+
+  //연장서비스플랜 esp 
 .espWrap {
   .container {
     max-width: 100%;
@@ -1039,4 +1041,6 @@
         display: block;
       }
   }
+}
+
 }

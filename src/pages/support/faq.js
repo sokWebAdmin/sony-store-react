@@ -15,6 +15,7 @@ export default function Faq() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents support">
         <div className="container full">
   <div className="content">
     <div className="faq_notice_head">
@@ -332,7 +333,7 @@ export default function Faq() {
     </div>
   </div>
 </div>
-
+</div>
         </>
     );
 }

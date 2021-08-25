@@ -38,7 +38,7 @@ export default function Header() {
                 <a href="#" className="btn btn__desktop btn__mypage"><img src={mypage} alt="마이페이지" onClick={()=>{
                   setInfoOpen(!isInfoOpen)
                 }} /></a>
-                <a href="cart" className="btn btn__cart"><img src={cart} alt="장바구니" /></a>
+                <a href="/cart" className="btn btn__cart"><img src={cart} alt="장바구니" /></a>
                 <button type="button" className="btn btn__mo btn__menu__open" onClick={()=>{
                   setMobileSideBarOpen(true)
                 }}><img src={menu} alt="메뉴 열기" /></button>
@@ -55,7 +55,7 @@ export default function Header() {
               <>
               <div className={`member ${isInfoOpen && "member--visible"}`}>
             <div className="member__inner">
-                <a href="#" className="member__msg member__msg__login">로그인이<br />필요합니다</a>
+                <a href="/member/login" className="member__msg member__msg__login">로그인이<br />필요합니다</a>
                 <button type="button" className="btn btn__login" onClick={()=>{
                   window.location.href="/member/login"
                 }}>로그인</button>
@@ -64,7 +64,7 @@ export default function Header() {
                     <li className="member__menu__mypage"><a href="/member/join">회원가입</a></li>
                     <li className="member__menu__order"><a href="/my-page/order-list">주문/배송 조회</a></li>
                     <li className="member__menu__order"><a href="#" onClick={()=>{setLoggedIn(true)}}>임시)로그인 모드</a></li>
-                    <li className="member__menu__cart"><a href="/order/cart.html">장바구니<span className="badge">99</span></a></li>
+                    <li className="member__menu__cart"><a href="/cart">장바구니<span className="badge">99</span></a></li>
                 </ul>
                 </div>
             </div>

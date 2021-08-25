@@ -15,6 +15,7 @@ export default function videoCourse() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents support">
         <div className="container full">
   <div className="content">
     <div className="course_video">
@@ -94,7 +95,7 @@ export default function videoCourse() {
     </div>
   </div>
 </div>
-
+</div>
         </>
     );
 }

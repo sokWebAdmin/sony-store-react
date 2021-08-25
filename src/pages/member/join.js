@@ -14,6 +14,7 @@ export default function join() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents">
         <div className="container" id="container">
   <div className="login">
     <div className="join_area">
@@ -42,7 +43,7 @@ export default function join() {
     </div>
   </div>
 </div>
-
+</div>
 
 
         </>

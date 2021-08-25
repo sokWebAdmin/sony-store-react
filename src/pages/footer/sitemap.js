@@ -14,6 +14,7 @@ export default function sitemap() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents">
         <div className="container">
   <div className="content">
     {/* 서브페이지 타이틀 영역 */}
@@ -156,7 +157,7 @@ export default function sitemap() {
     </div>
   </div>
 </div>
-
+</div>
         </>
     );
 }

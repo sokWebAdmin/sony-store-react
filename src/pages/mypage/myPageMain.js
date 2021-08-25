@@ -15,6 +15,7 @@ export default function myPageMain() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents mypage">
         <div className="my_wrap">
             <div className="my_head">
                 <h2 className="title">마이페이지</h2>
@@ -600,7 +601,7 @@ export default function myPageMain() {
                 </div>
             </div>
             </div>
-
+</div>
 
 
         </>

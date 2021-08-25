@@ -15,6 +15,7 @@ export default function orderList() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents mypage">
         <div className="container">
   <div className="content">
     <div className="common_head">
@@ -180,7 +181,7 @@ export default function orderList() {
     </div>
   </div>
 </div>
-
+</div>
         </>
     );
 }

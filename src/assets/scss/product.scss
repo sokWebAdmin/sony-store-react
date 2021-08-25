@@ -1,6 +1,8 @@
 @import "./import/variables";
 
-// s : 제품 상세 페이지
+.product {
+
+  // s : 제품 상세 페이지
 .no_scroll{
   position: fixed;
   left: 0;
@@ -1935,3 +1937,6 @@
   
 }
 // e : 제품 상세
+
+}
+

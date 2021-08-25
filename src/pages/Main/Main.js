@@ -56,7 +56,7 @@ export default function Main() {
       return (
           <>
           <SEOHelmet title={"메인"} />
-
+            <div className="main">
             <div id="container" className="container">
                 <div className="content main">
                 {/* <!-- key visual --> */}
@@ -484,22 +484,23 @@ export default function Main() {
                   <h2 className="main__help__title">무엇을<br />도와드릴까요?</h2>
                   <ul className="main__help__lists">
                     <li className="main__help__list notice">
-                      <a href="#">공지사항 & FAQ</a>
+                      <a href="/notice">공지사항 & FAQ</a>
                     </li>
                     <li className="main__help__list location">
-                      <a href="#">매장안내</a>
+                      <a href="store-info">매장안내</a>
                     </li>
                     <li className="main__help__list customer">
                       <a href="#">고객센터</a>
                     </li>
                     <li className="main__help__list service">
-                      <a href="#">제품지원</a>
+                      <a href="https://www.sony.co.kr/electronics/support">제품지원</a>
                     </li>
                   </ul>
                 </div>
                 {/* customer service */}
 
               </div>
+            </div>
             </div>
           </>
       )

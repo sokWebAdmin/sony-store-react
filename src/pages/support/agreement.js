@@ -16,6 +16,7 @@ export default function Agreement() {
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
 
+        <div className="contents support">
         <div className="container">
             <div className="content">
                 <div className="support_head">
@@ -63,7 +64,7 @@ export default function Agreement() {
                 </div>
             </div>
             </div>
-
+</div>
         </>
     );
 }

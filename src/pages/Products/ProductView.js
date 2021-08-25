@@ -47,7 +47,7 @@ export default function ProductView({match}) {
     return (
       <>        
       <SEOHelmet title={"상품 상세"} />
-      
+      <div className="contents product">
       {
         (headerHeight != 0 || size.height < 1280) && 
 <div className="product_view_wrap" style={{backgroundColor:"#fff"}}>
@@ -784,6 +784,7 @@ export default function ProductView({match}) {
         </div>
       </div>
       }
+      </div>
       </>  
     )
 }

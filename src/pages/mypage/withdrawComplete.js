@@ -15,6 +15,7 @@ export default function withdrawComplete() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents mypage">
         <div className="container" id="container">
   <div className="accounts withdrawComplete">
     <h1 className="accounts_title">회원 탈퇴 신청 완료</h1>
@@ -24,7 +25,7 @@ export default function withdrawComplete() {
     </div>
   </div>
 </div>
-
+</div>
 
 
         </>

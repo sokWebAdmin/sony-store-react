@@ -14,6 +14,7 @@ export default function login() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents">
         <div className="container" id="container">
   <div className="login">
     <ul className="login__tab">
@@ -106,7 +107,7 @@ export default function login() {
     </div>
   </div>
 </div>
-
+</div>
 
 
         </>

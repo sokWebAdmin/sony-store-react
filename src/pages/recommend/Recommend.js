@@ -24,6 +24,7 @@ export default function Recommend({match}) {
 
     return(
         <>
+        <div className="contents recommend">
         <div className="container">
   <div className="content">
     <div className="reco">
@@ -178,7 +179,7 @@ export default function Recommend({match}) {
     </div>
   </div>
 </div>
-
+</div>
         </>
     )
 }

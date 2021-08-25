@@ -14,6 +14,7 @@ export default function pwSearch() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents">
         <div className="container" id="container">
   <div className="login">
     <h2 className="login__title">아이디 · 비밀번호 찾기</h2>
@@ -101,7 +102,7 @@ export default function pwSearch() {
     </div>
   </div>
 </div>
-
+</div>
         </>
     );
 }

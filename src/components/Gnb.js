@@ -94,16 +94,16 @@ export default function Gnb() {
                     <a href="/event/list">기획전</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a href="#">소니스토어 단독</a>
+                        <a href="/event/list">소니스토어 단독</a>
                         </li>
                         <li>
-                        <a href="#">혜택존</a>
+                        <a href="/event/refurbish">혜택존</a>
                         </li>
                         <li>
-                        <a href="#">예약판매</a>
+                        <a href="/event/list">예약판매</a>
                         </li>
                         <li>
-                        <a href="#">정품 등록 이벤트</a>
+                        <a href="/event/refined">정품 등록 이벤트</a>
                         </li>
                         <li>
                         <a href="/event/live-on">LIVE ON</a>

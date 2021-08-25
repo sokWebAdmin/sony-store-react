@@ -15,6 +15,7 @@ export default function purchaseConsulting() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents support">
         <div className="container">
   <div className="content" style={{padding: `120px 0 160px`}}>
     <div className="support_head">
@@ -362,7 +363,7 @@ export default function purchaseConsulting() {
     </div>
   </div>
 </div>
-
+</div>
 
         </>
     );

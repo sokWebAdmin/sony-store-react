@@ -15,6 +15,7 @@ export default function myPageMember() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents mypage">
        <div className="member_wrap">
   <div className="common_head first_tit">
     <a href="../../html/mypage/myPageMain.html" className="common_head_back">마이페이지</a>
@@ -210,7 +211,7 @@ export default function myPageMember() {
     </div>
   </form>
 </div>{/* // member_wrap */}
-
+</div>
         </>
     );
 }

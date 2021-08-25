@@ -15,6 +15,7 @@ export default function cart() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents order">
         <div className="container" id="container">
   <div className="content order_page">
     <div className="order_box">
@@ -186,7 +187,7 @@ export default function cart() {
     </div>
   </div>
 </div>
-
+</div>
         </>
     );
 }

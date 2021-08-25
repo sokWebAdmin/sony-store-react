@@ -28,7 +28,7 @@ export default function eventList() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
-      
+        <div className="contents events">
         <div className="container full">{/* full : max-width 1920 */}
   <div className="content">
     <div className="event_slider swiper-container">
@@ -523,7 +523,7 @@ export default function eventList() {
     </div>
   </div>
 </div>
-
+</div>
         </>
     );
 }

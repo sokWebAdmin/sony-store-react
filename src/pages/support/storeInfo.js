@@ -15,6 +15,7 @@ export default function storeInfo() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents support">
         <div className="container full">
   <div className="content">
     <div className="store_info_wrap"> 
@@ -158,7 +159,7 @@ export default function storeInfo() {
     </div>
   </div>
 </div>
-
+</div>
 
         </>
     );

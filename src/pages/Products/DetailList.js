@@ -95,7 +95,7 @@ export default function Products({match}) {
     return (
         <>
         <SEOHelmet title={`제품세부목록:${detailTypeName}`} />
-
+        <div className="category">
         <div className="container">
             <div className="content">
 
@@ -321,6 +321,7 @@ export default function Products({match}) {
                     </div>
             </div>
             </div>
+        </div>
         </div>
         </>
     );

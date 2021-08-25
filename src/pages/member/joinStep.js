@@ -14,6 +14,7 @@ export default function joinStep() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents">
         <div className="container" id="container">
   <div className="login join_step">
     <h2 className="login__title">회원가입</h2>
@@ -111,6 +112,7 @@ export default function joinStep() {
       </div>
     </div>
   </div>
+</div>
 </div>
         </>
     );

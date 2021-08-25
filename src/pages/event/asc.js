@@ -15,7 +15,8 @@ export default function asc() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
-        <div className="container full">{/* full : max-width 1920 */}
+        <div className="contents events">
+        <div className="container full contents">{/* full : max-width 1920 */}
   <div className="content employee">
     <div className="event_header">
       <div className="event_header_inner">
@@ -628,7 +629,7 @@ export default function asc() {
     </div>
   </div>
 </div>
-
+</div>
         </>
     );
 }

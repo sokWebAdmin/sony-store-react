@@ -15,6 +15,7 @@ export default function orderStep2() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents order">
         <div className="container" id="container">
   <div className="content order_page">
     <div className="order_box">
@@ -540,7 +541,7 @@ export default function orderStep2() {
     </div>
   </div>
 </div>
-
+</div>
 
         </>
     );

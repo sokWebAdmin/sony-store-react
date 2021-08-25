@@ -15,6 +15,7 @@ export default function orderComplete() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents order">
         <div className="container" id="container">
         <div className="content order_page">
             <div className="order_confirm_box">
@@ -36,6 +37,7 @@ export default function orderComplete() {
                 <button className="button button_positive" type="button">주문/배송 조회</button>
             </div>
             </div>
+        </div>
         </div>
         </div>
         </>

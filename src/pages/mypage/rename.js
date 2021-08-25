@@ -15,6 +15,7 @@ export default function rename() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <div className="contents mypage">
         <div className="rename_wrap">
   <div className="common_head first_tit">
     <a href="../../html/mypage/myPageMain.html" className="common_head_back">마이페이지</a>
@@ -52,7 +53,7 @@ export default function rename() {
     </div>
   </div>
 </div>
-
+</div>
 
         </>
     );

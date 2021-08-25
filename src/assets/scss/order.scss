@@ -1,5 +1,6 @@
 @import "./import/variables";
 
+.order {
 //주문,결제 페이지일때 sidebar 위치
 .Order {
   @include under-pc {
@@ -1172,3 +1173,6 @@
     }
   }
 }
+
+}
+

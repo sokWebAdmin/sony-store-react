@@ -16,7 +16,7 @@ export default function liveon() {
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
-      
+        <div className="contents events liveon">
         <div className="container full">{/* full : max-width 1920 */}
   <div className="content liveon">
     <div className="event_video">
@@ -140,7 +140,7 @@ export default function liveon() {
     </div>
   </div>
 </div>
-
+</div>
         </>
     );
 }

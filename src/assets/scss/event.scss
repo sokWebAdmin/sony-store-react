@@ -1,13 +1,15 @@
 @import "./import/variables";
 
-/* event 기획전 */
+.events {
+
+  /* event 기획전 */
 //liveon
 .container.full .content.employee {
   @include under-pc {
-    margin: 0;
+    margin: 0 !important;
   }
 }
-.event{
+.event_zone{
   .tab_ui{
     .tabs{
       .btn{
@@ -20,7 +22,7 @@
     .tab_ui{
       .tabs{
         .btn{
-          font-size:18px;
+          font-size:18px !important;
         }
       }
     }
@@ -1320,3 +1322,7 @@
     }
   }
 }
+
+
+}
+
