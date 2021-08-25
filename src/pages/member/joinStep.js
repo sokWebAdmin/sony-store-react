@@ -20,7 +20,7 @@ export default function joinStep() {
     <h2 className="login__title">회원가입</h2>
     <p className="login__desc">소니코리아 통합 웹회원 정책 상 공식적으로 <strong>만 14세 미만의 경우 회원가입이 불가합니다.</strong></p>
     <div className="join_inp_box">
-      <div className="group not-ready">
+      <div className="group">
         <div className="inp_box">
           <label className="inp_desc" htmlFor="loginName">
             <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off" tabIndex={1} />
@@ -31,7 +31,7 @@ export default function joinStep() {
         <div className="error_txt"><span className="ico" />이메일 아이디를 입력해 주세요.</div>
       </div>
       <div className="rowgroup">
-        <div className="group not-ready">
+        <div className="group">
           <div className="inp_box password_box">
             <label className="inp_desc" htmlFor="loginPw1">
               <input type="password" id="loginPw1" className="inp" placeholder=" " autoComplete="off" tabIndex={2} />
@@ -42,7 +42,7 @@ export default function joinStep() {
           </div>
           <div className="error_txt"><span className="ico" />비밀번호를 입력해 주세요.</div>
         </div>
-        <div className="group not-ready">
+        <div className="group">
           <div className="inp_box password_box">
             <label className="inp_desc" htmlFor="loginPw2">
               <input type="password" id="loginPw2" className="inp" placeholder=" " autoComplete="off" tabIndex={3} />
@@ -55,7 +55,7 @@ export default function joinStep() {
         </div>
       </div>
       <div className="rowgroup">
-        <div className="group not-ready">
+        <div className="group">
           <div className="inp_box">
             <label className="inp_desc" htmlFor="username">
               <input type="text" id="username" className="inp" placeholder=" " autoComplete="off" tabIndex={4} />
@@ -65,7 +65,7 @@ export default function joinStep() {
           </div>
           <div className="error_txt"><span className="ico" />이름을 입력해 주세요.</div>
         </div>
-        <div className="group not-ready">
+        <div className="group">
           <div className="inp_box">
             <label className="inp_desc" htmlFor="userbirth">
               <input type="text" id="userbirth" className="inp" placeholder=" " />
@@ -76,7 +76,7 @@ export default function joinStep() {
           <div className="error_txt"><span className="ico" />생년월일을 주세요.</div>
         </div>
       </div>
-      <div className="group not-ready btn_type">
+      <div className="group btn_type">
         <div className="inp_box">
           <label className="inp_desc" htmlFor="phonenumber">
             <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off" tabIndex={5} />
@@ -91,7 +91,7 @@ export default function joinStep() {
         </div>
         <div className="error_txt"><span className="ico" />휴대폰 번호를 입력해주세요.</div>
       </div>
-      <div className="group not-ready btn_type">
+      <div className="group btn_type">
         <div className="inp_box">
           <label className="inp_desc" htmlFor="certifynumber">
             <input type="text" id="certifynumber" className="inp" placeholder=" " autoComplete="off" tabIndex={6} />

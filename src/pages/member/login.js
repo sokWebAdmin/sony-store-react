@@ -22,7 +22,7 @@ export default function login() {
       <li data-tab="tab2"><a href="#">비회원 로그인</a></li>
     </ul>
     <div id="tab1" className="login__tabcont current">
-      <div className="group not-ready">
+      <div className="group">
         <div className="inp_box">
           <label className="inp_desc" htmlFor="loginName">
             <input type="text" id="loginName" className="inp" placeholder=" " />
@@ -32,7 +32,7 @@ export default function login() {
         </div>
         <div className="error_txt"><span className="ico" />이메일 아이디를 입력해 주세요.</div>
       </div>
-      <div className="group not-ready">
+      <div className="group">
         <div className="inp_box password_box">
           <label className="inp_desc" htmlFor="loginPw">
             <input type="password" id="loginPw" className="inp" placeholder=" " />
@@ -72,7 +72,7 @@ export default function login() {
       </div>
     </div>
     <div id="tab2" className="login__tabcont">
-      <div className="group not-ready">
+      <div className="group">
         <div className="inp_box">
           <label className="inp_desc" htmlFor="loginumber">
             <input type="text" id="loginumber" className="inp" placeholder=" " />
@@ -82,7 +82,7 @@ export default function login() {
         </div>
         <div className="error_txt"><span className="ico" />주문번호를 입력해 주세요.</div>
       </div>
-      <div className="group not-ready">
+      <div className="group">
         <div className="inp_box password_box">
           <label className="inp_desc" htmlFor="loginumber">
             <input type="password" id="loginPw_nonmember" className="inp" placeholder=" " />
