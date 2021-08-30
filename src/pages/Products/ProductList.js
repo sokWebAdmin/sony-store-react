@@ -4,7 +4,7 @@ import { React ,useState, useEffect, useContext, useRef } from 'react';
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import { sampleApi } from "../../api/sample";
+import { getProductListByCategoryNo } from "../../api/product";
 
 //css
 import "../../assets/scss/category.scss"
@@ -12,11 +12,9 @@ import "../../assets/scss/category.scss"
 //context
 import GlobalContext from '../../context/global.context';
 
-//util
-import { wonComma } from '../../utils/utils';
+//component
+import Product from '../../components/Product';
 
-//dummy
-import {productList} from '../../dummy/products';
 
 export default function Products({match}) {
     const {onChangeGlobal} = useContext(GlobalContext)
@@ -24,19 +22,52 @@ export default function Products({match}) {
 
     const [typeName, setTypeName] = useState('');
 
+    //ui
+    const [mobileOrderOpen, setMobileOrderOpen] = useState(false);
+
+    //data
+    const [categoryNo, setCategoryNo] = useState();
+    const [orderBy, setOrderBy] = useState('RECENT_PRODUCT');
+
+    const [totalNum, setTotalNum] = useState();
+    const [productList, setProductList] = useState([]);
+
     useEffect(()=>{
         if(type == "camera"){
             setTypeName("카메라");
+            setCategoryNo(60859)
         } else if(type == "videocamera"){
             setTypeName("비디오 카메라");
+            setCategoryNo(60865)
         } else if(type == "audio"){
             setTypeName("오디오");
+            setCategoryNo(60871)
         } else if(type == "accessory"){
             setTypeName("엑세서리");
+            setCategoryNo(60883)
         } else if(type == "playstation"){
             setTypeName("PlayStation®");
+            setCategoryNo(60896)
         }
     },[type])
+
+    useEffect(()=>{
+        if(categoryNo){
+            _getProductListByCategoryNo(categoryNo)
+        }
+        setMobileOrderOpen(false);
+    },[categoryNo, orderBy])
+
+    const _getProductListByCategoryNo = async(category) =>{
+        const response = await getProductListByCategoryNo(category, orderBy);
+        if(response.status == 200 && response.data && response.data.items){
+            setTotalNum(response.data.totalCount);
+            //data-items
+            setProductList(response.data.items)
+
+        }
+        console.log(response);
+    }
 
     return (
         <>
@@ -52,7 +83,7 @@ export default function Products({match}) {
                     <ul className="swiper-wrapper centered">
                         {type == "camera" &&
                             <>
-                                <li className="swiper-slide all category__header__menu--active"><a href="/products/camera/all"><span>전체보기</span></a></li>
+                                <li className="swiper-slide all category__header__menu--active"><a href="#"><span>전체보기</span></a></li>
                                 <li className="swiper-slide category__header__menu__camera0">
                                 <a href="/products/camera/lens"><span>렌즈교환식 카메라</span></a>
                                 </li>
@@ -64,7 +95,7 @@ export default function Products({match}) {
 
                         {type == "videocamera" &&
                             <>
-                                 <li class="swiper-slide all category__header__menu--active"><a href="/products/videocamera/all"><span>전체보기</span></a></li>
+                                 <li class="swiper-slide all category__header__menu--active"><a href="#"><span>전체보기</span></a></li>
                                 <li class="swiper-slide category__header__menu__videocamera0">
                                 <a href="/products/videocamera/cinema"><span>시네마 라인 카메라</span></a>
                                 </li>
@@ -79,7 +110,7 @@ export default function Products({match}) {
 
                         {type == "audio" &&
                             <>
-                                 <li class="swiper-slide all category__header__menu--active"><a href="/products/audio/all"><span>전체보기</span></a></li>
+                                 <li class="swiper-slide all category__header__menu--active"><a href="#"><span>전체보기</span></a></li>
                                 <li class="swiper-slide category__header__menu__audio0">
                                 <a href="/products/audio/headphone"><span>헤드폰/이어폰</span></a>
                                 </li>
@@ -97,7 +128,7 @@ export default function Products({match}) {
 
                         {type == "accessory" &&
                             <>
-                                 <li class="swiper-slide all category__header__menu--active"><a href="/products/accessory/all"><span>전체보기</span></a></li>
+                                 <li class="swiper-slide all category__header__menu--active"><a href="#"><span>전체보기</span></a></li>
                                 <li class="swiper-slide category__header__menu__accessory0">
                                 <a href="/products/accessory/camera"><span>카메라 액세서리</span></a>
                                 </li>
@@ -109,7 +140,7 @@ export default function Products({match}) {
 
                         {type == "playstation" &&
                             <>
-                                 <li class="swiper-slide all category__header__menu--active"><a href="/products/playstation/all"><span>전체보기</span></a></li>
+                                 <li class="swiper-slide all category__header__menu--active"><a href="#"><span>전체보기</span></a></li>
                                 <li class="swiper-slide category__header__menu__playstation0">
                                 <a href="/products/playstation/playstation"><span>PlayStation®</span></a>
                                 </li>
@@ -126,25 +157,33 @@ export default function Products({match}) {
                 <div className="product__list__wrapper">
                     <h2 className="list__info">
                     <span className="list__info__name">제품</span>
-                    <span className="list__info__num">(60)</span>
+                    <span className="list__info__num">({totalNum && totalNum})</span>
                     </h2>
-                    <div className="itemsort" aria-label="상품 정렬">
-                    <button className="itemsort__button">
+                    <div className={`itemsort ${mobileOrderOpen ? "itemsort--open" : ""}`} aria-label="상품 정렬">
+                    <button className="itemsort__button" onClick={()=>{
+                        setMobileOrderOpen(!mobileOrderOpen)
+                    }}>
                         <span className="itemsort__button__label sr-only">정렬기준:</span>
-                        <span className="itemsort__button__selected">최신순</span>
+                        <span className="itemsort__button__selected">{orderBy == "RECENT_PRODUCT" ? "최신순" : (orderBy == "TOP_PRICE" ? "높은 가격순" : "낮은 가격순")}</span>
                     </button>
                     <div className="itemsort__drawer">
                         <ul className="itemsort__items">
-                        <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-                        <li className="itemsort__item"><a href="#" className="itemsort__item__link">높은 가격순</a></li>
-                        <li className="itemsort__item"><a href="#" className="itemsort__item__link">낮은 가격순</a></li>
+                        <li className={`itemsort__item ${orderBy == "RECENT_PRODUCT" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                            setOrderBy("RECENT_PRODUCT")
+                        }}>최신순</a></li>
+                        <li className={`itemsort__item ${orderBy == "TOP_PRICE" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                            setOrderBy("TOP_PRICE")
+                        }}>높은 가격순</a></li>
+                        <li className={`itemsort__item ${orderBy == "DISCOUNTED_PRICE" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                            setOrderBy("DISCOUNTED_PRICE")
+                        }}>낮은 가격순</a></li>
                         </ul>
                     </div>
                     </div>
                             {/* <!-- item-list --> */}
                     <div className="product__list">
                         {
-                            productList.map((product, productIndex)=>{
+                            productList && productList.map((product, productIndex)=>{
                                 
                                 return (
                                     <>
@@ -172,58 +211,7 @@ export default function Products({match}) {
                                             </>
                                         )
                                     }
-                                    <div className="product">
-                                        { product.badge !== "" && (
-                                            product.badge == "best" ?     
-                                                <span className={`badge__text badge__text__best`}>BEST</span> :
-                                                ( product.badge == "event" ? <span className={`badge__text badge__text__event`}>EVENT</span> : <span className={`badge__text badge__text__hot`}>HOT</span> )
-                                        )}
-                                        <div className="product__pic">
-                                        <a href="/product-view/1" className="product__pic__link">
-                                            {
-                                                product.images && product.images.map((image, imageIndex)=>{
-                                                    return (
-                                                        <img src={image.src} alt={image.alt} className={`product__pic__img ${imageIndex == 0 && "product__pic__img--visible"}`} />
-                                                    )
-                                                })
-                                            }
-                                        </a>
-                                        </div>
-                                        <div className="colorchip">
-                                        <span className="sr-only">전체 색상</span>
-                                            {
-                                                product.colors && product.colors.map((color, colorIndex) =>{
-                                                    return (
-                                                        <span className={`colorchip__item ${colorIndex == 0 && "colorchip__item--active"}`}>
-                                                            <span className="colorchip__item__label" style={{backgroundColor:`#${color.code}`}}>
-                                                                <span className="sr-only">{color.label}</span>
-                                                            </span>
-                                                        </span>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                        <a href="/product-view/1" className="product__title">
-                                        <strong className="product__title__name">{product.title}</strong>
-                                        { product.badge_label !== "" && (
-                                            product.badge_label == "reserve" ?     
-                                                <span className="badge__label badge__label__reserve">예약판매</span> :
-                                                ( product.badge_label == "outstock" ? <span className={`badge__label badge__label__outofstock`}>일시품절</span> : (
-                                                    product.badge_label == "soldout" ? <span className={`badge__label badge__label__soldout`}>품절</span> : 
-                                                    <span className={`badge__label badge__label__release`}>출시예정</span>
-                                                ) )
-                                        )}
-                                        
-                                        </a>
-                                        <a href="/product-view/1" className="product__info">
-                                            {product.info}
-                                        </a>
-                                        <div className="product__price">
-                                        <span className="product__price__num">{wonComma(product.price)}</span>
-                                            {/* 원 단위 콤마 필수  */}
-                                        <span className="product__price__unit">원</span>
-                                        </div>
-                                    </div>
+                                    <Product product={product} key={productIndex} />
                                     </>
                                 )
                             })

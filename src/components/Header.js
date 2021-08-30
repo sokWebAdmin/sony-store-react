@@ -22,7 +22,7 @@ export default function Header() {
   const [isLoggedIn, setLoggedIn] = useState(false);
 
   const onClickLogout = () => {
-    Cookies.remove("shopByToke n");
+    Cookies.remove("shopByToken");
     window.history.go("/");
   };
 

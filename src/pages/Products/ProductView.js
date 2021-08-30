@@ -15,7 +15,7 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 import "swiper/swiper.scss"
 
 //api
-import { sampleApi } from "../../api/sample";
+import { getProductDetail } from "../../api/product";
 
 //css
 import "../../assets/scss/contents.scss"
@@ -33,7 +33,13 @@ import {useWindowSize} from '../../utils/utils'
 export default function ProductView({match}) {
 
   const {onChangeGlobal} = useContext(GlobalContext)
+  const {product_no} = match.params;
+
+  //ui
   const [headerHeight, setHeaderHeight] = useState(0);
+
+  //data
+  const [productData, setProductData] = useState();
 
   const size = useWindowSize();
 
@@ -43,13 +49,26 @@ export default function ProductView({match}) {
     const header = document.getElementsByClassName("header").clientHeight;
     setHeaderHeight(header);
   },[])
+  
+  const _getProductDetail = async(productNo) =>{
+      const response = await getProductDetail(productNo);
+      
+      if(response.status == 200 && response.data){
+        console.log(response)
+        setProductData(response.data)
+      }
+  }
 
+  useEffect(()=>{
+    _getProductDetail(product_no)
+  },[])
+  
     return (
       <>        
       <SEOHelmet title={"상품 상세"} />
       <div className="contents product">
       {
-        (headerHeight != 0 || size.height < 1280) && 
+        (headerHeight != 0 || size.height < 1280) && productData &&
 <div className="product_view_wrap" style={{backgroundColor:"#fff"}}>
         <div className="product_view_main">
           <div className="prd_main_slider" style={size.width > 1280 ? ( size.height - headerHeight < 500 ? {height: "500px", marginTop : (headerHeight/2)*-1} : {height: `${size.height}px`, marginTop : (headerHeight/2)*-1} ) : {display: "block"}}>
@@ -89,7 +108,7 @@ export default function ProductView({match}) {
             <div className="product_view_about">{/* class :  soldout-품절, restock-재입고 텍스트 색상 변경을 위함 */}
               <div className="cont">
                 <span className="flag new">NEW</span>{/* class : new / event / best / hot */}
-                <p className="product_tit">WF-SP800N</p>
+                <p className="product_tit">{productData.baseInfo.productName}</p>
                 <p className="product_txt">모든 순간에 몰입하다</p>
                 <p className="product_desc">이 제품은 예약 주문 상품으로 구매 후 1주일 뒤에 발송됩니다</p>
                 <ul className="social_list">
@@ -98,7 +117,7 @@ export default function ProductView({match}) {
               </div>
               <div className="cont">
                 <p className="delivery_txt">무료배송</p>
-                <p className="product_price"><strong className="price">219,000</strong> 원</p>
+                <p className="product_price"><strong className="price">{wonComma(productData.price.salePrice)}</strong> 원</p>
               </div>
               <div className="cont line">
                 <p className="tit">회원별 마일리지 적립혜택 <span className="icon_question">!</span></p>
@@ -107,21 +126,21 @@ export default function ProductView({match}) {
                     <span className="mark">VV</span>
                     <div className="save_info">
                       <span className="percentage">VVIP 8%</span>
-                      <p className="mileage"><span className="num">52,430</span> P</p>
+                      <p className="mileage"><span className="num">{wonComma(productData.price.salePrice * 0.08)}</span> P</p>
                     </div>
                   </li>
                   <li className="vip">
                     <span className="mark">V</span>
                     <div className="save_info">
                       <span className="percentage">VIP 4%</span>
-                      <p className="mileage"><span className="num">37,450</span> P</p>
+                      <p className="mileage"><span className="num">{wonComma(productData.price.salePrice * 0.04)}</span> P</p>
                     </div>
                   </li>
                   <li className="family">
                     <span className="mark">M</span>
                     <div className="save_info">
                       <span className="percentage">MEMBERSHIP 2%</span>
-                      <p className="mileage"><span className="num">22,420</span> P</p>
+                      <p className="mileage"><span className="num">{wonComma(productData.price.salePrice * 0.02)}</span> P</p>
                     </div>
                   </li>
                 </ul>
@@ -587,7 +606,7 @@ export default function ProductView({match}) {
           <div className="detail_info_zone tab_ui_info">
             {/* 제품 개요 */}
             <div className="detail_info tab_ui_inner view">
-              <iframe className="iframe_prd" src="./testIframe.html" frameBorder={0} />
+              {/* <iframe className="iframe_prd" src="./testIframe.html" frameBorder={0} /> */}
             </div>
             {/* 제품 상세 */}
             <div className="detail_info tab_ui_inner">

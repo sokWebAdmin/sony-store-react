@@ -61,7 +61,7 @@ export default function Gnb() {
                             setMSubMenu(2)
                         }}
                         >
-                    <a href="/products/all">제품</a>
+                    <a href="#">제품</a>
                     <ul className="gnb__menu__secondary">
                         <li>
                         <a href="/products/camera">카메라</a>
