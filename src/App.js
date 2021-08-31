@@ -69,6 +69,9 @@ import sitemap from "./pages/footer/sitemap"
 //api
 import { sampleApi } from "./api/sample";
 
+//검색
+import SearchResult from "./pages/footer/searchResult"
+
 const App = (props) => {
   let location = useLocation();
 
@@ -169,6 +172,8 @@ const App = (props) => {
                   <Route exact path="/404" component={Error404} />
                   <Route exact path="/error-server" component={ErrorServer} />
 
+                  {/* 검색 결과  */}
+                  <Route exact path="/search-result" component={SearchResult} />
 
                   {/* 푸터 */}
                   <Footer />

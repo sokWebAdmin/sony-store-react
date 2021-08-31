@@ -17,7 +17,9 @@ export default function Search({ setSearchOpen }) {
             <fieldset>
               <legend>검색</legend>
               <input type="text" id="search__input" className="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxLength="40" />
-              <button className="btn search__btn__submit"><img src={search} alt="검색" /></button>
+              <button className="btn search__btn__submit" onClick={()=>{
+                window.location.href="/search-result"
+              }}><img src={search} alt="검색" /></button>
             </fieldset>
              {/* </form>  */}
           </div>
