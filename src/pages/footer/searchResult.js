@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useEffect, useState } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -10,8 +10,28 @@ import { sampleApi } from "../../api/sample";
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/category.scss"
 
+//lib
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } from 'swiper/core';
+
+//lib-css
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
+import "swiper/swiper.scss"
+
+//utils
+import {useWindowSize} from '../../utils/utils'
+
 export default function SearchResult() {
 
+    const size = useWindowSize();
+
+    const [tabState, setTabState] = useState("total");
+
+
+    SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
+    
     return (
         <>
         <SEOHelmet title={"검색 결과 페이지"} />
@@ -36,31 +56,71 @@ export default function SearchResult() {
     </div>
     {/*// 검색 결과 영역 */}
     {/* 스와이퍼 탭영역 */}
-    <div className="swipe_tab swiper-container">
-      <ul className="swiper-wrapper">
-        <li className="active swiper-slide">
+        { 
+            size.width < 1281 ?
+            <div className="swipe_tab swiper-container">
+
+        <Swiper className="swiper-wrapper"
+        navigation={{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        }}
+        slidesPerView="auto"
+        freeMode={true}
+      >
+        <SwiperSlide className="active swiper-slide">
           <a href="#">전체 (79)</a>
-        </li>
-        <li className="swiper-slide">
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
           <a href="#">제품 (60)</a>
-        </li>
-        <li className="swiper-slide">
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
           <a href="#">기획전 (6)</a>
-        </li>
-        <li className="swiper-slide">
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
           <a href="#">카테고리 (14)</a>
-        </li>
-        <li className="swiper-slide">
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
           <a href="#">공지사항 (2)</a>
-        </li>
-      </ul>
+        </SwiperSlide>
+        </Swiper>
       <div className="swiper-button-prev">
-        <a href="#" title="메뉴 더보기">메뉴 더보기</a>
-      </div>
-      <div className="swiper-button-next">
-        <a href="#" title="메뉴 더보기">메뉴 더보기</a>
-      </div>
+      <a href="#" title="메뉴 더보기">메뉴 더보기</a>
     </div>
+    <div className="swiper-button-next">
+      <a href="#" title="메뉴 더보기">메뉴 더보기</a>
+    </div>
+  </div>
+        :
+<div class="swipe_tab swiper-container">
+        <ul class="swiper-wrapper">
+          <li class="active swiper-slide">
+            <a href="#">전체 (79)</a>
+          </li>
+          <li class="swiper-slide">
+            <a href="#">제품 (60)</a>
+          </li>
+          <li class="swiper-slide">
+            <a href="#">기획전 (6)</a>
+          </li>
+          <li class="swiper-slide">
+            <a href="#">카테고리 (14)</a>
+          </li>
+          <li class="swiper-slide">
+            <a href="#">공지사항 (2)</a>
+          </li>
+        </ul>
+        <div class="swiper-button-prev">
+          <a href="#" title="메뉴 더보기">메뉴 더보기</a>
+        </div>
+        <div class="swiper-button-next">
+          <a href="#" title="메뉴 더보기">메뉴 더보기</a>
+        </div>
+      </div>
+
+        }
+      
+
     {/*//스와이퍼 탭영역 */}
     {/* 제품 리스트 영역 */}
     <div className="product">
