@@ -231,6 +231,11 @@ export default function ProductView({match}) {
                                   <li>
                                     <a href="#" className="opt_list" onClick={()=>{
                                       let tempOptionList = selectedOption;
+                                      if(tempOptionList.includes(item)){
+                                        alert("이미 선택된 옵션입니다.");
+                                        return;
+                                      }
+
                                       tempOptionList.push(item);
                                       setSelectedOption(tempOptionList)
                                       setOptionOpen(false)
