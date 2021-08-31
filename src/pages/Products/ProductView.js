@@ -15,7 +15,7 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 import "swiper/swiper.scss"
 
 //api
-import { getProductDetail } from "../../api/product";
+import { getProductDetail, getProductOptions } from "../../api/product";
 
 //css
 import "../../assets/scss/contents.scss"
@@ -37,9 +37,14 @@ export default function ProductView({match}) {
 
   //ui
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [tabState, setTabState] = useState('intro');
+  const [isOptionOpen, setOptionOpen] = useState(false);
 
   //data
   const [productData, setProductData] = useState();
+  const [productOptions, setProductOptions] = useState();
+
+  const [selectedOption, setSelectedOption] = useState([])
 
   const size = useWindowSize();
 
@@ -56,8 +61,18 @@ export default function ProductView({match}) {
       if(response.status == 200 && response.data){
         console.log(response)
         setProductData(response.data)
+        _getProductOptions(productNo)
       }
   }
+
+  const _getProductOptions = async(productNo) =>{
+    const response = await getProductOptions(productNo);
+    
+    if(response.status == 200 && response.data){
+      console.log(response)
+      setProductOptions(response.data)
+    }
+}
 
   useEffect(()=>{
     _getProductDetail(product_no)
@@ -88,9 +103,12 @@ export default function ProductView({match}) {
                   prevEl: '.swiper-button-prev',
                 }}
                 >
-                <SwiperSlide className="swiper-slide"><img src="/images/product/productView_colorType_fc5227_thumb_01.png" alt="" /></SwiperSlide>
-                <SwiperSlide className="swiper-slide"><img src="/images/product/productView_colorType_fc5227_thumb_02.png" alt="" /></SwiperSlide>
-                <SwiperSlide className="swiper-slide"><img src="/images/product/productView_colorType_fc5227_thumb_03.png" alt="" /></SwiperSlide>
+
+                  {
+                    productData.baseInfo.imageUrls && productData.baseInfo.imageUrls.map((image) =>{
+                      return(<SwiperSlide className="swiper-slide"><img src={`https:${image}`} alt="" /></SwiperSlide>)
+                    })
+                  }
                 {/*
               여러 색상일 경우.
               productView_colorType_fc5227_thumb_01 이미지 명 : colorType_ 와 _thumb 사이 값으로 교체. = fc5227
@@ -109,14 +127,18 @@ export default function ProductView({match}) {
               <div className="cont">
                 <span className="flag new">NEW</span>{/* class : new / event / best / hot */}
                 <p className="product_tit">{productData.baseInfo.productName}</p>
-                <p className="product_txt">모든 순간에 몰입하다</p>
-                <p className="product_desc">이 제품은 예약 주문 상품으로 구매 후 1주일 뒤에 발송됩니다</p>
+                {productData.baseInfo.productNameEn &&
+                    <p className="product_txt">{productData.baseInfo.productNameEn}</p>
+                }
+                {/* <p className="product_desc">이 제품은 예약 주문 상품으로 구매 후 1주일 뒤에 발송됩니다</p> */}
                 <ul className="social_list">
                   <li className="share"><a href="#" className="ico_btn" data-popup="popup_share">공유하기</a></li>
                 </ul>
               </div>
               <div className="cont">
-                <p className="delivery_txt">무료배송</p>
+                <p className="delivery_txt">
+                  {productData.deliveryFee.deliveryConditionType == "FREE" ? "무료배송" : ""}
+                  </p>
                 <p className="product_price"><strong className="price">{wonComma(productData.price.salePrice)}</strong> 원</p>
               </div>
               <div className="cont line">
@@ -145,11 +167,11 @@ export default function ProductView({match}) {
                   </li>
                 </ul>
               </div>
-              <div className="cont line">
+              {/* <div className="cont line">
                 <div className="color_select">
                   <p className="tit">색상</p>
                   <ul className="circle_color_box">
-                    <li className="on">{/* 선택 class : on */}
+                    <li className="on">
                       <a href="#" className="color_btn">
                         <span className="circle_color">
                           <span className="c_bg" data-slide-img-type="fc5227" style={{background: '#fc5227'}} />
@@ -183,107 +205,87 @@ export default function ProductView({match}) {
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
               {/* prd_select_wrap */}
               <div className="cont prd_select_wrap">
                 <div className="prd_select_inner">
-                  <div className="prd_select_box">
-                    <p className="tit">제품선택</p>
-                    <div className="select_zone">
-                      <a href="#" className="selected_btn" data-default-text="제품을 선택하세요.">{/* disabled : 선택불가 품절 */}
-                        제품을 선택하세요.
-                      </a>
-                      <div className="select_inner">
-                        <p className="prd_tag">제품</p>
-                        <ul className="select_opt">
-                          <li>
-                            <a href="#" className="opt_list disabled">{/* disabled : 선택 불가 품절 */}
-                              <div className="item">
-                                <span className="circle_color">
-                                  <span className="c_bg" style={{background: '#fc5227'}} />
-                                </span>
-                                <span className="opt_name">WF-SP800N / 주황색 <span>품절</span></span>
+
+
+                        <>
+                          <div className="prd_select_box">
+                            <p className="tit">제품선택</p>
+                            <div className={`select_zone selectOn ${isOptionOpen ? "open" : ''}`}>
+                              {/* 품절시 disabled class  */}
+                              <a href="#" className="selected_btn" data-default-text="제품을 선택하세요." onClick={
+                                ()=>{
+                                  setOptionOpen(!isOptionOpen)
+                                }
+                              }>{/* disabled : 선택불가 품절 */}
+                                제품을 선택하세요.
+                              </a>
+                              <div className="select_inner" style={isOptionOpen ? {display:"block"} : {display:"none"}}>
+                                <p className="prd_tag">제품</p>
+                                <ul className="select_opt">
+                                  {productOptions && productOptions.flatOptions.map(item => {
+                                    return (<>
+                                  <li>
+                                    <a href="#" className="opt_list" onClick={()=>{
+                                      let tempOptionList = selectedOption;
+                                      tempOptionList.push(item);
+                                      setSelectedOption(tempOptionList)
+                                      setOptionOpen(false)
+                                    }}>{/* disabled : 선택 불가 품절 */}
+                                      <div className="item">
+                                        {/* <span className="circle_color">
+                                          <span className="c_bg" style={{background: '#fc5227'}} />
+                                        </span> */}
+                                        {/* <span className="opt_name">{item.label} <span>품절</span></span> */}
+                                        <span className="opt_name">{item.label}</span>
+                                      </div>
+                                    </a>
+                                  </li>
+                                    </>)
+                                  })}
+                                </ul>
                               </div>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" className="opt_list">
-                              <div className="item">
-                                <span className="circle_color">
-                                  <span className="c_bg" style={{background: '#f7f5f5'}} />
-                                </span>
-                                <span className="opt_name">WF-SP800N / 화이트</span>
-                              </div>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" className="opt_list">
-                              <div className="item">
-                                <span className="circle_color">
-                                  <span className="c_bg" style={{background: '#1b8faa'}} />
-                                </span>
-                                <span className="opt_name">WF-SP800N / 블루</span>
-                              </div>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" className="opt_list">
-                              <div className="item">
-                                <span className="circle_color">
-                                  <span className="c_bg" style={{background: '#222'}} />
-                                </span>
-                                <span className="opt_name">WF-SP800N / 블랙</span>
-                              </div>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+                            </div>
+                          </div>
+                        </>
+                    
+
                   <div className="selected_opt"> {/* 선택한 제품 */}
-                    {/* s : 상품 등록 예시 태그 구조
+                    
+
+              {selectedOption.length > 0 &&
+                selectedOption.map(item => {
+                  return (<>
                 <div className="opt_info">
-                  <p className="opt_tag">제품</p>
-                  <div className="opt_item">
-                    <div className="item">
-                      <span className="circle_color">
-                        <span className="c_bg" style="background:#fc5227"></span>
-                      </span>
-                      <span className="opt_name">WF-SP800N / 오렌지</span>
-                    </div>
-                    <div className="item">
-                      <span className="circle_color">
-                        <span className="c_bg" style="background:#b5b5b5"></span>
-                      </span>
-                      <span className="opt_name">WF-SP800N / 화이트</span>
-                    </div>
+                <p className="opt_tag">제품</p>
+                <div className="opt_item">
+                  <div className="item">
+                    <span className="opt_name">{item.label}</span>
                   </div>
-                  <p className="opt_tag">사은품</p>
-                  <div className="opt_item">
-                    <div className="item">
-                      <span className="circle_color">
-                        <span className="c_bg" style="background:#bea07d"></span>
-                      </span>
-                      <span className="opt_name">헤드폰 거치대 사은품 / 우드</span>
-                    </div>
-                    <div className="item">
-                      <span className="circle_color">
-                        <span className="c_bg" style="background:#b5b5b5"></span>
-                      </span>
-                      <span className="opt_name">WF-SP800N / 화이트</span>
-                    </div>
+                  {/* <div className="item">
+                    <span className="opt_name">WF-SP800N / 화이트</span>
+                  </div> */}
+                </div>
+                <div className="opt_count">
+                  <div className="count_box">
+                    <button className="minus">감소</button>
+                    <input type="text" readonly="readonly" value="1" className="count" />
+                    <button className="plus">증가</button>
                   </div>
-                  <div className="opt_count">
-                    <div className="count_box">
-                      <button className="minus">감소</button>
-                      <input type="text" readonly="readonly" value="1" className="count">
-                      <button className="plus">증가</button>
-                    </div>
-                    <p className="opt_price"><strong className="price">219,000</strong>원</p>
-                  </div>
-                  <a href="#" className="prd_delete">구매 목록에서 삭제</a>
-                </div
-                // e : 상품 등록 예시 태그 구조 */}
+                  <p className="opt_price"><strong className="price">219,000</strong>원</p>
+                </div>
+                <a href="#" className="prd_delete">구매 목록에서 삭제</a>
+              </div>  
+                  </>
+                  )
+                })
+                
+            
+              }
+                
                   </div>
                 </div>
                 <div className="result_list">
@@ -598,18 +600,26 @@ export default function ProductView({match}) {
         <div className="product_cont">
           <div className="detail_tab tab_ui size3">
             <ul>
-              <li className="tabs on"><a href="#" className="btn">제품 개요</a></li>
-              <li className="tabs"><a href="#" className="btn">제품 상세</a></li>
-              <li className="tabs"><a href="#" className="btn">배송/환불규정</a></li>
+              <li className={`tabs ${tabState=="intro" ? "on" : ""}`}><a className="btn" onClick={()=>{
+                setTabState("intro")
+              }}>제품 개요</a></li>
+              <li className={`tabs ${tabState=="detail" ? "on" : ""}`}><a className="btn" onClick={()=>{
+                setTabState("detail")
+              }}>제품 상세</a></li>
+              <li className={`tabs ${tabState=="terms" ? "on" : ""}`}><a className="btn" onClick={()=>{
+                setTabState("terms")
+              }}>배송/환불규정</a></li>
             </ul>
           </div>
           <div className="detail_info_zone tab_ui_info">
             {/* 제품 개요 */}
-            <div className="detail_info tab_ui_inner view">
-              {/* <iframe className="iframe_prd" src="./testIframe.html" frameBorder={0} /> */}
+            <div className={`detail_info tab_ui_inner ${tabState=="intro" ? "view" : ""}`}>
+               <div dangerouslySetInnerHTML={ {__html: productData.baseInfo.content} }>
+               </div>
+              
             </div>
             {/* 제품 상세 */}
-            <div className="detail_info tab_ui_inner">
+            <div className={`detail_info tab_ui_inner ${tabState=="detail" ? "view" : ""}`}>
               <div className="detail_box">
                 <h2 className="common__title h2">제품 상세</h2>
                 <h3 className="common__title h3">렌즈</h3>
@@ -699,7 +709,7 @@ export default function ProductView({match}) {
               </div>
             </div>
             {/* 배송/환불 규정 */}
-            <div className="detail_info tab_ui_inner">
+            <div className={`detail_info tab_ui_inner ${tabState=="terms" ? "view" : ""}`}>
               <div className="detail_box">
                 <h2 className="common__title h2">배송 / 환불 규정</h2>
                 <h3 className="common__title h3">교환 / 반품 안내 및 보증 조건과 절차</h3>
