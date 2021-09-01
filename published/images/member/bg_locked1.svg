@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144">
+    <defs>
+        <style>
+            .cls-2{fill:#222}.cls-3{fill:#5865f5}
+        </style>
+    </defs>
+    <g id="Dormant_Account_Icon" transform="translate(-260 -660)">
+        <path id="bg" fill="rgba(255,0,0,0)" d="M0 0H144V144H0z" transform="translate(260 660)"/>
+        <g id="Icon" transform="translate(-175 470)">
+            <g id="패스_1230">
+                <path id="패스_1350" d="M496.1 241.724h-2.191L493.5 228h3zm-2.527 2.8h2.82V248h-2.82z" class="cls-2"/>
+            </g>
+            <g id="그룹_5700">
+                <path id="패스_1351" d="M565.5 285v-10a12.5 12.5 0 0 0-25 0v10H529v33h48v-33zm-22-10a9.5 9.5 0 0 1 19 0v10h-19zm30.5 40h-42v-27h42z" class="cls-3"/>
+                <g id="그룹_5698">
+                    <path id="패스_1353" d="M506.633 290H529v-3h-89v-16h101.168a12.44 12.44 0 0 1 1.482-3H440v-59h108v54.551a12.411 12.411 0 0 1 3-.876V206H437v84h44.367l-7.724 19H460v3h68v-3h-13.643zM494 309h-17.119l7.721-18.993-.017-.007h18.83l-.017.007L511.119 309z" class="cls-2"/>
+                </g>
+                <g id="그룹_5699">
+                    <path id="패스_1354" d="M557 299.5a3.5 3.5 0 1 0-5 3.15V307h3v-4.35a3.491 3.491 0 0 0 2-3.15z" class="cls-3"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

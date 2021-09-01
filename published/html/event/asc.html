@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msapplication-TileImage" content="../../images/favicon_144x144.png">
+<title>ASC몰</title>
+<link rel="shortcut icon" href="../../images/favicon_144x144.png">
+<link rel="stylesheet" href="../../css/contents.css">
+<link rel="stylesheet" href="../../css/event.css">
+<link rel="stylesheet" href="../../lib/css/swiper.min.css">
+<script src="../../lib/js/jquery-3.6.0.min.js"></script>
+<script src="../../lib/js/swiper.min.js"></script>
+<script src="../../js/ux-common.js"></script>
+</head>
+<body>
+  <div class="wrapper event">
+    <div id="skipnav" class="skipnav">
+    	<a href="#container"><span>본문 바로가기</span></a>
+    </div>
+    <header id="header" class="header">
+      <div class="header__wrapper">
+        <h1 class="header__logo"><a href="../../html/main.html"><img src="../../images/common/logo.svg" alt="SONY"></a></h1>
+        <div class="header__menu">
+          <button class="btn btn__mo__hidden btn__search"><img src="../../images/common/ic_search.svg" alt="검색창 열기"></button>
+          <a href="../../html/member/mypage.html" class="btn btn__desktop btn__mypage"><img src="../../images/common/ic_mypage.svg" alt="마이페이지"></a>
+          <a href="../../html/order/cart.html" class="btn btn__cart"><img src="../../images/common/ic_cart.svg" alt="장바구니"></a></li>
+          <button type="button" class="btn btn__mo btn__menu__open"><img src="../../images/common/ic_menu.svg" alt="메뉴 열기"></button>
+          <button type="button" class="btn btn__mo btn__mo__hidden btn__menu__close"><img src="../../images/common/ic_close.svg" alt="메뉴 닫기"></button>
+        </div>
+        <div class="header__inner">
+    
+          <!-- 비회원/로그인 전 -->
+          <!--
+          <div class="member">
+            <div class="member__inner">
+              <a href="#" class="member__msg member__msg__login">로그인이<br>필요합니다</a>
+              <button type="button" class="btn btn__login">로그인</button>
+              <div class="member__menu">
+                <ul>
+                  <li class="member__menu__mypage"><a href="../../html/member/join.html">회원가입</a></li>
+                  <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                  <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          -->
+    
+          <!-- 회원/로그인 -->
+          <div class="member">
+            <div class="member__inner">
+              <p class="member__msg">박소니님<br>안녕하세요!</p>
+              <div class="member__menu">
+                <ul>
+                  <li class="member__menu__mypage"><a href="../../html/member/mypage.html">마이페이지</a></li>
+                  <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                  <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+                </ul>
+              </div>
+              <button type="button" class="btn btn__logout">로그아웃</button>
+            </div>
+          </div>
+          <nav class="gnb">
+            <ul class="gnb__menu">
+              <li>
+                <a href="#">스토어 추천 제품</a>
+                <ul class="gnb__menu__secondary">
+                  <li>
+                    <a href="../../html/recommend/recommend.html">추천 제품</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="../../html/product/List.html">제품</a>
+                <ul class="gnb__menu__secondary">
+                  <li>
+                    <a href="../../html/product/camera.html">카메라</a>
+                  </li>
+                  <li>
+                    <a href="../../html/product/videocamera.html">비디오카메라</a>
+                  </li>
+                  <li>
+                    <a href="../../html/product/audio.html">오디오</a>
+                  </li>
+                  <li>
+                    <a href="../../html/product/accessory.html">액세서리</a>
+                  </li>
+                  <li>
+                    <a href="../../html/product/playstation.html">PlayStation®</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">기획전</a>
+                <ul class="gnb__menu__secondary">
+                  <li>
+                    <a href="#">소니스토어 단독</a>
+                  </li>
+                  <li>
+                    <a href="#">혜택존</a>
+                  </li>
+                  <li>
+                    <a href="#">예약판매</a>
+                  </li>
+                  <li>
+                    <a href="#">정품 등록 이벤트</a>
+                  </li>
+                  <li>
+                    <a href="#">LIVE ON</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">멤버십</a>
+                <ul class="gnb__menu__secondary">
+                  <li>
+                    <a href="#">등급&amp;혜택 안내</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">고객 서비스</a>
+                <ul class="gnb__menu__secondary">
+                  <li>
+                    <a href="#">FAQ&amp;공지사항</a>
+                  </li>
+                  <li>
+                    <a href="https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa">정품등록 안내</a>
+                  </li>
+                  <li>
+                    <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
+                  </li>
+                  <li>
+                    <a href="#">구매 상담</a>
+                  </li>
+                  <li>
+                    <a href="#">직영점 안내</a>
+                  </li>
+                  <li>
+                    <a href="#">동영상 강좌</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <!-- ↓ 앱 전용 메뉴 -->
+          <div class="appmenu">
+            <ul>
+              <li class="appmenu__qr"><a href="#">QR스캔</a></li>
+              <li class="appmenu__setting"><a href="#">설정</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- ↓ 검색 -->
+        <div class="search">
+          <h2 class="sr-only">통합검색</h2>
+          <div class="search__inner">
+            <div class="search__field">
+              <!-- <form action="get" role="search"> -->
+              <fieldset>
+                <legend>검색</legend>
+                <input type="text" id="search__input" class="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxlength="40">
+                <button class="btn search__btn__submit"><img src="../../images/common/ic_search.svg" alt="검색"></button>
+              </fieldset>
+              <!-- </form> -->
+            </div>
+            <div class="search__keyword">
+              <h3 class="search__title">인기 검색어</h3>
+              <div class="search__keyword__list">
+                <a href="#" class="search__keyword__item"># SEL40F25G</a>
+                <a href="#" class="search__keyword__item"># SRS-RA5000/MKR2</a>
+                <a href="#" class="search__keyword__item"># 카메라의 초격차</a>
+                <a href="#" class="search__keyword__item"># 알파 야카데미 8월 강좌</a>
+                <a href="#" class="search__keyword__item"># 노이즈캔슬링</a>
+                <a href="#" class="search__keyword__item"># 벗지않는 헤드폰</a>
+                <a href="#" class="search__keyword__item"># WF-1000XM3SME</a>
+                <a href="#" class="search__keyword__item"># 무선 스피커</a>
+                <a href="#" class="search__keyword__item"># 하이 레졸루션 오디오</a>
+                <a href="#" class="search__keyword__item"># 프리미엄 SD카드</a>
+              </div>
+            </div>
+            <div class="search__recomm">
+              <h3 class="search__title">추천 제품</h3>
+              <div class="search__recomm__wrapper">
+                <ul class="search__recomm__list">
+                  <li class="search__recomm__item">
+                    <a href="#">
+                      <div class="search__recomm__pic">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="상품명1">
+                        <span class="badge__text badge__text__new">NEW</span>
+                        <!--
+                        <span class="badge__text badge__text__best">BEST</span>
+                        <span class="badge__text badge__text__event">EVENT</span>
+                        <span class="badge__text badge__text__hot">HOT</span>
+                        -->
+                      </div>
+                      <div class="search__recomm__wrapper">
+                        <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                        <p class="search__recomm__desc ellipsis2">끄지마세요, 벗지마세요, 편하게 대화를 시작하세요!</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="search__recomm__item">
+                    <a href="#">
+                      <div class="search__recomm__pic">
+                        <img src="../../images/_tmp/item640x640_02.png" alt="상품명2">
+                        <span class="badge__text badge__text__best">BEST</span>
+                      </div>
+                      <div class="search__recomm__wrapper">
+                        <span class="search__recomm__name ellipsis">microSDXC SR-64HXA Class 10 High Sound Quality Model with SD Card Adapter</span>
+                        <p class="search__recomm__desc ellipsis2">일렉트로닉 노이즈 억제, 맑고 깨끗한 사운드를 실현</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="search__recomm__item">
+                    <a href="#">
+                      <div class="search__recomm__pic">
+                        <img src="../../images/_tmp/item640x640_03.png" alt="상품명3">
+                        <span class="badge__text badge__text__event">EVENT</span>
+                      </div>
+                      <div class="search__recomm__wrapper">
+                        <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                        <p class="search__recomm__desc ellipsis2">모든 위대함은, 아주 작은 것들로부터. 원핸드 컴팩트 풀프레임 카메라, 독보적인 존재감, 예뻐지는 데일리 카메라</p>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <button class="btn search__btn__close"><img src="../../images/common/ic_close.svg" alt="검색창 닫기"></button>
+        </div>
+        <!-- ↑ 검색 -->
+      </div>
+    </header>
+    <div class="container full"><!-- full : max-width 1920 -->
+      <div class="content employee">
+        <div class="event_header">
+          <div class="event_header_inner">
+            <h1 class="event_header_title">ASC몰</h1>
+            <p class="event_header_desc">ASC 임직원을 위한 소니 ASC몰에서<br>다양한 제품을 더욱 특별한 가격으로 만나보세요</p>
+            <div class="event_header_link"><a href="javascript:openModal('popup_empolyee');" data-modal-target="popup_empolyee">ASC 이용규정</a></div>
+          </div>
+        </div>
+        <div class="event_tablist">
+          <div class="tab_ui scroll" data-scroll-view="5"><!-- 스크롤탭 : class: scroll / data-scroll-view 보여지는 탭 수 -->
+            <ul>
+              <li class="tabs on"><a href="#" class="btn">전체</a></li>
+              <li class="tabs"><a href="#" class="btn">렌즈교환식 카메라</a></li>
+              <li class="tabs"><a href="#" class="btn">캠코더</a></li>
+              <li class="tabs"><a href="#" class="btn">헤드폰/이어폰</a></li>
+              <li class="tabs"><a href="#" class="btn">스피커</a></li>
+              <li class="tabs"><a href="#" class="btn">기타</a></li>
+            </ul>
+          </div>
+          <div class="tab_ui_info">
+            <div class="tab_ui_inner view">
+              <div class="employee_prd">
+                <div class="section_top">
+                  <h2 class="title">전체</h2>
+                  <div class="itemsort" aria-label="상품 정렬">
+                    <button class="itemsort__button">
+                      <span class="itemsort__button__label sr-only">정렬기준:</span>
+                      <span class="itemsort__button__selected">선택</span>
+                    </button>
+                    <div class="itemsort__drawer">
+                      <ul class="itemsort__items">
+                        <li class="itemsort__item itemsort__item--active"><a href="#" class="itemsort__item__link">A급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">B급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">C급</a></li>
+                      </ul>
+                    </div>
+                  </div>                </div>
+                <!-- event list-->
+                <div class="event_prd_list">
+                  <div class="product">
+                    <span class="badge_state state_a">A<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                      <div class="sold_out"><span>SOLD OUT</span></div>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">SRS-XP500 (1+1)</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_b">B<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_primary button-s">예약 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_c">C<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original"></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn_area">
+                  <button type="button" class="btn_more" title="제품 더보기">더보기<span class="ico_plus"></span></button>
+                </div>
+                <!--// event list-->
+              </div>
+            </div>
+            <div class="tab_ui_inner">
+              <div class="employee_prd">
+                <div class="section_top">
+                  <h2 class="title">렌즈교환식 카메라</h2>
+                  <div class="itemsort" aria-label="상품 정렬">
+                    <button class="itemsort__button">
+                      <span class="itemsort__button__label sr-only">정렬기준:</span>
+                      <span class="itemsort__button__selected">선택</span>
+                    </button>
+                    <div class="itemsort__drawer">
+                      <ul class="itemsort__items">
+                        <li class="itemsort__item itemsort__item--active"><a href="#" class="itemsort__item__link">A급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">B급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">C급</a></li>
+                      </ul>
+                    </div>
+                  </div>                </div>
+                <!-- event list-->
+                <div class="event_prd_list">
+                  <div class="product">
+                    <span class="badge_state state_a">A<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                      <div class="sold_out"><span>SOLD OUT</span></div>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">SRS-XP500 (1+1)</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_b">B<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_primary button-s">예약 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_c">C<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original"></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn_area">
+                  <button type="button" class="btn_more" title="제품 더보기">더보기<span class="ico_plus"></span></button>
+                </div>
+                <!--// event list-->
+              </div>
+            </div>
+            <div class="tab_ui_inner">
+              <div class="employee_prd">
+                <div class="section_top">
+                  <h2 class="title">캠코더</h2>
+                  <div class="itemsort" aria-label="상품 정렬">
+                    <button class="itemsort__button">
+                      <span class="itemsort__button__label sr-only">정렬기준:</span>
+                      <span class="itemsort__button__selected">선택</span>
+                    </button>
+                    <div class="itemsort__drawer">
+                      <ul class="itemsort__items">
+                        <li class="itemsort__item itemsort__item--active"><a href="#" class="itemsort__item__link">A급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">B급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">C급</a></li>
+                      </ul>
+                    </div>
+                  </div>                </div>
+                <!-- event list-->
+                <div class="event_prd_list">
+                  <div class="product">
+                    <span class="badge_state state_a">A<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                      <div class="sold_out"><span>SOLD OUT</span></div>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">SRS-XP500 (1+1)</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_b">B<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_primary button-s">예약 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_c">C<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original"></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn_area">
+                  <button type="button" class="btn_more" title="제품 더보기">더보기<span class="ico_plus"></span></button>
+                </div>
+                <!--// event list-->
+              </div>
+            </div>
+            <div class="tab_ui_inner">
+              <div class="employee_prd">
+                <div class="section_top">
+                  <h2 class="title">헤드폰/이어폰</h2>
+                  <div class="itemsort" aria-label="상품 정렬">
+                    <button class="itemsort__button">
+                      <span class="itemsort__button__label sr-only">정렬기준:</span>
+                      <span class="itemsort__button__selected">선택</span>
+                    </button>
+                    <div class="itemsort__drawer">
+                      <ul class="itemsort__items">
+                        <li class="itemsort__item itemsort__item--active"><a href="#" class="itemsort__item__link">A급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">B급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">C급</a></li>
+                      </ul>
+                    </div>
+                  </div>                </div>
+                <!-- event list-->
+                <div class="event_prd_list">
+                  <div class="product">
+                    <span class="badge_state state_a">A<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                      <div class="sold_out"><span>SOLD OUT</span></div>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">SRS-XP500 (1+1)</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_b">B<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_primary button-s">예약 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_c">C<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original"></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn_area">
+                  <button type="button" class="btn_more" title="제품 더보기">더보기<span class="ico_plus"></span></button>
+                </div>
+                <!--// event list-->
+              </div>
+            </div>
+            <div class="tab_ui_inner">
+              <div class="employee_prd">
+                <div class="section_top">
+                  <h2 class="title">스피커</h2>
+                  <div class="itemsort" aria-label="상품 정렬">
+                    <button class="itemsort__button">
+                      <span class="itemsort__button__label sr-only">정렬기준:</span>
+                      <span class="itemsort__button__selected">선택</span>
+                    </button>
+                    <div class="itemsort__drawer">
+                      <ul class="itemsort__items">
+                        <li class="itemsort__item itemsort__item--active"><a href="#" class="itemsort__item__link">A급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">B급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">C급</a></li>
+                      </ul>
+                    </div>
+                  </div>                </div>
+                <!-- event list-->
+                <div class="event_prd_list">
+                  <div class="product">
+                    <span class="badge_state state_a">A<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                      <div class="sold_out"><span>SOLD OUT</span></div>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">SRS-XP500 (1+1)</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_b">B<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_primary button-s">예약 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_c">C<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original"></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn_area">
+                  <button type="button" class="btn_more" title="제품 더보기">더보기<span class="ico_plus"></span></button>
+                </div>
+                <!--// event list-->
+              </div>
+            </div>
+            <div class="tab_ui_inner">
+              <div class="employee_prd">
+                <div class="section_top">
+                  <h2 class="title">기타</h2>
+                  <div class="itemsort" aria-label="상품 정렬">
+                    <button class="itemsort__button">
+                      <span class="itemsort__button__label sr-only">정렬기준:</span>
+                      <span class="itemsort__button__selected">선택</span>
+                    </button>
+                    <div class="itemsort__drawer">
+                      <ul class="itemsort__items">
+                        <li class="itemsort__item itemsort__item--active"><a href="#" class="itemsort__item__link">A급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">B급</a></li>
+                        <li class="itemsort__item"><a href="#" class="itemsort__item__link">C급</a></li>
+                      </ul>
+                    </div>
+                  </div>                </div>
+                <!-- event list-->
+                <div class="event_prd_list">
+                  <div class="product">
+                    <span class="badge_state state_a">A<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                      <div class="sold_out"><span>SOLD OUT</span></div>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">SRS-XP500 (1+1)</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_b">B<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인</p>
+                      <div class="product_name_price">
+                        <div class="original">179,000 <span class="unit">원</span></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_primary button-s">예약 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product">
+                    <span class="badge_state state_c">C<span class="txt">급</span></span>
+                    <div class="product_pic">
+                      <a href="#" class="product_link">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="">
+                      </a>
+                    </div>
+                    <div class="product_name">
+                      <a href="#" class="product_name_title">WH-1000XM4/SME</a>
+                      <p class="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
+                        1인치 핸디캠</p>
+                      <div class="product_name_price">
+                        <div class="original"></div>
+                        <div class="sale">159,000 <span class="unit">원</span></div>
+                      </div>
+                      <div class="product_btn_wrap">
+                        <button type="button" class="button button_secondary button-s view"><i class="ico search"></i>제품 보기</button>
+                        <button type="button" class="button button_positive button-s">바로 구매</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn_area">
+                  <button type="button" class="btn_more" title="제품 더보기">더보기<span class="ico_plus"></span></button>
+                </div>
+                <!--// event list-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <nav class="sidebar">
+        <div class="sidebar__inner">
+          <a href="../../html/mypage/myPageMain.html" class="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+          <a href="#" class="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
+          <a href="#header" class="sidebar__btn top"><span>페이지 상단</span></a>
+        </div>
+        <button class="sidebar__btn sidebar__btn__toggle" type="button"><img src="../../images/common/ic_sidebar1.svg" alt="메뉴토글"></button>
+      </nav>
+      <div class="footer__inner">
+        <div class="footer__social__wrap">
+          <div class="footer__social">
+            <h3 class="footer__social__title">FOLLOW US</h2>
+            <div class="footer__social__links">
+              <a href="#" class="footer__social__link"><img src="../../images/common/ic_facebook.svg" alt="facebook"></a>
+              <a href="#" class="footer__social__link"><img src="../../images/common/ic_instagram.svg" alt="instagram"></a>
+              <a href="#" class="footer__social__link"><img src="../../images/common/ic_youtube.svg" alt="youtube"></a>
+              <a href="#" class="footer__social__link"><img src="../../images/common/ic_blog.svg" alt="blog"></a>
+            </div>
+          </div>
+          <div class="footer__family">
+            <div class="footer__family__links">
+              <div class="footer__family__link footer__pc">
+                <button type="button" class="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침">Sony Family</button>
+                <div class="footer__family__link__inner">
+                  <h4 class="optgroup__label">Sony Family</h4>
+                  <ul class="optgroup">
+                    <li class="option"><a href="#" target="_blank">소니코리아</a></li>
+                    <li class="option"><a href="#" target="_blank">소니코리아 고객지원</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 알파 α</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 방송/업무용 솔루션</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
+                  </ul>
+                  <h4 class="optgroup__label">Family Company</h4>
+                  <ul class="optgroup">
+                    <li class="option"><a href="#" target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
+                  </ul>
+                </div>
+              </div>
+              <select class="footer__family__link footer__mo">
+                <optgroup label="Sony Family">
+                  <option>소니코리아</option>
+                  <option>소니코리아 고객지원</option>
+                  <option>소니 알파 α</option>
+                  <option>소니 방송/업무용 솔루션</option>
+                  <option>소니 방송 업무용 솔루션 고객지원</option>
+                </optgroup>
+                <optgroup label="Family Company">
+                  <option>소니 인터렉티브 엔터테인먼트 코리아</option>
+                  <option>소니 뮤직 엔터테인먼트 코리아</option>
+                  <option>소니 ATV 뮤직 퍼블리싱 코리아</option>
+                  <option>소니 픽쳐스 엔터테인먼트 코리아</option>
+                  <option>소니 픽쳐스 텔레비전 코리아</option>
+                </optgroup>
+              </select>
+            </div>
+            <a href="https://www.sony.com/" class="footer__family__global" target="_blank">Sony Global</a>
+          </div>
+        </div>
+        <div class="footer__legal">
+          <div class="footer__legal__links">
+            <a href="../../html/footer/terms.html" class="footer__legal__link">이용약관</a>
+            <a href="../../html/footer/policy.html" class="footer__legal__link privacy">개인정보처리방침</a>
+            <a href="javascript:openModal('modal__customer__insurance');" class="footer__legal__link" data-modal-target="modal__customer__insurance">소비자 피해 보상보험</a>
+            <a href="../../html/footer/siteMap.html" class="footer__legal__link">사이트맵</a>
+          </div>
+          <div class="footer__legal__warning">
+            <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
+            <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a href="#" class="escrow">에스크로결제</a></p>
+          </div>
+        </div>
+        <address class="address">
+          <span>사업장주소 : 서울특별시 영등포구 국제금융로 10 원아이에프씨 24F</span>
+          <span>사업자 등록번호 : 106-81-23810 통신판매번호 2012-서울영등포-1038 소니코리아㈜</span>
+          <span>대표이사 : Okura Kikuo</span>
+          <span>개인정보관리책임자 : Okura Kikuo</span>
+          <span>TEL : 소니코리아 고객센터 1588-0911</span>
+          <span>E-MAIL : <a href="mailto:cshelp@sony.co.kr">cshelp@sony.co.kr</a></span>
+          <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
+        </address>
+      </div>
+    </footer>
+    
+    <!-- 소비자피해보상 보험 팝업 -->
+    <div class="layer modal__customer__insurance">
+      <div class="layer_wrap">
+        <div class="layer_container">
+          <div class="layer_title">
+            <h1>소비자피해보상보험</h1>
+          </div>
+          <div class="layer_content">
+            <div class="consumer_logo">
+              <img src="../../images/img_consumerlogo.png">
+            </div>
+            <p>고객님은 안전거래를 위해 현금 결제 시 저희 쇼핑몰이 가입한 구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.</p>
+            <p>보상대상 : 미배송&#47;반품, 환불거부&#47;쇼핑몰부도</p>
+            <div class="btn_box">
+              <a href="https://mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810" target="_blank" title="새창열림">서비스 가입 사실 확인하기</a>
+            </div>
+          </div>
+          <button href="#" class="layer_close close" title="팝업창 닫기">
+            <span>팝업창 닫기</span>
+        </button>        
+        </div>    
+      </div>
+    </div>
+    <!--// 소비자피해보상 보험 팝업 -->
+    
+    <script>
+         //팝업 열기
+        function openModal(modalname) {
+            $("." + modalname).fadeIn(300);
+            $("body,html").css({"overflow":"hidden"});        
+            return false;
+        }
+        // 팝업 닫기
+        $(document).ready(function(){
+          $layer = $(".layer");
+    
+          $('.close').click(function() {
+              $layer.fadeOut(300);
+              $('body,html').css({"overflow":"visible"});
+          });
+        });
+    </script>    <!-- s: ASC몰 이용 규정 팝업 -->
+    <div class="layer agree_layer popup_empolyee">
+      <div class="layer_wrap">
+        <div class="layer_container">
+          <div class="layer_title">
+            <h1>ASC몰 이용 규정</h1>
+          </div>
+          <div class="layer_content">
+            <div class="scroll_inner">
+              <div class="foot_cont">
+                <ul>
+                  <li>
+                    <h5 class="Fh5_tit first">1. 등급 대상제품 및 구매범위</h5>
+                    <p>등급 판매는 소니코리아에서 취급하는 제품에 한하여 제품 상태에서 따라 A, B ,C 등급으로 나눠서 진행됩니다. 본 몰에서 판매되는 제품은 ASC를 대상으로만 판매합니다.</p>
+                  </li>
+                  <li>
+                    <h5 class="Fh5_tit">2. 등급가격</h5>
+                    <p>각 등급별 제품의 가격은 아래와 같이 적용됩니다.</p>
+                    <ol>
+                      <li>A등급: Base Price(출고가격)의 103% 판매 (VAT 포함)</li>
+                      <li>B등급: Base Price(출고가격)의 80% 판매 (VAT 포함)</li>
+                      <li>C등급: Base Price(출고가격)의 60% 판매 (VAT 포함)</li>
+                    </ol>
+                    <p class="mt">각 제품에 따라서 판매시마다 특별 가격을 부여할 수 있습니다.</p>
+                  </li>
+                  <li>
+                    <h5 class="Fh5_tit">3. 운영방법</h5>
+                    <ol>
+                      <li>
+                        1) 등급 가능 시간<br>
+                        특정 기간의 판매 기간 동안에만 구매하실 수 있습니다.
+                      </li>
+                      <li class="mt">2) 등급 금지품목<br>
+                        영업 정책상 할당제품은 등급이 제한될 수 있습니다.</li>
+                      <li class="mt">3) 사판 구매 가능 수량 쿼터제 실시<br>
+                        일부 제품에 대하여 ASC당 구매 가능 수량을 제한할 수 있으며, 제품 상황에 따라 그 조건을 변경할 수 있습니다. 이는 전 ASC에 등급 구입의 공정한 기회를 제공하기 위하여 실시하는 제도 입니다.</li>
+                      <li class="mt">4) 등급 구매절차<br>
+                        소니 스토어에 회원 가입 후 ASC 인증을 거친 후에 이용하실 수 있습니다. 해당 몰 접속은 ASC내에서만 가능합니다.</li>
+                      <li class="mt">5) 결제<br>
+                        모든 결제는 구매 당일에 이루어져야 하며, 하기와 같은 두 가지 결제 방식이 있습니다.<br>무통장입금 과 신용카드 (모든 종류의 신용카드 가능하며 본인 및 타인 소유의 카드 결제 가능)로 결제 하여야 합니다. 결제내역 등은 변경이 불가합니다.<br>
+                        무통장 입금 계좌 번호는 아래와 같습니다.<br>무통장 입금계좌: 우리은행 940-001346-13-004
+                      </li>
+                      <li class="mt">6) 베송<br>
+                        배송기간은 등급 제품 구매 후 최종 발송 완료 메일을 받은 후로 약 2일정도 소요됩니다. 단, 교통 및 일부 지역적인 사정에 따라 배송이 지연되는 경우가 발생할 수 있습니다. 일요일, 공휴일은 배송되지 않습니다.</li>
+                      <li class="mt">7) 제품 보증기간<br>
+                        등급 판매를 통해서 구입하신 B, C등급품의 경우 구입일로부터 1년간 무상보증수리를 받으실 수가 있으나, SCS 고객지원사이트(<a href="http://scs.sony.co.kr" target="_blank" title="새창열림">http://scs.sony.co.kr</a></a>) 또는 제품 박스 내에 동봉되어 있는 보증연장신청서를 통한 보증연장신청 및 이쿠폰 발행은 적용되지 않습니다. 단, A급 제품의 경우 보증연장신청은 할 수 있으나 이 쿠폰은 발행되지 않습니다.</li>
+                      <li class="mt">8) AS<br>
+                        이 필요한 경우 가까운 서비스센터(1588-0911)를 통해 구입자 본인이 직접 연락하셔야 합니다. 액세서리 누락의 경우, CS(080-021-2000)로 연락해주시기 바랍니다.</li>
+                    </ol>
+                  </li>
+                  <li>
+                    <h5 class="Fh5_tit">4. 등급 구입시 주의사항</h5>
+                    <ol>
+                      <li>1) 반품<br>
+                        - 제품을 구매하기 전에 반드시 구매하고자 하는 제품인지를 확인하고 제품을 신청하여야 하며 구입 이후 제품의 중요한 결함이 없는 경우 반품이 불가능 합니다.<br>
+                        - 일반적인 고객변심 등의 사유로는 반품 불가합니다.<br>
+                        - 일반적인 고객변심 등의 사유로는 반품 불가합니다.
+                      </li>
+                      <li class="mt">
+                        2) 고객에게 등급제품 소개시 준수사항<br>
+                      - 등급 제품 소개시 등급품에 대한 내용을 충분히 설명해주시기 바랍니다.<br>
+                      - 제품의 최종 수령까지 제품의 인수여부를 확인해주시기 바랍니다.<br>
+                      - 차후 논란이 발생하지 않도록 꼭 CS Net이 아니더라도 판매 일지에 작성하여 고객에게 판매된 증빙을 남겨 주시기 바랍니다.
+                      </li>
+                    </ol>
+                  </li>
+                  <li>
+                    <h5 class="Fh5_tit">5. 등급판매 담당자 연락처</h5>
+                    <p>담당자: (e-mail: <a href="mailto:sok-ts@sony.co.kr" title="새 창">sok-ts@sony.co.kr</a>)</p>
+                  </li>
+                  <li>
+                    <h5 class="Fh5_tit">6. 기타사항</h5>
+                    <p>상기 내용 이외의 사항 또는 예측할 수 없는 상황의 발생에 대하여는 주관부서의 협의를 거쳐시행 합니다.</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <button href="#" class="layer_close close" title="팝업창 닫기">
+            <span>팝업창 닫기</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- e: ASC몰 이용 규정 팝업 -->
+  </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+  $(function(){
+
+  });
+  </script>

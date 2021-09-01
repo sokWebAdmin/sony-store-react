@@ -1,0 +1,1165 @@
+
+<!DOCTYPE html>
+<html lang="ko" xml:lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="msapplication-TileImage" content="../../images/favicon_144x144.png">
+<title>Sony KOREA - Store | 퍼블리싱 작업 현황</title>
+<link rel="shortcut icon" href="../../images/favicon_144x144.png">
+<script src="../../lib/js/jquery-3.6.0.min.js"></script>
+<style type="text/css">
+   *{margin:0; padding:0; box-sizing:border-box;}
+   body{font-family:"MalGun Gothic"; color:#666; font-size:13px;}
+   li{list-style: none;}
+   a{color:inherit;}
+   .list-wrap{padding:20px; min-width:920px;}
+   .list-wrap h1{text-align:center; font-weight:normal; font-size:19px; color:#222; }
+   .list-wrap h2{font-weight:normal; font-size:14px; color:#222; margin:15px 0 5px;}
+   .list-wrap h2:before{display:inline-block; content:'- '; vertical-align:middle}
+   .list-table-wrap{width:100%; border-top:3px solid #555; margin-top:10px; /*border-bottom:1px solid #bbb;*/}
+   .list-table-wrap table{width:100%; table-layout:fixed; border-collapse:collapse; border-bottom:1px solid #bbb;}
+   .list-table-wrap table thead th{background-color:#e6e6e6; text-align:center; height:30px; border-top:0;}
+   .list-table-wrap table th,
+   .list-table-wrap table td{text-align:left; border-right:1px solid #bbb; border-top:1px solid #bbb; padding:4px 10px 6px; vertical-align:middle; color:#666; word-break: break-all;}
+   .list-table-wrap table td.text-center,.list-table-wrap table td.date,.list-table-wrap table td.name{text-align:center;}
+   .list-table-wrap table tr td:last-child,.list-table-wrap table tr th:last-child{border-right:0;}
+   .list-table-wrap table tbody tr:nth-child(even) td{background:#f7f7f7;}
+   /*.list-table-wrap > table tbody tr:hover td{background:#f0f4f7;}*/
+   .list-table-wrap table td.comment ul li:before{display:inline-block; content:'-';}
+   .list-table-wrap table tr.menu td{border-top:1px solid #555;}
+   .status{margin:10px 0; text-align:center;}
+   .status ul{overflow:hidden; display:inline-block; text-align:center;}
+   .status ul li{display:inline-block; margin:0 10px; font-size:16px;}
+   .status ul li span{font-weight:bold; padding-right:2px;}
+   .list-notice{border:1px dashed #bbb; min-height:30px; padding:5px 10px; max-width:780px; margin:10px auto 0;}
+   .list-notice h2{font-size:13px;}
+   .status-wrap{display:table; width:100%; font-size:11px;}
+   .status-wrap .menu-status{display:table-cell; text-align:center; border-right:1px solid #ddd; padding:0 5px;}
+   .status-wrap .menu-status:last-child{border-right:0;}
+   .status-wrap .menu-status .menu-txt{display:block; text-decoration:underline;}
+   .btn-gotop{position:fixed; bottom:50px; right:30px; width:50px; height:50px; background:#555; border-radius:100%; border:0; cursor:pointer; color:#fff;}
+   .tab{overflow:hidden; margin:0 0 5px; margin-left:-5px; }
+   .tab li{float:left; width:150px; margin:0 2px 0 3px; border:1px solid #999; border-bottom:0; padding:5px 10px; text-align:center; background:#eee;}
+   .tab li a{opacity:.5}
+   .tab li.on{background:#fff; border:1px solid #555; border-bottom:0;}
+   .tab li.on a{font-weight:bold; opacity:1}
+   .tab-table{display:none;}
+   .tab-table.on{display:block;}
+
+   .list-table-wrap table tr.ok td.date.confirm{font-weight:bold}
+   .list-table-wrap table tr.ok td.file{font-weight:bold; color:#000;}
+   .list-table-wrap table tr td.comment.on{color:#e75300;}
+/*   .list-table-wrap table tr td.file > a{display:block;}
+   .list-table-wrap table tr td.file > a + a{margin-top:5px;}*/
+</style>
+</head>
+<body>
+<div class="list-wrap">
+	<h1>Sony KOREA - Store | 퍼블리싱 작업 현황</h1>
+
+	<div class="status">
+		<ul>
+			<li>잔여 <span class="page">0</span>P / 총 <span class="total">0000</span>P</li>
+			<li><span class="percent">0</span>% 진행</li>
+		</ul>
+	</div><!-- // total-status -->
+
+    <div class="status-wrap">
+    	<div class="menu-status">
+            <p><span class="menu-txt">메인</span> <span class="main-page">0</span>P / <span class="main-total">0000</span>P</p>
+            <p><span class="main-percent">0</span>% 진행</p>
+        </div>
+      	<div class="menu-status">
+            <p><span class="menu-txt">회원</span> <span class="member-page">0</span>P / <span class="member-total">0000</span>P</p>
+            <p><span class="member-percent">0</span>% 진행</p>
+        </div>
+        <div class="menu-status">
+					<p><span class="menu-txt">장바구니</span> <span class="order-page">0</span>P / <span class="order-total">0000</span>P</p>
+					<p><span class="order-percent">0</span>% 진행</p>
+			</div>
+        <div class="menu-status">
+            <p><span class="menu-txt">스토어 추천 제품</span> <span class="recommend-page">0</span>P / <span class="recommend-total">0000</span>P</p>
+            <p><span class="recommend-percent">0</span>% 진행</p>
+        </div>
+        <div class="menu-status">
+            <p><span class="menu-txt">제품</span> <span class="product-page">0</span>P / <span class="product-total">0000</span>P</p>
+            <p><span class="product-percent">0</span>% 진행</p>
+        </div>
+         <div class="menu-status">
+            <p><span class="menu-txt">기획전</span> <span class="plan-page">0</span>P / <span class="plan-total">0000</span>P</p>
+            <p><span class="plan-percent">0</span>% 진행</p>
+        </div>
+        <div class="menu-status">
+            <p><span class="menu-txt">멤버쉽</span> <span class="membership-page">0</span>P / <span class="membership-total">0000</span>P</p>
+            <p><span class="membership-percent">0</span>% 진행</p>
+        </div>
+        <div class="menu-status">
+            <p><span class="menu-txt">고객 서비스</span> <span class="customerservice-page">0</span>P / <span class="customerservice-total">0000</span>P</p>
+            <p><span class="customerservice-percent">0</span>% 진행</p>
+        </div>
+        <div class="menu-status">
+            <p><span class="menu-txt">공통</span> <span class="common-page">0</span>P / <span class="common-total">0000</span>P</p>
+            <p><span class="common-percent">0</span>% 진행</p>
+        </div>
+        <div class="menu-status">
+            <p><span class="menu-txt">error</span> <span class="error-page">0</span>P / <span class="error-total">0000</span>P</p>
+            <p><span class="error-percent">0</span>% 진행</p>
+        </div>
+        <div class="menu-status">
+					<p><span class="menu-txt">mail</span> <span class="mail-page">0</span>P / <span class="mail-total">0000</span>P</p>
+					<p><span class="mail-percent">0</span>% 진행</p>
+				</div>
+        <div class="menu-status">
+					<p><span class="menu-txt">etc</span> <span class="etc-page">0</span>P / <span class="etc-total">0000</span>P</p>
+					<p><span class="etc-percent">0</span>% 진행</p>
+			</div>
+    </div>
+
+  <!--  <div class="list-notice">
+      <h2>Notice</h2>
+      <ul>
+         <li>-</li>
+      </ul>
+   </div> --><!-- // list-notice -->
+
+   <div class="list-table-wrap">
+		<table>
+			<colgroup>
+				<col span="3" style="width:15%" /><col /><col /><col style="width:70px" /><col style="width:70px" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">1Depth</th>
+					<th scope="col">2Depth</th>
+					<th scope="col">3Depth</th>
+					<th scope="col">File</th>
+					<th scope="col">Comment</th>
+					<th scope="col">완료일</th>
+					<th scope="col">수정일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Main -->
+				<tr class="menu main  ok">
+					<td class="text-center">Main</td>
+					<td></td>
+					<td></td>
+					<td class="file">
+						<a href="main.html" target="_blank">main.html</a>
+					</td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// Main -->
+
+				<!-- 회원 -->
+				<tr class="menu member ok">
+					<td rowspan="10" class="text-center">회원</td>
+					<td>회원 로그인</td>
+					<td></td>
+					<td class="file"><a href="member/login.html" target="_blank">login.html</a></td>
+					<td class="comment">
+						디자인 변경으로 인한 수정
+					</td>
+					<td class="date confirm">06-16</td>
+					<td class="date modify">06-21</td>
+				</tr>
+				<tr class="member ok">
+					<td>회원가입 약관동의</td>
+					<td></td>
+					<td class="file"><a href="member/joinAgree.html" target="_blank">joinAgree.html</a></td>
+					<td class="comment">
+						디자인 변경으로 인한 수정
+					</td>
+					<td class="date confirm">06-16</td>
+					<td class="date modify">06-21</td>
+				</tr>
+				<tr class="member ok">
+					<td>회원가입(간편회원가입)</td>
+					<td></td>
+					<td class="file"><a href="member/join.html" target="_blank">join.html</a></td>
+					<td class="comment">
+						디자인 변경으로 인한 수정
+					</td>
+					<td class="date confirm">06-16</td>
+					<td class="date modify">06-21</td>
+				</tr>
+				<tr class="member ok">
+					<td>회원가입</td>
+					<td></td>
+					<td class="file"><a href="member/joinStep.html" target="_blank">joinStep.html</a></td>
+					<td class="comment">
+						디자인 변경으로 인한 수정
+					</td>
+					<td class="date confirm">06-16</td>
+					<td class="date modify">06-21</td>
+				</tr>
+				<tr class="member ok">
+					<td>아이디 찾기</td>
+					<td></td>
+					<td class="file"><a href="member/idSearch.html" target="_blank">idSearch.html</a></td>
+					<td class="comment">
+						디자인 변경으로 인한 수정
+					</td>
+					<td class="date confirm">06-16</td>
+					<td class="date modify">06-21</td>
+				</tr>
+				<tr class="member ok">
+					<td>아이디 찾기 검색결과</td>
+					<td></td>
+					<td class="file"><a href="member/idSearchresult.html" target="_blank">idSearchresult.html</a></td>
+					<td class="comment">
+						디자인 변경으로 인한 수정
+					</td>
+					<td class="date confirm">06-16</td>
+					<td class="date modify">06-21</td>
+				</tr>
+				<tr class="member ok">
+					<td>비밀번호 찾기</td>
+					<td></td>
+					<td class="file"><a href="member/pwSearch.html" target="_blank">pwSearch.html</a></td>
+					<td class="comment">
+						디자인 변경으로 인한 수정
+					</td>
+					<td class="date confirm">06-16</td>
+					<td class="date modify">06-21</td>
+				</tr>
+				<tr class="member ok">
+					<td>휴면계정 전환 안내</td>
+					<td></td>
+					<td class="file"><a href="member/inactiveAccounts.html" target="_blank">inactiveAccounts.html</a></td>
+					<td class="comment"></td>
+					<td class="date confirm">06-16</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="member ok">
+					<td>휴면계정 해제 안내</td>
+					<td></td>
+					<td class="file"><a href="member/activeAccounts.html" target="_blank">activeAccounts.html</a></td>
+					<td class="comment"></td>
+					<td class="date confirm">06-16</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="member ok">
+					<td>계정 정보 잠금 안내</td>
+					<td></td>
+					<td class="file"><a href="member/lockedAccounts.html" target="_blank">lockedAccounts.html</a></td>
+					<td class="comment"></td>
+					<td class="date confirm">06-16</td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// 회원 -->
+
+				<!-- 마이페이지 -->
+				<!-- <tr class="menu mypage">
+					<td rowspan="11" class="text-center">마이페이지</td>
+					<td>메인</td>
+					<td></td>
+					<td class="file"><a href="../../html/mypage/myPageMain.html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="mypage">
+					<td>주문/배송 내역</td>
+					<td></td>
+					<td class="file"><a href=".html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="mypage">
+					<td>주문/배송 내역 주문상세 조회 (회원)</td>
+					<td></td>
+					<td class="file"><a href=".html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="mypage">
+					<td>주문/배송 내역 주문상세 조회 (비회원)</td>
+					<td></td>
+					<td class="file"><a href=".html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="mypage">
+					<td>환불계좌 입력</td>
+					<td></td>
+					<td class="file"><a href=".html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="mypage">
+					<td>회원정보</td>
+					<td></td>
+					<td class="file"><a href=".html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="mypage">
+					<td>회원정보 수정</td>
+					<td></td>
+					<td class="file"><a href=".html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="mypage">
+					<td>개명 회원 본인 확인</td>
+					<td></td>
+					<td class="file"><a href=".html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="mypage">
+					<td>비밀번호 변경</td>
+					<td></td>
+					<td class="file"><a href=".html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="mypage">
+					<td>회원탈퇴</td>
+					<td></td>
+					<td class="file"><a href=".html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="mypage">
+					<td>회원탈퇴신청 완료</td>
+					<td></td>
+					<td class="file"><a href=".html" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr> -->
+				<!-- // 마이페이지 -->
+
+				<!-- 마이페이지 -->
+				<tr class="menu mypage">
+					<td class="text-center" rowspan="8">마이페이지</td>
+					<td colspan="6">-</td>
+				</tr>
+				<tr class="  ok">
+					<td>마이페이지 초기 화면</td>
+					<td></td>
+					<td class="file"><a href="../../html/mypage/myPageMain.html" target="_blank">myPageMain.html</a></td>
+					<td></td>
+					<td class="date confirm">07-22</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>회원정보</td>
+					<td></td>
+					<td class="file"><a href="../../html/mypage/myPageMember.html" target="_blank">myPageMember.html</a></td>
+					<td></td>
+					<td class="date confirm">07-22</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>주문/배송내역 목록</td>
+					<td></td>
+					<td class="file"><a href="../../html/mypage/orderList.html" target="_blank">orderList.html</a></td>
+					<td></td>
+					<td class="date confirm">07-22</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>주문 상세 조회</td>
+					<td></td>
+					<td class="file"><a href="../../html/mypage/orderDetail.html" target="_blank">orderDetail.html</a></td>
+					<td></td>
+					<td class="date confirm">07-22</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>개명 회원 본인 확인</td>
+					<td></td>
+					<td class="file"><a href="../../html/mypage/rename.html" target="_blank">rename.html</a></td>
+					<td></td>
+					<td class="date confirm">07-22</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>회원탈퇴 폼</td>
+					<td></td>
+					<td class="file"><a href="../../html/mypage/withdraw.html" target="_blank">withdraw.html</a></td>
+					<td></td>
+					<td class="date confirm">07-22</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>회원탈퇴 신청 완료</td>
+					<td></td>
+					<td class="file"><a href="../../html/mypage/withdrawComplete.html" target="_blank">withdrawComplete.html</a></td>
+					<td></td>
+					<td class="date confirm">07-22</td>
+					<td class="date modify"></td>
+				</tr>
+				<!-- // 마이페이지 -->
+				<!-- 짱바구니 -->
+				<tr class="menu ok order">
+					<td class="text-center" rowspan="10">주문</td>
+					<td colspan="6">-</td>
+				</tr>
+				<tr class="  ok">
+					<td>장바구니</td>
+					<td></td>
+					<td class="file"><a href="../../html/order/cart1.html" target="_blank">cart1.html</a></td>
+					<td></td>
+					<td class="date confirm">07-01</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>비어있는 장바구니</td>
+					<td></td>
+					<td class="file"><a href="../../html/order/cartEmpty.html" target="_blank">cartEmpty.html</a></td>
+					<td></td>
+					<td class="date confirm">07-01</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>비회원 구매 동의</td>
+					<td></td>
+					<td class="file"><a href="../../html/order/orderAgree.html" target="_blank">orderAgree.html</a></td>
+					<td></td>
+					<td class="date confirm">07-19</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>회원 주문서 작성/결제</td>
+					<td></td>
+					<td class="file"><a href="../../html/order/order1.html" target="_blank">order1.html</a></td>
+					<td></td>
+					<td class="date confirm">07-19</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>비회원 주문서 작성/결제</td>
+					<td></td>
+					<td class="file"><a href="../../html/order/order2.html" target="_blank">order2.html</a></td>
+					<td></td>
+					<td class="date confirm">07-19</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>선물하기 주문서 작성/결제</td>
+					<td></td>
+					<td class="file"><a href="../../html/order/order3.html" target="_blank">order3.html</a></td>
+					<td></td>
+					<td class="date confirm">07-06</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>회원/비회원 주문 완료</td>
+					<td></td>
+					<td class="file"><a href="../../html/order/orderComplete1.html" target="_blank">orderComplete1.html</a></td>
+					<td></td>
+					<td class="date confirm">07-02</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>선물하기 주문 완료</td>
+					<td></td>
+					<td class="file"><a href="../../html/order/orderComplete2.html" target="_blank">orderComplete2.html</a></td>
+					<td></td>
+					<td class="date confirm">07-02</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="  ok">
+					<td>소니스토어 선물하기 배송지입력</td>
+					<td></td>
+					<td class="file"><a href="../../html/order/orderPresent.html" target="_blank">orderPresent.html</a></td>
+					<td></td>
+					<td class="date confirm">07-13</td>
+					<td class="date modify"></td>
+				</tr>
+				<!-- // 짱바구니 -->
+
+				<!-- 스토어 추천제품 -->
+				<tr class="menu recommend ok">
+					<td rowspan="2" class="text-center">스토어 추천제품</td>
+					<td rowspan="2">추천제품</td>
+					<td></td>
+					<td class="file"><a href="../../html/recommend/recommend.html" target="_blank">recommend.html</a></td>
+					<td class="comment">
+					</td>
+					<td class="date confirm">08-09</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="recommend ok">
+					<td>(디버그)</td>
+					<td class="file"><a href="../../html/recommend/recommend_debug.html" target="_blank">recommend_debug.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">08-09</td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// 스토어 추천제품 -->
+
+				<!-- 제품 -->
+				<tr class="menu product ok">
+					<td rowspan="7" class="text-center">제품</td>
+					<td rowspan="3">카테고리 목록</td>
+					<td>1Depth</td>
+					<td class="file"><a href="product/camera.html" target="_blank">camera.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-24</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="product ok">
+					<td>2Depth</td>
+					<td class="file"><a href="product/camera1.html" target="_blank">camera1.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-24</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="product ok">
+					<td>KV</td>
+					<td class="file"><a href="product/category.html" target="_blank">category.html</a></td>
+					<td class="comment">
+						상단 타이틀만 구성
+					</td>
+					<td class="date confirm">06-24</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="product ok">
+					<td>상세</td>
+					<td></td>
+					<td class="file"><a href="product/productView.html" target="_blank">productView.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-24</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="product ok">
+					<td>연장서비스 플랜 ESP</td>
+					<td></td>
+					<td class="file"><a href="product/esp.html" target="_blank">esp.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-24</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="product ok">
+					<td>비어있는 연장서비스 플랜 ESP</td>
+					<td></td>
+					<td class="file"><a href="product/esp1.html" target="_blank">esp1.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">07-24</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="product ok">
+					<td>연장서비스 플랜 ESP 구매신청 목록</td>
+					<td></td>
+					<td class="file"><a href="product/esp2.html" target="_blank">esp2.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">07-24</td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// 제품 -->
+
+				<!-- 기획전 -->
+				<!-- 라이브온 임직원몰 ASC몰 리퍼비시몰 정품등록 특가몰 임직원 로그인 -->
+				<tr class="menu plan ok">
+					<td rowspan="10" class="text-center">기획전</td>
+					<td>소니스토어 단독</td>
+					<td></td>
+					<td class="file"><a href="../../html/event/eventList.html" target="_blank">eventList.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">07-30</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="plan ok">
+					<td>종료된 기획전</td>
+					<td></td>
+					<td class="file"><a href="../../html/event/endList.html" target="_blank">endList.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">07-30</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="plan ok">
+					<td>LIVE ON</td>
+					<td></td>
+					<td class="file"><a href="../../html/event/liveon.html" target="_blank">liveon.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">07-28</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="plan ok">
+					<td>임직원몰</td>
+					<td></td>
+					<td class="file"><a href="../../html/event/employee.html" target="_blank">employee.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">07-29</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="plan ok">
+					<td>ASC몰</td>
+					<td></td>
+					<td class="file"><a href="../../html/event/asc.html" target="_blank">asc.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">07-29</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="plan ok">
+					<td>리퍼비시몰</td>
+					<td></td>
+					<td class="file"><a href="../../html/event/refurbish.html" target="_blank">refurbish.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">07-29</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="plan ok">
+					<td>정품등록 특가몰</td>
+					<td></td>
+					<td class="file"><a href="../../html/event/refined.html" target="_blank">refined.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">07-29</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="plan">
+					<td>예약판매</td>
+					<td></td>
+					<td class="file"><a href="" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="plan">
+					<td>혜택존</td>
+					<td></td>
+					<td class="file"><a href="" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="plan ok">
+					<td>임직원 로그인</td>
+					<td></td>
+					<td class="file"><a href="../../html/event/employeeGate.html" target="_blank">employeeGate.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">07-30</td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// 기획전 -->
+
+				<!-- 멤버쉽 -->
+				<tr class="menu membership">
+					<td class="text-center">멤버쉽</td>
+					<td>등급&amp;혜택 안내</td>
+					<td></td>
+					<td class="file"><a href="" target="_blank"></a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// 멤버쉽 -->
+
+				<!-- 고객 서비스 -->
+				<tr class="menu customerservice ok">
+					<td rowspan="7" class="text-center">고객 서비스</td>
+					<td>FAQ</td>
+					<td>목록</td>
+					<td class="file"><a href="../../html/support/faq.html" target="_blank">faq.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">08-08</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="customerservice ok">
+					<td rowspan="2">공지사항</td>
+					<td>목록</td>
+					<td class="file"><a href="../../html/support/noticeList.html" target="_blank">noticeList.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">08-08</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="customerservice ok">
+					<td>상세</td>
+					<td class="file"><a href="../../html/support/notice.html" target="_blank">notice.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">08-08</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="customerservice ok">
+					<td rowspan="2">구매상담</td>
+					<td>이용약관 동의</td>
+					<td class="file"><a href="../../html/support/agreement.html" target="_blank">agreement.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">08-04</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="customerservice ok">
+					<td>구매상담 안내 (개인/기업)</td>
+					<td class="file"><a href="../../html/support/purchaseConsulting.html" target="_blank">purchaseConsulting.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">08-04</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="customerservice ok">
+					<td>직영점 안내</td>
+					<td></td>
+					<td class="file"><a href="../../html/support/storeInfo.html" target="_blank">storeInfo.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">08-09</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="customerservice ok">
+					<td>동영상 강좌</td>
+					<td></td>
+					<td class="file"><a href="../../html/support/videoCourse.html" target="_blank">videoCourse.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">08-11</td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// 고객 서비스 -->
+
+				<!-- 공통 -->
+				<tr class="menu common ok">
+					<td rowspan="6" class="text-center">공통</td>
+					<td>검색결과</td>
+					<td></td>
+					<td class="file"><a href="footer/searchResult.html" target="_blank">searchResult.html</a></td>
+					<td class="comment">
+					</td>
+					<td class="date confirm">05-28</td>
+					<td class="date modify">06-08</td>
+				</tr>
+				<tr class="common ok">
+					<td>검색결과 없을 시</td>
+					<td></td>
+					<td class="file"><a href="footer/searchResultNone.html" target="_blank">searchResultNone.html</a></td>
+					<td class="comment">
+					</td>
+					<td class="date confirm">05-28</td>
+					<td class="date modify">06-08</td>
+				</tr>
+				<tr class="common ok">
+					<td>이용약관</td>
+					<td></td>
+					<td class="file"><a href="footer/terms.html" target="_blank">terms.html</a></td>
+					<td class="comment">
+					</td>
+					<td class="date confirm">05-28</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="common ok">
+					<td>개인정보처리방침</td>
+					<td></td>
+					<td class="file"><a href="footer/policy.html" target="_blank">policy.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">05-28</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="common ok">
+					<td>사이트맵</td>
+					<td></td>
+					<td class="file"><a href="footer/siteMap.html" target="_blank">siteMap.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">05-28</td>
+					<td class="date modify">06-08</td>
+				</tr>
+				<tr class="common ok">
+					<td>소비자피해보상보험 pop</td>
+					<td></td>
+					<td class="file"><a href="main.html" target="_blank">main.html</a></td>
+					<td class="comment">
+						모든 페이지 하단 footer 에 있음.
+					</td>
+					<td class="date confirm">05-28</td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// 공통 -->
+
+				<!-- 에러페이지 -->
+				<tr class="menu error ok">
+					<td rowspan="2" class="text-center">error</td>
+					<td>404 error</td>
+					<td></td>
+					<td class="file"><a href="error/error404.html" target="_blank">error404.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-04</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="error ok">
+					<td>서버 점검중 error</td>
+					<td></td>
+					<td class="file"><a href="error/errorServer.html" target="_blank">errorServer.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-04</td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// 에러페이지 -->
+
+				<!-- 자동발송 DM -->
+				<tr class="menu mail ok">
+					<td rowspan="8" class="text-center">mail</td>
+					<td></td>
+					<td></td>
+					<td class="file"><a href="mail/DM_010001.html" target="_blank">DM_010001.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-07</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="menu mail ok">
+					<td></td>
+					<td></td>
+					<td class="file"><a href="mail/DM_010002.html" target="_blank">DM_010002.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-07</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="menu mail ok">
+					<td></td>
+					<td></td>
+					<td class="file"><a href="mail/DM_010003.html" target="_blank">DM_010003.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-07</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="menu mail ok">
+					<td></td>
+					<td></td>
+					<td class="file"><a href="mail/DM_010006.html" target="_blank">DM_010006.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-07</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="menu mail ok">
+					<td></td>
+					<td></td>
+					<td class="file"><a href="mail/DM_010007.html" target="_blank">DM_010007.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-07</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="menu mail ok">
+					<td></td>
+					<td></td>
+					<td class="file"><a href="mail/DM_050002.html" target="_blank">DM_050002.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-07</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="menu mail ok">
+					<td></td>
+					<td></td>
+					<td class="file"><a href="mail/DM_050006.html" target="_blank">DM_050006.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-07</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="menu mail ok">
+					<td></td>
+					<td></td>
+					<td class="file"><a href="mail/DM_060000.html" target="_blank">DM_060000.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-24</td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// 자동발송 DM -->
+
+				<!-- 기타 -->
+				<tr class="etc">
+					<td rowspan="3" class="text-center">etc</td>
+					<td>퍼블리싱 공통가이드</td>
+					<td></td>
+					<td class="file"><a href="demo/demo.html" target="_blank">demo.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm"></td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="etc ok">
+					<td>수신거부 신청</td>
+					<td></td>
+					<td class="file"><a href="member/unsubscribeApply.html" target="_blank">unsubscribeApply.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-04</td>
+					<td class="date modify"></td>
+				</tr>
+				<tr class="etc ok">
+					<td>수신거부 신청완료</td>
+					<td></td>
+					<td class="file"><a href="member/unsubscribeApplyConfirm.html" target="_blank">unsubscribeApplyConfirm.html</a></td>
+					<td class="comment">
+
+					</td>
+					<td class="date confirm">06-04</td>
+					<td class="date modify"></td>
+				</tr>
+				<!--// 기타 -->
+			</tbody>
+		</table>
+   </div><!-- // list-table-wrap -->
+</div><!-- // list-wrap -->
+
+<button type="button" class="btn-gotop"><span>TOP</span></button>
+
+<script type="text/javascript">
+   $(function () {
+        var total = $(".list-table-wrap table tbody").children("tr").length;
+        var ok = $(".list-table-wrap table tbody").children("tr.ok").length;
+        var remain = total - ok;
+        var allpercent = ok / total  * 100;
+        var percent = allpercent.toFixed(2);
+        $(".total").text(total);
+        $(".page").text(remain);
+        //$(".percent").text(Math.floor(percent));
+        $(".percent").text(percent);
+
+        var mainTotal = $(".list-table-wrap table tbody").children("tr.main").length;
+        var mainOk = $(".list-table-wrap table tbody").children("tr.main.ok").length;
+        // var mainRemain = mainTotal - mainOk;
+        var mainRemain = mainOk;
+        var mainAllpercent = mainOk / mainTotal  * 100;
+        var mainPercent = mainAllpercent.toFixed(2);
+        $(".main-total").text(mainTotal);
+        $(".main-page").text(mainRemain);
+        $(".main-percent").text(mainPercent);
+
+        var loginTotal = $(".list-table-wrap table tbody").children("tr.member").length;
+        var loginOk = $(".list-table-wrap table tbody").children("tr.member.ok").length;
+       // var loginRemain = loginTotal - loginOk;
+        var loginRemain = loginOk;
+        var loginAllpercent = loginOk / loginTotal  * 100;
+        var loginPercent = loginAllpercent.toFixed(2);
+        $(".member-total").text(loginTotal);
+        $(".member-page").text(loginRemain);
+        $(".member-percent").text(loginPercent);
+
+        var magazineTotal = $(".list-table-wrap table tbody").children("tr.recommend").length;
+        var magazineOk = $(".list-table-wrap table tbody").children("tr.recommend.ok").length;
+        var magazineRemain = magazineTotal - magazineOk;
+        var magazineAllpercent = magazineOk / magazineTotal  * 100;
+        var magazinePercent = magazineAllpercent.toFixed(2);
+        $(".recommend-total").text(magazineTotal);
+        $(".recommend-page").text(magazineTotal - magazineRemain);
+        $(".recommend-percent").text(magazinePercent);
+
+        var proTotal = $(".list-table-wrap table tbody").children("tr.product").length;
+        var proOk = $(".list-table-wrap table tbody").children("tr.product.ok").length;
+        var proRemain = proTotal - proOk;
+        var proAllpercent = proOk / proTotal  * 100;
+        var proPercent = proAllpercent.toFixed(2);
+        $(".product-total").text(proTotal);
+        $(".product-page").text(proTotal - proRemain);
+        $(".product-percent").text(proPercent);
+
+        var prdtTotal = $(".list-table-wrap table tbody").children("tr.plan").length;
+        var prdtOk = $(".list-table-wrap table tbody").children("tr.plan.ok").length;
+        var prdtRemain = prdtTotal - prdtOk;
+        var prdtAllpercent = prdtOk / prdtTotal  * 100;
+        var prdtPercent = prdtAllpercent.toFixed(2);
+        $(".plan-total").text(prdtTotal);
+        $(".plan-page").text(prdtTotal - prdtRemain);
+        $(".plan-percent").text(prdtPercent);
+
+        var eventTotal = $(".list-table-wrap table tbody").children("tr.membership").length;
+        var eventOk = $(".list-table-wrap table tbody").children("tr.membership.ok").length;
+        var eventRemain = eventTotal - eventOk;
+        var eventAllpercent = eventOk / eventTotal  * 100;
+        var eventPercent = eventAllpercent.toFixed(2);
+        $(".membership-total").text(eventTotal);
+        $(".membership-page").text(eventTotal - eventRemain);
+        $(".membership-percent").text(eventPercent);
+
+        var seminarTotal = $(".list-table-wrap table tbody").children("tr.customerservice").length;
+        var seminarOk = $(".list-table-wrap table tbody").children("tr.customerservice.ok").length;
+        var seminarRemain = seminarTotal - seminarOk;
+        var seminarAllpercent = seminarOk / seminarTotal  * 100;
+        var seminarPercent = seminarAllpercent.toFixed(2);
+        $(".customerservice-total").text(seminarTotal);
+        $(".customerservice-page").text(seminarTotal - seminarRemain);
+        $(".customerservice-percent").text(seminarPercent);
+
+        var academyTotal = $(".list-table-wrap table tbody").children("tr.common").length;
+        var academyOk = $(".list-table-wrap table tbody").children("tr.common.ok").length;
+        var academyRemain = academyTotal - academyOk;
+        var academyAllpercent = academyOk / academyTotal  * 100;
+        var academyPercent = academyAllpercent.toFixed(2);
+        $(".common-total").text(academyTotal);
+        $(".common-page").text(academyTotal - academyRemain);
+        $(".common-percent").text(academyPercent);
+
+        var storeTotal = $(".list-table-wrap table tbody").children("tr.error").length;
+        var storeOk = $(".list-table-wrap table tbody").children("tr.error.ok").length;
+        var storeRemain = storeTotal - storeOk;
+        var storeAllpercent = storeOk / storeTotal  * 100;
+        var storePercent = storeAllpercent.toFixed(2);
+        $(".error-total").text(storeTotal);
+        $(".error-page").text(storeTotal - storeRemain);
+        $(".error-percent").text(storePercent);
+
+        var storeTotal = $(".list-table-wrap table tbody").children("tr.mail").length;
+        var storeOk = $(".list-table-wrap table tbody").children("tr.mail.ok").length;
+        var storeRemain = storeTotal - storeOk;
+        var storeAllpercent = storeOk / storeTotal  * 100;
+        var storePercent = storeAllpercent.toFixed(2);
+        $(".mail-total").text(storeTotal);
+        $(".mail-page").text(storeTotal - storeRemain);
+        $(".mail-percent").text(storePercent);
+
+        var storeTotal = $(".list-table-wrap table tbody").children("tr.order").length;
+        var storeOk = $(".list-table-wrap table tbody").children("tr.order.ok").length;
+        var storeRemain = storeTotal - storeOk;
+        var storeAllpercent = storeOk / storeTotal  * 100;
+        var storePercent = storeAllpercent.toFixed(2);
+        $(".order-total").text(storeTotal);
+        $(".order-page").text(storeTotal - storeRemain);
+        $(".order-percent").text(storePercent);
+
+				var storeTotal = $(".list-table-wrap table tbody").children("tr.etc").length;
+        var storeOk = $(".list-table-wrap table tbody").children("tr.etc.ok").length;
+        var storeRemain = storeTotal - storeOk;
+        var storeAllpercent = storeOk / storeTotal  * 100;
+        var storePercent = storeAllpercent.toFixed(2);
+        $(".etc-total").text(storeTotal);
+        $(".etc-page").text(storeTotal - storeRemain);
+        $(".etc-percent").text(storePercent);
+
+        // top 버튼
+        $(window).on("scroll", function(){
+            goTop();
+        });
+
+        $(".btn-gotop").on("click", function(){
+            $("html, body").stop().animate({ scrollTop : 0 }, 200);
+        });
+
+        var scrollValue;
+
+        // Tab
+        $(".tab li").children("a").click(function() {
+
+            scrollValue = $(document).scrollTop();
+
+            var tabID = $(this).attr("href");
+            $(this).parent("li").addClass("on").siblings("li").removeClass("on");
+            $(tabID).addClass("on").siblings().removeClass("on");
+
+            $("html, body").stop().animate({ scrollTop : scrollValue }, 200);
+        });
+
+   });
+
+    // goTop
+    function goTop(){
+        if ($(this).scrollTop() > 100){
+            $(".btn-gotop").stop().fadeIn(200);
+        } else{
+            $(".btn-gotop").stop().fadeOut(200);
+        }
+    }
+</script>
+
+</body>
+</html>

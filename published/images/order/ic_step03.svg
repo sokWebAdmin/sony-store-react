@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <defs>
+        <style>
+            .cls-2{fill:#fff}
+        </style>
+    </defs>
+    <g id="Receipt" transform="translate(-739 -286)">
+        <circle id="Icon_Area" cx="40" cy="40" r="40" fill="#5865f5" transform="translate(739 286)"/>
+        <g id="Icon" transform="translate(638 112)">
+            <path id="사각형_1063" d="M0 0H18V2H0z" class="cls-2" transform="translate(131 202)"/>
+            <path id="사각형_1064" d="M0 0H18V2H0z" class="cls-2" transform="translate(131 208)"/>
+            <path id="사각형_1065" d="M0 0H9V2H0z" class="cls-2" transform="translate(140 220)"/>
+            <path id="사각형_1066" d="M0 0H18V2H0z" class="cls-2" transform="translate(131 214)"/>
+            <path id="패스_1012" d="M126 232v-36h28v24h2v-26h-32v40h20v-2z" class="cls-2"/>
+            <path id="패스_1013" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2px" d="M146 227l4 4 6-7" transform="translate(2 2)"/>
+        </g>
+    </g>
+</svg>

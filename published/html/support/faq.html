@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msapplication-TileImage" content="../../images/favicon_144x144.png">
+<title>자주하는 질문</title>
+<link rel="shortcut icon" href="../../images/favicon_144x144.png">
+<link rel="stylesheet" href="../../css/contents.css">
+<link rel="stylesheet" href="../../css/support.css">
+<link rel="stylesheet" href="../../lib/css/swiper.min.css">
+<script src="../../lib/js/jquery-3.6.0.min.js"></script>
+<script src="../../lib/js/swiper.min.js"></script>
+<script src="../../js/ux-common.js"></script>
+</head>
+<body>
+  <div class="wrapper faq_notice">
+    <div id="skipnav" class="skipnav">
+    	<a href="#container"><span>본문 바로가기</span></a>
+    </div>
+    <header id="header" class="header">
+      <div class="header__wrapper">
+        <h1 class="header__logo"><a href="../../html/main.html"><img src="../../images/common/logo.svg" alt="SONY"></a></h1>
+        <div class="header__menu">
+          <button class="btn btn__mo__hidden btn__search"><img src="../../images/common/ic_search.svg" alt="검색창 열기"></button>
+          <a href="../../html/member/mypage.html" class="btn btn__desktop btn__mypage"><img src="../../images/common/ic_mypage.svg" alt="마이페이지"></a>
+          <a href="../../html/order/cart.html" class="btn btn__cart"><img src="../../images/common/ic_cart.svg" alt="장바구니"></a></li>
+          <button type="button" class="btn btn__mo btn__menu__open"><img src="../../images/common/ic_menu.svg" alt="메뉴 열기"></button>
+          <button type="button" class="btn btn__mo btn__mo__hidden btn__menu__close"><img src="../../images/common/ic_close.svg" alt="메뉴 닫기"></button>
+        </div>
+        <div class="header__inner">
+    
+          <!-- 비회원/로그인 전 -->
+          <!--
+          <div class="member">
+            <div class="member__inner">
+              <a href="#" class="member__msg member__msg__login">로그인이<br>필요합니다</a>
+              <button type="button" class="btn btn__login">로그인</button>
+              <div class="member__menu">
+                <ul>
+                  <li class="member__menu__mypage"><a href="../../html/member/join.html">회원가입</a></li>
+                  <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                  <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          -->
+    
+          <!-- 회원/로그인 -->
+          <div class="member">
+            <div class="member__inner">
+              <p class="member__msg">박소니님<br>안녕하세요!</p>
+              <div class="member__menu">
+                <ul>
+                  <li class="member__menu__mypage"><a href="../../html/member/mypage.html">마이페이지</a></li>
+                  <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                  <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+                </ul>
+              </div>
+              <button type="button" class="btn btn__logout">로그아웃</button>
+            </div>
+          </div>
+          <nav class="gnb">
+            <ul class="gnb__menu">
+              <li>
+                <a href="#">스토어 추천 제품</a>
+                <ul class="gnb__menu__secondary">
+                  <li>
+                    <a href="../../html/recommend/recommend.html">추천 제품</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="../../html/product/List.html">제품</a>
+                <ul class="gnb__menu__secondary">
+                  <li>
+                    <a href="../../html/product/camera.html">카메라</a>
+                  </li>
+                  <li>
+                    <a href="../../html/product/videocamera.html">비디오카메라</a>
+                  </li>
+                  <li>
+                    <a href="../../html/product/audio.html">오디오</a>
+                  </li>
+                  <li>
+                    <a href="../../html/product/accessory.html">액세서리</a>
+                  </li>
+                  <li>
+                    <a href="../../html/product/playstation.html">PlayStation®</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">기획전</a>
+                <ul class="gnb__menu__secondary">
+                  <li>
+                    <a href="#">소니스토어 단독</a>
+                  </li>
+                  <li>
+                    <a href="#">혜택존</a>
+                  </li>
+                  <li>
+                    <a href="#">예약판매</a>
+                  </li>
+                  <li>
+                    <a href="#">정품 등록 이벤트</a>
+                  </li>
+                  <li>
+                    <a href="#">LIVE ON</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">멤버십</a>
+                <ul class="gnb__menu__secondary">
+                  <li>
+                    <a href="#">등급&amp;혜택 안내</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">고객 서비스</a>
+                <ul class="gnb__menu__secondary">
+                  <li>
+                    <a href="#">FAQ&amp;공지사항</a>
+                  </li>
+                  <li>
+                    <a href="https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa">정품등록 안내</a>
+                  </li>
+                  <li>
+                    <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
+                  </li>
+                  <li>
+                    <a href="#">구매 상담</a>
+                  </li>
+                  <li>
+                    <a href="#">직영점 안내</a>
+                  </li>
+                  <li>
+                    <a href="#">동영상 강좌</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <!-- ↓ 앱 전용 메뉴 -->
+          <div class="appmenu">
+            <ul>
+              <li class="appmenu__qr"><a href="#">QR스캔</a></li>
+              <li class="appmenu__setting"><a href="#">설정</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- ↓ 검색 -->
+        <div class="search">
+          <h2 class="sr-only">통합검색</h2>
+          <div class="search__inner">
+            <div class="search__field">
+              <!-- <form action="get" role="search"> -->
+              <fieldset>
+                <legend>검색</legend>
+                <input type="text" id="search__input" class="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxlength="40">
+                <button class="btn search__btn__submit"><img src="../../images/common/ic_search.svg" alt="검색"></button>
+              </fieldset>
+              <!-- </form> -->
+            </div>
+            <div class="search__keyword">
+              <h3 class="search__title">인기 검색어</h3>
+              <div class="search__keyword__list">
+                <a href="#" class="search__keyword__item"># SEL40F25G</a>
+                <a href="#" class="search__keyword__item"># SRS-RA5000/MKR2</a>
+                <a href="#" class="search__keyword__item"># 카메라의 초격차</a>
+                <a href="#" class="search__keyword__item"># 알파 야카데미 8월 강좌</a>
+                <a href="#" class="search__keyword__item"># 노이즈캔슬링</a>
+                <a href="#" class="search__keyword__item"># 벗지않는 헤드폰</a>
+                <a href="#" class="search__keyword__item"># WF-1000XM3SME</a>
+                <a href="#" class="search__keyword__item"># 무선 스피커</a>
+                <a href="#" class="search__keyword__item"># 하이 레졸루션 오디오</a>
+                <a href="#" class="search__keyword__item"># 프리미엄 SD카드</a>
+              </div>
+            </div>
+            <div class="search__recomm">
+              <h3 class="search__title">추천 제품</h3>
+              <div class="search__recomm__wrapper">
+                <ul class="search__recomm__list">
+                  <li class="search__recomm__item">
+                    <a href="#">
+                      <div class="search__recomm__pic">
+                        <img src="../../images/_tmp/item640x640_01.png" alt="상품명1">
+                        <span class="badge__text badge__text__new">NEW</span>
+                        <!--
+                        <span class="badge__text badge__text__best">BEST</span>
+                        <span class="badge__text badge__text__event">EVENT</span>
+                        <span class="badge__text badge__text__hot">HOT</span>
+                        -->
+                      </div>
+                      <div class="search__recomm__wrapper">
+                        <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                        <p class="search__recomm__desc ellipsis2">끄지마세요, 벗지마세요, 편하게 대화를 시작하세요!</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="search__recomm__item">
+                    <a href="#">
+                      <div class="search__recomm__pic">
+                        <img src="../../images/_tmp/item640x640_02.png" alt="상품명2">
+                        <span class="badge__text badge__text__best">BEST</span>
+                      </div>
+                      <div class="search__recomm__wrapper">
+                        <span class="search__recomm__name ellipsis">microSDXC SR-64HXA Class 10 High Sound Quality Model with SD Card Adapter</span>
+                        <p class="search__recomm__desc ellipsis2">일렉트로닉 노이즈 억제, 맑고 깨끗한 사운드를 실현</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="search__recomm__item">
+                    <a href="#">
+                      <div class="search__recomm__pic">
+                        <img src="../../images/_tmp/item640x640_03.png" alt="상품명3">
+                        <span class="badge__text badge__text__event">EVENT</span>
+                      </div>
+                      <div class="search__recomm__wrapper">
+                        <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                        <p class="search__recomm__desc ellipsis2">모든 위대함은, 아주 작은 것들로부터. 원핸드 컴팩트 풀프레임 카메라, 독보적인 존재감, 예뻐지는 데일리 카메라</p>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <button class="btn search__btn__close"><img src="../../images/common/ic_close.svg" alt="검색창 닫기"></button>
+        </div>
+        <!-- ↑ 검색 -->
+      </div>
+    </header>
+    <div class="container full">
+      <div class="content">
+        <div class="faq_notice_head">
+          <div class="common_head first_tit">
+            <h1 class="common_head_name">FAQ & 공지사항</h1>
+            <p class="common_head_txt">소니스토어에 많이 물어보시는 질문과<br class="pc_none">새로운 소식을 만나보세요.</p>
+          </div>
+          <div class="tab_link_zone">
+            <ul class="tab_link_inner">
+              <li class="tabs on">
+                <a href="../../html/support/faq.html" class="tab_btn" title="FAQ 보기"><span class="tit">FAQ</span></a>
+              </li>
+              <li class="tabs">
+                <a href="../../html/support/noticeList.html" class="tab_btn" title="공지사항 보기"><span class="tit">공지사항</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="faq_notice_inner">
+          <div class="faq_notice_cont faq_list">
+            <div class="category_center">
+              <div class="category_slide_tab swiper-container">
+                <ul class="swiper-wrapper">
+                  <li class="swiper-slide on" data-view-category="category_all">
+                    <a href="#" class="btn"><span>전체</span></a>
+                  </li>
+                  <li class="swiper-slide" data-view-category="category_01">
+                    <a href="#" class="btn"><span>쿠폰/마일리지</span></a>
+                  </li>
+                  <li class="swiper-slide" data-view-category="category_02">
+                    <a href="#" class="btn"><span>주문/결제</span></a>
+                  </li>
+                  <li class="swiper-slide" data-view-category="category_03">
+                    <a href="#" class="btn"><span>세금계산서/영수증</span></a>
+                  </li>
+                  <li class="swiper-slide" data-view-category="category_04">
+                    <a href="#" class="btn"><span>배송</span></a>
+                  </li>
+                  <li class="swiper-slide" data-view-category="category_05">
+                    <a href="#" class="btn"><span>취소/환불/AS</span></a>
+                  </li>
+                  <li class="swiper-slide" data-view-category="category_06">
+                    <a href="#" class="btn"><span>회원관련</span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="category_list">
+              <div class="acc acc_ui_zone">
+                <div class="acc_item category_01"> <!-- 분류 class : category_01~ . . .  -->
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">쿠폰/마일리지</span>
+                      <span class="acc_tit">마일리지로 ESP(연장서비스 쿠폰/마일리지 플랜) 구입이 가능한가요?</span>
+                      <span class="acc_arrow">선택됨/상세 닫기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: block;">
+                    <div class="acc_box">
+                      <p class="txt">ESP는 마일리지로 구입 가능합니다. (단, ESP 구매 시 마일리지 적립은 되지 않습니다.)</p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_01">
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">쿠폰/마일리지</span>
+                      <span class="acc_tit">온라인 쿠폰을 소니스토어 직영점 및 전화 주문 시에도 사용할 수 있나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: block;">
+                    <div class="acc_box">
+                      <p class="txt">
+                        소니스토어 매장 방문 시 출력된 쿠폰을 지참하시면 사용하실 수 있습니다.<br>
+                        전화주문 시에는 쿠폰 번호를 알려주시면 결제 시 적용 받으실 수 있습니다.
+                      </p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_01">
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">쿠폰/마일리지</span>
+                      <span class="acc_tit">E-Coupon은 언제 사용할 수 있나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">
+                        상품 1개당 한 개의 쿠폰만 사용하실 수 있으며, 쿠폰에 안내된 사용기간 내에만 가능합니다.
+                        단, 정품 등록 후 발급되는 쿠폰의 경우는 2개 이상 상품주문이 가능합니다.(1개의 주문으로 복수 주문 시로만 가능)<br>
+                        쿠폰금액이 판매가를 초과할 경우, 쿠폰이 적용 되지 않습니다.
+                      </p>
+                      <ul class="list_dot">
+                        <li class="bar">주문 후 반품, 환불의 경우 한번 사용하신 쿠폰은 다시 사용하실 수 없습니다.</li>
+                        <li class="bar">쿠폰 사용 시 마일리지는 쿠폰 사용금액을 제외한 실 결제금액을 기준으로 적립됩니다.</li>
+                        <li class="bar">적용 상품이 제한되어 있는 할인쿠폰은 해당 적용 상품 외에는 사용하실 수 없습니다.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_02"><!-- 분류 class : category_01~ . . .  -->
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">주문/결제</span>
+                      <span class="acc_tit">결제방법에는 무엇이 있나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">가상 계좌와 신용카드로 결제 가능하며, 쿠폰 및 마일리지를 보유하신 경우에는 동시에 사용하실 수 있습니다.</p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_02">
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">주문/결제</span>
+                      <span class="acc_tit">가상계좌 입금 시 입금 확인은 어떻게 하나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">
+                        주문 완료 후 ‘가상계좌 결제’를 선택한 경우, 가상 계좌번호가 확인되며 SMS와 알림톡을 통해서도 해당 내역이 전송 됩니다. 전송 된 계좌로 입금해 주시면 입금 확인 후 배송이 진행 됩니다.<br>
+                        가상 계좌를 통한 입금수수료는 주문자 부담이며 입금 확인은 오전 및 오후 2회씩 진행되고 있습니다.<br>
+                        주문 후 3일 이내에 입금되지 않을 경우는 주문이 자동으로 취소됩니다.<br>
+                        입금 후 확인 되지 않을 경우 반드시 고객지원센터(1588-0911)나 이메일(sonystore@sony.co.kr)로 연락 주시기 바랍니다.
+                      </p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_02">
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">주문/결제</span>
+                      <span class="acc_tit">신용카드 무이자할부 혜택은 어디서 확인하나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">무이자 할부는 해당 상품 상세 페이지 및 결제 페이지에서 확인하실 수 있습니다.</p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_02">
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">주문/결제</span>
+                      <span class="acc_tit">대량 구매 문의는 어디로 해야 하나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">B2B 기업체 특판 구매는 <strong>1) 모델 2) 수량 3) 납기일 4) 납품처 5) 제품 용도</strong> 의 정보가 필요합니다.<br> 위의 정보를 포함한 메일을 송부 부탁 드립니다. </p>
+                      <a href="https://store.sony.co.kr/handler/Support-StartCompany" class="button button_negative button-s" type="button">구매상담 가기</a>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_03"><!-- 분류 class : category_01~ . . .  -->
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">세금계산서/영수증</span>
+                      <span class="acc_tit">신용카드 영수증 출력은 어떻게 하나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">신용카드 영수증은 고객님께서 입력해주신 e-mail로 보내드리는 결제확인메일의 <영수증 출력>버튼을 클릭하시면 바로 출력 하실 수 있습니다. 만약 e-mail을 지우셨을 경우 이니시스 웹사이트(www.inicis.com)의 사용내역 및 청구내역 조회에서 발급 받으실 수 있습니다.</p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_03">
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">세금계산서/영수증</span>
+                      <span class="acc_tit">현금영수증 발급은 가능한가요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">5,000원 이상 현금 구매 시 현금 영수증을 받으실 수 있습니다. 입금이 확인된 후 ‘마이 페이지’ (비회원의 경우 배송조회 메뉴)에서 현금영수증 발급 버튼을 누르시면 즉시 발급됩니다.</p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_04"><!-- 분류 class : category_01~ . . .  -->
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">배송</span>
+                      <span class="acc_tit">배송 일정 및 배송 현황 조회는 어디서 하나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">
+                        고객님께서 주문해주신 상품은 입금확인 후 발송 준비되며, 지역에 따라 3~7일 이내 전국 어디든 배송 가능합니다.<br>
+                        예약판매 상품 등 일부 상품에 대해서는 상품 수급 사정에 의해 배송이 지연될 수 있습니다. 주문상품에 대한 상세한 확인 및 배송상황은 '<a href="../../html/mypage/myPageMain.html" class="under_line">마이페이지</a>'에서 모두 확인하실 수 있습니다.
+                      </p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_04">
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">배송</span>
+                      <span class="acc_tit">배송료 부담은 누가하나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">소니스토어는 무료 배송을 원칙으로 하고 있습니다. 다만 산간 도서지방의 경우는 상품 특성에 따라 배송료를 부담하실 수도 있습니다.</p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_04">
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">배송</span>
+                      <span class="acc_tit">비회원 주문 시 주문 및 배송 조회는 어디서 하나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">비회원 주문 시 페이지 우측 상단의 &lt;주문/배송조회&gt;을 클릭하신 후 주문번호 및 비밀번호(주문 시 입력하신 비밀번호) 를 입력하시면 됩니다.</p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_05"><!-- 분류 class : category_01~ . . .  -->
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">취소/환불/AS</span>
+                      <span class="acc_tit">주문취소 및 반품 신청은 어떻게 하나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">주문취소 및 반품신청은 e-mail 및 고객지원센터로 요청하실 수 있습니다.
+                        (e-mail : cshelp@sony.co.kr / 전화 : 1588-0911)</p>
+                      <p class="txt">e-mail을 통한 신청 시 운영시간 이후에는 익일 처리되므로 다소 지연될 수 있습니다.
+                        구입하신 상품에 대해서는 제품을 받으신 날로부터 7일 이내에 교환 및 반품이 가능합니다.
+                        단, 구입하신 상품의 내용이 표시, 광고 내용과 다르거나 계약 내용과 다르게 이행된 경우에는 해당상품을 공급 받은 날부터 3개월 이내,
+                        그 사실을 안 날 또는 알 수 있었던 날부터 30일 이내에 청약철회 가능합니다. 제품하자가 아닌 변심으로 인한 반품 시에는
+                        고객님께서 반품 비용을 부담하셔야 합니다.
+                        </p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_05">
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">취소/환불/AS</span>
+                      <span class="acc_tit">가상계좌 주문 건의 경우, 환불은 어떻게 처리되나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">
+                        소니스토어 온라인에서 주문 취소/환불을 신청하시면, 환불 계좌번호를 등록하실 수 있습니다.<br>
+                        등록된 계좌번호로 환불이 진행되며 잘못 입력하셨거나 계좌번호 변경이 필요한 경우 고객센터(1588-0911)를 통해 환불 신청이 가능합니다.<br>
+                        환불은 신청하신 날로부터 3영업일 이내에 완료됩니다.
+                      </p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_06"><!-- 분류 class : category_01~ . . .  -->
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">회원관련</span>
+                      <span class="acc_tit">소니스토어 회원 가입은 어떻게 해야 하나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">소니스토어 온라인사이트에서 회원 가입을 하시면 누구나 소니스토어 회원이 되실 수 있습니다.</p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+                <div class="acc_item category_06">
+                  <div class="acc_head">
+                    <a href="#" class="acc_btn" title="상세 내용 토글">
+                      <span class="category_tit">회원관련</span>
+                      <span class="acc_tit">개명한 경우 이름을 어떻게 변경 하나요?</span>
+                      <span class="acc_arrow">상세 보기</span>
+                    </a>
+                  </div>
+                  <div class="acc_inner" style="display: none;">
+                    <div class="acc_box">
+                      <p class="txt">
+                        개명하신 경우 기존 아이디로 로그인 하신 후, 회원정보를 수정하실 수 있습니다.<br>
+                        다만, 개명한 이름으로 실명인증이 가능해야 합니다
+                      </p>
+                    </div>
+                  </div>
+                </div><!-- // acc_item -->
+              </div><!-- // acc_ui_zone -->
+              <div class="btn_article comm_more">
+                <a href="#" class="more_btn" title="더보기">더보기</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <nav class="sidebar">
+        <div class="sidebar__inner">
+          <a href="../../html/mypage/myPageMain.html" class="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+          <a href="#" class="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
+          <a href="#header" class="sidebar__btn top"><span>페이지 상단</span></a>
+        </div>
+        <button class="sidebar__btn sidebar__btn__toggle" type="button"><img src="../../images/common/ic_sidebar1.svg" alt="메뉴토글"></button>
+      </nav>
+      <div class="footer__inner">
+        <div class="footer__social__wrap">
+          <div class="footer__social">
+            <h3 class="footer__social__title">FOLLOW US</h2>
+            <div class="footer__social__links">
+              <a href="#" class="footer__social__link"><img src="../../images/common/ic_facebook.svg" alt="facebook"></a>
+              <a href="#" class="footer__social__link"><img src="../../images/common/ic_instagram.svg" alt="instagram"></a>
+              <a href="#" class="footer__social__link"><img src="../../images/common/ic_youtube.svg" alt="youtube"></a>
+              <a href="#" class="footer__social__link"><img src="../../images/common/ic_blog.svg" alt="blog"></a>
+            </div>
+          </div>
+          <div class="footer__family">
+            <div class="footer__family__links">
+              <div class="footer__family__link footer__pc">
+                <button type="button" class="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침">Sony Family</button>
+                <div class="footer__family__link__inner">
+                  <h4 class="optgroup__label">Sony Family</h4>
+                  <ul class="optgroup">
+                    <li class="option"><a href="#" target="_blank">소니코리아</a></li>
+                    <li class="option"><a href="#" target="_blank">소니코리아 고객지원</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 알파 α</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 방송/업무용 솔루션</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
+                  </ul>
+                  <h4 class="optgroup__label">Family Company</h4>
+                  <ul class="optgroup">
+                    <li class="option"><a href="#" target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
+                    <li class="option"><a href="#" target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
+                  </ul>
+                </div>
+              </div>
+              <select class="footer__family__link footer__mo">
+                <optgroup label="Sony Family">
+                  <option>소니코리아</option>
+                  <option>소니코리아 고객지원</option>
+                  <option>소니 알파 α</option>
+                  <option>소니 방송/업무용 솔루션</option>
+                  <option>소니 방송 업무용 솔루션 고객지원</option>
+                </optgroup>
+                <optgroup label="Family Company">
+                  <option>소니 인터렉티브 엔터테인먼트 코리아</option>
+                  <option>소니 뮤직 엔터테인먼트 코리아</option>
+                  <option>소니 ATV 뮤직 퍼블리싱 코리아</option>
+                  <option>소니 픽쳐스 엔터테인먼트 코리아</option>
+                  <option>소니 픽쳐스 텔레비전 코리아</option>
+                </optgroup>
+              </select>
+            </div>
+            <a href="https://www.sony.com/" class="footer__family__global" target="_blank">Sony Global</a>
+          </div>
+        </div>
+        <div class="footer__legal">
+          <div class="footer__legal__links">
+            <a href="../../html/footer/terms.html" class="footer__legal__link">이용약관</a>
+            <a href="../../html/footer/policy.html" class="footer__legal__link privacy">개인정보처리방침</a>
+            <a href="javascript:openModal('modal__customer__insurance');" class="footer__legal__link" data-modal-target="modal__customer__insurance">소비자 피해 보상보험</a>
+            <a href="../../html/footer/siteMap.html" class="footer__legal__link">사이트맵</a>
+          </div>
+          <div class="footer__legal__warning">
+            <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
+            <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a href="#" class="escrow">에스크로결제</a></p>
+          </div>
+        </div>
+        <address class="address">
+          <span>사업장주소 : 서울특별시 영등포구 국제금융로 10 원아이에프씨 24F</span>
+          <span>사업자 등록번호 : 106-81-23810 통신판매번호 2012-서울영등포-1038 소니코리아㈜</span>
+          <span>대표이사 : Okura Kikuo</span>
+          <span>개인정보관리책임자 : Okura Kikuo</span>
+          <span>TEL : 소니코리아 고객센터 1588-0911</span>
+          <span>E-MAIL : <a href="mailto:cshelp@sony.co.kr">cshelp@sony.co.kr</a></span>
+          <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
+        </address>
+      </div>
+    </footer>
+    
+    <!-- 소비자피해보상 보험 팝업 -->
+    <div class="layer modal__customer__insurance">
+      <div class="layer_wrap">
+        <div class="layer_container">
+          <div class="layer_title">
+            <h1>소비자피해보상보험</h1>
+          </div>
+          <div class="layer_content">
+            <div class="consumer_logo">
+              <img src="../../images/img_consumerlogo.png">
+            </div>
+            <p>고객님은 안전거래를 위해 현금 결제 시 저희 쇼핑몰이 가입한 구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.</p>
+            <p>보상대상 : 미배송&#47;반품, 환불거부&#47;쇼핑몰부도</p>
+            <div class="btn_box">
+              <a href="https://mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810" target="_blank" title="새창열림">서비스 가입 사실 확인하기</a>
+            </div>
+          </div>
+          <button href="#" class="layer_close close" title="팝업창 닫기">
+            <span>팝업창 닫기</span>
+        </button>        
+        </div>    
+      </div>
+    </div>
+    <!--// 소비자피해보상 보험 팝업 -->
+    
+    <script>
+         //팝업 열기
+        function openModal(modalname) {
+            $("." + modalname).fadeIn(300);
+            $("body,html").css({"overflow":"hidden"});        
+            return false;
+        }
+        // 팝업 닫기
+        $(document).ready(function(){
+          $layer = $(".layer");
+    
+          $('.close').click(function() {
+              $layer.fadeOut(300);
+              $('body,html').css({"overflow":"visible"});
+          });
+        });
+    </script>  </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+$(function(){
+
+  function categoryTab(){
+    let $wrapCategory = $('.faq_notice_cont.faq_list'),
+        $listWrap = $wrapCategory.find('.category_list');
+    let categorySwiper = new Swiper('.category_slide_tab',{
+      slidesPerView: "auto",
+      spaceBetween: 8,
+      breakpoints: {
+        1281: {
+          touchRatio: 0,
+          centeredSlides: false,
+        },
+      }
+    });
+
+    $(".category_slide_tab .btn").on("click",function(){
+      let $thisLi = $(this).closest('li'),
+          _viewData = $thisLi.data("view-category"),
+          _index = $thisLi.index();
+      if($thisLi.hasClass("on") == false){
+        categorySwiper.slideTo(_index);
+        $thisLi.addClass("on").siblings().removeClass("on");
+        accReset(); // 열려 있던 acc 메뉴 초기화
+        if(_index > 0){
+          $listWrap.find('.acc_item').removeClass("view").hide();
+          $listWrap.find('.'+_viewData).addClass("view").fadeIn(200);
+        }else{
+          $listWrap.find('.acc_item').addClass("view").fadeIn(200);
+        }
+        listView();
+      }
+      return false;
+    });
+
+    function accReset(){
+      let $accItem = $('.acc_item');
+      $accItem.removeClass("on");
+      $accItem.find('.acc_arrow').text("상세 보기");
+      $accItem.find('.acc_inner').hide();
+    }
+
+    $listWrap.find('.acc_item').addClass("view");
+    listView();
+    function listView(){
+      let $onList = $listWrap.find('.view'),
+          _listSize = $onList.length;
+      for(let _viewNum =0 ; _viewNum <= _listSize ; _viewNum++ ){
+        if(_viewNum>9){
+          $onList.eq(_viewNum).removeClass("view").hide();
+        }else{
+          $onList.eq(_viewNum).addClass("view").fadeIn(200);
+        }
+      }
+      if(_listSize > 9){
+        $listWrap.find('.comm_more').show(function(){
+          $(this).find('.more_btn').off().on("click",function(){
+            $onList.addClass("view").fadeIn(200);
+            $(this).closest('.comm_more').hide();
+            return false;
+          });
+        });
+      }else{
+        $listWrap.find('.comm_more').hide();
+      }
+    }
+  }
+  categoryTab();
+});
+</script>

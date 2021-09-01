@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+    <defs>
+        <style>
+            .cls-3{fill:none;stroke-width:1.75px;stroke:#222}
+        </style>
+    </defs>
+    <g id="Icon_feather-book-open" transform="translate(0 3.488)">
+        <path id="사각형_45" fill="rgba(255,255,255,0)" d="M0 0H56V56H0z" transform="translate(0 -3.488)"/>
+        <g id="ic_공지" transform="translate(-3938 2486.528)">
+            <g id="그룹_3462" transform="translate(3947 -2483.016)">
+                <path id="패스_163" fill="none" stroke="#5865f5" stroke-miterlimit="10" stroke-width="1.75px" d="M249 502a6 6 0 0 1 0 12" transform="translate(-215 -491.583)"/>
+                <path id="합치기_13" d="M20.561 25.335H0V8.074h20.562L34.466 0v33.41z" class="cls-3"/>
+                <path id="선_26" d="M0 0L0 18" class="cls-3" transform="translate(8.443 7.943)"/>
+                <path id="패스_160" d="M9.326 24.743l1.562 12H5.266l-4.378-12" class="cls-3" transform="translate(3.112 .257)"/>
+            </g>
+        </g>
+    </g>
+</svg>

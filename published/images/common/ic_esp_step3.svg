@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64.465" viewBox="0 0 64 64.465">
+    <defs>
+        <style>
+            .cls-1{fill:none}
+        </style>
+    </defs>
+    <g id="ic_step3" transform="translate(-438 -1520)">
+        <path id="area" d="M0 0H64V64H0z" class="cls-1" transform="translate(438 1520)"/>
+        <g id="그룹_4851" transform="translate(243 964)">
+            <g id="사각형_721" fill="none" stroke="#191919" stroke-width="2px">
+                <path stroke="none" d="M0 0H53V22H0z" transform="translate(201 565)"/>
+                <path d="M1 1H52V21H1z" class="cls-1" transform="translate(201 565)"/>
+            </g>
+            <text id="BUY" fill="#5865f5" font-family="MuseoSans-900, Museo Sans" font-size="11px" font-weight="900" letter-spacing="0.1em" transform="translate(227 580)">
+                <tspan x="-12.342" y="0">BUY</tspan>
+            </text>
+            <path id="패스_658" fill="#fbfbfb" stroke="#191919" stroke-miterlimit="10" stroke-width="2px" d="M242.678 588.162l-8.6 5.161-6.83-6.83a3 3 0 1 0-4.242 4.242l8.486 8.486 4.779 4.78H232.2a3 3 0 0 0 0 6h11.309a3.036 3.036 0 0 0 .593-.06c.084-.016.161-.048.242-.071a2.917 2.917 0 0 0 .317-.1 2.835 2.835 0 0 0 .278-.146c.08-.043.162-.078.238-.129a3.049 3.049 0 0 0 .458-.374l8.486-8.486a3 3 0 0 0 0-4.243l-7.779-7.779a3 3 0 0 0-3.664-.451z" transform="translate(481.268 7.404) rotate(45)"/>
+        </g>
+    </g>
+</svg>

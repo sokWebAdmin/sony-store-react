@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msapplication-TileImage" content="../../images/favicon_144x144.png">
+<title>장바구니</title>
+<link rel="shortcut icon" href="../../images/favicon_144x144.png">
+<link rel="stylesheet" href="../../lib/css/swiper.min.css">
+<link rel="stylesheet" href="../../css/contents.css">
+<link rel="stylesheet" href="../../css/order.css">
+<link rel="stylesheet" href="../../css/demo.css">
+<script src="../../lib/js/jquery-3.6.0.min.js"></script>
+<script src="../../lib/js/swiper.min.js"></script>
+<script src="../../js/ux-common.js"></script>
+<script src="../../js/ux-sub.js"></script>
+</head>
+<body>
+<div class="wrapper">
+  <div id="skipnav" class="skipnav">
+  	<a href="#container"><span>본문 바로가기</span></a>
+  </div>
+  <header id="header" class="header">
+    <div class="header__wrapper">
+      <h1 class="header__logo"><a href="../../html/main.html"><img src="../../images/common/logo.svg" alt="SONY"></a></h1>
+      <div class="header__menu">
+        <button class="btn btn__mo__hidden btn__search"><img src="../../images/common/ic_search.svg" alt="검색창 열기"></button>
+        <a href="../../html/member/mypage.html" class="btn btn__desktop btn__mypage"><img src="../../images/common/ic_mypage.svg" alt="마이페이지"></a>
+        <a href="../../html/order/cart.html" class="btn btn__cart"><img src="../../images/common/ic_cart.svg" alt="장바구니"></a></li>
+        <button type="button" class="btn btn__mo btn__menu__open"><img src="../../images/common/ic_menu.svg" alt="메뉴 열기"></button>
+        <button type="button" class="btn btn__mo btn__mo__hidden btn__menu__close"><img src="../../images/common/ic_close.svg" alt="메뉴 닫기"></button>
+      </div>
+      <div class="header__inner">
+  
+        <!-- 비회원/로그인 전 -->
+        <!--
+        <div class="member">
+          <div class="member__inner">
+            <a href="#" class="member__msg member__msg__login">로그인이<br>필요합니다</a>
+            <button type="button" class="btn btn__login">로그인</button>
+            <div class="member__menu">
+              <ul>
+                <li class="member__menu__mypage"><a href="../../html/member/join.html">회원가입</a></li>
+                <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        -->
+  
+        <!-- 회원/로그인 -->
+        <div class="member">
+          <div class="member__inner">
+            <p class="member__msg">박소니님<br>안녕하세요!</p>
+            <div class="member__menu">
+              <ul>
+                <li class="member__menu__mypage"><a href="../../html/member/mypage.html">마이페이지</a></li>
+                <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn__logout">로그아웃</button>
+          </div>
+        </div>
+        <nav class="gnb">
+          <ul class="gnb__menu">
+            <li>
+              <a href="#">스토어 추천 제품</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="../../html/recommend/recommend.html">추천 제품</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="../../html/product/List.html">제품</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="../../html/product/camera.html">카메라</a>
+                </li>
+                <li>
+                  <a href="../../html/product/videocamera.html">비디오카메라</a>
+                </li>
+                <li>
+                  <a href="../../html/product/audio.html">오디오</a>
+                </li>
+                <li>
+                  <a href="../../html/product/accessory.html">액세서리</a>
+                </li>
+                <li>
+                  <a href="../../html/product/playstation.html">PlayStation®</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">기획전</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">소니스토어 단독</a>
+                </li>
+                <li>
+                  <a href="#">혜택존</a>
+                </li>
+                <li>
+                  <a href="#">예약판매</a>
+                </li>
+                <li>
+                  <a href="#">정품 등록 이벤트</a>
+                </li>
+                <li>
+                  <a href="#">LIVE ON</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">멤버십</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">등급&amp;혜택 안내</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">고객 서비스</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">FAQ&amp;공지사항</a>
+                </li>
+                <li>
+                  <a href="https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa">정품등록 안내</a>
+                </li>
+                <li>
+                  <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
+                </li>
+                <li>
+                  <a href="#">구매 상담</a>
+                </li>
+                <li>
+                  <a href="#">직영점 안내</a>
+                </li>
+                <li>
+                  <a href="#">동영상 강좌</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- ↓ 앱 전용 메뉴 -->
+        <div class="appmenu">
+          <ul>
+            <li class="appmenu__qr"><a href="#">QR스캔</a></li>
+            <li class="appmenu__setting"><a href="#">설정</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- ↓ 검색 -->
+      <div class="search">
+        <h2 class="sr-only">통합검색</h2>
+        <div class="search__inner">
+          <div class="search__field">
+            <!-- <form action="get" role="search"> -->
+            <fieldset>
+              <legend>검색</legend>
+              <input type="text" id="search__input" class="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxlength="40">
+              <button class="btn search__btn__submit"><img src="../../images/common/ic_search.svg" alt="검색"></button>
+            </fieldset>
+            <!-- </form> -->
+          </div>
+          <div class="search__keyword">
+            <h3 class="search__title">인기 검색어</h3>
+            <div class="search__keyword__list">
+              <a href="#" class="search__keyword__item"># SEL40F25G</a>
+              <a href="#" class="search__keyword__item"># SRS-RA5000/MKR2</a>
+              <a href="#" class="search__keyword__item"># 카메라의 초격차</a>
+              <a href="#" class="search__keyword__item"># 알파 야카데미 8월 강좌</a>
+              <a href="#" class="search__keyword__item"># 노이즈캔슬링</a>
+              <a href="#" class="search__keyword__item"># 벗지않는 헤드폰</a>
+              <a href="#" class="search__keyword__item"># WF-1000XM3SME</a>
+              <a href="#" class="search__keyword__item"># 무선 스피커</a>
+              <a href="#" class="search__keyword__item"># 하이 레졸루션 오디오</a>
+              <a href="#" class="search__keyword__item"># 프리미엄 SD카드</a>
+            </div>
+          </div>
+          <div class="search__recomm">
+            <h3 class="search__title">추천 제품</h3>
+            <div class="search__recomm__wrapper">
+              <ul class="search__recomm__list">
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_01.png" alt="상품명1">
+                      <span class="badge__text badge__text__new">NEW</span>
+                      <!--
+                      <span class="badge__text badge__text__best">BEST</span>
+                      <span class="badge__text badge__text__event">EVENT</span>
+                      <span class="badge__text badge__text__hot">HOT</span>
+                      -->
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                      <p class="search__recomm__desc ellipsis2">끄지마세요, 벗지마세요, 편하게 대화를 시작하세요!</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_02.png" alt="상품명2">
+                      <span class="badge__text badge__text__best">BEST</span>
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">microSDXC SR-64HXA Class 10 High Sound Quality Model with SD Card Adapter</span>
+                      <p class="search__recomm__desc ellipsis2">일렉트로닉 노이즈 억제, 맑고 깨끗한 사운드를 실현</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_03.png" alt="상품명3">
+                      <span class="badge__text badge__text__event">EVENT</span>
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                      <p class="search__recomm__desc ellipsis2">모든 위대함은, 아주 작은 것들로부터. 원핸드 컴팩트 풀프레임 카메라, 독보적인 존재감, 예뻐지는 데일리 카메라</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <button class="btn search__btn__close"><img src="../../images/common/ic_close.svg" alt="검색창 닫기"></button>
+      </div>
+      <!-- ↑ 검색 -->
+    </div>
+  </header>
+  <div class="container" id="container">
+    <div class="content order_page">
+      <div class="order_box">
+        <h2 class="order_box__tit">장바구니</h2>
+        <ol class="order_box__list">
+          <li class="on">
+            <i class="step_ico cart"></i>
+            <p>장바구니</p>
+          </li>
+          <li>
+            <i class="step_ico order"></i>
+            <p>주문·결제</p>
+          </li>
+          <li>
+            <i class="step_ico confirm"></i>
+            <p>주문 완료</p>
+          </li>
+        </ol>
+
+        <div class="cart_func">
+          <div class="cart_func_check">
+            <div class="check">
+              <input type="checkbox" class="inp_check check_all" id="check_cart_items" name="check_cart_item">
+              <label for="check_cart_items">전체</label>
+            </div>
+          </div>
+          <div class="cart_func_buttons">
+            <button type="button" class="button button_negative button-s button_del_checked_items">선택 삭제</button>
+            <button type="button" class="button button_positive button-s button_print_esimate popup_comm_btn" data-popup-name="estimate">견적서 출력</button>
+          </div>
+        </div>
+
+        <div class="col_table_wrap order_list">
+          <div class="col_table">
+            <div class="col_table_head">
+              <div class="col_table_row">
+                <div class="col_table_cell">제품</div>
+                <div class="col_table_cell">가격</div>
+                <div class="col_table_cell">수량</div>
+                <div class="col_table_cell">합계</div>
+                <div class="col_table_cell ir">삭제</div>
+              </div>
+            </div>
+            <div class="col_table_body">
+              <div class="col_table_row">
+                <div class="col_table_cell prd_wrap tal">
+                  <div class="prd">
+                    <div class="check check_only">
+                      <input type="checkbox" class="inp_check" name="check_cart_item">
+                    </div>
+                    <div class="prd_thumb">
+                      <img class="prd_thumb_pic" src="../../images/_tmp/item640x640_03.png" alt="상품명입력">
+                    </div>
+                    <div class="prd_info">
+                      <div class="prd_info_name">PLAYSTATION 5 DIGITAL (CFI-1018B01)</div>
+                      <p class="prd_info_option">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트 화이트)</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col_table_cell prd_price">
+                  4,299,000 <span class="won">원</span>
+                </div>
+                <div class="col_table_cell prd_count">
+                  <div class="count_ui_box">
+                    <button class="minus">감소</button>
+                    <input type="text" readonly="readonly" value="1" class="count">
+                    <button class="plus">증가</button>
+                  </div>
+                </div>
+                <div class="col_table_cell prd_total">
+                  4,299,000 <span class="won">원</span>
+                </div>
+                <div class="col_table_cell">
+                  <button type="button" class="btn_del_prd"><img src="../../images/common/ic_close.svg" alt="제품 삭제"></button>
+                </div>
+              </div>
+              <div class="col_table_row">
+                <div class="col_table_cell prd_wrap tal">
+                  <div class="prd">
+                    <div class="check check_only">
+                      <input type="checkbox" class="inp_check" name="check_cart_item">
+                    </div>
+                    <div class="prd_thumb">
+                      <img class="prd_thumb_pic" src="../../images/_tmp/item640x640_02.png" alt="상품명입력">
+                    </div>
+                    <div class="prd_info">
+                      <div class="prd_info_name">AK-74 Hi-Res Aux 3.5mm 케이블 (16.5m)</div>
+                      <p class="prd_info_option">AK-47 전용 고해상도 Aux 케이블</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col_table_cell prd_price">
+                  9,000 <span class="won">원</span>
+                </div>
+                <div class="col_table_cell prd_count">
+                  <div class="count_ui_box">
+                    <button class="minus">감소</button>
+                    <input type="text" readonly="readonly" value="1" class="count">
+                    <button class="plus">증가</button>
+                  </div>
+                </div>
+                <div class="col_table_cell prd_total">
+                  18,000 <span class="won">원</span>
+                </div>
+                <div class="col_table_cell">
+                  <button type="button" class="btn_del_prd"><img src="../../images/common/ic_close.svg" alt="제품 삭제"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col_table_foot">
+            <div class="prd_summary">
+              <span class="prd_summary_length">결제 예정 금액 (총 1개)</span>
+              <span class="prd_summary_price">200,000,000,000 <span class="won">원</span></span>
+              <p class="prd_summary_warning">* 최종 결제금액은 고객님의 <span class="mo_block">쿠폰 / 마일리지 적용에 따라 달라질 수 있습니다.</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="button_wrap">
+          <a href="#" class="button button_negative">쇼핑 계속 하기</a>
+          <button type="submit" class="button button_positive popup_comm_btn" data-popup-name="login_chk_order">구매하기</button>
+        </div>
+
+        <div class="acc acc_ui_zone acc_faq acc_cart">
+          <div class="acc_item on">
+            <div class="acc_head">
+              <a href="#" class="acc_btn" title="상세 내용 토글">
+                <span class="acc_tit">장바구니 이용 안내</span>
+                <span class="acc_arrow">선택됨/상세 닫기</span>
+              </a>
+            </div>
+            <div class="acc_inner" style="display: block;">
+              <div class="acc_box">
+                <!-- 앞에 불릿이 들어 갈 것 같다. 그땐 tag 교체 -->
+                <p>모든 이벤트는 결제완료시간 기준으로 적용됩니다.</p>
+                <p>견적서를 클릭하시면 견적서 프린트가 가능합니다.</p>
+                <p>소니스토어 멤버십 회원에 한하여 플레이스테이션 및 주변기기, ESP를 제외한 제품의 총 구매액 2% / 5% / 7%(회원 등급별 차등)가 마일리지로 적립됩니다.</p>
+                <p>동일한 제품군별로만 장바구니에 담으실 수 있습니다. (예, 마일리지 상품과 일반 상품은 함께 장바구니에담으실 수 없습니다.)</p>
+              </div>
+            </div>
+          </div>
+          <div class="acc_item">
+            <div class="acc_head">
+              <a href="#" class="acc_btn" title="상세 내용 토글">
+                <span class="acc_tit">AS관련 제품 주의사항</span>
+                <span class="acc_arrow">상세 보기</span>
+              </a>
+            </div>
+            <div class="acc_inner">
+              <div class="acc_box">
+                <p>ESP(Extended Service Plan)를 주문하시는 것은 ESP 이용약관에 기재된 내용을 모두 이해하고 준수하는 데 동의하신 것으로 간주됩니다.</p>
+                <p>ESP(Extended Service Plan) 구입 후 7일 이내에 고객지원사이트의 My SCS에서 연장된 서비스 기간 조회가 가능합니다. (구입 확인은 내부 사정에 따라 조정될 수 있습니다.)</p>
+              </div>
+            </div>
+          </div>
+          <div class="acc_item">
+            <div class="acc_head">
+              <a href="#" class="acc_btn" title="상세 내용 토글">
+                <span class="acc_tit">인터넷 주문이 어려우세요?</span>
+                <span class="acc_arrow">상세 보기</span>
+              </a>
+            </div>
+            <div class="acc_inner">
+              <div class="acc_box">
+                <p>제품 주문 시 어려움이 있으시다면 고객지원센터(1588-0911)로 전화주세요. 소니 전문 상담원이 제품 설명과 함께 고객님의 주문을 도와 드립니다.</p>
+              </div>
+            </div>
+          </div><!-- // acc_item -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <nav class="sidebar">
+      <div class="sidebar__inner">
+        <a href="../../html/mypage/myPageMain.html" class="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+        <a href="#" class="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
+        <a href="#header" class="sidebar__btn top"><span>페이지 상단</span></a>
+      </div>
+      <button class="sidebar__btn sidebar__btn__toggle" type="button"><img src="../../images/common/ic_sidebar1.svg" alt="메뉴토글"></button>
+    </nav>
+    <div class="footer__inner">
+      <div class="footer__social__wrap">
+        <div class="footer__social">
+          <h3 class="footer__social__title">FOLLOW US</h2>
+          <div class="footer__social__links">
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_facebook.svg" alt="facebook"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_instagram.svg" alt="instagram"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_youtube.svg" alt="youtube"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_blog.svg" alt="blog"></a>
+          </div>
+        </div>
+        <div class="footer__family">
+          <div class="footer__family__links">
+            <div class="footer__family__link footer__pc">
+              <button type="button" class="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침">Sony Family</button>
+              <div class="footer__family__link__inner">
+                <h4 class="optgroup__label">Sony Family</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니코리아 고객지원</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 알파 α</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송/업무용 솔루션</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
+                </ul>
+                <h4 class="optgroup__label">Family Company</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
+                </ul>
+              </div>
+            </div>
+            <select class="footer__family__link footer__mo">
+              <optgroup label="Sony Family">
+                <option>소니코리아</option>
+                <option>소니코리아 고객지원</option>
+                <option>소니 알파 α</option>
+                <option>소니 방송/업무용 솔루션</option>
+                <option>소니 방송 업무용 솔루션 고객지원</option>
+              </optgroup>
+              <optgroup label="Family Company">
+                <option>소니 인터렉티브 엔터테인먼트 코리아</option>
+                <option>소니 뮤직 엔터테인먼트 코리아</option>
+                <option>소니 ATV 뮤직 퍼블리싱 코리아</option>
+                <option>소니 픽쳐스 엔터테인먼트 코리아</option>
+                <option>소니 픽쳐스 텔레비전 코리아</option>
+              </optgroup>
+            </select>
+          </div>
+          <a href="https://www.sony.com/" class="footer__family__global" target="_blank">Sony Global</a>
+        </div>
+      </div>
+      <div class="footer__legal">
+        <div class="footer__legal__links">
+          <a href="../../html/footer/terms.html" class="footer__legal__link">이용약관</a>
+          <a href="../../html/footer/policy.html" class="footer__legal__link privacy">개인정보처리방침</a>
+          <a href="javascript:openModal('modal__customer__insurance');" class="footer__legal__link" data-modal-target="modal__customer__insurance">소비자 피해 보상보험</a>
+          <a href="../../html/footer/siteMap.html" class="footer__legal__link">사이트맵</a>
+        </div>
+        <div class="footer__legal__warning">
+          <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
+          <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a href="#" class="escrow">에스크로결제</a></p>
+        </div>
+      </div>
+      <address class="address">
+        <span>사업장주소 : 서울특별시 영등포구 국제금융로 10 원아이에프씨 24F</span>
+        <span>사업자 등록번호 : 106-81-23810 통신판매번호 2012-서울영등포-1038 소니코리아㈜</span>
+        <span>대표이사 : Okura Kikuo</span>
+        <span>개인정보관리책임자 : Okura Kikuo</span>
+        <span>TEL : 소니코리아 고객센터 1588-0911</span>
+        <span>E-MAIL : <a href="mailto:cshelp@sony.co.kr">cshelp@sony.co.kr</a></span>
+        <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
+      </address>
+    </div>
+  </footer>
+  
+  <!-- 소비자피해보상 보험 팝업 -->
+  <div class="layer modal__customer__insurance">
+    <div class="layer_wrap">
+      <div class="layer_container">
+        <div class="layer_title">
+          <h1>소비자피해보상보험</h1>
+        </div>
+        <div class="layer_content">
+          <div class="consumer_logo">
+            <img src="../../images/img_consumerlogo.png">
+          </div>
+          <p>고객님은 안전거래를 위해 현금 결제 시 저희 쇼핑몰이 가입한 구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.</p>
+          <p>보상대상 : 미배송&#47;반품, 환불거부&#47;쇼핑몰부도</p>
+          <div class="btn_box">
+            <a href="https://mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810" target="_blank" title="새창열림">서비스 가입 사실 확인하기</a>
+          </div>
+        </div>
+        <button href="#" class="layer_close close" title="팝업창 닫기">
+          <span>팝업창 닫기</span>
+      </button>        
+      </div>    
+    </div>
+  </div>
+  <!--// 소비자피해보상 보험 팝업 -->
+  
+  <script>
+       //팝업 열기
+      function openModal(modalname) {
+          $("." + modalname).fadeIn(300);
+          $("body,html").css({"overflow":"hidden"});        
+          return false;
+      }
+      // 팝업 닫기
+      $(document).ready(function(){
+        $layer = $(".layer");
+  
+        $('.close').click(function() {
+            $layer.fadeOut(300);
+            $('body,html').css({"overflow":"visible"});
+        });
+      });
+  </script></div>
+<!-- 로그인 후 주문 -->
+<div class="popup_wrap size_ms login_chk_order">
+  <div class="pop_inner">
+    <div class="pop_cont">
+      <p class="pop_tit">로그인 후 주문해주세요.</p>
+      <p class="pop_txt">소니스토어 회원으로 로그인 하시고 다양한 멤버십 혜택을 누리세요!
+        비회원으로 제품을 구매하시면 소니스토어의 쿠폰 및 마일리지 적립 혜택을 받으실 수 없습니다. </p>
+      <div class="btn_article">
+        <button class="button button_negative button-m closed" type="button">비회원 구매</button>
+        <button class="button button_positive button-m" type="button">회원 구매</button>
+      </div>
+    </div>
+    <button href="#" class="ico_x closed" title="팝업창 닫기">
+      <span>팝업창 닫기</span>
+    </button>
+  </div>
+</div>
+<!-- // 로그인 후 주문 -->
+<!-- s : 견적서 -->
+<div class="popup_wrap size_l estimate">
+  <div class="pop_inner">
+    <div class="pop_head">
+      <span class="pop_logo"><img src="../../images/common/logo.svg" alt="SONY"></span>
+    </div>
+    <div class="pop_cont">
+      <p class="pop_tit">견 적 서</p>
+      <div class="pop_cont_scroll">
+        <div class="simplified_info">
+          <div class="simplified_estimate">
+            <p class="date">2021.06.29</p>
+            <p class="tit"><strong>소니코리아 고객님 귀하,</strong><br> 아래와 같이 견적합니다.</p>
+            <div class="estimate_price">
+              <span class="txt">견적금액 :</span>
+              <span class="price_txt"><strong class="price">4,299,000</strong> 원</span>
+              <span class="s_txt">(부가세 포함)</span>
+            </div>
+          </div>
+          <div class="estimate_corp">
+            <ul class="corp_list">
+              <li class="name"><strong>소니코리아 주식회사</strong></li>
+              <li class="addr">서울특별시 영등포구 여의도동 국제금융로<br>10 원아이에프씨 24F (우)150-876</li>
+              <li class="txt">사업자 등록번호 : 106-81-23810</li>
+              <li class="txt"></li>대표자명 : Okura Kikuo 대표  (직인 생략)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="estimate_detail">
+          <div class="all_table_wrap">
+            <p class="s_txt_right">* 아래 견적 금액은 구매 시점에 따라 변동될 수 있습니다.</p>
+            <div class="col_table_wrap order_list">
+              <div class="col_table">
+                <div class="col_table_head">
+                  <div class="col_table_row">
+                    <div class="col_table_cell">제품명</div>
+                    <div class="col_table_cell">가격/수량</div>
+                    <div class="col_table_cell">공급가액(원)</div>
+                    <div class="col_table_cell">비고</div>
+                  </div>
+                </div>
+                <div class="col_table_body">
+                  <div class="col_table_row">
+                    <div class="col_table_cell">
+                      <div class="prd">
+                        <div class="prd_info">
+                          <div class="prd_info_name">PLAYSTATION 5 DIGITAL<br>(CFI-1018B01)</div>
+                          <p class="prd_info_option line2">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트 화이트)</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col_table_cell prd_price">
+                      4,299,000 <span class="won">원</span><br>
+                      <span class="count">1개</span>
+                    </div>
+                    <div class="col_table_cell prd_price">
+                      4,299,000 <span class="won">원</span><br>
+                      <span class="s_txt">(부가세 포함)</span>
+                    </div>
+                    <div class="col_table_cell ">
+                      &nbsp;
+                    </div>
+                  </div>
+                  <div class="col_table_row">
+                    <div class="col_table_cell">
+                      <div class="prd">
+                        <div class="prd_info">
+                          <div class="prd_info_name">ILCE-7RM4</div>
+                          <p class="prd_info_option">블랙</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col_table_cell prd_price">
+                      4,299,000 <span class="won">원</span><br>
+                      <span class="count">1개</span>
+                    </div>
+                    <div class="col_table_cell prd_price">
+                      4,299,000 <span class="won">원</span><br>
+                      <span class="s_txt">(부가세 포함)</span>
+                    </div>
+                    <div class="col_table_cell ">
+                      &nbsp;
+                    </div>
+                  </div>
+                </div>
+              </div><!-- // col_table-->
+              <div class="col_table_foot">
+                <div class="prd_summary">
+                  <p class="prd_total_price">최종 합계 금액 <strong class="prd_summary_price">4,299,000 <span class="won">원</span></strong></p>
+                </div>
+              </div>
+              <p class="sign_txt"><span class="orderer">주문자:</span><span class="name"></span><span class="sign">(서명)</span></p>
+            </div><!-- // col_table_wrap -->
+          </div>
+        </div>
+      </div><!-- // pop_cont_scroll -->
+    </div><!-- // pop_cont -->
+  </div>
+  <div class="btn_article">
+    <button class="button button_negative button-m closed" type="button">취소</button>
+    <button class="button button_positive button-m print" type="button">프린트</button>
+  </div>
+</div>
+<!-- // e : 견적서 -->
+<script>
+  $(function(){
+  $('.popup_comm_btn').on("click",function(){ // 팝업 테스트
+    let _popName = $(this).data("popup-name");
+    if($('.popup_wrap:animated').length < 1){ // fadeInOut 시 중복 클릭 방지
+      popupCommon(_popName, $(this)); // 오픈할 팝업과 닫기 시 돌아갈 포커스 select
+    }
+    if(_popName == "estimate"){ // 견적서
+      printFunc($('.estimate'));
+    }
+  });
+
+  /* S: 공통 common.js 옮겨야할 */
+  function printFunc(wrap){ //프린트 버튼
+    let $printBtn = $(wrap).find('.print');
+    $printBtn.off().on("click", function(){
+      if($(wrap).find('.pop_cont_scroll').length > 0){ // scroll 컨텐츠 영역이 있을경우 높이 해제 (프린트 하기 위함.)
+        $(wrap).find('.pop_cont').removeClass("scrollH");
+        $(wrap).find('.pop_cont_scroll').removeAttr("style");
+      }
+      const html = document.querySelector('html');
+      const printContents = $(wrap)[0].querySelector('.pop_inner').innerHTML;
+      const printDiv = document.createElement("DIV");
+      printDiv.className = "pop_inner";
+      html.appendChild(printDiv);
+      printDiv.innerHTML = printContents;
+      document.body.style.display = 'none';
+      window.print();
+      document.body.style.display = 'block';
+      printDiv.style.display = 'none';
+
+      $(wrap).find('.closed').trigger("click");
+      return false;
+    });
+  }
+
+  $('.popup_button').on("click",function(){
+    let _popupName = $(this).data("popup");
+    openModal(_popupName);
+    return false;
+  });
+
+  const alertBtn = (e) =>{
+    $('.alertLayerBtn').on("click",function(){ // alert 팝업 data-alert-text 값 노출
+      let _alertTxt = $(this).data("alert-text"),
+          _alertOpen = $(this).data("open-layer");
+      alertLayer(_alertTxt, _alertOpen);
+      return false;
+    });
+  }
+  const alertLayer = (_eText, layerClass) =>{ // alert 팝업 오픈
+    $('.alert_layer').find('.alert_text').html(_eText);
+    openModal(layerClass); // 보여질 팝업 class
+  }
+  /* e: 공통 common.js 옮겨야할 */
+
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: red;
+        opacity: 0;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="ic_cart" transform="translate(-998 119)">
+    <rect id="사각형_1331" data-name="사각형 1331" class="cls-1" width="24" height="24" transform="translate(998 -119)"/>
+    <path id="패스_1549" data-name="패스 1549" class="cls-2" d="M1014.9-114a5.009,5.009,0,0,0-4.9-4,5.009,5.009,0,0,0-4.9,4H1000v18h20v-18Zm-4.9-2a3,3,0,0,1,2.816,2h-5.632A3,3,0,0,1,1010-116Zm8,18h-16v-14h3v3h2v-3h6v3h2v-3h3Z"/>
+  </g>
+</svg>

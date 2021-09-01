@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="ic_cart_number" data-name="ic cart number" transform="translate(-2715.943 -3563.35)">
+    <rect id="bg" width="56" height="56" transform="translate(2715.943 3563.35)"/>
+    <g id="ic_cart" data-name="ic cart">
+      <path id="패스_1504" data-name="패스 1504" class="cls-1" d="M2720.943,3572.1h38.5v33.25h-38.5Z"/>
+      <path id="패스_1505" data-name="패스 1505" class="cls-2" d="M2747.818,3572.1v-.287a7.63,7.63,0,0,0-15.25.024v.263h-11.625v33.25h38.5V3572.1Zm-14-.24a6.38,6.38,0,0,1,12.75-.023v.263h-12.75Zm24.375,32.24h-36v-30.75h10.375v11h1.25v-11h12.75v11h1.25v-11h10.375Z" transform="translate(4)"/>
+    </g>
+  </g>
+</svg>

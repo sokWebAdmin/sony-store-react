@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <defs>
+        <style>
+            .cls-2{fill:#222}.cls-3{fill:#5865f5}
+        </style>
+    </defs>
+    <g id="Phone_A_Icon" transform="translate(-718 -508)">
+        <g id="Phone_A_Icon-2" transform="translate(640 133)">
+            <g id="그룹_4896">
+                <path id="패스_757" d="M105 383h-6v2h6v-2z" class="cls-2"/>
+            </g>
+            <g id="그룹_4897">
+                <path id="패스_758" d="M86 433v-10h24v-2H86v-40h32v27h2v-29H84v56h26v-2z" class="cls-2"/>
+            </g>
+            <g id="그룹_4898">
+                <path id="패스_759" d="M130 417v-5a7 7 0 0 0-14 0v5h-6v18h26v-18zm-12-5a5 5 0 0 1 10 0v5h-10zm16 21h-22v-14h22z" class="cls-3"/>
+                <path id="패스_760" d="M125 425a2 2 0 1 0-3 1.723V429h2v-2.277a1.994 1.994 0 0 0 1-1.723z" class="cls-3"/>
+            </g>
+            <g id="그룹_4899">
+                <path id="패스_761" d="M106 427h-8v2h8v-2z" class="cls-2"/>
+            </g>
+        </g>
+    </g>
+</svg>
