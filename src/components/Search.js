@@ -1,10 +1,15 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 
 //images
 import search from "../assets/images/common/ic_search.svg";
 import close from "../assets/images/common/ic_close.svg";
 
+//utils
+import { useHistory } from "react-router-dom";
+
 export default function Search({ setSearchOpen }) {
+  
+  const history = useHistory();
 
   const [keyword, setKeyword] = useState('');
 
@@ -23,7 +28,7 @@ export default function Search({ setSearchOpen }) {
               }} />
               <button className="btn search__btn__submit" onClick={()=>{
                 if(keyword){
-                  window.location.href="/search-result/"+keyword
+                  history.push("/search-result/"+keyword)
                 } else{
                   alert("검색어를 입력해주세요.")
                 }

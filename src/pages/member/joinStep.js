@@ -12,14 +12,16 @@ import "../../assets/scss/contents.scss"
 
 //utils
 import { emptyCheck, tokenValidation } from '../../utils/utils';
+import { useHistory } from "react-router-dom";
 
 //context
 import GlobalContext from '../../context/global.context';
 
 
 export default function JoinStep() {
-  const {onChangeGlobal, shopByToken} = useContext(GlobalContext)
+  const {shopByToken} = useContext(GlobalContext)
 
+  const history = useHistory();
 
   const [isPwVisible, setPwVisible] = useState(false);
   const [isConfirmVisible, setConfirmVisible] = useState(false);
@@ -170,7 +172,7 @@ export default function JoinStep() {
       if(response.data.errorCode == "0000"){
         //성공
         alert("회원가입이 완료되었습니다.")
-        window.location.replace("/member/login")
+        history.push("/member/login")
       } else{
         alert(response.data.errorMessage)
         return;
@@ -234,7 +236,7 @@ export default function JoinStep() {
     if(shopByToken !== undefined && shopByToken !== ''){
       //valid check
       if(tokenValidation(shopByToken)){
-       window.location.replace("/"); 
+        history.push("/")
       }
     }
   },[shopByToken])

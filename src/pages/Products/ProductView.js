@@ -665,99 +665,14 @@ export default function ProductView({match}) {
           <div className="detail_info_zone tab_ui_info">
             {/* 제품 개요 */}
             <div className={`detail_info tab_ui_inner ${tabState=="intro" ? "view" : ""}`}>
-               <div dangerouslySetInnerHTML={ {__html: productData.baseInfo.content} }>
+               <div dangerouslySetInnerHTML={ {__html: productData.baseInfo.contentHeader} }>
                </div>
               
             </div>
             {/* 제품 상세 */}
             <div className={`detail_info tab_ui_inner ${tabState=="detail" ? "view" : ""}`}>
-              <div className="detail_box">
-                <h2 className="common__title h2">제품 상세</h2>
-                <h3 className="common__title h3">렌즈</h3>
-                <div className="common__table__wrap">
-                  <table className="common__table" role="presentation">
-                    <caption>렌즈 호환성 등의 정보</caption>
-                    <colgroup>
-                      <col width="23.5%" />
-                      <col width="76.5%" />
-                    </colgroup>
-                    <tbody>
-                      <tr>
-                        <th scope="row">렌즈 호환성</th>
-                        <td>소니 E-마운트 렌즈</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">이미지 크기(픽셀), [3:2]</th>
-                        <td>35mm 풀프레임 L : 9504 x 6336(60M), M : 6240 x 4160(26M), S : 4752 x 3168(15M) APS-C L : 6240 x 4160(26M), M : 4752 x 3168(15M), S : 3120 x 2080(6.5M)</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <h3 className="common__title h3">이미지 센서</h3>
-                <div className="common__table__wrap">
-                  <table className="common__table" role="presentation">
-                    <caption>이미지 센서 등의 정보</caption>
-                    <colgroup>
-                      <col width="23.5%" />
-                      <col width="76.5%" />
-                    </colgroup>
-                    <tbody>
-                      <tr>
-                        <th scope="row">화면비</th>
-                        <td>3:2</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">픽셀 수</th>
-                        <td>약 61.0 메가픽셀(유효) / 약 62.5 메가픽셀(전체)</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">센서 유형</th>
-                        <td>35mm 풀프레임(35.7 x 23.8mm), Exmor R CMOS 센서</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">방진 시스템</th>
-                        <td>광학 필터 및 이미지 센서 시프트 메커니즘에 보호 코팅 제공</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <h3 className="common__title h3">레코딩 (정지 이미지)</h3>
-                <div className="common__table__wrap">
-                  <table className="common__table" role="presentation">
-                    <caption>레코딩 (정지 이미지) 등의 정보</caption>
-                    <colgroup>
-                      <col width="23.5%" />
-                      <col width="76.5%" />
-                    </colgroup>
-                    <tbody>
-                      <tr>
-                        <th scope="row">레코딩 포맷</th>
-                        <td>JPEG(DCF 버전 2.0, Exif 버전 2.31, MPF 베이스라인 지원), RAW(소니 ARW 2.3 포맷)</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">이미지 크기(픽셀), [3:2]</th>
-                        <td>JPEG(DCF 버전 2.0, Exif 버전 2.31, MPF 베이스라인 지원), RAW(소니 ARW 2.3 포맷)</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">이미지 크기(픽셀), [4:3]</th>
-                        <td>35mm 풀프레임 L : 9504 x 6336(60M), M : 6240 x 4160(26M), S : 4752 x 3168(15M) APS-C L : 6240 x 4160(26M), M : 4752 x 3168(15M), S : 3120 x 2080(6.5M)</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">이미지 크기(픽셀), [16:9]</th>
-                        <td>35mm 풀프레임 L : 9504 x 6336(60M), M : 6240 x 4160(26M), S : 4752 x 3168(15M) APS-C L : 6240 x 4160(26M), M : 4752 x 3168(15M), S : 3120 x 2080(6.5M)</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">이미지 크기(픽셀), [1:1]</th>
-                        <td>35mm 풀프레임 L : 9504 x 6336(60M), M : 6240 x 4160(26M), S : 4752 x 3168(15M) APS-C L : 6240 x 4160(26M), M : 4752 x 3168(15M), S : 3120 x 2080(6.5M)</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">방진 시스템</th>
-                        <td>광학 필터 및 이미지 센서 시프트 메커니즘에 보호 코팅 제공</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <div dangerouslySetInnerHTML={ {__html: productData.baseInfo.content} }>
+               </div>
             </div>
             {/* 배송/환불 규정 */}
             <div className={`detail_info tab_ui_inner ${tabState=="terms" ? "view" : ""}`}>

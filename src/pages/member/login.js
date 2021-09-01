@@ -11,6 +11,7 @@ import "../../assets/scss/contents.scss"
 
 //utils
 import {emptyCheck, tokenValidation} from '../../utils/utils'
+import { useHistory } from "react-router-dom";
 
 //lib
 import Cookies from "js-cookie";
@@ -18,8 +19,12 @@ import Cookies from "js-cookie";
 //context
 import GlobalContext from '../../context/global.context';
 
+
+
 export default function Login() {
   const {onChangeGlobal, shopByToken} = useContext(GlobalContext)
+
+  const history = useHistory();
 
   const [tabState, setTabState] = useState("member");
   const [isPwVisible, setPwVisible] = useState(false);
@@ -63,17 +68,14 @@ export default function Login() {
         const tokenValue = response.data.accessToken;
         
         await Cookies.set("shopByToken", tokenValue);
-        onChangeGlobal({shopByToken: tokenValue});
-        
+      
         if(saveEmail === true){
           Cookies.set("sony_email", email);
         }else{
           Cookies.remove("sony_email");
         }
 
-        //메인페이지 이동
-        window.location.replace("/");
-
+        onChangeGlobal({shopByToken: tokenValue});
       }
     }
   }
@@ -85,7 +87,7 @@ export default function Login() {
     if(shopByToken !== undefined && shopByToken !== ''){
       //valid check
       if(tokenValidation(shopByToken)){
-       window.location.replace("/"); 
+        history.push("/")
       }
     }
   },[shopByToken])

@@ -10,11 +10,15 @@ import { sampleApi } from "../../api/sample";
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/order.scss"
 
-export default function cart() {
+//utils
+import { useHistory } from "react-router-dom";
+
+export default function Cart() {
+  const history = useHistory();
 
     return (
         <>
-        <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <SEOHelmet title={"장바구니"} />
         <div className="contents order">
         <div className="container" id="container">
   <div className="content order_page">
@@ -135,7 +139,7 @@ export default function cart() {
       <div className="button_wrap">
         <a href="#" className="button button_negative">쇼핑 계속 하기</a>
         <button type="submit" className="button button_positive popup_comm_btn" data-popup-name="login_chk_order" onClick={()=>{
-          window.location.href='/order/step/1'
+          history.push('/order/step/1')
         }}>구매하기</button>
       </div>
       <div className="acc acc_ui_zone acc_faq acc_cart">
