@@ -1,18 +1,34 @@
-import { React, useState } from 'react';
+import { React, useState, useContext, useEffect } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
-//api
-import { sampleApi } from "../../api/sample";
-
 //utils
-import {emptyCheck} from '../../utils/utils'
+import { tokenValidation} from '../../utils/utils'
+import { useHistory } from "react-router-dom";
 
 //css
 import "../../assets/scss/contents.scss"
 
-export default function join() {
+//context
+import GlobalContext from '../../context/global.context';
+
+export default function Join() {
+  const {onChangeGlobal, shopByToken} = useContext(GlobalContext)
+
+  const history = useHistory();
+
+  //componentDidMount
+  useEffect(()=>{
+    //로그인 상태인 경우, 메인화면으로 자동 이동처리
+    console.log(shopByToken)
+    if(shopByToken !== undefined && shopByToken !== ''){
+      //valid check
+      if(tokenValidation(shopByToken)){
+        history.push("/")
+      }
+    }
+  },[shopByToken])
 
     return (
         <>
@@ -25,7 +41,7 @@ export default function join() {
                 <p className="login__desc">소니스토어와 소니 고객지원 사이트는 하나의 아이디와 비밀번호로 운영됩니다. <span className="block">회원가입을 통해 다양한 서비스를 이용하실 수 있습니다.</span></p>
                 <div className="btn_box full">
                   <button type="button" className="btn btn_dark" onClick={()=>{
-                      window.location.href="/member/joinStep"
+                    history.push("/member/joinStep")
                   }}>소니스토어 간편 회원 가입</button>
                 </div>
               </div>

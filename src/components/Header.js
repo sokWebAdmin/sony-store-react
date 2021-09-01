@@ -17,17 +17,23 @@ import Search from "./Search";
 //context
 import GlobalContext from '../context/global.context';
 
+//utils
+import { useHistory } from "react-router-dom";
 
 export default function Header() {
+  const history = useHistory();
+
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
 
   const [sideBarOpen, setMobileSideBarOpen] = useState(false);
   const [isLoggedIn, setLoggedIn] = useState(false);
 
-  const {onChangeGlobal, shopByToken} = useContext(GlobalContext)
+  const {shopByToken} = useContext(GlobalContext)
 
     useEffect(()=>{
+      console.log("token Changed")
+      console.log(shopByToken)
       if(shopByToken){
         setLoggedIn(true);
       }else{
@@ -65,13 +71,12 @@ export default function Header() {
             <div className="member__inner">
                 <a href="/member/login" className="member__msg member__msg__login">로그인이<br />필요합니다</a>
                 <button type="button" className="btn btn__login" onClick={()=>{
-                  window.location.href="/member/login"
+                  history.push("/member/login")
                 }}>로그인</button>
                 <div className="member__menu">
                 <ul>
                     <li className="member__menu__mypage"><a href="/member/join">회원가입</a></li>
                     <li className="member__menu__order"><a href="/my-page/order-list">주문/배송 조회</a></li>
-                    <li className="member__menu__order"><a href="#" onClick={()=>{setLoggedIn(true)}}>임시)로그인 모드</a></li>
                     <li className="member__menu__cart"><a href="/cart">장바구니<span className="badge">99</span></a></li>
                 </ul>
                 </div>
