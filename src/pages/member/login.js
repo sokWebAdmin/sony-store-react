@@ -61,7 +61,7 @@ export default function Login() {
       const response = await loginApi(email, password);
       console.log(response)
       if(response.status != 200) {
-        alert(response.data.message);
+        // alert(response.data.message);
         return;
 
       }else if(response.status == 200){
