@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <defs>
+        <style>
+            .cls-2{fill:#fff}
+        </style>
+    </defs>
+    <g id="Order_Icon_off" transform="translate(-740 -286)">
+        <circle id="Icon_Area" cx="40" cy="40" r="40" fill="#5865f5" transform="translate(740 286)"/>
+        <g id="Order" transform="translate(-119 -223)">
+            <path id="패스_890" d="M879 534v30h40v-30zm2 8h36v4h-36zm36 20h-36v-14h36zm-36-22v-4h36v4z" class="cls-2"/>
+            <path id="패스_891" d="M895 552h-12v2h12v-2z" class="cls-2" transform="translate(1)"/>
+            <path id="패스_892" d="M891 556h-8v2h8v-2z" class="cls-2" transform="translate(1)"/>
+            <path id="패스_893" d="M913 554v2h-4v-2h4m2-2h-8v6h8v-6z" class="cls-2" transform="translate(-1)"/>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <defs>
+        <style>
+            .cls-2{fill:#fff}
+        </style>
+    </defs>
+    <g id="ic_genu_64" transform="translate(-2199 -3641.625)">
+        <path id="사각형_575-3" fill="rgba(0,0,0,0)" d="M0 0H64V64H0z" transform="translate(2199 3641.625)"/>
+        <g id="그룹_5615">
+            <g id="패스_1290">
+                <path id="패스_1392" d="M2250.258 3684.876h-2v-31h-7v-2h9z" class="cls-2"/>
+            </g>
+            <g id="패스_1291">
+                <path id="패스_1393" d="M2238.258 3697.876h-26v-46h9v2h-7v42h24z" class="cls-2"/>
+            </g>
+            <g id="사각형_1210">
+                <path id="패스_1394" d="M2237.258 3657.876h-12a5.006 5.006 0 0 1-5-5v-5h22v5a5.006 5.006 0 0 1-5 5zm-15-8v3a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-3z" class="cls-2"/>
+            </g>
+            <g id="그룹_5612">
+                <g id="선_157">
+                    <path id="사각형_1263" d="M0 0H16V2H0z" class="cls-2" transform="translate(2227.258 3663.876)"/>
+                </g>
+                <g id="선_158">
+                    <path id="사각형_1264" d="M0 0H16V2H0z" class="cls-2" transform="translate(2227.258 3671.876)"/>
+                </g>
+                <g id="선_159">
+                    <path id="사각형_1265" d="M0 0H16V2H0z" class="cls-2" transform="translate(2227.258 3679.876)"/>
+                </g>
+                <g id="사각형_1211">
+                    <path id="사각형_1266" d="M0 0H4V4H0z" class="cls-2" transform="translate(2219.258 3662.876)"/>
+                </g>
+                <g id="사각형_1212">
+                    <path id="사각형_1267" d="M0 0H4V4H0z" class="cls-2" transform="translate(2219.258 3670.876)"/>
+                </g>
+                <g id="사각형_1213">
+                    <path id="사각형_1268" d="M0 0H4V4H0z" class="cls-2" transform="translate(2219.258 3678.876)"/>
+                </g>
+            </g>
+            <g id="그룹_5614">
+                <g id="그룹_5613">
+                    <g id="패스_1292">
+                        <path id="패스_1395" d="M2245.8 3698.29l-7.253-7.252 1.414-1.414 5.839 5.838 8.747-8.748 1.414 1.414z" class="cls-2"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

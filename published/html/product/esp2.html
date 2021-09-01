@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msapplication-TileImage" content="../../images/favicon_144x144.png">
+<title>연장서비스플랜 ESP</title>
+<link rel="shortcut icon" href="../../images/favicon_144x144.png">
+<link rel="stylesheet" href="../../lib/css/swiper.min.css">
+<link rel="stylesheet" href="../../css/category.css">
+<link rel="stylesheet" href="../../css/esp.css">
+<link rel="stylesheet" href="../../css/contents.css">
+<link rel="stylesheet" href="../../css/product.css">
+<script src="../../lib/js/jquery-3.6.0.min.js"></script>
+<script src="../../lib/js/swiper.min.js"></script>
+<script src="../../js/ux-common.js"></script>
+</head>
+<body>
+<div class="wrapper">
+  <div id="skipnav" class="skipnav">
+  	<a href="#container"><span>본문 바로가기</span></a>
+  </div>
+  <header id="header" class="header">
+    <div class="header__wrapper">
+      <h1 class="header__logo"><a href="../../html/main.html"><img src="../../images/common/logo.svg" alt="SONY"></a></h1>
+      <div class="header__menu">
+        <button class="btn btn__mo__hidden btn__search"><img src="../../images/common/ic_search.svg" alt="검색창 열기"></button>
+        <a href="../../html/member/mypage.html" class="btn btn__desktop btn__mypage"><img src="../../images/common/ic_mypage.svg" alt="마이페이지"></a>
+        <a href="../../html/order/cart.html" class="btn btn__cart"><img src="../../images/common/ic_cart.svg" alt="장바구니"></a></li>
+        <button type="button" class="btn btn__mo btn__menu__open"><img src="../../images/common/ic_menu.svg" alt="메뉴 열기"></button>
+        <button type="button" class="btn btn__mo btn__mo__hidden btn__menu__close"><img src="../../images/common/ic_close.svg" alt="메뉴 닫기"></button>
+      </div>
+      <div class="header__inner">
+  
+        <!-- 비회원/로그인 전 -->
+        <!--
+        <div class="member">
+          <div class="member__inner">
+            <a href="#" class="member__msg member__msg__login">로그인이<br>필요합니다</a>
+            <button type="button" class="btn btn__login">로그인</button>
+            <div class="member__menu">
+              <ul>
+                <li class="member__menu__mypage"><a href="../../html/member/join.html">회원가입</a></li>
+                <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        -->
+  
+        <!-- 회원/로그인 -->
+        <div class="member">
+          <div class="member__inner">
+            <p class="member__msg">박소니님<br>안녕하세요!</p>
+            <div class="member__menu">
+              <ul>
+                <li class="member__menu__mypage"><a href="../../html/member/mypage.html">마이페이지</a></li>
+                <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn__logout">로그아웃</button>
+          </div>
+        </div>
+        <nav class="gnb">
+          <ul class="gnb__menu">
+            <li>
+              <a href="#">스토어 추천 제품</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="../../html/recommend/recommend.html">추천 제품</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="../../html/product/List.html">제품</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="../../html/product/camera.html">카메라</a>
+                </li>
+                <li>
+                  <a href="../../html/product/videocamera.html">비디오카메라</a>
+                </li>
+                <li>
+                  <a href="../../html/product/audio.html">오디오</a>
+                </li>
+                <li>
+                  <a href="../../html/product/accessory.html">액세서리</a>
+                </li>
+                <li>
+                  <a href="../../html/product/playstation.html">PlayStation®</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">기획전</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">소니스토어 단독</a>
+                </li>
+                <li>
+                  <a href="#">혜택존</a>
+                </li>
+                <li>
+                  <a href="#">예약판매</a>
+                </li>
+                <li>
+                  <a href="#">정품 등록 이벤트</a>
+                </li>
+                <li>
+                  <a href="#">LIVE ON</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">멤버십</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">등급&amp;혜택 안내</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">고객 서비스</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">FAQ&amp;공지사항</a>
+                </li>
+                <li>
+                  <a href="https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa">정품등록 안내</a>
+                </li>
+                <li>
+                  <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
+                </li>
+                <li>
+                  <a href="#">구매 상담</a>
+                </li>
+                <li>
+                  <a href="#">직영점 안내</a>
+                </li>
+                <li>
+                  <a href="#">동영상 강좌</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- ↓ 앱 전용 메뉴 -->
+        <div class="appmenu">
+          <ul>
+            <li class="appmenu__qr"><a href="#">QR스캔</a></li>
+            <li class="appmenu__setting"><a href="#">설정</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- ↓ 검색 -->
+      <div class="search">
+        <h2 class="sr-only">통합검색</h2>
+        <div class="search__inner">
+          <div class="search__field">
+            <!-- <form action="get" role="search"> -->
+            <fieldset>
+              <legend>검색</legend>
+              <input type="text" id="search__input" class="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxlength="40">
+              <button class="btn search__btn__submit"><img src="../../images/common/ic_search.svg" alt="검색"></button>
+            </fieldset>
+            <!-- </form> -->
+          </div>
+          <div class="search__keyword">
+            <h3 class="search__title">인기 검색어</h3>
+            <div class="search__keyword__list">
+              <a href="#" class="search__keyword__item"># SEL40F25G</a>
+              <a href="#" class="search__keyword__item"># SRS-RA5000/MKR2</a>
+              <a href="#" class="search__keyword__item"># 카메라의 초격차</a>
+              <a href="#" class="search__keyword__item"># 알파 야카데미 8월 강좌</a>
+              <a href="#" class="search__keyword__item"># 노이즈캔슬링</a>
+              <a href="#" class="search__keyword__item"># 벗지않는 헤드폰</a>
+              <a href="#" class="search__keyword__item"># WF-1000XM3SME</a>
+              <a href="#" class="search__keyword__item"># 무선 스피커</a>
+              <a href="#" class="search__keyword__item"># 하이 레졸루션 오디오</a>
+              <a href="#" class="search__keyword__item"># 프리미엄 SD카드</a>
+            </div>
+          </div>
+          <div class="search__recomm">
+            <h3 class="search__title">추천 제품</h3>
+            <div class="search__recomm__wrapper">
+              <ul class="search__recomm__list">
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_01.png" alt="상품명1">
+                      <span class="badge__text badge__text__new">NEW</span>
+                      <!--
+                      <span class="badge__text badge__text__best">BEST</span>
+                      <span class="badge__text badge__text__event">EVENT</span>
+                      <span class="badge__text badge__text__hot">HOT</span>
+                      -->
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                      <p class="search__recomm__desc ellipsis2">끄지마세요, 벗지마세요, 편하게 대화를 시작하세요!</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_02.png" alt="상품명2">
+                      <span class="badge__text badge__text__best">BEST</span>
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">microSDXC SR-64HXA Class 10 High Sound Quality Model with SD Card Adapter</span>
+                      <p class="search__recomm__desc ellipsis2">일렉트로닉 노이즈 억제, 맑고 깨끗한 사운드를 실현</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_03.png" alt="상품명3">
+                      <span class="badge__text badge__text__event">EVENT</span>
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                      <p class="search__recomm__desc ellipsis2">모든 위대함은, 아주 작은 것들로부터. 원핸드 컴팩트 풀프레임 카메라, 독보적인 존재감, 예뻐지는 데일리 카메라</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <button class="btn search__btn__close"><img src="../../images/common/ic_close.svg" alt="검색창 닫기"></button>
+      </div>
+      <!-- ↑ 검색 -->
+    </div>
+  </header>
+  <div class="container">
+    <div class="content esp_page">
+      <div class="common_head first_tit">
+        <a href="../../html/product/esp.html" class="common_head_back">연장서비스플랜 ESP</a>
+        <h1 class="common_head_name">정품/보증기간/연장서비스플랜</h1>
+      </div>
+      <div class="esp_list_box">
+        <div class="esp_tbl_wrap">
+          <div class="col_table_wrap">
+            <div class="col_table">
+              <div class="col_table_head">
+                <div class="col_table_row">
+                  <div class="col_table_cell">모델명</div>
+                  <div class="col_table_cell">정품등록일</div>
+                  <div class="col_table_cell">보증기간 만료일 (제품번호)</div>
+                  <div class="col_table_cell">연장서비스플랜 구매 신청</div>
+                </div>
+              </div>
+              <div class="col_table_body">
+                <div class="col_table_row">
+                  <div class="col_table_cell">
+                  <div class="prd_name">CMT-GPZ6</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <div class="prd_date">21.07.22</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <div class="prd_num">27.10.22 (9165530)</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <button class="button button_secondary button-s popup_comm_btn" data-popup-name="esp_pop" type="button">구매 신청</button>
+                  </div>
+                </div>
+                <div class="col_table_row">
+                  <div class="col_table_cell">
+                  <div class="prd_name">CMT-GPZ6</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <div class="prd_date">21.07.22</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <div class="prd_num">27.10.22 (9165530)</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <button class="button button_secondary button-s popup_comm_btn" data-popup-name="esp_pop" type="button">구매 신청</button>
+                  </div>
+                </div>
+                <div class="col_table_row">
+                  <div class="col_table_cell">
+                  <div class="prd_name">CMT-GPZ6</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <div class="prd_date">21.07.22</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <div class="prd_num">27.10.22 (9165530)</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <button class="button button_secondary button-s popup_comm_btn" data-popup-name="esp_pop" type="button">구매 신청</button>
+                  </div>
+                </div>
+                <div class="col_table_row">
+                  <div class="col_table_cell">
+                  <div class="prd_name">CMT-GPZ6</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <div class="prd_date">21.07.22</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <div class="prd_num">27.10.22 (9165530)</div>
+                  </div>
+                  <div class="col_table_cell">
+                    <button class="button button_secondary button-s popup_comm_btn" data-popup-name="esp_pop" type="button">구매 신청</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="btn_area">
+            <button type="button" class="btn_more" title="기획전 더보기">더보기<span class="ico_plus"></span></button>
+          </div>
+        </div>
+        <div class="esp_info">
+          <strong class="esp_tit">[안내]</strong>
+          <ul class="list_dot">
+            <li>고객님의 아이디로 정품등록 되어진 모델에 대한 정보입니다.</li>
+            <li>연장서비스플랜을 구매하실 수 있는 경우 &lt;구매신청&gt;버튼이 노출되며, 클릭하시면 장바구니 페이지로 이동합니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <nav class="sidebar">
+      <div class="sidebar__inner">
+        <a href="../../html/mypage/myPageMain.html" class="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+        <a href="#" class="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
+        <a href="#header" class="sidebar__btn top"><span>페이지 상단</span></a>
+      </div>
+      <button class="sidebar__btn sidebar__btn__toggle" type="button"><img src="../../images/common/ic_sidebar1.svg" alt="메뉴토글"></button>
+    </nav>
+    <div class="footer__inner">
+      <div class="footer__social__wrap">
+        <div class="footer__social">
+          <h3 class="footer__social__title">FOLLOW US</h2>
+          <div class="footer__social__links">
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_facebook.svg" alt="facebook"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_instagram.svg" alt="instagram"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_youtube.svg" alt="youtube"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_blog.svg" alt="blog"></a>
+          </div>
+        </div>
+        <div class="footer__family">
+          <div class="footer__family__links">
+            <div class="footer__family__link footer__pc">
+              <button type="button" class="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침">Sony Family</button>
+              <div class="footer__family__link__inner">
+                <h4 class="optgroup__label">Sony Family</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니코리아 고객지원</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 알파 α</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송/업무용 솔루션</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
+                </ul>
+                <h4 class="optgroup__label">Family Company</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
+                </ul>
+              </div>
+            </div>
+            <select class="footer__family__link footer__mo">
+              <optgroup label="Sony Family">
+                <option>소니코리아</option>
+                <option>소니코리아 고객지원</option>
+                <option>소니 알파 α</option>
+                <option>소니 방송/업무용 솔루션</option>
+                <option>소니 방송 업무용 솔루션 고객지원</option>
+              </optgroup>
+              <optgroup label="Family Company">
+                <option>소니 인터렉티브 엔터테인먼트 코리아</option>
+                <option>소니 뮤직 엔터테인먼트 코리아</option>
+                <option>소니 ATV 뮤직 퍼블리싱 코리아</option>
+                <option>소니 픽쳐스 엔터테인먼트 코리아</option>
+                <option>소니 픽쳐스 텔레비전 코리아</option>
+              </optgroup>
+            </select>
+          </div>
+          <a href="https://www.sony.com/" class="footer__family__global" target="_blank">Sony Global</a>
+        </div>
+      </div>
+      <div class="footer__legal">
+        <div class="footer__legal__links">
+          <a href="../../html/footer/terms.html" class="footer__legal__link">이용약관</a>
+          <a href="../../html/footer/policy.html" class="footer__legal__link privacy">개인정보처리방침</a>
+          <a href="javascript:openModal('modal__customer__insurance');" class="footer__legal__link" data-modal-target="modal__customer__insurance">소비자 피해 보상보험</a>
+          <a href="../../html/footer/siteMap.html" class="footer__legal__link">사이트맵</a>
+        </div>
+        <div class="footer__legal__warning">
+          <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
+          <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a href="#" class="escrow">에스크로결제</a></p>
+        </div>
+      </div>
+      <address class="address">
+        <span>사업장주소 : 서울특별시 영등포구 국제금융로 10 원아이에프씨 24F</span>
+        <span>사업자 등록번호 : 106-81-23810 통신판매번호 2012-서울영등포-1038 소니코리아㈜</span>
+        <span>대표이사 : Okura Kikuo</span>
+        <span>개인정보관리책임자 : Okura Kikuo</span>
+        <span>TEL : 소니코리아 고객센터 1588-0911</span>
+        <span>E-MAIL : <a href="mailto:cshelp@sony.co.kr">cshelp@sony.co.kr</a></span>
+        <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
+      </address>
+    </div>
+  </footer>
+  
+  <!-- 소비자피해보상 보험 팝업 -->
+  <div class="layer modal__customer__insurance">
+    <div class="layer_wrap">
+      <div class="layer_container">
+        <div class="layer_title">
+          <h1>소비자피해보상보험</h1>
+        </div>
+        <div class="layer_content">
+          <div class="consumer_logo">
+            <img src="../../images/img_consumerlogo.png">
+          </div>
+          <p>고객님은 안전거래를 위해 현금 결제 시 저희 쇼핑몰이 가입한 구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.</p>
+          <p>보상대상 : 미배송&#47;반품, 환불거부&#47;쇼핑몰부도</p>
+          <div class="btn_box">
+            <a href="https://mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810" target="_blank" title="새창열림">서비스 가입 사실 확인하기</a>
+          </div>
+        </div>
+        <button href="#" class="layer_close close" title="팝업창 닫기">
+          <span>팝업창 닫기</span>
+      </button>        
+      </div>    
+    </div>
+  </div>
+  <!--// 소비자피해보상 보험 팝업 -->
+  
+  <script>
+       //팝업 열기
+      function openModal(modalname) {
+          $("." + modalname).fadeIn(300);
+          $("body,html").css({"overflow":"hidden"});        
+          return false;
+      }
+      // 팝업 닫기
+      $(document).ready(function(){
+        $layer = $(".layer");
+  
+        $('.close').click(function() {
+            $layer.fadeOut(300);
+            $('body,html').css({"overflow":"visible"});
+        });
+      });
+  </script></div>
+<!-- s: 연장서비스플랜 이용약관 -->
+<div class="popup_wrap size_m esp_pop">
+  <div class="pop_inner">
+    <div class="pop_cont">
+      <p class="pop_tit">연장서비스플랜 이용약관</p>
+      <div class="pop_cont_scroll">
+        <p class="pop_txt txt_l">본 이용약관은 고객님께서 Sony(이하 본문의 "Sony"는 Sony Korea Corporation을 의미)로부터 주문하신 연장서비스플랜(Extended Service Plan, 이하 "ESP")의 범위 및 조건이 명시되어 있습니다.</p>
+        <div class="inner_scroll">
+          <div class="related_laws">
+            <ul class="dot_line">
+              <li>
+                <p class="tit">1조. ESP 대상 고객 및 제품</p>
+                <p class="desc">본 ESP는 Sony 또는 Sony의 공식대리점을 통해 판매된 제품 중 지정된 모델을 구매한 고객이 대상이 됩니다. (등급 제품 제외) 본 ESP는 해당 제품과 동시에 구입하거나 제품 구매일로부터 1년 이내에 구입해야 합니다.</p>
+              </li>
+              <li>
+                <p class="tit">2조. ESP 유효 기간</p>
+                <p class="desc">본 ESP가 적용되는 유효기간 기산을 위한 기준일은 ESP가 적용되는 제품(본체)의 최초 구매일 입니다. 당해 구매일을 기준으로 ESP의 유효기간이 산정되며 당해 유효기간의 종료일에 ESP의 효력이 종료됩니다. 제품 구매일자의 확인은 보증서 또는 구입 영수증과 당사 제품 관리 전산시스템을 기준으로 합니다. 본 ESP의 유효기간은 연장되거나 갱신 되지 않습니다.</p>
+              </li>
+              <li>
+                <p class="tit">3조. ESP 제공 내용</p>
+                <p class="desc">본 ESP는 ESP의 유효기간 동안 ESP에 지정된 제품에 한해 고장 발생시 본 이용약관 제4조 무상 수리 조건에 근거하여 횟수에 관계없이 전액 무상 수리 서비스를 제공합니다. 단 본 이용약관 제5조의 무상 수리가 제외되는 각 항목에 해당하는 경우는 예외로 합니다.</p>
+              </li>
+              <li>
+                <p class="tit">4조. 무상 수리 조건</p>
+                <p class="desc">본 이용약관에 근거하여, 무상 수리는 표준 사용법을 준수한 상태에서(사용설명서, 라벨, 제품과 함께 제공된 인쇄물에 명시된) 발생한 제품 또는 기능 문제에 대해서만 무상으로 적용됩니다. 본 ESP는 제품의 액세서리(배터리, 리모컨 등)에는 적용되지 않으며, 사용설명서, 라벨 및 구매 시 포함된 인쇄물 등을 포함하지 않습니다.</p>
+              </li>
+              <li>
+                <p class="tit">5조. ESP에 의한 무상 수리에서 제외되는 경우</p>
+                <p class="desc">아래의 각각에 해당하는 경우에는 ESP에 의한 무상 수리 대상에서 제외되어 유상 수리로 처리됩니다.</p>
+                <ol>
+                  <li class="desc">1.	표면손상</li>
+                  <li class="desc">2.	사고로 인한 경우, 올바르지 않은 사용, 제품의 용법에 의한 사용이 아닌 경우, 관리 소홀, 상업적인 사용, 제품의 개조로 인한 손상</li>
+                  <li class="desc">3.	부적절한 제품의 작동이나 유지 보수</li>
+                  <li class="desc">4.	올바르지 않은 전원 공급으로 인한 손상</li>
+                  <li class="desc">5.	제품 구매 후 운송 중 발생한 손상. 떨어뜨리거나 가열로 인한 손상</li>
+                  <li class="desc">6.	천재지변으로 인한 손상; 화재, 지진, 수해, 번개, 환경오염, 급격한 전류 변화</li>
+                  <li class="desc">7.	Sony 공식 서비스 센터가 아닌 다른 업체를 이용하여 수리한 경우 발생한 손상</li>
+                  <li class="desc">8.	Sony 제품 자체에 결함이 아닌, 액세서리, 타사 제품, 보조제품, 주변 장치 등을 연결 사용 발생한 제품 고장</li>
+                  <li class="desc">9.	공장 출하 시 매겨진 시리얼 번호가 수정, 손상 또는 제거되어 확인 할 수 없는 제품</li>
+                  <li class="desc">10.	도난, 분실, 화재 등에 의한 제품의 멸실</li>
+                  <li class="desc">11.	설치 후 소비자의 부주의(이동,낙하,충격,파손,무리한 작동 등)로 발생된 고장, 파손, 손상 발생시</li>
+                  <li class="desc">12.	영업 및 영리 목적으로 지속적으로 사용되는 제품</li>
+                </ol>
+              </li>
+              <li>
+                <p class="tit">6조. 수리 요청 방법</p>
+                <p class="desc">본 약관에 근거하여 수리가 필요하다면, 고객님이 현재 위치하고 계시는 지역의 Sony공식서비스센터 또는 고객지원 콜센터로 전화를 하셔서 수리 서비스를 요청하실 수 있습니다.</p>
+              </li>
+              <li>
+                <p class="tit">7조. 면책</p>
+                <p class="desc">Sony는 본 약관에 명시한 사항 이외에는 어떠한 명시적 또는 묵시적 보증도 하지 않으며 어떤 경우에도 고객에게 발생한 우연적 또는 결과적 손해에 대하여 책임을 지지 않습니다. 이러한 손해의 범위에는 이익 손실, 수입 손실, 데이터 손실, 제품 사용 기회의 상실, 관련 장비의 미사용으로 인한 피해, 시스템 정지 및 구매 중단으로 인한 시간 비용 및 이와 유사한 손실을 포함합니다. 또한 Sony는 제품의 시장성 또는 제품의 특정한 용도의 적합성 여부에 관하여 어떠한 의미의 보증도 하지 않습니다.</p>
+              </li>
+              <li>
+                <p class="tit">8조. 개인 정보(사생활 보호)</p>
+                <p class="desc">Sony는 고객에게 서비스를 제공하기 위해 제품의 제조번호, 제품 및 서비스 구입일 뿐만 아니라 고객의 개인정보(예를 들어 고객 이름, 주소, 전화번호, 여권번호). (이하 “고객정보”)를 요구할 수 있습니다. 고객정보는 외부 유출되지 않으며, 서비스 센터에서 필요한 기간 동안 보관됩니다. 지원요건 확인 및 서비스 제공 목적을 위해 Sony는 고객정보를 Sony 내 관련부서와 공유할 수 있습니다. 고객은 언제든 자신의 최근 정보를 Sony측에 제공할 수 있으며, 만약 잘못된 정보의 경우 요청하여 수정하실 수 있습니다. 개인정보와 관련된 고객의 권리는 관련 법률에 의거하여 보호됩니다. 개인정보에 대한 문의는 고객지원 콜센터로 문의하시기 바랍니다.</p>
+              </li>
+              <li>
+                <p class="tit">9조. 양도</p>
+                <p class="desc">본 ESP는 ESP가 적용되는 제품과 함께 양도가 가능합니다. 즉 제품과 분리하여 ESP만 양도할 수 없습니다. 양도에 관한 자세한 절차는 고객지원 콜센터로 문의해 주시기 바랍니다.</p>
+              </li>
+              <li>
+                <p class="tit">10조. 취소/환불</p>
+                <ol>
+                  <li class="desc">1) 본 ESP는, ESP에 의한 무상 수리 연장기간이 적용되는 시점 이후에는 환불이 불가합니다.</li>
+                  <li class="desc">2) 본 ESP가 적용되는 제품이 Sony귀책으로 인해 교환, 환불되는 경우 ESP의 효력은 자동으로 종료되며 Sony는 고객님께 ESP구입금액 전액을 환불합니다. 단, ESP 환불은 제품의 교환, 환불과 함께 자동으로 이루어지지 않으며 일반적인 취소, 환불 절차에 따라 고객지원 콜센터 및 이메일 (cshelp@sony.co.kr) 을 통해 별도로 요청해주셔야 합니다.</li>
+                </ol>
+              </li>
+              <li>
+                <p class="tit">11조. 유의사항</p>
+                <ol>
+                  <li class="desc">1) 수리 요청으로 인해 발생되는 모든 배송비는 Sony 택배서비스 기준에 적용됩니다</li>
+                  <li class="desc">2) 본 ESP의 유효기간은 품질보증기간이 아닙니다. 즉 품질보증기간이 연장되는 것이 아니므로 당해 유효기간 동안 소비자기본법상 제품의 교환/환불에 해당하는 사유가 발생되어도 제품의 교환, 환불은 불가합니다.</li>
+                  <li class="desc">3) 수리시에 새 부품이거나 품질이 보증된 재사용 부품을 사용할 수 있습니다. 이때 교체되는 부품은 Sony의 재산입니다.</li>
+                  <li class="desc">4) 본 ESP는 Sony Korea가 발행하였으며, 제공 서비스는 대한민국 내에서만 유효합니다.</li>
+                </ol>
+              </li>
+              <li>
+                <p class="tit">12조. 기타</p>
+                <ol>
+                  <li class="desc">1) 상기에 언급되지 않은 사항들은 Sony의 수리 기준 또는 소비자기본법에 준합니다.</li>
+                  <li class="desc">2) Sony는 언제라도 서비스의 특성이나 내용을 변경할 수 있는 권리를 유보합니다.</li>
+                </ol>
+              </li>
+              <li>
+                <p class="desc">본 이용약관에 근거한 ESP를 주문하시는 것은 이용약관에 기재된 내용을 모두 이해하고 준수하는 데 동의하신 것으로 간주됩니다.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="agree_check_box">
+        <div class="check">
+          <input type="checkbox" class="inp_check" id="agree_check">
+          <label for="agree_check">동의합니다.</label>
+        </div>
+        <p>'연장 서비스플랜 이용약관' 동의 시<span class="mo"> 장바구니에 상품이 담깁니다.</span></p>
+      </div>
+    </div>
+    <button href="#" class="ico_x closed" title="팝업창 닫기">
+      <span>팝업창 닫기</span>
+    </button>
+  </div>
+</div>
+<!-- e: 연장서비스플랜 이용약관 -->
+<!-- s: 장바구니 팝업-->
+<div class="popup_cart layer">
+  <div class="layer_wrap">
+    <div class="layer_container">
+      <p class="layer_title ico cart">장바구니 담기 완료</p>
+      <p class="text">해당 상품이 장바구니에 담겼습니다.<br> 장바구니로 이동하시겠습니까?</p>
+      <div class="btn_article size2">
+        <a href="#" class="btn close white">쇼핑 계속하기</a>
+        <a href="#" class="btn cart">장바구니 이동</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- e: 장바구니 팝업 -->
+<script>
+    $(function() {
+      $('.popup_comm_btn').on("click",function(){
+        $("#agree_check").prop("checked", false);
+        let _popName = $(this).data("popup-name");
+        if($('.popup_wrap:animated').length < 1){ // fadeInOut 시 중복 클릭 방지
+          popupCommon(_popName, $(this)); // 오픈할 팝업과 닫기 시 돌아갈 포커스 select
+        }
+      });
+      $("#agree_check").change(function(){
+          if($("#agree_check").is(":checked")){
+              $('.popup_cart').show();
+          }else{
+            $('.popup_cart').hide();
+          }
+      });
+      $(".popup_cart .close").click(function(e){
+        $('.layer, .esp_pop').hide();
+        $('.layer_mask').remove();
+        e.preventDefault();
+      });
+    });
+</script>
+</body>
+</html>

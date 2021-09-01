@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="ic___16px" width="16" height="16" viewBox="0 0 16 16">
+    <defs>
+        <style>
+            .cls-2{fill:#fff}
+        </style>
+    </defs>
+    <circle id="타원_838" cx="8" cy="8" r="8" fill="#bbb"/>
+    <path id="사각형_1112" d="M0 0H2V5H0z" class="cls-2" transform="translate(7 4)"/>
+    <path id="사각형_1113" d="M0 0H2V2H0z" class="cls-2" transform="translate(7 10)"/>
+</svg>

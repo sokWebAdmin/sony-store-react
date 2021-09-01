@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msapplication-TileImage" content="../../images/favicon_144x144.png">
+<title>마이페이지</title>
+<link rel="shortcut icon" href="../../images/favicon_144x144.png">
+<link rel="stylesheet" href="../../css/contents.css">
+<link rel="stylesheet" href="../../css/mypage.css">
+<script src="../../lib/js/jquery-3.6.0.min.js"></script>
+<script src="../../lib/js/jquery-ui.min.js"></script>
+<script src="../../js/ux-common.js"></script>
+<script src="../../js/ux-sub.js"></script>
+</head>
+<body>
+<div class="wrapper my">
+  <div id="skipnav" class="skipnav">
+  	<a href="#container"><span>본문 바로가기</span></a>
+  </div>
+  <header id="header" class="header">
+    <div class="header__wrapper">
+      <h1 class="header__logo"><a href="../../html/main.html"><img src="../../images/common/logo.svg" alt="SONY"></a></h1>
+      <div class="header__menu">
+        <button class="btn btn__mo__hidden btn__search"><img src="../../images/common/ic_search.svg" alt="검색창 열기"></button>
+        <a href="../../html/member/mypage.html" class="btn btn__desktop btn__mypage"><img src="../../images/common/ic_mypage.svg" alt="마이페이지"></a>
+        <a href="../../html/order/cart.html" class="btn btn__cart"><img src="../../images/common/ic_cart.svg" alt="장바구니"></a></li>
+        <button type="button" class="btn btn__mo btn__menu__open"><img src="../../images/common/ic_menu.svg" alt="메뉴 열기"></button>
+        <button type="button" class="btn btn__mo btn__mo__hidden btn__menu__close"><img src="../../images/common/ic_close.svg" alt="메뉴 닫기"></button>
+      </div>
+      <div class="header__inner">
+  
+        <!-- 비회원/로그인 전 -->
+        <!--
+        <div class="member">
+          <div class="member__inner">
+            <a href="#" class="member__msg member__msg__login">로그인이<br>필요합니다</a>
+            <button type="button" class="btn btn__login">로그인</button>
+            <div class="member__menu">
+              <ul>
+                <li class="member__menu__mypage"><a href="../../html/member/join.html">회원가입</a></li>
+                <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        -->
+  
+        <!-- 회원/로그인 -->
+        <div class="member">
+          <div class="member__inner">
+            <p class="member__msg">박소니님<br>안녕하세요!</p>
+            <div class="member__menu">
+              <ul>
+                <li class="member__menu__mypage"><a href="../../html/member/mypage.html">마이페이지</a></li>
+                <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn__logout">로그아웃</button>
+          </div>
+        </div>
+        <nav class="gnb">
+          <ul class="gnb__menu">
+            <li>
+              <a href="#">스토어 추천 제품</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="../../html/recommend/recommend.html">추천 제품</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="../../html/product/List.html">제품</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="../../html/product/camera.html">카메라</a>
+                </li>
+                <li>
+                  <a href="../../html/product/videocamera.html">비디오카메라</a>
+                </li>
+                <li>
+                  <a href="../../html/product/audio.html">오디오</a>
+                </li>
+                <li>
+                  <a href="../../html/product/accessory.html">액세서리</a>
+                </li>
+                <li>
+                  <a href="../../html/product/playstation.html">PlayStation®</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">기획전</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">소니스토어 단독</a>
+                </li>
+                <li>
+                  <a href="#">혜택존</a>
+                </li>
+                <li>
+                  <a href="#">예약판매</a>
+                </li>
+                <li>
+                  <a href="#">정품 등록 이벤트</a>
+                </li>
+                <li>
+                  <a href="#">LIVE ON</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">멤버십</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">등급&amp;혜택 안내</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">고객 서비스</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">FAQ&amp;공지사항</a>
+                </li>
+                <li>
+                  <a href="https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa">정품등록 안내</a>
+                </li>
+                <li>
+                  <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
+                </li>
+                <li>
+                  <a href="#">구매 상담</a>
+                </li>
+                <li>
+                  <a href="#">직영점 안내</a>
+                </li>
+                <li>
+                  <a href="#">동영상 강좌</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- ↓ 앱 전용 메뉴 -->
+        <div class="appmenu">
+          <ul>
+            <li class="appmenu__qr"><a href="#">QR스캔</a></li>
+            <li class="appmenu__setting"><a href="#">설정</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- ↓ 검색 -->
+      <div class="search">
+        <h2 class="sr-only">통합검색</h2>
+        <div class="search__inner">
+          <div class="search__field">
+            <!-- <form action="get" role="search"> -->
+            <fieldset>
+              <legend>검색</legend>
+              <input type="text" id="search__input" class="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxlength="40">
+              <button class="btn search__btn__submit"><img src="../../images/common/ic_search.svg" alt="검색"></button>
+            </fieldset>
+            <!-- </form> -->
+          </div>
+          <div class="search__keyword">
+            <h3 class="search__title">인기 검색어</h3>
+            <div class="search__keyword__list">
+              <a href="#" class="search__keyword__item"># SEL40F25G</a>
+              <a href="#" class="search__keyword__item"># SRS-RA5000/MKR2</a>
+              <a href="#" class="search__keyword__item"># 카메라의 초격차</a>
+              <a href="#" class="search__keyword__item"># 알파 야카데미 8월 강좌</a>
+              <a href="#" class="search__keyword__item"># 노이즈캔슬링</a>
+              <a href="#" class="search__keyword__item"># 벗지않는 헤드폰</a>
+              <a href="#" class="search__keyword__item"># WF-1000XM3SME</a>
+              <a href="#" class="search__keyword__item"># 무선 스피커</a>
+              <a href="#" class="search__keyword__item"># 하이 레졸루션 오디오</a>
+              <a href="#" class="search__keyword__item"># 프리미엄 SD카드</a>
+            </div>
+          </div>
+          <div class="search__recomm">
+            <h3 class="search__title">추천 제품</h3>
+            <div class="search__recomm__wrapper">
+              <ul class="search__recomm__list">
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_01.png" alt="상품명1">
+                      <span class="badge__text badge__text__new">NEW</span>
+                      <!--
+                      <span class="badge__text badge__text__best">BEST</span>
+                      <span class="badge__text badge__text__event">EVENT</span>
+                      <span class="badge__text badge__text__hot">HOT</span>
+                      -->
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                      <p class="search__recomm__desc ellipsis2">끄지마세요, 벗지마세요, 편하게 대화를 시작하세요!</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_02.png" alt="상품명2">
+                      <span class="badge__text badge__text__best">BEST</span>
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">microSDXC SR-64HXA Class 10 High Sound Quality Model with SD Card Adapter</span>
+                      <p class="search__recomm__desc ellipsis2">일렉트로닉 노이즈 억제, 맑고 깨끗한 사운드를 실현</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_03.png" alt="상품명3">
+                      <span class="badge__text badge__text__event">EVENT</span>
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                      <p class="search__recomm__desc ellipsis2">모든 위대함은, 아주 작은 것들로부터. 원핸드 컴팩트 풀프레임 카메라, 독보적인 존재감, 예뻐지는 데일리 카메라</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <button class="btn search__btn__close"><img src="../../images/common/ic_close.svg" alt="검색창 닫기"></button>
+      </div>
+      <!-- ↑ 검색 -->
+    </div>
+  </header>
+  <div class="my_wrap">
+    <div class="my_head">
+      <h2 class="title">마이페이지</h2>
+      <div class="my_user">
+        <div class="user_profile">
+          <p class="user_name"><span class="name">김소니</span>님 안녕하세요 :)</p>
+          <a href="#" class="user_modify under_line">회원정보 수정</a>
+        </div>
+        <div class="user_info">
+          <ul>
+            <li class="user_item grade">
+              <a href="#" class="user_tabs">
+                <span class="ico_txt"><span class="txt_arrow">회원등급</span></span>
+                <span class="val_txt">
+                  <span class="val vvip">VVIP</span><!-- class: 별 등급 색상 지정 vvip / vip / family -->
+                </span>
+              </a>
+            </li>
+            <li class="user_item mileage">
+              <a href="#" class="user_tabs">
+                <span class="ico_txt"><span class="txt_arrow">마일리지</span></span>
+                <span class="val_txt"><span class="val">153,248</span>M</span>
+              </a>
+            </li>
+            <li class="user_item coupon">
+              <a href="#" class="user_tabs">
+                <span class="ico_txt"><span class="txt_arrow">쿠폰</span></span>
+                <span class="val_txt"><span class="val">0</span> 장</span>
+              </a>
+            </li>
+            <li class="user_item like">
+              <a href="#" class="user_tabs">
+                <span class="ico_txt"><span class="txt_arrow">찜</span></span>
+                <span class="val_txt"><span class="val">0</span></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- s: 임직원/B2B 배너 버튼 -->
+    <div class="cont_inner">
+      <div class="b2b_banner">
+        <a href="#" class="b2b_link refurbish">
+          <div class="txt_box">
+            <p class="tit">리퍼비시몰</p>
+            <p class="txt">소니 제품을 리퍼비시몰에서 더 저렴하게 만나보세요!</p>
+          </div>
+        </a>
+        <a href="#" class="b2b_link executives">
+          <div class="txt_box">
+            <p class="tit">임직원몰</p>
+            <p class="txt">맞춤형 임직원몰에서 특별한 혜택 누리세요!</p>
+          </div>
+        </a>
+        <a href="#" class="b2b_link refined_article">
+          <div class="txt_box">
+            <p class="tit">정품등록 특가몰</p>
+            <p class="txt">정품등록을 완료하신 고객님께 특별한 혜택을 드립니다!</p>
+          </div>
+        </a>
+        <a href="#" class="b2b_link asc">
+          <div class="txt_box">
+            <p class="tit">ASC몰</p>
+            <p class="txt">ASC 임직원을 위해 준비한 다양한 제품을 특별한 가격으로 만나보세요!</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- // e: 임직원/B2B 배너 버튼 -->
+    <div class="cont_inner">
+      <div class="cont history_order">
+        <div class="tit_head">
+          <h3 class="cont_tit">주문/배송 내역</h3>
+          <div class="btn_article right">
+            <a href="#" class="button button_secondary button-s" >자세히 보기</a>
+          </div>
+        </div>
+        <div class="history_inner">
+          <div class="my_order">
+            <ul class="order_list">
+              <li class="step_1 on"><!-- 1건 이상 부터 class: on 추가 -->
+                <div class="ship_box">
+                  <span class="ico_txt">입금대기</span>
+                  <a href="#" class="val_txt"><span class="val">4</span><span>건</span></a>
+                </div>
+              </li>
+              <li class="step_2">
+                <div class="ship_box">
+                  <span class="ico_txt">결제완료</span>
+                  <a href="#" class="val_txt"><span class="val">0</span><span>건</span></a>
+                </div>
+              </li>
+              <li class="step_3">
+                <div class="ship_box">
+                  <span class="ico_txt">배송준비</span>
+                  <a href="#" class="val_txt"><span class="val">0</span><span>건</span></a>
+                </div>
+              </li>
+              <li class="step_4 on">
+                <div class="ship_box">
+                  <span class="ico_txt">배송중</span>
+                  <a href="#" class="val_txt"><span class="val">1</span><span>건</span></a>
+                </div>
+              </li>
+              <li class="step_5 on">
+                <div class="ship_box">
+                  <span class="ico_txt">배송완료</span>
+                  <a href="#" class="val_txt"><span class="val">1</span><span>건</span></a>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="my_claim">
+            <p class="txt cancel on">주문 취소 <a href="#" title="주문 취소 건"><strong class="val_txt"><span class="val">4</span> 건</strong></a></p>
+            <p class="txt return">교환 반품 <a href="#" title="교환 반품 건" ><strong class="val_txt"><span class="val">0</span> 건</strong></a></p>
+          </div>
+        </div>
+      </div>
+      <div class="cont history_mileage">
+        <h3 class="cont_tit">마일리지</h3>
+        <div class="history_inner">
+          <div class="my_mileage">
+            <p class="txt">사용 가능
+              <span class="mileage_val">153,248</span>
+              <span class="extinction">
+                  (<strong class="val_txt"><span class="val">300</span>M</strong>당월 소멸 예정)
+              </span>
+            </p>
+          </div>
+          <div class="mileage_inquiry">
+            <div class="date_box">
+              <ul class="date3_tab">
+                <li class="tabs on">
+                  <a href="#" class="date3_btn">3개월</a>
+                </li>
+                <li class="tabs">
+                  <a href="#" class="date3_btn">6개월</a>
+                </li>
+                <li class="tabs">
+                  <a href="#" class="date3_btn">1년</a>
+                </li>
+              </ul>
+              <div class="date_rang">
+                <div class="calendar_box">
+                  <input type="text" id="datepicker1" class="inp datepicker" autocomplete="off">
+                </div>
+                <div class="calendar_box">
+                  <input type="text" id="datepicker2" class="inp datepicker" autocomplete="off">
+                </div>
+                <button class="button button_positive button-s" type="button">조회</button>
+              </div>
+            </div>
+            <div class="history_list">
+              <div class="col_table_wrap mileage_table on"><!-- 데이터가 있는 경우 class : on -->
+                <div class="col_table">
+                  <div class="col_table_head">
+                    <div class="col_table_row">
+                      <div class="col_table_cell">날짜</div>
+                      <div class="col_table_cell">내역</div>
+                      <div class="col_table_cell">주문번호</div>
+                      <div class="col_table_cell">마일리지</div>
+                      <div class="col_table_cell">유효기간</div>
+                    </div>
+                  </div>
+                  <div class="col_table_body">
+                    <div class="col_table_row">
+                      <div class="col_table_cell order_date">
+                        <p class="txt">21.05.12</p>
+                      </div>
+                      <div class="col_table_cell order_details">
+                        <p class="txt">주문 취소</p>
+                      </div>
+                      <div class="col_table_cell order_number">
+                        <a href="#" class="txt">20210512-663W24</a>
+                      </div>
+                      <div class="col_table_cell order_mileage down">
+                        <p class="txt">- 400</p>
+                      </div>
+                      <div class="col_table_cell order_expiration">
+                          <p class="txt">22.12.31</p>
+                       </div>
+                    </div>
+                    <div class="col_table_row">
+                      <div class="col_table_cell order_date">
+                        <p class="txt">21.05.12</p>
+                      </div>
+                      <div class="col_table_cell order_details">
+                        <p class="txt">마일리지로 제품 구입</p>
+                      </div>
+                      <div class="col_table_cell order_number">
+                        <a href="#" class="txt">20210512-663W24</a>
+                      </div>
+                      <div class="col_table_cell order_mileage down">
+                        <p class="txt">- 800</p>
+                      </div>
+                      <div class="col_table_cell order_expiration">
+                          <p class="txt">22.12.31</p>
+                       </div>
+                    </div>
+                    <div class="col_table_row">
+                      <div class="col_table_cell order_date">
+                        <p class="txt">21.05.12</p>
+                      </div>
+                      <div class="col_table_cell order_details">
+                        <p class="txt">주문 취소</p>
+                      </div>
+                      <div class="col_table_cell order_number">
+                        <a href="#" class="txt">20210512-663W24</a>
+                      </div>
+                      <div class="col_table_cell order_mileage up">
+                        <p class="txt">+ 800</p>
+                      </div>
+                      <div class="col_table_cell order_expiration">
+                          <p class="txt">22.12.31</p>
+                       </div>
+                    </div>
+                    <div class="col_table_row">
+                      <div class="col_table_cell order_date">
+                        <p class="txt">21.05.12</p>
+                      </div>
+                      <div class="col_table_cell order_details">
+                        <p class="txt">주문 취소</p>
+                      </div>
+                      <div class="col_table_cell order_number">
+                        <a href="#" class="txt">20210512-663W24</a>
+                      </div>
+                      <div class="col_table_cell order_mileage up">
+                        <p class="txt">+ 2500</p>
+                      </div>
+                      <div class="col_table_cell order_expiration">
+                          <p class="txt">22.12.31</p>
+                       </div>
+                    </div>
+                    <div class="col_table_row">
+                      <div class="col_table_cell order_date">
+                        <p class="txt">21.05.12</p>
+                      </div>
+                      <div class="col_table_cell order_details">
+                        <p class="txt">주문 취소</p>
+                      </div>
+                      <div class="col_table_cell order_number">
+                        <a href="#" class="txt">20210512-663W24</a>
+                      </div>
+                      <div class="col_table_cell order_mileage down">
+                        <p class="txt">- 3000</p>
+                      </div>
+                      <div class="col_table_cell order_expiration">
+                          <p class="txt">22.12.31</p>
+                       </div>
+                    </div>
+                    <div class="col_table_row">
+                      <div class="col_table_cell order_date">
+                        <p class="txt">21.05.12</p>
+                      </div>
+                      <div class="col_table_cell order_details">
+                        <p class="txt">주문 취소</p>
+                      </div>
+                      <div class="col_table_cell order_number">
+                        <a href="#" class="txt">20210512-663W24</a>
+                      </div>
+                      <div class="col_table_cell order_mileage up">
+                        <p class="txt">- 800</p>
+                      </div>
+                      <div class="col_table_cell order_expiration">
+                          <p class="txt">22.12.31</p>
+                       </div>
+                    </div>
+                    <div class="col_table_row">
+                      <div class="col_table_cell order_date">
+                        <p class="txt">21.05.12</p>
+                      </div>
+                      <div class="col_table_cell order_details">
+                        <p class="txt">주문 취소</p>
+                      </div>
+                      <div class="col_table_cell order_number">
+                        <a href="#" class="txt">20210512-663W24</a>
+                      </div>
+                      <div class="col_table_cell order_mileage up">
+                        <p class="txt">- 800</p>
+                      </div>
+                      <div class="col_table_cell order_expiration">
+                          <p class="txt">22.12.31</p>
+                       </div>
+                    </div>
+                    <div class="col_table_row">
+                      <div class="col_table_cell order_date">
+                        <p class="txt">21.05.12</p>
+                      </div>
+                      <div class="col_table_cell order_details">
+                        <p class="txt">주문 취소</p>
+                      </div>
+                      <div class="col_table_cell order_number">
+                        <a href="#" class="txt">20210512-663W24</a>
+                      </div>
+                      <div class="col_table_cell order_mileage down">
+                        <p class="txt">- 400</p>
+                      </div>
+                      <div class="col_table_cell order_expiration">
+                          <p class="txt">22.12.31</p>
+                       </div>
+                    </div>
+                    <div class="col_table_row">
+                      <div class="col_table_cell order_date">
+                        <p class="txt">21.05.12</p>
+                      </div>
+                      <div class="col_table_cell order_details">
+                        <p class="txt">주문 취소</p>
+                      </div>
+                      <div class="col_table_cell order_number">
+                        <a href="#" class="txt">20210512-663W24</a>
+                      </div>
+                      <div class="col_table_cell order_mileage down">
+                        <p class="txt">- 400</p>
+                      </div>
+                      <div class="col_table_cell order_expiration">
+                          <p class="txt">22.12.31</p>
+                       </div>
+                    </div>
+                    <div class="col_table_row">
+                      <div class="col_table_cell order_date">
+                        <p class="txt">21.05.12</p>
+                      </div>
+                      <div class="col_table_cell order_details">
+                        <p class="txt">주문 취소</p>
+                      </div>
+                      <div class="col_table_cell order_number">
+                        <a href="#" class="txt">20210512-663W24</a>
+                      </div>
+                      <div class="col_table_cell order_mileage down">
+                        <p class="txt">- 400</p>
+                      </div>
+                      <div class="col_table_cell order_expiration">
+                          <p class="txt">22.12.31</p>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn_article">
+                  <a href="#" class="more_btn">더보기</a>
+                </div>
+              </div>
+              <div class="no_data on"> <!-- 데이터가 없을 경우 class : on -->
+                <span>내역이 없습니다.</span>
+              </div>
+            </div>
+          </div>
+          <div class="guide_list">
+            <p class="tit">[멤버십 마일리지 안내]</p>
+            <ul class="list_dot">
+              <li>구매 시 결제금액의 2%가 적립됩니다. (일부 품목 마일리지 적립대상 제외)</li>
+              <li><strong>VIP회원</strong>(누적 구매 금액 <strong>200만원</strong> 이상부터 적용)은 구매 시 결제금액의 4%가 적립됩니다. (2년 간 혜택 유지) </li>
+              <li>마일리지 적립은 <strong>제품 구매일 당일</strong>에만 적립 가능합니다. (온라인 소니스토어 배송 완료 후 7일 이내에 적립) </li>
+              <li><strong>5,000 마일리지 이상</strong>이면 현금처럼 사용하실 수 있습니다. </li>
+              <li>적립하신 마일리지는 소니스토어 온라인 및 직영점에서 제품 구매 시, 소니 공식 서비스 센터에서의 제품 수리 및 콘텐츠 이용 시 사용 가능합니다. </li>
+              <li>최근 1년 간의 멤버십 마일리지 내역만 조회 가능합니다. (날짜 직접 검색을 통해서 확인 가능)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="cont history_coupon">
+        <h3 class="cont_tit">쿠폰</h3>
+        <div class="history_inner">
+          <div class="history_list">
+            <div class="coupon_inner on"><!-- class : on 내역이 있을 경우 on -->
+              <div class="coupon_list">
+                <div class="coupon_box">
+                  <div class="coupon">
+                    <span class="coupon_no">No. <span class="num">3757897055</span></span>
+                    <p class="tit">정품등록감사<br> 소니 액세서리 <span class="percentage">10%</span> 할인</p>
+                    <p class="cut_txt">3만원 이상 구매 시 </p>
+                    <p class="expiration_txt"><strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12</p>
+                  </div>
+                </div>
+                <div class="coupon_box">
+                  <div class="coupon">
+                    <span class="coupon_no">No. <span class="num">3757897055</span></span>
+                    <p class="tit">정품등록감사<br> 소니 액세서리 <span class="percentage">10%</span> 할인</p>
+                    <p class="cut_txt">3만원 이상 구매 시 </p>
+                    <p class="expiration_txt"><strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12</p>
+                  </div>
+                </div>
+                <div class="coupon_box">
+                  <div class="coupon">
+                    <span class="coupon_no">No. <span class="num">3757897055</span></span>
+                    <p class="tit">정품등록감사<br> 소니 액세서리 <span class="percentage">10%</span> 할인</p>
+                    <p class="cut_txt">3만원 이상 구매 시 </p>
+                    <p class="expiration_txt"><strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12</p>
+                  </div>
+                </div>
+                <div class="coupon_box">
+                  <div class="coupon">
+                    <span class="coupon_no">No. <span class="num">3757897055</span></span>
+                    <p class="tit">정품등록감사<br> 소니 액세서리 <span class="percentage">10%</span> 할인</p>
+                    <p class="cut_txt">3만원 이상 구매 시 </p>
+                    <p class="expiration_txt"><strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12</p>
+                  </div>
+                </div>
+                <div class="coupon_box">
+                  <div class="coupon">
+                    <span class="coupon_no">No. <span class="num">3757897055</span></span>
+                    <p class="tit">정품등록감사<br> 소니 액세서리 <span class="percentage">10%</span> 할인</p>
+                    <p class="cut_txt">3만원 이상 구매 시 </p>
+                    <p class="expiration_txt"><strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12</p>
+                  </div>
+                </div>
+                <div class="coupon_box">
+                  <div class="coupon">
+                    <span class="coupon_no">No. <span class="num">3757897055</span></span>
+                    <p class="tit">정품등록감사<br> 소니 액세서리 <span class="percentage">10%</span> 할인</p>
+                    <p class="cut_txt">3만원 이상 구매 시 </p>
+                    <p class="expiration_txt"><strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12</p>
+                  </div>
+                </div>
+              </div>
+              <div class="btn_article line">
+                <a href="#" class="more_btn">더보기</a>
+              </div>
+            </div>
+            <div class="no_data on"><!-- class : on 내역이 없을 경우 on -->
+              <span>내역이 없습니다.</span>
+            </div>
+          </div>
+          <div class="guide_list">
+            <p class="tit">[쿠폰 사용 안내]</p>
+            <ul class="list_dot">
+              <li>쿠폰은 <strong>주문당 1매씩 사용 가능하며, 제품 1개에만 적용</strong>됩니다. </li>
+              <li>쿠폰 할인은 결제 시점에서 자동으로 할인 금액만큼 차감되며 결제 예정금액이 표시됩니다. </li>
+              <li>쿠폰은 주문 후 취소할 경우 재발급되지 않으니 사용에 유의하여 주시기 바랍니다. </li>
+              <li>소니스토어에서 발행하는 쿠폰은 행사 내용에 따라 기간 및 해당 제품 등 적용 방법이 다를 수 있습니다.</li>
+            </ul>
+          </div>
+          <div class="ico_box_link">
+            <a href="#" class="box_link_inner ico_type1">
+              <div class="txt_box">
+                <p class="tit">소니스토어의 쿠폰 보기</p>
+                <p class="txt">첫 구매 등 소니스토어의 다양한 쿠폰 혜택을 받으세요!</p>
+              </div>
+            </a>
+            <a href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start" target="_blank" title="새 창 열림" class="box_link_inner ico_type2">
+              <div class="txt_box">
+                <p class="tit">정품등록 관리</p>
+                <p class="txt">소니 제품 구매 후 정품등록하고 쿠폰을 받으세요!</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="cont history_like">
+        <div class="cont_head">
+          <h3 class="cont_tit">찜</h3>
+          <!-- s : 찜 목록이 없을 경우 display:none -->
+          <div class="like_select_btn">
+            <button class="button button_secondary button-s" type="button">선택 삭제</button>
+            <button class="button button_positive button-s popup_comm_btn" type="button" data-popup-name="cart_pop"><span>선택 제품</span> 장바구니 담기</button>
+          </div>
+          <!-- e : 찜 목록이 없을 경우 display:none -->
+        </div>
+        <div class="history_inner">
+          <div class="history_list">
+            <div class="like_inner on"><!-- class : on 내역이 있을 경우 on -->
+              <div class="all_checked check">
+                <input type="checkbox" class="inp_check check_all" id="allChk" name="likeChk">
+                <label for="allChk">전체</label>
+              </div>
+              <div class="like_prd_inner">
+                <ul class="like_prd_list">
+                  <li class="like_list">
+                    <div class="item">
+                      <div class="check check_only">
+                        <input type="checkbox" class="inp_check" name="likeChk">
+                      </div>
+                      <div class="img"><img src="../../images/_tmp/item640x640_01.png" alt=""></div>
+                      <div class="prd_info">
+                        <p class="tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                        <p class="txt">4K HDR(HLGAF가 탑재)</p>
+                        <p class="prd_price"><span class="price">899,000</span>원</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="like_list">
+                    <div class="item">
+                      <div class="check check_only">
+                        <input type="checkbox" class="inp_check" name="likeChk">
+                      </div>
+                      <div class="img"><img src="../../images/_tmp/item640x640_01.png" alt=""></div>
+                      <div class="prd_info">
+                        <p class="tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                        <p class="txt">4K HDR(HLG), Fast Hybrid AF</p>
+                        <p class="prd_price"><span class="price">899,000</span>원</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="like_list">
+                    <div class="item">
+                      <div class="check check_only">
+                        <input type="checkbox" class="inp_check" name="likeChk">
+                      </div>
+                      <div class="img"><img src="../../images/_tmp/item640x640_01.png" alt=""></div>
+                      <div class="prd_info">
+                        <p class="tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                        <p class="txt">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠</p>
+                        <p class="prd_price"><span class="price">899,000</span>원</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="like_list">
+                    <div class="item">
+                      <div class="check check_only">
+                        <input type="checkbox" class="inp_check" name="likeChk">
+                      </div>
+                      <div class="img"><img src="../../images/_tmp/item640x640_01.png" alt=""></div>
+                      <div class="prd_info">
+                        <p class="tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                        <p class="txt">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠</p>
+                        <p class="prd_price"><span class="price">899,000</span>원</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="like_list">
+                    <div class="item">
+                      <div class="check check_only">
+                        <input type="checkbox" class="inp_check" name="likeChk">
+                      </div>
+                      <div class="img"><img src="../../images/_tmp/item640x640_01.png" alt=""></div>
+                      <div class="prd_info">
+                        <p class="tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                        <p class="txt">4K HDR(HLG), Fast Hybrid </p>
+                        <p class="prd_price"><span class="price">899,000</span>원</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="like_list">
+                    <div class="item">
+                      <div class="check check_only">
+                        <input type="checkbox" class="inp_check" name="likeChk">
+                      </div>
+                      <div class="img"><img src="../../images/_tmp/item640x640_01.png" alt=""></div>
+                      <div class="prd_info">
+                        <p class="tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                        <p class="txt">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠</p>
+                        <p class="prd_price"><span class="price">899,000</span>원</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="like_list">
+                    <div class="item">
+                      <div class="check check_only">
+                        <input type="checkbox" class="inp_check" name="likeChk">
+                      </div>
+                      <div class="img"><img src="../../images/_tmp/item640x640_01.png" alt=""></div>
+                      <div class="prd_info">
+                        <p class="tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                        <p class="txt">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠</p>
+                        <p class="prd_price"><span class="price">899,000</span>원</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="like_list">
+                    <div class="item">
+                      <div class="check check_only">
+                        <input type="checkbox" class="inp_check" name="likeChk">
+                      </div>
+                      <div class="img"><img src="../../images/_tmp/item640x640_01.png" alt=""></div>
+                      <div class="prd_info">
+                        <p class="tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                        <p class="txt">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠</p>
+                        <p class="prd_price"><span class="price">899,000</span>원</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="btn_article line">
+                <a href="#" class="more_btn">더보기</a>
+              </div>
+            </div>
+            <div class="no_data on"><!-- class : on 내역이 없을 경우 on -->
+              <span>내역이 없습니다.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <nav class="sidebar">
+      <div class="sidebar__inner">
+        <a href="../../html/mypage/myPageMain.html" class="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+        <a href="#" class="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
+        <a href="#header" class="sidebar__btn top"><span>페이지 상단</span></a>
+      </div>
+      <button class="sidebar__btn sidebar__btn__toggle" type="button"><img src="../../images/common/ic_sidebar1.svg" alt="메뉴토글"></button>
+    </nav>
+    <div class="footer__inner">
+      <div class="footer__social__wrap">
+        <div class="footer__social">
+          <h3 class="footer__social__title">FOLLOW US</h2>
+          <div class="footer__social__links">
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_facebook.svg" alt="facebook"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_instagram.svg" alt="instagram"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_youtube.svg" alt="youtube"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_blog.svg" alt="blog"></a>
+          </div>
+        </div>
+        <div class="footer__family">
+          <div class="footer__family__links">
+            <div class="footer__family__link footer__pc">
+              <button type="button" class="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침">Sony Family</button>
+              <div class="footer__family__link__inner">
+                <h4 class="optgroup__label">Sony Family</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니코리아 고객지원</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 알파 α</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송/업무용 솔루션</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
+                </ul>
+                <h4 class="optgroup__label">Family Company</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
+                </ul>
+              </div>
+            </div>
+            <select class="footer__family__link footer__mo">
+              <optgroup label="Sony Family">
+                <option>소니코리아</option>
+                <option>소니코리아 고객지원</option>
+                <option>소니 알파 α</option>
+                <option>소니 방송/업무용 솔루션</option>
+                <option>소니 방송 업무용 솔루션 고객지원</option>
+              </optgroup>
+              <optgroup label="Family Company">
+                <option>소니 인터렉티브 엔터테인먼트 코리아</option>
+                <option>소니 뮤직 엔터테인먼트 코리아</option>
+                <option>소니 ATV 뮤직 퍼블리싱 코리아</option>
+                <option>소니 픽쳐스 엔터테인먼트 코리아</option>
+                <option>소니 픽쳐스 텔레비전 코리아</option>
+              </optgroup>
+            </select>
+          </div>
+          <a href="https://www.sony.com/" class="footer__family__global" target="_blank">Sony Global</a>
+        </div>
+      </div>
+      <div class="footer__legal">
+        <div class="footer__legal__links">
+          <a href="../../html/footer/terms.html" class="footer__legal__link">이용약관</a>
+          <a href="../../html/footer/policy.html" class="footer__legal__link privacy">개인정보처리방침</a>
+          <a href="javascript:openModal('modal__customer__insurance');" class="footer__legal__link" data-modal-target="modal__customer__insurance">소비자 피해 보상보험</a>
+          <a href="../../html/footer/siteMap.html" class="footer__legal__link">사이트맵</a>
+        </div>
+        <div class="footer__legal__warning">
+          <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
+          <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a href="#" class="escrow">에스크로결제</a></p>
+        </div>
+      </div>
+      <address class="address">
+        <span>사업장주소 : 서울특별시 영등포구 국제금융로 10 원아이에프씨 24F</span>
+        <span>사업자 등록번호 : 106-81-23810 통신판매번호 2012-서울영등포-1038 소니코리아㈜</span>
+        <span>대표이사 : Okura Kikuo</span>
+        <span>개인정보관리책임자 : Okura Kikuo</span>
+        <span>TEL : 소니코리아 고객센터 1588-0911</span>
+        <span>E-MAIL : <a href="mailto:cshelp@sony.co.kr">cshelp@sony.co.kr</a></span>
+        <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
+      </address>
+    </div>
+  </footer>
+  
+  <!-- 소비자피해보상 보험 팝업 -->
+  <div class="layer modal__customer__insurance">
+    <div class="layer_wrap">
+      <div class="layer_container">
+        <div class="layer_title">
+          <h1>소비자피해보상보험</h1>
+        </div>
+        <div class="layer_content">
+          <div class="consumer_logo">
+            <img src="../../images/img_consumerlogo.png">
+          </div>
+          <p>고객님은 안전거래를 위해 현금 결제 시 저희 쇼핑몰이 가입한 구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.</p>
+          <p>보상대상 : 미배송&#47;반품, 환불거부&#47;쇼핑몰부도</p>
+          <div class="btn_box">
+            <a href="https://mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810" target="_blank" title="새창열림">서비스 가입 사실 확인하기</a>
+          </div>
+        </div>
+        <button href="#" class="layer_close close" title="팝업창 닫기">
+          <span>팝업창 닫기</span>
+      </button>        
+      </div>    
+    </div>
+  </div>
+  <!--// 소비자피해보상 보험 팝업 -->
+  
+  <script>
+       //팝업 열기
+      function openModal(modalname) {
+          $("." + modalname).fadeIn(300);
+          $("body,html").css({"overflow":"hidden"});        
+          return false;
+      }
+      // 팝업 닫기
+      $(document).ready(function(){
+        $layer = $(".layer");
+  
+        $('.close').click(function() {
+            $layer.fadeOut(300);
+            $('body,html').css({"overflow":"visible"});
+        });
+      });
+  </script></div>
+
+<!-- s: 찜 장바구니 완료 -->
+<div class="popup_wrap size_sl cart_pop">
+  <div class="pop_inner">
+    <div class="pop_cont">
+      <p class="pop_tit ico_cart">장바구니 담기 완료</p>
+      <p class="pop_txt">해당 제품이 장바구니에 담겼습니다.<br> 장바구니로 이동하시겠습니까?</p>
+      <div class="btn_article">
+        <button class="button button_negative button-l closed" type="button">쇼핑 계속하기</button>
+        <button class="button button_positive button-l" type="button">장바구니 이동</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- // e: 찜 장바구니 완료 -->
+
+</body>
+</html>
+
+<script type="text/javascript">
+$(function(){
+  // 팝업
+  $('.popup_comm_btn').on("click",function(){
+    let _popName = $(this).data("popup-name");
+    if($('.popup_wrap:animated').length < 1){ // fadeInOut 시 중복 클릭 방지
+      popupCommon(_popName, $(this)); // 오픈할 팝업과 닫기 시 돌아갈 포커스 select
+    }
+  });
+  $('.date3_btn').on("click",function(){
+    let $tabs = $(this).parents();
+    $tabs.addClass("on").siblings().removeClass("on");
+    return false;
+  });
+  datepickerUi($("#datepicker1"));
+  datepickerUi($("#datepicker2"));
+});
+</script>

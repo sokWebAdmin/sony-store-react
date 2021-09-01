@@ -11,7 +11,7 @@ yarn install && yarn start
 npx 커맨드로 다음과 같이 실행가능. 
 
 ``` zsh
-cd published && npx lite-server index.html
+npm run markup
 ```
 
 

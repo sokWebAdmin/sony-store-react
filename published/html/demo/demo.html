@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msapplication-TileImage" content="../../images/favicon_144x144.png">
+<title>💻공통 가이드💻</title>
+<link rel="shortcut icon" href="../../images/favicon_144x144.png">
+<link rel="stylesheet" href="../../lib/css/swiper.min.css">
+<link rel="stylesheet" href="../../css/contents.css">
+<link rel="stylesheet" href="../../css/order.css">
+<link rel="stylesheet" href="../../css/demo.css">
+<script src="../../lib/js/jquery-3.6.0.min.js"></script>
+<script src="../../lib/js/jquery-ui.min.js"></script>
+<script src="../../lib/js/swiper.min.js"></script>
+<script src="../../js/ux-common.js"></script>
+<script src="../../js/ux-sub.js"></script>
+<style>
+  @media print {
+    * {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper guide">
+  <div id="skipnav" class="skipnav">
+  	<a href="#container"><span>본문 바로가기</span></a>
+  </div>
+  <header id="header" class="header">
+    <div class="header__wrapper">
+      <h1 class="header__logo"><a href="../../html/main.html"><img src="../../images/common/logo.svg" alt="SONY"></a></h1>
+      <div class="header__menu">
+        <button class="btn btn__mo__hidden btn__search"><img src="../../images/common/ic_search.svg" alt="검색창 열기"></button>
+        <a href="../../html/member/mypage.html" class="btn btn__desktop btn__mypage"><img src="../../images/common/ic_mypage.svg" alt="마이페이지"></a>
+        <a href="../../html/order/cart.html" class="btn btn__cart"><img src="../../images/common/ic_cart.svg" alt="장바구니"></a></li>
+        <button type="button" class="btn btn__mo btn__menu__open"><img src="../../images/common/ic_menu.svg" alt="메뉴 열기"></button>
+        <button type="button" class="btn btn__mo btn__mo__hidden btn__menu__close"><img src="../../images/common/ic_close.svg" alt="메뉴 닫기"></button>
+      </div>
+      <div class="header__inner">
+  
+        <!-- 비회원/로그인 전 -->
+        <!--
+        <div class="member">
+          <div class="member__inner">
+            <a href="#" class="member__msg member__msg__login">로그인이<br>필요합니다</a>
+            <button type="button" class="btn btn__login">로그인</button>
+            <div class="member__menu">
+              <ul>
+                <li class="member__menu__mypage"><a href="../../html/member/join.html">회원가입</a></li>
+                <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        -->
+  
+        <!-- 회원/로그인 -->
+        <div class="member">
+          <div class="member__inner">
+            <p class="member__msg">박소니님<br>안녕하세요!</p>
+            <div class="member__menu">
+              <ul>
+                <li class="member__menu__mypage"><a href="../../html/member/mypage.html">마이페이지</a></li>
+                <li class="member__menu__order"><a href="../../html/order/orderList.html">주문/배송 조회</a></li>
+                <li class="member__menu__cart"><a href="../../html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn__logout">로그아웃</button>
+          </div>
+        </div>
+        <nav class="gnb">
+          <ul class="gnb__menu">
+            <li>
+              <a href="#">스토어 추천 제품</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="../../html/recommend/recommend.html">추천 제품</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="../../html/product/List.html">제품</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="../../html/product/camera.html">카메라</a>
+                </li>
+                <li>
+                  <a href="../../html/product/videocamera.html">비디오카메라</a>
+                </li>
+                <li>
+                  <a href="../../html/product/audio.html">오디오</a>
+                </li>
+                <li>
+                  <a href="../../html/product/accessory.html">액세서리</a>
+                </li>
+                <li>
+                  <a href="../../html/product/playstation.html">PlayStation®</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">기획전</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">소니스토어 단독</a>
+                </li>
+                <li>
+                  <a href="#">혜택존</a>
+                </li>
+                <li>
+                  <a href="#">예약판매</a>
+                </li>
+                <li>
+                  <a href="#">정품 등록 이벤트</a>
+                </li>
+                <li>
+                  <a href="#">LIVE ON</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">멤버십</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">등급&amp;혜택 안내</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">고객 서비스</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">FAQ&amp;공지사항</a>
+                </li>
+                <li>
+                  <a href="https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa">정품등록 안내</a>
+                </li>
+                <li>
+                  <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
+                </li>
+                <li>
+                  <a href="#">구매 상담</a>
+                </li>
+                <li>
+                  <a href="#">직영점 안내</a>
+                </li>
+                <li>
+                  <a href="#">동영상 강좌</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- ↓ 앱 전용 메뉴 -->
+        <div class="appmenu">
+          <ul>
+            <li class="appmenu__qr"><a href="#">QR스캔</a></li>
+            <li class="appmenu__setting"><a href="#">설정</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- ↓ 검색 -->
+      <div class="search">
+        <h2 class="sr-only">통합검색</h2>
+        <div class="search__inner">
+          <div class="search__field">
+            <!-- <form action="get" role="search"> -->
+            <fieldset>
+              <legend>검색</legend>
+              <input type="text" id="search__input" class="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxlength="40">
+              <button class="btn search__btn__submit"><img src="../../images/common/ic_search.svg" alt="검색"></button>
+            </fieldset>
+            <!-- </form> -->
+          </div>
+          <div class="search__keyword">
+            <h3 class="search__title">인기 검색어</h3>
+            <div class="search__keyword__list">
+              <a href="#" class="search__keyword__item"># SEL40F25G</a>
+              <a href="#" class="search__keyword__item"># SRS-RA5000/MKR2</a>
+              <a href="#" class="search__keyword__item"># 카메라의 초격차</a>
+              <a href="#" class="search__keyword__item"># 알파 야카데미 8월 강좌</a>
+              <a href="#" class="search__keyword__item"># 노이즈캔슬링</a>
+              <a href="#" class="search__keyword__item"># 벗지않는 헤드폰</a>
+              <a href="#" class="search__keyword__item"># WF-1000XM3SME</a>
+              <a href="#" class="search__keyword__item"># 무선 스피커</a>
+              <a href="#" class="search__keyword__item"># 하이 레졸루션 오디오</a>
+              <a href="#" class="search__keyword__item"># 프리미엄 SD카드</a>
+            </div>
+          </div>
+          <div class="search__recomm">
+            <h3 class="search__title">추천 제품</h3>
+            <div class="search__recomm__wrapper">
+              <ul class="search__recomm__list">
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_01.png" alt="상품명1">
+                      <span class="badge__text badge__text__new">NEW</span>
+                      <!--
+                      <span class="badge__text badge__text__best">BEST</span>
+                      <span class="badge__text badge__text__event">EVENT</span>
+                      <span class="badge__text badge__text__hot">HOT</span>
+                      -->
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                      <p class="search__recomm__desc ellipsis2">끄지마세요, 벗지마세요, 편하게 대화를 시작하세요!</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_02.png" alt="상품명2">
+                      <span class="badge__text badge__text__best">BEST</span>
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">microSDXC SR-64HXA Class 10 High Sound Quality Model with SD Card Adapter</span>
+                      <p class="search__recomm__desc ellipsis2">일렉트로닉 노이즈 억제, 맑고 깨끗한 사운드를 실현</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="../../images/_tmp/item640x640_03.png" alt="상품명3">
+                      <span class="badge__text badge__text__event">EVENT</span>
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                      <p class="search__recomm__desc ellipsis2">모든 위대함은, 아주 작은 것들로부터. 원핸드 컴팩트 풀프레임 카메라, 독보적인 존재감, 예뻐지는 데일리 카메라</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <button class="btn search__btn__close"><img src="../../images/common/ic_close.svg" alt="검색창 닫기"></button>
+      </div>
+      <!-- ↑ 검색 -->
+    </div>
+  </header>
+  <div class="container">
+    <div class="content" style="padding-top:50px;">
+      
+      <h1 class="guide_title01">guide</h1>
+      <div class="guide_wrap">
+        <div class="guide_box">
+          <h2 class="guide_title02">* check, radio</h2>
+          <h3 class="guide_title03">* check</h3>
+          <div class="float_left mt-0">
+            <div class="check">
+              <input type="checkbox" class="inp_check check_all" id="chk00" name="check1">
+              <label for="chk00">전체</label>
+            </div>
+            <div class="check">
+              <input type="checkbox" class="inp_check" id="chk01" name="check1" checked="checked">
+              <label for="chk01">체크박스1</label>
+            </div>
+            <div class="check">
+              <input type="checkbox" class="inp_check" id="chk02" name="check1">
+              <label for="chk02">체크박스2</label>
+            </div>
+          </div>
+          <h3 class="guide_title03">* w/o label (width/height 24px)</h3>
+          <div class="float_left mt-0">
+            <div class="check">
+              <input type="checkbox" class="inp_check check_all" id="chk10" name="check2">
+              <label for="chk10">전체</label>
+            </div>
+            <div class="check check_only">
+              <input type="checkbox" class="inp_check" id="chk11" name="check2">
+            </div>
+            <div class="check check_only">
+              <input type="checkbox" class="inp_check" id="chk12" name="check2">
+            </div>
+          </div>
+          <h3 class="guide_title03">* radio ga ga - 낄 낄</h3>
+          <p class="guide_txt">Radio & TEXT</p>
+          <div class="float_left mt-0">
+            <div class="radio_box">
+              <input type="radio" class="inp_radio" id="radio1" name="radioName_1" checked="checked">
+              <label for="radio1" class="contentType">radio1</label>
+            </div>
+            <div class="radio_box">
+              <input type="radio" class="inp_radio" id="radio2" name="radioName_1" >
+              <label for="radio2" class="contentType">radio2</label>
+            </div>
+          </div>
+          <p class="guide_txt">Radio</p>
+          <div class="float_left mt-0">
+            <div class="radio_box radio_only">
+              <input type="radio" class="inp_radio" id="radio3" name="radioName_2" checked="checked">
+              <label for="radio3" class="contentType">radio1</label>
+            </div>
+            <div class="radio_box radio_only">
+              <input type="radio" class="inp_radio" id="radio4" name="radioName_2" >
+              <label for="radio4" class="contentType">radio2</label>
+            </div>
+          </div>
+        </div>
+        <div class="guide_box">
+          <h2 class="guide_title02">* switchbtn</h2>
+          <div class="switchbtn">
+            <label class="switch">
+              <input type="checkbox" name="all" class="check_all">
+              <span class="toggle"></span>
+            </label>
+          </div>
+          <h2 class="guide_title02 mt-10">* CountBox</h2>
+          <div class="count_ui_box">
+            <button class="minus">감소</button>
+            <input type="text" readonly="readonly" value="1" class="count">
+            <button class="plus">증가</button>
+          </div>
+        </div>
+        <div class="guide_box">
+          <h2 class="guide_title02">* 도트 텍스트 목록</h2>
+          <ul class="list_dot">
+            <li>리스트1</li>
+            <li>리스트2</li>
+            <li>리스트3</li>
+            <li>리스트4</li>
+            <li>리스트5</li>
+          </ul>
+        </div>
+      </div>
+      <div class="guide_wrap">
+        <div class="guide_box">
+          <h2 class="guide_title02">Badge</h2>
+          <h3 class="guide_title03">Label</h3>
+          <div class="float_left">
+            <span class="badge__label badge__label__reserve">예약판매</span>
+            <span class="badge__label badge__label__release">출시예정</span>
+            <span class="badge__label badge__label__outofstock">일시품절</span>
+            <span class="badge__label badge__label__soldout">품절</span>
+          </div>
+          <h3 class="guide_title03 mt-10">Text</h3>
+          <div class="float_left mt-0">
+            <span class="badge__text badge__text__new">NEW</span>
+            <span class="badge__text badge__text__hot">HOT</span>
+            <span class="badge__text badge__text__event">EVENT</span>
+            <span class="badge__text badge__text__best">BEST</span>
+          </div>
+        </div>
+        <div class="guide_box">
+          <h2 class="guide_title02">* color Tab </h2>
+          <p class="guide_txt">제품 리스트 기능 : hover 이미지 교체 시 사용</p>
+          <p class="guide_txt">* PC: border-20x20 color-14x14 // MO : border-18x18  color-12x12</p>
+          <div class="colorchip">
+            <span class="sr-only">전체 색상</span>
+            <span class="colorchip__item" data-color-code="000000" data-color-src="../../images/_tmp/item640x640_01.png">
+              <span class="colorchip__item__label" style="background-color: #000000;">
+                <span class="sr-only">블랙</span>
+              </span>
+            </span>
+            <span class="colorchip__item" data-color-code="666666" data-color-src="../../images/main_prod_camera.png">
+              <span class="colorchip__item__label" style="background-color: #666666;">
+                <span class="sr-only">그레이</span>
+              </span>
+            </span>
+            <span class="colorchip__item colorchip__item--active" data-color-code="ffffff" data-color-src="../../images/_tmp/item640x640_03.png">
+              <span class="colorchip__item__label" style="background-color: #ffffff;">
+                <span class="sr-only">화이트</span>
+              </span>
+            </span>
+          </div>
+          <p class="guide_txt mt-10">제품 상셰</p>
+          <p class="guide_txt">* PC: border-22x22 color-16x16 // MO : border-18x18  color-12x12</p>
+          <span class="circle_color">
+            <span class="c_bg" data-slide-img-type="fc5227" style="background:#fc5227"></span>
+          </span>
+          <span class="circle_color">
+            <span class="c_bg" data-slide-img-type="fc5227" style="background:#5865f5"></span>
+          </span>
+          <span class="circle_color">
+            <span class="c_bg" data-slide-img-type="fc5227" style="background:#1b8faa"></span>
+          </span>
+        </div>
+        <div class="guide_box">
+          <h2 class="guide_title02">* color & underline</h2>
+          <div>
+            <em class="color">포인트 컬러</em>
+          </div>
+          <div>
+            <p><a href="https://www.sony.co.kr/" class="under_line">https://www.sony.co.kr/ 밑줄</a></p>
+            <p><a href="https://www.sony.co.kr/" class="under_line"><em class="color">https://www.sony.co.kr/</em></a></p>
+          </div>
+        </div>
+      </div>
+      <div class="guide_wrap">
+        <div class="guide_box">
+          <h2 class="guide_title02">* 아코디언 메뉴</h2>
+          <h3 class="guide_title03">아코디언 메뉴 - 선택 메뉴만 오픈</h3>
+          <!--
+            class : acc_ui_zone(script 기준) acc(style scss 기준) 둘 다 사용.
+            data-acc-open: single(오픈 된 다른 아코디언 닫기) / 다른 아코디언 오픈 상태 그대로 두기 data 옵션 x
+          -->
+          <div class="acc acc_ui_zone" data-acc-open="single">
+            <div class="acc_item on"><!-- 오픈 상태 class on -->
+              <div class="acc_head">
+                <a href="#" class="acc_btn" title="accordion 1 열기">
+                  <span class="acc_tit">accordion 1</span>
+                  <span class="acc_arrow">상세 보기</span>
+                </a>
+              </div>
+              <div class="acc_inner">
+                <div class="acc_box">
+                  내용111111<br>
+                  sopsoasod<br>
+                  asdasdadasd
+                </div>
+              </div>
+            </div><!-- // acc_item -->
+            <div class="acc_item">
+              <div class="acc_head">
+                <a href="#" class="acc_btn" title="accordion 2 열기">
+                  <span class="acc_tit">accordion 2</span>
+                  <span class="acc_arrow">상세 보기</span>
+                </a>
+              </div>
+              <div class="acc_inner">
+                <div class="acc_box">
+                  내용2222222<br>
+                  sopsoasod<br>
+                  asdasdadasd
+                </div>
+              </div>
+            </div><!-- // acc_item -->
+            <div class="acc_item">
+              <div class="acc_head">
+                <a href="#" class="acc_btn" title="accordion 3 열기">
+                  <span class="acc_tit">accordion 3</span>
+                  <span class="acc_arrow">상세 보기</span>
+                </a>
+              </div>
+              <div class="acc_inner">
+                <div class="acc_box">
+                  내용3333333<br>
+                  sopsoasod<br>
+                  asdasdadasd
+                </div>
+              </div>
+            </div><!-- // acc_item -->
+          </div><!-- // acc -->
+        </div>
+        <div class="guide_box">
+          <h2 class="guide_title02">* 아코디언 메뉴</h2>
+          <h3 class="guide_title03">아코디언 메뉴 - 메뉴 개별 오픈</h3>
+          <!--
+            class : acc_ui_zone(script 기준) acc(style scss 기준) 둘 다 사용.
+            data-acc-open: single(오픈 된 다른 아코디언 닫기) / 다른 아코디언 오픈 상태 그대로 두기 data 옵션 x
+          -->
+          <div class="acc acc_ui_zone">
+            <div class="acc_item on">
+              <div class="acc_head">
+                <a href="#" class="acc_btn" title="accordion 1 열기">
+                  <span class="acc_tit">accordion 1 </span>
+                  <span class="acc_arrow">상세 보기</span>
+                </a>
+              </div>
+              <div class="acc_inner">
+                <div class="acc_box">
+                  내용111111<br>
+                  sopsoasod<br>
+                  asdasdadasd
+                </div>
+              </div>
+            </div><!-- // acc_item -->
+            <div class="acc_item">
+              <div class="acc_head">
+                <a href="#" class="acc_btn" title="accordion 2 열기">
+                  <span class="acc_tit">accordion 2</span>
+                  <span class="acc_arrow">상세 보기</span>
+                </a>
+              </div>
+              <div class="acc_inner">
+                <div class="acc_box">
+                  내용2222222<br>
+                  sopsoasod<br>
+                  asdasdadasd
+                </div>
+              </div>
+            </div><!-- // acc_item -->
+            <div class="acc_item">
+              <div class="acc_head">
+                <a href="#" class="acc_btn" title="accordion 3 열기">
+                  <span class="acc_tit">accordion 3</span>
+                  <span class="acc_arrow">상세 보기</span>
+                </a>
+              </div>
+              <div class="acc_inner">
+                <div class="acc_box">
+                  내용3333333<br>
+                  sopsoasod<br>
+                  asdasdadasd
+                </div>
+              </div>
+            </div><!-- // acc_item -->
+          </div><!-- // acc -->
+        </div>
+        <div class="guide_box">
+          <h2 class="guide_title02">* selectbox</h2>
+          <div class="select_ui_zone tit_btm_line">
+            <a href="#" class="selected_btn" data-default-text="쿠폰을 선택해주세요.">
+              쿠폰을 선택해주세요.
+            </a>
+            <div class="select_inner">
+              <p class="prd_tag">제품</p>
+              <ul class="select_opt">
+                <li>
+                  <a href="#" class="opt_list">
+                    <div class="item">첫 구매 감사 5% 할인 쿠폰 (2021.08.10까지)</div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="opt_list not_opt"><!-- not_opt : 텍스트 컬러 888 -->
+                    <div class="item">쿠폰 적용 안함</div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="select_ui_zone btm_line">
+            <a href="#" class="selected_btn" data-default-text="쿠폰을 선택해주세요."><!-- disabled : 선택불가 품절 -->
+              쿠폰을 선택해주세요.
+            </a>
+            <div class="select_inner">
+              <p class="prd_tag">제품</p>
+              <ul class="select_opt">
+                <li>
+                  <a href="#" class="opt_list"><!-- disabled : 선택 불가 품절 -->
+                    <div class="item">첫 구매 감사 5% 할인 쿠폰 (2021.08.10까지)</div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="opt_list not_opt"><!-- not_opt : 텍스트 컬러 888 -->
+                    <div class="item">쿠폰 적용 안함</div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="select_ui_zone btm_line">
+            <a href="#" class="selected_btn" data-default-text="쿠폰을 선택해주세요."><!-- disabled : 선택불가 품절 -->
+              쿠폰을 선택해주세요.
+            </a>
+            <div class="select_inner">
+              <p class="prd_tag">제품</p>
+              <ul class="select_opt">
+                <li>
+                  <a href="#" class="opt_list"><!-- disabled : 선택 불가 품절 -->
+                    <div class="item">첫 구매 감사 5% 할인 쿠폰 (2021.08.10까지)</div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="opt_list">
+                    <div class="item">테스트 목록</div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="select_ui_zone">
+            <a href="#" class="selected_btn" data-default-text="선택하세요."><!-- disabled : 선택불가 품절 -->
+              선택하세요
+            </a>
+            <div class="select_inner">
+              <ul class="select_opt">
+                <li>
+                  <a href="#" class="opt_list"><!-- disabled : 선택 불가 품절 -->
+                    <div class="item">TEXT1</div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="opt_list">
+                    <div class="item">TEXT2</div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="select_ui_zone">
+            <a href="#" class="selected_btn" data-default-text="제품을 선택하세요."><!-- disabled : 선택불가 품절 -->
+              제품을 선택하세요.
+            </a>
+            <div class="select_inner">
+              <ul class="select_opt">
+                <li>
+                  <a href="#" class="opt_list disabled"><!-- disabled : 선택 불가 품절 -->
+                    <div class="item">
+                      <span class="circle_color">
+                        <span class="c_bg" style="background:#fc5227"></span>
+                      </span>
+                      <span class="opt_name">WF-SP800N / 주황색 <span>품절</span></span>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="opt_list">
+                    <div class="item">
+                      <span class="circle_color">
+                        <span class="c_bg" style="background:#f7f5f5"></span>
+                      </span>
+                      <span class="opt_name">WF-SP800N / 화이트</span>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="opt_list">
+                    <div class="item">
+                      <span class="circle_color">
+                        <span class="c_bg" style="background:#1b8faa"></span>
+                      </span>
+                      <span class="opt_name">WF-SP800N / 블루</span>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="opt_list">
+                    <div class="item">
+                      <span class="circle_color">
+                        <span class="c_bg" style="background:#222"></span>
+                      </span>
+                      <span class="opt_name">WF-SP800N / 블랙</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="guide_wrap size2">
+        <div class="guide_box">
+          <h2 class="guide_title02">* Alert</h2>
+          <div class="float_left">
+            <button class="button button_positive button-m" type="button" onclick="common.makeAlert('complete', '로그인 할 수 없습니다. &lt;br&gt; 아이디와 비밀번호를 다시 확인해 주세요.')">Type 1</button>
+            <button class="button button_positive button-m" type="button" onclick="common.makeConfirm('complete', '확인 취소 버튼 Alert')">Type 2</button>
+          </div>
+        </div>
+        <div class="guide_box">
+          <h2 class="guide_title02">* 장바구니 팝업 샘플</h2>
+          <div class="float_left">
+            <button class="button button_positive button-m popup_comm_btn" data-popup-name="login_chk_order">로그인 후 주문</button>
+            <button class="button button_positive button-m popup_comm_btn" data-popup-name="shipping_addr ">최근 배송지</button>
+            <button class="button button_positive button-m popup_comm_btn" data-popup-name="coupon_inquiry">쿠폰 적용 및 조회</button>
+            <button class="button button_positive button-m popup_comm_btn" data-popup-name="tax_invoice1">세금 계산서 발행 안내</button>
+            <button class="button button_positive button-m popup_comm_btn" data-popup-name="tax_invoice2">전자 세금계산서 신청</button>
+            <button class="button button_positive button-m popup_comm_btn" data-popup-name="refund_account">환불계좌 입력</button>
+            <button class="button button_positive button-m popup_comm_btn" data-popup-name="estimate">견적서</button>
+          </div>
+        </div>
+      </div>
+      <div class="guide_wrap size2">
+        <div class="guide_box">
+          <h2 class="guide_title02">* checkBox List</h2>
+          <h3 class="guide_title03">리스트 클릭 가능 type</h3>
+          <p class="guide_txt">체크박스,라디오 버튼 외 리스트 클릭을 원할 시 부모(체크박스+리스트) class : label_click 추가</p>
+          <div class="chk_select_zone">
+            <ul class="chk_select_inner">
+              <li class="chk_select_list">
+                <div class="chk_select_item label_click">
+                  <div class="check check_only chk_select">
+                    <input type="checkbox" class="inp_check" id="test_check1" name="test_check" title="test_check1" checked="checked">
+                  </div>
+                  <div class="chk_select_info">
+                    <p class="txt">
+                      <strong class="name">김소니</strong>
+                      <span class="number">010 0000 0000</span>
+                    </p>
+                    <p class="txt">서울특별시 영등포구 여의도동 국제금융로 10 One IFC 24층
+                      ㈜소니코리아 (080080)</p>
+                  </div>
+                </div>
+              </li>
+              <li class="chk_select_list">
+                <div class="chk_select_item label_click">
+                  <div class="check check_only chk_select">
+                    <input type="checkbox" class="inp_check" id="test_check2" name="test_check" title="test_check2">
+                  </div>
+                  <div class="chk_select_info">
+                    <p class="txt">
+                      <strong class="name">김소니</strong>
+                      <span class="number">010 0000 0000</span>
+                    </p>
+                    <p class="txt">서울시 구로구 구로동 12-1</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <br><br>
+          <h3 class="guide_title03">체크박스 클릭만 가능 type</h3>
+          <div class="chk_select_zone">
+            <ul class="chk_select_inner">
+              <li class="chk_select_list">
+                <div class="chk_select_item">
+                  <div class="check check_only chk_select">
+                    <input type="checkbox" class="inp_check" id="test2_check1" name="test2_check" title="test2_check1" checked="checked">
+                  </div>
+                  <div class="chk_select_info">
+                    <p class="txt">
+                      <strong class="name">김소니</strong>
+                      <span class="number">010 0000 0000</span>
+                    </p>
+                    <p class="txt">서울특별시 영등포구 여의도동 국제금융로 10 One IFC 24층
+                      ㈜소니코리아 (080080)</p>
+                  </div>
+                </div>
+              </li>
+              <li class="chk_select_list">
+                <div class="chk_select_item">
+                  <div class="check check_only chk_select">
+                    <input type="checkbox" class="inp_check" id="test2_check2" name="test2_check" title="test2_check2">
+                  </div>
+                  <div class="chk_select_info">
+                    <p class="txt">
+                      <strong class="name">김소니</strong>
+                      <span class="number">010 0000 0000</span>
+                    </p>
+                    <p class="txt">서울시 구로구 구로동 12-1</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="guide_box">
+          <h2 class="guide_title02">* radio List</h2>
+          <h3 class="guide_title03">리스트 클릭 가능 type</h3>
+          <p class="guide_txt">체크박스,라디오 버튼 외 리스트 클릭을 원할 시 부모(체크박스+리스트) class : label_click 추가</p>
+          <div class="chk_select_zone">
+            <ul class="chk_select_inner">
+              <li class="chk_select_list">
+                <div class="chk_select_item label_click">
+                  <div class="radio_box radio_only chk_select">
+                    <input type="radio" class="inp_radio" id="test_radio1" name="test_radio" checked="checked">
+                    <label for="test_radio1" class="contentType">radio1</label>
+                  </div>
+                  <div class="chk_select_info">
+                    <p class="txt">
+                      <strong class="name">김소니</strong>
+                      <span class="number">010 0000 0000</span>
+                    </p>
+                    <p class="txt">서울특별시 영등포구 여의도동 국제금융로 10 One IFC 24층
+                      ㈜소니코리아 (080080)</p>
+                  </div>
+                </div>
+              </li>
+              <li class="chk_select_list">
+                <div class="chk_select_item label_click">
+                  <div class="radio_box radio_only chk_select">
+                    <input type="radio" class="inp_radio" id="test_radio2" name="test_radio">
+                    <label for="test_radio2" class="contentType">radio1</label>
+                  </div>
+                  <div class="chk_select_info">
+                    <p class="txt">
+                      <strong class="name">김소니</strong>
+                      <span class="number">010 0000 0000</span>
+                    </p>
+                    <p class="txt">서울시 구로구 구로동 12-1</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <br><br>
+          <h3 class="guide_title03">라디오 버튼만 클릭 가능 type</h3>
+          <div class="chk_select_zone">
+            <ul class="chk_select_inner">
+              <li class="chk_select_list">
+                <div class="chk_select_item table">
+                  <div class="radio_box radio_only chk_select">
+                    <input type="radio" class="inp_radio" id="test_prd_coupon1" name="test_prd_coupon" checked="checked">
+                    <label for="test_prd_coupon1" class="contentType">radio1</label>
+                  </div>
+                  <div class="chk_select_info">
+                    <div class="info_cell prd_thumb">
+                      <span class="img"><img src="../../images/_tmp/coupon_prd_thumb.png" alt=""></span>
+                    </div>
+                    <div class="info_cell prd_info">
+                      <p class="prd_tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                      <p class="prd_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED …</p>
+                    </div>
+                    <div class="info_cell prd_price">
+                      <p class="prd_tit"><span class="price">4,299,000</span>원</p>
+                      <p class="prd_desc"><span class="count">1</span>개</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="chk_select_list">
+                <div class="chk_select_item table">
+                  <div class="radio_box radio_only chk_select">
+                    <input type="radio" class="inp_radio" id="test_prd_coupon2" name="test_prd_coupon">
+                    <label for="test_prd_coupon2" class="contentType">radio1</label>
+                  </div>
+                  <div class="chk_select_info">
+                    <div class="info_cell prd_thumb">
+                      <span class="img"><img src="../../images/_tmp/coupon_prd_thumb.png" alt=""></span>
+                    </div>
+                    <div class="info_cell prd_info">
+                      <p class="prd_tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                      <p class="prd_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED …</p>
+                    </div>
+                    <div class="info_cell prd_price">
+                      <p class="prd_tit"><span class="price">4,299,000</span>원</p>
+                      <p class="prd_desc"><span class="count">1</span>개</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="guide_wrap size2">
+        <div class="guide_box">
+          <h2 class="guide_title02">* Table row</h2>
+          <div class="common__table__wrap">
+            <table class="common__table" role="presentation">
+              <caption>렌즈 호환성 등의 정보</caption>
+              <colgroup>
+                <col width="23.5%">
+                <col width="76.5%">
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th scope="row">렌즈 호환성</th>
+                  <td>소니 E-마운트 렌즈</td>
+                </tr>
+                <tr>
+                  <th scope="row">이미지 크기(픽셀), [3:2]</th>
+                  <td>35mm 풀프레임 L : 9504 x 6336(60M), M : 6240 x 4160(26M), S : 4752 x 3168(15M) APS-C L : 6240 x 4160(26M), M : 4752 x 3168(15M), S : 3120 x 2080(6.5M)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h2 class="guide_title02">* Table col</h2>
+          <div class="common__table__wrap ">
+            <table class="common__table col" role="presentation">
+              <caption>테이블</caption>
+              <colgroup>
+                <col style="width:25%">
+                <col style="width:25%">
+                <col style="width:25%">
+                <col style="width:25%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th scope="col">구성1</th>
+                  <th scope="col">2번</th>
+                  <th scope="col">3번</th>
+                  <th scope="col">4번</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">확인</th>
+                  <td>내용1</td>
+                  <td>내용2</td>
+                  <td>내용3</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="no_bg">배경 없는 th</th>
+                  <td class="al_left">TEXT 왼쪽</td>
+                  <td class="al_right">TEXT 오른쪽</td>
+                  <td class="al_center">TEXTX 가운데</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="guide_box">
+          <h2 class="guide_title02">* FAQ style</h2>
+          <div class="acc acc_ui_zone acc_faq">
+            <div class="acc_item on">
+              <div class="acc_head">
+                <a href="#" class="acc_btn" title="상세 내용 토글">
+                  <span class="acc_tit">장바구니 이용 안내</span>
+                  <span class="acc_arrow">선택됨/상세 닫기</span>
+                </a>
+              </div>
+              <div class="acc_inner" style="display: block;">
+                <div class="acc_box">
+                  <!-- 앞에 불릿이 들어 갈 것 같다. 그땐 tag 교체 -->
+                  <p>모든 이벤트는 결제완료시간 기준으로 적용됩니다.</p>
+                  <p>견적서를 클릭하시면 견적서 프린트가 가능합니다.</p>
+                  <p>소니스토어 멤버십 회원에 한하여 플레이스테이션 및 주변기기, ESP를 제외한 제품의 총 구매액 2% / 5% / 7%(회원 등급별 차등)가 마일리지로 적립됩니다.</p>
+                  <p>동일한 제품군별로만 장바구니에 담으실 수 있습니다. (예, 마일리지 상품과 일반 상품은 함께 장바구니에담으실 수 없습니다.)</p>
+                </div>
+              </div>
+            </div>
+            <div class="acc_item">
+              <div class="acc_head">
+                <a href="#" class="acc_btn" title="상세 내용 토글">
+                  <span class="acc_tit">AS관련 제품 주의사항</span>
+                  <span class="acc_arrow">상세 보기</span>
+                </a>
+              </div>
+              <div class="acc_inner">
+                <div class="acc_box">
+                  <p>ESP(Extended Service Plan)를 주문하시는 것은 ESP 이용약관에 기재된 내용을 모두 이해하고 준수하는 데 동의하신 것으로 간주됩니다.</p>
+                  <p>ESP(Extended Service Plan) 구입 후 7일 이내에 고객지원사이트의 My SCS에서 연장된 서비스 기간 조회가 가능합니다. (구입 확인은 내부 사정에 따라 조정될 수 있습니다.)</p>
+                </div>
+              </div>
+            </div>
+            <div class="acc_item">
+              <div class="acc_head">
+                <a href="#" class="acc_btn" title="상세 내용 토글">
+                  <span class="acc_tit">인터넷 주문이 어려우세요?</span>
+                  <span class="acc_arrow">상세 보기</span>
+                </a>
+              </div>
+              <div class="acc_inner">
+                <div class="acc_box">
+                  <p>제품 주문 시 어려움이 있으시다면 고객지원센터(1588-0911)로 전화주세요. 소니 전문 상담원이 제품 설명과 함께 고객님의 주문을 도와 드립니다.</p>
+                </div>
+              </div>
+            </div><!-- // acc_item -->
+          </div>
+        </div>
+      </div>
+      <div class="guide_wrap full">
+        <div class="guide_box">
+          <h2 class="guide_title02">* div : Table col</h2>
+          <!-- 2021-07-05 추가
+          1. 필요한 경우 .col_table_wrap 추가,
+          2. 필요한 경우 .col_table 컴포넌트 최상위 element에 클래스 추가
+          .col_table      === <table> display: table;
+          .col_table_head === <thead> display: table-header-group;
+          .col_table_foot === <tfoot> display: table-footer-group; (단 .col_table 내에 있을 경우 한정)
+          .col_table_body === <tbody> display: table-row-group;
+          .col_table_row  === <tr>    display: table-row;
+          .col_table_cell === <th>    display: table-cell;
+          .col_table_cell === <td>    display: table-cell;
+
+          // optional?
+          .col_table_caption  === <caption>   display: table-caption;
+          .col_table_colgroup === <colgroup>  display: table-column-group;
+          .col_table_col      === <col>       display: table-column;
+          -->
+          <!-- demo에서 -->
+          <div class="col_table_wrap" style="margin-bottom: 40px;">
+            <div class="col_table">
+              <div class="col_table_head">
+                <div class="col_table_row">
+                  <div class="col_table_cell">제품정보</div>
+                  <div class="col_table_cell">가격</div>
+                  <div class="col_table_cell">수량</div>
+                  <div class="col_table_cell">합계</div>
+                  <div class="col_table_cell ir">삭제</div>
+                </div>
+              </div>
+
+              <div class="col_table_body">
+                <div class="col_table_row">
+                  <div class="col_table_cell tal">
+                    PLAYSTATION 5 DIGITAL (CFI-1018Bd01)
+                    <p>4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트 화이트)</p>
+                  </div>
+                  <div class="col_table_cell">
+                    4,299,000 원
+                  </div>
+                  <div class="col_table_cell">
+                    3
+                  </div>
+                  <div class="col_table_cell">
+                    4,299,000 원
+                  </div>
+                  <div class="col_table_cell">
+                    <button type="button" class="btn_del_prd">X</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col_table_foot">
+              <div class="prd_summary">
+                <span class="prd_summary_length">결제 예정 금액 (총 1개)</span>
+                <span class="prd_summary_price">200,000,000,000 <span class="won">원</span></span>
+                <p class="prd_summary_warning">* 최종 결제금액은 고객님의 쿠폰 / 마일리지 적용에 따라 달라질 수 있습니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 장바구니에서 -->
+          <div class="col_table_wrap order_list" style="margin-bottom: 40px;">
+            <div class="col_table">
+              <div class="col_table_head">
+                <div class="col_table_row">
+                  <div class="col_table_cell">제품</div>
+                  <div class="col_table_cell">가격</div>
+                  <div class="col_table_cell">수량</div>
+                  <div class="col_table_cell">합계</div>
+                  <div class="col_table_cell ir">삭제</div>
+                </div>
+              </div>
+              <div class="col_table_body">
+                <div class="col_table_row">
+                  <div class="col_table_cell prd_wrap">
+                    <div class="prd">
+                      <div class="check check_only">
+                        <input type="checkbox" class="inp_check">
+                      </div>
+                      <div class="prd_thumb">
+                        <img class="prd_thumb_pic" src="../../images/_tmp/item640x640_03.png" alt="상품명입력">
+                      </div>
+                      <div class="prd_info">
+                        <div class="prd_info_name">PLAYSTATION 5 DIGITAL (CFI-1018B01)</div>
+                        <p class="prd_info_option">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트 화이트)</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col_table_cell prd_price">
+                    4,299,000 <span class="won">원</span>
+                  </div>
+                  <div class="col_table_cell prd_count">
+                    <div class="count_ui_box">
+                      <button class="minus">감소</button>
+                      <input type="text" readonly="readonly" value="1" class="count">
+                      <button class="plus">증가</button>
+                    </div>
+                  </div>
+                  <div class="col_table_cell prd_total">
+                    4,299,000 <span class="won">원</span>
+                  </div>
+                  <div class="col_table_cell">
+                    <button type="button" class="btn_del_prd"><img src="../../images/common/ic_close.svg" alt="제품 삭제"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col_table_foot">
+              <div class="prd_summary">
+                <span class="prd_summary_length">결제 예정 금액 (총 1개)</span>
+                <span class="prd_summary_price">200,000,000,000 <span class="won">원</span></span>
+                <p class="prd_summary_warning">* 최종 결제금액은 고객님의 쿠폰 / 마일리지 적용에 따라 달라질 수 있습니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 주문·결제에서 -->
+          <div class="col_table_wrap order_list">
+            <div class="col_table">
+              <div class="col_table_head">
+                <div class="col_table_row">
+                  <div class="col_table_cell">제품</div>
+                  <div class="col_table_cell">가격</div>
+                  <div class="col_table_cell">수량</div>
+                  <div class="col_table_cell">합계</div>
+                </div>
+              </div>
+              <div class="col_table_body">
+                <div class="col_table_row">
+                  <div class="col_table_cell prd_wrap">
+                    <div class="prd">
+                      <div class="prd_thumb">
+                        <img class="prd_thumb_pic" src="../../images/_tmp/item640x640_03.png" alt="상품명입력">
+                      </div>
+                      <div class="prd_info">
+                        <div class="prd_info_name">PLAYSTATION 5 DIGITAL (CFI-1018B01)</div>
+                        <p class="prd_info_option">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트 화이트)</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col_table_cell prd_price">
+                    4,299,000 <span class="won">원</span>
+                  </div>
+                  <div class="col_table_cell prd_count">
+                    2
+                  </div>
+                  <div class="col_table_cell prd_total">
+                    8,598,000 <span class="won">원</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="guide_wrap full">
+        <div class="guide_box">
+          <h2 class="guide_title02">* TAB 2</h2>
+          <div><!-- 한번 감싸주는 부모 필요 class 지정 x -->
+            <div class="tab_ui size2">
+              <ul>
+                <li class="tabs on"><a href="#" class="btn">TAB 1</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 2</a></li>
+              </ul>
+            </div>
+            <div class="tab_ui_info">
+              <div class="tab_ui_inner view">1 내용</div>
+              <div class="tab_ui_inner">2 내용</div>
+            </div>
+          </div>
+          <br><hr><br>
+          <h2 class="guide_title02">* TAB 3</h2>
+          <div><!-- 한번 감싸주는 부모 필요 class 지정 x -->
+            <div class="tab_ui size3">
+              <ul>
+                <li class="tabs on"><a href="#" class="btn">TAB 1</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 2</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 3</a></li>
+              </ul>
+            </div>
+            <div class="tab_ui_info">
+              <div class="tab_ui_inner view">1 내용</div>
+              <div class="tab_ui_inner">2 내용</div>
+              <div class="tab_ui_inner">3 내용</div>
+            </div>
+          </div>
+          <br><hr><br>
+          <h2 class="guide_title02">* TAB 4</h2>
+          <div><!-- 한번 감싸주는 부모 필요 class 지정 x -->
+            <div class="tab_ui size4">
+              <ul>
+                <li class="tabs on"><a href="#" class="btn">TAB 1</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 2</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 3</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 4</a></li>
+              </ul>
+            </div>
+            <div class="tab_ui_info">
+              <div class="tab_ui_inner view">1 내용</div>
+              <div class="tab_ui_inner">2 내용</div>
+              <div class="tab_ui_inner">3 내용</div>
+              <div class="tab_ui_inner">4 내용</div>
+            </div>
+          </div>
+          <br><hr><br>
+          <h2 class="guide_title02">* TAB scroll</h2>
+          <div><!-- 한번 감싸주는 부모 필요 class 지정 x -->
+            <div class="tab_ui scroll" data-scroll-view="4"><!-- 스크롤탭 : class: scroll / data-scroll-view 보여지는 탭 수 -->
+              <ul>
+                <li class="tabs on"><a href="#" class="btn">TAB 1</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 2</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 3</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 4</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 5</a></li>
+                <li class="tabs"><a href="#" class="btn">TAB 6</a></li>
+              </ul>
+            </div>
+            <div class="tab_ui_info">
+              <div class="tab_ui_inner view">1 내용</div>
+              <div class="tab_ui_inner">2 내용</div>
+              <div class="tab_ui_inner">3 내용</div>
+              <div class="tab_ui_inner">4 내용</div>
+              <div class="tab_ui_inner">5 내용</div>
+              <div class="tab_ui_inner">6 내용</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="guide_wrap full">
+        <h2 class="guide_title02">* 기획전 풀 배너 슬라이드</h2>
+        <!-- 기획전 이벤트 배너 -->
+        <!-- 기획전 슬라이드 -->
+        <div class="exhibitions_slider swiper-container">
+          <ul class="swiper-wrapper">
+            <li class="swiper-slide">
+              <div class="exhibitions_box">
+                <img class="bg_img" src="../../images/product/banner_thumb_01.png" alt=""><!-- 슬라이드 배경 -->
+                <div class="txt_box">
+                  <span class="tag" style="color:#5865f5;">기획전</span>
+                  <p class="tit">원핸드 컴팩트 풀프레임<br>G 렌즈 예약판매</p>
+                </div>
+              </div>
+            </li>
+            <li class="swiper-slide">
+              <div class="exhibitions_box">
+                <img class="bg_img" src="../../images/product/banner_thumb_01.png" alt="">
+                <div class="txt_box">
+                  <span class="tag" style="color:#5865f5;">기획전</span>
+                  <p class="tit">원핸드 컴팩트 풀프레임<br>G 렌즈 예약판매</p>
+                </div>
+              </div>
+            </li>
+            <li class="swiper-slide">
+              <div class="exhibitions_box">
+                <img class="bg_img" src="../../images/product/banner_thumb_01.png" alt="">
+                <div class="txt_box">
+                  <span class="tag" style="color:#5865f5;">기획전</span>
+                  <p class="tit">원핸드 컴팩트 풀프레임<br>G 렌즈 예약판매</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="arrow_btn">
+            <a class="arrow swiper-button-prev"><img src="../../images/common/arrow_19_34.png" alt="이전"></span></a>
+            <a class="arrow swiper-button-next"><img src="../../images/common/arrow_19_34.png" alt="다음"></span></a>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        
+        <script type="text/javascript">
+        $(function(){
+          fullSliderBanner();
+        });
+        </script>      </div>
+      <div class="guide_wrap full">
+        <div class="guide_box">
+          <h2 class="guide_title02">* button </h2>
+          <h2 class="guide_title02">Basic</h2>
+          <h3 class="guide_title03">*width: min-width: 기준</h3>
+          <p class="guide_txt"> [PC 1281 ↑] 200 x 64  // [TB,MO :1280 ↓] 150 x 48</p>
+          <h3 class="guide_title03">button[type="button"]</h3>
+          <button class="button button_positive" type="button">확인</button>
+          <button class="button button_negative" type="button">취소</button>
+          <button class="button button_primary" type="button">퇴사신청</button>
+          <button class="button button_secondary" type="button">불구속입건</button>
+          <h3 class="guide_title03 mt-10">input[type="button"]</h3>
+          <input type="button" class="button button_positive" value="확인">
+          <input type="button" class="button button_negative" value="취소">
+          <input type="button" class="button button_primary" value="퇴사신청">
+          <input type="button" class="button button_secondary" value="퇴사신청">
+          <h3 class="guide_title03 mt-10">a</h3>
+          <a href="#" class="button button_positive">확인</a>
+          <a href="#" class="button button_negative">취소</a>
+          <a href="#" class="button button_primary">퇴사신청</a>
+          <a href="#" class="button button_secondary">퇴사신청</a>
+          <h3 class="guide_title03 mt-10">:disabled</h3>
+          <button class="button button_positive" disabled="" type="button">확인</button>
+          <button class="button button_negative" disabled="" type="button">취소</button>
+          <button class="button button_primary" disabled="" type="button">퇴사신청</button>
+          <button class="button button_secondary" disabled="" type="button">퇴사신청</button>
+          <h2 class="guide_title02 mt-20">Medium (레이어 팝업 하단 배치)</h2>
+          <p class="guide_txt"> [PC 1281 ↑] 140 x 56  // [TB,MO :1280 ↓] 150 x 48</p>
+          <button class="button button_positive button-l" type="button">확인</button>
+          <button class="button button_negative button-l" type="button">취소</button>
+          <button class="button button_primary button-l" type="button">퇴사신청</button>
+          <button class="button button_secondary button-l" type="button">불구속입건</button>
+          <h2 class="guide_title02 mt-20">확인 (얼럿/컨펌 레이어 하단 배치)</h2>
+          <p class="guide_txt"> [PC 1281 ↑] 140 x 48  // [TB,MO :1280 ↓] 150 x 48</p>
+          <button class="button button_positive button-m" type="button">확인</button>
+          <button class="button button_negative button-m" type="button">취소</button>
+          <button class="button button_primary button-m" type="button">퇴사신청</button>
+          <button class="button button_secondary button-m" type="button">불구속입건</button>
+          <h2 class="guide_title02 mt-20">Small (본문 배치)</h2>
+          <p class="guide_txt"> [PC 1281 ↑] 140 x 32  // [TB,MO :1280 ↓] 64 x 36</p>
+          <button class="button button_positive button-s" type="button">확인</button>
+          <button class="button button_negative button-s" type="button">취소</button>
+          <button class="button button_primary button-s" type="button">퇴사신청</button>
+          <button class="button button_secondary button-s" type="button">불구속입건</button>
+          <h2 class="guide_title02 mt-10">* usage</h2>
+          <p class="guide_txt">부모 너비에 따른</p>
+          <p class="guide_txt"> [PC 1281 ↑] height : 64  // [TB,MO :1280 ↓] height : 48</p>
+          <h3 class="guide_title03 mt-10">100%</h3>
+          <div class="parent">
+            <button class="button button_positive button-full" type="button">확인</button>
+          </div>
+          <h3 class="guide_title03 mt-10">half & half</h3>
+          <div class="parent">
+            <button class="button button_negative button-half" type="button">취소</button>
+            <button class="button button_positive button-half" type="button">확인</button>
+          </div>
+          <h3 class="guide_title03 mt-10">one-third</h3>
+          <div class="parent">
+            <button class="button button_negative button-onethird" type="button">반대</button>
+            <button class="button button_secondary button-onethird" type="button">기권</button>
+            <button class="button button_positive button-onethird" type="button">찬성</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide_wrap full">
+        <div class="guide_box">
+          <h2 class="guide_title02">* Input</h2>
+          <div class="group">
+            <div class="inp_box">
+              <label class="inp_desc" for="loginName">
+                <input type="text" id="loginName" class="inp" placeholder="&nbsp;" autocomplete="off" tabindex="1">
+                <span class="label">이메일 아이디<span>(예 : sony@sony.co.kr)</span></span>
+                <span class="focus_bg"></span>
+              </label>
+            </div>
+            <div class="error_txt"><span class="ico"></span>이메일 아이디를 입력해 주세요.</div>
+          </div>
+          <div class="group">
+            <div class="inp_box password_box">
+              <label class="inp_desc" for="loginPw">
+              <input type="password" id="loginPw" class="inp" placeholder="&nbsp;">
+              <span class="label">비밀번호</span>
+              <span class="focus_bg"></span>
+              <div class="eyes"><a href="#" class="eyes_btn" title="비밀번호 숨김"><i class="ico ico_eyes"></i></a></div>
+            </label>
+            </div>
+            <div class="error_txt"><span class="ico"></span>비밀번호를 입력해 주세요.</div>
+          </div>
+          <div class="rowgroup">
+            <div class="group">
+              <div class="inp_box password_box">
+                <label class="inp_desc" for="loginPw1">
+                  <input type="password" id="loginPw1" class="inp" placeholder="&nbsp;" autocomplete="off" tabindex="2">
+                  <span class="label">비밀번호<span>(영문/숫자 조합 10~15자리 미만)</span></span>
+                  <span class="focus_bg"></span>
+                  <div class="eyes"><a href="#" class="eyes_btn" title="비밀번호 숨김"><i class="ico ico_eyes"></i></a></div>
+                </label>
+              </div>
+              <div class="error_txt"><span class="ico"></span>비밀번호를 입력해 주세요.</div>
+            </div>
+            <div class="group">
+              <div class="inp_box password_box">
+                <label class="inp_desc" for="loginPw2">
+                  <input type="password" id="loginPw2" class="inp" placeholder="&nbsp;" autocomplete="off" tabindex="3">
+                  <span class="label">비밀번호 확인</span>
+                  <span class="focus_bg"></span>
+                  <div class="eyes"><a href="#" class="eyes_btn" title="비밀번호 숨김"><i class="ico ico_eyes"></i></a></div>
+                </label>
+              </div>
+              <div class="error_txt"><span class="ico"></span>비밀번호를 재입력 해주세요.</div>
+            </div>
+          </div>
+          <div class="rowgroup">
+            <div class="group">
+              <div class="inp_box">
+                <label class="inp_desc" for="username">
+                  <input type="text" id="username" class="inp" placeholder="&nbsp;" autocomplete="off" tabindex="4">
+                  <span class="label">이름<span>(띄어쓰기 없이 입력하세요.)</span></span>
+                  <span class="focus_bg"></span>
+                </label>
+              </div>
+              <div class="error_txt"><span class="ico"></span>이름을 입력해 주세요.</div>
+            </div>
+            <div class="group">
+              <div class="inp_box">
+                <label class="inp_desc" for="userbirth">
+                  <input type="text" id="userbirth" class="inp" placeholder="&nbsp;">
+                  <span class="label">생년월일<span>(예 : 20210307)</span></span>
+                  <span class="focus_bg"></span>
+                </label>
+              </div>
+              <div class="error_txt"><span class="ico"></span>생년월일을 주세요.</div>
+            </div>
+          </div>
+          <div class="group btn_type">
+            <div class="inp_box">
+              <label class="inp_desc" for="phonenumber">
+                <input type="text" id="phonenumber" class="inp" placeholder="&nbsp;" autocomplete="off" tabindex="5">
+                <span class="label">휴대폰 번호<span>(-없이 입력하세요.)</span></span>
+                <span class="focus_bg"></span>
+              </label>
+              <div class="btn_box">
+                <a href="#" class="btn btn_disable">인증번호</a>
+                <!--<a href="#" class="btn btn_primary">인증번호</a> 휴대폰 번호 입력시 활성화 버튼-->
+                <!--<a href="#" class="btn btn_default">재전송</a> 재전송시 버튼 -->
+              </div>
+            </div>
+            <div class="error_txt"><span class="ico"></span>휴대폰 번호를 입력해주세요.</div>
+          </div>
+          <div class="group btn_type">
+            <div class="inp_box">
+              <label class="inp_desc" for="certifynumber">
+                <input type="text" id="certifynumber" class="inp" placeholder="&nbsp;" autocomplete="off" tabindex="6">
+                <span class="label">인증번호</span>
+                <span class="timer" id="timer">02:55</span>
+                <span class="focus_bg"></span>
+              </label>
+              <div class="btn_box">
+                <a href="#" class="btn btn_primary">인증</a>
+              </div>
+            </div>
+            <div class="certify_txt">※ 입력하신 번호로 인증번호가 전송되었습니다.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <footer class="footer">
+    <nav class="sidebar">
+      <div class="sidebar__inner">
+        <a href="../../html/mypage/myPageMain.html" class="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+        <a href="#" class="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
+        <a href="#header" class="sidebar__btn top"><span>페이지 상단</span></a>
+      </div>
+      <button class="sidebar__btn sidebar__btn__toggle" type="button"><img src="../../images/common/ic_sidebar1.svg" alt="메뉴토글"></button>
+    </nav>
+    <div class="footer__inner">
+      <div class="footer__social__wrap">
+        <div class="footer__social">
+          <h3 class="footer__social__title">FOLLOW US</h2>
+          <div class="footer__social__links">
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_facebook.svg" alt="facebook"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_instagram.svg" alt="instagram"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_youtube.svg" alt="youtube"></a>
+            <a href="#" class="footer__social__link"><img src="../../images/common/ic_blog.svg" alt="blog"></a>
+          </div>
+        </div>
+        <div class="footer__family">
+          <div class="footer__family__links">
+            <div class="footer__family__link footer__pc">
+              <button type="button" class="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침">Sony Family</button>
+              <div class="footer__family__link__inner">
+                <h4 class="optgroup__label">Sony Family</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니코리아 고객지원</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 알파 α</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송/업무용 솔루션</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
+                </ul>
+                <h4 class="optgroup__label">Family Company</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
+                </ul>
+              </div>
+            </div>
+            <select class="footer__family__link footer__mo">
+              <optgroup label="Sony Family">
+                <option>소니코리아</option>
+                <option>소니코리아 고객지원</option>
+                <option>소니 알파 α</option>
+                <option>소니 방송/업무용 솔루션</option>
+                <option>소니 방송 업무용 솔루션 고객지원</option>
+              </optgroup>
+              <optgroup label="Family Company">
+                <option>소니 인터렉티브 엔터테인먼트 코리아</option>
+                <option>소니 뮤직 엔터테인먼트 코리아</option>
+                <option>소니 ATV 뮤직 퍼블리싱 코리아</option>
+                <option>소니 픽쳐스 엔터테인먼트 코리아</option>
+                <option>소니 픽쳐스 텔레비전 코리아</option>
+              </optgroup>
+            </select>
+          </div>
+          <a href="https://www.sony.com/" class="footer__family__global" target="_blank">Sony Global</a>
+        </div>
+      </div>
+      <div class="footer__legal">
+        <div class="footer__legal__links">
+          <a href="../../html/footer/terms.html" class="footer__legal__link">이용약관</a>
+          <a href="../../html/footer/policy.html" class="footer__legal__link privacy">개인정보처리방침</a>
+          <a href="javascript:openModal('modal__customer__insurance');" class="footer__legal__link" data-modal-target="modal__customer__insurance">소비자 피해 보상보험</a>
+          <a href="../../html/footer/siteMap.html" class="footer__legal__link">사이트맵</a>
+        </div>
+        <div class="footer__legal__warning">
+          <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
+          <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a href="#" class="escrow">에스크로결제</a></p>
+        </div>
+      </div>
+      <address class="address">
+        <span>사업장주소 : 서울특별시 영등포구 국제금융로 10 원아이에프씨 24F</span>
+        <span>사업자 등록번호 : 106-81-23810 통신판매번호 2012-서울영등포-1038 소니코리아㈜</span>
+        <span>대표이사 : Okura Kikuo</span>
+        <span>개인정보관리책임자 : Okura Kikuo</span>
+        <span>TEL : 소니코리아 고객센터 1588-0911</span>
+        <span>E-MAIL : <a href="mailto:cshelp@sony.co.kr">cshelp@sony.co.kr</a></span>
+        <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
+      </address>
+    </div>
+  </footer>
+  
+  <!-- 소비자피해보상 보험 팝업 -->
+  <div class="layer modal__customer__insurance">
+    <div class="layer_wrap">
+      <div class="layer_container">
+        <div class="layer_title">
+          <h1>소비자피해보상보험</h1>
+        </div>
+        <div class="layer_content">
+          <div class="consumer_logo">
+            <img src="../../images/img_consumerlogo.png">
+          </div>
+          <p>고객님은 안전거래를 위해 현금 결제 시 저희 쇼핑몰이 가입한 구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.</p>
+          <p>보상대상 : 미배송&#47;반품, 환불거부&#47;쇼핑몰부도</p>
+          <div class="btn_box">
+            <a href="https://mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810" target="_blank" title="새창열림">서비스 가입 사실 확인하기</a>
+          </div>
+        </div>
+        <button href="#" class="layer_close close" title="팝업창 닫기">
+          <span>팝업창 닫기</span>
+      </button>        
+      </div>    
+    </div>
+  </div>
+  <!--// 소비자피해보상 보험 팝업 -->
+  
+  <script>
+       //팝업 열기
+      function openModal(modalname) {
+          $("." + modalname).fadeIn(300);
+          $("body,html").css({"overflow":"hidden"});        
+          return false;
+      }
+      // 팝업 닫기
+      $(document).ready(function(){
+        $layer = $(".layer");
+  
+        $('.close').click(function() {
+            $layer.fadeOut(300);
+            $('body,html').css({"overflow":"visible"});
+        });
+      });
+  </script></div>
+
+
+<!-- alert 팝업 -->
+<div class="alert_layer layer alert_pop">
+  <div class="layer_wrap">
+    <div class="layer_container">
+      <div class="layer_content">
+        <p class="alert_text">-</p><!-- 텍스트 받아오기. -->
+        <div class="btn_box">
+          <button type="button" class="close btn btn_dark">확인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- // e: alert 팝업 -->
+<!-- alert 팝업 버튼2 -->
+<div class="alert_layer layer alert_pop2">
+  <div class="layer_wrap">
+    <div class="layer_container">
+      <div class="layer_content">
+        <p class="alert_text">-</p><!-- 텍스트 받아오기. -->
+        <div class="btn_box">
+          <button type="button" class="close btn btn_default">취소</button>
+          <button type="button" class="btn btn_dark">확인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- // e: alert 팝업 -->
+
+<!-- 로그인 확인 레이어 -->
+<div class="pop_login layer">
+  <div class="layer_wrap">
+    <div class="layer_container">
+      <div class="layer_content">
+        <p class="layer_title">로그인 후 주문해주세요.</p>
+        <p class="layer_stxt">소니스토어 회원으로 로그인 하시고 다양한 멤버십 혜택을 누리세요!<br> 비회원으로 제품을 구매하시면 소니스토어의 쿠폰 및 마일리지 적립 혜택을 받으실 수 없습니다.</p>
+        <div class="btn_box size2">
+          <button type="button" class="btn btn_default">비회원 구매</button>
+          <button type="button" class="btn btn_dark">회원 구매</button>
+        </div>
+        <button href="#" class="layer_close close" title="팝업창 닫기">
+          <span>팝업창 닫기</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- // 로그인 확인 레이어 -->
+
+
+<!--
+  ////////////////////////////////////////////////////////////////////////
+                              팝업 샘플
+  ////////////////////////////////////////////////////////////////////////
+-->
+<!-- s: 최근 배송지 -->
+<div class="popup_wrap size_m shipping_addr">
+  <div class="pop_inner">
+    <div class="pop_cont">
+      <p class="pop_tit">최근 배송지</p>
+      <p class="pop_txt">최근에 입력하신 배송지 5개까지 노출됩니다.</p>
+      <div class="chk_select_zone">
+        <ul class="chk_select_inner">
+          <li class="chk_select_list">
+            <div class="chk_select_item label_click"><!-- 리스트 클릭 가능 : label_click -->
+              <div class="radio_box radio_only chk_select">
+                <input type="radio" class="inp_radio" id="addr_chk1" name="addr_chk1" checked="checked">
+                <label for="addr_chk1" class="contentType">radio1</label>
+              </div>
+              <div class="chk_select_info">
+                <p class="txt">
+                  <strong class="name">김소니</strong>
+                  <span class="number">010 0000 0000</span>
+                </p>
+                <p class="txt">서울특별시 영등포구 여의도동 국제금융로 10 One IFC 24층
+                  ㈜소니코리아 (080080)</p>
+              </div>
+            </div>
+          </li>
+          <li class="chk_select_list">
+            <div class="chk_select_item label_click"><!-- 리스트 클릭 가능 : label_click -->
+              <div class="radio_box radio_only chk_select">
+                <input type="radio" class="inp_radio" id="addr_chk2" name="addr_chk1">
+                <label for="addr_chk2" class="contentType">radio1</label>
+              </div>
+              <div class="chk_select_info">
+                <p class="txt">
+                  <strong class="name">김소니</strong>
+                  <span class="number">010 0000 0000</span>
+                </p>
+                <p class="txt">서울시 구로구 구로동 12-1</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="btn_article">
+        <button class="button button_positive button-m" type="button">확인</button>
+      </div>
+    </div>
+    <button href="#" class="ico_x closed" title="팝업창 닫기">
+      <span>팝업창 닫기</span>
+    </button>
+  </div>
+</div>
+<!-- // e: 최근 배송지 -->
+<!-- 로그인 후 주문 -->
+<div class="popup_wrap size_ms login_chk_order">
+  <div class="pop_inner">
+    <div class="pop_cont">
+      <p class="pop_tit">로그인 후 주문해주세요.</p>
+      <p class="pop_txt">소니스토어 회원으로 로그인 하시고 다양한 멤버십 혜택을 누리세요!
+        비회원으로 제품을 구매하시면 소니스토어의 쿠폰 및 마일리지 적립 혜택을 받으실 수 없습니다. </p>
+      <div class="btn_article">
+        <button class="button button_negative button-m closed" type="button">비회원 구매</button>
+        <button class="button button_positive button-m" type="button">회원 구매</button>
+      </div>
+    </div>
+    <button href="#" class="ico_x closed" title="팝업창 닫기">
+      <span>팝업창 닫기</span>
+    </button>
+  </div>
+</div>
+<!-- // 로그인 후 주문 -->
+<!-- s: 쿠폰 조회 및 적용 -->
+<div class="popup_wrap size_m coupon_inquiry">
+  <div class="pop_inner">
+    <div class="pop_cont">
+      <p class="pop_tit">쿠폰 조회 및 적용</p>
+      <div class="pop_cont_scroll">
+        <div class="chk_select_zone">
+          <ul class="chk_select_inner">
+            <li class="chk_select_list">
+              <div class="chk_select_item table label_click">
+                <div class="radio_box radio_only chk_select">
+                  <input type="radio" class="inp_radio" id="prd_coupon1" name="prd_coupon" checked="checked">
+                  <label for="prd_coupon1" class="contentType">radio1</label>
+                </div>
+                <div class="chk_select_info">
+                  <div class="info_cell prd_thumb">
+                    <span class="img"><img src="../../images/_tmp/coupon_prd_thumb.png" alt=""></span>
+                  </div>
+                  <div class="info_cell prd_info">
+                    <p class="prd_tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                    <p class="prd_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED …</p>
+                  </div>
+                  <div class="info_cell prd_price">
+                    <p class="prd_tit"><span class="price">4,299,000</span>원</p>
+                    <p class="prd_desc"><span class="count">1</span>개</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="chk_select_list">
+              <div class="chk_select_item table label_click">
+                <div class="radio_box radio_only chk_select">
+                  <input type="radio" class="inp_radio" id="prd_coupon2" name="prd_coupon" >
+                  <label for="prd_coupon2" class="contentType">radio1</label>
+                </div>
+                <div class="chk_select_info">
+                  <div class="info_cell prd_thumb">
+                    <span class="img"><img src="../../images/_tmp/coupon_prd_thumb.png" alt=""></span>
+                  </div>
+                  <div class="info_cell prd_info">
+                    <p class="prd_tit">PLAYSTATION 5 DIGITAL (CFI-1018B01)</p>
+                    <p class="prd_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED …</p>
+                  </div>
+                  <div class="info_cell prd_price">
+                    <p class="prd_tit"><span class="price">4,299,000</span>원</p>
+                    <p class="prd_desc"><span class="count">1</span>개</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="coupon_info">
+          <div class="select_ui_zone tit_btm_line">
+            <a href="#" class="selected_btn" data-default-text="쿠폰을 선택해주세요.">
+              쿠폰을 선택해주세요.
+            </a>
+            <div class="select_inner">
+              <p class="prd_tag">제품</p>
+              <ul class="select_opt">
+                <li>
+                  <a href="#" class="opt_list">
+                    <div class="item">첫 구매 감사 5% 할인 쿠폰 (2021.08.10까지)</div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="opt_list not_opt"><!-- not_opt : 텍스트 컬러 888 -->
+                    <div class="item">쿠폰 적용 안함</div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="btn_article">
+            <button class="button button_positive button-m button-full" type="button">쿠폰적용</button>
+          </div>
+          <p class="pop_txt txt_l">사용 가능한 쿠폰만 확인하실 수 있으며,<br>
+            보유하신 전체 쿠폰은 마이 페이지에서 확인하세요!</p>
+          <div class="guide_list">
+            <p class="tit">[쿠폰 이용안내]</p>
+            <ul class="list_dot">
+              <li>쿠폰은 주문 당 1매씩 사용 가능하며, 상품 1개에만 적용됩니다.</li>
+              <li>쿠폰의 경우, 일부 상품(이벤트 할인 상품 등)에 대해 사용이 제한 될 수 있습니다.</li>
+              <li>소니스토어 오프라인 매장에서 쿠폰을 사용하시려면 출력된 쿠폰 지참, 혹은 모바일 App 내 마이페이지에서 쿠폰 내역을 직원에게 제시해 주세요.</li>
+              <li>주문 시 사용하신 쿠폰은 해당 주문을 취소하시더라도 복원되지 않습니다.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button href="#" class="ico_x closed" title="팝업창 닫기">
+      <span>팝업창 닫기</span>
+    </button>
+  </div>
+</div>
+
+<!-- e: 쿠폰 조회 및 적용 -->
+
+<!-- s: 전자 세금 계산서 발행 안내 -->
+<div class="popup_wrap size_m tax_invoice1">
+  <div class="pop_inner">
+    <div class="pop_cont">
+      <p class="pop_tit">전자 세금계산서 발행 안내</p>
+      <div class="pop_cont_scroll">
+        <p class="pop_txt txt_l">2011년 1월부터 전자세금계산서 제도를 시행하고 있습니다.<br>
+          이에 따라 전자세금계산서 발행이 의무화되었으며, <strong class="under_line">재화를 공급한 달의 익월 8일</strong> 까지 세금계산서를 발행하도록 규정하고 있습니다. <br>
+          익월 8일 이후에 요청되는 세금계산서 발행 요청에 대해서는 불가한 점 고객님들의 양해를 구합니다.</p>
+        <div class="related_laws">
+          <ul class="dot_line">
+            <li>
+              <p class="tit">부가가치세법 제 22조 - 제2호</p>
+              <p class="desc">② 사업자가 다음 각 호의 어느 하나에 해당하는 경우에는 그 공급가액에 대하여 100분의 1(제2호의 2에 해당하는 경우에 1천분의 5)에 해당하는 금액을 납부세액에 더하거나 환급세액에서 뺀다. 다만, 제2호의2는 법인사업자에 대해서는 2010년 12월 31일까지 적용하지 아니하고 2011년 1월 1일부터 2012년 12월 31일까지는 각각 1천분의3, 1천분의 1을 적용하며, 대통령령으로 정하는 개인사업자에 대해서는 2011년 12월 31일까지 적용하지 아니하고 2012년 1월 1일부터 2013년 12월 31일까지는 각각 1천분의3, 1천분의 1을 적용한다. (개정 2010.1, 2010.12.27)</p>
+            </li>
+            <li>
+              <ol class="dot_depth_list">
+                <li class="desc">1. 제16조에 따른 세금계산서의 발급시기를 경과하여 발급하거나 세금계산서의 필요적 기재사항의 전부 또는 일부가 착오 또는 과실로 적혀 있기 아니하거나 사실과 다른 경우</li>
+                <li class="desc">2. 제16조제2항에 따라 전자세금계산서를 발급한 사업자가 재화 또는 용역의 공급시기가 속하는 과세기간 말의 다음 달 15일까지 국세청장에게 세금계산서 발급명세를 전송하지 아니한 경우, 2의2, 제16조제3항에 따른 기한이 경과한 후 재화 또는 용역의 공급시기가 속하는 과세기간 말의 다음달 15일까지 국세청장에게 세금계산서 발급명세를 전송하는 경우</li>
+                <li class="desc">3. 제32조의2제3항에 따른 신용카드매출전표등을 발급받아 제18조제1항 및 제2항 단서 또는 제19조제1항에 따라 신고하는 때에 정부에 제출하여 매입세액을 공제받지 아니하고 대톨령령으로 정하는 사유로 매입세액을 공제받는 경우</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <button href="#" class="ico_x closed" title="팝업창 닫기">
+      <span>팝업창 닫기</span>
+    </button>
+  </div>
+</div>
+<!-- e: 전자 세금 계산서 발행 안내 -->
+<!-- s: 전자 세금 계산서 신청 -->
+<div class="popup_wrap size_m tax_invoice2">
+  <div class="pop_inner">
+    <div class="pop_cont">
+      <p class="pop_tit">전자 세금계산서 신청</p>
+      <div class="pop_cont_scroll">
+        <form action="">
+          <div class="form_zone">
+            <div class="input_item">
+              <span class="input_tit"><label for="corp_num" class="tit">사업자등록번호</label></span>
+              <span class="input_box">
+                <input type="text" id="corp_num" class="input" placeholder="사업자 등록 번호를 입력하세요. ( - 포함 등록)">
+                <span class="focus_bg"></span>
+              </span>
+            </div>
+            <div class="input_item">
+              <span class="input_tit"><label for="corp_group" class="tit">법인명(단체명)</label></span>
+              <span class="input_box">
+                <input type="text" id="corp_group" class="input" placeholder="법인(단체)명을 입력하세요.">
+                <span class="focus_bg"></span>
+              </span>
+            </div>
+            <div class="input_item">
+              <span class="input_tit"><label for="corp_name" class="tit">대표자명</label></span>
+              <span class="input_box">
+                <input type="text" id="corp_name" class="input" placeholder="대표자 이름을 입력하세요.">
+                <span class="focus_bg"></span>
+              </span>
+            </div>
+            <div class="input_item">
+              <span class="input_tit"><label for="corp_addr" class="tit">사업장 소재지</label></span>
+              <span class="input_box">
+                <input type="text" id="corp_addr" class="input" placeholder="사업장 소재지를 입력하세요. (ex : 서울)">
+                <span class="focus_bg"></span>
+              </span>
+            </div>
+            <div class="input_item col">
+              <span class="input_tit"><span class="tit">사업의 종류</span></span>
+              <div class="input_col_type">
+                <span class="input_col">
+                  <span class="input_tit"><label for="corp_type1" class="tit">업태</label></span>
+                  <span class="input_box">
+                    <input type="text" id="corp_type1" class="input" placeholder="(ex : 도매, 소매, 서비스)">
+                    <span class="focus_bg"></span>
+                  </span>
+                </span>
+                <span class="input_col">
+                  <span class="input_tit"><label for="corp_type2" class="tit">종목</label></span>
+                  <span class="input_box">
+                    <input type="text" id="corp_type2" class="input" placeholder="(ex : 무역, 통신판매)">
+                   <span class="focus_bg"></span>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="btn_article">
+            <button class="button button_positive button-m" type="button">전자 세금계산서 신청하기</button>
+          </div>
+        </form>
+        <div class="related_laws">
+          <ul class="dot_line">
+            <li>
+              <p class="tit">부가가치세법 제 22조 - 제2호</p>
+              <p class="desc">② 사업자가 다음 각 호의 어느 하나에 해당하는 경우에는 그 공급가액에 대하여 100분의 1(제2호의 2에 해당하는 경우에 1천분의 5)에 해당하는 금액을 납부세액에 더하거나 환급세액에서 뺀다. 다만, 제2호의2는 법인사업자에 대해서는 2010년 12월 31일까지 적용하지 아니하고 2011년 1월 1일부터 2012년 12월 31일까지는 각각 1천분의3, 1천분의 1을 적용하며, 대통령령으로 정하는 개인사업자에 대해서는 2011년 12월 31일까지 적용하지 아니하고 2012년 1월 1일부터 2013년 12월 31일까지는 각각 1천분의3, 1천분의 1을 적용한다. (개정 2010.1, 2010.12.27)</p>
+            </li>
+            <li>
+              <ol>
+                <li class="desc">1. 제16조에 따른 세금계산서의 발급시기를 경과하여 발급하거나 세금계산서의 필요적 기재사항의 전부 또는 일부가 착오 또는 과실로 적혀 있기 아니하거나 사실과 다른 경우</li>
+                <li class="desc">2. 제16조제2항에 따라 전자세금계산서를 발급한 사업자가 재화 또는 용역의 공급시기가 속하는 과세기간 말의 다음 달 15일까지 국세청장에게 세금계산서 발급명세를 전송하지 아니한 경우, 2의2, 제16조제3항에 따른 기한이 경과한 후 재화 또는 용역의 공급시기가 속하는 과세기간 말의 다음달 15일까지 국세청장에게 세금계산서 발급명세를 전송하는 경우</li>
+                <li class="desc">3. 제32조의2제3항에 따른 신용카드매출전표등을 발급받아 제18조제1항 및 제2항 단서 또는 제19조제1항에 따라 신고하는 때에 정부에 제출하여 매입세액을 공제받지 아니하고 대톨령령으로 정하는 사유로 매입세액을 공제받는 경우</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <button href="#" class="ico_x closed" title="팝업창 닫기">
+      <span>팝업창 닫기</span>
+    </button>
+  </div>
+</div>
+<!-- e: 전자 세금 계산서 신청 -->
+
+<!-- s: 환불계좌 입력-->
+<div class="popup_wrap size_ms refund_account">
+  <div class="pop_inner">
+    <div class="pop_cont">
+      <p class="pop_tit">환불계좌 입력</p>
+      <div class="pop_cont_scroll">
+        <form action="">
+        <div class="form_zone">
+          <div class="input_item">
+            <div class="group">
+              <div class="inp_box">
+                <div class="select_ui_zone btm_line">
+                  <a href="#" class="selected_btn" data-default-text="은행을 선택해주세요.">은행을 선택해주세요.</a>
+                  <div class="select_inner" style="display: none;">
+                    <p class="prd_tag">환불 받을 은행</p>
+                    <ul class="select_opt">
+                      <li><a href="#" class="opt_list"><div class="item">한국은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">한국산업은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">중소기업은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">국민은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">한국외환은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">한국외환은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">한국수출입은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">농협</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">우리은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">조흥은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">제일은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">하나은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">하나은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">신한은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">한국씨티은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">대구은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">부산은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">광주은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">제주은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">전북은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">경남은행</div></a></li>
+                      <li><a href="#" class="opt_list"><div class="item">새마을금고(MG)</div></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="error_txt"><span class="ico"></span>은행을 선택하세요.</div>
+            </div>
+            <div class="group">
+              <div class="inp_box">
+                <label class="inp_desc" for="refund_account">
+                  <input type="text" id="refund_account" class="inp center" placeholder="&nbsp;" autocomplete="off">
+                  <span class="label">계좌번호</span>
+                  <span class="focus_bg"></span>
+                </label>
+              </div>
+              <div class="error_txt"><span class="ico"></span>계좌번호를 입력하세요.</div>
+            </div>
+            <div class="group">
+              <div class="inp_box">
+                <label class="inp_desc" for="refund_name">
+                  <input type="text" id="refund_name" class="inp center" placeholder="&nbsp;" autocomplete="off">
+                  <span class="label">예금주명</span>
+                  <span class="focus_bg"></span>
+                </label>
+              </div>
+              <div class="error_txt"><span class="ico"></span>예금주명을 입력하세요.</div>
+            </div>
+            <div class="check">
+              <input type="checkbox" class="inp_check" id="refund_mileage" name="refund_mileage">
+              <label for="refund_mileage">마일리지 적립으로 환불</label>
+            </div>
+          </div>
+          <div class="btn_article">
+            <button class="button button_positive button-full" type="button" onclick="common.makeAlert('complete', '환불계좌 등록이 완료되었습니다.')">저장</button>
+          </div>
+          <div class="guide_list">
+            <p class="tit info_tit">[안내]</p>
+            <ul class="list_dot">
+              <li>주문 취소 접수 후에 환불받으실 계좌를 지정하실 수 있습니다.</li>
+              <li>환불 계좌 지정은 각 주문 번호당 주문 취소 접수 전 한 번만 가능합니다. </li>
+              <li>환불 계좌를 지정하지 않고 취소하시는 경우, 소니코리아 고객지원센터(1588-0911)에 통장 사본을 FAX(02-6333-4600)로 보내 주셔야 가능합니다.</li>
+              <li>마일리지로 환불한 경우, 해당 마일리지는 마일리지 정책에 따라 사용 가능합니다.</li>
+            </ul>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+    <button href="#" class="ico_x closed" title="팝업창 닫기">
+      <span>팝업창 닫기</span>
+    </button>
+  </div>
+</div>
+<!-- // e: 환불계좌 입력 -->
+
+<!-- s : 견적서 -->
+<div class="popup_wrap size_l estimate">
+  <div class="pop_inner">
+    <div class="pop_head">
+      <span class="pop_logo"><img src="../../images/common/logo.svg" alt="SONY"></span>
+    </div>
+    <div class="pop_cont">
+      <p class="pop_tit">견 적 서</p>
+      <div class="pop_cont_scroll">
+        <div class="simplified_info">
+          <div class="simplified_estimate">
+            <p class="date">2021.06.29</p>
+            <p class="tit"><strong>소니코리아 고객님 귀하,</strong><br> 아래와 같이 견적합니다.</p>
+            <div class="estimate_price">
+              <span class="txt">견적금액 :</span>
+              <span class="price_txt"><strong class="price">4,299,000</strong> 원</span>
+              <span class="s_txt">(부가세 포함)</span>
+            </div>
+          </div>
+          <div class="estimate_corp">
+            <ul class="corp_list">
+              <li class="name"><strong>소니코리아 주식회사</strong></li>
+              <li class="addr">서울특별시 영등포구 여의도동 국제금융로<br>10 원아이에프씨 24F (우)150-876</li>
+              <li class="txt">사업자 등록번호 : 106-81-23810</li>
+              <li class="txt"></li>대표자명 : Okura Kikuo 대표  (직인 생략)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="estimate_detail">
+          <div class="all_table_wrap">
+            <p class="s_txt_right">* 아래 견적 금액은 구매 시점에 따라 변동될 수 있습니다.</p>
+            <div class="col_table_wrap order_list">
+              <div class="col_table">
+                <div class="col_table_head">
+                  <div class="col_table_row">
+                    <div class="col_table_cell">제품명</div>
+                    <div class="col_table_cell">가격/수량</div>
+                    <div class="col_table_cell">공급가액(원)</div>
+                    <div class="col_table_cell">비고</div>
+                  </div>
+                </div>
+                <div class="col_table_body">
+                  <div class="col_table_row">
+                    <div class="col_table_cell">
+                      <div class="prd">
+                        <div class="prd_info">
+                          <div class="prd_info_name">PLAYSTATION 5 DIGITAL<br>(CFI-1018B01)</div>
+                          <p class="prd_info_option line2">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트 화이트)</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col_table_cell prd_price">
+                      4,299,000 <span class="won">원</span><br>
+                      <span class="count">1개</span>
+                    </div>
+                    <div class="col_table_cell prd_price">
+                      4,299,000 <span class="won">원</span><br>
+                      <span class="s_txt">(부가세 포함)</span>
+                    </div>
+                    <div class="col_table_cell ">
+                      &nbsp;
+                    </div>
+                  </div>
+                  <div class="col_table_row">
+                    <div class="col_table_cell">
+                      <div class="prd">
+                        <div class="prd_info">
+                          <div class="prd_info_name">ILCE-7RM4</div>
+                          <p class="prd_info_option">블랙</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col_table_cell prd_price">
+                      4,299,000 <span class="won">원</span><br>
+                      <span class="count">1개</span>
+                    </div>
+                    <div class="col_table_cell prd_price">
+                      4,299,000 <span class="won">원</span><br>
+                      <span class="s_txt">(부가세 포함)</span>
+                    </div>
+                    <div class="col_table_cell ">
+                      &nbsp;
+                    </div>
+                  </div>
+                </div>
+              </div><!-- // col_table-->
+              <div class="col_table_foot">
+                <div class="prd_summary">
+                  <p class="prd_total_price">최종 합계 금액 <strong class="prd_summary_price">4,299,000 <span class="won">원</span></strong></p>
+                </div>
+              </div>
+              <p class="sign_txt"><span class="orderer">주문자:</span><span class="name"></span><span class="sign">(서명)</span></p>
+            </div><!-- // col_table_wrap -->
+          </div>
+        </div>
+      </div><!-- // pop_cont_scroll -->
+    </div><!-- // pop_cont -->
+  </div>
+  <div class="btn_article">
+    <button class="button button_negative button-m closed" type="button">취소</button>
+    <button class="button button_positive button-m print" type="button">프린트</button>
+  </div>
+</div>
+<!-- // e : 견적서 -->
+</body>
+</html>
+
+<script>
+$(function(){
+  $('.popup_comm_btn').on("click",function(){ // 팝업 테스트
+    let _popName = $(this).data("popup-name");
+    if($('.popup_wrap:animated').length < 1){ // fadeInOut 시 중복 클릭 방지
+      popupCommon(_popName, $(this)); // 오픈할 팝업과 닫기 시 돌아갈 포커스 select
+    }
+    if(_popName == "estimate"){ // 견적서
+      printFunc($('.estimate'));
+    }
+  });
+
+  /* S: 공통 common.js 옮겨야할 */
+  function printFunc(wrap){ //프린트 버튼
+    let $printBtn = $(wrap).find('.print');
+    $printBtn.off().on("click", function(){
+      if($(wrap).find('.pop_cont_scroll').length > 0){ // scroll 컨텐츠 영역이 있을경우 높이 해제 (프린트 하기 위함.)
+        $(wrap).find('.pop_cont').removeClass("scrollH");
+        $(wrap).find('.pop_cont_scroll').removeAttr("style");
+      }
+      const html = document.querySelector('html');
+      const printContents = $(wrap)[0].querySelector('.pop_inner').innerHTML;
+      const printDiv = document.createElement("DIV");
+      printDiv.className = "pop_inner";
+      html.appendChild(printDiv);
+      printDiv.innerHTML = printContents;
+      document.body.style.display = 'none';
+      window.print();
+      document.body.style.display = 'block';
+      printDiv.style.display = 'none';
+
+      $(wrap).find('.closed').trigger("click");
+      return false;
+    });
+  }
+
+
+
+
+  $('.popup_button').on("click",function(){
+    let _popupName = $(this).data("popup");
+    openModal(_popupName);
+    return false;
+  });
+
+  const alertBtn = (e) =>{
+    $('.alertLayerBtn').on("click",function(){ // alert 팝업 data-alert-text 값 노출
+      let _alertTxt = $(this).data("alert-text"),
+          _alertOpen = $(this).data("open-layer");
+      alertLayer(_alertTxt, _alertOpen);
+      return false;
+    });
+  }
+  const alertLayer = (_eText, layerClass) =>{ // alert 팝업 오픈
+    $('.alert_layer').find('.alert_text').html(_eText);
+    openModal(layerClass); // 보여질 팝업 class
+  }
+  /* e: 공통 common.js 옮겨야할 */
+
+
+
+  /* demo 페이지에서만 사용 - 임시 */
+  const passwordView = (e) =>{
+    // 눈표시 클릭 시 패스워드 보이기
+    $('.eyes').on('click',function(){
+      let $inputBox = $(this).closest('.inp_box');
+
+      $inputBox.toggleClass('active');
+      if($inputBox.hasClass('active') == true ){
+        $(this).find('.ico_eyes').attr('class',"ico_eyes_open").parents('.password_box').find('.inp').attr('type',"text");
+        $(this).find('>a').attr('title',"비밀번호 표시");
+        // i 클래스 // 텍스트 보이기 i 클래스
+      }
+      else{
+        $(this).find('.ico_eyes_open').attr('class',"ico_eyes").parents('.password_box').find('.inp').attr('type','password');
+        $(this).find('>a').attr('title',"비밀번호 숨김");
+      }
+      return false;
+    });
+  }
+  alertBtn();
+  passwordView();
+});
+</script>

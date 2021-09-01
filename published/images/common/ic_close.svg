@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+    <defs>
+        <style>
+            .cls-2{fill:#fff}
+        </style>
+    </defs>
+    <g id="ic_close" transform="translate(-281 -13)">
+        <g id="ic_close-2" transform="translate(281 13)">
+            <path id="bg" fill="rgba(0,0,0,0)" d="M0 0H28V28H0z"/>
+            <g id="그룹_3447" transform="translate(2.333 2.333)">
+                <path id="패스_131" d="M0 0h31.76v2.888H0z" class="cls-2" transform="rotate(45 1.021 2.465)"/>
+                <path id="패스_132" d="M0 0h31.982v2.665H0z" class="cls-2" transform="rotate(135 11.86 6.016)"/>
+            </g>
+        </g>
+    </g>
+</svg>

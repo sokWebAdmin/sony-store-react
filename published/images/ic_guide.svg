@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+    <defs>
+        <style>
+            .cls-2{fill:#444}
+        </style>
+    </defs>
+    <g id="ic__" transform="translate(-0.082 -0.451)">
+        <g id="타원_91" fill="none" stroke="#444" stroke-width="2px" transform="translate(0.082 0.451)">
+            <circle cx="20" cy="20" r="20" stroke="none"/>
+            <circle cx="20" cy="20" r="19"/>
+        </g>
+        <g id="그룹_3612" transform="translate(18.581 10.951)">
+            <path id="사각형_354" d="M0 0H3V12H0z" class="cls-2"/>
+            <path id="사각형_355" d="M0 0H3V4H0z" class="cls-2" transform="translate(0 14)"/>
+        </g>
+    </g>
+</svg>

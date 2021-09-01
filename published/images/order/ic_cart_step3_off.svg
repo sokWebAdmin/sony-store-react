@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <defs>
+        <style>
+            .cls-2{fill:#bbb}
+        </style>
+    </defs>
+    <g id="Receipt_off" transform="translate(-739 -286)">
+        <circle id="Icon_Area" cx="40" cy="40" r="40" fill="#f1f1f1" transform="translate(739 286)"/>
+        <g id="Receipt" transform="translate(-202 -223)">
+            <path id="패스_894" d="M995 531v34.764l-1.106-.553-.894-.447-.894.447-3.106 1.553-3.106-1.553-.894-.447-.894.447-3.106 1.553-3.106-1.553-.894-.447-.894.447-3.106 1.553-3.106-1.553-.894-.447-.894.447-1.106.553V531h28m2-2h-32v40l4-2 4 2 4-2 4 2 4-2 4 2 4-2 4 2v-40z" class="cls-2"/>
+            <path id="패스_895" d="M990 537h-18v2h18v-2z" class="cls-2"/>
+            <path id="패스_896" d="M990 543h-18v2h18v-2z" class="cls-2"/>
+            <path id="패스_897" d="M990 549h-18v2h18v-2z" class="cls-2"/>
+            <path id="패스_898" d="M990 555h-9v2h9v-2z" class="cls-2"/>
+        </g>
+    </g>
+</svg>

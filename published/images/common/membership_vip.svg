@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+    <g transform="translate(-0.202)">
+        <rect width="40" height="40" fill="#5865f5" rx="8" transform="translate(0.202)"/>
+        <text fill="#fff" font-family="MuseoSans-900, Museo Sans" font-size="20px" font-weight="900" transform="translate(20.202 27)">
+            <tspan x="-6.75" y="0">V</tspan>
+        </text>
+    </g>
+</svg>

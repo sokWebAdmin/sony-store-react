@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msapplication-TileImage" content="../../images/favicon_144x144.png">
+<title>소니스토어 선물하기</title>
+<link rel="shortcut icon" href="../../images/favicon_144x144.png">
+<link rel="stylesheet" href="../../css/contents.css">
+<link rel="stylesheet" href="../../css/order.css">
+<script src="../../lib/js/jquery-3.6.0.min.js"></script>
+<script src="../../js/ux-common.js"></script>
+</head>
+<body>
+<div class="wrapper">
+  <div class="erro orderPresent">
+    <div class="error__header">
+      <h1 class="error_logo">
+        <a href="http://sony.co.kr"><img src="../../images/common/error_logo.svg" alt="SONY"></a>
+      </h1>
+    </div>
+    <div class="orderPresent_container">
+      <div class="orderPresent_info">
+        <i class="present"><img src="../../images/order/ic_present.svg" alt=""></i>
+        <h2 class="orderPresent_tit">소니스토어 선물하기</h2>
+        <p class="orderPresent_dsc">선물 받으실 상품의 배송지 정보를 입력해 주세요!</p>
+      </div>
+      <div class="order_box__cont">
+        <div class="acc">
+          <!-- acc_item -->
+          <div class="acc_item">
+            <div class="acc_head">
+              <a href="#" class="acc_btn" title="배송지 정보">
+                <span class="acc_tit">배송지 정보</span>
+              </a>
+            </div>
+            <div class="acc_inner">
+              <div class="acc_box">
+                <p class="acc_dsc_top">표시는 필수입력 정보</p>
+                <div class="acc_form">
+                  <div class="acc_cell">
+                    <label for="user_name">수령인 이름<i class="necessary"></i></label>
+                  </div>
+                  <div class="acc_cell">
+                    <div class="acc_group parent error"><!-- error 문구 제어 -->
+                      <div class="acc_inp type3">
+                        <input type="text" class="inp" id="user_name" placeholder="이름을 입력하세요. (띄어쓰기 없이 입력하세요.)">
+                        <span class="focus_bg"></span>
+                      </div>
+                      <p class="error_txt"><span class="ico"></span>이름을 입력해 주세요.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="acc_form">
+                  <div class="acc_cell">
+                    <label for="user_number">휴대폰 번호<i class="necessary"></i></label>
+                  </div>
+                  <div class="acc_cell">
+                    <div class="acc_group parent error"><!-- error 문구 제어 -->
+                      <div class="acc_inp type3">
+                        <input type="text" class="inp" id="user_number" placeholder="휴대폰 번호를 입력해 주세요. (-없이 입력하세요.)">
+                        <span class="focus_bg"></span>
+                      </div>
+                      <p class="error_txt"><span class="ico"></span>휴대폰 번호를 입력해 주세요.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="acc_form">
+                  <div class="acc_cell vat">
+                    <label for="user_address">주소<i class="necessary"></i></label>
+                  </div>
+                  <div class="acc_cell">
+                    <div class="acc_group parent error"><!-- error 문구 제어 -->
+                      <div class="acc_inp type4">
+                        <input type="text" class="inp" id="user_address" placeholder="주소를 입력하세요.">
+                        <span class="focus_bg"></span>
+                        <div class="delivery_btn_box">
+                          <button class="button button_negative button-s" type="button">우편 번호</button>
+                        </div>
+                        <p class="error_txt"><span class="ico"></span>배송 받으실 주소를 입력해 주세요.</p>
+                      </div>
+                    </div>
+                    <div class="acc_group parent">
+                      <div class="acc_inp type5">
+                        <input type="text" class="inp" placeholder="">
+                        <span class="focus_bg"></span>
+                      </div>
+                    </div>
+                    <div class="acc_group parent error"><!-- error 문구 제어 -->
+                      <div class="acc_inp type5">
+                        <input type="text" class="inp" placeholder="상세 주소를 입력하세요.">
+                        <span class="focus_bg"></span>
+                      </div>
+                      <p class="error_txt"><span class="ico"></span>상세 주소를 입력해 주세요.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="acc_form">
+                  <div class="acc_cell vat">
+                    <label for="delivery_request">배송 요청 사항</label>
+                  </div>
+                  <div class="acc_cell">
+                    <div class="acc_group parent">
+                      <div class="acc_inp type3">
+                        <div class="select_ui_zone btm_line">
+                          <a href="#" class="selected_btn" data-default-text="택배 기사님께 요청하실 내용을 선택하세요."><!-- disabled : 선택불가 품절 -->
+                            택배 기사님께 요청하실 내용을 선택하세요.
+                          </a>
+                          <div class="select_inner">
+                            <p class="prd_tag">요청사항</p>
+                            <ul class="select_opt">
+                              <li>
+                                <a href="#" class="opt_list"><!-- disabled : 선택 불가 품절 -->
+                                  <div class="item">배송 전 연락바랍니다.</div>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#" class="opt_list">
+                                  <div class="item">부재 시 경비실에 맡겨 주세요.</div>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#" class="opt_list">
+                                  <div class="item">부재 시 무인 택배함에 맡겨주세요.</div>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#" class="opt_list">
+                                  <div class="item">부재 시 집 문앞에 놔주세요.</div>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#" class="opt_list">
+                                  <div class="item">부재 시 휴대폰으로 연락 주세요.</div>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#" class="opt_list">
+                                  <div class="item">파손의 위험이 있는 상품이니 조심히 다뤄주세요.</div>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="acc_group parent">
+                      <div class="acc_inp type3">
+                        <input type="text" class="inp" placeholder="배송 메모를 입력하세요.">
+                        <span class="focus_bg"></span>
+                      </div>
+                    </div>
+                    <ul class="list_dot">
+                      <li>선물하기로 배송 받으시는 경우 상품의 배송조회는 주문하신 분만 조회가 가능합니다.</li>
+                      <li>소니스토어의 모든 상품은 무료 배송입니다.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- // acc_item -->
+        </div>
+        <div class="parent">
+          <button class="button button_positive button-full" type="button">입력 완료</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

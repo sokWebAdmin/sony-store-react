@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+    <defs>
+        <style>
+            .cls-2{fill:#888}
+        </style>
+    </defs>
+    <g id="ic_coupon" transform="translate(14.422 13.154) rotate(180)">
+        <g id="그룹_5538" transform="translate(-325.996 759.566) rotate(180)">
+            <path id="사각형_1151" d="M0 0H1V1H0z" class="cls-2" transform="translate(-333.953 754.912)"/>
+            <path id="사각형_1152" d="M0 0H1V1H0z" class="cls-2" transform="translate(-333.953 756.912)"/>
+            <path id="사각형_1153" d="M0 0H1V1H0z" class="cls-2" transform="translate(-333.953 752.912)"/>
+            <path id="사각형_1154" d="M0 0H1V1H0z" class="cls-2" transform="translate(-333.953 750.912)"/>
+            <path id="패스_1262" d="M-327.5 753.5a.707.707 0 0 1 .083.017v-4.105h-10v10h10v-3.929a.707.707 0 0 1-.083.017 1 1 0 0 1-1-1 1 1 0 0 1 1-1zm-.917-.777a2 2 0 0 0-1.083 1.777 2 2 0 0 0 1.083 1.777v2.135h-8v-8h8z" class="cls-2"/>
+        </g>
+    </g>
+</svg>
