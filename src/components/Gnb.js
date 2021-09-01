@@ -1,7 +1,9 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 
 export default function Gnb() {
+    const history = useHistory();
+
     const [hovering, setHovering] = useState(false); 
 
     const [subMenu1, setSubMenu1] = useState(false); 
@@ -64,22 +66,34 @@ export default function Gnb() {
                     <a href="#">제품</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a href="/products/camera">카메라</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/products/camera")
+                        }}>카메라</a>
                         </li>
                         <li>
-                        <a href="/products/videocamera">비디오카메라</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/products/videocamera")
+                        }}>비디오카메라</a>
                         </li>
                         <li>
-                        <a href="/products/audio">오디오</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/products/audio")
+                        }}>오디오</a>
                         </li>
                         <li>
-                        <a href="/products/accessory">액세서리</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/products/accessory")
+                        }}>액세서리</a>
                         </li>
                         <li>
-                        <a href="/products/playstation">PlayStation®</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/products/playstation")
+                        }}>PlayStation®</a>
                         </li>
                         <li>
-                        <a href="/products/test">test</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/products/test")
+                        }}>test</a>
                         </li>
                     </ul>
                     </li>
@@ -97,19 +111,29 @@ export default function Gnb() {
                     <a href="/event/list">기획전</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a href="/event/list">소니스토어 단독</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/event/list")
+                        }}>소니스토어 단독</a>
                         </li>
                         <li>
-                        <a href="/event/refurbish">혜택존</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/event/refurbish")
+                        }}>혜택존</a>
                         </li>
                         <li>
-                        <a href="/event/list">예약판매</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/event/list")
+                        }}>예약판매</a>
                         </li>
                         <li>
-                        <a href="/event/refined">정품 등록 이벤트</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/event/refined")
+                        }}>정품 등록 이벤트</a>
                         </li>
                         <li>
-                        <a href="/event/live-on">LIVE ON</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/event/live-on")
+                        }}>LIVE ON</a>
                         </li>
                     </ul>
                     </li>
@@ -145,6 +169,9 @@ export default function Gnb() {
                     <a href="#">고객 서비스</a>
                     <ul className="gnb__menu__secondary">
                         <li>
+                        <a href="#" onClick={()=>{
+                            history.push("/faq")
+                        }}>공지사항</a>
                         <a href="/faq">FAQ&amp;공지사항</a>
                         </li>
                         <li>
@@ -154,13 +181,19 @@ export default function Gnb() {
                         <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
                         </li>
                         <li>
-                        <a href="/purchase-consulting">구매 상담</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/purchase-consulting")
+                        }}>구매 상담</a>
                         </li>
                         <li>
-                        <a href="/store-info">직영점 안내</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/store-info")
+                        }}>직영점 안내</a>
                         </li>
                         <li>
-                        <a href="/video-course">동영상 강좌</a>
+                        <a href="#" onClick={()=>{
+                            history.push("/video-course")
+                        }}>동영상 강좌</a>
                         </li>
                     </ul>
                     </li>
