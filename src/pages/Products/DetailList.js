@@ -157,7 +157,7 @@ export default function Products({match}) {
                         detail_type == "lens" &&
                          <div className="category__header__links">
                             <a href="#" className="category__header__link">제품 비교</a>
-                            <a href="#" className="category__header__link">연장서비스플랜 ESP 보기</a>
+                            <a href={`/esp`} className="category__header__link">연장서비스플랜 ESP 보기</a>
                         </div>
                     }
                     <div className="category__header__menu swiper-container">

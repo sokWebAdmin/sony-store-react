@@ -38,3 +38,13 @@ export const newProductList = ()=> {
 export const themeProducts = (categoryNo)=> {
   return request("products/search?fromDB=true&categoryNos="+categoryNo+"&order.by=RECENT_PRODUCT&pageSize=4", "get", null, null, {});
 };
+
+export const getProductSearch = (query) => {
+  let strQuery = '';
+
+  for (const key in query) {
+    strQuery += `${key}=${query[key]}&`;
+  }
+
+  return request(`products/search?${strQuery}`, "get", null, null, {});
+};
