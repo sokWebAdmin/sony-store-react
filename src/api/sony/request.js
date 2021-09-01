@@ -2,7 +2,9 @@ import axios from "axios";
 import {isMobile} from 'react-device-detect';
 
 
-const SERVER = "/api/v1/";
+// const SERVER = "https://devstore.sony.co.kr/api/v1/";
+// const SERVER = "http://localhost:5000/api/v1/";
+const SERVER = "http://61.101.55.185:50005/api/v1/";
 const Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb255IGFwaSB0b2tlbiIsImlzcyI6InN0b3JlLnNvbnkuY28ua3IiLCJpYXQiOjE2MjYwNTMxODAsIm5iZiI6MTYyNjA1MzEyMCwiZXhwIjozMzE2MjA1MzE4MH0.jCyxY2T4QqeDiIAIqqUcB835LpcFPnEyPU9lUhA_28c";
 
 const platform =  isMobile ? "Mobile Web Android" : "PC";

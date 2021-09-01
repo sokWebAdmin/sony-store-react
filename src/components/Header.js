@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -14,6 +14,10 @@ import close from "../assets/images/common/ic_close.svg";
 import Gnb from "./Gnb";
 import Search from "./Search";
 
+//context
+import GlobalContext from '../context/global.context';
+
+
 export default function Header() {
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
@@ -21,11 +25,15 @@ export default function Header() {
   const [sideBarOpen, setMobileSideBarOpen] = useState(false);
   const [isLoggedIn, setLoggedIn] = useState(false);
 
-  const onClickLogout = () => {
-    Cookies.remove("shopByToken");
-    window.history.go("/");
-  };
+  const {onChangeGlobal, shopByToken} = useContext(GlobalContext)
 
+    useEffect(()=>{
+      if(shopByToken){
+        setLoggedIn(true);
+      }else{
+        setLoggedIn(false);
+      }
+    },[shopByToken])
   return (
     <>
       <header id="header" className={`header ${sideBarOpen == true && "header--active"}`}>

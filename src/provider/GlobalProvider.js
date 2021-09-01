@@ -11,6 +11,7 @@ const GlobalProvider = ({ children }) => {
   };
   const initialState = {
     onChangeGlobal,
+    shopByToken:'',
   };
   const [option, setOption] = useState(initialState);
 

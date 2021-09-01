@@ -54,26 +54,25 @@ export default function Login() {
 
     if(validation == true){
       const response = await loginApi(email, password);
-      if(response.status == 400) {
-        //issue
-        if(response.data.code == "M0019"){
-          alert("아이디/비밀번호를 다시 확인해주세요.");
-        }
+      console.log(response)
+      if(response.status != 200) {
+        alert(response.data.message);
+        return;
+
       }else if(response.status == 200){
-        //success
-        /**
-         * token
-         */
-
-        /**
-         * final
-         */
-
+        const tokenValue = response.data.accessToken;
+        
+        await Cookies.set("shopByToken", tokenValue);
+        onChangeGlobal({shopByToken: tokenValue});
+        
         if(saveEmail === true){
           Cookies.set("sony_email", email);
         }else{
           Cookies.remove("sony_email");
         }
+
+        //메인페이지 이동
+        window.location.replace("/");
 
       }
     }

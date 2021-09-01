@@ -84,7 +84,7 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "scripts": {
-    "start": "HTTPS=true SSL_CRT_FILE=_wildcard.thebuild.kr+2.pem SSL_KEY_FILE=_wildcard.thebuild.kr+2-key.pem HOST=0.0.0.0 node scripts/start.js",
+    "start": "node scripts/start.js",
     "start_original": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",

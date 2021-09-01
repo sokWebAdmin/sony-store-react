@@ -5,6 +5,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //api
 import {registerApi} from '../../api/sony/member';
+import {sendSMS, verifySMS} from '../../api/util';
 
 //css
 import "../../assets/scss/contents.scss"
@@ -64,7 +65,7 @@ export default function JoinStep() {
       return;
     } else{
       //email check 
-      if (email.match(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/)) {
+      if (email.match(/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/g)) {
         setIsEmail(true);
       } else {
         setIsEmail(false);
@@ -131,7 +132,7 @@ export default function JoinStep() {
       setIsPhone(false);
       return;
     }else{
-      if(phone.match(/^\d{2,3}\d{3,4}\d{4}$/)){
+      if(phone.match(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g)){
         setIsPhone(true);
       } else{
         setPhoneWrongType(2);
@@ -148,16 +149,62 @@ export default function JoinStep() {
 
     //final
     const data = {
-      email : email,
-      password : password,
-      name: name,
+      customerid : email,
+      custcategory: "01",
+      gender: "1",
+      firstname: name,
+      mobile: phone.replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-"),
       birthday: birthday,
-      phone: phone,
-      authCode: authCode
+      email: email,
+      viasite: "SonyStyle",
+      sms:"N",
+      mobileflag: "N",
+      servicesite: {mallid:"SonyStyle", news:"N", snsinfo:""},
+      password : password,
     }
 
-    // const response = await registerApi(data);
-    
+    const response = await registerApi(data);
+    console.log(JSON.stringify(data).trim())
+    if(response.status == 200){
+      console.log(response.data)
+      if(response.data.errorCode == "0000"){
+        //성공
+        alert("회원가입이 완료되었습니다.")
+        window.location.replace("/member/login")
+      } else{
+        alert(response.data.errorMessage)
+        return;
+      }
+    }
+  }
+
+  const _sendSMS = async(phoneNum) => {
+    const response = await sendSMS(phoneNum, "JOIN");
+    /**
+     * temp
+     */
+    if(response.status == 200){
+      //발송성공
+      setAuthSent(true);
+    } else{
+      alert(response.data.message);
+    }
+
+    setAuthSent(true);
+  }
+
+  const _verifySMS = async(phoneNum, code) => {
+    /**
+     * temp
+     */
+    const response = await verifySMS(phoneNum, code, "JOIN");
+    if(response.status == 200){
+      //인증성공
+      setAuthCheck(true);
+      } else{
+      alert(response.data.message);
+    }
+    setAuthCheck(true);
   }
 
   useEffect(()=>{
@@ -287,7 +334,8 @@ export default function JoinStep() {
                             setExpireAt(target);
 
                             //인증번호 발송 
-                            setAuthSent(true);
+                            _sendSMS(phone)
+                            
                           }
                         }}>재전송</button>
                         :
@@ -300,7 +348,7 @@ export default function JoinStep() {
                             setExpireAt(target);
 
                             //인증번호 발송 
-                            setAuthSent(true);
+                            _sendSMS(phone)
                           }
                         }}>인증번호</button>
                       }
@@ -330,9 +378,7 @@ export default function JoinStep() {
                                   alert('인증번호를 입력해주세요.');
                                   return;
                                 }
-                                //인증 진행
-                                //만약 인증이 성공이라면
-                                setAuthCheck(true);
+                                _verifySMS(phone, authCode, "JOIN");
                               }
                             }
                           }}>인증</button>
