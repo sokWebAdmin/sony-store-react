@@ -78,6 +78,9 @@ export default function Gnb() {
                         <li>
                         <a href="/products/playstation">PlayStation®</a>
                         </li>
+                        <li>
+                        <a href="/products/test">test</a>
+                        </li>
                     </ul>
                     </li>
 

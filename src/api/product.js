@@ -8,8 +8,14 @@ export const getProductListByCategoryNo = (categoryNo, orderBy)=> {
   }
   
   //POPULAR:판매인기순(검색엔진 도입), SALE_YMD:판매일자, DISCOUNTED_PRICE:가격순, REVIEW:상품평, SALE_CNT:총판매량순, RECENT_PRODUCT:최근상품순, MD_RECOMMEND:MD추천순
+};
 
-
+export const productSearch = (keyword, orderBy)=> {
+  if(orderBy == "TOP_PRICE"){
+    return request("products/search?filter.keywords="+keyword + "&order.by=DISCOUNTED_PRICE&order.direction=ASC", "get", null, null, {});
+  }else{
+    return request("products/search?filter.keywords="+keyword+"&order.by="+orderBy, "get", null, null, {});
+  }
 };
 
 export const getProductDetail = (productNo)=> {

@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 //images
 import search from "../assets/images/common/ic_search.svg";
 import close from "../assets/images/common/ic_close.svg";
 
 export default function Search({ setSearchOpen }) {
+
+  const [keyword, setKeyword] = useState('');
 
   return (
     <>
@@ -16,9 +18,16 @@ export default function Search({ setSearchOpen }) {
             {/* <form action="get" role="search">  */}
             <fieldset>
               <legend>검색</legend>
-              <input type="text" id="search__input" className="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxLength="40" />
+              <input type="text" id="search__input" className="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxLength="40" value={keyword} onChange={(e)=>{
+                setKeyword(e.target.value);
+              }} />
               <button className="btn search__btn__submit" onClick={()=>{
-                window.location.href="/search-result"
+                if(keyword){
+                  window.location.href="/search-result/"+keyword
+                } else{
+                  alert("검색어를 입력해주세요.")
+                }
+                
               }}><img src={search} alt="검색" /></button>
             </fieldset>
              {/* </form>  */}

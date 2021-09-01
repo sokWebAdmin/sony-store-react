@@ -4,7 +4,7 @@ import { React, useEffect, useState } from 'react';
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import { sampleApi } from "../../api/sample";
+import { productSearch } from "../../api/product";
 
 //css
 import "../../assets/scss/contents.scss"
@@ -22,12 +22,51 @@ import "swiper/swiper.scss"
 
 //utils
 import {useWindowSize} from '../../utils/utils'
+import Product from '../../components/Product';
 
-export default function SearchResult() {
+export default function SearchResult({match}) {
+    const {keyword} = match.params;
 
     const size = useWindowSize();
 
+    //ui
     const [tabState, setTabState] = useState("total");
+    const [mobileOrderOpen, setMobileOrderOpen] = useState(false);
+
+    //data
+    const [productList, setProductList] = useState([]);
+    const [exhibitionList, setExhibitionList] = useState([]);
+    const [categoryList, setCategoryList] = useState([]);
+    const [noticeList, setNoticeList] = useState([]);
+
+    //data-else
+    const [productCount, setProductCount] = useState(0);
+    const [exhibitionCount, setExhibitionCount] = useState(0);
+    const [categoryCount, setCategoryCount] = useState(0);
+    const [noticeCount, setNoticeCount] = useState(0);
+
+    //keyword
+    const [searchKeyword, setSearchKeyword] = useState(keyword);
+    const [finalKeyword, setFinalKeyword] = useState(keyword);
+
+    //sort
+    const [orderBy, setOrderBy] = useState('RECENT_PRODUCT');
+
+    const _productSearch = async(_keyword, _orderBy) => {
+        const response = await productSearch(_keyword, _orderBy);
+        if(response.status == 200){
+          if(response.data.items){
+            setProductList(response.data.items)
+          }
+          setProductCount(response.data.totalCount);          
+        }
+
+        console.log(response)
+    }
+
+    useEffect(()=>{
+      _productSearch(finalKeyword, orderBy)
+    },[finalKeyword, orderBy])
 
 
     SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
@@ -44,13 +83,18 @@ export default function SearchResult() {
       <div className="searchResult__form">
         <form>
           <label htmlFor="search-input">검색결과</label>
-          <input type="text" id="search-input" className="input-txt" defaultValue="헤드폰" />
-          <button type="button" className="btn_search" title="검색">검색</button>
+          <input type="text" id="search-input" className="input-txt" defaultValue={searchKeyword} onChange={(e)=>{
+            setSearchKeyword(e.target.value)
+          }} />
+          <button type="button" className="btn_search" title="검색" onClick={()=>{
+            _productSearch(searchKeyword)
+            setFinalKeyword(searchKeyword)
+          }}>검색</button>
         </form>
       </div>
       <div className="result-message">
         <p>
-          <strong>‘헤드폰’</strong>에 대한 검색결과는 총 <strong>79</strong>건 입니다.
+          <strong>‘{finalKeyword}’</strong>에 대한 검색결과는 총 <strong>{productCount + exhibitionCount + categoryCount + noticeCount}</strong>건 입니다.
         </p>
       </div>
     </div>
@@ -68,20 +112,30 @@ export default function SearchResult() {
         slidesPerView="auto"
         freeMode={true}
       >
-        <SwiperSlide className="active swiper-slide">
-          <a href="#">전체 (79)</a>
+        <SwiperSlide className={`swiper-slide ${tabState == "total" ? "active" : ""}`}>
+          <a href="#" onClick={()=>{
+            setTabState("total");
+          }}>전체 ({productCount + exhibitionCount + categoryCount + noticeCount})</a>
         </SwiperSlide>
-        <SwiperSlide className="swiper-slide">
-          <a href="#">제품 (60)</a>
+        <SwiperSlide className={`swiper-slide ${tabState == "product" ? "active" : ""}`}>
+          <a href="#" onClick={()=>{
+            setTabState("product");
+          }}>제품 ({productCount})</a>
         </SwiperSlide>
-        <SwiperSlide className="swiper-slide">
-          <a href="#">기획전 (6)</a>
+        <SwiperSlide className={`swiper-slide ${tabState == "exhibition" ? "active" : ""}`}>
+          <a href="#" onClick={()=>{
+            setTabState("exhibition");
+          }}>기획전 ({exhibitionCount})</a>
         </SwiperSlide>
-        <SwiperSlide className="swiper-slide">
-          <a href="#">카테고리 (14)</a>
+        <SwiperSlide className={`swiper-slide ${tabState == "category" ? "active" : ""}`}>
+          <a href="#" onClick={()=>{
+            setTabState("category");
+          }}>카테고리 ({categoryCount})</a>
         </SwiperSlide>
-        <SwiperSlide className="swiper-slide">
-          <a href="#">공지사항 (2)</a>
+        <SwiperSlide className={`swiper-slide ${tabState == "notice" ? "active" : ""}`}>
+          <a href="#" onClick={()=>{
+            setTabState("notice");
+          }}>공지사항 ({noticeCount})</a>
         </SwiperSlide>
         </Swiper>
       <div className="swiper-button-prev">
@@ -94,20 +148,30 @@ export default function SearchResult() {
         :
 <div class="swipe_tab swiper-container">
         <ul class="swiper-wrapper">
-          <li class="active swiper-slide">
-            <a href="#">전체 (79)</a>
+          <li className={`swiper-slide ${tabState == "total" ? "active" : ""}`}>
+            <a href="#" onClick={()=>{
+            setTabState("total");
+          }}>전체 ({productCount + exhibitionCount + categoryCount + noticeCount})</a>
           </li>
-          <li class="swiper-slide">
-            <a href="#">제품 (60)</a>
+          <li className={`swiper-slide ${tabState == "product" ? "active" : ""}`}>
+            <a href="#" onClick={()=>{
+            setTabState("product");
+          }}>제품 ({productCount})</a>
           </li>
-          <li class="swiper-slide">
-            <a href="#">기획전 (6)</a>
+          <li className={`swiper-slide ${tabState == "exhibition" ? "active" : ""}`}>
+            <a href="#" onClick={()=>{
+            setTabState("exhibition");
+          }}>기획전 ({exhibitionCount})</a>
           </li>
-          <li class="swiper-slide">
-            <a href="#">카테고리 (14)</a>
+          <li className={`swiper-slide ${tabState == "category" ? "active" : ""}`}>
+            <a href="#" onClick={()=>{
+            setTabState("category");
+          }}>카테고리 ({categoryCount})</a>
           </li>
-          <li class="swiper-slide">
-            <a href="#">공지사항 (2)</a>
+          <li className={`swiper-slide ${tabState == "notice" ? "active" : ""}`}>
+            <a href="#" onClick={()=>{
+            setTabState("notice");
+          }}>공지사항 ({noticeCount})</a>
           </li>
         </ul>
         <div class="swiper-button-prev">
@@ -119,454 +183,58 @@ export default function SearchResult() {
       </div>
 
         }
-      
+                <div className="product">
 
-    {/*//스와이퍼 탭영역 */}
-    {/* 제품 리스트 영역 */}
-    <div className="product">
+
+    { (tabState == "total" || tabState == "product") &&
+      <>
       <div className="section_top">
-        <h2 className="title">제품<span>(60)</span></h2>
-        <div className="itemsort" aria-label="상품 정렬">
-          <button className="itemsort__button">
-            <span className="itemsort__button__label sr-only">정렬기준:</span>
-            <span className="itemsort__button__selected">최신순</span>
-          </button>
+        <h2 className="title">제품<span>({productCount})</span></h2>
+        <div className={`itemsort ${mobileOrderOpen ? "itemsort--open" : ""}`} aria-label="상품 정렬">
+                    <button className="itemsort__button" onClick={()=>{
+                        setMobileOrderOpen(!mobileOrderOpen)
+                    }}>
+                        <span className="itemsort__button__label sr-only">정렬기준:</span>
+                        <span className="itemsort__button__selected">{orderBy == "RECENT_PRODUCT" ? "최신순" : (orderBy == "TOP_PRICE" ? "높은 가격순" : "낮은 가격순")}</span>
+                    </button>
           <div className="itemsort__drawer">
-            <ul className="itemsort__items">
-              <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-              <li className="itemsort__item"><a href="#" className="itemsort__item__link">높은 가격순</a></li>
-              <li className="itemsort__item"><a href="#" className="itemsort__item__link">낮은 가격순</a></li>
-            </ul>
-          </div>
-        </div>      </div>
+                        <ul className="itemsort__items">
+                        <li className={`itemsort__item ${orderBy == "RECENT_PRODUCT" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                            setOrderBy("RECENT_PRODUCT")
+                        }}>최신순</a></li>
+                        <li className={`itemsort__item ${orderBy == "TOP_PRICE" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                            setOrderBy("TOP_PRICE")
+                        }}>높은 가격순</a></li>
+                        <li className={`itemsort__item ${orderBy == "DISCOUNTED_PRICE" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                            setOrderBy("DISCOUNTED_PRICE")
+                        }}>낮은 가격순</a></li>
+                        </ul>
+                    </div>
+        </div>      
+        </div>
       {/* item-list */}
       <div className="product__list product__list--lite">
         {/* item */}
-        <div className="product">
-          <span className="badge__text badge__text__best">BEST</span>
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_01.png" alt="상품1 색상1" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_02.png" alt="상품1 색상2" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_03.png" alt="상품1 색상3" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip">
-            <span className="sr-only">전체 색상</span>
-            <span className="colorchip__item" data-color-code={"000000"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">블랙</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code={"666666"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">그레이</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code="ffffff">
-              <span className="colorchip__item__label">
-                <span className="sr-only">화이트</span>
-              </span>
-            </span>
-          </div>
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M7 Worldcup Special Edition</strong>
-            <span className="badge__label badge__label__reserve">예약판매</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 APS-C 카메라
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">1,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <span className="badge__text badge__text__event">EVENT</span>
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_02.png" alt="상품2 색상1" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_03.png" alt="상품2 색상2" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_04.png" alt="상품2 색상3" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip">
-            <span className="sr-only">전체 색상</span>
-            <span className="colorchip__item" data-color-code={"000000"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">블랙</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code={"666666"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">그레이</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code="ffffff">
-              <span className="colorchip__item__label">
-                <span className="sr-only">화이트</span>
-              </span>
-            </span>
-          </div>
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M8</strong>
-            <span className="badge__label badge__label__release">출시예정</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 AF 속도(0.02초)의 리얼 타임 Eye-AF 지원 APS-C 카메라  Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">2,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <span className="badge__text badge__text__hot">HOT</span>
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_03.png" alt="상품3 색상1" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip" />
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M9</strong>
-            <span className="badge__label badge__label__outofstock">일시품절</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 AF 속도(0.02초)의 리얼 타임 Eye-AF 지원 APS-C 카메라
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">1,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_04.png" alt="상품4 색상1" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_05.png" alt="상품4 색상2" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_06.png" alt="상품4 색상3" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip">
-            <span className="sr-only">전체 색상</span>
-            <span className="colorchip__item" data-color-code={"000000"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">블랙</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code={"666666"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">그레이</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code="ffffff">
-              <span className="colorchip__item__label">
-                <span className="sr-only">화이트</span>
-              </span>
-            </span>
-          </div>
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M10</strong>
-            <span className="badge__label badge__label__soldout">품절</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 AF 속도(0.02초)의 리얼 타임 Eye-AF 지원 APS-C 카메라
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">1,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <span className="badge__text badge__text__best">BEST</span>
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_05.png" alt="상품5 색상1" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_06.png" alt="상품5 색상2" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip">
-            <span className="sr-only">전체 색상</span>
-            <span className="colorchip__item" data-color-code={"000000"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">블랙</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code={"666666"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">그레이</span>
-              </span>
-            </span>
-          </div>
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M11</strong>
-            <span className="badge__label badge__label__outofstock">일시품절</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 AF 속도(0.02초)의 리얼 타임 Eye-AF 지원 APS-C 카메라
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">1,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <span className="badge__text badge__text__hot">HOT</span>
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_06.png" alt="상품6 색상1" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_01.png" alt="상품6 색상2" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_02.png" alt="상품6 색상3" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip">
-            <span className="sr-only">전체 색상</span>
-            <span className="colorchip__item" data-color-code={"000000"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">블랙</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code={"666666"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">그레이</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code="ffffff">
-              <span className="colorchip__item__label">
-                <span className="sr-only">화이트</span>
-              </span>
-            </span>
-          </div>
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M12</strong>
-            <span className="badge__label badge__label__soldout">품절</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 AF 속도(0.02초)의 리얼 타임 Eye-AF 지원 APS-C 카메라
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">1,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <span className="badge__text badge__text__best">BEST</span>
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_01.png" alt="상품1 색상1" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_02.png" alt="상품1 색상2" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_03.png" alt="상품1 색상3" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip">
-            <span className="sr-only">전체 색상</span>
-            <span className="colorchip__item" data-color-code={"000000"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">블랙</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code={"666666"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">그레이</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code="ffffff">
-              <span className="colorchip__item__label">
-                <span className="sr-only">화이트</span>
-              </span>
-            </span>
-          </div>
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M7 Worldcup Special Edition</strong>
-            <span className="badge__label badge__label__reserve">예약판매</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 APS-C 카메라
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">1,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <span className="badge__text badge__text__event">EVENT</span>
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_02.png" alt="상품2 색상1" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_03.png" alt="상품2 색상2" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_04.png" alt="상품2 색상3" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip">
-            <span className="sr-only">전체 색상</span>
-            <span className="colorchip__item" data-color-code={"000000"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">블랙</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code={"666666"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">그레이</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code="ffffff">
-              <span className="colorchip__item__label">
-                <span className="sr-only">화이트</span>
-              </span>
-            </span>
-          </div>
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M8</strong>
-            <span className="badge__label badge__label__release">출시예정</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 AF 속도(0.02초)의 리얼 타임 Eye-AF 지원 APS-C 카메라  Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">2,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <span className="badge__text badge__text__hot">HOT</span>
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_03.png" alt="상품3 색상1" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip" />
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M9</strong>
-            <span className="badge__label badge__label__outofstock">일시품절</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 AF 속도(0.02초)의 리얼 타임 Eye-AF 지원 APS-C 카메라
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">1,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_04.png" alt="상품4 색상1" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_05.png" alt="상품4 색상2" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_06.png" alt="상품4 색상3" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip">
-            <span className="sr-only">전체 색상</span>
-            <span className="colorchip__item" data-color-code={"000000"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">블랙</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code={"666666"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">그레이</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code="ffffff">
-              <span className="colorchip__item__label">
-                <span className="sr-only">화이트</span>
-              </span>
-            </span>
-          </div>
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M10</strong>
-            <span className="badge__label badge__label__soldout">품절</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 AF 속도(0.02초)의 리얼 타임 Eye-AF 지원 APS-C 카메라
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">1,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <span className="badge__text badge__text__best">BEST</span>
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_05.png" alt="상품5 색상1" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_06.png" alt="상품5 색상2" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip">
-            <span className="sr-only">전체 색상</span>
-            <span className="colorchip__item" data-color-code={"000000"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">블랙</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code={"666666"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">그레이</span>
-              </span>
-            </span>
-          </div>
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M11</strong>
-            <span className="badge__label badge__label__outofstock">일시품절</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 AF 속도(0.02초)의 리얼 타임 Eye-AF 지원 APS-C 카메라
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">1,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
-        <div className="product">
-          <span className="badge__text badge__text__hot">HOT</span>
-          <div className="product__pic">
-            <a href="#" className="product__pic__link">
-              <img src="/images/_tmp/item640x640_06.png" alt="상품6 색상1" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_01.png" alt="상품6 색상2" className="product__pic__img" />
-              <img src="/images/_tmp/item640x640_02.png" alt="상품6 색상3" className="product__pic__img" />
-            </a>
-          </div>
-          <div className="colorchip">
-            <span className="sr-only">전체 색상</span>
-            <span className="colorchip__item" data-color-code={"000000"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">블랙</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code={"666666"}>
-              <span className="colorchip__item__label">
-                <span className="sr-only">그레이</span>
-              </span>
-            </span>
-            <span className="colorchip__item" data-color-code="ffffff">
-              <span className="colorchip__item__label">
-                <span className="sr-only">화이트</span>
-              </span>
-            </span>
-          </div>
-          <a href="#" className="product__title">
-            <strong className="product__title__name">DSC-RX100M12</strong>
-            <span className="badge__label badge__label__soldout">품절</span>
-          </a>
-          <a href="#" className="product__info">
-            세계 최고의 AF 속도(0.02초)의 리얼 타임 Eye-AF 지원 APS-C 카메라
-          </a>
-          <div className="product__price">
-            <span className="product__price__num">1,890,900</span>
-            <span className="product__price__unit">원</span>
-          </div>
-        </div>
+        {productList && productList.map((item, itemIndex) => {
+          return(<Product product={item} />)
+        })}
+
       </div>
       {/* 더보기 버튼영역 */}
       <div className="btn_area">
         <button type="button" className="btn_more" title="제품 더보기">더보기<span className="ico_plus" /></button>
       </div>
       {/*// 더보기 버튼영역 */}
+      </>
+    }
+
       {/* 기획전 리스트 영역 */}
+
+      {
+        (tabState == "total" || tabState == "exhibition") &&
+          <>
       <div className="section_top">
-        <h2 className="title">기획전<span>(6)</span></h2>
+        <h2 className="title">기획전<span>({exhibitionCount})</span></h2>
         <div className="itemsort" aria-label="게시판 정렬">
           <button className="itemsort__button">
             <span className="itemsort__button__label sr-only">정렬기준:</span>
@@ -665,15 +333,21 @@ export default function SearchResult() {
       </div>
       {/*// 더보기 버튼영역 */}
       {/*// 기획전 리스트 영역 */}
-      {/* 카테고리 리스트 영역 */}
+          </>
+      }
+
+{
+        (tabState == "total" || tabState == "category") &&
+          <>
+                {/* 카테고리 리스트 영역 */}
       <div className="section_top">
-        <h2 className="title">카테고리<span>(60)</span></h2>
+        <h2 className="title">카테고리<span>({categoryCount})</span></h2>
       </div>
       <div className="result_list">
         <ul className="category">
           <li>
             <a href="#none">
-              <span>제품</span><span>오디오</span><span>헤드폰/이어폰</span><strong className="keword">헤드폰 엠프</strong>
+              <span>제품</span><span>오디오</span><span>헤드폰/이어폰</span><strong className="keword">          엠프</strong>
             </a>
           </li>
           <li>
@@ -694,9 +368,16 @@ export default function SearchResult() {
       </div>
       {/*// 더보기 버튼영역 */}
       {/* 카테고리 리스트 영역 */}
-      {/* 공지사항 리스트 영역 */}
+          </>
+}
+
+
+{
+        (tabState == "total" || tabState == "notice") &&
+          <>
+                {/* 공지사항 리스트 영역 */}
       <div className="section_top">
-        <h2 className="title">공지사항<span>(5)</span></h2>
+        <h2 className="title">공지사항<span>({noticeCount})</span></h2>
         <div className="itemsort" aria-label="게시판 정렬">
           <button className="itemsort__button">
             <span className="itemsort__button__label sr-only">정렬기준:</span>
@@ -733,6 +414,8 @@ export default function SearchResult() {
       </div>
       {/*// 더보기 버튼영역 */}
       {/* 공지사항 리스트 영역 */}
+          </>
+}
     </div>
   </div>
 </div>

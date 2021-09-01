@@ -48,6 +48,8 @@ export default function Products({match}) {
         } else if(type == "playstation"){
             setTypeName("PlayStation®");
             setCategoryNo(60896)
+        } else if(type == "test"){
+            setCategoryNo(59184)
         }
     },[type])
 

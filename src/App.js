@@ -173,7 +173,7 @@ const App = (props) => {
                   <Route exact path="/error-server" component={ErrorServer} />
 
                   {/* 검색 결과  */}
-                  <Route exact path="/search-result" component={SearchResult} />
+                  <Route exact path="/search-result/:keyword" component={SearchResult} />
 
                   {/* 푸터 */}
                   <Footer />
