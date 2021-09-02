@@ -41,16 +41,16 @@ export default function Search({ setSearchOpen }) {
           <div className="search__keyword">
             <h3 className="search__title">인기 검색어</h3>
             <div className="search__keyword__list">
-              <a href="#" className="search__keyword__item"># SEL40F25G</a>
-              <a href="#" className="search__keyword__item"># SRS-RA5000/MKR2</a>
-              <a href="#" className="search__keyword__item"># 카메라의 초격차</a>
-              <a href="#" className="search__keyword__item"># 알파 야카데미 8월 강좌</a>
-              <a href="#" className="search__keyword__item"># 노이즈캔슬링</a>
-              <a href="#" className="search__keyword__item"># 벗지않는 헤드폰</a>
-              <a href="#" className="search__keyword__item"># WF-1000XM3SME</a>
-              <a href="#" className="search__keyword__item"># 무선 스피커</a>
-              <a href="#" className="search__keyword__item"># 하이 레졸루션 오디오</a>
-              <a href="#" className="search__keyword__item"># 프리미엄 SD카드</a>
+              <a  className="search__keyword__item"># SEL40F25G</a>
+              <a  className="search__keyword__item"># SRS-RA5000/MKR2</a>
+              <a  className="search__keyword__item"># 카메라의 초격차</a>
+              <a  className="search__keyword__item"># 알파 야카데미 8월 강좌</a>
+              <a  className="search__keyword__item"># 노이즈캔슬링</a>
+              <a  className="search__keyword__item"># 벗지않는 헤드폰</a>
+              <a  className="search__keyword__item"># WF-1000XM3SME</a>
+              <a  className="search__keyword__item"># 무선 스피커</a>
+              <a  className="search__keyword__item"># 하이 레졸루션 오디오</a>
+              <a  className="search__keyword__item"># 프리미엄 SD카드</a>
             </div>
           </div>
           <div className="search__recomm">
@@ -58,7 +58,7 @@ export default function Search({ setSearchOpen }) {
             <div className="search__recomm__wrapper">
               <ul className="search__recomm__list">
                 <li className="search__recomm__item">
-                  <a href="#">
+                  <a >
                     <div className="search__recomm__pic">
                       <img src="/images/_tmp/item640x640_01.png" alt="상품명1" />
                       <span className="badge__text badge__text__new">NEW</span>
@@ -75,7 +75,7 @@ export default function Search({ setSearchOpen }) {
                   </a>
                 </li>
                 <li className="search__recomm__item">
-                  <a href="#">
+                  <a >
                     <div className="search__recomm__pic">
                       <img src="/images/_tmp/item640x640_02.png" alt="상품명2" />
                       <span className="badge__text badge__text__best">BEST</span>
@@ -87,7 +87,7 @@ export default function Search({ setSearchOpen }) {
                   </a>
                 </li>
                 <li className="search__recomm__item">
-                  <a href="#">
+                  <a >
                     <div className="search__recomm__pic">
                       <img src="/images/_tmp/item640x640_03.png" alt="상품명3" />
                       <span className="badge__text badge__text__event">EVENT</span>

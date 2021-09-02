@@ -3,10 +3,11 @@ import React from "react";
 
 //util
 import { wonComma } from '../utils/utils';
-
+import { useHistory } from "react-router-dom";
 
 export default function Product({product}) {
-  
+    const history = useHistory();
+
   return (
     <>
     <div className="product">
@@ -16,7 +17,9 @@ export default function Product({product}) {
                     ( product.badge == "event" ? <span className={`badge__text badge__text__event`}>EVENT</span> : <span className={`badge__text badge__text__hot`}>HOT</span> )
             )}
             <div className="product__pic">
-            <a href={`/product-view/${product.productNo}`} className="product__pic__link">
+            <a  onClick={()=>{
+                history.push(`/product-view/${product.productNo}`)
+            }} className="product__pic__link">
                 {
                     product.listImageUrls && product.listImageUrls.map((image, imageIndex)=>{
                         return (
@@ -43,7 +46,9 @@ export default function Product({product}) {
                 </div>
             }
             
-            <a href={`/product-view/${product.productNo}`} className="product__title">
+            <a  onClick={()=>{
+                history.push(`/product-view/${product.productNo}`)
+            }} className="product__title">
             <strong className="product__title__name">{product.productName}</strong>
             { product.badge_label && (
                 product.badge_label == "reserve" ?     
@@ -56,7 +61,9 @@ export default function Product({product}) {
             
             </a>
             { product.productNameEn &&
-                <a href={`/product-view/${product.productNo}`} className="product__info">
+                <a h onClick={()=>{
+                    history.push(`/product-view/${product.productNo}`)
+                }} className="product__info">
                 {product.productNameEn}
             </a>
             }

@@ -24,7 +24,7 @@ export default function myPageMember() {
   <form action>
     <div className="member_info">
       <div className="member_withdrawal">
-        <a href="#" className="button button_secondary button-s">회원탈퇴</a>
+        <a  className="button button_secondary button-s">회원탈퇴</a>
       </div>
       <div className="member_info_list">
         <div className="member_list name">

@@ -16,6 +16,7 @@ import GlobalContext from '../../context/global.context';
 
 //utils
 import {useWindowSize} from '../../utils/utils'
+import { useHistory } from "react-router-dom";
 
 //lib
 import { Controller, Scene } from 'react-scrollmagic';
@@ -31,7 +32,8 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 import "swiper/swiper.scss"
 
 export default function Recommend({match}) {
-  
+  const history = useHistory();
+
   const size = useWindowSize();
 
   const [isFinished, setFinished] = useState(false);
@@ -149,7 +151,7 @@ export default function Recommend({match}) {
                 totalProgress={progress}
                 paused
               >
-                <a href="/product-view/1" className={`reco_prod ${progress == 1 && "end"}`}>
+                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
               <img src="/images/recommend/img1.jpg" alt="PS-LX310BT" className="reco_prod_img" />
             </a>
            </Tween>
@@ -200,7 +202,7 @@ export default function Recommend({match}) {
                 paused
               >
             <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a href="/product-view/1" className="reco_hash">#이벤트</a>
+              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#이벤트</a>
             </div>
            </Tween>
               )}
@@ -224,7 +226,7 @@ export default function Recommend({match}) {
                 totalProgress={progress}
                 paused
               >
-                <a href="/product-view/1" className={`reco_prod ${progress == 1 && "end"}`}>
+                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
               <img src="/images/recommend/img2.jpg" alt="WH-1000XM4/L" className="reco_prod_img" />
             </a>
            </Tween>
@@ -275,7 +277,7 @@ export default function Recommend({match}) {
                 paused
               >
             <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a href="/product-view/1" className="reco_hash">#벗지 않는 헤드폰</a>
+              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#벗지 않는 헤드폰</a>
             </div>
            </Tween>
               )}
@@ -297,7 +299,7 @@ export default function Recommend({match}) {
                 totalProgress={progress}
                 paused
               >
-                <a href="/product-view/1" className={`reco_prod ${progress == 1 && "end"}`}>
+                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
                 <img src="/images/recommend/img3.jpg" alt="WH-1000XM4/W" className="reco_prod_img" />
             </a>
            </Tween>
@@ -348,7 +350,7 @@ export default function Recommend({match}) {
                 paused
               >
             <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a href="/product-view/1" className="reco_hash">#벗지 않는 헤드폰</a>
+              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#벗지 않는 헤드폰</a>
             </div>
            </Tween>
               )}
@@ -371,7 +373,7 @@ export default function Recommend({match}) {
                 totalProgress={progress}
                 paused
               >
-                <a href="/product-view/1" className={`reco_prod ${progress == 1 && "end"}`}>
+                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
                 <img src="/images/recommend/img4.jpg" alt="SRS-RA3000H" className="reco_prod_img" />
             </a>
            </Tween>
@@ -422,7 +424,7 @@ export default function Recommend({match}) {
                 paused
               >
             <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a href="/product-view/1" className="reco_hash">#인테리어</a>
+              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#인테리어</a>
             </div>
            </Tween>
               )}
@@ -463,7 +465,7 @@ export default function Recommend({match}) {
                 totalProgress={progress}
                 paused
               >
-                <a href="/product-view/1" className={`reco_prod ${progress == 1 && "end"}`}>
+                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
                 <img src="/images/recommend/img5.jpg" alt="WF-1000XM4/S" className="reco_prod_img" />
             </a>
            </Tween>
@@ -514,7 +516,7 @@ export default function Recommend({match}) {
                 paused
               >
             <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a href="/product-view/1" className="reco_hash">#노이즈캔슬링</a>
+              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#노이즈캔슬링</a>
             </div>
            </Tween>
               )}
@@ -536,7 +538,7 @@ export default function Recommend({match}) {
                 totalProgress={progress}
                 paused
               >
-                <a href="/product-view/1" className={`reco_prod ${progress == 1 && "end"}`}>
+                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
                 <img src="/images/recommend/img6.jpg" alt="WF-1000XM4/B" className="reco_prod_img" />
             </a>
            </Tween>
@@ -587,7 +589,7 @@ export default function Recommend({match}) {
                 paused
               >
             <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a href="/product-view/1" className="reco_hash">#노이즈캔슬링</a>
+              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#노이즈캔슬링</a>
             </div>
            </Tween>
               )}
@@ -609,7 +611,7 @@ export default function Recommend({match}) {
                 totalProgress={progress}
                 paused
               >
-                <a href="/product-view/1" className={`reco_prod ${progress == 1 && "end"}`}>
+                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
                 <img src="/images/recommend/img7.jpg" alt="WH-1000XM4/W" className="reco_prod_img" />
             </a>
            </Tween>
@@ -660,7 +662,7 @@ export default function Recommend({match}) {
                 paused
               >
             <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a href="/product-view/1" className="reco_hash">#벗지 않는 헤드폰</a>
+              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#벗지 않는 헤드폰</a>
             </div>
            </Tween>
               )}

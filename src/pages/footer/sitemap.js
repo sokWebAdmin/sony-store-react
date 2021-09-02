@@ -27,10 +27,10 @@ export default function sitemap() {
         <h2 className="title">스토어 추천 제품</h2>
         <ul>
           <li>
-            <a href="#">추천 제품</a>
+            <a >추천 제품</a>
           </li>
           <li>
-            <a href="#">선물 제안</a>
+            <a >선물 제안</a>
           </li>
         </ul>
       </div>
@@ -38,66 +38,66 @@ export default function sitemap() {
         <h2 className="title">제품</h2>
         <ul>
           <li>
-            <a href="#">카메라</a>
+            <a >카메라</a>
             <ul className="product_box">
               <li>
-                <a href="#">렌즈교환식 카메라</a>
+                <a >렌즈교환식 카메라</a>
               </li>
               <li>
-                <a href="#">컴팩트 카메라</a>
+                <a >컴팩트 카메라</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#">비디오카메라</a>
+            <a >비디오카메라</a>
             <ul className="product_box">
               <li>
-                <a href="#">시네마 라인 카메라</a>
+                <a >시네마 라인 카메라</a>
               </li>
               <li>
-                <a href="#">캠코더</a>
+                <a >캠코더</a>
               </li>
               <li>
-                <a href="#">액션캠</a>
+                <a >액션캠</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#">오디오</a>
+            <a >오디오</a>
             <ul className="product_box">
               <li>
-                <a href="#">헤드폰/이어폰</a>
+                <a >헤드폰/이어폰</a>
               </li>
               <li>
-                <a href="#">스피커</a>
+                <a >스피커</a>
               </li>
               <li>
-                <a href="#">홈 오디오</a>
+                <a >홈 오디오</a>
               </li>
               <li>
-                <a href="#">워크맨/녹음기</a>
+                <a >워크맨/녹음기</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#">액세서리</a>
+            <a >액세서리</a>
             <ul className="product_box">
               <li>
-                <a href="#">카메라 액세서리</a>
+                <a >카메라 액세서리</a>
               </li>
               <li>
-                <a href="#">오디오 액세서리</a>
+                <a >오디오 액세서리</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#">PlayStation®</a>
+            <a >PlayStation®</a>
             <ul className="product_box">
               <li>
-                <a href="#">PlayStation</a>
+                <a >PlayStation</a>
               </li>
               <li>
-                <a href="#">게임타이틀 및 주변기기</a>
+                <a >게임타이틀 및 주변기기</a>
               </li>
             </ul>
           </li>
@@ -107,19 +107,19 @@ export default function sitemap() {
         <h2 className="title">기획전</h2>
         <ul>
           <li>
-            <a href="#">소니스토어 단독</a>
+            <a >소니스토어 단독</a>
           </li>
           <li>
-            <a href="#">혜택존</a>
+            <a >혜택존</a>
           </li>
           <li>
-            <a href="#">예약판매</a>
+            <a >예약판매</a>
           </li>
           <li>
-            <a href="#">정품 등록 이벤트</a>
+            <a >정품 등록 이벤트</a>
           </li>
           <li>
-            <a href="#">LIVE ON</a>
+            <a >LIVE ON</a>
           </li>
         </ul>
       </div>
@@ -127,7 +127,7 @@ export default function sitemap() {
         <h2 className="title">멤버십</h2>
         <ul>
           <li>
-            <a href="#">등급&amp;혜택 안내</a>
+            <a >등급&amp;혜택 안내</a>
           </li>
         </ul>
       </div>
@@ -135,22 +135,22 @@ export default function sitemap() {
         <h2 className="title">고객 서비스</h2>
         <ul>
           <li>
-            <a href="#">FAQ&amp;공지사항</a>
+            <a >FAQ&amp;공지사항</a>
           </li>
           <li>
-            <a href="#">정품등록 안내</a>
+            <a >정품등록 안내</a>
           </li>
           <li>
-            <a href="#">제품 지원</a>
+            <a >제품 지원</a>
           </li>
           <li>
-            <a href="#">구매 상담</a>
+            <a >구매 상담</a>
           </li>
           <li>
-            <a href="#">직영점 안내</a>
+            <a >직영점 안내</a>
           </li>
           <li>
-            <a href="#">동영상 강좌</a>
+            <a >동영상 강좌</a>
           </li>
         </ul>
       </div>

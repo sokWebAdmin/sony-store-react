@@ -10,7 +10,12 @@ import { sampleApi } from "../../api/sample";
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/support.scss"
 
+//utils
+import { useHistory } from "react-router-dom";
+
+
 export default function Faq() {
+  const history = useHistory();
 
     return (
         <>
@@ -26,10 +31,10 @@ export default function Faq() {
       <div className="tab_link_zone">
         <ul className="tab_link_inner">
           <li className="tabs on">
-            <a href="/faq" className="tab_btn" title="FAQ 보기"><span className="tit">FAQ</span></a>
+            <a  onClick={()=>{history.push('/faq')}} className="tab_btn" title="FAQ 보기"><span className="tit">FAQ</span></a>
           </li>
           <li className="tabs">
-            <a href="/notice-list" className="tab_btn" title="공지사항 보기"><span className="tit">공지사항</span></a>
+            <a  onClick={()=>{history.push('/notice-list')}} className="tab_btn" title="공지사항 보기"><span className="tit">공지사항</span></a>
           </li>
         </ul>
       </div>
@@ -40,25 +45,25 @@ export default function Faq() {
           <div className="category_slide_tab swiper-container">
             <ul className="swiper-wrapper">
               <li className="swiper-slide on" data-view-category="category_all">
-                <a href="#" className="btn"><span>전체</span></a>
+                <a  className="btn"><span>전체</span></a>
               </li>
               <li className="swiper-slide" data-view-category="category_01">
-                <a href="#" className="btn"><span>쿠폰/마일리지</span></a>
+                <a  className="btn"><span>쿠폰/마일리지</span></a>
               </li>
               <li className="swiper-slide" data-view-category="category_02">
-                <a href="#" className="btn"><span>주문/결제</span></a>
+                <a  className="btn"><span>주문/결제</span></a>
               </li>
               <li className="swiper-slide" data-view-category="category_03">
-                <a href="#" className="btn"><span>세금계산서/영수증</span></a>
+                <a  className="btn"><span>세금계산서/영수증</span></a>
               </li>
               <li className="swiper-slide" data-view-category="category_04">
-                <a href="#" className="btn"><span>배송</span></a>
+                <a  className="btn"><span>배송</span></a>
               </li>
               <li className="swiper-slide" data-view-category="category_05">
-                <a href="#" className="btn"><span>취소/환불/AS</span></a>
+                <a  className="btn"><span>취소/환불/AS</span></a>
               </li>
               <li className="swiper-slide" data-view-category="category_06">
-                <a href="#" className="btn"><span>회원관련</span></a>
+                <a  className="btn"><span>회원관련</span></a>
               </li>
             </ul>
           </div>
@@ -67,7 +72,7 @@ export default function Faq() {
           <div className="acc acc_ui_zone">
             <div className="acc_item category_01"> {/* 분류 class : category_01~ . . .  */}
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">쿠폰/마일리지</span>
                   <span className="acc_tit">마일리지로 ESP(연장서비스 쿠폰/마일리지 플랜) 구입이 가능한가요?</span>
                   <span className="acc_arrow">선택됨/상세 닫기</span>
@@ -81,7 +86,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_01">
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">쿠폰/마일리지</span>
                   <span className="acc_tit">온라인 쿠폰을 소니스토어 직영점 및 전화 주문 시에도 사용할 수 있나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -98,7 +103,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_01">
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">쿠폰/마일리지</span>
                   <span className="acc_tit">E-Coupon은 언제 사용할 수 있나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -121,7 +126,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_02">{/* 분류 class : category_01~ . . .  */}
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">주문/결제</span>
                   <span className="acc_tit">결제방법에는 무엇이 있나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -135,7 +140,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_02">
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">주문/결제</span>
                   <span className="acc_tit">가상계좌 입금 시 입금 확인은 어떻게 하나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -154,7 +159,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_02">
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">주문/결제</span>
                   <span className="acc_tit">신용카드 무이자할부 혜택은 어디서 확인하나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -168,7 +173,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_02">
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">주문/결제</span>
                   <span className="acc_tit">대량 구매 문의는 어디로 해야 하나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -183,7 +188,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_03">{/* 분류 class : category_01~ . . .  */}
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">세금계산서/영수증</span>
                   <span className="acc_tit">신용카드 영수증 출력은 어떻게 하나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -197,7 +202,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_03">
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">세금계산서/영수증</span>
                   <span className="acc_tit">현금영수증 발급은 가능한가요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -211,7 +216,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_04">{/* 분류 class : category_01~ . . .  */}
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">배송</span>
                   <span className="acc_tit">배송 일정 및 배송 현황 조회는 어디서 하나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -228,7 +233,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_04">
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">배송</span>
                   <span className="acc_tit">배송료 부담은 누가하나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -242,7 +247,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_04">
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">배송</span>
                   <span className="acc_tit">비회원 주문 시 주문 및 배송 조회는 어디서 하나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -256,7 +261,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_05">{/* 분류 class : category_01~ . . .  */}
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">취소/환불/AS</span>
                   <span className="acc_tit">주문취소 및 반품 신청은 어떻게 하나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -277,7 +282,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_05">
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">취소/환불/AS</span>
                   <span className="acc_tit">가상계좌 주문 건의 경우, 환불은 어떻게 처리되나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -295,7 +300,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_06">{/* 분류 class : category_01~ . . .  */}
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">회원관련</span>
                   <span className="acc_tit">소니스토어 회원 가입은 어떻게 해야 하나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -309,7 +314,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
             <div className="acc_item category_06">
               <div className="acc_head">
-                <a href="#" className="acc_btn" title="상세 내용 토글">
+                <a  className="acc_btn" title="상세 내용 토글">
                   <span className="category_tit">회원관련</span>
                   <span className="acc_tit">개명한 경우 이름을 어떻게 변경 하나요?</span>
                   <span className="acc_arrow">상세 보기</span>
@@ -326,7 +331,7 @@ export default function Faq() {
             </div>{/* // acc_item */}
           </div>{/* // acc_ui_zone */}
           <div className="btn_article comm_more">
-            <a href="#" className="more_btn" title="더보기">더보기</a>
+            <a  className="more_btn" title="더보기">더보기</a>
           </div>
         </div>
       </div>

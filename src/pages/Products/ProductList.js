@@ -16,8 +16,12 @@ import GlobalContext from '../../context/global.context';
 import Product from '../../components/Product';
 import { Link } from 'react-router-dom';
 
+//utils
+import { useHistory } from "react-router-dom";
 
 export default function Products({match}) {
+    const history = useHistory();
+
     const {onChangeGlobal} = useContext(GlobalContext)
     const {type} = match.params;
 
@@ -86,69 +90,69 @@ export default function Products({match}) {
                     <ul className="swiper-wrapper centered">
                         {type == "camera" &&
                             <>
-                                <li className="swiper-slide all category__header__menu--active"><a href="#"><span>전체보기</span></a></li>
+                                <li className="swiper-slide all category__header__menu--active"><a ><span>전체보기</span></a></li>
                                 <li className="swiper-slide category__header__menu__camera0">
                                     <Link to="/products/camera/lens"><span>렌즈교환식 카메라</span></Link>
                                 </li>
                                 <li className="swiper-slide category__header__menu__camera1">
-                                <a href="/products/camera/compact"><span>컴팩트 카메라</span></a>
+                                <a  onClick={()=>{history.push('/products/camera/compact')}}><span>컴팩트 카메라</span></a>
                                 </li>
                             </>
                         }
 
                         {type == "videocamera" &&
                             <>
-                                 <li class="swiper-slide all category__header__menu--active"><a href="#"><span>전체보기</span></a></li>
+                                 <li class="swiper-slide all category__header__menu--active"><a ><span>전체보기</span></a></li>
                                 <li class="swiper-slide category__header__menu__videocamera0">
-                                <a href="/products/videocamera/cinema"><span>시네마 라인 카메라</span></a>
+                                <a  onClick={()=>{history.push('/products/videocamera/cinema')}}><span>시네마 라인 카메라</span></a>
                                 </li>
                                 <li class="swiper-slide category__header__menu__videocamera1">
-                                <a href="/products/videocamera/camcoder"><span>캠코더</span></a>
+                                <a  onClick={()=>{history.push('/products/videocamera/camcoder')}}><span>캠코더</span></a>
                                 </li>
                                 <li class="swiper-slide category__header__menu__videocamera2">
-                                <a href="/products/videocamera/actioncam"><span>액션캠</span></a>
+                                <a  onClick={()=>{history.push('/products/videocamera/actioncam')}}><span>액션캠</span></a>
                                 </li>
                             </>
                         }
 
                         {type == "audio" &&
                             <>
-                                 <li class="swiper-slide all category__header__menu--active"><a href="#"><span>전체보기</span></a></li>
+                                 <li class="swiper-slide all category__header__menu--active"><a ><span>전체보기</span></a></li>
                                 <li class="swiper-slide category__header__menu__audio0">
-                                <a href="/products/audio/headphone"><span>헤드폰/이어폰</span></a>
+                                <a  onClick={()=>{history.push('/products/audio/headphone')}}><span>헤드폰/이어폰</span></a>
                                 </li>
                                 <li class="swiper-slide category__header__menu__audio1">
-                                <a href="/products/audio/speaker"><span>스피커</span></a>
+                                <a  onClick={()=>{history.push('/products/audio/speaker')}}><span>스피커</span></a>
                                 </li>
                                 <li class="swiper-slide category__header__menu__audio2">
-                                <a href="/products/audio/homeaudio"><span>홈 오디오</span></a>
+                                <a  onClick={()=>{history.push('/products/audio/homeaudio')}}><span>홈 오디오</span></a>
                                 </li>
                                 <li class="swiper-slide category__header__menu__audio3">
-                                <a href="/products/audio/recorder"><span>워크맨/녹음기</span></a>
+                                <a  onClick={()=>{history.push('/products/audio/recorder')}}><span>워크맨/녹음기</span></a>
                                 </li>
                             </>
                         }
 
                         {type == "accessory" &&
                             <>
-                                 <li class="swiper-slide all category__header__menu--active"><a href="#"><span>전체보기</span></a></li>
+                                 <li class="swiper-slide all category__header__menu--active"><a ><span>전체보기</span></a></li>
                                 <li class="swiper-slide category__header__menu__accessory0">
-                                <a href="/products/accessory/camera"><span>카메라 액세서리</span></a>
+                                <a  onClick={()=>{history.push('/products/accessory/camera')}}><span>카메라 액세서리</span></a>
                                 </li>
                                 <li class="swiper-slide category__header__menu__accessory1">
-                                <a href="/products/accessory/audio"><span>오디오 액세서리</span></a>
+                                <a  onClick={()=>{history.push('/products/accessory/audio')}}><span>오디오 액세서리</span></a>
                                 </li>
                             </>
                         }
 
                         {type == "playstation" &&
                             <>
-                                 <li class="swiper-slide all category__header__menu--active"><a href="#"><span>전체보기</span></a></li>
+                                 <li class="swiper-slide all category__header__menu--active"><a ><span>전체보기</span></a></li>
                                 <li class="swiper-slide category__header__menu__playstation0">
-                                <a href="/products/playstation/playstation"><span>PlayStation®</span></a>
+                                <a  onClick={()=>{history.push('/products/playstation/playstation')}}><span>PlayStation®</span></a>
                                 </li>
                                 <li class="swiper-slide category__header__menu__playstation1">
-                                <a href="/products/playstation/title"><span>게임타이틀 및 주변기기</span></a>
+                                <a  onClick={()=>{history.push('/products/playstation/title')}}><span>게임타이틀 및 주변기기</span></a>
                                 </li>
                             </>
                         }
@@ -171,13 +175,13 @@ export default function Products({match}) {
                     </button>
                     <div className="itemsort__drawer">
                         <ul className="itemsort__items">
-                        <li className={`itemsort__item ${orderBy == "RECENT_PRODUCT" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                        <li className={`itemsort__item ${orderBy == "RECENT_PRODUCT" ? "itemsort__item--active" : ""}`}><a  className="itemsort__item__link" onClick={()=>{
                             setOrderBy("RECENT_PRODUCT")
                         }}>최신순</a></li>
-                        <li className={`itemsort__item ${orderBy == "TOP_PRICE" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                        <li className={`itemsort__item ${orderBy == "TOP_PRICE" ? "itemsort__item--active" : ""}`}><a  className="itemsort__item__link" onClick={()=>{
                             setOrderBy("TOP_PRICE")
                         }}>높은 가격순</a></li>
-                        <li className={`itemsort__item ${orderBy == "DISCOUNTED_PRICE" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                        <li className={`itemsort__item ${orderBy == "DISCOUNTED_PRICE" ? "itemsort__item--active" : ""}`}><a  className="itemsort__item__link" onClick={()=>{
                             setOrderBy("DISCOUNTED_PRICE")
                         }}>낮은 가격순</a></li>
                         </ul>
@@ -207,7 +211,7 @@ export default function Products({match}) {
                                                 <span>견고함, 타의 추종을 불허하는 속도 등을 갖추었습니다.</span>
                                                 <span>프로 워크플로우가 요구하는 사항을 충족하는 고급 기능을 제공합니다.</span>
                                                 </div>
-                                                <a href="#" className="product__banner__link">자세히 보기</a>
+                                                <a  className="product__banner__link">자세히 보기</a>
                                             </div>
                                             {/* <!--  아이템 갯수 css 를 위해 빈 아이템 ".blank" 추가 --> */}
                                             <div className="product blank"></div>

@@ -24,13 +24,13 @@ export default function rename() {
   <div className="certify_zone">
     <ul className="certify_box">
       <li className="certify_list">{/* 클릭 시 on */}
-        <a href="#" className="certify">
+        <a  className="certify">
           <span className="ico_phone_certify" />
           <p className="tit">휴대폰 번호 인증하기<span className="tit_desc">생년월일, 성명, 휴대폰 정보를 통한 휴대폰 인증서비스</span></p>
         </a>
       </li>
       <li className="certify_list">
-        <a href="#" className="certify">
+        <a  className="certify">
           <span className="ico_ipn_certify" />
           <p className="tit">아이핀 인증하기<span className="tit_desc">방송통신위원회에서 주관하는 아이핀 인증서비스</span></p>
         </a>

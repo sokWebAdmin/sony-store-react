@@ -24,11 +24,14 @@ import "../../assets/scss/main.scss"
 //utils
 import {useWindowSize} from '../../utils/utils'
 import { breakPoint, breakPointTablet } from '../../utils/constants';
+import { useHistory } from "react-router-dom";
 
 //context
 import GlobalContext from '../../context/global.context';
 
 export default function Main() {
+  const history = useHistory();
+
   const {onChangeGlobal} = useContext(GlobalContext)
 
   const size = useWindowSize();
@@ -124,7 +127,7 @@ export default function Main() {
                             <div className="kv__head__copy"><span className="copy-2"><span>WH-1000</span></span><span className="copy-3"><span>XM4</span></span></div>
                         </div>
                         <span className="kv__product"><span>무선 노이즈 캔슬링 헤드폰</span></span>
-                        <a href="/product-view/1//" className="kv__link"><span>자세히 보기</span></a>
+                        <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>
                       </div>
                     </SwiperSlide>
                     <SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/pc_kv_img1.jpg)` : `url(/images/_tmp/mo_kv_img1.jpg)`}}>
@@ -135,7 +138,7 @@ export default function Main() {
                           <div class="kv__head__copy"><span class="copy-3"><span>α7c</span></span></div>
                         </div>
                         <span className="kv__product"><span>원핸드 컴팩트 풀프레임 카메라</span></span>
-                        <a href="/product-view/1//" className="kv__link"><span>자세히 보기</span></a>
+                        <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>
                       </div>
                     </SwiperSlide>
                     <SwiperSlide className="swiper-slide video-slide" data-swiper-autoplay="10000">
@@ -148,7 +151,7 @@ export default function Main() {
                           <div class="kv__head__copy"><span class="copy-2"><span>ZV-1</span></span></div>
                         </div>
                         <span className="kv__product"><span>예뻐지는 데일리 카메라</span></span>
-                        <a href="/product-view/1//" className="kv__link"><span>자세히 보기</span></a>
+                        <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>
                       </div>
                     </SwiperSlide>
                     <SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/pc_kv_img2.jpg)` : `url(/images/_tmp/mo_kv_img2.jpg)`}}>
@@ -158,7 +161,7 @@ export default function Main() {
                           <div class="kv__head__copy"><span class="copy-1"><span>1000XM4</span></span></div>
                         </div>
                         <span className="kv__product"><span>무선 노이즈 캔슬링 헤드폰</span></span>
-                        <a href="/product-view/1//" className="kv__link"><span>자세히 보기</span></a>
+                        <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>
                       </div>
                     </SwiperSlide>
                     <SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/pc_kv_img3.jpg)` : `url(/images/_tmp/mo_kv_img3.jpg)`}}>
@@ -168,7 +171,7 @@ export default function Main() {
                           <div class="kv__head__copy"><span class="copy-2"><span>ZV-1</span></span></div>
                         </div>
                         <span className="kv__product"><span>예뻐지는 데일리 카메라</span></span>
-                        <a href="/product-view/1//" className="kv__link"><span>자세히 보기</span></a>
+                        <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>
                       </div>
                     </SwiperSlide>
                   </Swiper>
@@ -243,7 +246,7 @@ export default function Main() {
                     }}
                     >
                       <SwiperSlide className="recommend__item swiper-slide">
-                        <a href="/product-view/1//" onClick={(e)=>{
+                        <a  onClick={()=>{history.push('/product-view/1')}} onClick={(e)=>{
                           if(window.innerWidth > breakPoint){
                             if(e.currentTarget.parentElement.classList.contains("swiper-slide-next")){
                               e.preventDefault();
@@ -260,7 +263,7 @@ export default function Main() {
                         </a>
                       </SwiperSlide>
                       <SwiperSlide className="recommend__item swiper-slide">
-                        <a href="/product-view/1//" onClick={(e)=>{
+                        <a  onClick={()=>{history.push('/product-view/1')}} onClick={(e)=>{
                           if(window.innerWidth > breakPoint){
                             if(e.currentTarget.parentElement.classList.contains("swiper-slide-next")){
                               e.preventDefault();
@@ -277,7 +280,7 @@ export default function Main() {
                         </a>
                       </SwiperSlide>
                       <SwiperSlide className="recommend__item swiper-slide">
-                      <a href="/product-view/1//" onClick={(e)=>{
+                      <a  onClick={()=>{history.push('/product-view/1')}} onClick={(e)=>{
                           if(window.innerWidth > breakPoint){
                             if(e.currentTarget.parentElement.classList.contains("swiper-slide-next")){
                               e.preventDefault();
@@ -294,7 +297,7 @@ export default function Main() {
                         </a>
                       </SwiperSlide>
                       <SwiperSlide className="recommend__item swiper-slide">
-                      <a href="/product-view/1//" onClick={(e)=>{
+                      <a  onClick={()=>{history.push('/product-view/1')}} onClick={(e)=>{
                           if(window.innerWidth > breakPoint){
                             if(e.currentTarget.parentElement.classList.contains("swiper-slide-next")){
                               e.preventDefault();
@@ -345,7 +348,7 @@ export default function Main() {
                           }}
                           >
                           <SwiperSlide className="swiper-slide">
-                            <a href="/product-view/1//"><img src="/images/_tmp/item640x640_01.png" alt="상품명" /></a>
+                            <a  onClick={()=>{history.push('/product-view/1')}}><img src="/images/_tmp/item640x640_01.png" alt="상품명" /></a>
                             <div className="event__main__inner">
                               <div className="event__product">
                                 <span className="event__product__name">SRS-RA3000BMKR2</span>
@@ -354,7 +357,7 @@ export default function Main() {
                             </div>
                           </SwiperSlide>
                           <SwiperSlide className="swiper-slide">
-                            <a href="/product-view/1//"><img src="/images/_tmp/item640x640_02.png" alt="상품명" /></a>
+                            <a  onClick={()=>{history.push('/product-view/1')}}><img src="/images/_tmp/item640x640_02.png" alt="상품명" /></a>
                             <div className="event__main__inner">
                               <div className="event__product">
                                 <span className="event__product__name">WWE-RA3000BMKR2</span>
@@ -363,7 +366,7 @@ export default function Main() {
                             </div>
                           </SwiperSlide>
                           <SwiperSlide className="swiper-slide">
-                            <a href="/product-view/1//"><img src="/images/_tmp/item640x640_03.png" alt="상품명" /></a>
+                            <a  onClick={()=>{history.push('/product-view/1')}}><img src="/images/_tmp/item640x640_03.png" alt="상품명" /></a>
                             <div className="event__main__inner">
                               <div className="event__product">
                                 <span className="event__product__name">WOW-RA3000BMKR2</span>
@@ -416,7 +419,7 @@ export default function Main() {
                         }}
                         >
                         <SwiperSlide className="swiper-slide" style={{backgroundImage: `url("/images/_tmp/main_event2-1.jpg")`}}>
-                          <a href="#">
+                          <a >
                             <div className="event__sub__inner">
                               <p className="event__copy__head">
                                 <span>성공적인 재택생활</span>
@@ -427,7 +430,7 @@ export default function Main() {
                           </a>
                         </SwiperSlide>
                         <SwiperSlide className="swiper-slide" style={{backgroundImage: `url("/images/_tmp/main_event2-2.jpg")`}}>
-                          <a href="#">
+                          <a >
                             <div className="event__sub__inner">
                               <p className="event__copy__head">
                                 <span>이번주는 오리지널</span>
@@ -438,7 +441,7 @@ export default function Main() {
                           </a>
                         </SwiperSlide>
                         <SwiperSlide className="swiper-slide" style={{backgroundImage: `url("/images/_tmp/main_event2-3.jpg")`}}>
-                          <a href="#">
+                          <a >
                             <div className="event__sub__inner">
                               <p className="event__copy__head">
                                 <span>카메라 무상 수리 서비스</span>
@@ -452,7 +455,7 @@ export default function Main() {
                       <div className="swiper-scrollbar event-scrollbar" style={{position:"absolute"}}></div>
                     </div>
                   </div>
-                  <a href="#" className="btn__event__more">더 보러 가기</a>
+                  <a  className="btn__event__more">더 보러 가기</a>
                 </div>
                 {/* <!-- // event --> */}
 
@@ -461,10 +464,10 @@ export default function Main() {
                   <h2 className="main__product__title">PRODUCT</h2>
                   <div className="main__product__inner">
                     <ul className="main__product__lists">
-                      <li className="main__product__list camera"><a href="/products/camera//">Camera</a></li>
-                      <li className="main__product__list vcamera"><a href="/products/videocamera//">Video Camera</a></li>
-                      <li className="main__product__list audio"><a href="/products/audio//">Audio</a></li>
-                      <li className="main__product__list ps"><a href="/products/playstation//">PlayStation®</a></li>
+                      <li className="main__product__list camera"><a  onClick={()=>{history.push('/products/camera')}}>Camera</a></li>
+                      <li className="main__product__list vcamera"><a  onClick={()=>{history.push('/products/videocamera')}}>Video Camera</a></li>
+                      <li className="main__product__list audio"><a  onClick={()=>{history.push('/products/audio')}}>Audio</a></li>
+                      <li className="main__product__list ps"><a  onClick={()=>{history.push('/products/playstation')}}>PlayStation®</a></li>
                     </ul>
                   </div>
                 </div>
@@ -474,7 +477,7 @@ export default function Main() {
                 <div className="main__banner" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/main_banner_pc.png)` : ( size.width > breakPointTablet ? `url(/images/_tmp/main_banner_tab.png)` : `url(/images/_tmp/main_banner_mo.png)`)}}>
                   <div className="main__banner__inner">
                     <h2 className="main__banner__title">알파 아카데미<br />4월 강좌 수강신청</h2>
-                    <a href="#" className="main__banner__link">자세히 보기</a>
+                    <a  className="main__banner__link">자세히 보기</a>
                   </div>
                 </div>
               {/* // academy banner */}
@@ -484,13 +487,13 @@ export default function Main() {
                   <h2 className="main__help__title">무엇을<br />도와드릴까요?</h2>
                   <ul className="main__help__lists">
                     <li className="main__help__list notice">
-                      <a href="/notice//">공지사항 & FAQ</a>
+                      <a  onClick={()=>{history.push('/notice')}}>공지사항 & FAQ</a>
                     </li>
                     <li className="main__help__list location">
                       <a href="store-info">매장안내</a>
                     </li>
                     <li className="main__help__list customer">
-                      <a href="#">고객센터</a>
+                      <a >고객센터</a>
                     </li>
                     <li className="main__help__list service">
                       <a href="https://www.sony.co.kr/electronics/support">제품지원</a>

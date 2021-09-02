@@ -28,7 +28,7 @@ export default function videoCourse() {
               <div className="course_video_zone">
                 <div className="course_video_main">
                   <div className="video_wrap">
-                    {/* <a href="#" class="video_cover"><img src="/images/_tmp/course_video_thumb_01.png" alt=""></a> */}
+                    {/* <a  class="video_cover"><img src="/images/_tmp/course_video_thumb_01.png" alt=""></a> */}
                     <iframe
                       src="https://www.youtube.com/embed/XWLfrRu0Aao"
                       frameBorder={0}

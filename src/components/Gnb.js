@@ -42,12 +42,12 @@ export default function Gnb() {
                             setSubMenu1(false)
                         }}
                     >
-                    <a href="#" onClick={()=>{
+                    <a  onClick={()=>{
                         setMSubMenu(1)
                     }}>스토어 추천 제품</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a href="/recommend">추천 제품</a>
+                        <a  onClick={()=>{history.push('/recommend')}}>추천 제품</a>
                         </li>
                     </ul>
                     </li>
@@ -63,35 +63,35 @@ export default function Gnb() {
                             setMSubMenu(2)
                         }}
                         >
-                    <a href="#">제품</a>
+                    <a >제품</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/products/camera")
                         }}>카메라</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/products/videocamera")
                         }}>비디오카메라</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/products/audio")
                         }}>오디오</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/products/accessory")
                         }}>액세서리</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/products/playstation")
                         }}>PlayStation®</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/products/test")
                         }}>test</a>
                         </li>
@@ -108,30 +108,30 @@ export default function Gnb() {
                             setMSubMenu(3)
                         }}
                         >
-                    <a href="/event/list">기획전</a>
+                    <a  onClick={()=>{history.push('/event/list')}}>기획전</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/event/list")
                         }}>소니스토어 단독</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/event/refurbish")
                         }}>혜택존</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/event/list")
                         }}>예약판매</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/event/refined")
                         }}>정품 등록 이벤트</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/event/live-on")
                         }}>LIVE ON</a>
                         </li>
@@ -148,10 +148,10 @@ export default function Gnb() {
                             setMSubMenu(4)
                         }}
                         >
-                    <a href="#">멤버십</a>
+                    <a >멤버십</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a href="#">등급&amp;혜택 안내</a>
+                        <a >등급&amp;혜택 안내</a>
                         </li>
                     </ul>
                     </li>
@@ -166,13 +166,13 @@ export default function Gnb() {
                             setMSubMenu(5)
                         }}
                         >
-                    <a href="#">고객 서비스</a>
+                    <a >고객 서비스</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/faq")
                         }}>공지사항</a>
-                        <a href="/faq">FAQ&amp;공지사항</a>
+                        <a  onClick={()=>{history.push('/faq')}}>FAQ&amp;공지사항</a>
                         </li>
                         <li>
                         <a href="https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa">정품등록 안내</a>
@@ -181,17 +181,17 @@ export default function Gnb() {
                         <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/purchase-consulting")
                         }}>구매 상담</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/store-info")
                         }}>직영점 안내</a>
                         </li>
                         <li>
-                        <a href="#" onClick={()=>{
+                        <a  onClick={()=>{
                             history.push("/video-course")
                         }}>동영상 강좌</a>
                         </li>

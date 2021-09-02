@@ -1,5 +1,8 @@
 import React,{useState} from "react";
-import { Link } from "react-router-dom";
+
+//utils
+import { useHistory } from "react-router-dom";
+
 
 //img
 import facebook from "../assets/images/common/ic_facebook.svg";
@@ -11,6 +14,7 @@ import sidebar1 from "../assets/images/common/ic_sidebar1.svg";
 import InsurePop from "./InsurePop";
 
 export default function Footer() {
+  const history = useHistory();
 
   const [isPop, setPop] = useState(false);
 
@@ -19,8 +23,8 @@ export default function Footer() {
         <footer className="footer">
       <nav className="sidebar">
         <div className="sidebar__inner">
-          <a href="/mypage/myPageMain.html" className="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
-          <a href="#" className="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
+          <a  onClick={()=>{history.push('/mypage/myPageMain.html')}} className="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+          <a  className="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
           <a href="#header" className="sidebar__btn top"><span>페이지 상단</span></a>
         </div>
         <button className="sidebar__btn sidebar__btn__toggle" type="button"><img src={sidebar1} alt="메뉴토글" /></button>
@@ -30,10 +34,10 @@ export default function Footer() {
           <div className="footer__social">
             <h3 className="footer__social__title">FOLLOW US</h3>
             <div className="footer__social__links">
-              <a href="#" className="footer__social__link"><img src={facebook} alt="facebook" /></a>
-              <a href="#" className="footer__social__link"><img src={instagram} alt="instagram" /></a>
-              <a href="#" className="footer__social__link"><img src={youtube} alt="youtube" /></a>
-              <a href="#" className="footer__social__link"><img src={blog} alt="blog" /></a>
+              <a  className="footer__social__link"><img src={facebook} alt="facebook" /></a>
+              <a  className="footer__social__link"><img src={instagram} alt="instagram" /></a>
+              <a  className="footer__social__link"><img src={youtube} alt="youtube" /></a>
+              <a  className="footer__social__link"><img src={blog} alt="blog" /></a>
             </div>
           </div>
           <div className="footer__family">
@@ -43,19 +47,19 @@ export default function Footer() {
                 <div className="footer__family__link__inner">
                   <h4 className="optgroup__label">Sony Family</h4>
                   <ul className="optgroup">
-                    <li className="option"><a href="#" target="_blank">소니코리아</a></li>
-                    <li className="option"><a href="#" target="_blank">소니코리아 고객지원</a></li>
-                    <li className="option"><a href="#" target="_blank">소니 알파 α</a></li>
-                    <li className="option"><a href="#" target="_blank">소니 방송/업무용 솔루션</a></li>
-                    <li className="option"><a href="#" target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
+                    <li className="option"><a  target="_blank">소니코리아</a></li>
+                    <li className="option"><a  target="_blank">소니코리아 고객지원</a></li>
+                    <li className="option"><a  target="_blank">소니 알파 α</a></li>
+                    <li className="option"><a  target="_blank">소니 방송/업무용 솔루션</a></li>
+                    <li className="option"><a  target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
                   </ul>
                   <h4 className="optgroup__label">Family Company</h4>
                   <ul className="optgroup">
-                    <li className="option"><a href="#" target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
-                    <li className="option"><a href="#" target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
-                    <li className="option"><a href="#" target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
-                    <li className="option"><a href="#" target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
-                    <li className="option"><a href="#" target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
+                    <li className="option"><a  target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
+                    <li className="option"><a  target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
+                    <li className="option"><a  target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
+                    <li className="option"><a  target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
+                    <li className="option"><a  target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
                   </ul>
                 </div>
               </div>
@@ -81,14 +85,14 @@ export default function Footer() {
         </div>
         <div className="footer__legal">
           <div className="footer__legal__links">
-            <a href="/footer/terms" className="footer__legal__link">이용약관</a>
-            <a href="/footer/policy" className="footer__legal__link privacy">개인정보처리방침</a>
+            <a  onClick={()=>{history.push('/footer/terms')}} className="footer__legal__link">이용약관</a>
+            <a  onClick={()=>{history.push('/footer/policy')}} className="footer__legal__link privacy">개인정보처리방침</a>
             <a  onClick={()=>{setPop(true)}} className="footer__legal__link" data-modal-target="modal__customer__insurance" style={{cursor:"pointer"}}>소비자 피해 보상보험</a>
-            <a href="/footer/siteMap" className="footer__legal__link">사이트맵</a>
+            <a  onClick={()=>{history.push('/footer/siteMap')}} className="footer__legal__link">사이트맵</a>
           </div>
           <div className="footer__legal__warning">
             <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
-            <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br /> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a href="#" className="escrow">에스크로결제</a></p>
+            <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br /> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a  className="escrow">에스크로결제</a></p>
           </div>
         </div>
         <address className="address">

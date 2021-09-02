@@ -10,10 +10,11 @@ import { sampleApi } from "../../api/sample";
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/support.scss"
 
+//utils
 import { useHistory } from "react-router-dom";
 
 export default function Notice() {
-
+  const history = useHistory();
   
     return (
         <>
@@ -29,10 +30,10 @@ export default function Notice() {
       <div className="tab_link_zone">
         <ul className="tab_link_inner">
           <li className="tabs">
-            <a href="/faq" className="tab_btn" title="FAQ 보기"><span className="tit">FAQ</span></a>
+            <a  onClick={()=>{history.push('/faq')}} className="tab_btn" title="FAQ 보기"><span className="tit">FAQ</span></a>
           </li>
           <li className="tabs on">
-            <a href="/notice-list" className="tab_btn" title="공지사항 보기"><span className="tit">공지사항</span></a>
+            <a  onClick={()=>{history.push('/notice-list')}} className="tab_btn" title="공지사항 보기"><span className="tit">공지사항</span></a>
           </li>
         </ul>
       </div>
@@ -46,8 +47,8 @@ export default function Notice() {
           </button>
           <div className="itemsort__drawer">
             <ul className="itemsort__items">
-              <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-              <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
+              <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">최신순</a></li>
+              <li className="itemsort__item"><a  className="itemsort__item__link">오래된 순</a></li>
             </ul>
           </div>
         </div>
@@ -73,7 +74,7 @@ export default function Notice() {
                 <div className="col_table_cell divide">
                   <div className="divide_table">
                     <div className="table_cell notice_tit tal">
-                      <a href="/notice" className="txt link_btn">고객센터 정상 업무 안내</a>
+                      <a  onClick={()=>{history.push('/notice')}} className="txt link_btn">고객센터 정상 업무 안내</a>
                     </div>
                     <div className="table_cell notice_date">
                       <p className="txt">21.08.06</p>
@@ -91,7 +92,7 @@ export default function Notice() {
                 <div className="col_table_cell divide">
                   <div className="divide_table">
                     <div className="table_cell notice_tit tal">
-                      <a href="/notice" className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
+                      <a  onClick={()=>{history.push('/notice')}} className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
                     </div>
                     <div className="table_cell notice_date">
                       <p className="txt">21.07.31</p>
@@ -109,7 +110,7 @@ export default function Notice() {
                 <div className="col_table_cell divide">
                   <div className="divide_table">
                     <div className="table_cell notice_tit tal">
-                      <a href="/notice" className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
+                      <a  onClick={()=>{history.push('/notice')}} className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
                     </div>
                     <div className="table_cell notice_date">
                       <p className="txt">21.06.31</p>
@@ -127,7 +128,7 @@ export default function Notice() {
                 <div className="col_table_cell divide">
                   <div className="divide_table">
                     <div className="table_cell notice_tit tal">
-                      <a href="/notice" className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
+                      <a  onClick={()=>{history.push('/notice')}} className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
                     </div>
                     <div className="table_cell notice_date">
                       <p className="txt">21.05.31</p>
@@ -145,7 +146,7 @@ export default function Notice() {
                 <div className="col_table_cell divide">
                   <div className="divide_table">
                     <div className="table_cell notice_tit tal">
-                      <a href="/notice" className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
+                      <a  onClick={()=>{history.push('/notice')}} className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
                     </div>
                     <div className="table_cell notice_date">
                       <p className="txt">21.05.31</p>
@@ -163,7 +164,7 @@ export default function Notice() {
                 <div className="col_table_cell divide">
                   <div className="divide_table">
                     <div className="table_cell notice_tit tal">
-                      <a href="/notice" className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
+                      <a  onClick={()=>{history.push('/notice')}} className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
                     </div>
                     <div className="table_cell notice_date">
                       <p className="txt">21.05.31</p>
@@ -181,7 +182,7 @@ export default function Notice() {
                 <div className="col_table_cell divide">
                   <div className="divide_table">
                     <div className="table_cell notice_tit tal">
-                      <a href="/notice" className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
+                      <a  onClick={()=>{history.push('/notice')}} className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
                     </div>
                     <div className="table_cell notice_date">
                       <p className="txt">21.05.31</p>
@@ -199,7 +200,7 @@ export default function Notice() {
                 <div className="col_table_cell divide">
                   <div className="divide_table">
                     <div className="table_cell notice_tit tal">
-                      <a href="/notice" className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
+                      <a  onClick={()=>{history.push('/notice')}} className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
                     </div>
                     <div className="table_cell notice_date">
                       <p className="txt">21.05.31</p>
@@ -217,7 +218,7 @@ export default function Notice() {
                 <div className="col_table_cell divide">
                   <div className="divide_table">
                     <div className="table_cell notice_tit tal">
-                      <a href="/notice" className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
+                      <a  onClick={()=>{history.push('/notice')}} className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
                     </div>
                     <div className="table_cell notice_date">
                       <p className="txt">21.05.31</p>
@@ -235,7 +236,7 @@ export default function Notice() {
                 <div className="col_table_cell divide">
                   <div className="divide_table">
                     <div className="table_cell notice_tit tal">
-                      <a href="/notice" className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
+                      <a  onClick={()=>{history.push('/notice')}} className="txt link_btn">[당첨자 발표]6월 소니스토어 온라인 설문조사 이벤트 당첨자 발표</a>
                     </div>
                     <div className="table_cell notice_date">
                       <p className="txt">21.05.31</p>
@@ -249,7 +250,7 @@ export default function Notice() {
             </div>{/* // col_table_body */}
           </div>
           <div className="btn_article comm_more">{/* 목록이 없을 경우 숨김 처리 */}
-            <a href="#" className="more_btn" title="더보기">더보기</a>
+            <a  className="more_btn" title="더보기">더보기</a>
           </div>
         </div>
       </div>

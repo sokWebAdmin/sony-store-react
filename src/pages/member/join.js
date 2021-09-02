@@ -52,9 +52,9 @@ export default function Join() {
               <div className="sns_login_box">
                 <strong className="sns_title">SNS 계정으로<span>간편하게 로그인하세요.</span></strong>
                 <ul className="sns_list">
-                  <li className="naver"><a href="#">네이버</a></li>
-                  <li className="kakao"><a href="#">카카오톡</a></li>
-                  <li className="facebook"><a href="#">페이스북</a></li>
+                  <li className="naver"><a >네이버</a></li>
+                  <li className="kakao"><a >카카오톡</a></li>
+                  <li className="facebook"><a >페이스북</a></li>
                 </ul>
               </div>
               <div className="caution_txt">

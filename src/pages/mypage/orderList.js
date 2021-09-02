@@ -29,38 +29,38 @@ export default function orderList() {
             <li className="step_1 on">{/* 1건 이상 부터 class: on 추가 */}
               <div className="ship_box">
                 <span className="ico_txt">입금대기</span>
-                <a href="#" className="val_txt"><span className="val">4</span><span>건</span></a>
+                <a  className="val_txt"><span className="val">4</span><span>건</span></a>
               </div>
             </li>
             <li className="step_2">
               <div className="ship_box">
                 <span className="ico_txt">결제완료</span>
-                <a href="#" className="val_txt"><span className="val">0</span><span>건</span></a>
+                <a  className="val_txt"><span className="val">0</span><span>건</span></a>
               </div>
             </li>
             <li className="step_3">
               <div className="ship_box">
                 <span className="ico_txt">배송준비</span>
-                <a href="#" className="val_txt"><span className="val">0</span><span>건</span></a>
+                <a  className="val_txt"><span className="val">0</span><span>건</span></a>
               </div>
             </li>
             <li className="step_4 on">
               <div className="ship_box">
                 <span className="ico_txt">배송중</span>
-                <a href="#" className="val_txt"><span className="val">1</span><span>건</span></a>
+                <a  className="val_txt"><span className="val">1</span><span>건</span></a>
               </div>
             </li>
             <li className="step_5 on">
               <div className="ship_box">
                 <span className="ico_txt">배송완료</span>
-                <a href="#" className="val_txt"><span className="val">1</span><span>건</span></a>
+                <a  className="val_txt"><span className="val">1</span><span>건</span></a>
               </div>
             </li>
           </ul>
         </div>
         <div className="my_claim">
-          <p className="txt cancel on">주문 취소 <a href="#" title="주문 취소 건"><strong className="val_txt"><span className="val">4</span> 건</strong></a></p>
-          <p className="txt return">교환 반품 <a href="#" title="교환 반품 건"><strong className="val_txt"><span className="val">0</span> 건</strong></a></p>
+          <p className="txt cancel on">주문 취소 <a  title="주문 취소 건"><strong className="val_txt"><span className="val">4</span> 건</strong></a></p>
+          <p className="txt return">교환 반품 <a  title="교환 반품 건"><strong className="val_txt"><span className="val">0</span> 건</strong></a></p>
         </div>
       </div>
     </div>
@@ -70,13 +70,13 @@ export default function orderList() {
         <div className="date_box">
           <ul className="date3_tab">
             <li className="tabs on">
-              <a href="#" className="date3_btn">3개월</a>
+              <a  className="date3_btn">3개월</a>
             </li>
             <li className="tabs">
-              <a href="#" className="date3_btn">6개월</a>
+              <a  className="date3_btn">6개월</a>
             </li>
             <li className="tabs">
-              <a href="#" className="date3_btn">1년</a>
+              <a  className="date3_btn">1년</a>
             </li>
           </ul>
           <div className="date_rang">
@@ -105,7 +105,7 @@ export default function orderList() {
             <div className="col_table_row">
               <div className="col_table_cell order">
                 <span className="order_date">21.05.12</span>
-                <a href="#" className="order_number">20210512-663W24</a>
+                <a  className="order_number">20210512-663W24</a>
               </div>
               <div className="col_table_cell prd_wrap">
                 <div className="prd">
@@ -129,7 +129,7 @@ export default function orderList() {
             <div className="col_table_row">
               <div className="col_table_cell order">
                 <span className="order_date">21.05.12</span>
-                <a href="#" className="order_number">20210512-663W24</a>
+                <a  className="order_number">20210512-663W24</a>
               </div>
               <div className="col_table_cell prd_wrap">
                 <div className="prd">
@@ -153,7 +153,7 @@ export default function orderList() {
           </div>
         </div>
         <div className="btn_article">
-          <a href="#" className="more_btn">더보기</a>
+          <a  className="more_btn">더보기</a>
         </div>
         {/* 내역 없는 경우 .col_table_body, .btn_article 노출 안되어야 합니다. */}
         {/* <div class="no-data">
@@ -172,7 +172,7 @@ export default function orderList() {
       </ul>
     </div>
     <div className="ico_box_link">
-      <a href="#" className="box_link_inner ico_type3">
+      <a  className="box_link_inner ico_type3">
         <div className="txt_box">
           <p className="tit">고객지원 센터</p>
           <p className="txt">제품 서비스 및 보증기간을 확인하세요!</p>

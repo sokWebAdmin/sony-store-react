@@ -124,7 +124,7 @@ export default function orderStep1() {
               {/* acc_item */}
               <div className="acc_item on">
                 <div className="acc_head">
-                  <a href="#" className="acc_btn" title="주문자 정보 열기">
+                  <a  className="acc_btn" title="주문자 정보 열기">
                     <span className="acc_tit">주문자 정보</span>
                     <span className="acc_arrow">상세 보기</span>
                   </a>
@@ -181,7 +181,7 @@ export default function orderStep1() {
               {/* acc_item */}
               <div className="acc_item on">
                 <div className="acc_head">
-                  <a href="#" className="acc_btn" title="배송지 정보 열기">
+                  <a  className="acc_btn" title="배송지 정보 열기">
                     <span className="acc_tit">배송지 정보</span>
                     <span className="acc_arrow">상세 보기</span>
                   </a>
@@ -274,39 +274,39 @@ export default function orderStep1() {
                         <div className="acc_group parent">
                           <div className="acc_inp type3">
                             <div className="select_ui_zone btm_line">
-                              <a href="#" className="selected_btn" data-default-text="택배 기사님께 요청하실 내용을 선택하세요.">{/* disabled : 선택불가 품절 */}
+                              <a  className="selected_btn" data-default-text="택배 기사님께 요청하실 내용을 선택하세요.">{/* disabled : 선택불가 품절 */}
                                 택배 기사님께 요청하실 내용을 선택하세요.
                               </a>
                               <div className="select_inner">
                                 <p className="prd_tag">요청사항</p>
                                 <ul className="select_opt">
                                   <li>
-                                    <a href="#" className="opt_list">{/* disabled : 선택 불가 품절 */}
+                                    <a  className="opt_list">{/* disabled : 선택 불가 품절 */}
                                       <div className="item">배송 전 연락바랍니다.</div>
                                     </a>
                                   </li>
                                   <li>
-                                    <a href="#" className="opt_list">
+                                    <a  className="opt_list">
                                       <div className="item">부재 시 경비실에 맡겨 주세요.</div>
                                     </a>
                                   </li>
                                   <li>
-                                    <a href="#" className="opt_list">
+                                    <a  className="opt_list">
                                       <div className="item">부재 시 무인 택배함에 맡겨주세요.</div>
                                     </a>
                                   </li>
                                   <li>
-                                    <a href="#" className="opt_list">
+                                    <a  className="opt_list">
                                       <div className="item">부재 시 집 문앞에 놔주세요.</div>
                                     </a>
                                   </li>
                                   <li>
-                                    <a href="#" className="opt_list">
+                                    <a  className="opt_list">
                                       <div className="item">부재 시 휴대폰으로 연락 주세요.</div>
                                     </a>
                                   </li>
                                   <li>
-                                    <a href="#" className="opt_list">
+                                    <a  className="opt_list">
                                       <div className="item">파손의 위험이 있는 상품이니 조심히 다뤄주세요.</div>
                                     </a>
                                   </li>
@@ -365,7 +365,7 @@ export default function orderStep1() {
               {/* acc_item */}
               <div className="acc_item on">
                 <div className="acc_head">
-                  <a href="#" className="acc_btn" title="할인 정보 열기">
+                  <a  className="acc_btn" title="할인 정보 열기">
                     <span className="acc_tit">할인 정보</span>
                     <span className="acc_arrow">상세 보기</span>
                   </a>
@@ -413,7 +413,7 @@ export default function orderStep1() {
               {/* // acc_item */}
               <div className="acc_item on">
                 <div className="acc_head">
-                  <a href="#" className="acc_btn" title="결제 방법 열기">
+                  <a  className="acc_btn" title="결제 방법 열기">
                     <span className="acc_tit">결제 방법</span>
                     <span className="acc_arrow">상세 보기</span>
                   </a>
@@ -503,7 +503,7 @@ export default function orderStep1() {
               {/* acc_item */}
               <div className="acc_item on">
                 <div className="acc_head pc_none">
-                  <a href="#" className="acc_btn" title="결제 예정 금액열기">
+                  <a  className="acc_btn" title="결제 예정 금액열기">
                     <span className="acc_tit">결제 예정 금액</span>
                     <span className="acc_arrow">상세 보기</span>
                   </a>

@@ -28,12 +28,12 @@ export default function asc() {
     <div className="event_tablist">
       <div className="tab_ui scroll" data-scroll-view={5}>{/* 스크롤탭 : class: scroll / data-scroll-view 보여지는 탭 수 */}
         <ul>
-          <li className="tabs on"><a href="#" className="btn">전체</a></li>
-          <li className="tabs"><a href="#" className="btn">렌즈교환식 카메라</a></li>
-          <li className="tabs"><a href="#" className="btn">캠코더</a></li>
-          <li className="tabs"><a href="#" className="btn">헤드폰/이어폰</a></li>
-          <li className="tabs"><a href="#" className="btn">스피커</a></li>
-          <li className="tabs"><a href="#" className="btn">기타</a></li>
+          <li className="tabs on"><a  className="btn">전체</a></li>
+          <li className="tabs"><a  className="btn">렌즈교환식 카메라</a></li>
+          <li className="tabs"><a  className="btn">캠코더</a></li>
+          <li className="tabs"><a  className="btn">헤드폰/이어폰</a></li>
+          <li className="tabs"><a  className="btn">스피커</a></li>
+          <li className="tabs"><a  className="btn">기타</a></li>
         </ul>
       </div>
       <div className="tab_ui_info">
@@ -48,9 +48,9 @@ export default function asc() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">A급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">B급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">C급</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">A급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">B급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">C급</a></li>
                   </ul>
                 </div>
               </div>              </div>
@@ -59,13 +59,13 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_a">A<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                   <div className="sold_out"><span>SOLD OUT</span></div>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">SRS-XP500 (1+1)</a>
+                  <a  className="product_name_title">SRS-XP500 (1+1)</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
@@ -82,12 +82,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_b">B<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인</p>
                   <div className="product_name_price">
@@ -103,12 +103,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_c">C<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠</p>
                   <div className="product_name_price">
@@ -123,12 +123,12 @@ export default function asc() {
               </div>
               <div className="product">
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
@@ -160,9 +160,9 @@ export default function asc() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">A급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">B급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">C급</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">A급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">B급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">C급</a></li>
                   </ul>
                 </div>
               </div>              </div>
@@ -171,13 +171,13 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_a">A<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                   <div className="sold_out"><span>SOLD OUT</span></div>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">SRS-XP500 (1+1)</a>
+                  <a  className="product_name_title">SRS-XP500 (1+1)</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
@@ -194,12 +194,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_b">B<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인</p>
                   <div className="product_name_price">
@@ -215,12 +215,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_c">C<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠</p>
                   <div className="product_name_price">
@@ -235,12 +235,12 @@ export default function asc() {
               </div>
               <div className="product">
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
@@ -272,9 +272,9 @@ export default function asc() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">A급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">B급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">C급</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">A급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">B급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">C급</a></li>
                   </ul>
                 </div>
               </div>              </div>
@@ -283,13 +283,13 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_a">A<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                   <div className="sold_out"><span>SOLD OUT</span></div>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">SRS-XP500 (1+1)</a>
+                  <a  className="product_name_title">SRS-XP500 (1+1)</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
@@ -306,12 +306,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_b">B<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인</p>
                   <div className="product_name_price">
@@ -327,12 +327,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_c">C<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠</p>
                   <div className="product_name_price">
@@ -363,9 +363,9 @@ export default function asc() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">A급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">B급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">C급</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">A급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">B급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">C급</a></li>
                   </ul>
                 </div>
               </div>              </div>
@@ -374,13 +374,13 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_a">A<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                   <div className="sold_out"><span>SOLD OUT</span></div>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">SRS-XP500 (1+1)</a>
+                  <a  className="product_name_title">SRS-XP500 (1+1)</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
@@ -397,12 +397,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_b">B<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인</p>
                   <div className="product_name_price">
@@ -418,12 +418,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_c">C<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠</p>
                   <div className="product_name_price">
@@ -454,9 +454,9 @@ export default function asc() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">A급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">B급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">C급</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">A급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">B급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">C급</a></li>
                   </ul>
                 </div>
               </div>              </div>
@@ -465,13 +465,13 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_a">A<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                   <div className="sold_out"><span>SOLD OUT</span></div>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">SRS-XP500 (1+1)</a>
+                  <a  className="product_name_title">SRS-XP500 (1+1)</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
@@ -488,12 +488,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_b">B<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인</p>
                   <div className="product_name_price">
@@ -509,12 +509,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_c">C<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠</p>
                   <div className="product_name_price">
@@ -545,9 +545,9 @@ export default function asc() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">A급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">B급</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">C급</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">A급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">B급</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">C급</a></li>
                   </ul>
                 </div>
               </div>              </div>
@@ -556,13 +556,13 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_a">A<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                   <div className="sold_out"><span>SOLD OUT</span></div>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">SRS-XP500 (1+1)</a>
+                  <a  className="product_name_title">SRS-XP500 (1+1)</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
@@ -579,12 +579,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_b">B<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인</p>
                   <div className="product_name_price">
@@ -600,12 +600,12 @@ export default function asc() {
               <div className="product">
                 <span className="badge_state state_c">C<span className="txt">급</span></span>
                 <div className="product_pic">
-                  <a href="#" className="product_link">
+                  <a  className="product_link">
                     <img src="../../images/_tmp/item640x640_01.png" alt="" />
                   </a>
                 </div>
                 <div className="product_name">
-                  <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+                  <a  className="product_name_title">WH-1000XM4/SME</a>
                   <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                     1인치 핸디캠</p>
                   <div className="product_name_price">

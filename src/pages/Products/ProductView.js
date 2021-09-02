@@ -27,12 +27,14 @@ import GlobalContext from '../../context/global.context';
 //util
 import { wonComma } from '../../utils/utils';
 import {useWindowSize} from '../../utils/utils'
+import { useHistory } from "react-router-dom";
 
 //image
 
 export default function ProductView({match}) {
+  const history = useHistory();
 
-  const {onChangeGlobal} = useContext(GlobalContext)
+  const {onChangeGlobal, shopByToken} = useContext(GlobalContext)
   const {product_no} = match.params;
 
   //ui
@@ -133,7 +135,7 @@ export default function ProductView({match}) {
                 }
                 {/* <p className="product_desc">이 제품은 예약 주문 상품으로 구매 후 1주일 뒤에 발송됩니다</p> */}
                 <ul className="social_list">
-                  <li className="share"><a href="#" className="ico_btn" data-popup="popup_share">공유하기</a></li>
+                  <li className="share"><a  className="ico_btn" data-popup="popup_share">공유하기</a></li>
                 </ul>
               </div>
               <div className="cont">
@@ -173,7 +175,7 @@ export default function ProductView({match}) {
                   <p className="tit">색상</p>
                   <ul className="circle_color_box">
                     <li className="on">
-                      <a href="#" className="color_btn">
+                      <a  className="color_btn">
                         <span className="circle_color">
                           <span className="c_bg" data-slide-img-type="fc5227" style={{background: '#fc5227'}} />
                         </span>
@@ -181,7 +183,7 @@ export default function ProductView({match}) {
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="color_btn">
+                      <a  className="color_btn">
                         <span className="circle_color">
                           <span className="c_bg" data-slide-img-type="f7f5f5" style={{background: '#f7f5f5'}} />
                         </span>
@@ -189,7 +191,7 @@ export default function ProductView({match}) {
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="color_btn">
+                      <a  className="color_btn">
                         <span className="circle_color">
                           <span className="c_bg" data-slide-img-type="1b8faa" style={{background: '#1b8faa'}} />
                         </span>
@@ -197,7 +199,7 @@ export default function ProductView({match}) {
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="color_btn">
+                      <a  className="color_btn">
                         <span className="circle_color">
                           <span className="c_bg" data-slide-img-type={222222} style={{background: '#222'}} />
                         </span>
@@ -217,7 +219,7 @@ export default function ProductView({match}) {
                             <p className="tit">제품선택</p>
                             <div className={`select_zone selectOn ${isOptionOpen ? "open" : ''}`}>
                               {/* 품절시 disabled class  */}
-                              <a href="#" className="selected_btn" data-default-text="제품을 선택하세요." onClick={
+                              <a  className="selected_btn" data-default-text="제품을 선택하세요." onClick={
                                 ()=>{
                                   setOptionOpen(!isOptionOpen)
                                 }
@@ -230,7 +232,7 @@ export default function ProductView({match}) {
                                   {productOptions && productOptions.flatOptions.map(item => {
                                     return (<>
                                   <li>
-                                    <a href="#" className="opt_list" onClick={()=>{
+                                    <a  className="opt_list" onClick={()=>{
                                       let tempOptionList = selectedOption;
                                       if(tempOptionList.includes(item)){
                                         alert("이미 선택된 옵션입니다.");
@@ -318,7 +320,7 @@ export default function ProductView({match}) {
                   </div>
                   <p className="opt_price"><strong className="price">{wonComma(item.buyPrice * item.buyCnt)}</strong>원</p>
                 </div>
-                <a href="#" className="prd_delete" onClick={()=>{
+                <a  className="prd_delete" onClick={()=>{
                   let tempOptionList = selectedOption.filter(function(element){
                     return element!= item;
                 });
@@ -348,13 +350,21 @@ export default function ProductView({match}) {
                 <div className="result_btn_inner">
                   <div className="result_btn_box">
                     <ul>
-                      <li className="like"><a href="#" className="btn_icon">찜하기</a></li>
-                      <li className="cart"><a href="/cart" className="btn_icon" data-popup="popup_cart">장바구니</a></li>
-                      <li className="gift"><a href="#" className="btn_icon" data-popup="popup_gift">선물</a></li>
+                      <li className="like"><a  className="btn_icon">찜하기</a></li>
+                      <li className="cart"><a  onClick={()=>{history.push('/cart')}} className="btn_icon" data-popup="popup_cart">장바구니</a></li>
+                      <li className="gift"><a  className="btn_icon" data-popup="popup_gift">선물</a></li>
                       <li className="final">
-                        <a href="/order/step/1" className="btn_style direct" style={{backgroundColor: '#000'}}>바로 구매하기</a>
-                        <a href="#" className="btn_style disabled" style={{display: 'none', backgroundColor: '#ddd'}}>품절</a>
-                        <a href="#" className="btn_style reservation" style={{display: 'none', backgroundColor: '#5865F5'}}>예약구매</a>
+                        <a  onClick={()=>{
+                          //구매 로직 
+                          if(shopByToken){
+                            
+                          }else{
+                            alert("로그인 후 이용해주세요.")
+                          }
+                          
+                        }} className="btn_style direct" style={{backgroundColor: '#000'}}>바로 구매하기</a>
+                        <a  className="btn_style disabled" style={{display: 'none', backgroundColor: '#ddd'}}>품절</a>
+                        <a  className="btn_style reservation" style={{display: 'none', backgroundColor: '#5865F5'}}>예약구매</a>
                         {/*
                       * 버튼 참고
                       btn_style : 기본 버튼 스타일
@@ -367,7 +377,7 @@ export default function ProductView({match}) {
                     </ul>
                   </div>
                 </div>
-                <a href="#" className="select_closed" title="선택 목록 닫기">닫기</a>
+                <a  className="select_closed" title="선택 목록 닫기">닫기</a>
               </div>
               {/* 네이버 임시 */}
               <div className="cont naver" style={{marginTop: '24px', paddingTop: 0}}>
@@ -403,7 +413,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                    <a href="/product-view/1">
+                    <a  onClick={()=>{history.push('/product-view/1')}}>
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_06.png" alt="" />
@@ -415,7 +425,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                    <a href="/product-view/1">
+                    <a  onClick={()=>{history.push('/product-view/1')}}>
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임</p>
                       </a>
@@ -431,7 +441,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                  <a href="/product-view/1">
+                  <a  onClick={()=>{history.push('/product-view/1')}}>
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_05.png" alt="" />
@@ -443,7 +453,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                    <a href="/product-view/1">
+                    <a  onClick={()=>{history.push('/product-view/1')}}>
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임 G 렌즈원핸드 컴팩트 풀프레임 G 렌즈
                           원핸드 컴팩트 풀프레임
@@ -461,7 +471,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                  <a href="/product-view/1">
+                  <a  onClick={()=>{history.push('/product-view/1')}}>
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_04.png" alt="" />
@@ -473,7 +483,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                    <a href="/product-view/1">
+                    <a  onClick={()=>{history.push('/product-view/1')}}>
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임 G 렌즈
                           원핸드 컴팩트 풀프레임</p>
@@ -490,7 +500,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                  <a href="/product-view/1">
+                  <a  onClick={()=>{history.push('/product-view/1')}}>
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_03.png" alt="" />
@@ -502,7 +512,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                    <a href="/product-view/1">
+                    <a  onClick={()=>{history.push('/product-view/1')}}>
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임 G 렌즈
                           원핸드 컴팩트 풀프레임</p>
@@ -519,7 +529,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                  <a href="/product-view/1">
+                  <a  onClick={()=>{history.push('/product-view/1')}}>
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_02.png" alt="" />
@@ -531,7 +541,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                    <a href="/product-view/1">
+                    <a  onClick={()=>{history.push('/product-view/1')}}>
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임 G 렌즈
                           원핸드 컴팩트 풀프레임</p>
@@ -548,7 +558,7 @@ export default function ProductView({match}) {
                 <div className="product_tabArea">
                   {/* 상품 이미지*/}
                   <div className="product_img">
-                    <a href="#">
+                    <a >
                       <div className="img-box">
                         <div className="inner">
                           <img src="/images/_tmp/item640x640_01.png" alt="" />
@@ -560,7 +570,7 @@ export default function ProductView({match}) {
                   {/* 상품 이름*/}
                   <div className="product-name">
                     <div className="product-option">
-                    <a href="/product-view/1">
+                    <a  onClick={()=>{history.push('/product-view/1')}}>
                         <strong>SEL50F25G</strong>
                         <p>원핸드 컴팩트 풀프레임 G 렌즈
                           원핸드 컴팩트 풀프레임</p>
