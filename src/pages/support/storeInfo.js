@@ -19,6 +19,7 @@ export default function StoreInfo() {
     display: isMapOpen ? 'block' : 'none',
   };
 
+  // TODO: 맵 이미지 or API 문의중 https://nhnent.dooray.com/project/posts/3088453851789491392
   const onOpenMap = () => {
     setIsMapOpen(!isMapOpen);
   };
