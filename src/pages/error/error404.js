@@ -13,8 +13,12 @@
  import errorLogo from '../../assets/images/common/error_logo.svg';
  import ic404 from '../../assets/images/common/ic_404.svg';
 
+ //utils
+import { useHistory } from "react-router-dom";
+
  export default function Error404() {
- 
+    const history = useHistory();
+
      return (
          <>
          <SEOHelmet title={"페이지를 찾을 수 없습니다"} />
@@ -33,7 +37,7 @@
                 <p className="desc">오래된 URL이거나 폐지된 페이지일 수 있으니,<br />
                     메인(홈)으로 이동하셔서 원하시는 정보를 찾아주십시오. 감사합니다.</p>
                 <div className="btn_box">
-                    <a href="/" className="btn btn_dark">홈으로</a>
+                    <a  onClick={()=>{history.push('/')}} className="btn btn_dark">홈으로</a>
                 </div>
                 </div>
             </div>

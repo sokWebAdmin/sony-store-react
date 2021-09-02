@@ -207,7 +207,7 @@ export default function orderDetail() {
     <div className="cont button_wrap">
       <button type="button" className="button button_negative">주문 취소</button>
       <button type="button" className="button button_negative only-pc" onclick="onPrint()">주문 정보 프린트</button>
-      <a href="#" className="button button_positive">목록</a>
+      <a  className="button button_positive">목록</a>
     </div>
     {/* // buttons */}
   </div>

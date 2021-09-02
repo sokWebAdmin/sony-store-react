@@ -44,15 +44,15 @@ export default function Header() {
     <>
       <header id="header" className={`header ${sideBarOpen == true && "header--active"}`}>
         <div className="header__wrapper">
-            <h1 className="header__logo"><a href="/"><img src={logo} alt="SONY" /></a></h1>
+            <h1 className="header__logo"><a  onClick={()=>{history.push('/')}}><img src={logo} alt="SONY" /></a></h1>
             <div className="header__menu">
                 <button className="btn btn__mo__hidden btn__search" onClick={()=>{
                   setSearchOpen(true)
                 }}><img src={search} alt="검색창 열기" /></button>
-                <a href="#" className="btn btn__desktop btn__mypage"><img src={mypage} alt="마이페이지" onClick={()=>{
+                <a  className="btn btn__desktop btn__mypage"><img src={mypage} alt="마이페이지" onClick={()=>{
                   setInfoOpen(!isInfoOpen)
                 }} /></a>
-                <a href="/cart" className="btn btn__cart"><img src={cart} alt="장바구니" /></a>
+                <a  onClick={()=>{history.push('/cart')}} className="btn btn__cart"><img src={cart} alt="장바구니" /></a>
                 <button type="button" className="btn btn__mo btn__menu__open" onClick={()=>{
                   setMobileSideBarOpen(true)
                 }}><img src={menu} alt="메뉴 열기" /></button>
@@ -69,16 +69,16 @@ export default function Header() {
               <>
               <div className={`member ${isInfoOpen && "member--visible"}`}>
             <div className="member__inner">
-                <a href="/member/login" className="member__msg member__msg__login">로그인이<br />필요합니다</a>
+                <a  onClick={()=>{history.push('/member/login')}} className="member__msg member__msg__login">로그인이<br />필요합니다</a>
                 <button type="button" className="btn btn__login" onClick={()=>{
                   history.push("/member/login")
                   setInfoOpen(false);
                 }}>로그인</button>
                 <div className="member__menu">
                 <ul>
-                    <li className="member__menu__mypage"><a href="/member/join">회원가입</a></li>
-                    <li className="member__menu__order"><a href="/my-page/order-list">주문/배송 조회</a></li>
-                    <li className="member__menu__cart"><a href="/cart">장바구니<span className="badge">99</span></a></li>
+                    <li className="member__menu__mypage"><a  onClick={()=>{history.push('/member/join')}}>회원가입</a></li>
+                    <li className="member__menu__order"><a  onClick={()=>{history.push('/my-page/order-list')}}>주문/배송 조회</a></li>
+                    <li className="member__menu__cart"><a  onClick={()=>{history.push('/cart')}}>장바구니<span className="badge">99</span></a></li>
                 </ul>
                 </div>
             </div>
@@ -95,9 +95,9 @@ export default function Header() {
                     <p className="member__msg">{profile.memberName}님<br />안녕하세요!</p>
                     <div className="member__menu">
                     <ul>
-                        <li className="member__menu__mypage"><a href="/my-page">마이페이지</a></li>
-                        <li className="member__menu__order"><a href="/my-page/order-list">주문/배송 조회</a></li>
-                        <li className="member__menu__cart"><a href="/cart">장바구니<span className="badge">99</span></a></li>
+                        <li className="member__menu__mypage"><a  onClick={()=>{history.push('/my-page')}}>마이페이지</a></li>
+                        <li className="member__menu__order"><a  onClick={()=>{history.push('/my-page/order-list')}}>주문/배송 조회</a></li>
+                        <li className="member__menu__cart"><a  onClick={()=>{history.push('/cart')}}>장바구니<span className="badge">99</span></a></li>
                     </ul>
                     </div>
                     <button type="button" className="btn btn__logout" onClick={()=>{
@@ -116,8 +116,8 @@ export default function Header() {
             {/* 앱 전용 메뉴 */}
             <div className="appmenu">
             <ul>
-                <li className="appmenu__qr"><a href="#">QR스캔</a></li>
-                <li className="appmenu__setting"><a href="#">설정</a></li>
+                <li className="appmenu__qr"><a >QR스캔</a></li>
+                <li className="appmenu__setting"><a >설정</a></li>
             </ul>
             </div>
         </div>

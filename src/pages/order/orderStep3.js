@@ -124,7 +124,7 @@ export default function orderStep3() {
               {/* acc_item */}
               <div className="acc_item on">
                 <div className="acc_head">
-                  <a href="#" className="acc_btn" title="주문자 정보 열기">
+                  <a  className="acc_btn" title="주문자 정보 열기">
                     <span className="acc_tit">주문자 정보</span>
                     <span className="acc_arrow">상세 보기</span>
                   </a>
@@ -181,7 +181,7 @@ export default function orderStep3() {
               {/* acc_item */}
               <div className="acc_item on">
                 <div className="acc_head">
-                  <a href="#" className="acc_btn" title="선물 받으실 분 열기">
+                  <a  className="acc_btn" title="선물 받으실 분 열기">
                     <span className="acc_tit">선물 받으실 분</span>
                     <span className="acc_arrow">상세 보기</span>
                   </a>
@@ -228,7 +228,7 @@ export default function orderStep3() {
               {/* // acc_item */}
               <div className="acc_item on">
                 <div className="acc_head">
-                  <a href="#" className="acc_btn" title="할인 정보 열기">
+                  <a  className="acc_btn" title="할인 정보 열기">
                     <span className="acc_tit">할인 정보</span>
                     <span className="acc_arrow">상세 보기</span>
                   </a>
@@ -276,7 +276,7 @@ export default function orderStep3() {
               {/* // acc_item */}
               <div className="acc_item on">
                 <div className="acc_head">
-                  <a href="#" className="acc_btn" title="결제 방법 열기">
+                  <a  className="acc_btn" title="결제 방법 열기">
                     <span className="acc_tit">결제 방법</span>
                     <span className="acc_arrow">상세 보기</span>
                   </a>
@@ -366,7 +366,7 @@ export default function orderStep3() {
               {/* acc_item */}
               <div className="acc_item on">
                 <div className="acc_head pc_none">
-                  <a href="#" className="acc_btn" title="결제 예정 금액열기">
+                  <a  className="acc_btn" title="결제 예정 금액열기">
                     <span className="acc_tit">결제 예정 금액</span>
                     <span className="acc_arrow">상세 보기</span>
                   </a>

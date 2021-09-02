@@ -137,15 +137,15 @@ export default function Cart() {
         </div>
       </div>
       <div className="button_wrap">
-        <a href="#" className="button button_negative">쇼핑 계속 하기</a>
+        <a  className="button button_negative">쇼핑 계속 하기</a>
         <button type="submit" className="button button_positive popup_comm_btn" data-popup-name="login_chk_order" onClick={()=>{
-          history.push('/order/step/1')
+          history.push('//order/step/1')
         }}>구매하기</button>
       </div>
       <div className="acc acc_ui_zone acc_faq acc_cart">
         <div className="acc_item on">
           <div className="acc_head">
-            <a href="#" className="acc_btn" title="상세 내용 토글">
+            <a  className="acc_btn" title="상세 내용 토글">
               <span className="acc_tit">장바구니 이용 안내</span>
               <span className="acc_arrow">선택됨/상세 닫기</span>
             </a>
@@ -162,7 +162,7 @@ export default function Cart() {
         </div>
         <div className="acc_item">
           <div className="acc_head">
-            <a href="#" className="acc_btn" title="상세 내용 토글">
+            <a  className="acc_btn" title="상세 내용 토글">
               <span className="acc_tit">AS관련 제품 주의사항</span>
               <span className="acc_arrow">상세 보기</span>
             </a>
@@ -176,7 +176,7 @@ export default function Cart() {
         </div>
         <div className="acc_item">
           <div className="acc_head">
-            <a href="#" className="acc_btn" title="상세 내용 토글">
+            <a  className="acc_btn" title="상세 내용 토글">
               <span className="acc_tit">인터넷 주문이 어려우세요?</span>
               <span className="acc_arrow">상세 보기</span>
             </a>

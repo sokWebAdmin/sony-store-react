@@ -113,72 +113,72 @@ export default function SearchResult({match}) {
         freeMode={true}
       >
         <SwiperSlide className={`swiper-slide ${tabState == "total" ? "active" : ""}`}>
-          <a href="#" onClick={()=>{
+          <a  onClick={()=>{
             setTabState("total");
           }}>전체 ({productCount + exhibitionCount + categoryCount + noticeCount})</a>
         </SwiperSlide>
         <SwiperSlide className={`swiper-slide ${tabState == "product" ? "active" : ""}`}>
-          <a href="#" onClick={()=>{
+          <a  onClick={()=>{
             setTabState("product");
           }}>제품 ({productCount})</a>
         </SwiperSlide>
         <SwiperSlide className={`swiper-slide ${tabState == "exhibition" ? "active" : ""}`}>
-          <a href="#" onClick={()=>{
+          <a  onClick={()=>{
             setTabState("exhibition");
           }}>기획전 ({exhibitionCount})</a>
         </SwiperSlide>
         <SwiperSlide className={`swiper-slide ${tabState == "category" ? "active" : ""}`}>
-          <a href="#" onClick={()=>{
+          <a  onClick={()=>{
             setTabState("category");
           }}>카테고리 ({categoryCount})</a>
         </SwiperSlide>
         <SwiperSlide className={`swiper-slide ${tabState == "notice" ? "active" : ""}`}>
-          <a href="#" onClick={()=>{
+          <a  onClick={()=>{
             setTabState("notice");
           }}>공지사항 ({noticeCount})</a>
         </SwiperSlide>
         </Swiper>
       <div className="swiper-button-prev">
-      <a href="#" title="메뉴 더보기">메뉴 더보기</a>
+      <a  title="메뉴 더보기">메뉴 더보기</a>
     </div>
     <div className="swiper-button-next">
-      <a href="#" title="메뉴 더보기">메뉴 더보기</a>
+      <a  title="메뉴 더보기">메뉴 더보기</a>
     </div>
   </div>
         :
 <div class="swipe_tab swiper-container">
         <ul class="swiper-wrapper">
           <li className={`swiper-slide ${tabState == "total" ? "active" : ""}`}>
-            <a href="#" onClick={()=>{
+            <a  onClick={()=>{
             setTabState("total");
           }}>전체 ({productCount + exhibitionCount + categoryCount + noticeCount})</a>
           </li>
           <li className={`swiper-slide ${tabState == "product" ? "active" : ""}`}>
-            <a href="#" onClick={()=>{
+            <a  onClick={()=>{
             setTabState("product");
           }}>제품 ({productCount})</a>
           </li>
           <li className={`swiper-slide ${tabState == "exhibition" ? "active" : ""}`}>
-            <a href="#" onClick={()=>{
+            <a  onClick={()=>{
             setTabState("exhibition");
           }}>기획전 ({exhibitionCount})</a>
           </li>
           <li className={`swiper-slide ${tabState == "category" ? "active" : ""}`}>
-            <a href="#" onClick={()=>{
+            <a  onClick={()=>{
             setTabState("category");
           }}>카테고리 ({categoryCount})</a>
           </li>
           <li className={`swiper-slide ${tabState == "notice" ? "active" : ""}`}>
-            <a href="#" onClick={()=>{
+            <a  onClick={()=>{
             setTabState("notice");
           }}>공지사항 ({noticeCount})</a>
           </li>
         </ul>
         <div class="swiper-button-prev">
-          <a href="#" title="메뉴 더보기">메뉴 더보기</a>
+          <a  title="메뉴 더보기">메뉴 더보기</a>
         </div>
         <div class="swiper-button-next">
-          <a href="#" title="메뉴 더보기">메뉴 더보기</a>
+          <a  title="메뉴 더보기">메뉴 더보기</a>
         </div>
       </div>
 
@@ -199,13 +199,13 @@ export default function SearchResult({match}) {
                     </button>
           <div className="itemsort__drawer">
                         <ul className="itemsort__items">
-                        <li className={`itemsort__item ${orderBy == "RECENT_PRODUCT" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                        <li className={`itemsort__item ${orderBy == "RECENT_PRODUCT" ? "itemsort__item--active" : ""}`}><a  className="itemsort__item__link" onClick={()=>{
                             setOrderBy("RECENT_PRODUCT")
                         }}>최신순</a></li>
-                        <li className={`itemsort__item ${orderBy == "TOP_PRICE" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                        <li className={`itemsort__item ${orderBy == "TOP_PRICE" ? "itemsort__item--active" : ""}`}><a  className="itemsort__item__link" onClick={()=>{
                             setOrderBy("TOP_PRICE")
                         }}>높은 가격순</a></li>
-                        <li className={`itemsort__item ${orderBy == "DISCOUNTED_PRICE" ? "itemsort__item--active" : ""}`}><a href="#" className="itemsort__item__link" onClick={()=>{
+                        <li className={`itemsort__item ${orderBy == "DISCOUNTED_PRICE" ? "itemsort__item--active" : ""}`}><a  className="itemsort__item__link" onClick={()=>{
                             setOrderBy("DISCOUNTED_PRICE")
                         }}>낮은 가격순</a></li>
                         </ul>
@@ -242,8 +242,8 @@ export default function SearchResult({match}) {
           </button>
           <div className="itemsort__drawer">
             <ul className="itemsort__items">
-              <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-              <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된순</a></li>
+              <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">최신순</a></li>
+              <li className="itemsort__item"><a  className="itemsort__item__link">오래된순</a></li>
             </ul>
           </div>
         </div>      </div>
@@ -385,8 +385,8 @@ export default function SearchResult({match}) {
           </button>
           <div className="itemsort__drawer">
             <ul className="itemsort__items">
-              <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-              <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된순</a></li>
+              <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">최신순</a></li>
+              <li className="itemsort__item"><a  className="itemsort__item__link">오래된순</a></li>
             </ul>
           </div>
         </div>      </div>

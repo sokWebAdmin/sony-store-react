@@ -10,11 +10,16 @@ import { sampleApi } from "../../api/sample";
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/mypage.scss"
 
-export default function myPageMain() {
+//utils
+import { useHistory } from "react-router-dom";
+
+export default function MyPageMain() {
+
+    const history = useHistory();
 
     return (
         <>
-        <SEOHelmet title={"구매상담 이용약관 동의"} />
+        <SEOHelmet title={"마이페이지"} />
         <div className="contents mypage">
         <div className="my_wrap">
             <div className="my_head">
@@ -22,12 +27,12 @@ export default function myPageMain() {
                 <div className="my_user">
                 <div className="user_profile">
                     <p className="user_name"><span className="name">김소니</span>님 안녕하세요 :)</p>
-                    <a href="#" className="user_modify under_line">회원정보 수정</a>
+                    <a  className="user_modify under_line">회원정보 수정</a>
                 </div>
                 <div className="user_info">
                     <ul>
                     <li className="user_item grade">
-                        <a href="#" className="user_tabs">
+                        <a  className="user_tabs">
                         <span className="ico_txt"><span className="txt_arrow">회원등급</span></span>
                         <span className="val_txt">
                             <span className="val vvip">VVIP</span>{/* class: 별 등급 색상 지정 vvip / vip / family */}
@@ -35,19 +40,19 @@ export default function myPageMain() {
                         </a>
                     </li>
                     <li className="user_item mileage">
-                        <a href="#" className="user_tabs">
+                        <a  className="user_tabs">
                         <span className="ico_txt"><span className="txt_arrow">마일리지</span></span>
                         <span className="val_txt"><span className="val">153,248</span>M</span>
                         </a>
                     </li>
                     <li className="user_item coupon">
-                        <a href="#" className="user_tabs">
+                        <a  className="user_tabs">
                         <span className="ico_txt"><span className="txt_arrow">쿠폰</span></span>
                         <span className="val_txt"><span className="val">0</span> 장</span>
                         </a>
                     </li>
                     <li className="user_item like">
-                        <a href="#" className="user_tabs">
+                        <a  className="user_tabs">
                         <span className="ico_txt"><span className="txt_arrow">찜</span></span>
                         <span className="val_txt"><span className="val">0</span></span>
                         </a>
@@ -59,25 +64,25 @@ export default function myPageMain() {
             {/* s: 임직원/B2B 배너 버튼 */}
             <div className="cont_inner">
                 <div className="b2b_banner">
-                <a href="/event/refurbish" className="b2b_link refurbish">
+                <a  onClick={()=>{history.push('/event/refurbish')}} className="b2b_link refurbish">
                     <div className="txt_box">
                     <p className="tit">리퍼비시몰</p>
                     <p className="txt">소니 제품을 리퍼비시몰에서 더 저렴하게 만나보세요!</p>
                     </div>
                 </a>
-                <a href="/event/employee" className="b2b_link executives">
+                <a  onClick={()=>{history.push('/event/employee')}} className="b2b_link executives">
                     <div className="txt_box">
                     <p className="tit">임직원몰</p>
                     <p className="txt">맞춤형 임직원몰에서 특별한 혜택 누리세요!</p>
                     </div>
                 </a>
-                <a href="/event/refined" className="b2b_link refined_article">
+                <a  onClick={()=>{history.push('/event/refined')}} className="b2b_link refined_article">
                     <div className="txt_box">
                     <p className="tit">정품등록 특가몰</p>
                     <p className="txt">정품등록을 완료하신 고객님께 특별한 혜택을 드립니다!</p>
                     </div>
                 </a>
-                <a href="/event/asc" className="b2b_link asc">
+                <a  onClick={()=>{history.push('/event/asc')}} className="b2b_link asc">
                     <div className="txt_box">
                     <p className="tit">ASC몰</p>
                     <p className="txt">ASC 임직원을 위해 준비한 다양한 제품을 특별한 가격으로 만나보세요!</p>
@@ -91,7 +96,7 @@ export default function myPageMain() {
                 <div className="tit_head">
                     <h3 className="cont_tit">주문/배송 내역</h3>
                     <div className="btn_article right">
-                    <a href="#" className="button button_secondary button-s">자세히 보기</a>
+                    <a  className="button button_secondary button-s">자세히 보기</a>
                     </div>
                 </div>
                 <div className="history_inner">
@@ -100,38 +105,38 @@ export default function myPageMain() {
                         <li className="step_1 on">{/* 1건 이상 부터 class: on 추가 */}
                         <div className="ship_box">
                             <span className="ico_txt">입금대기</span>
-                            <a href="#" className="val_txt"><span className="val">4</span><span>건</span></a>
+                            <a  className="val_txt"><span className="val">4</span><span>건</span></a>
                         </div>
                         </li>
                         <li className="step_2">
                         <div className="ship_box">
                             <span className="ico_txt">결제완료</span>
-                            <a href="#" className="val_txt"><span className="val">0</span><span>건</span></a>
+                            <a  className="val_txt"><span className="val">0</span><span>건</span></a>
                         </div>
                         </li>
                         <li className="step_3">
                         <div className="ship_box">
                             <span className="ico_txt">배송준비</span>
-                            <a href="#" className="val_txt"><span className="val">0</span><span>건</span></a>
+                            <a  className="val_txt"><span className="val">0</span><span>건</span></a>
                         </div>
                         </li>
                         <li className="step_4 on">
                         <div className="ship_box">
                             <span className="ico_txt">배송중</span>
-                            <a href="#" className="val_txt"><span className="val">1</span><span>건</span></a>
+                            <a  className="val_txt"><span className="val">1</span><span>건</span></a>
                         </div>
                         </li>
                         <li className="step_5 on">
                         <div className="ship_box">
                             <span className="ico_txt">배송완료</span>
-                            <a href="#" className="val_txt"><span className="val">1</span><span>건</span></a>
+                            <a  className="val_txt"><span className="val">1</span><span>건</span></a>
                         </div>
                         </li>
                     </ul>
                     </div>
                     <div className="my_claim">
-                    <p className="txt cancel on">주문 취소 <a href="#" title="주문 취소 건"><strong className="val_txt"><span className="val">4</span> 건</strong></a></p>
-                    <p className="txt return">교환 반품 <a href="#" title="교환 반품 건"><strong className="val_txt"><span className="val">0</span> 건</strong></a></p>
+                    <p className="txt cancel on">주문 취소 <a  title="주문 취소 건"><strong className="val_txt"><span className="val">4</span> 건</strong></a></p>
+                    <p className="txt return">교환 반품 <a  title="교환 반품 건"><strong className="val_txt"><span className="val">0</span> 건</strong></a></p>
                     </div>
                 </div>
                 </div>
@@ -150,13 +155,13 @@ export default function myPageMain() {
                     <div className="date_box">
                         <ul className="date3_tab">
                         <li className="tabs on">
-                            <a href="#" className="date3_btn">3개월</a>
+                            <a  className="date3_btn">3개월</a>
                         </li>
                         <li className="tabs">
-                            <a href="#" className="date3_btn">6개월</a>
+                            <a  className="date3_btn">6개월</a>
                         </li>
                         <li className="tabs">
-                            <a href="#" className="date3_btn">1년</a>
+                            <a  className="date3_btn">1년</a>
                         </li>
                         </ul>
                         <div className="date_rang">
@@ -190,7 +195,7 @@ export default function myPageMain() {
                                 <p className="txt">주문 취소</p>
                                 </div>
                                 <div className="col_table_cell order_number">
-                                <a href="#" className="txt">20210512-663W24</a>
+                                <a  className="txt">20210512-663W24</a>
                                 </div>
                                 <div className="col_table_cell order_mileage down">
                                 <p className="txt">- 400</p>
@@ -207,7 +212,7 @@ export default function myPageMain() {
                                 <p className="txt">마일리지로 제품 구입</p>
                                 </div>
                                 <div className="col_table_cell order_number">
-                                <a href="#" className="txt">20210512-663W24</a>
+                                <a  className="txt">20210512-663W24</a>
                                 </div>
                                 <div className="col_table_cell order_mileage down">
                                 <p className="txt">- 800</p>
@@ -224,7 +229,7 @@ export default function myPageMain() {
                                 <p className="txt">주문 취소</p>
                                 </div>
                                 <div className="col_table_cell order_number">
-                                <a href="#" className="txt">20210512-663W24</a>
+                                <a  className="txt">20210512-663W24</a>
                                 </div>
                                 <div className="col_table_cell order_mileage up">
                                 <p className="txt">+ 800</p>
@@ -241,7 +246,7 @@ export default function myPageMain() {
                                 <p className="txt">주문 취소</p>
                                 </div>
                                 <div className="col_table_cell order_number">
-                                <a href="#" className="txt">20210512-663W24</a>
+                                <a  className="txt">20210512-663W24</a>
                                 </div>
                                 <div className="col_table_cell order_mileage up">
                                 <p className="txt">+ 2500</p>
@@ -258,7 +263,7 @@ export default function myPageMain() {
                                 <p className="txt">주문 취소</p>
                                 </div>
                                 <div className="col_table_cell order_number">
-                                <a href="#" className="txt">20210512-663W24</a>
+                                <a  className="txt">20210512-663W24</a>
                                 </div>
                                 <div className="col_table_cell order_mileage down">
                                 <p className="txt">- 3000</p>
@@ -275,7 +280,7 @@ export default function myPageMain() {
                                 <p className="txt">주문 취소</p>
                                 </div>
                                 <div className="col_table_cell order_number">
-                                <a href="#" className="txt">20210512-663W24</a>
+                                <a  className="txt">20210512-663W24</a>
                                 </div>
                                 <div className="col_table_cell order_mileage up">
                                 <p className="txt">- 800</p>
@@ -292,7 +297,7 @@ export default function myPageMain() {
                                 <p className="txt">주문 취소</p>
                                 </div>
                                 <div className="col_table_cell order_number">
-                                <a href="#" className="txt">20210512-663W24</a>
+                                <a  className="txt">20210512-663W24</a>
                                 </div>
                                 <div className="col_table_cell order_mileage up">
                                 <p className="txt">- 800</p>
@@ -309,7 +314,7 @@ export default function myPageMain() {
                                 <p className="txt">주문 취소</p>
                                 </div>
                                 <div className="col_table_cell order_number">
-                                <a href="#" className="txt">20210512-663W24</a>
+                                <a  className="txt">20210512-663W24</a>
                                 </div>
                                 <div className="col_table_cell order_mileage down">
                                 <p className="txt">- 400</p>
@@ -326,7 +331,7 @@ export default function myPageMain() {
                                 <p className="txt">주문 취소</p>
                                 </div>
                                 <div className="col_table_cell order_number">
-                                <a href="#" className="txt">20210512-663W24</a>
+                                <a  className="txt">20210512-663W24</a>
                                 </div>
                                 <div className="col_table_cell order_mileage down">
                                 <p className="txt">- 400</p>
@@ -343,7 +348,7 @@ export default function myPageMain() {
                                 <p className="txt">주문 취소</p>
                                 </div>
                                 <div className="col_table_cell order_number">
-                                <a href="#" className="txt">20210512-663W24</a>
+                                <a  className="txt">20210512-663W24</a>
                                 </div>
                                 <div className="col_table_cell order_mileage down">
                                 <p className="txt">- 400</p>
@@ -355,7 +360,7 @@ export default function myPageMain() {
                             </div>
                         </div>
                         <div className="btn_article">
-                            <a href="#" className="more_btn">더보기</a>
+                            <a  className="more_btn">더보기</a>
                         </div>
                         </div>
                         <div className="no_data on"> {/* 데이터가 없을 경우 class : on */}
@@ -432,7 +437,7 @@ export default function myPageMain() {
                         </div>
                         </div>
                         <div className="btn_article line">
-                        <a href="#" className="more_btn">더보기</a>
+                        <a  className="more_btn">더보기</a>
                         </div>
                     </div>
                     <div className="no_data on">{/* class : on 내역이 없을 경우 on */}
@@ -449,7 +454,7 @@ export default function myPageMain() {
                     </ul>
                     </div>
                     <div className="ico_box_link">
-                    <a href="#" className="box_link_inner ico_type1">
+                    <a  className="box_link_inner ico_type1">
                         <div className="txt_box">
                         <p className="tit">소니스토어의 쿠폰 보기</p>
                         <p className="txt">첫 구매 등 소니스토어의 다양한 쿠폰 혜택을 받으세요!</p>
@@ -590,7 +595,7 @@ export default function myPageMain() {
                         </ul>
                         </div>
                         <div className="btn_article line">
-                        <a href="#" className="more_btn">더보기</a>
+                        <a  className="more_btn">더보기</a>
                         </div>
                     </div>
                     <div className="no_data on">{/* class : on 내역이 없을 경우 on */}

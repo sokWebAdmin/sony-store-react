@@ -21,8 +21,8 @@ export default function pwSearch() {
     <p className="login__desc">아이디·비밀번호가 기억나지 않으신가요? <span>아래의 인증 방법 중 선택하여 인증해주세요.</span></p>
     <div className="login__search_box">
       <ul className="login__tab search_type">
-        <li><a href="#">아이디 찾기</a></li>
-        <li className="current"><a href="#">비밀번호 찾기</a></li>{/* 활성화 클래스 li 에 current */}
+        <li><a >아이디 찾기</a></li>
+        <li className="current"><a >비밀번호 찾기</a></li>{/* 활성화 클래스 li 에 current */}
       </ul>
       <div className="idsearch_way">
         <div className="radio_box">
@@ -38,13 +38,13 @@ export default function pwSearch() {
         <div className="result_cont tab1 on">
           <ul className="certify_box">
             <li>
-              <a href="#">
+              <a >
                 <span className="ico_phone_certify" />
                 <p>휴대폰 번호 인증하기<span>(본인인증으로 찾기)</span></p>
               </a>
             </li>
             <li>
-              <a href="#">
+              <a >
                 <span className="ico_ipn_certify" />
                 <p>아이핀 인증하기<span>(간편 회원 가입정보로 찾기)</span></p>
               </a>

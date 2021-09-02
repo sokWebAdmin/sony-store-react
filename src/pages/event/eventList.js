@@ -69,7 +69,7 @@ export default function eventList() {
               <p className="txt">한 층 더 업그레이드 된 사운드와 조명으로<br /> 공간을 밝히는 스피커</p>
               <p className="event_duration">2021.05.27 ~ 2021.06.13</p>
               <div className="btn_article">
-                <a href="#" className="event_link">자세히 보기</a>
+                <a  className="event_link">자세히 보기</a>
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@ export default function eventList() {
               <p className="txt">한 층 더 업그레이드 된 사운드와 조명으로<br /> 공간을 밝히는 스피커</p>
               <p className="event_duration">2021.05.27 ~ 2021.06.13</p>
               <div className="btn_article">
-                <a href="#" className="event_link">자세히 보기</a>
+                <a  className="event_link">자세히 보기</a>
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@ export default function eventList() {
               <p className="txt">한 층 더 업그레이드 된 사운드와 조명으로<br /> 공간을 밝히는 스피커</p>
               <p className="event_duration">2021.05.27 ~ 2021.06.13</p>
               <div className="btn_article">
-                <a href="#" className="event_link">자세히 보기</a>
+                <a  className="event_link">자세히 보기</a>
               </div>
             </div>
           </div>
@@ -110,12 +110,12 @@ export default function eventList() {
     <div className="event_zone">
       <div className="tab_ui scroll category_evnet" data-scroll-view={6} data-tab-scroll-view={5}>{/* 스크롤탭 : class: scroll / data-scroll-view 보여지는 탭 수 */}
         <ul>
-          <li className="tabs on"><a href="#" className="btn">전체</a></li>
-          <li className="tabs"><a href="#" className="btn">소니스토어 단독</a></li>
-          <li className="tabs"><a href="#" className="btn">혜택존</a></li>
-          <li className="tabs"><a href="#" className="btn">예약판매</a></li>
-          <li className="tabs"><a href="#" className="btn">정품등록 이벤트</a></li>
-          <li className="tabs"><a href="#" className="btn">LIVE ON</a></li>
+          <li className="tabs on"><a  className="btn">전체</a></li>
+          <li className="tabs"><a  className="btn">소니스토어 단독</a></li>
+          <li className="tabs"><a  className="btn">혜택존</a></li>
+          <li className="tabs"><a  className="btn">예약판매</a></li>
+          <li className="tabs"><a  className="btn">정품등록 이벤트</a></li>
+          <li className="tabs"><a  className="btn">LIVE ON</a></li>
         </ul>
       </div>
       <div className="tab_ui_info">
@@ -130,8 +130,8 @@ export default function eventList() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">최신순</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">오래된 순</a></li>
                   </ul>
                 </div>
               </div>
@@ -140,68 +140,68 @@ export default function eventList() {
             <div className="item_list">
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
             </div>
@@ -222,8 +222,8 @@ export default function eventList() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">최신순</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">오래된 순</a></li>
                   </ul>
                 </div>
               </div>
@@ -247,8 +247,8 @@ export default function eventList() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">최신순</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">오래된 순</a></li>
                   </ul>
                 </div>
               </div>
@@ -257,46 +257,46 @@ export default function eventList() {
             <div className="item_list">
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
             </div>
@@ -317,8 +317,8 @@ export default function eventList() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">최신순</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">오래된 순</a></li>
                   </ul>
                 </div>
               </div>
@@ -327,46 +327,46 @@ export default function eventList() {
             <div className="item_list">
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
             </div>
@@ -387,8 +387,8 @@ export default function eventList() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">최신순</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">오래된 순</a></li>
                   </ul>
                 </div>
               </div>
@@ -397,46 +397,46 @@ export default function eventList() {
             <div className="item_list">
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
             </div>
@@ -457,8 +457,8 @@ export default function eventList() {
                 </button>
                 <div className="itemsort__drawer">
                   <ul className="itemsort__items">
-                    <li className="itemsort__item itemsort__item--active"><a href="#" className="itemsort__item__link">최신순</a></li>
-                    <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
+                    <li className="itemsort__item itemsort__item--active"><a  className="itemsort__item__link">최신순</a></li>
+                    <li className="itemsort__item"><a  className="itemsort__item__link">오래된 순</a></li>
                   </ul>
                 </div>
               </div>
@@ -467,46 +467,46 @@ export default function eventList() {
             <div className="item_list">
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
               <div className="item_row">
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
                 <div className="event_item">
-                  <a href="#" className="item">
+                  <a  className="item">
                     <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
                     <div className="event_desc">
                       <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
                       <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
                     </div>
                   </a>
-                  <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
+                  <a  className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
                 </div>
               </div>
             </div>
@@ -517,7 +517,7 @@ export default function eventList() {
           </div>
         </div>{/* e: tab_ui_inner */}
         <div className="btn_article comm_more line">{/* 목록이 없을 경우 숨김 처리 */}
-          <a href="#" className="more_btn" title="기획전 더보기">더보기</a>
+          <a  className="more_btn" title="기획전 더보기">더보기</a>
         </div>
       </div>
     </div>

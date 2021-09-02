@@ -34,7 +34,7 @@ export default function InsurePop({ setPop }) {
               </div>
             </div>
             <button
-              href="#"
+              
               className="layer_close close"
               title="팝업창 닫기"
               onClick={() => {

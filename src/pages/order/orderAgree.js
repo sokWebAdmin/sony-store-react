@@ -593,7 +593,7 @@ export default function orderAgree() {
             </div>
           </div>
         </div>
-        <button href="#" className="layer_close close" title="팝업창 닫기">
+        <button  className="layer_close close" title="팝업창 닫기">
           <span>팝업창 닫기</span>
         </button>
       </div>
@@ -669,7 +669,7 @@ export default function orderAgree() {
             </div>
           </div>
         </div>
-        <button href="#" className="layer_close close" title="팝업창 닫기">
+        <button  className="layer_close close" title="팝업창 닫기">
           <span>팝업창 닫기</span>
         </button>
       </div>

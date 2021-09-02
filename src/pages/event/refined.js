@@ -31,13 +31,13 @@ export default function asc() {
           <div className="product">
             <span className="badge_txt">20,000 <span className="unit">원</span> OFF</span>
             <div className="product_pic">
-              <a href="#" className="product_link">
+              <a  className="product_link">
                 <img src="../../images/_tmp/item640x640_01.png" alt="" />
               </a>
               <div className="sold_out"><span>SOLD OUT</span></div>
             </div>
             <div className="product_name">
-              <a href="#" className="product_name_title">SRS-XP500 (1+1)</a>
+              <a  className="product_name_title">SRS-XP500 (1+1)</a>
               <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                 1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                 1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
@@ -54,12 +54,12 @@ export default function asc() {
           <div className="product">
             <div className="product_pic">
               <span className="badge_txt">20,000 <span className="unit">원</span> OFF</span>
-              <a href="#" className="product_link">
+              <a  className="product_link">
                 <img src="../../images/_tmp/item640x640_01.png" alt="" />
               </a>
             </div>
             <div className="product_name">
-              <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+              <a  className="product_name_title">WH-1000XM4/SME</a>
               <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                 1인</p>
               <div className="product_name_price">
@@ -75,12 +75,12 @@ export default function asc() {
           <div className="product">
             <div className="product_pic">
               <span className="badge_txt">20,000 <span className="unit">원</span> OFF</span>
-              <a href="#" className="product_link">
+              <a  className="product_link">
                 <img src="../../images/_tmp/item640x640_01.png" alt="" />
               </a>
             </div>
             <div className="product_name">
-              <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+              <a  className="product_name_title">WH-1000XM4/SME</a>
               <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                 1인치 핸디캠</p>
               <div className="product_name_price">
@@ -96,12 +96,12 @@ export default function asc() {
           <div className="product">
             <span className="badge_txt">20,000 <span className="unit">원</span> OFF</span>
             <div className="product_pic">
-              <a href="#" className="product_link">
+              <a  className="product_link">
                 <img src="../../images/_tmp/item640x640_01.png" alt="" />
               </a>
             </div>
             <div className="product_name">
-              <a href="#" className="product_name_title">WH-1000XM4/SME</a>
+              <a  className="product_name_title">WH-1000XM4/SME</a>
               <p className="product_name_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                 1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
                 1인치 핸디캠4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급

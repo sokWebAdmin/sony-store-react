@@ -10,7 +10,12 @@ import { sampleApi } from "../../api/sample";
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/support.scss"
 
+//utils
+import { useHistory } from "react-router-dom";
+
+
 export default function Notice() {
+  const history = useHistory();
 
     return (
         <>
@@ -26,10 +31,10 @@ export default function Notice() {
       <div className="tab_link_zone">
         <ul className="tab_link_inner">
           <li className="tabs">
-            <a href="/faq" className="tab_btn" title="FAQ 보기"><span className="tit">FAQ</span></a>
+            <a  onClick={()=>{history.push('/faq')}} className="tab_btn" title="FAQ 보기"><span className="tit">FAQ</span></a>
           </li>
           <li className="tabs on">
-            <a href="/notice-list" className="tab_btn" title="공지사항 보기"><span className="tit">공지사항</span></a>
+            <a  onClick={()=>{history.push('/notice-list')}} className="tab_btn" title="공지사항 보기"><span className="tit">공지사항</span></a>
           </li>
         </ul>
       </div>
@@ -64,7 +69,7 @@ export default function Notice() {
             <p className="txt">감사합니다.</p>
           </div>
           <div className="btn_article">
-            <a href="/notice-list" className="button button_positive" type="button">목록</a>
+            <a  onClick={()=>{history.push('/notice-list')}} className="button button_positive" type="button">목록</a>
           </div>
         </div>
       </div>
@@ -114,7 +119,7 @@ export default function Notice() {
             </div>
           </div>
           <div className="btn_article">
-            <a href="/notice-list" className="button button_positive" type="button">목록</a>
+            <a  onClick={()=>{history.push('/notice-list')}} className="button button_positive" type="button">목록</a>
           </div>
         </div>
       </div> */}
