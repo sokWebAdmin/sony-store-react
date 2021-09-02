@@ -132,12 +132,6 @@ export default function StoreInfo() {
                       </ul>
                       <p className="box_desc">(일요일, 공휴일 휴무)</p>
                     </div>
-                    <div className="swiper-slide box search">
-                      <a href="#">
-                        <i className="icon" />
-                        <p className="box_desc">AS 센터 찾기</p>
-                      </a>
-                    </div>
                   </div>
                 </div>
               </div>
