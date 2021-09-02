@@ -29,6 +29,7 @@ export default function Search({ setSearchOpen }) {
               <button className="btn search__btn__submit" onClick={()=>{
                 if(keyword){
                   history.push("/search-result/"+keyword)
+                  setSearchOpen(false)
                 } else{
                   alert("검색어를 입력해주세요.")
                 }

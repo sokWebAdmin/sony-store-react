@@ -61,9 +61,12 @@ export default function Login() {
       const response = await loginApi(email, password);
       console.log(response)
       if(response.status != 200) {
-        // alert(response.data.message);
+        if(response.data){
+          alert(response.data.message);
+        } else{
+          alert("알 수 없는 에러가 발생하였습니다.");
+        }
         return;
-
       }else if(response.status == 200){
         const tokenValue = response.data.accessToken;
         
@@ -155,8 +158,8 @@ export default function Login() {
                     <label htmlFor="chk01">이메일 아이디 저장</label>
                   </div>
                   <ul className="user_menu">
-                    <li><a href="/member/pw-search">아이디 · 비밀번호 찾기</a></li>
-                    <li><a href="/member/join">회원가입</a></li>
+                    <li><a href="/member/pw-search//">아이디 · 비밀번호 찾기</a></li>
+                    <li><a href="/member/join//">회원가입</a></li>
                   </ul>
                 </div>
                 <div className="txt_or">
@@ -204,7 +207,7 @@ export default function Login() {
                   <strong className="join_title">아직 소니코리아 회원이 아니세요?</strong>
                   <p className="join_desc">회원가입을 통해 소니스토어에서 <span className="block">다양한 서비스를 이용하실 수 있습니다.</span></p>
                   <div className="btn_box">
-                    <a href="/member/join" className="btn btn_default">회원가입</a>
+                    <a href="/member/join//" className="btn btn_default">회원가입</a>
                   </div>
                 </div>
               </div>

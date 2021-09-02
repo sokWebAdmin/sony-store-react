@@ -186,19 +186,15 @@ export default function JoinStep() {
      * temp
      */
     if(response.status == 200){
+      console.log(response)
       //발송성공
       setAuthSent(true);
     } else{
       alert(response.data.message);
     }
-
-    setAuthSent(true);
   }
 
   const _verifySMS = async(phoneNum, code) => {
-    /**
-     * temp
-     */
     const response = await verifySMS(phoneNum, code, "JOIN");
     if(response.status == 200){
       //인증성공
@@ -206,7 +202,6 @@ export default function JoinStep() {
       } else{
       alert(response.data.message);
     }
-    setAuthCheck(true);
   }
 
   useEffect(()=>{

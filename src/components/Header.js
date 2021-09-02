@@ -29,7 +29,7 @@ export default function Header() {
   const [sideBarOpen, setMobileSideBarOpen] = useState(false);
   const [isLoggedIn, setLoggedIn] = useState(false);
 
-  const {shopByToken} = useContext(GlobalContext)
+  const {shopByToken, onChangeGlobal} = useContext(GlobalContext)
 
     useEffect(()=>{
       console.log("token Changed")
@@ -72,6 +72,7 @@ export default function Header() {
                 <a href="/member/login" className="member__msg member__msg__login">로그인이<br />필요합니다</a>
                 <button type="button" className="btn btn__login" onClick={()=>{
                   history.push("/member/login")
+                  setInfoOpen(false);
                 }}>로그인</button>
                 <div className="member__menu">
                 <ul>
@@ -100,6 +101,8 @@ export default function Header() {
                     </ul>
                     </div>
                     <button type="button" className="btn btn__logout" onClick={()=>{
+                      setInfoOpen(false)
+                      onChangeGlobal({shopByToken:""})
                       setLoggedIn(false)
                     }}>로그아웃</button>
                 </div>
