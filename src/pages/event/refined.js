@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -12,9 +12,14 @@ import '../../assets/scss/event.scss';
 import { getEventByEventNo } from '../../api/events';
 
 export default function Asc() {
+  const [products, setProducts] = useState([]);
   useEffect(async () => {
-    const res = await getEventByEventNo(444);
-    console.log(res);
+    const { data } = await getEventByEventNo(444);
+
+    const products = data.section.flatMap(({ products }) => products).flat();
+
+    
+    setProducts(products)
   }, []);
 
   return (
