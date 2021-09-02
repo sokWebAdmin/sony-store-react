@@ -10,8 +10,11 @@ import { sampleApi } from "../../api/sample";
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/support.scss"
 
+import { useHistory } from "react-router-dom";
+
 export default function Notice() {
 
+  
     return (
         <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
