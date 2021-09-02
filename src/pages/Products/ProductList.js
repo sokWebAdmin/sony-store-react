@@ -14,6 +14,7 @@ import GlobalContext from '../../context/global.context';
 
 //component
 import Product from '../../components/Product';
+import { Link } from 'react-router-dom';
 
 //utils
 import { useHistory } from "react-router-dom";
@@ -91,7 +92,7 @@ export default function Products({match}) {
                             <>
                                 <li className="swiper-slide all category__header__menu--active"><a ><span>전체보기</span></a></li>
                                 <li className="swiper-slide category__header__menu__camera0">
-                                <a  onClick={()=>{history.push('/products/camera/lens')}}><span>렌즈교환식 카메라</span></a>
+                                    <Link to="/products/camera/lens"><span>렌즈교환식 카메라</span></Link>
                                 </li>
                                 <li className="swiper-slide category__header__menu__camera1">
                                 <a  onClick={()=>{history.push('/products/camera/compact')}}><span>컴팩트 카메라</span></a>

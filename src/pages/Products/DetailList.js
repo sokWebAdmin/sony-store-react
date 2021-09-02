@@ -29,6 +29,7 @@ import Product from '../../components/Product';
 //img
 import categoryLeft from '../../assets/images/category/btn_category_left.svg';
 import categoryRight from '../../assets/images/category/btn_category_right.svg';
+import { Link } from 'react-router-dom';
 
 //utils
 import { useHistory } from "react-router-dom";
@@ -164,8 +165,8 @@ export default function Products({match}) {
                     {
                         detail_type == "lens" &&
                          <div className="category__header__links">
-                            <a  className="category__header__link">제품 비교</a>
-                            <a  className="category__header__link">연장서비스플랜 ESP 보기</a>
+                             <a href="#" className="category__header__link">제품 비교</a>
+                             <Link to="/esp" className="category__header__link">연장서비스플랜 ESP 보기</Link>
                         </div>
                     }
                     <div className="category__header__menu swiper-container">

@@ -183,8 +183,9 @@
     position:relative !important;
     width:calc((100% - 24px)/2) !important;
     margin-left:24px !important;
-    &:first-child{
+    &:nth-child(2n + 1){
       margin-left:0 !important;
+      clear: both;
     }
     .item{
       display:block !important;
