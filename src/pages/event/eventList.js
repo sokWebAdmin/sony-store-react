@@ -1,10 +1,10 @@
-import { React } from 'react';
+import React, { useEffect, useState } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import { sampleApi } from '../../api/sample';
+import { getDisplayEvents, getDisplayEventsEventNo } from '../../api/display';
 
 //lib
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -20,9 +20,32 @@ import 'swiper/swiper.scss';
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/event.scss';
 
-export default function eventList() {
+// TODO: 기획전 리스트 api 연결까지 진행
 
+export default function EventList() {
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
+
+  const [events, setEvents] = useState([]);
+
+  const fetchDisplayEvents = async () => {
+    const { data } = await getDisplayEvents();
+    setEvents(data);
+  }
+
+  useEffect(() => {
+    fetchDisplayEvents();
+  }, []);
+
+  const formatYmdt = (ymdt) => new Date(ymdt).toISOString().slice(0, 10);
+
+  const onClickEventDetail = async (eventNo) => {
+    const test = await getDisplayEventsEventNo(eventNo, {});
+    console.log(test.data);
+  };
+
+  const openShareEventLayer = () => {
+    alert('TODO: share event layer')
+  }
 
   return (
     <>
@@ -74,34 +97,6 @@ export default function eventList() {
                     </div>
                   </div>
                 </SwiperSlide>
-                <SwiperSlide className="swiper-slide">
-                  <div className="slider_box"
-                       style={{ background: `url('/images/_tmp/pc_eventMain_img01.png') center 80% / cover no-repeat` }}>
-                    <img className="bg_img" src="/images/_tmp/pc_eventMain_img01.png" alt="" />{/* 슬라이드 배경 */}
-                    <div className="desc_box">
-                      <p className="tit">SRS-XP500<br /> 런칭 기념 이벤트</p>
-                      <p className="txt">한 층 더 업그레이드 된 사운드와 조명으로<br /> 공간을 밝히는 스피커</p>
-                      <p className="event_duration">2021.05.27 ~ 2021.06.13</p>
-                      <div className="btn_article">
-                        <a href="#" className="event_link">자세히 보기</a>
-                      </div>
-                    </div>
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide className="swiper-slide">
-                  <div className="slider_box"
-                       style={{ background: `url('/images/_tmp/pc_eventMain_img01.png') center 80% / cover no-repeat` }}>
-                    <img className="bg_img" src="/images/_tmp/pc_eventMain_img01.png" alt="" />{/* 슬라이드 배경 */}
-                    <div className="desc_box">
-                      <p className="tit">SRS-XP500<br /> 런칭 기념 이벤트</p>
-                      <p className="txt">한 층 더 업그레이드 된 사운드와 조명으로<br /> 공간을 밝히는 스피커</p>
-                      <p className="event_duration">2021.05.27 ~ 2021.06.13</p>
-                      <div className="btn_article">
-                        <a href="#" className="event_link">자세히 보기</a>
-                      </div>
-                    </div>
-                  </div>
-                </SwiperSlide>
               </Swiper>
               <div className="arrow_btn">
                 <a className="arrow swiper-button-prev"><span className="ico_btn">이전</span></a>
@@ -122,7 +117,7 @@ export default function eventList() {
                 </ul>
               </div>
               <div className="tab_ui_info">
-                <div className="tab_ui_inner view">{/* Tab 1 : 전체 */}
+                <div className="tab_ui_inner view">
                   <div className="event_list">
                     <div className="category_head">
                       <p className="tit">전체</p>
@@ -145,400 +140,28 @@ export default function eventList() {
                     </div>
                     <div className="item_list">
                       <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
+                        {events?.map(({eventNo, label, pcImageUrl, startYmdt, endYmdt}) => {
+                          return (
+                            <div className="event_item" key={eventNo} onClick={() => onClickEventDetail(eventNo)}>
+                              <a href="javascript:" className="item">
+                                <div className="img"><img src={pcImageUrl} alt={label} /></div>
+                                <div className="event_desc">
+                                  <p className="tit">{label}</p>
+                                  <p className="event_duration">{formatYmdt(startYmdt)} ~ {formatYmdt(endYmdt)}</p>
+                                </div>
+                              </a>
+                              <a href="#" className="event_share popup_comm_btn" onClick={() => openShareEventLayer()}>공유하기</a>
                             </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                      </div>
-                      <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                      </div>
-                      <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
+                          )
+                        })}
                       </div>
                     </div>
                   </div>
                   {/* 등록된 이벤트가 없을 경우 */}
-                  <div className="no_data" style={{ display: 'none' }}>
+                  {events.length === 0 && (<div className="no_data">
                     <span className="ico_no_data">등록된 이벤트가 없습니다.</span>
-                  </div>
+                  </div>)}
                 </div>
-                {/* // tab_ui_inner */}
-                <div className="tab_ui_inner">{/* TAB 2 : 소니스토어 단독 */}
-                  <div className="event_list" style={{ display: 'none' }}>
-                    <div className="category_head">
-                      <p className="tit">소니스토어 단독</p>
-                      <div className="itemsort" aria-label="소니스토어 단독 정렬">
-                        <button className="itemsort__button">
-                          <span className="itemsort__button__label sr-only">정렬기준:</span>
-                          <span className="itemsort__button__selected">최신순</span>
-                        </button>
-                        <div className="itemsort__drawer">
-                          <ul className="itemsort__items">
-                            <li className="itemsort__item itemsort__item--active"><a href="#"
-                                                                                     className="itemsort__item__link">최신순</a>
-                            </li>
-                            <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <a href="../../html/evnet/endList.html" className="button button_positive button-s link_btn">종료된
-                        기획전</a>
-                    </div>
-                    <div className="item_list">{/* 기획전 목록 */}
-                    </div>
-                  </div>
-                  <div className="no_data">{/* 등록된 이벤트가 없을 경우 */}
-                    <span className="ico_no_data">등록된 이벤트가 없습니다.</span>
-                  </div>
-                </div>
-                <div className="tab_ui_inner">{/* TAB 3 : 혜택존 */}
-                  <div className="event_list">
-                    <div className="category_head">
-                      <p className="tit">혜택존</p>
-                      <div className="itemsort" aria-label="혜택 정렬">
-                        <button className="itemsort__button">
-                          <span className="itemsort__button__label sr-only">정렬기준:</span>
-                          <span className="itemsort__button__selected">최신순</span>
-                        </button>
-                        <div className="itemsort__drawer">
-                          <ul className="itemsort__items">
-                            <li className="itemsort__item itemsort__item--active"><a href="#"
-                                                                                     className="itemsort__item__link">최신순</a>
-                            </li>
-                            <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <a href="../../html/evnet/endList.html" className="button button_positive button-s link_btn">종료된
-                        기획전</a>
-                    </div>
-                    <div className="item_list">
-                      <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                      </div>
-                      <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* 등록된 이벤트가 없을 경우 */}
-                  <div className="no_data" style={{ display: 'none' }}>
-                    <span className="ico_no_data">등록된 이벤트가 없습니다.</span>
-                  </div>
-                </div>
-                <div className="tab_ui_inner">{/* TAB 4 : 예약판매 */}
-                  <div className="event_list">
-                    <div className="category_head">
-                      <p className="tit">예약판매</p>
-                      <div className="itemsort" aria-label="예약판매 정렬">
-                        <button className="itemsort__button">
-                          <span className="itemsort__button__label sr-only">정렬기준:</span>
-                          <span className="itemsort__button__selected">최신순</span>
-                        </button>
-                        <div className="itemsort__drawer">
-                          <ul className="itemsort__items">
-                            <li className="itemsort__item itemsort__item--active"><a href="#"
-                                                                                     className="itemsort__item__link">최신순</a>
-                            </li>
-                            <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <a href="../../html/evnet/endList.html" className="button button_positive button-s link_btn">종료된
-                        기획전</a>
-                    </div>
-                    <div className="item_list">
-                      <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                      </div>
-                      <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* 등록된 이벤트가 없을 경우 */}
-                  <div className="no_data" style={{ display: 'none' }}>
-                    <span className="ico_no_data">등록된 이벤트가 없습니다.</span>
-                  </div>
-                </div>
-                <div className="tab_ui_inner">{/* TAB 5 : 정품등록 이벤트 */}
-                  <div className="event_list">
-                    <div className="category_head">
-                      <p className="tit">정품등록 이벤트</p>
-                      <div className="itemsort" aria-label="정품등록 이벤트 정렬">
-                        <button className="itemsort__button">
-                          <span className="itemsort__button__label sr-only">정렬기준:</span>
-                          <span className="itemsort__button__selected">최신순</span>
-                        </button>
-                        <div className="itemsort__drawer">
-                          <ul className="itemsort__items">
-                            <li className="itemsort__item itemsort__item--active"><a href="#"
-                                                                                     className="itemsort__item__link">최신순</a>
-                            </li>
-                            <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <a href="../../html/evnet/endList.html" className="button button_positive button-s link_btn">종료된
-                        기획전</a>
-                    </div>
-                    <div className="item_list">
-                      <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                      </div>
-                      <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* 등록된 이벤트가 없을 경우 */}
-                  <div className="no_data" style={{ display: 'none' }}>
-                    <span className="ico_no_data">등록된 이벤트가 없습니다.</span>
-                  </div>
-                </div>
-                <div className="tab_ui_inner">{/* TAB 6 : LIVE ON */}
-                  <div className="event_list">
-                    <div className="category_head">
-                      <p className="tit">LIVE ON</p>
-                      <div className="itemsort" aria-label="LIVE ON 정렬">
-                        <button className="itemsort__button">
-                          <span className="itemsort__button__label sr-only">정렬기준:</span>
-                          <span className="itemsort__button__selected">최신순</span>
-                        </button>
-                        <div className="itemsort__drawer">
-                          <ul className="itemsort__items">
-                            <li className="itemsort__item itemsort__item--active"><a href="#"
-                                                                                     className="itemsort__item__link">최신순</a>
-                            </li>
-                            <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <a href="../../html/evnet/endList.html" className="button button_positive button-s link_btn">종료된
-                        기획전</a>
-                    </div>
-                    <div className="item_list">
-                      <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                      </div>
-                      <div className="item_row">
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_01.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                        <div className="event_item">
-                          <a href="#" className="item">
-                            <div className="img"><img src="/images/_tmp/tmp_event_list_02.png" alt="" /></div>
-                            <div className="event_desc">
-                              <p className="tit">공간을 밝히는 스피커 SRS-XP500<br />런칭 이벤트</p>
-                              <p className="event_duration">2021.06.01 ~ 2021.06.20</p>
-                            </div>
-                          </a>
-                          <a href="#" className="event_share popup_comm_btn" data-popup-name="pop_share">공유하기</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* 등록된 이벤트가 없을 경우 */}
-                  <div className="no_data" style={{ display: 'none' }}>
-                    <span className="ico_no_data">등록된 이벤트가 없습니다.</span>
-                  </div>
-                </div>
-                {/* e: tab_ui_inner */}
                 <div className="btn_article comm_more line">{/* 목록이 없을 경우 숨김 처리 */}
                   <a href="#" className="more_btn" title="기획전 더보기">더보기</a>
                 </div>
