@@ -72,6 +72,7 @@ import { sampleApi } from "./api/sample";
 //검색
 import SearchResult from "./pages/footer/searchResult"
 import EspMain from './pages/esp/EspMain';
+import EspList from './pages/esp/EspList';
 
 const App = (props) => {
   let location = useLocation();
@@ -122,6 +123,7 @@ const App = (props) => {
 
                   {/* esp */}
                   <Route exact path="/esp" component={EspMain} />
+                  <Route exact path="/esp/list" component={EspList} />
 
                   {/* 고객지원  */}
                   <Route exact path="/agreement" component={Agreement} />

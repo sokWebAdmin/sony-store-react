@@ -23,6 +23,8 @@ import { getCategoryList } from '../../api/category';
 import { getProductListByCategoryNo, getProductSearch } from '../../api/product';
 import EspProduct from '../../components/EspProduct';
 
+// TODO ESP 는 카테고리라고 이해했고, 카테고리 가져온 후 화면 구성하고, 해당 카테고리에 포함된 상품 리스트 호출하는 식으로 개발했습니다.
+// TODO 제가 이해한 부분이 맞는지는 확인해봐야 합니다.
 
 export default function EspMain() {
 
@@ -91,7 +93,6 @@ export default function EspMain() {
     }
 
     const _initProduct = async () => {
-        console.log('_initProduct', focusCategoryNo);
         const data = await _getEspProducts(1);
 
         setProduct(data);
