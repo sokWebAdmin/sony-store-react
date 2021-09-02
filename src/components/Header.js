@@ -29,7 +29,7 @@ export default function Header() {
   const [sideBarOpen, setMobileSideBarOpen] = useState(false);
   const [isLoggedIn, setLoggedIn] = useState(false);
 
-  const {shopByToken, onChangeGlobal} = useContext(GlobalContext)
+  const {shopByToken, onChangeGlobal, profile} = useContext(GlobalContext)
 
     useEffect(()=>{
       console.log("token Changed")
@@ -88,11 +88,11 @@ export default function Header() {
             
             {/* 회원/로그인 */}
             {
-              isLoggedIn === true &&
+              isLoggedIn === true && profile != undefined &&
               <>
               <div className={`member ${isInfoOpen && "member--visible"}`}>
                 <div className="member__inner">
-                    <p className="member__msg">박소니님<br />안녕하세요!</p>
+                    <p className="member__msg">{profile.memberName}님<br />안녕하세요!</p>
                     <div className="member__menu">
                     <ul>
                         <li className="member__menu__mypage"><a href="/my-page">마이페이지</a></li>

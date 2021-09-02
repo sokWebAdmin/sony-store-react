@@ -5,6 +5,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //api
 import {loginApi} from "../../api/auth";
+import {getProfile} from "../../api/profile";
 
 //css
 import "../../assets/scss/contents.scss"
@@ -64,12 +65,13 @@ export default function Login() {
         if(response.data){
           alert(response.data.message);
         } else{
-          alert("알 수 없는 에러가 발생하였습니다.");
+          alert("아이디/비밀번호를 확인해주세요.");
         }
         return;
       }else if(response.status == 200){
         const tokenValue = response.data.accessToken;
         
+        await _getProfile(tokenValue);
         await Cookies.set("shopByToken", tokenValue);
       
         if(saveEmail === true){
@@ -77,9 +79,15 @@ export default function Login() {
         }else{
           Cookies.remove("sony_email");
         }
-
-        onChangeGlobal({shopByToken: tokenValue});
       }
+    }
+  }
+
+  const _getProfile = async(token) => {
+    const response = await getProfile(token);
+    if(response.status == 200){
+      console.log(response)
+      onChangeGlobal({shopByToken: token, profile: response.data})
     }
   }
 

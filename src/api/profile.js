@@ -32,3 +32,7 @@ export const openIdAuth = (token, type) => {
   return request("oauth/openid", "get", {}, "provider="+type+"&openAccessToken="+token, null);
 };
 
+export const getProfile = (token) => {
+  return request("profile", "get", {accessToken: token}, null, null);
+};
+
