@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import { getBoardConfiguration, getBoards } from "../api/board";
+import { getBoardConfiguration, getBoards } from "../api/manage";
 
 const defaultData = {
   config: {

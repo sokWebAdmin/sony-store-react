@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import { getDisplayEvents, getDisplayEventsEventNo } from '../../api/display';
+import { getDisplayEvents, getEventByEventNo } from '../../api/display';
 
 //lib
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -39,7 +39,7 @@ export default function EventList() {
   const formatYmdt = (ymdt) => new Date(ymdt).toISOString().slice(0, 10);
 
   const onClickEventDetail = async (eventNo) => {
-    const test = await getDisplayEventsEventNo(eventNo, {});
+    const test = await getEventByEventNo(eventNo, {});
     console.log(test.data);
   };
 

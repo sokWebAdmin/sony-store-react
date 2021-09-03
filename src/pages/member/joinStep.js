@@ -5,7 +5,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //api
 import {registerApi} from '../../api/sony/member';
-import {sendSMS, verifySMS} from '../../api/util';
+import {sendSMS, verifySMS} from '../../api/auth';
 
 //css
 import "../../assets/scss/contents.scss"

@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import { useBoardState } from "../../../../context/board.context";
-import { getBoardByArticleId } from '../../../../api/board';
+import { getBoardByArticleId } from '../../../../api/manage';
 
 
 export default function FaqItem() {

@@ -9,7 +9,7 @@ import SEOHelmet from '../../../../components/SEOHelmet';
 //css
 import "../../../../assets/scss/contents.scss";
 import "../../../../assets/scss/support.scss"
-import { getBoardByArticleId } from '../../../../api/board';
+import { getBoardByArticleId } from '../../../../api/manage';
 import { useBoardState } from '../../../../context/board.context';
 import { Link } from 'react-router-dom';
 import Tabs from '../tabs';

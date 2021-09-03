@@ -4,12 +4,11 @@ import { React, useEffect, useState } from 'react';
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import { sampleApi } from '../../api/sample';
 
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/event.scss';
-import { getEventByEventNo } from '../../api/events';
+import { getEventByEventNo } from '../../api/display';
 
 export default function Asc() {
   const [products, setProducts] = useState([]);

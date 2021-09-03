@@ -19,7 +19,7 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import "swiper/swiper.scss"
-import { getCategoryList } from '../../api/category';
+import { getCategoryList } from '../../api/display';
 import { getProductListByCategoryNo, getProductSearch } from '../../api/product';
 import EspProduct from '../../components/EspProduct';
 

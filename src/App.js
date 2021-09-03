@@ -67,7 +67,6 @@ import terms from "./pages/footer/terms"
 import sitemap from "./pages/footer/sitemap"
 
 //api
-import { sampleApi } from "./api/sample";
 
 //검색
 import SearchResult from "./pages/footer/searchResult"

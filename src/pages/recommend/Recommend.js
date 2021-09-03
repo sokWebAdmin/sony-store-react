@@ -5,7 +5,7 @@ import { React ,useState, useEffect, useContext, useRef } from 'react';
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import { sampleApi } from "../../api/sample";
+
 
 //css
 import "../../assets/scss/contents.scss"

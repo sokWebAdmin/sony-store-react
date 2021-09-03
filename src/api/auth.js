@@ -1,5 +1,6 @@
 import request from "./request";
 
+// profile > authentication
 export const loginApi = (memberId, password) => {
   return request("oauth/token", "post", null, null, {
     memberId: memberId,
@@ -16,4 +17,13 @@ export const joinApi = (memberId, password, name, phone, email) => {
     telephoneNo: phone,
     email: email,
   });
+};
+export const sendSMS = (number, type) => {
+  return request("authentications/sms", "post", null, null, {
+    mobileNo: number,
+    usage: type
+  });
+};
+export const verifySMS = (number, code, type) => {
+  return request("authentications/sms", "get", null, "mobileNo="+number+"&key="+code+"&usage="+type, null);
 };
