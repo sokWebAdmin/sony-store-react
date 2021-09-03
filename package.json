@@ -2,7 +2,16 @@
   "name": "sony",
   "version": "0.1.0",
   "private": true,
-  "author": "Sangkyeol Kim",
+  "scripts": {
+    "start": "node scripts/start.js",
+    "start_original": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "markup": "cd published && npx lite-server index.html"
+  },
+  "devDependencies": {
+    "html-loader": "^0.5.5"
+  },
   "dependencies": {
     "@babel/core": "7.12.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
@@ -46,7 +55,9 @@
     "jest-watch-typeahead": "0.6.1",
     "jquery": "^3.6.0",
     "js-cookie": "^3.0.0",
+    "lodash": "4.17.21",
     "mini-css-extract-plugin": "0.11.3",
+    "moment": "2.29.1",
     "node-sass": "^6.0.1",
     "optimize-css-assets-webpack-plugin": "5.0.4",
     "pnp-webpack-plugin": "1.6.4",
@@ -56,6 +67,7 @@
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "5.0.2",
     "prompts": "2.4.0",
+    "qs": "6.10.1",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
     "react-context-devtool": "^2.0.3",
@@ -83,13 +95,6 @@
     "webpack-dev-server": "3.11.1",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.4"
-  },
-  "scripts": {
-    "start": "node scripts/start.js",
-    "start_original": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "markup": "cd published && npx lite-server index.html"
   },
   "eslintConfig": {
     "extends": [
@@ -171,8 +176,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "devDependencies": {
-    "html-loader": "^0.5.5"
   }
 }
