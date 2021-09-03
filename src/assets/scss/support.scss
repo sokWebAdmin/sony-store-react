@@ -112,6 +112,9 @@
 }
 .category_slide_tab{
   display:inline-block;
+  li+li {
+		margin-left: 10px;
+	}
   .swiper-slide{
     width:auto;
     .btn{
