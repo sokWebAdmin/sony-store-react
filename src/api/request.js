@@ -10,9 +10,20 @@ const platform =  isMobile ? "MOBILE_WEB" : "PC";
 // API request 모듈
 const request = async (url, method, headers = {}, query, requestBody) => {
   let Address = SERVER + url;
-  if(query != null){
-    Address += '?'+query;
+  
+  if (query != null) {
+    Address += '?';
+
+    if (query instanceof Object) {
+      for (const key in query) {
+        Address += `${key}=${query[key]}&`;
+      }
+      Address = Address.substring(0, Address.length - 1);
+    } else {
+      Address += query;
+    }
   }
+
   try {
     let headerData = new Object()
     headerData.platform = platform;
