@@ -6,7 +6,7 @@ import { React } from "react";
  *            label: string;
  *            disabled?: boolean;
  *            useColor?: boolean;
- *            background?: string(색상코드);
+ *            background?: string(only color code); ex) '#fc5227'
  *          }[];
  * @params selectOption (optionNo: number, label: string) => {};
  */
