@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
 
 //context
 import GlobalContext from '../../context/global.context';
-
+import Alert from '../../components/common/Alert';
 
 export default function JoinStep() {
   const {shopByToken} = useContext(GlobalContext)
@@ -60,6 +60,17 @@ export default function JoinStep() {
   const [time, setTime] = useState(179)
   const [expireAt, setExpireAt] = useState('');
 
+  // alert
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const openAlert = (message) => {
+    setAlertVisible(true);
+    setAlertMessage(message);
+  }
+  const closeModal = () => {
+    setAlertVisible(false);
+  }
   const _registerApi = async() =>{
     //이메일
     if(emptyCheck(email.trim())){
@@ -145,7 +156,7 @@ export default function JoinStep() {
 
     //authCheck
     if(authCheck !== true) {
-      alert("휴대폰 인증을 해주세요.");
+      openAlert("휴대폰 인증을 해주세요.");
       return;
     }
 
@@ -166,41 +177,35 @@ export default function JoinStep() {
     }
 
     const response = await registerApi(data);
-    console.log(JSON.stringify(data).trim())
-    if(response.status == 200){
-      console.log(response.data)
-      if(response.data.errorCode == "0000"){
+    if(response.status === 200){
+      if(response.data.errorCode === "0000"){
         //성공
-        alert("회원가입이 완료되었습니다.")
+        openAlert("회원가입이 완료되었습니다.")
         history.push("/member/login")
       } else{
-        alert(response.data.errorMessage)
-        return;
+        openAlert(response.data.errorMessage)
       }
     }
   }
 
   const _sendSMS = async(phoneNum) => {
     const response = await sendSMS(phoneNum, "JOIN");
-    /**
-     * temp
-     */
-    if(response.status == 200){
-      console.log(response)
+    if(response.status === 200){
       //발송성공
       setAuthSent(true);
     } else{
-      alert(response.data.message);
+      openAlert(response.data.message);
     }
   }
 
   const _verifySMS = async(phoneNum, code) => {
     const response = await verifySMS(phoneNum, code, "JOIN");
-    if(response.status == 200){
+    if(response.status === 200){
       //인증성공
       setAuthCheck(true);
+      openAlert('인증되었습니다.');
       } else{
-      alert(response.data.message);
+      openAlert(response.data.message);
     }
   }
 
@@ -227,7 +232,6 @@ export default function JoinStep() {
   //componentDidMount
   useEffect(()=>{
     //로그인 상태인 경우, 메인화면으로 자동 이동처리
-    console.log(shopByToken)
     if(shopByToken !== undefined && shopByToken !== ''){
       //valid check
       if(tokenValidation(shopByToken)){
@@ -235,7 +239,6 @@ export default function JoinStep() {
       }
     }
   },[shopByToken])
-
 
   const timeFormat = (time) => {
     const m = Math.floor(time / 60).toString()
@@ -247,7 +250,8 @@ export default function JoinStep() {
     return (
         <>
         <SEOHelmet title={"소니코리아 회원가입"} />
-        <div className="contents">
+        {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+          <div className="contents">
           <div className="container" id="container">
             <div className="login join_step">
               <h2 className="login__title">회원가입</h2>
@@ -256,7 +260,7 @@ export default function JoinStep() {
                 <div className={`group ${isEmail === false && "error"}`}>
                   <div className="inp_box">
                     <label className="inp_desc" htmlFor="loginName">
-                      <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off" tabIndex={1} value={email} onChange={(e)=>{ setEmail(e.target.value) }} />
+                      <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off" tabIndex={1} value={email} onChange={(e)=>{ setEmail(e.target.value) }} />
                       <span className="label">이메일 아이디<span>(예 : sony@sony.co.kr)</span></span>
                       <span className="focus_bg" />
                     </label>
@@ -267,7 +271,7 @@ export default function JoinStep() {
                   <div className={`group ${isPassword === false && "error"}`}>
                     <div className="inp_box password_box">
                       <label className="inp_desc" htmlFor="loginPw1">
-                        <input type={`${isPwVisible === true ? "text" : "password"}`} id="loginPw1" className="inp" placeholder=" " autoComplete="off" tabIndex={2} value={password} onChange={(e)=>{ setPassword(e.target.value) }} />
+                        <input type={`${isPwVisible === true ? "text" : "password"}`} id="loginPw1" className="inp" placeholder=" " autoComplete="off" tabIndex={2} value={password} onChange={(e)=>{ setPassword(e.target.value) }} />
                         <span className="label">비밀번호<span>(영문/숫자 조합 10~15자리 미만)</span></span>
                         <span className="focus_bg" />
                         <div className="eyes"><button type="button" title="비밀번호 숨김" onClick={()=>{
@@ -280,7 +284,7 @@ export default function JoinStep() {
                   <div className={`group ${isConfirm === false && "error"}`}>
                     <div className="inp_box password_box">
                       <label className="inp_desc" htmlFor="loginPw2">
-                        <input type={`${isConfirmVisible === true ? "text" : "password"}`} id="loginPw2" className="inp" placeholder=" " autoComplete="off" tabIndex={3} value={confirm} onChange={(e)=>{ setConfirm(e.target.value) }} />
+                        <input type={`${isConfirmVisible === true ? "text" : "password"}`} id="loginPw2" className="inp" placeholder=" " autoComplete="off" tabIndex={3} value={confirm} onChange={(e)=>{ setConfirm(e.target.value) }} />
                         <span className="label">비밀번호 확인</span>
                         <span className="focus_bg" />
                         <div className="eyes"><button type="button" title="비밀번호 숨김" onClick={()=>{
@@ -295,7 +299,7 @@ export default function JoinStep() {
                   <div className={`group ${isName === false && "error"}`}>
                     <div className="inp_box">
                       <label className="inp_desc" htmlFor="username">
-                        <input type="text" id="username" className="inp" placeholder=" " autoComplete="off" tabIndex={4} value={name} onChange={(e)=>{ setName(e.target.value) }} />
+                        <input type="text" id="username" className="inp" placeholder=" " autoComplete="off" tabIndex={4} value={name} onChange={(e)=>{ setName(e.target.value) }} />
                         <span className="label">이름<span>(띄어쓰기 없이 입력하세요.)</span></span>
                         <span className="focus_bg" />
                       </label>
@@ -305,7 +309,7 @@ export default function JoinStep() {
                   <div className={`group ${isBirthday === false && "error"}`}>
                     <div className="inp_box">
                       <label className="inp_desc" htmlFor="userbirth">
-                        <input type="text" id="userbirth" className="inp" placeholder=" " value={birthday} onChange={(e)=>{ setBirthday(e.target.value) }} />
+                        <input type="text" id="userbirth" className="inp" placeholder=" " value={birthday} onChange={(e)=>{ setBirthday(e.target.value) }} />
                         <span className="label">생년월일<span>(예 : 20210307)</span></span>
                         <span className="focus_bg" />
                       </label>
@@ -316,7 +320,7 @@ export default function JoinStep() {
                 <div className={`group btn_type ${isPhone === false && "error"}`}>
                   <div className="inp_box">
                     <label className="inp_desc" htmlFor="phonenumber">
-                      <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off" tabIndex={5} value={phone} onChange={(e)=>{ setPhone(e.target.value) }} readOnly={authSent ? true : false}  />
+                      <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off" tabIndex={5} value={phone} onChange={(e)=>{ setPhone(e.target.value) }} readOnly={authSent ? true : false}  />
                       <span className="label">휴대폰 번호<span>(-없이 입력하세요.)</span></span>
                       <span className="focus_bg" />
                     </label>
@@ -358,7 +362,7 @@ export default function JoinStep() {
                     <div className="group btn_type">
                       <div className="inp_box">
                         <label className="inp_desc" htmlFor="certifynumber">
-                          <input type="text" id="certifynumber" className="inp" placeholder=" " autoComplete="off" tabIndex={6} value={authCode} onChange={(e)=>{ setAuthCode(e.target.value) }} readOnly={authCheck ? true : false} />
+                          <input type="text" id="certifynumber" className="inp" placeholder=" " autoComplete="off" tabIndex={6} value={authCode} onChange={(e)=>{ setAuthCode(e.target.value) }} readOnly={authCheck ? true : false} />
                           <span className="label">인증번호</span>
                           {authCheck === false &&
                             <span className="timer" id="timer">{timeFormat(time)}</span>
@@ -369,10 +373,10 @@ export default function JoinStep() {
                           <button type="button" className={`btn ${authCheck !== true ? "btn_primary" : "btn_disable"}`} onClick={()=>{
                             if(authCheck !== true){
                               if(time == 0){
-                                alert("인증시간이 만료되었습니다. 재전송 후 인증해주세요.");
+                                openAlert("인증시간이 만료되었습니다. 재전송 후 인증해주세요.");
                               } else{
                                 if(authCode === ''){
-                                  alert('인증번호를 입력해주세요.');
+                                  openAlert('인증번호를 입력해주세요.');
                                   return;
                                 }
                                 _verifySMS(phone, authCode, "JOIN");
