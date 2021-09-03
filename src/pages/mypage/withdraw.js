@@ -32,7 +32,7 @@ export default function withdraw() {
           <div className="group">
             <div className="inp_box password_box">
               <label className="inp_desc" htmlFor="popPw">
-                <input type="password" id="popPw" className="inp center" placeholder=" " />
+                <input type="password" id="popPw" className="inp center" placeholder=" " />
                 <span className="label">비밀번호</span>
                 <span className="focus_bg" />
                 <div className="eyes"><button type="button" title="비밀번호 숨김"><i className="ico ico_eyes" /></button></div>
