@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { createPortal } from 'react-dom';
 
-const LayerPopup = ({ children, onClose, title, className, size = 'ms' }) => {
+const LayerPopup = ({ children, onClose, className, size = 'ms' }) => {
   const [container] = useState(() => {
     return document.createElement('div');
   });
@@ -25,7 +25,6 @@ const LayerPopup = ({ children, onClose, title, className, size = 'ms' }) => {
       <div className={`popup_wrap size_${size} ${className}`} style={{ display: 'block' }}>
         <div className="pop_inner">
           <div className="pop_cont">
-            <p className="pop_tit">{title}</p>
             {children}
           </div>
           <button type="button" className="ico_x closed" title="팝업창 닫기" onClick={close}>
