@@ -1,5 +1,6 @@
 import request from "./request";
 
+// profile
 export const newAccount = (data)=> {
   return request("profile", "post", null, null, data);
 };

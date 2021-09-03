@@ -5,7 +5,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //api
 import {loginApi} from "../../api/auth";
-import {getProfile} from "../../api/profile";
+import {getProfile} from "../../api/member";
 
 //css
 import "../../assets/scss/contents.scss"

@@ -16,7 +16,7 @@ import "swiper/swiper.scss"
 
 
 //api
-import { sampleApi } from "../../api/sample";
+
 
 //css
 import "../../assets/scss/main.scss"

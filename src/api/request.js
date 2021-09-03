@@ -14,7 +14,7 @@ const request = async (url, method, headers = {}, query, requestBody) => {
     Address += '?'+query;
   }
   try {
-    var headerData = new Object()
+    let headerData = new Object()
     headerData.platform = platform;
     headerData.clientId = clientId;
     headerData.Version = version;
@@ -25,8 +25,6 @@ const request = async (url, method, headers = {}, query, requestBody) => {
     if (headers != undefined && headers != null && (typeof headers == 'object')) {
         headerData = Object.assign(headerData, headers)
     }
-
-    console.log(headerData);
 
     if (method === "get") {
         const data = await axios[method](Address,{
@@ -51,64 +49,11 @@ const request = async (url, method, headers = {}, query, requestBody) => {
         return data;
     }
   } catch (error) {
-    console.log(JSON.stringify(error))
-    console.log("request function error", error, url);
+    console.error(error)
     // api 오류일때
-    return "error";
     await Promise.reject(error);
+    return "error";
   }
 };
 
-
 export default request;
-
-// const request = async (url, method, headers = {}, params, requestBody) => {
-//   const Address = SERVER + "/" + url;
-//   try {
-//     // 200 이나 이런거 감지하려면 중괄호 제거 const data = ....
-//     if (method === "get") {
-//       const data = await axios[method](Address, {
-//         headers: {
-//           ...headers,
-//           "Content-Type": "application/json",
-//           platform: platform,
-//           Version: version,
-//           clientId: clientId,
-//         },
-//       });
-//       return data;
-//     } else {
-//       const data = await axios[method](Address, requestBody, {
-//         headers: {
-//           ...headers,
-//           "Content-Type": "application/json",
-//           platform: platform,
-//           Version: version,
-//           clientId: clientId,
-//         },
-//       });
-//       return data;
-//     }
-//   } catch (error) {
-//     console.log("request function error", error, url);
-//     // api 오류일때
-//     return "error";
-//     await Promise.reject(error);
-//   }
-// };
-
-
-// const { data } = await axios({
-//   url: Address,
-//   method: method,
-//   data: requestBody,
-//   params: params,
-//   headers: {
-//     ...headers,
-//     "Content-Type": "application/json",
-//     platform: platform,
-//     Version: version,
-//     clientId: clientId,
-//   },
-// });
-// testApi.js 참조
