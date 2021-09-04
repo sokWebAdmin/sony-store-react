@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useToggle } from "../../hooks";
 import BoxSelector from "./selectbox/Box";
 import DropDownSelector from "./selectbox/DropDown";
@@ -29,6 +29,7 @@ const selector = {
 
 export default function SelectBox({ defaultInfo, selectOption, ...props }) {
   const [isOpened, onToggle] = useToggle(false);
+  const [selectedValue, setSelectedValue] = useState(defaultInfo.placeholder);
   
   const onToggleHandler = useCallback((event) => {
     event.preventDefault();
@@ -37,19 +38,26 @@ export default function SelectBox({ defaultInfo, selectOption, ...props }) {
 
   const onClickHandler = useCallback((event, option) => {
     event.preventDefault();
-    selectOption(option);
-    onToggle(false);
+    try {
+      selectOption(option);
+      setSelectedValue(option.label);
+    } catch (error) {
+      throw error;
+    } finally {
+      onToggle(false);
+    }
   }, [selectOption, onToggle]);
 
   return (
     <>
       {
         React.createElement(selector[defaultInfo.type], {
-          ...defaultInfo,
           ...props,
           onToggleHandler,
           onClickHandler,
-          display: isOpened ? 'block' : 'none'
+          display: isOpened ? 'block' : 'none',
+          selectedValue,
+          tag: defaultInfo.tag,
         })
       }
     </>
