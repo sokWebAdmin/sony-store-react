@@ -1,45 +1,65 @@
-import { React } from "react";
+import React, { useCallback } from "react";
+import { useToggle } from "../../hooks";
+import BoxSelector from "./selectbox/Box";
+import DropDownSelector from "./selectbox/DropDown";
+
+const selector = {
+  box: BoxSelector,
+  dropdown: DropDownSelector
+};
+
 
 /**
- * @params selectOption = {
+ * SelectBox
+ * 
+ * @params defaultInfo = {
+ *            type?: 'dropdown' | 'box'; default = 'box';
+ *            placeholder?: string;
+ *            tag?: string;
+ *          }
+ * @params selectOptions = {
  *            optionNo: number;
  *            label: string;
  *            disabled?: boolean;
  *            useColor?: boolean;
- *            background?: string(only color code); ex) '#fc5227'
+ *            background?: string(only color code); ex) '#fc5227';
  *          }[];
  * @params selectOption (optionNo: number, label: string) => {};
  */
 
-// @TODO color bomee.yoon
-export default function SelectBox({ selectOptions, selectOption }) {
+export default function SelectBox({ defaultInfo, selectOption, ...props }) {
+  const [isOpened, onToggle] = useToggle(false);
   
-  const emitSelectedOption = (event, optionNo, label) => {
+  const onToggleHandler = useCallback((event) => {
     event.preventDefault();
-    selectOption(optionNo, label);
-  };
+    onToggle(!isOpened);
+  }, [isOpened, onToggle]);
+
+  const onClickHandler = useCallback((event, option) => {
+    event.preventDefault();
+    selectOption(option);
+    onToggle(false);
+  }, [selectOption, onToggle]);
 
   return (
-    <ul class="select_opt">
+    <>
       {
-        selectOptions.map(option => {
-          const { label, optionNo } = option;
-          return (
-            <li>
-              <a href={label} className={ `opt_list ${ option?.disabled && 'disabled' }` } onClick={event => emitSelectedOption(event, optionNo)}>
-                <div class="item">
-                  if (option?.useColor) {
-                    <span class="circle_color">
-                    <span class="c_bg" style={{ background:option?.background }}></span>
-                    </span>
-                  }
-                  <span class="opt_name">{ label }</span>
-                </div>
-              </a>
-            </li>
-          )
+        React.createElement(selector[defaultInfo.type], {
+          ...defaultInfo,
+          ...props,
+          onToggleHandler,
+          onClickHandler,
+          display: isOpened ? 'block' : 'none'
         })
       }
-    </ul>
+    </>
   )
+}
+
+SelectBox.defaultProps = {
+  defaultInfo: {
+    type: 'box',
+    placeholder: '제품을 선택해주세요.',
+    tag: '제품',
+  }
 }

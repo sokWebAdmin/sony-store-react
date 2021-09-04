@@ -1,4 +1,5 @@
-import { React, useEffect } from 'react';
+// import * as test from 'react';
+import React, { useEffect } from 'react';
 
 //SEO
 import SEOHelmet from '../../../components/SEOHelmet';
@@ -14,10 +15,11 @@ import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../../cont
 
 //components
 import FaqContent from './faq/faqContent';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Tabs from './tabs';
+import SelectBox from '../../../components/common/SelectBox';
 
-export default function Faq() {
+export default function Faq(props) {
   const dispatch = useBoardDispatch();
   const { config } = useBoardState();
 
@@ -39,6 +41,47 @@ export default function Faq() {
               </div>
               <Tabs />
             </div>
+            <SelectBox
+              selectOptions={[
+                {
+                  optionNo: 1,
+                  label: 'test',
+                },
+                {
+                  optionNo: 2,
+                  label: 'test2',
+                  disabled: true,
+                },
+              ]}
+              selectOption={
+                (number, label) => {
+                  console.log(number, label);
+                }
+              }
+            />
+            <SelectBox
+              defaultInfo={{
+                type: 'dropdown',
+                placeholder: '다른 것을 선택하세요',
+                tag: '쿠폰',
+              }}
+              selectOptions={[
+                {
+                  optionNo: 3,
+                  label: '쿠폰test',
+                },
+                {
+                  optionNo: 4,
+                  label: '쿠폰test2',
+                  disabled: true,
+                },
+              ]}
+              selectOption={
+                (number, label) => {
+                  console.log(number, label);
+                }
+              }
+            />
             <FaqContent />
           </div>
         </div>
