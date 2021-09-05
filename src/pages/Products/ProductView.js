@@ -29,6 +29,7 @@ import { wonComma } from '../../utils/utils';
 import {useWindowSize} from '../../utils/utils'
 import { useHistory } from "react-router-dom";
 import CountBox from '../../components/common/CountBox';
+import _, { sum } from 'lodash';
 
 //image
 
@@ -298,7 +299,10 @@ export default function ProductView({match}) {
                       setSelectedOption(() => tempOptionList);
 
                       setTotalCnt(
-                        () => tempOptionList.reduce((acc, curr) => acc+= curr.buyCnt , 0)
+                        () => _.chain(tempOptionList)
+                                .map(({ buyCnt }) => buyCnt)
+                                .sum()
+                                .value()
                       )
                       setTotalPrice(() => totalPrice - (prevBuyCnt * buyPrice) + (currentCount * buyPrice))
                     }}
