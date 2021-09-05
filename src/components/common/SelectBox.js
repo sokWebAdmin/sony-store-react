@@ -8,6 +8,12 @@ const selector = {
   dropdown: DropDownSelector
 };
 
+const validator = {
+  isDuplicated(selectedOptions, selectedNo) {
+    return selectedOptions.some(option => option.optionNo === selectedNo);
+  },
+}
+
 
 /**
  * SelectBox
@@ -27,37 +33,45 @@ const selector = {
  * @params selectOption (optionNo: number, label: string) => {};
  */
 
-export default function SelectBox({ defaultInfo, selectOption, ...props }) {
+export default function SelectBox({ defaultInfo, selectOption, selectOptions }) {
   const [isOpened, onToggle] = useToggle(false);
-  const [selectedValue, setSelectedValue] = useState(defaultInfo.placeholder);
+  const [selectedValue, setSelectedValue] = useState({
+    label: defaultInfo.placeholder,
+    options: [],
+  });
   
   const onToggleHandler = useCallback((event) => {
     event.preventDefault();
     onToggle(!isOpened);
-  }, [isOpened, onToggle]);
+  }, [onToggle, isOpened])
 
   const onClickHandler = useCallback((event, option) => {
     event.preventDefault();
-    try {
+    
+    if (validator.isDuplicated(selectedValue.options, option.optionNo)) {
+      alert('이미 선택된 옵션입니다.');
+    } else {
+      setSelectedValue(({ options }) => ({
+        label: option.label,
+        options: options.concat(option)
+      }));
       selectOption(option);
-      setSelectedValue(option.label);
-    } catch (error) {
-      throw error;
-    } finally {
-      onToggle(false);
     }
-  }, [selectOption, onToggle]);
+    
+    onToggle(false);
+
+  }, [setSelectedValue, selectOption, onToggle, selectedValue.options])
 
   return (
     <>
       {
         React.createElement(selector[defaultInfo.type], {
-          ...props,
+          selectOptions,
+          display: isOpened ? 'block' : 'none',
+          selectedLabel: selectedValue.label,
+          tag: defaultInfo.tag,
           onToggleHandler,
           onClickHandler,
-          display: isOpened ? 'block' : 'none',
-          selectedValue,
-          tag: defaultInfo.tag,
         })
       }
     </>

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-export default function DropDownSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedValue, tag }) {
+export default function DropDownSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedLabel, tag }) {
   const isOpened = useMemo(() => display === 'block', [display]);
   return (
     <div className={ `select_ui_zone tit_btm_line ${ isOpened ? 'open' : '' }` }>
@@ -9,7 +9,7 @@ export default function DropDownSelector({ selectOptions, onToggleHandler, onCli
         className="selected_btn"
         onClick={ onToggleHandler }
       >
-        { selectedValue }
+        { selectedLabel }
       </a>
       <div className="select_inner" style={{ display }}>
         <p class="prd_tag">{ tag }</p>

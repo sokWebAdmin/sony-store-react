@@ -1,7 +1,6 @@
-import { useRef } from "react";
 
 // @TODO color bomee.yoon
-export default function BoxSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedValue, tag }) {
+export default function BoxSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedLabel, tag }) {
   
   return (
     <div className="select_ui_zone">
@@ -11,7 +10,7 @@ export default function BoxSelector({ selectOptions, onToggleHandler, onClickHan
           className="selected_btn"
           onClick={ onToggleHandler }
         >
-          { selectedValue }
+          { selectedLabel }
         </a>
         <div className="select_inner" style={{ display }}>
           <p class="prd_tag">{ tag }</p>
