@@ -15,7 +15,7 @@ const platform =  isMobile ? "Mobile Web Android" : "PC";
 const request = async (url, method, headers = {}, query, requestBody) => {
   let Address = SERVER + url;
   
-  if (query) {
+  if (query != null) {
     Address += '?';
 
     if (query instanceof Object) {

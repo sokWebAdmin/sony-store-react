@@ -1,5 +1,5 @@
 
-import { React ,useState, useEffect, useContext, useRef, useMemo } from 'react';
+import { React ,useState, useEffect, useContext } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -285,7 +285,7 @@ export default function ProductView({match}) {
                   </div> */}
                 </div>
                 <div className="opt_count">
-                  <CountBox
+                  <CountBox 
                     maxCount={item.stockCnt}
                     changedCount={currentCount => {
                       const { buyCnt: prevBuyCnt, buyPrice } = selectedOption[itemIndex];
