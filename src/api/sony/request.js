@@ -1,4 +1,5 @@
 import axios from "axios";
+import _ from "lodash";
 import {isMobile} from 'react-device-detect';
 
 
@@ -14,14 +15,15 @@ const platform =  isMobile ? "Mobile Web Android" : "PC";
 const request = async (url, method, headers = {}, query, requestBody) => {
   let Address = SERVER + url;
   
-  if (query != null) {
+  if (query) {
     Address += '?';
 
     if (query instanceof Object) {
-      for (const key in query) {
-        Address += `${key}=${query[key]}&`;
-      }
-      Address = Address.substring(0, Address.length - 1);
+      Address += _.chain(Object.entries(query))
+                  .reject(([_, v]) => !v)
+                  .map(([k, v]) => `${k}=${v}`)
+                  .join('&')
+                  .value()
     } else {
       Address += query;
     }
