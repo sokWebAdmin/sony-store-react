@@ -306,17 +306,15 @@ export default function ProductView({match}) {
                   
                   <p className="opt_price"><strong className="price">{wonComma(item.buyPrice * item.buyCnt)}</strong>원</p>
                 </div>
-                <a  className="prd_delete" onClick={()=>{
-                  let tempOptionList = selectedOption.filter(function(element){
-                    return element!= item;
-                });
-                
-                setTotalCnt(totalCnt - item.buyCnt);
-                setTotalPrice(totalPrice - (item.buyCnt * item.buyPrice));
+                <a href="#none" className="prd_delete" onClick={ event => {
 
+                  event.preventDefault();
+                  const tempOptionList = selectedOption.filter(({ optionNo }) => optionNo !== item.optionNo)
+                
+                  setTotalCnt(totalCnt - item.buyCnt);
+                  setTotalPrice(totalPrice - (item.buyCnt * item.buyPrice));
 
                   setSelectedOption(tempOptionList)
-                  
                   
                 }}>구매 목록에서 삭제</a>
               </div>  
