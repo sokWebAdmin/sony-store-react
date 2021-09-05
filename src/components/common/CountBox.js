@@ -1,13 +1,20 @@
 import { useState } from "react";
 
-export default function CountBox({ maxCount, changedCount }) {
+/**
+ * CountBox
+ * 
+ * @param maxCount: number;
+ * @param changedCount: (changedCount) => {}
+ * @param errorMsg?: { min?: '', max?: '' }
+ */
+export default function CountBox({ maxCount, changedCount, errorMsg }) {
   const [ count, setCount ] = useState(1);
 
   const onMinusClickHandler = event => {
     event.preventDefault();
 
     if (count <= 1) {
-      alert('한개 이상 선택되어야 합니다.');
+      alert(errorMsg.min);
       return;
     }
     changedCount(count - 1);
@@ -18,7 +25,7 @@ export default function CountBox({ maxCount, changedCount }) {
     event.preventDefault();
     
     if (count >= maxCount) {
-      alert("최대 구매 가능 갯수를 초과합니다.");
+      alert(errorMsg.max);
       return;
     }
     changedCount(count + 1);
@@ -34,10 +41,10 @@ export default function CountBox({ maxCount, changedCount }) {
     let customCount = !target?.value ? 0 : Number(target.value);
     
     if (customCount < 1) {
-      alert('한개 이상 선택되어야 합니다.');
+      alert(errorMsg.min);
       customCount = 1;
     } else if (customCount > maxCount) {
-      alert("최대 구매 가능 갯수를 초과합니다.");
+      alert(errorMsg.max);
       customCount = maxCount;
     } 
     setCount(customCount);
@@ -48,8 +55,15 @@ export default function CountBox({ maxCount, changedCount }) {
   return (
     <div className="count_box">
       <button className="minus" onClick={ onMinusClickHandler }>감소</button>
-      <input type="text" value={ count } className="count" onChange={onChangeHandler} onBlur={ onBlurHandler } />
+      <input className="count" type="text" value={ count } onChange={onChangeHandler} onBlur={ onBlurHandler } />
       <button className="plus" onClick={ onPlusClickHandler }>증가</button>
     </div>
   )
+}
+
+CountBox.defaultProps = {
+  errorMsg: {
+    min: '한개 이상 선택되어야 합니다.',
+    max: '최대 구매 가능 갯수를 초과합니다.'
+  }
 }
