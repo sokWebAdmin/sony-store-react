@@ -233,7 +233,7 @@ export default function ProductView({match}) {
                                 <ul className="select_opt">
                                   {productOptions && productOptions.flatOptions.map(item => {
                                     return (<>
-                                  <li>
+                                  <li key={item.optionNo}>
                                     <a  className="opt_list" onClick={()=>{
                                       let tempOptionList = selectedOption;
                                       if(tempOptionList.includes(item)){
@@ -286,8 +286,10 @@ export default function ProductView({match}) {
                 </div>
                 <div className="opt_count">
                   <CountBox 
+                    initialCount={item?.buyCnt}
                     maxCount={item.stockCnt}
                     changedCount={currentCount => {
+                      if (!currentCount) return;
                       const { buyCnt: prevBuyCnt, buyPrice } = selectedOption[itemIndex];
 
                       const tempOptionList = selectedOption;
@@ -310,8 +312,8 @@ export default function ProductView({match}) {
                   
                   <p className="opt_price"><strong className="price">{wonComma(item.buyPrice * item.buyCnt)}</strong>원</p>
                 </div>
-                <a href="#none" className="prd_delete" onClick={ event => {
-
+                <a href="#delete" className="prd_delete" onClick={ event => {
+                
                   event.preventDefault();
                   const tempOptionList = selectedOption.filter(({ optionNo }) => optionNo !== item.optionNo)
                 

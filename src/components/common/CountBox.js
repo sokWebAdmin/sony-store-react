@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * CountBox
@@ -10,6 +10,8 @@ import { useState } from "react";
  */
 export default function CountBox({ initialCount, maxCount, changedCount, errorMsg }) {
   const [ count, setCount ] = useState(initialCount);
+
+  useEffect(() => setCount(initialCount), [initialCount])
 
   const onMinusClickHandler = event => {
     event.preventDefault();
