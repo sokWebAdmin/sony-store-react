@@ -17,7 +17,7 @@ const request = async (url, method, headers = {}, query, requestBody) => {
 
     if (query instanceof Object) {
       Address += _.chain(Object.entries(query))
-                  .reject(([k, v]) => !v)
+                  .reject(([_, v]) => !v)
                   .map(([k, v]) => `${k}=${v}`)
                   .join('&')
                   .value()
