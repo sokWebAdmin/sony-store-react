@@ -237,10 +237,9 @@ export default function ProductView({match}) {
 
               {selectedOption.length > 0 &&
                               selectedOption.map((item, itemIndex) => {
-                  debugger
                   return (<>
                 <div className="opt_info">
-                <p className="opt_tag">제품</p>
+                  <p className="opt_tag">제품</p>
                 <div className="opt_item">
                   <div className="item">
                     <span className="opt_name">{item.label}</span>
