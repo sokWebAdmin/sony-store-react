@@ -7,8 +7,8 @@ import { useState } from "react";
  * @param changedCount: (changedCount) => {}
  * @param errorMsg?: { min?: '', max?: '' }
  */
-export default function CountBox({ maxCount, changedCount, errorMsg }) {
-  const [ count, setCount ] = useState(1);
+export default function CountBox({ initialCount, maxCount, changedCount, errorMsg }) {
+  const [ count, setCount ] = useState(initialCount);
 
   const onMinusClickHandler = event => {
     event.preventDefault();
@@ -62,6 +62,7 @@ export default function CountBox({ maxCount, changedCount, errorMsg }) {
 }
 
 CountBox.defaultProps = {
+  initialCount: 1,
   errorMsg: {
     min: '한개 이상 선택되어야 합니다.',
     max: '최대 구매 가능 갯수를 초과합니다.'

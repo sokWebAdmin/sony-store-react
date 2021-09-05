@@ -286,6 +286,7 @@ export default function ProductView({match}) {
                 </div>
                 <div className="opt_count">
                   <CountBox 
+                    initialCount={5}
                     maxCount={item.stockCnt}
                     changedCount={currentCount => {
                       const { buyCnt: prevBuyCnt, buyPrice } = selectedOption[itemIndex];
