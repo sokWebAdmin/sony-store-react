@@ -3,6 +3,7 @@ import { useState } from "react";
 /**
  * CountBox
  * 
+ * @param initialCount?: number;
  * @param maxCount: number;
  * @param changedCount: (changedCount) => {}
  * @param errorMsg?: { min?: '', max?: '' }
