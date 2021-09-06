@@ -125,7 +125,7 @@ export default function Login() {
                 <div className={`group ${isEmail === true && "error"}`}>
                   <div className="inp_box">
                     <label className="inp_desc" htmlFor="loginName">
-                      <input type="text" id="loginName" className="inp" placeholder=" " value={email} onChange={(e)=>{ setEmail(e.target.value) }} />
+                      <input type="text" id="loginName" className="inp" placeholder=" " value={email} onChange={(e)=>{ setEmail(e.target.value) }} />
                       <span className="label">이메일 아이디<span>(예 : sony@sony.co.kr)</span></span>
                       <span className="focus_bg" />
                     </label>
@@ -135,7 +135,7 @@ export default function Login() {
                 <div className={`group ${isPw === true && "error"}`}>
                   <div className="inp_box password_box">
                     <label className="inp_desc" htmlFor="loginPw">
-                      <input type={`${isPwVisible === true ? "text" : "password"}`} id="loginPw" className="inp" placeholder=" " value={pw} onChange={(e)=>{ setPw(e.target.value) }} />
+                      <input type={`${isPwVisible === true ? "text" : "password"}`} id="loginPw" className="inp" placeholder=" " value={pw} onChange={(e)=>{ setPw(e.target.value) }} />
                       <span className="label">비밀번호</span>
                       <span className="focus_bg" />
                       <div className="eyes">
@@ -189,7 +189,7 @@ export default function Login() {
                 <div className="group">
                   <div className="inp_box">
                     <label className="inp_desc" htmlFor="loginumber">
-                      <input type="text" id="loginumber" className="inp" placeholder=" " />
+                      <input type="text" id="loginumber" className="inp" placeholder=" " />
                       <span className="label">주문번호</span>
                       <span className="focus_bg" />
                     </label>
@@ -199,7 +199,7 @@ export default function Login() {
                 <div className="group">
                   <div className="inp_box password_box">
                     <label className="inp_desc" htmlFor="loginumber">
-                      <input type="password" id="loginPw_nonmember" className="inp" placeholder=" " />
+                      <input type="password" id="loginPw_nonmember" className="inp" placeholder=" " />
                       <span className="label">비밀번호</span>
                       <div className="eyes"><button type="button" title="비밀번호 숨김"><i className="ico ico_eyes" /></button></div>
                       <span className="focus_bg" />

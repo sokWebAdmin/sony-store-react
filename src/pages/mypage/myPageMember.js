@@ -54,7 +54,7 @@ export default function myPageMember() {
             <div className="info_box type_txt_btn">
               <div className="data_box">
                 <div className="inp_box">
-                  <input type="text" id="member_tel" className="inp tel_number disabled" defaultValue={"12345678910"} disabled="disabled" maxLength={11} autoComplete="off" placeholder=" " />
+                  <input type="text" id="member_tel" className="inp tel_number disabled" defaultValue={"12345678910"} disabled="disabled" maxLength={11} autoComplete="off" placeholder=" " />
                   <span className="label">휴대폰 번호<span>(- 없이 입력하세요.)</span></span>
                   <span className="focus_bg" />
                 </div>
@@ -66,7 +66,7 @@ export default function myPageMember() {
             <div className="info_box type_txt_btn tel_chk">
               <div className="data_box">
                 <div className="inp_box">
-                  <input type="text" className="inp" maxLength={11} title="인증번호  입력해주세요." disabled="disabled" placeholder=" " autoComplete="off" />
+                  <input type="text" className="inp" maxLength={11} title="인증번호  입력해주세요." disabled="disabled" placeholder=" " autoComplete="off" />
                   <span className="label">인증번호</span>
                   <span className="focus_bg" />
                 </div>

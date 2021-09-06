@@ -55,7 +55,7 @@ export default function pwSearch() {
           <div className="group not-ready">
             <div className="inp_box">
               <label className="inp_desc" htmlFor="loginName">
-                <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off" tabIndex={1} />
+                <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off" tabIndex={1} />
                 <span className="label">이메일 아이디<span>(예 : sony@sony.co.kr)</span></span>
                 <span className="focus_bg" />
               </label>
@@ -65,7 +65,7 @@ export default function pwSearch() {
           <div className="group not-ready btn_type">
             <div className="inp_box">
               <label className="inp_desc" htmlFor="phonenumber">
-                <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off" tabIndex={2} />
+                <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off" tabIndex={2} />
                 <span className="label">휴대폰 번호<span>(-없이 입력하세요.)</span></span>
                 <span className="focus_bg" />
               </label>
@@ -80,7 +80,7 @@ export default function pwSearch() {
           <div className="group not-ready btn_type">
             <div className="inp_box">
               <label className="inp_desc" htmlFor="certifynumber">
-                <input type="text" id="certifynumber" className="inp" placeholder=" " autoComplete="off" tabIndex={3} />
+                <input type="text" id="certifynumber" className="inp" placeholder=" " autoComplete="off" tabIndex={3} />
                 <span className="label">인증번호</span>
                 <span className="timer" id="timer">02:43</span>
                 <span className="focus_bg" />
