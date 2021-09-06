@@ -5,18 +5,18 @@ export const getBoardList = (boardNo)=> {
   return request("boards/"+boardNo+"/articles?pageSize=10", "get", null, null, {});
 };
 export const getBoardConfiguration = () => {
-  return request(`boards/configurations`, 'get', null, null, null);
+  return request(`boards/configurations`, 'get', null, null);
 }
 
 export const getBoards = ({ pathParams, params }) => {
-  return request(`boards/${pathParams.boardNo}/articles`, 'get', null, params, null)
+  return request(`boards/${pathParams.boardNo}/articles`, 'get', params, null)
 }
 
 export const getBoardByArticleId = data => {
   const { pathParams: { boardNo, articleNo } } = data;
-  return request(`boards/${boardNo}/articles/${articleNo}`, 'get', null, null, null);
+  return request(`boards/${boardNo}/articles/${articleNo}`, 'get', null, null);
 }
 
 export const getBoardCategories = data => {
-  return request(`boards/${data.pathParams.boardNo}/categories`, 'get', null, null, null);
+  return request(`boards/${data.pathParams.boardNo}/categories`, 'get', null, null);
 }
