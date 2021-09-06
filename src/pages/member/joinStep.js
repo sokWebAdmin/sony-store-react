@@ -11,8 +11,8 @@ import {sendSMS, verifySMS} from '../../api/auth';
 import "../../assets/scss/contents.scss"
 
 //utils
-import { emptyCheck, isLogin } from '../../utils/utils';
-import { useHistory } from "react-router-dom";
+import { emptyCheck, getUrlParam, isLogin } from '../../utils/utils';
+import { useHistory, useLocation } from "react-router-dom";
 
 //context
 import GlobalContext from '../../context/global.context';
@@ -22,6 +22,7 @@ export default function JoinStep() {
   const {isLogin} = useContext(GlobalContext)
 
   const history = useHistory();
+  const location = useLocation();
 
   const [isPwVisible, setPwVisible] = useState(false);
   const [isConfirmVisible, setConfirmVisible] = useState(false);
@@ -169,9 +170,9 @@ export default function JoinStep() {
       birthday: birthday,
       email: email,
       viasite: "SonyStyle",
-      sms:"N",
+      sms:getUrlParam('sms') === 'true' ? 'Y' : 'N',
       mobileflag: "N",
-      servicesite: {news:"N", snsinfo:null},
+      servicesite: {news: getUrlParam('email') === 'true' ? 'Y' : 'N', snsinfo:null},
       password : password,
     }
 
@@ -234,6 +235,7 @@ export default function JoinStep() {
     if (isLogin) {
       history.push('/');
     }
+
   },[])
 
   const timeFormat = (time) => {
