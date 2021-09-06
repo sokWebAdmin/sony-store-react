@@ -10,7 +10,8 @@ import SEOHelmet from '../../components/SEOHelmet';
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/order.scss"
 
-export default function orderStep1() {
+export default function orderStep1({ location }) {
+  console.log(location.state?.orderSheetNo);
 
     return (
         <>
