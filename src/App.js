@@ -72,8 +72,18 @@ import sitemap from "./pages/footer/sitemap"
 import SearchResult from "./pages/footer/searchResult"
 import EspMain from './pages/esp/EspMain';
 import EspList from './pages/esp/EspList';
+import { fetchMallInfo, useMallDispatch, useMallState } from "./context/mall.context";
 
 const App = (props) => {
+  const dispatch = useMallDispatch();
+  const state = useMallState();
+
+  useEffect(() => {
+    if (state?.mall) return;
+    fetchMallInfo(dispatch);
+  }, [dispatch, state?.mall])
+
+
   let location = useLocation();
 
   const [isStatus, setIsStatus] = useState(true);

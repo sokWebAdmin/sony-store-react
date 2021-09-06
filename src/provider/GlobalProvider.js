@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { BoardProvider } from '../context/board.context';
 import GlobalContext from '../context/global.context';
+import { MallProvider } from '../context/mall.context';
 
 const GlobalProvider = ({ children }) => {
   const onChangeGlobal = values => {
@@ -18,9 +19,11 @@ const GlobalProvider = ({ children }) => {
 
   return (
     <GlobalContext.Provider value={option}>
-      <BoardProvider>
-        {children}
-      </BoardProvider>
+      <MallProvider>
+        <BoardProvider>
+          {children}
+        </BoardProvider>
+      </MallProvider>
     </GlobalContext.Provider>
   );
 };
