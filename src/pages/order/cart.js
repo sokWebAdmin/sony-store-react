@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useEffect } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -14,6 +14,13 @@ import { useHistory } from 'react-router-dom';
 
 export default function Cart () {
   const history = useHistory();
+
+  useEffect(init);
+
+  function init() {
+    console.log('init')
+    console.log(history.location.search)
+  }
 
   return (
     <>
