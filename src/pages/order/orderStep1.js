@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
@@ -15,9 +15,7 @@ import '../../assets/scss/order.scss';
 import { getUrlParam } from '../../utils/location'
 
 export default function OrderStep1 ({ location }) {
-  const data = {
-    deliveryGroups: [1]
-  }
+  const [ deliveryGroups, setDeliveryGroups ] = useState([]);
 
   const init = {
     async start() {
@@ -27,10 +25,8 @@ export default function OrderStep1 ({ location }) {
       return getUrlParam('orderSheetNo') ?? -1;
     },
     async fetchOrderSheet(orderSheetNo) {
-      const { data } = await getOrderSheets(orderSheetNo)
-      const { deliveryGroups } = data;
-      data.deliveryGroups = deliveryGroups;
-      console.log(data.deliveryGroups)
+      const { data: { deliveryGroups } } = await getOrderSheets(orderSheetNo)
+      setDeliveryGroups(deliveryGroups);
     }
   }
 
@@ -71,7 +67,7 @@ export default function OrderStep1 ({ location }) {
                       </div>
                     </div>
 
-                    <Products data={data.deliveryGroups} />
+                    <Products data={deliveryGroups} />
 
                     <div className="col_table_body">
 

@@ -1,13 +1,17 @@
 const Products = props => {
   const { data } = props
 
+  const dataMapping = deliveryGroups => {
+    console.log(deliveryGroups)
+    return [1]
+  }
+
   return (
     <ul>
-      {data}
       {
         data?.length >= 1 ?
-          data.map(() =>
-            <li>item</li>
+          dataMapping(data).map((item) =>
+            <li>{item}</li>
           ) :
           <h1>상품없음 UI</h1>
       }
