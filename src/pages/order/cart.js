@@ -15,12 +15,17 @@ import { useHistory } from 'react-router-dom';
 export default function Cart () {
   const history = useHistory();
 
-  useEffect(init);
 
-  function init() {
-    console.log('init')
-    console.log(history.location.search)
+  const init = {
+    start() {
+      console.log('init')
+      console.group('route history')
+      console.log(history)
+      console.groupEnd();
+    }
   }
+
+  useEffect(init.start);
 
   return (
     <>
