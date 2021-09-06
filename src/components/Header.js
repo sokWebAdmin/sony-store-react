@@ -78,7 +78,7 @@ export default function Header() {
                 }}>로그인</button>
                 <div className="member__menu">
                 <ul>
-                    <li className="member__menu__mypage"><a  onClick={()=>{history.push('/member/join')}}>회원가입</a></li>
+                    <li className="member__menu__mypage"><a  onClick={()=>{history.push('/member/join-agree')}}>회원가입</a></li>
                     <li className="member__menu__order"><a  onClick={()=>{history.push('/my-page/order-list')}}>주문/배송 조회</a></li>
                     <li className="member__menu__cart"><a  onClick={()=>{history.push('/cart')}}>장바구니<span className="badge">99</span></a></li>
                 </ul>
