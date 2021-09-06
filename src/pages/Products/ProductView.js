@@ -31,6 +31,7 @@ import { Link, useHistory } from "react-router-dom";
 import CountBox from '../../components/common/CountBox';
 import _, { sum } from 'lodash';
 import SelectBox from '../../components/common/SelectBox';
+import qs from 'qs';
 import { postOrderSheets } from '../../api/order';
 
 //image
@@ -331,7 +332,7 @@ export default function ProductView({match}) {
 
                           history.push({
                             pathname: '/order/step/1',
-                            state: response.data,
+                            search: '?' + qs.stringify(response.data)
                           })
 
 
