@@ -27,10 +27,12 @@ import GlobalContext from '../../context/global.context';
 //util
 import { wonComma } from '../../utils/utils';
 import {useWindowSize} from '../../utils/utils'
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import CountBox from '../../components/common/CountBox';
 import _, { sum } from 'lodash';
 import SelectBox from '../../components/common/SelectBox';
+import qs from 'qs';
+import { postOrderSheets } from '../../api/order';
 
 //image
 
@@ -221,7 +223,7 @@ export default function ProductView({match}) {
                             <p className="tit">제품선택</p>
 
                               <SelectBox 
-                                selectOptions={productOptions?.flatOptions ?? []}
+                                selectOptions={productOptions?.flatOptions.map(o => ({...o, disabled: o.forcedSoldOut})) ?? []}
                                 selectOption={option => {
                                   setSelectedOption(prev => prev.concat({
                                     ...option,
@@ -312,15 +314,36 @@ export default function ProductView({match}) {
                       <li className="cart"><a  onClick={()=>{history.push('/cart')}} className="btn_icon" data-popup="popup_cart">장바구니</a></li>
                       <li className="gift"><a  className="btn_icon" data-popup="popup_gift">선물</a></li>
                       <li className="final">
-                        <a  onClick={()=>{
-                          //구매 로직 
-                          if(isLogin){
+                        <Link to="/order/step/1" onClick={ async ( event) => {
+                          event.preventDefault();
+                          const response = await postOrderSheets({
+                            productCoupons: null,
+                            trackingKey: null,
+                            cartNos: null,
+                            channelType: null,
+                            products: selectedOption.map(p => ({
+                              channelType: null,
+                              orderCnt: p.buyCnt,
+                              optionInputs: null,
+                              optionNo: p.optionNo,
+                              productNo: product_no
+                            }))
+                          });
+
+                          history.push({
+                            pathname: '/order/step/1',
+                            search: '?' + qs.stringify(response.data)
+                          })
+
+
+                          // //구매 로직 
+                          // if(shopByToken){
                             
-                          }else{
-                            alert("로그인 후 이용해주세요.")
-                          }
+                          // }else{
+                          //   alert("로그인 후 이용해주세요.")
+                          // }
                           
-                        }} className="btn_style direct" style={{backgroundColor: '#000'}}>바로 구매하기</a>
+                        }} className="btn_style direct" style={{backgroundColor: '#000'}}>바로 구매하기</Link>
                         <a  className="btn_style disabled" style={{display: 'none', backgroundColor: '#ddd'}}>품절</a>
                         <a  className="btn_style reservation" style={{display: 'none', backgroundColor: '#5865F5'}}>예약구매</a>
                         {/*
