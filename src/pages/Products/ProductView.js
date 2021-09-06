@@ -1,5 +1,5 @@
 
-import { React ,useState, useEffect, useContext, useRef } from 'react';
+import { React ,useState, useEffect, useContext } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -28,6 +28,7 @@ import GlobalContext from '../../context/global.context';
 import { wonComma } from '../../utils/utils';
 import {useWindowSize} from '../../utils/utils'
 import { useHistory } from "react-router-dom";
+import SelectBox from '../../components/common/SelectBox';
 
 //image
 
@@ -40,7 +41,6 @@ export default function ProductView({match}) {
   //ui
   const [headerHeight, setHeaderHeight] = useState(0);
   const [tabState, setTabState] = useState('intro');
-  const [isOptionOpen, setOptionOpen] = useState(false);
 
   //data
   const [productData, setProductData] = useState();
@@ -217,51 +217,17 @@ export default function ProductView({match}) {
                         <>
                           <div className="prd_select_box">
                             <p className="tit">제품선택</p>
-                            <div className={`select_zone selectOn ${isOptionOpen ? "open" : ''}`}>
-                              {/* 품절시 disabled class  */}
-                              <a  className="selected_btn" data-default-text="제품을 선택하세요." onClick={
-                                ()=>{
-                                  setOptionOpen(!isOptionOpen)
-                                }
-                              }>{/* disabled : 선택불가 품절 */}
-                                제품을 선택하세요.
-                              </a>
-                              <div className="select_inner" style={isOptionOpen ? {display:"block"} : {display:"none"}}>
-                                <p className="prd_tag">제품</p>
-                                <ul className="select_opt">
-                                  {productOptions && productOptions.flatOptions.map(item => {
-                                    return (<>
-                                  <li>
-                                    <a  className="opt_list" onClick={()=>{
-                                      let tempOptionList = selectedOption;
-                                      if(tempOptionList.includes(item)){
-                                        alert("이미 선택된 옵션입니다.");
-                                        setOptionOpen(false);
-                                        return;
-                                      }
-
-                                      item.buyCnt = 1;
-                                      tempOptionList.push(item);
-                                      setSelectedOption(tempOptionList)
-                                      setOptionOpen(false)
-
-                                      setTotalCnt(totalCnt + 1);
-                                      setTotalPrice(totalPrice + item.buyPrice);
-                                    }}>{/* disabled : 선택 불가 품절 */}
-                                      <div className="item">
-                                        {/* <span className="circle_color">
-                                          <span className="c_bg" style={{background: '#fc5227'}} />
-                                        </span> */}
-                                        {/* <span className="opt_name">{item.label} <span>품절</span></span> */}
-                                        <span className="opt_name">{item.label}</span>
-                                      </div>
-                                    </a>
-                                  </li>
-                                    </>)
-                                  })}
-                                </ul>
-                              </div>
-                            </div>
+                              <SelectBox 
+                                selectOptions={productOptions?.flatOptions ?? []}
+                                selectOption={option => {
+                                  setSelectedOption(prev => prev.concat({
+                                    ...option,
+                                    buyCnt: 1,
+                                  }));
+                                  setTotalCnt(totalCnt + 1);
+                                  setTotalPrice(totalPrice + option.buyPrice);
+                                }}
+                              />
                           </div>
                         </>
                     
@@ -270,10 +236,10 @@ export default function ProductView({match}) {
                     
 
               {selectedOption.length > 0 &&
-                selectedOption.map((item, itemIndex) => {
+                              selectedOption.map((item, itemIndex) => {
                   return (<>
                 <div className="opt_info">
-                <p className="opt_tag">제품</p>
+                  <p className="opt_tag">제품</p>
                 <div className="opt_item">
                   <div className="item">
                     <span className="opt_name">{item.label}</span>
