@@ -57,6 +57,7 @@ import refined from "./pages/event/refined"
 
 //member
 import join from "./pages/member/join"
+import JoinAgree from "./pages/member/JoinAgree"
 import joinStep from "./pages/member/joinStep"
 import login from "./pages/member/login"
 import pwSearch from "./pages/member/pwSearch"
@@ -174,6 +175,7 @@ const App = (props) => {
 
                 {/* member  */}
                 <Route exact path="/member/join" component={join} />
+                <Route exact path="/member/join-agree" component={JoinAgree} />
                 <Route exact path="/member/joinStep" component={joinStep} />
                 <Route exact path="/member/login" component={login} />
                 <Route exact path="/member/pw-search" component={pwSearch} />
