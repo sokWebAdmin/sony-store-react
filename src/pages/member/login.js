@@ -11,7 +11,7 @@ import {getProfile} from "../../api/member";
 import "../../assets/scss/contents.scss"
 
 //utils
-import { emptyCheck, isLogin } from '../../utils/utils';
+import { emptyCheck } from '../../utils/utils';
 import { useHistory } from "react-router-dom";
 
 //lib
@@ -156,7 +156,7 @@ export default function Login() {
                   </div>
                   <ul className="user_menu">
                     <li><a  onClick={()=>{history.push('/member/pw-search')}}>아이디 · 비밀번호 찾기</a></li>
-                    <li><a  onClick={()=>{history.push('/member/join')}}>회원가입</a></li>
+                    <li><a  onClick={()=>{history.push('/member/join-agree')}}>회원가입</a></li>
                   </ul>
                 </div>
                 <div className="txt_or">

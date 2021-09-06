@@ -8,6 +8,7 @@ const Alert = ({ children, onClose, type = 'default', customButton }) => {
   });
 
   const close = (e) => {
+    document.body.style.overflow = "auto";
     onClose?.(e);
   }
 

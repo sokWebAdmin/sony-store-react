@@ -45,3 +45,13 @@ export function emptyCheck(value) {
   }
   return result;
 }
+
+export function getUrlParam(name, defaultValue = '') {
+  const searchParams = new URLSearchParams(window.location.search);
+
+  if (searchParams.has(name) && Boolean(searchParams.get(name))) {
+    return decodeURIComponent(searchParams.get(name));
+  }
+
+  return defaultValue;
+}
