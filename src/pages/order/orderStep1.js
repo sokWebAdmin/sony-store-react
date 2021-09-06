@@ -286,7 +286,7 @@ export default function OrderStep1 ({ location }) {
                                   className="acc_group parent error">{/* error 문구 제어 */}
                                   <div className="acc_inp type5">
                                     <input type="text" className="inp"
-                                           id="user_number2" placeholder />
+                                           id="user_number2" />
                                     <span className="focus_bg" />
                                   </div>
                                   <p className="error_txt"><span
@@ -321,7 +321,6 @@ export default function OrderStep1 ({ location }) {
                                 <div className="acc_group parent">
                                   <div className="acc_inp type5">
                                     <input type="text" className="inp"
-                                           placeholder
                                            defaultValue="서울특별시 영등포구 여의도동 국제금융로 10 One IFC" />
                                     <span className="focus_bg" />
                                   </div>
@@ -515,7 +514,7 @@ export default function OrderStep1 ({ location }) {
                                   <div className="acc_inp disable_type">
                                     <input type="text" id="mileage"
                                            className="inp"
-                                           placeholder={0} /><span
+                                           placeholder="0" /><span
                                     className="unit">점</span>
                                     <span className="focus_bg" />
                                   </div>
