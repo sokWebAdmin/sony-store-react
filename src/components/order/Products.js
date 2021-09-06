@@ -1,17 +1,23 @@
+import { useState, useEffect } from 'react'
+
 const Products = props => {
   const { data } = props
+  const [products, setProducts] = useState([]);
 
-  const dataMapping = deliveryGroups => {
-    console.log(deliveryGroups)
-    return [1]
-  }
+  const dataMapping = deliveryGroups =>
+    deliveryGroups
+      .flatMap(deliveryGroup => deliveryGroup.orderProducts)
+
+  useEffect(() => {
+    setProducts(dataMapping(data))
+  }, [data])
 
   return (
     <ul>
       {
-        data?.length >= 1 ?
-          dataMapping(data).map((item) =>
-            <li>{item}</li>
+        products?.length >= 1 ?
+          products.map(product =>
+            <li>{product.productName}</li>
           ) :
           <h1>상품없음 UI</h1>
       }

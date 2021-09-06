@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useCallback, useState } from 'react';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
@@ -17,7 +17,7 @@ import { getUrlParam } from '../../utils/location'
 export default function OrderStep1 ({ location }) {
   const [ deliveryGroups, setDeliveryGroups ] = useState([]);
 
-  const init = {
+  const init = useCallback(() => ({
     async start() {
       await this.fetchOrderSheet(this.orderSheetNo)
     },
@@ -25,12 +25,17 @@ export default function OrderStep1 ({ location }) {
       return getUrlParam('orderSheetNo') ?? -1;
     },
     async fetchOrderSheet(orderSheetNo) {
+
       const { data: { deliveryGroups } } = await getOrderSheets(orderSheetNo)
       setDeliveryGroups(deliveryGroups);
     }
-  }
+  }), [])
 
-  useEffect(init.start.bind(init));
+  useEffect(() => {
+    init().start()
+  }, [init])
+  // useEffect(init.start.bind(init));
+
 
   return (
     <>
