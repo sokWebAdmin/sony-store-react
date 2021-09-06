@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
+import produce from "immer";
 import { getBoardConfiguration, getBoards } from "../api/manage";
 
 const defaultData = {
@@ -56,31 +57,27 @@ function mapConfiguration(data, originData) {
 function boardReducer(state, action) {
   switch (action.type) {
     case 'SET_CONFIGURATION':
-      return {
-        ...state,
-        config: mapConfiguration(action.data, state.config),
-      }
+      return produce(state, draft => {
+        draft.config = mapConfiguration(action.data, state.config)
+      });
     case 'GET_BOARD_LIST':
       // @fixme: 더보기 기능 완료 후 재확인 필요
-      return {
-        ...state,
-        [`${action.name}Board`]: {
+      return produce(state, draft => {
+        draft[`${action.name}Board`] = {
           totalCount: action.data.totalCount,
           items: action.data.items,
         }
-      }
+      })
     case 'SELECT_CATEGORY':
-      return {
-        ...state,
-        faqBoard: { ...defaultData.board },
-        isAll: !action.data.categoryNo,
-        currentCategoryNo: action.data.categoryNo,
-      }
+      return produce(state, draft => {
+        draft.faqBoard = { ...defaultData.board };
+        draft.isAll = !action.data.categoryNo;
+        draft.currentCategoryNo = action.data.categoryNo;
+      })
     case 'SELECT_TAB':
-      return {
-        ...state,
-        currentTab: action.data.currentTab,
-      }
+      return produce(state, draft => {
+        draft.currentTab = action.data.currentTab;
+      });
     default:
       throw new Error('INVALID_BOARD_ACTION_TYPE');
   }
