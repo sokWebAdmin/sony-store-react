@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useEffect } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -9,8 +9,19 @@ import SEOHelmet from '../../components/SEOHelmet';
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
-export default function orderStep1 ({ location }) {
+export default function OrderStep1 ({ location }) {
   console.log(location.state?.orderSheetNo);
+
+  const init = {
+    start() {
+      console.log('init')
+      console.group('route location')
+      console.log(location)
+      console.groupEnd();
+    }
+  }
+
+  useEffect(init.start);
 
   return (
     <>
