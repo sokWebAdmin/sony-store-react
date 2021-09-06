@@ -1,75 +1,31 @@
 import axios from "axios";
-import _ from "lodash";
-import {isMobile} from 'react-device-detect';
+import { getAccessToken } from '../../utils/token';
 
-
-const SERVER = "https://devstore.sony.co.kr/api/v1/";
-// const SERVER = "http://localhost:5000/api/v1/";
-// const SERVER = "http://61.101.55.185:50005/api/v1/";
+const SERVER = process.env.REACT_APP_SONY_API_URL;
 const Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb255IGFwaSB0b2tlbiIsImlzcyI6InN0b3JlLnNvbnkuY28ua3IiLCJpYXQiOjE2MjYwNTMxODAsIm5iZiI6MTYyNjA1MzEyMCwiZXhwIjozMzE2MjA1MzE4MH0.jCyxY2T4QqeDiIAIqqUcB835LpcFPnEyPU9lUhA_28c";
 
-const platform =  isMobile ? "Mobile Web Android" : "PC";
-//Mobile Web Android, Mobile Web IOS, App Android, App IOS, PC
-
 // API request 모듈
-const request = async (url, method, headers = {}, query, requestBody) => {
-  let Address = SERVER + url;
-  
-  if (query != null) {
-    Address += '?';
-
-    if (query instanceof Object) {
-      Address += _.chain(Object.entries(query))
-                  .reject(([_, v]) => !v)
-                  .map(([k, v]) => `${k}=${v}`)
-                  .join('&')
-                  .value()
-    } else {
-      Address += query;
-    }
-  }
+const request = async (url, method, query = {}, requestBody = null) => {
+  const queryParams = new URLSearchParams(query).toString();
+  const queryString = !queryParams || !query ? '' : `?${queryParams}`;
+  const requestUrl = SERVER + url + queryString;
 
   try {
-    var headerData = new Object()
-    headerData.Authorization = Authorization;
-    
-    const contentType = {"Content-Type": "application/json; charset=utf-8"}
-    headerData = Object.assign(headerData, contentType)
-    
-    if (headers != undefined && headers != null && (typeof headers == 'object')) {
-        headerData = Object.assign(headerData, headers)
-    }
+    let headers = {Authorization, 'Content-Type': 'application/json; charset=utf-8'};
+    const accessToken = getAccessToken();
 
-    if (method === "get") {
-        const data = await axios[method](Address,{
-          headers: headerData,
-          validateStatus: function (status) {
-            if(status == 400 || status == 200 || status == 401){
-              return true;
-            }
-          }
-        });
-        return data;
-    } else {
-      // post
-        const data = await axios[method](Address, requestBody, {
-          headers: headerData,
-                    validateStatus: function (status) {
-                      if(status == 400 || status == 200 || status == 401){
-              return true;
-            }
-          }
-        });
-        return data;
-    }
+    if (accessToken) Object.assign(headers, { accessToken });
+
+    return await axios({
+      method,
+      headers,
+      url: requestUrl,
+      data: requestBody,
+      validateStatus: status => status
+    })
   } catch (error) {
-    console.log(JSON.stringify(error))
-    console.log("request function error", error, url);
-    // api 오류일때
-    return "error";
-    await Promise.reject(error);
+    console.error(error);
   }
 };
-
 
 export default request;

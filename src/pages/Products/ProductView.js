@@ -39,7 +39,7 @@ import { postOrderSheets } from '../../api/order';
 export default function ProductView({match}) {
   const history = useHistory();
 
-  const {onChangeGlobal, shopByToken} = useContext(GlobalContext)
+  const {onChangeGlobal, isLogin} = useContext(GlobalContext)
   const {product_no} = match.params;
 
   //ui

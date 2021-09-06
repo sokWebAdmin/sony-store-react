@@ -11,7 +11,7 @@ import {getProfile} from "../../api/member";
 import "../../assets/scss/contents.scss"
 
 //utils
-import {emptyCheck, tokenValidation} from '../../utils/utils'
+import { emptyCheck, isLogin } from '../../utils/utils';
 import { useHistory } from "react-router-dom";
 
 //lib
@@ -19,11 +19,10 @@ import Cookies from "js-cookie";
 
 //context
 import GlobalContext from '../../context/global.context';
-
-
+import { setAccessToken } from '../../utils/token';
 
 export default function Login() {
-  const {onChangeGlobal, shopByToken} = useContext(GlobalContext)
+  const {onChangeGlobal, isLogin} = useContext(GlobalContext)
 
   const history = useHistory();
 
@@ -31,7 +30,7 @@ export default function Login() {
   const [isPwVisible, setPwVisible] = useState(false);
 
   //state
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(Cookies.get('sony_email') ?? '');
   const [pw, setPw] = useState('');
 
   //validation
@@ -58,50 +57,40 @@ export default function Login() {
       setIsPw(false)
     }
 
-    if(validation == true){
+    if(validation){
       const response = await loginApi(email, password);
-      console.log(response)
-      if(response.status != 200) {
-        if(response.data){
-          alert(response.data.message);
-        } else{
-          alert("아이디/비밀번호를 확인해주세요.");
-        }
-        return;
-      }else if(response.status == 200){
-        const tokenValue = response.data.accessToken;
-        
-        await _getProfile(tokenValue);
-        await Cookies.set("shopByToken", tokenValue);
-      
+      if(response.status !== 200) {
+        alert("아이디/비밀번호를 확인해주세요.");
+      }else {
+        const {accessToken, expireIn} = response.data;
+        setAccessToken(accessToken, expireIn);
+        onChangeGlobal({isLogin: true})
+        await _getProfile();
+
         if(saveEmail === true){
           Cookies.set("sony_email", email);
         }else{
           Cookies.remove("sony_email");
         }
+        history.push('/')
       }
     }
   }
 
-  const _getProfile = async(token) => {
-    const response = await getProfile(token);
-    if(response.status == 200){
-      console.log(response)
-      onChangeGlobal({shopByToken: token, profile: response.data})
+  const _getProfile = async() => {
+    const response = await getProfile();
+    if(response.status === 200){
+      onChangeGlobal({profile: response.data})
     }
   }
 
   //componentDidMount
   useEffect(()=>{
     //로그인 상태인 경우, 메인화면으로 자동 이동처리
-    console.log(shopByToken)
-    if(shopByToken !== undefined && shopByToken !== ''){
-      //valid check
-      if(tokenValidation(shopByToken)){
-        history.push("/")
-      }
+    if (isLogin) {
+      history.push('/');
     }
-  },[shopByToken])
+  },[])
 
 
     return (

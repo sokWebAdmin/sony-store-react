@@ -1,71 +1,54 @@
-import axios from "axios";
-import _ from "lodash";
-import {isMobile} from 'react-device-detect';
+import axios from 'axios';
+import { isMobile } from 'react-device-detect';
+import { getAccessToken, getGuestToken } from '../utils/token';
 
-
-const SERVER = "https://alpha-api.e-ncp.com/";
-const version = "1.0";
-const clientId = "MzuMctQTZBXWmdTlujFy3Q==";
+const SERVER = process.env.REACT_APP_API_URL;
+const version = '1.0';
+const clientId = 'MzuMctQTZBXWmdTlujFy3Q==';
 //SonyStore ALPHA
-const platform =  isMobile ? "MOBILE_WEB" : "PC";
+const platform = isMobile ? 'MOBILE_WEB' : 'PC';
+const credentialLevelUrl = {
+  guest: ['/guest'],
+}
 // API request 모듈
-const request = async (url, method, headers = {}, query, requestBody) => {
-  let Address = SERVER + url;
-  
-  if (query != null) {
-    Address += '?';
-
-    if (query instanceof Object) {
-      Address += _.chain(Object.entries(query))
-                  .reject(([_, v]) => !v)
-                  .map(([k, v]) => `${k}=${v}`)
-                  .join('&')
-                  .value()
-    } else {
-      Address += query;
-    }
-  }
+const request = async (url, method, query = {}, requestBody = null) => {
+  const queryParams = typeof query === 'string' ? query : new URLSearchParams(query).toString();
+  const queryString = !queryParams || !query ? '' : `?${queryParams}`;
+  const requestUrl = SERVER + url + queryString;
 
   try {
-    let headerData = new Object()
-    headerData.platform = platform;
-    headerData.clientId = clientId;
-    headerData.Version = version;
-    
-    const contentType = {"Content-Type": "application/json; charset=utf-8"}
-    headerData = Object.assign(headerData, contentType)
-    
-    if (headers != undefined && headers != null && (typeof headers == 'object')) {
-        headerData = Object.assign(headerData, headers)
+    let headers = {platform, clientId, Version: version};
+    const isFormData = requestBody instanceof FormData;
+    const contentType = { 'Content-Type': 'application/json; charset=utf-8' };
+    if (!isFormData) {
+      headers = Object.assign(headers, contentType);
     }
 
-    if (method === "get") {
-        const data = await axios[method](Address,{
-          headers: headerData,
-          validateStatus: function (status) {
-            if(status == 400 || status == 200 || status == 401){
-              return true;
-            }
-          }
-        });
-        return data;
+    const accessToken = getAccessToken();
+    const guestToken = getGuestToken();
+
+    const credentialLevel =
+      Object.entries(credentialLevelUrl).find((
+        [_, value],
+      ) => value.some(url => requestUrl.startsWith(url)))?.[0] ?? null;
+
+    if (credentialLevel === 'guest') {
+      if (guestToken) Object.assign(headers, { guestToken });
     } else {
-      // post
-        const data = await axios[method](Address, requestBody, {
-          headers: headerData,
-                    validateStatus: function (status) {
-                      if(status == 400 || status == 200 || status == 401){
-              return true;
-            }
-          }
-        });
-        return data;
+      if (accessToken) Object.assign(headers, { accessToken });
+      if (guestToken) Object.assign(headers, { guestToken });
     }
+
+    return await axios({
+      method,
+      headers,
+      url: requestUrl,
+      data: requestBody,
+      validateStatus: status => status
+    })
   } catch (error) {
-    console.error(error)
-    // api 오류일때
-    await Promise.reject(error);
-    return "error";
+    console.error(error);
+    throw error;
   }
 };
 

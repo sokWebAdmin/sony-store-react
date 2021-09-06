@@ -1,5 +1,5 @@
 
-import { React, useRef, useContext } from "react";
+import React, { useRef, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 //util
@@ -16,8 +16,7 @@ export default function EspProduct({product}) {
 
   // TODO 일단 코드상 로그인 여부를 토큰 존재 여부로 판단하는 것 같아서 이렇게 함
   // TODO isLogin() 같은 글로벌 함수가 있음 좋지 않을까?
-  const { shopByToken } = useContext(GlobalContext);
-  const isLogin = !!shopByToken;
+  const { isLogin } = useContext(GlobalContext);
 
   const toggleDescription = () => {
     const className = description.current.className;

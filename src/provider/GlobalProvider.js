@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { BoardProvider } from '../context/board.context';
 import GlobalContext from '../context/global.context';
 import { MallProvider } from '../context/mall.context';
+import { getAccessToken } from '../utils/token';
 
 const GlobalProvider = ({ children }) => {
   const onChangeGlobal = values => {
@@ -13,7 +14,7 @@ const GlobalProvider = ({ children }) => {
   };
   const initialState = {
     onChangeGlobal,
-    shopByToken:'',
+    isLogin: !!(getAccessToken() && getAccessToken() !== ''),
   };
   const [option, setOption] = useState(initialState);
 
