@@ -28,6 +28,8 @@ import GlobalContext from '../../context/global.context';
 import { wonComma } from '../../utils/utils';
 import {useWindowSize} from '../../utils/utils'
 import { useHistory } from "react-router-dom";
+import CountBox from '../../components/common/CountBox';
+import _, { sum } from 'lodash';
 import SelectBox from '../../components/common/SelectBox';
 
 //image
@@ -217,6 +219,7 @@ export default function ProductView({match}) {
                         <>
                           <div className="prd_select_box">
                             <p className="tit">제품선택</p>
+
                               <SelectBox 
                                 selectOptions={productOptions?.flatOptions ?? []}
                                 selectOption={option => {
@@ -228,6 +231,7 @@ export default function ProductView({match}) {
                                   setTotalPrice(totalPrice + option.buyPrice);
                                 }}
                               />
+                              
                           </div>
                         </>
                     
@@ -249,54 +253,42 @@ export default function ProductView({match}) {
                   </div> */}
                 </div>
                 <div className="opt_count">
-                  <div className="count_box">
-                    <button className="minus" onClick={()=>{
-                      if(item.buyCnt == 1) {
-                        alert("한개 이상 선택되어야 합니다.")
-                        return;
-                      }
-                      
-                      item.buyCnt -= 1;
-                      let tempOptionList = selectedOption;
-                      tempOptionList[itemIndex] = item;
-                      
-                      setSelectedOption(tempOptionList)
+                  <CountBox 
+                    initialCount={item?.buyCnt}
+                    maxCount={item.stockCnt}
+                    changedCount={currentCount => {
+                      if (!currentCount) return;
+                      const { buyCnt: prevBuyCnt, buyPrice } = selectedOption[itemIndex];
 
-                      setTotalCnt(totalCnt - 1);
-                      setTotalPrice(totalPrice - item.buyPrice);
-
-                    }}>감소</button>
-                    <input type="text" readonly="readonly" value={item.buyCnt} className="count" />
-                    <button className="plus" onClick={()=>{
-                      if(item.buyCnt + 1 > item.stockCnt) {
-                        alert("최대 구매 가능 갯수를 초과합니다.")
-                        return;
-                      }
+                      const tempOptionList = selectedOption;
+                      tempOptionList[itemIndex] = {
+                        ...item,
+                        buyCnt: currentCount,
+                      };
                       
-                      item.buyCnt += 1;
-                      let tempOptionList = selectedOption;
-                      tempOptionList[itemIndex] = item;
-                      
-                      setSelectedOption(tempOptionList)
+                      setSelectedOption(() => tempOptionList);
 
-                      setTotalCnt(totalCnt + 1);
-                      setTotalPrice(totalPrice + item.buyPrice);
-
-                    }}>증가</button>
-                  </div>
+                      setTotalCnt(
+                        () => _.chain(tempOptionList)
+                                .map(({ buyCnt }) => buyCnt)
+                                .sum()
+                                .value()
+                      )
+                      setTotalPrice(() => totalPrice - (prevBuyCnt * buyPrice) + (currentCount * buyPrice))
+                    }}
+                  />
+                  
                   <p className="opt_price"><strong className="price">{wonComma(item.buyPrice * item.buyCnt)}</strong>원</p>
                 </div>
-                <a  className="prd_delete" onClick={()=>{
-                  let tempOptionList = selectedOption.filter(function(element){
-                    return element!= item;
-                });
+                <a href="#delete" className="prd_delete" onClick={ event => {
                 
-                setTotalCnt(totalCnt - item.buyCnt);
-                setTotalPrice(totalPrice - (item.buyCnt * item.buyPrice));
-
+                  event.preventDefault();
+                  const tempOptionList = selectedOption.filter(({ optionNo }) => optionNo !== item.optionNo)
+                
+                  setTotalCnt(totalCnt - item.buyCnt);
+                  setTotalPrice(totalPrice - (item.buyCnt * item.buyPrice));
 
                   setSelectedOption(tempOptionList)
-                  
                   
                 }}>구매 목록에서 삭제</a>
               </div>  
@@ -309,8 +301,8 @@ export default function ProductView({match}) {
                 </div>
                 <div className="result_list">
                   <div className="result_chk_box">
-                    <p className="tit">총 상품금액 <span className="s_txt">(총 <span className="count">{totalCnt != 0 ? totalCnt : "-"}</span>개)</span></p>
-                    <p className="result_price"><span className="num">{totalPrice != 0 ? wonComma(totalPrice) : "-"}</span> 원</p>
+                    <p className="tit">총 상품금액 <span className="s_txt">(총 <span className="count">{totalCnt > 0 ? totalCnt : "-"}</span>개)</span></p>
+                    <p className="result_price"><span className="num">{totalPrice > 0 ? wonComma(totalPrice) : "-"}</span> 원</p>
                   </div>
                 </div>
                 <div className="result_btn_inner">
