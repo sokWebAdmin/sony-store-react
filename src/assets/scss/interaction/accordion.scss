@@ -1,0 +1,10 @@
+.trigger {
+  cursor: pointer
+}
+
+.parentNode {
+  display: block;
+  overflow: hidden;
+  height: 0;
+  transition: height 0.35s ease;
+}
