@@ -7,6 +7,7 @@ const LayerPopup = ({ children, onClose, className, size = 'ms' }) => {
   });
 
   const close = (e) => {
+    document.body.style.overflow = "auto";
     onClose?.(e);
   }
 
