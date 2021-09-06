@@ -14,7 +14,6 @@ import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../../cont
 
 //components
 import FaqContent from './faq/faqContent';
-import { Link } from 'react-router-dom';
 import Tabs from './tabs';
 
 export default function Faq() {

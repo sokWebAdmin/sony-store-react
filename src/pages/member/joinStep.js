@@ -161,7 +161,7 @@ export default function JoinStep() {
       viasite: "SonyStyle",
       sms:"N",
       mobileflag: "N",
-      servicesite: {mallid:"SonyStyle", news:"N", snsinfo:""},
+      servicesite: {news:"N", snsinfo:null},
       password : password,
     }
 
@@ -387,8 +387,8 @@ export default function JoinStep() {
                 
 
                 <div className="btn_box full">
-                  <button type="button" className="btn btn_dark" onClick={()=>{
-                      _registerApi();
+                  <button type="button" className="btn btn_dark" onClick={async ()=>{
+                      await _registerApi();
                   }}>가입 완료</button>
                 </div>
               </div>
