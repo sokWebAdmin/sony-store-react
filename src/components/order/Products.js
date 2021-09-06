@@ -6,7 +6,7 @@ const Products = props => {
   const [products, setProducts] = useState([]);
 
   const dataMapping = deliveryGroups =>
-    deliveryGroups.flatMap(deliveryGroup => makeOrderProductInfo(deliveryGroup));
+    deliveryGroups?.flatMap(deliveryGroup => makeOrderProductInfo(deliveryGroup));
 
   function makeOrderProductInfo (deliveryGroup) {
     const REPRESENTATIVE_PRODUCT = 0;

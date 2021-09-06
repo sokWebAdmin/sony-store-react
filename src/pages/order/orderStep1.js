@@ -3,6 +3,7 @@ import { React, useEffect, useCallback, useState } from 'react';
 // components
 import SEOHelmet from '../../components/SEOHelmet';
 import Products from '../../components/order/Products'
+import Accordion from '../../components/common/surface/Accordion'
 
 //api
 import { getOrderSheets } from "../../api/order";
@@ -81,6 +82,7 @@ export default function OrderStep1 ({ location }) {
                   <div className="order_left">
                     <div className="acc acc_ui_zone">
                       {/* acc_item */}
+                      <Accordion />
                       <div className="acc_item on">
                         <div className="acc_head">
                           <a className="acc_btn" title="주문자 정보 열기">
