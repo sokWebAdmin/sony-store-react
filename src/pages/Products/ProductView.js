@@ -37,7 +37,7 @@ import SelectBox from '../../components/common/SelectBox';
 export default function ProductView({match}) {
   const history = useHistory();
 
-  const {onChangeGlobal, shopByToken} = useContext(GlobalContext)
+  const {onChangeGlobal, isLogin} = useContext(GlobalContext)
   const {product_no} = match.params;
 
   //ui
@@ -314,7 +314,7 @@ export default function ProductView({match}) {
                       <li className="final">
                         <a  onClick={()=>{
                           //구매 로직 
-                          if(shopByToken){
+                          if(isLogin){
                             
                           }else{
                             alert("로그인 후 이용해주세요.")

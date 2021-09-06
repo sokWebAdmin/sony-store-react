@@ -19,27 +19,29 @@ import GlobalContext from '../context/global.context';
 
 //utils
 import { useHistory } from "react-router-dom";
+import { removeAccessToken } from '../utils/token';
+import { getProfile } from '../api/member';
 
 export default function Header() {
   const history = useHistory();
+  const {onChangeGlobal, isLogin} = useContext(GlobalContext)
 
+  const [profile, setProfile] = useState(null);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
-
   const [sideBarOpen, setMobileSideBarOpen] = useState(false);
-  const [isLoggedIn, setLoggedIn] = useState(false);
 
-  const {shopByToken, onChangeGlobal, profile} = useContext(GlobalContext)
+  const fetchProfileData = async () => {
+    const response = await getProfile();
+    setProfile(response.data);
+  }
 
-    useEffect(()=>{
-      console.log("token Changed")
-      console.log(shopByToken)
-      if(shopByToken){
-        setLoggedIn(true);
-      }else{
-        setLoggedIn(false);
-      }
-    },[shopByToken])
+  useEffect(() => {
+    if (isLogin) {
+      fetchProfileData();
+    }
+  }, [])
+
   return (
     <>
       <header id="header" className={`header ${sideBarOpen == true && "header--active"}`}>
@@ -65,7 +67,7 @@ export default function Header() {
   
             {/* 비회원/로그인 전 */}
             {
-              isLoggedIn === false &&
+              !isLogin &&
               <>
               <div className={`member ${isInfoOpen && "member--visible"}`}>
             <div className="member__inner">
@@ -88,7 +90,7 @@ export default function Header() {
             
             {/* 회원/로그인 */}
             {
-              isLoggedIn === true && profile != undefined &&
+              isLogin && profile &&
               <>
               <div className={`member ${isInfoOpen && "member--visible"}`}>
                 <div className="member__inner">
@@ -102,8 +104,8 @@ export default function Header() {
                     </div>
                     <button type="button" className="btn btn__logout" onClick={()=>{
                       setInfoOpen(false)
-                      onChangeGlobal({shopByToken:""})
-                      setLoggedIn(false)
+                      removeAccessToken();
+                      onChangeGlobal({isLogin: false})
                     }}>로그아웃</button>
                 </div>
                 </div>

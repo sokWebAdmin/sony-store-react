@@ -11,7 +11,7 @@ import {sendSMS, verifySMS} from '../../api/auth';
 import "../../assets/scss/contents.scss"
 
 //utils
-import { emptyCheck, tokenValidation } from '../../utils/utils';
+import { emptyCheck, isLogin } from '../../utils/utils';
 import { useHistory } from "react-router-dom";
 
 //context
@@ -19,13 +19,12 @@ import GlobalContext from '../../context/global.context';
 import Alert from '../../components/common/Alert';
 
 export default function JoinStep() {
-  const {shopByToken} = useContext(GlobalContext)
+  const {isLogin} = useContext(GlobalContext)
 
   const history = useHistory();
 
   const [isPwVisible, setPwVisible] = useState(false);
   const [isConfirmVisible, setConfirmVisible] = useState(false);
-
 
   //state
   const [email, setEmail] = useState('');
@@ -92,7 +91,7 @@ export default function JoinStep() {
       setIsPassword(false);
       return;
     }else{
-      if(password.match(/^[a-zA-Z0-9]{8,20}$/)){
+      if(password.match(/^[a-zA-Z0-9]{10,15}$/)){
         setIsPassword(true);
       } else{
         setPwWrongType(2);
@@ -232,13 +231,10 @@ export default function JoinStep() {
   //componentDidMount
   useEffect(()=>{
     //로그인 상태인 경우, 메인화면으로 자동 이동처리
-    if(shopByToken !== undefined && shopByToken !== ''){
-      //valid check
-      if(tokenValidation(shopByToken)){
-        history.push("/")
-      }
+    if (isLogin) {
+      history.push('/');
     }
-  },[shopByToken])
+  },[])
 
   const timeFormat = (time) => {
     const m = Math.floor(time / 60).toString()
