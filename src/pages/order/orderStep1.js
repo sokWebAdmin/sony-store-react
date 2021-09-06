@@ -4,24 +4,30 @@ import { React, useEffect } from 'react';
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
+import { getOrderSheets } from "../../api/order";
 
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
-export default function OrderStep1 ({ location }) {
-  console.log(location.state?.orderSheetNo);
+// functions
+import { getUrlParam } from '../../utils/location'
 
+export default function OrderStep1 ({ location }) {
   const init = {
-    start() {
-      console.log('init')
-      console.group('route location')
-      console.log(location)
-      console.groupEnd();
+    async start() {
+      await this.fetchOrderSheet(this.orderSheetNo)
+    },
+    get orderSheetNo() {
+      return getUrlParam('orderSheetNo') ?? -1;
+    },
+    async fetchOrderSheet(orderSheetNo) {
+      const { data } = await getOrderSheets(orderSheetNo)
+      console.log(data)
     }
   }
 
-  useEffect(init.start);
+  useEffect(init.start.bind(init));
 
   return (
     <>
@@ -58,6 +64,7 @@ export default function OrderStep1 ({ location }) {
                       </div>
                     </div>
                     <div className="col_table_body">
+
                       <div className="col_table_row">
                         <div className="col_table_cell prd_wrap">
                           <div className="prd">
@@ -84,6 +91,7 @@ export default function OrderStep1 ({ location }) {
                           8,598,000 <span className="won">원</span>
                         </div>
                       </div>
+
                       <div className="col_table_row">
                         <div className="col_table_cell prd_wrap">
                           <div className="prd">
