@@ -1,7 +1,8 @@
 import { React, useEffect } from 'react';
 
-//SEO
+// components
 import SEOHelmet from '../../components/SEOHelmet';
+import Products from '../../components/order/Products'
 
 //api
 import { getOrderSheets } from "../../api/order";
@@ -14,6 +15,10 @@ import '../../assets/scss/order.scss';
 import { getUrlParam } from '../../utils/location'
 
 export default function OrderStep1 ({ location }) {
+  const data = {
+    deliveryGroups: [1]
+  }
+
   const init = {
     async start() {
       await this.fetchOrderSheet(this.orderSheetNo)
@@ -23,7 +28,9 @@ export default function OrderStep1 ({ location }) {
     },
     async fetchOrderSheet(orderSheetNo) {
       const { data } = await getOrderSheets(orderSheetNo)
-      console.log(data)
+      const { deliveryGroups } = data;
+      data.deliveryGroups = deliveryGroups;
+      console.log(data.deliveryGroups)
     }
   }
 
@@ -63,6 +70,9 @@ export default function OrderStep1 ({ location }) {
                         <div className="col_table_cell">합계</div>
                       </div>
                     </div>
+
+                    <Products data={data.deliveryGroups} />
+
                     <div className="col_table_body">
 
                       <div className="col_table_row">
