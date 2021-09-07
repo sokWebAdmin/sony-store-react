@@ -23,7 +23,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
     validateStatus: status => status,
   }).then((response) => {
     if (response.errorCode === '9995' || response.errorCode === '9997' || response.errorCode === '9998' || response.errorCode === '9999') {
-      window.history.replace('/error-server');
+      window.location.replace('/error-server');
     } else {
       return response;
     }
