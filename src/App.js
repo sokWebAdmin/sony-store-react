@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Switch, useLocation, Route } from 'react-router-dom';
+import { Switch, useLocation, Route } from 'react-router-dom';
 
 //Component
 import Header from './components/Header';
@@ -111,7 +111,6 @@ const App = (props) => {
           </div>
           {/* 헤더 */}
           <Header />
-          <BrowserRouter>
             <Switch>
               {/* 메인 */}
               <Route exact path="/" component={Main} />
@@ -190,7 +189,6 @@ const App = (props) => {
               <Route component={Error404} />
               {/* 푸터 */}
             </Switch>
-          </BrowserRouter>
           <Footer />
         </div>
       ) : (
