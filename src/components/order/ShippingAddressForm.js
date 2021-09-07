@@ -22,25 +22,25 @@ const ShippingAddressForm = prop => {
   return (
     <>
       {isLogin &&
-        <div className="acc_form">
-          <div className="acc_cell">
-            <label htmlFor="delivery_choice">배송지 선택</label>
-          </div>
-          <div className="acc_cell">
-            <div className="acc_group parent">
-              <div className="acc_inp type4">
-                <p className="delivery_txt">배송지를 선택하세요.</p>
-                <div className="delivery_btn_box">
-                  <button
-                    className="button button_negative button-s popup_comm_btn"
-                    type="button"
-                    data-popup-name="shipping_addr">최근 배송지
-                  </button>
-                </div>
+      <div className="acc_form">
+        <div className="acc_cell">
+          <label htmlFor="delivery_choice">배송지 선택</label>
+        </div>
+        <div className="acc_cell">
+          <div className="acc_group parent">
+            <div className="acc_inp type4">
+              <p className="delivery_txt">배송지를 선택하세요.</p>
+              <div className="delivery_btn_box">
+                <button
+                  className="button button_negative button-s popup_comm_btn"
+                  type="button"
+                  data-popup-name="shipping_addr">최근 배송지
+                </button>
               </div>
             </div>
           </div>
         </div>
+      </div>
       }
       <div className="acc_form">
         <div className="acc_cell vat">
@@ -54,7 +54,10 @@ const ShippingAddressForm = prop => {
               <input type="text" className="inp"
                      id="user_name2"
                      placeholder="이름을 입력하세요."
-                     defaultValue="sony@sony.co.kr" />
+                     name="receiverName"
+                     value={shipping.receiverName}
+                     onChange={handleChange}
+              />
               <span className="focus_bg" />
             </div>
             <p className="error_txt"><span
