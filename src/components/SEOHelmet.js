@@ -1,12 +1,10 @@
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Helmet } from "react-helmet";
 
 const SEOHelmet = ({ title }) => (
     <>
-        <HelmetProvider>
-            <Helmet>
-                <title>{ title }</title>
-            </Helmet>
-        </HelmetProvider>
+        <Helmet>
+            <title>{ title }</title>
+        </Helmet>
     </>
 )
 
