@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 
-export default function DropDownSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedLabel, tag }) {
+export default function DropdownSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedLabel, tag }) {
   const isOpened = useMemo(() => display === 'block', [display]);
   return (
-    <div className={ `select_ui_zone tit_btm_line ${ isOpened ? 'open' : '' }` }>
+    <div className={ `select_ui_zone btm_line ${ isOpened ? 'open' : '' }` }>
       <a
         href="#select"
         className="selected_btn"
@@ -39,7 +39,7 @@ export default function DropDownSelector({ selectOptions, onToggleHandler, onCli
   );
 };
 
-DropDownSelector.defaultProps = {
+DropdownSelector.defaultProps = {
   defaultInfo: {
     type: 'dropbox',
     placeholder: '쿠폰을 선택해주세요.',

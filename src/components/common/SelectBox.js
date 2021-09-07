@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from "react";
 import { useToggle } from "../../hooks";
 import BoxSelector from "./selectbox/Box";
-import DropDownSelector from "./selectbox/DropDown";
+import DropdownSelector from './selectbox/Dropdown';
+import DropdownHighlightSelector from "./selectbox/DropdownHighlight";
 
 const selector = {
   box: BoxSelector,
-  dropdown: DropDownSelector
+  dropdown: DropdownSelector,
+  dropdownHighlight: DropdownHighlightSelector
 };
 
 const validator = {
@@ -19,7 +21,7 @@ const validator = {
  * SelectBox
  * 
  * @params defaultInfo = {
- *            type?: 'dropdown' | 'box'; default = 'box';
+ *            type?: 'dropdown' | 'dropdownHighlight' | 'box'; default = 'box';
  *            placeholder?: string;
  *            tag?: string;
  *          }
