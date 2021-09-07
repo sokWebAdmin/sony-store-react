@@ -3,7 +3,7 @@ import { useMemo } from "react";
 export default function DropDownHighlightSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedLabel, tag }) {
   const isOpened = useMemo(() => display === 'block', [display]);
   return (
-    <div className={ `select_ui_zone tit_btm_line ${ isOpened ? 'open' : '' }` }>
+    <div className={ `select_ui_zone btm_line ${ isOpened ? 'open' : '' }` }>
       <a
         href="#select"
         className="selected_btn"
