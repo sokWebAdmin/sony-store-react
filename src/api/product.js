@@ -39,12 +39,6 @@ export const themeProducts = (categoryNo)=> {
   return request("products/search?fromDB=true&categoryNos="+categoryNo+"&order.by=RECENT_PRODUCT&pageSize=4", "get", null, {});
 };
 
-export const getProductSearch = (query) => {
-  let strQuery = '';
-
-  for (const key in query) {
-    strQuery += `${key}=${query[key]}&`;
-  }
-
-  return request(`products/search?${strQuery}`, "get", null, {});
+export const getProductSearch = query => {
+  return request(`products/search`, "get", query, {});
 };
