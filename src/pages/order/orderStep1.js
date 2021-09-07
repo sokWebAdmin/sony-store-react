@@ -40,6 +40,7 @@ export default function OrderStep1 ({ location }) {
     receiverContact1: '',
     receiverContact2: '',
     customsIdNumber: '',
+    deliveryMemo: '', // not a shipping address member
   });
 
   const init = useCallback(() => ({

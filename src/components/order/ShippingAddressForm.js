@@ -7,8 +7,9 @@ const ShippingAddressForm = prop => {
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
-  // receiverContact1, receiverContact2, customsIdNumber,
+  // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
   const { shipping, setShipping } = prop;
+  // TODO. 배송일 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -80,7 +81,11 @@ const ShippingAddressForm = prop => {
             className="acc_group parent">
             <div className="acc_inp type5">
               <input type="text" className="inp"
-                     id="user_number2" />
+                     id="user_number2"
+                     name="receiverContact1"
+                     value={shipping.receiverContact1}
+                     onChange={handleChange}
+              />
               <span className="focus_bg" />
             </div>
             <p className="error_txt"><span
@@ -100,7 +105,10 @@ const ShippingAddressForm = prop => {
               <input type="text" className="inp"
                      id="user_address"
                      placeholder="주소를 입력하세요."
-                     defaultValue={'08008'} />
+                     name="receiverZipCd"
+                     value={shipping.receiverZipCd}
+                     onChange={handleChange}
+              />
               <span className="focus_bg" />
               <div className="delivery_btn_box type1">
                 <button
@@ -116,7 +124,10 @@ const ShippingAddressForm = prop => {
           <div className="acc_group parent">
             <div className="acc_inp type5">
               <input type="text" className="inp"
-                     defaultValue="서울특별시 영등포구 여의도동 국제금융로 10 One IFC" />
+                     name="receiverAddress"
+                     value={shipping.receiverAddress}
+                     onChange={handleChange}
+              />
               <span className="focus_bg" />
             </div>
           </div>
@@ -125,7 +136,10 @@ const ShippingAddressForm = prop => {
             <div className="acc_inp type5">
               <input type="text" className="inp"
                      placeholder="상세 주소를 입력하세요."
-                     defaultValue="24cmd (주)소니코리아" />
+                     name="receiverDetailAddress"
+                     value={shipping.receiverDetailAddress}
+                     onChange={handleChange}
+              />
               <span className="focus_bg" />
             </div>
             <p className="error_txt"><span
@@ -135,8 +149,7 @@ const ShippingAddressForm = prop => {
       </div>
       <div className="acc_form">
         <div className="acc_cell vat">
-          <label htmlFor="delivery_request">배송 요청
-            사항</label>
+          <label htmlFor="delivery_request">배송 요청 사항</label>
         </div>
         <div className="acc_cell">
           <div className="acc_group parent">
@@ -194,7 +207,11 @@ const ShippingAddressForm = prop => {
           <div className="acc_group parent">
             <div className="acc_inp type3">
               <input type="text" className="inp"
-                     placeholder="배송 메모를 입력하세요." />
+                     placeholder="배송 메모를 입력하세요."
+                     name="deliveryMemo"
+                     value={shipping.deliveryMemo}
+                     onChange={handleChange}
+              />
               <span className="focus_bg" />
             </div>
           </div>
