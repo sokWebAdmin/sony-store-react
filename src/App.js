@@ -148,7 +148,7 @@ const App = (props) => {
               <Route exact path="/my-page/withdraw-complete" component={withdrawComplete} />
 
               {/* 상품 상세페이지 */}
-              <Route exact path="/product-view/:product_no" component={ProductView} />
+              <Route exact path="/product-view/:productNo" component={ProductView} />
 
               {/* 주문 */}
               <Route exact path="/order/agree" component={orderAgree} />
