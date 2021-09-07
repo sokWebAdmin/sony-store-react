@@ -169,9 +169,6 @@ export default function Gnb() {
                     <a >고객 서비스</a>
                     <ul className="gnb__menu__secondary">
                         <li>
-                        <a  onClick={()=>{
-                            history.push("/faq")
-                        }}>공지사항</a>
                         <a  onClick={()=>{history.push('/faq')}}>FAQ&amp;공지사항</a>
                         </li>
                         <li>
