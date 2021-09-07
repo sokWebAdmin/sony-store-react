@@ -1,4 +1,12 @@
 .find_address {
+  @media screen and (max-width: 640px) {
+    width: 100% !important;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+
   .search_container {
     display: flex;
 
@@ -29,6 +37,11 @@
   .result {
     overflow: scroll;
     max-height: 50vh;
+    margin-top: 10px;
+
+    @media screen and (max-width: 640px) {
+      max-height: calc(100vh - 150px);
+    }
 
     .addresses {
       li button {
