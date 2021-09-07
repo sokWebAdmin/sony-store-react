@@ -48,7 +48,13 @@ const request = async (url, method, query = {}, requestBody = null) => {
     })
   } catch (error) {
     console.error(error);
-    throw error;
+    if (error.response.status === 404) {
+      window.history.push('/404');
+    } else if (error.response.status === 500) {
+      window.history.push('/error-server');
+    } else {
+      throw error;
+    }
   }
 };
 
