@@ -33,11 +33,9 @@ export default function Header() {
   const [sideBarOpen, setMobileSideBarOpen] = useState(false);
 
   useEffect(() => isLogin && fetchProfile(profileDispatch), []);
-  console.log(profile, 'outer');
+  
   useEffect(() => {
-    console.log(profile, 'profile');
     if (!profile.customerId) return;
-    console.log(profile.customerId, 'tttttt');
     profile.customerId && fetchMyProfile(profileDispatch, { type: '30', customerid: profile.customerId })
   }, [profileDispatch, profile.customerId])
 
