@@ -14,22 +14,24 @@ import '../../assets/scss/partials/popup/findAddress.scss';
 const FindAddress = () => {
   // LayerPopup 상태관리
   const [visible, setVisible] = useState(true);
+
   const [searchKeyword, setSearchKeyword] = useState('');
+
+  const [items, setItems] = useState([])
 
   const close = () => setVisible(false);
 
   const submit = event => {
     event.preventDefault()
-    return fetchAddresses()
+    fetchAddresses()
   };
 
-  async function fetchAddresses() {
-    const { data } = await getAddresses({
+  function fetchAddresses() {
+    getAddresses({
       keyword: searchKeyword,
       pageNumber: 1, // TODO
       pageSize: 10, // TODO
-    })
-    console.log(data)
+    }).then(({ data }) => setItems(data.items))
   }
 
   return (
