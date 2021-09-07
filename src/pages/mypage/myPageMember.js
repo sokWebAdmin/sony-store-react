@@ -14,7 +14,11 @@ import { useProfileState } from '../../context/profile.context';
 export default function MyPageMember() {
   const profileState = useProfileState();
   console.log(profileState);
-  
+  const handleSubmit = (event, ...pros) => {
+    event.preventDefault();
+    
+    console.log(event, pros);
+  }
 
     return (
         <>
@@ -25,7 +29,7 @@ export default function MyPageMember() {
     <a href="../../html/mypage/myPageMain.html" className="common_head_back">마이페이지</a>
     <h1 className="common_head_name">회원정보</h1>
   </div>
-  <form action>
+  <form onSubmit={ handleSubmit }>
     <div className="member_info">
       <div className="member_withdrawal">
         <a  className="button button_secondary button-s">회원탈퇴</a>
@@ -210,7 +214,7 @@ export default function MyPageMember() {
         {/* // 로봇이 아닙니다. */}
       </div>{/* // member_info_list */}
       <div className="btn_article">
-        <button className="button button_positive button-full popup_comm_btn" data-popup-name="modify_pw_chk" type="button">회원정보 수정</button>
+        <button className="button button_positive button-full popup_comm_btn" data-popup-name="modify_pw_chk" type="submit">회원정보 수정</button>
       </div>
     </div>
   </form>
