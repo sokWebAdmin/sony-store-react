@@ -9,7 +9,6 @@ import { getAddresses } from '../../api/manage';
 // stylesheet
 import '../../assets/scss/partials/popup/findAddress.scss';
 
-
 // 주소 찾기 팝업
 const FindAddress = () => {
   // LayerPopup 상태관리
@@ -23,11 +22,11 @@ const FindAddress = () => {
   const close = () => setVisible(false);
 
   const submit = event => {
-    event.preventDefault()
-    fetchAddresses()
+    event.preventDefault();
+    fetchAddresses();
   };
 
-  function fetchAddresses() {
+  function fetchAddresses () {
     getAddresses({
       keyword: searchKeyword,
       pageNumber: 1, // TODO
@@ -56,7 +55,33 @@ const FindAddress = () => {
         {noSearch ? <SearchTip /> : <div className="result">
           {items.length >= 1 ?
             <ul className="addresses">
-              <li>주소지 목록</li>
+              {items.map(({ zipCode, address, jibunAddress }, i) => (
+                <li key={i + '_' + zipCode}>
+                  <button>
+                    <div className="address">
+                      <div className="road">
+                            <span className="badge">
+                                도로명
+                            </span>
+                        <p>
+                          {address}
+                        </p>
+                      </div>
+                      <div className='ground'>
+                          <span className="badge">
+                              지번
+                          </span>
+                        <p>
+                          {jibunAddress}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="zip_code">
+                      {zipCode}
+                    </span>
+                  </button>
+                </li>
+              ))}
             </ul>
             : <NoResult />
           }
