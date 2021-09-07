@@ -24,7 +24,7 @@ const ShippingAddressForm = prop => {
 
   const handleShippingChange = event => handleChange(event)(setShipping)
 
-  const handleDeliveryMemoSelect = ({ label }) => setObjectState('deliveryMemo', label)(setShipping)
+  const handleSelect = (key, value) => setObjectState(key, value)(setShipping)
 
   return (
     <>
@@ -166,7 +166,7 @@ const ShippingAddressForm = prop => {
                   placeholder: '택배 기사님께 요청하실 내용을 선택하세요.'
                 }}
                 selectOptions={deliveryMemoFixedList}
-                selectOption={handleDeliveryMemoSelect}
+                selectOption={({ label }) => handleSelect('deliveryMemo', label)}
               />
             </div>
           </div>
