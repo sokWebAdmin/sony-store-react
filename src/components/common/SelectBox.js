@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { useToggle } from "../../hooks";
 import BoxSelector from "./selectbox/Box";
-import Dropdown from './selectbox/Dropdown';
+import DropdownSelector from './selectbox/Dropdown';
 import DropdownHighlightSelector from "./selectbox/DropdownHighlight";
 
 const selector = {
   box: BoxSelector,
-  dropdown: Dropdown,
+  dropdown: DropdownSelector,
   dropdownHighlight: DropdownHighlightSelector
 };
 

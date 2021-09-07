@@ -16,12 +16,28 @@ const ShippingAddressForm = prop => {
 
   const deliveryMemoFixedList = [
     {
-        optionNo: 1,
-        label: 'test',
+      optionNo: 1,
+      label: '배송 전 연락바랍니다.'
     },
     {
-        optionNo: 2,
-        label: 'test2',
+      optionNo: 2,
+      label: '부재 시 경비실에 맡겨 주세요.'
+    },
+    {
+      optionNo: 3,
+      label: '부재 시 무인 택배함에 맡겨주세요.'
+    },
+    {
+      optionNo: 4,
+      label: '부재 시 집 문앞에 놔주세요.'
+    },
+    {
+      optionNo: 5,
+      label: '부재 시 휴대폰으로 연락 주세요.'
+    },
+    {
+      optionNo: 6,
+      label: '파손의 위험이 있는 상품이니 조심히 다뤄주세요.'
     },
   ]
 
@@ -176,57 +192,8 @@ const ShippingAddressForm = prop => {
                   placeholder: '택배 기사님께 요청하실 내용을 선택하세요.'
                 }}
                 selectOptions={deliveryMemoFixedList}
-                selectOption={{logSelectedOption}}
+                selectOption={logSelectedOption}
               />
-              {/* html template sample */}
-              <div className="select_ui_zone btm_line">
-                <a className="selected_btn"
-                   data-default-text="택배 기사님께 요청하실 내용을 선택하세요.">{/* disabled : 선택불가 품절 */}
-                  택배 기사님께 요청하실 내용을 선택하세요.
-                </a>
-                <div className="select_inner">
-                  <p className="prd_tag">요청사항</p>
-                  <ul className="select_opt">
-                    <li>
-                      <a
-                        className="opt_list">{/* disabled : 선택 불가 품절 */}
-                        <div className="item">배송 전 연락바랍니다.
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a className="opt_list">
-                        <div className="item">부재 시 경비실에 맡겨 주세요.
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a className="opt_list">
-                        <div className="item">부재 시 무인 택배함에 맡겨주세요.
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a className="opt_list">
-                        <div className="item">부재 시 집 문앞에 놔주세요.
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a className="opt_list">
-                        <div className="item">부재 시 휴대폰으로 연락 주세요.
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a className="opt_list">
-                        <div className="item">파손의 위험이 있는 상품이니 조심히 다뤄주세요.
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
           <div className="acc_group parent">
