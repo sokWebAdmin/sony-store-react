@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import GlobalContext from '../../context/global.context';
 
 // components
@@ -25,6 +25,12 @@ const ShippingAddressForm = prop => {
   const handleShippingChange = event => handleChange(event)(setShipping)
 
   const handleSelect = (key, value) => setObjectState(key, value)(setShipping)
+
+  const [sameAsOrderer, setSameAsOrderer] = useState(false)
+
+  useEffect(() => {
+    console.log('useEffect changed :', sameAsOrderer)
+  }, [sameAsOrderer])
 
   return (
     <>
@@ -72,8 +78,11 @@ const ShippingAddressForm = prop => {
           </div>
           <div className="check email_check">
             <input type="checkbox" className="inp_check"
-                   id="chkemail" />
-            <label htmlFor="chkemail">주문자 정보와 동일</label>
+                   id="chkSame"
+                   checked={sameAsOrderer}
+                   onChange={evt => setSameAsOrderer(evt.target.checked)}
+            />
+            <label htmlFor="chkSame">주문자 정보와 동일</label>
           </div>
         </div>
       </div>
