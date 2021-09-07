@@ -8,6 +8,8 @@ import Accordion from '../../components/common/surface/Accordion';
 import OrdererForm from '../../components/order/OrdererForm';
 import ShippingAddressForm from '../../components/order/ShippingAddressForm';
 
+import FindAddress from '../../components/popup/FindAddress';
+
 //api
 import { getOrderSheets } from '../../api/order';
 
@@ -442,6 +444,8 @@ export default function OrderStep1 ({ location }) {
           </div>
         </div>
       </div>
+
+      <FindAddress />
     </>
   );
 }
