@@ -1,5 +1,10 @@
+import { useContext } from 'react';
+import GlobalContext from '../../context/global.context';
+
 // 배송지 정보
 const ShippingAddressForm = prop => {
+  const { isLogin } = useContext(GlobalContext);
+
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
   // receiverContact1, receiverContact2, customsIdNumber,
@@ -16,25 +21,27 @@ const ShippingAddressForm = prop => {
 
   return (
     <>
-      <div className="acc_form">
-        <div className="acc_cell">
-          <label htmlFor="delivery_choice">배송지 선택</label>
-        </div>
-        <div className="acc_cell">
-          <div className="acc_group parent">
-            <div className="acc_inp type4">
-              <p className="delivery_txt">배송지를 선택하세요.</p>
-              <div className="delivery_btn_box">
-                <button
-                  className="button button_negative button-s popup_comm_btn"
-                  type="button"
-                  data-popup-name="shipping_addr">최근 배송지
-                </button>
+      {isLogin &&
+        <div className="acc_form">
+          <div className="acc_cell">
+            <label htmlFor="delivery_choice">배송지 선택</label>
+          </div>
+          <div className="acc_cell">
+            <div className="acc_group parent">
+              <div className="acc_inp type4">
+                <p className="delivery_txt">배송지를 선택하세요.</p>
+                <div className="delivery_btn_box">
+                  <button
+                    className="button button_negative button-s popup_comm_btn"
+                    type="button"
+                    data-popup-name="shipping_addr">최근 배송지
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      }
       <div className="acc_form">
         <div className="acc_cell vat">
           <label htmlFor="user_name2">수령인 이름<i
