@@ -52,5 +52,5 @@ BoxSelector.defaultProps = {
     type: 'box',
     placeholder: '제품을 선택해주세요.',
     tag: '제품',
-  }
+  },
 }

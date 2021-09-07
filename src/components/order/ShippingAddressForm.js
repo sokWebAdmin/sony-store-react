@@ -14,6 +14,9 @@ import { deliveryMemos } from '../../const/order'
 const ShippingAddressForm = prop => {
   const { isLogin } = useContext(GlobalContext);
 
+  // @todo
+  const [ customOption, setCustomOption ] = useState(null);
+
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
@@ -185,10 +188,14 @@ const ShippingAddressForm = prop => {
                 }}
                 selectOptions={deliveryMemoFixedList}
                 selectOption={
-                  ({ optionNo, label }) => optionNo !== 1
-                  ? handleShippingChangeParameter('deliveryMemo', label)
-                  : handleShippingChangeParameter('deliveryMemo', '')
+                  ({ optionNo, label }) => {
+                    setCustomOption(null);
+                    return optionNo !== 1
+                      ? handleShippingChangeParameter('deliveryMemo', label)
+                      : handleShippingChangeParameter('deliveryMemo', '')
+                  }
                 }
+                customOption={customOption}
               />
             </div>
           </div>
@@ -200,6 +207,7 @@ const ShippingAddressForm = prop => {
                      value={shipping.deliveryMemo}
                      onChange={() => {
                        alert('select option 을 orderNo: 1 로 리셋해야하는데.. SelectBox랑 협업필요')
+                       setCustomOption({})
                        handleShippingChange()
                      }}
               />
