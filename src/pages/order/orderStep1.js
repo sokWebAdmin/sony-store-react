@@ -28,6 +28,20 @@ export default function OrderStep1 ({ location }) {
     ordererEmail: '',
   });
 
+  const [shipping, setShipping] = useState({
+    addressNo: '',
+    countryCd: '',
+    addressName: '',
+    receiverName: '',
+    receiverZipCd: '',
+    receiverAddress: '',
+    receiverDetailAddress: '',
+    receiverJibunAddress: '',
+    receiverContact1: '',
+    receiverContact2: '',
+    customsIdNumber: '',
+  });
+
   const init = useCallback(() => ({
     async start () {
       await this.fetchOrderSheet(this.orderSheetNo);
@@ -96,7 +110,8 @@ export default function OrderStep1 ({ location }) {
 
                       <Accordion title={'배송지 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <ShippingAddressForm />
+                        <ShippingAddressForm shipping={shipping}
+                                             setShipping={setShipping} />
                       </Accordion>
 
                       <div className="acc_item on">

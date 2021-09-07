@@ -1,13 +1,16 @@
 // 배송지 정보
 const ShippingAddressForm = prop => {
-  // const handleChange = e => {
-  //   const { name, value } = e.target;
-  //
-  //   setState(prevState => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
+  // addressNo, countryCd, addressName, receiverName, receiverZipCd, receiverAddress, receiverDetailAddress, receiverJibunAddress, receiverContact1, receiverContact2, customsIdNumber,
+  const { shipping, setShipping } = prop
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+
+    setShipping(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   return (
     <>
