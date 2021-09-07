@@ -23,14 +23,9 @@ import { useHistory } from "react-router-dom";
          <SEOHelmet title={"페이지를 찾을 수 없습니다"} />
 
          <div className="error">
-            {/* <div className="error__header">
-                <h1 className="error_logo">
-                <a href="http://sony.co.kr"><img src={errorLogo} alt="SONY" /></a>
-                </h1>
-            </div> */}
             <div className="error__container">
                 <div className="error_content">
-                <i className="icon"><img src={ic404} alt="" /></i>
+                <i className="icon"><img src={ic404} alt="404 Error" /></i>
                 <h2 className="title">요청하신 페이지를 <span>표시할 수 없습니다.</span></h2>
                 <p className="eng">The page that you are looking for is unavailable.</p>
                 <p className="desc">오래된 URL이거나 폐지된 페이지일 수 있으니,<br />
