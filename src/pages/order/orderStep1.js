@@ -112,6 +112,7 @@ export default function OrderStep1 ({ location }) {
                       <Accordion title={'배송지 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
                         <ShippingAddressForm shipping={shipping}
+                                             orderer={orderer}
                                              setShipping={setShipping} />
                       </Accordion>
 

@@ -5,7 +5,6 @@ import GlobalContext from '../../context/global.context';
 import SelectBox from '../../components/common/SelectBox';
 
 // utils
-import { each } from 'lodash'
 import { handleChange, setObjectState } from '../../utils/state';
 
 // const
@@ -18,8 +17,13 @@ const ShippingAddressForm = prop => {
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
-  const { shipping, setShipping } = prop;
+  const { shipping, setShipping, orderer } = prop;
   // TODO. 배송일 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
+
+  const ordererMap = {
+    receiverName: orderer.ordererName,
+    receiverContact1: orderer.ordererContact1
+  }
 
   const deliveryMemoFixedList = deliveryMemos
 
@@ -31,9 +35,11 @@ const ShippingAddressForm = prop => {
 
   useEffect(() => {
     sameAsOrderer
-      ? console.log('useEffect changed :', sameAsOrderer)
-      : each(['receiverName', 'receiverContact1'], key => handleShippingChangeParameter(key, ''))
-  }, [sameAsOrderer])
+      ? Object.entries(ordererMap).forEach(([key, value]) => handleShippingChangeParameter(key, value))
+      : Object.keys(ordererMap).forEach(key => handleShippingChangeParameter(key, ''))
+
+    console.log(shipping)
+    }, [sameAsOrderer])
 
   return (
     <>
@@ -178,7 +184,11 @@ const ShippingAddressForm = prop => {
                   placeholder: '택배 기사님께 요청하실 내용을 선택하세요.'
                 }}
                 selectOptions={deliveryMemoFixedList}
-                selectOption={({ label }) => handleShippingChangeParameter('deliveryMemo', label)}
+                selectOption={
+                  ({ optionNo, label }) => optionNo !== 1
+                  ? handleShippingChangeParameter('deliveryMemo', label)
+                  : handleShippingChangeParameter('deliveryMemo', '')
+                }
               />
             </div>
           </div>
@@ -188,7 +198,10 @@ const ShippingAddressForm = prop => {
                      placeholder="배송 메모를 입력하세요."
                      name="deliveryMemo"
                      value={shipping.deliveryMemo}
-                     onChange={handleShippingChange}
+                     onChange={() => {
+                       alert('select option 을 orderNo: 1 로 리셋해야하는데.. SelectBox랑 협업필요')
+                       handleShippingChange()
+                     }}
               />
               <span className="focus_bg" />
             </div>

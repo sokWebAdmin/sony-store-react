@@ -44,8 +44,8 @@ const OrdererForm = prop => {
               <input type="text" className="inp"
                      id="user_email"
                      placeholder="이메일 아이디 (예 : sony@sony.co.kr)"
-                     value={orderer.ordererContact1}
-                     name="ordererContact1"
+                     value={orderer.ordererEmail}
+                     name="ordererEmail"
                      onChange={handleOrdererChange}
               />
               <span className="focus_bg" />
@@ -66,8 +66,8 @@ const OrdererForm = prop => {
             <div className="acc_inp type3">
               <input type="text" className="inp"
                      id="user_number"
-                     value={orderer.ordererEmail}
-                     name="ordererEmail"
+                     value={orderer.ordererContact1}
+                     name="ordererContact1"
                      onChange={handleOrdererChange}
               />
               <span className="focus_bg" />
