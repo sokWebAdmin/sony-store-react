@@ -13,7 +13,7 @@ export default function BoxSelector({ selectOptions, onToggleHandler, onClickHan
           { selectedLabel }
         </a>
         <div className="select_inner" style={{ display }}>
-          <p class="prd_tag">{ tag }</p>
+          <p className="prd_tag">{ tag }</p>
           <ul className="select_opt">
             {
               selectOptions.map(option => {

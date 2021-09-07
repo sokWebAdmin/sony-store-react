@@ -1,10 +1,13 @@
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-const SEOHelmet = (props) => {
-    return (
-    <Helmet>
-        <title>{props.title}</title>
-    </Helmet>
-    )
-}
+const SEOHelmet = ({ title }) => (
+    <>
+        <HelmetProvider>
+            <Helmet>
+                <title>{ title }</title>
+            </Helmet>
+        </HelmetProvider>
+    </>
+)
+
 export default SEOHelmet

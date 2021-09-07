@@ -18,7 +18,10 @@ export default function Product({product}) {
             )}
             <div className="product__pic">
             <a  onClick={()=>{
-                history.push(`/product-view/${product.productNo}`)
+                history.push({
+                    path: `/product-view`,
+                    search: product.productNo,
+                })
             }} className="product__pic__link">
                 {
                     product.listImageUrls && product.listImageUrls.map((image, imageIndex)=>{
