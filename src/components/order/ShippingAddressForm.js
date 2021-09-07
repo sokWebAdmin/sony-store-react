@@ -172,7 +172,7 @@ const ShippingAddressForm = prop => {
             <div className="acc_inp type3">
               <SelectBox
                 defaultInfo={{
-                  type: 'dropdown',
+                  type: 'dropdownHighlight',
                   placeholder: '택배 기사님께 요청하실 내용을 선택하세요.'
                 }}
                 selectOptions={deliveryMemoFixedList}
