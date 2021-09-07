@@ -21,26 +21,20 @@ import GlobalContext from '../context/global.context';
 import { useHistory } from "react-router-dom";
 import { removeAccessToken } from '../utils/token';
 import { getProfile } from '../api/member';
+import { fetchProfile, useProfileState, useProileDispatch } from "../context/profile.context";
 
 export default function Header() {
   const history = useHistory();
-  const {onChangeGlobal, isLogin} = useContext(GlobalContext)
+  const {onChangeGlobal, isLogin} = useContext(GlobalContext);
+  const profileDispatch = useProileDispatch();
+  const profile = useProfileState();
 
-  const [profile, setProfile] = useState(null);
+  // const [profile, setProfile] = useState(null);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
   const [sideBarOpen, setMobileSideBarOpen] = useState(false);
 
-  const fetchProfileData = async () => {
-    const response = await getProfile();
-    setProfile(response.data);
-  }
-
-  useEffect(() => {
-    if (isLogin) {
-      fetchProfileData();
-    }
-  }, [])
+  useEffect(() => isLogin && fetchProfile(profileDispatch), [])
 
   return (
     <>
