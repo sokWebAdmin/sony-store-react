@@ -49,9 +49,9 @@ const request = async (url, method, query = {}, requestBody = null) => {
   } catch (error) {
     console.error(error);
     if (error.response.status === 404) {
-      window.history.push('/404');
+      window.history.replace('/404');
     } else if (error.response.status === 500) {
-      window.history.push('/error-server');
+      window.history.replace('/error-server');
     } else {
       throw error;
     }
