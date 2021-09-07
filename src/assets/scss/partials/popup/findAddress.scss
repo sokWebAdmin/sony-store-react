@@ -62,4 +62,19 @@
       }
     }
   }
+
+  .no_result {
+    margin-top: 25px;
+
+    strong {
+      color: #222;
+      font-weight: bold;
+    }
+
+    > p {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      color: #8a8a8a;
+    }
+  }
 }
