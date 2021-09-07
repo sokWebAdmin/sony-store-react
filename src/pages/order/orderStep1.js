@@ -35,7 +35,6 @@ export default function OrderStep1 ({ location }) {
   useEffect(() => {
     init().start();
   }, [init]);
-  // useEffect(init.start.bind(init));
 
   return (
     <>
@@ -81,7 +80,7 @@ export default function OrderStep1 ({ location }) {
                   <div className="order_left">
                     <div className="acc acc_ui_zone">
                       {/* acc_item */}
-                      <Accordion title={'주문자 정보'}>
+                      <Accordion title={'주문자 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
                         <div className="acc_form">
                           <div className="acc_cell vat">

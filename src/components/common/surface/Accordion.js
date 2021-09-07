@@ -1,5 +1,5 @@
 import '../../../assets/scss/interaction/accordion.scss'
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 /**
  * @param prop
@@ -7,27 +7,30 @@ import { useRef } from 'react';
  * children: HTMLElements
  */
 const Accordion = prop => {
-  const { title, children } = prop;
+  const { title, children, defaultVisible } = prop;
 
   const trigger = useRef(null)
   const content = useRef(null)
 
-  const toggle = () => {
-    const triggerNode = trigger.current
-    const contentNode = content.current
-    const contentParentNode = contentNode.parentNode;
-    const height = contentNode.clientHeight;
-    const isVisible = contentParentNode.clientHeight !== 0;
+  useEffect(() => {
+    defaultVisible && show()
+  }, [defaultVisible]);
 
-    if (isVisible) {
-      contentParentNode.style.height = 0
-      triggerNode.classList.remove('on')
-      return;
-    }
+  const toggle = () => content.current.parentNode.clientHeight === 0 ? show() : hide();
 
-    contentParentNode.style.height = `${height}px`
-    triggerNode.classList.add('on')
+  function show () {
+    const height = content.current.clientHeight;
+
+    content.current.parentNode.style.height = `${height}px`
+    trigger.current.classList.add('on')
   }
+
+  function hide () {
+    content.current.parentNode.style.height = 0
+    trigger.current.classList.remove('on')
+  }
+
+
 
   return (
     <div className="acc_item" ref={trigger}>
