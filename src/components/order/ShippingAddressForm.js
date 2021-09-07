@@ -37,7 +37,7 @@ const ShippingAddressForm = prop => {
       </div>
       <div className="acc_form">
         <div className="acc_cell vat">
-          <label htmlFor="user_email2">이메일<i
+          <label htmlFor="user_name2">수령인 이름<i
             className="necessary" /></label>
         </div>
         <div className="acc_cell">
@@ -45,13 +45,13 @@ const ShippingAddressForm = prop => {
             className="acc_group parent">
             <div className="acc_inp type3">
               <input type="text" className="inp"
-                     id="user_email2"
-                     placeholder="이메일 아이디 (예 : sony@sony.co.kr)"
+                     id="user_name2"
+                     placeholder="이름을 입력하세요."
                      defaultValue="sony@sony.co.kr" />
               <span className="focus_bg" />
             </div>
             <p className="error_txt"><span
-              className="ico" />이메일 아이디를 입력해 주세요.</p>
+              className="ico" />이름을 입력해 주세요.</p>
           </div>
           <div className="check email_check">
             <input type="checkbox" className="inp_check"
