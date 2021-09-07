@@ -36,8 +36,12 @@ export default function Header() {
   
   useEffect(() => {
     if (!profile.customerId) return;
-    profile.customerId && fetchMyProfile(profileDispatch, { type: '30', customerid: profile.customerId })
-  }, [profileDispatch, profile.customerId])
+    if (profile.my?.customerid) return;
+
+    const data = { type: '30', customerid: profile.customerId };
+    profile.customerId && fetchMyProfile(profileDispatch, data);
+    
+  }, [profileDispatch, profile.customerId, profile.my?.customerid])
 
   return (
     <>
