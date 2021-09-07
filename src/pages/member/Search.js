@@ -8,8 +8,6 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //css
 import '../../assets/scss/contents.scss';
-import Tab from '../../components/common/Tab';
-import { useTabs } from '../../hooks';
 
 export default function Search() {
   const [tabState, setTabState] = useState("id");
