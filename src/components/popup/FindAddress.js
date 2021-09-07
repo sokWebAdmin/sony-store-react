@@ -30,16 +30,16 @@ const FindAddress = () => {
           <form className="search_container">
             <input
               type="text"
-              placeholder="검색어(도로명,지번,건물명)를 입력해주세요"
+              placeholder="도로명,지번,건물명 입력"
               className="search_input"
             />
             <button type="submit" className="search_button button button_negative">검색</button>
           </form>
 
-          <div id="tip" className="post-search-tip">
-            <h2>
+          <div className="tip">
+            <p className="tit">
               TIP
-            </h2>
+            </p>
             <p>
               아래와 같이 검색하면 더욱 정확한 결과가 검색됩니다.
             </p>

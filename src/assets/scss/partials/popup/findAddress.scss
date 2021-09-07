@@ -25,4 +25,41 @@
       font-size: 12px;;
     }
   }
+
+  .tip {
+    padding: 35px 0 30px 0;
+    background-color: #fff;
+    letter-spacing: -0.5px;
+
+    .tit {
+      padding: 0 0 13px;
+      border-bottom: 1px solid #999999;
+      color: #000;
+      font-size: 18px;
+    }
+
+    p {
+      margin: 5px 0 24px 0;
+      font-size: 14px;
+      color: #8a8a8a;
+    }
+
+    dl {
+      margin: 13px 0 0 0;
+
+      dt {
+        padding: 0 0 0 12px;
+        font-size: 15px;
+        color: #222;
+        font-weight: bold;
+      }
+
+      dd {
+        margin: 0;
+        padding: 7px 0 7px 12px;
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  }
 }
