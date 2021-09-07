@@ -1,16 +1,11 @@
+import { handleChange } from '../../utils/state'
+
 // 주문자 정보
 const OrdererForm = prop => {
   // ordererName, ordererContact1, ordererEmail
   const { orderer, setOrderer } = prop
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-
-    setOrderer(prevState => ({
-      ...prevState,
-      [name]: value
-    }))
-  }
+  const handleOrdererChange = event => handleChange(event)(setOrderer)
 
   return (
     <>
@@ -28,7 +23,7 @@ const OrdererForm = prop => {
                      placeholder="이름을 입력하세요."
                      value={orderer.ordererName}
                      name="ordererName"
-                     onChange={handleChange}
+                     onChange={handleOrdererChange}
               />
               <span className="focus_bg" />
             </div>
@@ -51,7 +46,7 @@ const OrdererForm = prop => {
                      placeholder="이메일 아이디 (예 : sony@sony.co.kr)"
                      value={orderer.ordererContact1}
                      name="ordererContact1"
-                     onChange={handleChange}
+                     onChange={handleOrdererChange}
               />
               <span className="focus_bg" />
             </div>
@@ -73,7 +68,7 @@ const OrdererForm = prop => {
                      id="user_number"
                      value={orderer.ordererEmail}
                      name="ordererEmail"
-                     onChange={handleChange}
+                     onChange={handleOrdererChange}
               />
               <span className="focus_bg" />
             </div>
