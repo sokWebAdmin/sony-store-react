@@ -118,7 +118,7 @@ export default function Main() {
                         }>
                     
                     <SwiperSlide className="swiper-slide video-slide" data-swiper-autoplay="10000">
-                      <video className="video-slide-player" preload autoPlay muted={true} playsInline>
+                      <video className="video-slide-player" preload="true" autoPlay muted={true} playsInline>
                           <source src={ size.width > breakPoint ? `images/_tmp/demo_1920x1080-1.mp4` : `images/_tmp/demo_1920x1080-1.mp4`} type="video/mp4" />
                       </video>
                       <div className="kv__slide">
@@ -132,23 +132,23 @@ export default function Main() {
                     </SwiperSlide>
                     <SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/pc_kv_img1.jpg)` : `url(/images/_tmp/mo_kv_img1.jpg)`}}>
                       <div className="kv__slide">
-                        <div class="kv__head">
-                          <div class="kv__head__copy"><span class="copy-0"><span>One</span></span><span class="copy-1"><span>hand</span></span></div>
-                          <div class="kv__head__copy"><span class="copy-2"><span>Full-Frame</span></span></div>
-                          <div class="kv__head__copy"><span class="copy-3"><span>α7c</span></span></div>
+                        <div className="kv__head">
+                          <div className="kv__head__copy"><span className="copy-0"><span>One</span></span><span className="copy-1"><span>hand</span></span></div>
+                          <div className="kv__head__copy"><span className="copy-2"><span>Full-Frame</span></span></div>
+                          <div className="kv__head__copy"><span className="copy-3"><span>α7c</span></span></div>
                         </div>
                         <span className="kv__product"><span>원핸드 컴팩트 풀프레임 카메라</span></span>
                         <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>
                       </div>
                     </SwiperSlide>
                     <SwiperSlide className="swiper-slide video-slide" data-swiper-autoplay="10000">
-                      <video className="video-slide-player" preload autoPlay muted={true} playsInline>
+                      <video className="video-slide-player" preload="true" autoPlay muted={true} playsInline>
                           <source src={ size.width > breakPoint ? `images/_tmp/demo_608x1080-1.mp4` : `images/_tmp/demo_608x1080-1.mp4`} type="video/mp4" />
                       </video>
                       <div className="kv__slide">
-                        <div class="kv__head">
-                          <div class="kv__head__copy"><span class="copy-0"><span>Vlog</span></span><span class="copy-1"><span>camera</span></span></div>
-                          <div class="kv__head__copy"><span class="copy-2"><span>ZV-1</span></span></div>
+                        <div className="kv__head">
+                          <div className="kv__head__copy"><span className="copy-0"><span>Vlog</span></span><span className="copy-1"><span>camera</span></span></div>
+                          <div className="kv__head__copy"><span className="copy-2"><span>ZV-1</span></span></div>
                         </div>
                         <span className="kv__product"><span>예뻐지는 데일리 카메라</span></span>
                         <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>
@@ -156,9 +156,9 @@ export default function Main() {
                     </SwiperSlide>
                     <SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/pc_kv_img2.jpg)` : `url(/images/_tmp/mo_kv_img2.jpg)`}}>
                       <div className="kv__slide">
-                        <div class="kv__head">
-                          <div class="kv__head__copy"><span class="copy-0"><span>WH-</span></span></div>
-                          <div class="kv__head__copy"><span class="copy-1"><span>1000XM4</span></span></div>
+                        <div className="kv__head">
+                          <div className="kv__head__copy"><span className="copy-0"><span>WH-</span></span></div>
+                          <div className="kv__head__copy"><span className="copy-1"><span>1000XM4</span></span></div>
                         </div>
                         <span className="kv__product"><span>무선 노이즈 캔슬링 헤드폰</span></span>
                         <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>
@@ -166,9 +166,9 @@ export default function Main() {
                     </SwiperSlide>
                     <SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/pc_kv_img3.jpg)` : `url(/images/_tmp/mo_kv_img3.jpg)`}}>
                       <div className="kv__slide">
-                        <div class="kv__head">
-                          <div class="kv__head__copy"><span class="copy-0"><span>Vlog</span></span><span class="copy-1"><span>Camera</span></span></div>
-                          <div class="kv__head__copy"><span class="copy-2"><span>ZV-1</span></span></div>
+                        <div className="kv__head">
+                          <div className="kv__head__copy"><span className="copy-0"><span>Vlog</span></span><span className="copy-1"><span>Camera</span></span></div>
+                          <div className="kv__head__copy"><span className="copy-2"><span>ZV-1</span></span></div>
                         </div>
                         <span className="kv__product"><span>예뻐지는 데일리 카메라</span></span>
                         <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>

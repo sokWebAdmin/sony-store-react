@@ -105,7 +105,7 @@ const JoinAgree = () => {
                              checked={checkList[index]} id={key} />
                       <label htmlFor={key}>{label}</label>
                     </div>
-                    <a className="btn_view" onClick={() => openAgreeLayer(`modal${index + 1}`)}>전체보기</a>
+                    <a href="javascript:void(0)" className="btn_view" onClick={() => openAgreeLayer(`modal${index + 1}`)}>전체보기</a>
                   </div>);
                 })}
               </div>

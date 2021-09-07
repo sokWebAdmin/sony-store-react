@@ -1,6 +1,4 @@
 import React, {useState, useContext, useEffect} from "react";
-import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
 
 //images
 import logo from "../assets/images/common/logo.svg";

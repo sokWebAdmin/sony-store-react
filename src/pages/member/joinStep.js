@@ -11,7 +11,7 @@ import {sendSMS, verifySMS} from '../../api/auth';
 import "../../assets/scss/contents.scss"
 
 //utils
-import { emptyCheck, getUrlParam, isLogin } from '../../utils/utils';
+import { emptyCheck, getUrlParam, timeFormat } from '../../utils/utils';
 import { useHistory, useLocation } from "react-router-dom";
 
 //context
@@ -237,13 +237,6 @@ export default function JoinStep() {
     }
 
   },[])
-
-  const timeFormat = (time) => {
-    const m = Math.floor(time / 60).toString()
-    let s = (time % 60).toString()
-    if (s.length === 1) s = `0${s}`
-    return `${m}:${s}`
-  }
 
     return (
         <>

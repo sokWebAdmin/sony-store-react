@@ -92,15 +92,15 @@ export default function EventList() {
                       <p className="txt">한 층 더 업그레이드 된 사운드와 조명으로<br /> 공간을 밝히는 스피커</p>
                       <p className="event_duration">2021.05.27 ~ 2021.06.13</p>
                       <div className="btn_article">
-                        <a href="#" className="event_link">자세히 보기</a>
+                        <a href="javascript:void(0)" className="event_link">자세히 보기</a>
                       </div>
                     </div>
                   </div>
                 </SwiperSlide>
               </Swiper>
               <div className="arrow_btn">
-                <a className="arrow swiper-button-prev"><span className="ico_btn">이전</span></a>
-                <a className="arrow swiper-button-next"><span className="ico_btn">다음</span></a>
+                <a href="javascript:void(0)" className="arrow swiper-button-prev"><span className="ico_btn">이전</span></a>
+                <a href="javascript:void(0)" className="arrow swiper-button-next"><span className="ico_btn">다음</span></a>
               </div>
               <div className="swiper-pagination event-banner-pagination" />
             </div>
@@ -108,12 +108,12 @@ export default function EventList() {
               <div className="tab_ui scroll category_evnet" data-scroll-view={6}
                    data-tab-scroll-view={5}>{/* 스크롤탭 : class: scroll / data-scroll-view 보여지는 탭 수 */}
                 <ul>
-                  <li className="tabs on"><a href="#" className="btn">전체</a></li>
-                  <li className="tabs"><a href="#" className="btn">소니스토어 단독</a></li>
-                  <li className="tabs"><a href="#" className="btn">혜택존</a></li>
-                  <li className="tabs"><a href="#" className="btn">예약판매</a></li>
-                  <li className="tabs"><a href="#" className="btn">정품등록 이벤트</a></li>
-                  <li className="tabs"><a href="#" className="btn">LIVE ON</a></li>
+                  <li className="tabs on"><a href="javascript:void(0)" className="btn">전체</a></li>
+                  <li className="tabs"><a href="javascript:void(0)" className="btn">소니스토어 단독</a></li>
+                  <li className="tabs"><a href="javascript:void(0)" className="btn">혜택존</a></li>
+                  <li className="tabs"><a href="javascript:void(0)" className="btn">예약판매</a></li>
+                  <li className="tabs"><a href="javascript:void(0)" className="btn">정품등록 이벤트</a></li>
+                  <li className="tabs"><a href="javascript:void(0)" className="btn">LIVE ON</a></li>
                 </ul>
               </div>
               <div className="tab_ui_info">
@@ -128,10 +128,10 @@ export default function EventList() {
                         </button>
                         <div className="itemsort__drawer">
                           <ul className="itemsort__items">
-                            <li className="itemsort__item itemsort__item--active"><a href="#"
+                            <li className="itemsort__item itemsort__item--active"><a href="javascript:void(0)"
                                                                                      className="itemsort__item__link">최신순</a>
                             </li>
-                            <li className="itemsort__item"><a href="#" className="itemsort__item__link">오래된 순</a></li>
+                            <li className="itemsort__item"><a href="javascript:void(0)" className="itemsort__item__link">오래된 순</a></li>
                           </ul>
                         </div>
                       </div>
@@ -150,7 +150,7 @@ export default function EventList() {
                                   <p className="event_duration">{formatYmdt(startYmdt)} ~ {formatYmdt(endYmdt)}</p>
                                 </div>
                               </a>
-                              <a href="#" className="event_share popup_comm_btn" onClick={() => openShareEventLayer()}>공유하기</a>
+                              <a href="javascript:void(0)" className="event_share popup_comm_btn" onClick={() => openShareEventLayer()}>공유하기</a>
                             </div>
                           )
                         })}
@@ -163,7 +163,7 @@ export default function EventList() {
                   </div>)}
                 </div>
                 <div className="btn_article comm_more line">{/* 목록이 없을 경우 숨김 처리 */}
-                  <a href="#" className="more_btn" title="기획전 더보기">더보기</a>
+                  <a href="javascript:void(0)" className="more_btn" title="기획전 더보기">더보기</a>
                 </div>
               </div>
             </div>
