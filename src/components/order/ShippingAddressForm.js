@@ -5,6 +5,7 @@ import GlobalContext from '../../context/global.context';
 import SelectBox from '../../components/common/SelectBox';
 
 // utils
+import { each } from 'lodash'
 import { handleChange, setObjectState } from '../../utils/state';
 
 // const
@@ -24,12 +25,14 @@ const ShippingAddressForm = prop => {
 
   const handleShippingChange = event => handleChange(event)(setShipping)
 
-  const handleSelect = (key, value) => setObjectState(key, value)(setShipping)
+  const handleShippingChangeParameter = (key, value) => setObjectState(key, value)(setShipping)
 
   const [sameAsOrderer, setSameAsOrderer] = useState(false)
 
   useEffect(() => {
-    console.log('useEffect changed :', sameAsOrderer)
+    sameAsOrderer
+      ? console.log('useEffect changed :', sameAsOrderer)
+      : each(['receiverName', 'receiverContact1'], key => handleShippingChangeParameter(key, ''))
   }, [sameAsOrderer])
 
   return (
@@ -175,7 +178,7 @@ const ShippingAddressForm = prop => {
                   placeholder: '택배 기사님께 요청하실 내용을 선택하세요.'
                 }}
                 selectOptions={deliveryMemoFixedList}
-                selectOption={({ label }) => handleSelect('deliveryMemo', label)}
+                selectOption={({ label }) => handleShippingChangeParameter('deliveryMemo', label)}
               />
             </div>
           </div>
