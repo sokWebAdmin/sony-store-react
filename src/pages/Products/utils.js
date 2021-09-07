@@ -58,3 +58,5 @@ export const mapContents = ({ contentHeader, content, contentFooter }) => ([
         content: contentFooter,
      }
   ]);
+
+  
