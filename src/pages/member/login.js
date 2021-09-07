@@ -21,6 +21,7 @@ import Cookies from "js-cookie";
 import GlobalContext from '../../context/global.context';
 import { setAccessToken } from '../../utils/token';
 import { fetchProfile, useProileDispatch } from '../../context/profile.context';
+import OpenLogin from '../../components/member/OpenLogin';
 
 export default function Login() {
   const {onChangeGlobal, isLogin} = useContext(GlobalContext);
@@ -158,14 +159,7 @@ export default function Login() {
                   <span className="txt">또는</span>
                   <span className="bar" />
                 </div>
-                <div className="sns_login_box">
-                  <strong className="sns_title">SNS 계정으로 <span>간편하게 로그인하세요.</span></strong>
-                  <ul className="sns_list">
-                    <li className="naver"><a href="javascript:void(0)">네이버</a></li>
-                    <li className="kakao"><a href="javascript:void(0)">카카오톡</a></li>
-                    <li className="facebook"><a href="javascript:void(0)">페이스북</a></li>
-                  </ul>
-                </div>
+                <OpenLogin/>
               </div>
                 
                 {/* 비회원 로그인 */}
