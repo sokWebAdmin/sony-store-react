@@ -1,10 +1,12 @@
-export const handleChange = event => {
-  const { name, value } = event.target;
+export const handleChange = inputEvent => {
+  const { name, value } = inputEvent.target;
 
-  return setStateFunction => {
-    setStateFunction(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }
+  return setStateFunction => setObjectState(name, value)(setStateFunction)
 };
+
+export const setObjectState = (key, value) => setStateFunction => {
+  setStateFunction(prevState => ({
+    ...prevState,
+    [key]: value,
+  }));
+}
