@@ -1,7 +1,9 @@
 // 배송지 정보
 const ShippingAddressForm = prop => {
-  // addressNo, countryCd, addressName, receiverName, receiverZipCd, receiverAddress, receiverDetailAddress, receiverJibunAddress, receiverContact1, receiverContact2, customsIdNumber,
-  const { shipping, setShipping } = prop
+  // addressNo, countryCd, addressName, receiverName, receiverZipCd,
+  // receiverAddress, receiverDetailAddress, receiverJibunAddress,
+  // receiverContact1, receiverContact2, customsIdNumber,
+  const { shipping, setShipping } = prop;
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -140,45 +142,37 @@ const ShippingAddressForm = prop => {
                     <li>
                       <a
                         className="opt_list">{/* disabled : 선택 불가 품절 */}
-                        <div className="item">배송 전
-                          연락바랍니다.
+                        <div className="item">배송 전 연락바랍니다.
                         </div>
                       </a>
                     </li>
                     <li>
                       <a className="opt_list">
-                        <div className="item">부재 시 경비실에
-                          맡겨
-                          주세요.
+                        <div className="item">부재 시 경비실에 맡겨 주세요.
                         </div>
                       </a>
                     </li>
                     <li>
                       <a className="opt_list">
-                        <div className="item">부재 시 무인
-                          택배함에
-                          맡겨주세요.
+                        <div className="item">부재 시 무인 택배함에 맡겨주세요.
                         </div>
                       </a>
                     </li>
                     <li>
                       <a className="opt_list">
-                        <div className="item">부재 시 집 문앞에
-                          놔주세요.
+                        <div className="item">부재 시 집 문앞에 놔주세요.
                         </div>
                       </a>
                     </li>
                     <li>
                       <a className="opt_list">
-                        <div className="item">부재 시 휴대폰으로
-                          연락 주세요.
+                        <div className="item">부재 시 휴대폰으로 연락 주세요.
                         </div>
                       </a>
                     </li>
                     <li>
                       <a className="opt_list">
-                        <div className="item">파손의 위험이 있는
-                          상품이니 조심히 다뤄주세요.
+                        <div className="item">파손의 위험이 있는 상품이니 조심히 다뤄주세요.
                         </div>
                       </a>
                     </li>
@@ -198,8 +192,7 @@ const ShippingAddressForm = prop => {
       </div>
       <div className="acc_form">
         <div className="acc_cell vat">
-          <label htmlFor="delivery_choice">배송일
-            선택</label>
+          <label htmlFor="delivery_choice">배송일 선택</label>
         </div>
         <div className="acc_cell vat">
           <div className="acc_group parent">
@@ -212,8 +205,7 @@ const ShippingAddressForm = prop => {
                          name="deliveryradio"
                          defaultChecked="checked" />
                   <label htmlFor="delivery_radio1"
-                         className="contentType">정상
-                    배송</label>
+                         className="contentType">정상 배송</label>
                 </div>
                 <div className="radio_box">
                   <input type="radio"
@@ -221,8 +213,7 @@ const ShippingAddressForm = prop => {
                          id="delivery_radio2"
                          name="deliveryradio" />
                   <label htmlFor="delivery_radio2"
-                         className="contentType">출고일
-                    지정</label>
+                         className="contentType">출고일 지정</label>
                 </div>
               </div>
             </div>
