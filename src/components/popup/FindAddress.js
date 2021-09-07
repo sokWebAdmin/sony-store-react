@@ -10,18 +10,28 @@ import '../../assets/scss/partials/popup/findAddress.scss';
 const FindAddress = () => {
   // LayerPopup 상태관리
   const [visible, setVisible] = useState(true);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const close = () => setVisible(false);
+
+  const submit = event => {
+    event.preventDefault();
+
+    console.log('search searchKeyword :', searchKeyword)
+  }
 
   return (
     <>
       {visible && <LayerPopup className="find_address" onClose={close}>
         <p className="pop_tit">우편번호 찾기</p>
-        <form className="search_container">
+        <form className="search_container" onSubmit={submit}>
           <input
             type="text"
             placeholder="도로명,지번,건물명 입력"
             className="search_input"
+            name="searchKeyword"
+            value={searchKeyword}
+            onChange={({ target }) => setSearchKeyword(target.value)}
           />
           <button type="submit"
                   className="search_button button button_negative">검색
