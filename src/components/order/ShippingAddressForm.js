@@ -5,7 +5,10 @@ import GlobalContext from '../../context/global.context';
 import SelectBox from '../../components/common/SelectBox';
 
 // utils
-import { handleChange } from '../../utils/state'
+import { handleChange, setObjectState } from '../../utils/state';
+
+// const
+import { deliveryMemos } from '../../const/order'
 
 // 배송지 정보
 const ShippingAddressForm = prop => {
@@ -17,36 +20,11 @@ const ShippingAddressForm = prop => {
   const { shipping, setShipping } = prop;
   // TODO. 배송일 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
 
-  const deliveryMemoFixedList = [
-    {
-      optionNo: 1,
-      label: '배송 전 연락바랍니다.'
-    },
-    {
-      optionNo: 2,
-      label: '부재 시 경비실에 맡겨 주세요.'
-    },
-    {
-      optionNo: 3,
-      label: '부재 시 무인 택배함에 맡겨주세요.'
-    },
-    {
-      optionNo: 4,
-      label: '부재 시 집 문앞에 놔주세요.'
-    },
-    {
-      optionNo: 5,
-      label: '부재 시 휴대폰으로 연락 주세요.'
-    },
-    {
-      optionNo: 6,
-      label: '파손의 위험이 있는 상품이니 조심히 다뤄주세요.'
-    },
-  ]
-
-  const deliveryMemoSelected = option => console.log(option); // TODO. handleChange 에 보조함수 넘겨서 어떻게 잘 해봐
+  const deliveryMemoFixedList = deliveryMemos
 
   const handleShippingChange = event => handleChange(event)(setShipping)
+
+  const handleDeliveryMemoSelect = ({ label }) => setObjectState('deliveryMemo', label)(setShipping)
 
   return (
     <>
@@ -188,7 +166,7 @@ const ShippingAddressForm = prop => {
                   placeholder: '택배 기사님께 요청하실 내용을 선택하세요.'
                 }}
                 selectOptions={deliveryMemoFixedList}
-                selectOption={deliveryMemoSelected}
+                selectOption={handleDeliveryMemoSelect}
               />
             </div>
           </div>
