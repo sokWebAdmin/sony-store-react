@@ -41,13 +41,6 @@ export default function ProductView({ match }) {
 
   //ui
   const [headerHeight, setHeaderHeight] = useState(0);
-
-  //data
-  
-  const [productData, setProductData] = useState();
-  const [productOptions, setProductOptions] = useState();
-  const [contents, setContents] = useState([]);
-
   const size = useWindowSize();
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
@@ -56,6 +49,12 @@ export default function ProductView({ match }) {
     const header = document.getElementsByClassName("header").clientHeight;
     setHeaderHeight(header);
   },[]);
+
+  //data
+  
+  const [productData, setProductData] = useState();
+  const [productOptions, setProductOptions] = useState();
+  const [contents, setContents] = useState([]);
 
   // product init data
 
