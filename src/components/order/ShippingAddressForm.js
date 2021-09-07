@@ -4,6 +4,9 @@ import GlobalContext from '../../context/global.context';
 // components
 import SelectBox from '../../components/common/SelectBox';
 
+// utils
+import { handleChange } from '../../utils/state'
+
 // 배송지 정보
 const ShippingAddressForm = prop => {
   const { isLogin } = useContext(GlobalContext);
@@ -41,16 +44,9 @@ const ShippingAddressForm = prop => {
     },
   ]
 
-  const logSelectedOption = option => console.log(option);
+  const deliveryMemoSelected = option => console.log(option); // TODO. handleChange 에 보조함수 넘겨서 어떻게 잘 해봐
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-
-    setShipping(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  const handleShippingChange = event => handleChange(event)(setShipping)
 
   return (
     <>
@@ -89,7 +85,7 @@ const ShippingAddressForm = prop => {
                      placeholder="이름을 입력하세요."
                      name="receiverName"
                      value={shipping.receiverName}
-                     onChange={handleChange}
+                     onChange={handleShippingChange}
               />
               <span className="focus_bg" />
             </div>
@@ -116,7 +112,7 @@ const ShippingAddressForm = prop => {
                      id="user_number2"
                      name="receiverContact1"
                      value={shipping.receiverContact1}
-                     onChange={handleChange}
+                     onChange={handleShippingChange}
               />
               <span className="focus_bg" />
             </div>
@@ -139,7 +135,7 @@ const ShippingAddressForm = prop => {
                      placeholder="주소를 입력하세요."
                      name="receiverZipCd"
                      value={shipping.receiverZipCd}
-                     onChange={handleChange}
+                     onChange={handleShippingChange}
               />
               <span className="focus_bg" />
               <div className="delivery_btn_box type1">
@@ -158,7 +154,7 @@ const ShippingAddressForm = prop => {
               <input type="text" className="inp"
                      name="receiverAddress"
                      value={shipping.receiverAddress}
-                     onChange={handleChange}
+                     onChange={handleShippingChange}
               />
               <span className="focus_bg" />
             </div>
@@ -170,7 +166,7 @@ const ShippingAddressForm = prop => {
                      placeholder="상세 주소를 입력하세요."
                      name="receiverDetailAddress"
                      value={shipping.receiverDetailAddress}
-                     onChange={handleChange}
+                     onChange={handleShippingChange}
               />
               <span className="focus_bg" />
             </div>
@@ -192,7 +188,7 @@ const ShippingAddressForm = prop => {
                   placeholder: '택배 기사님께 요청하실 내용을 선택하세요.'
                 }}
                 selectOptions={deliveryMemoFixedList}
-                selectOption={logSelectedOption}
+                selectOption={deliveryMemoSelected}
               />
             </div>
           </div>
@@ -202,7 +198,7 @@ const ShippingAddressForm = prop => {
                      placeholder="배송 메모를 입력하세요."
                      name="deliveryMemo"
                      value={shipping.deliveryMemo}
-                     onChange={handleChange}
+                     onChange={handleShippingChange}
               />
               <span className="focus_bg" />
             </div>
