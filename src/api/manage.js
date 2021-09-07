@@ -20,3 +20,6 @@ export const getBoardByArticleId = data => {
 export const getBoardCategories = data => {
   return request(`boards/${data.pathParams.boardNo}/categories`, 'get', null, null);
 }
+
+export const getAddresses = query =>
+  request('addresses/search', 'get', query)

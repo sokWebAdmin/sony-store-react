@@ -3,8 +3,12 @@ import { useState } from 'react';
 // components
 import LayerPopup from '../common/LayerPopup';
 
+// api
+import { getAddresses } from '../../api/manage';
+
 // stylesheet
 import '../../assets/scss/partials/popup/findAddress.scss';
+
 
 // 주소 찾기 팝업
 const FindAddress = () => {
@@ -15,9 +19,17 @@ const FindAddress = () => {
   const close = () => setVisible(false);
 
   const submit = event => {
-    event.preventDefault();
+    event.preventDefault()
+    return fetchAddresses()
+  };
 
-    console.log('search searchKeyword :', searchKeyword)
+  async function fetchAddresses() {
+    const { data } = await getAddresses({
+      keyword: searchKeyword,
+      pageNumber: 1, // TODO
+      pageSize: 10, // TODO
+    })
+    console.log(data)
   }
 
   return (
