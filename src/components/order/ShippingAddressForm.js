@@ -1,6 +1,9 @@
 import { useContext } from 'react';
 import GlobalContext from '../../context/global.context';
 
+// components
+import SelectBox from '../../components/common/SelectBox';
+
 // 배송지 정보
 const ShippingAddressForm = prop => {
   const { isLogin } = useContext(GlobalContext);
@@ -10,6 +13,19 @@ const ShippingAddressForm = prop => {
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
   const { shipping, setShipping } = prop;
   // TODO. 배송일 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
+
+  const deliveryMemoFixedList = [
+    {
+        optionNo: 1,
+        label: 'test',
+    },
+    {
+        optionNo: 2,
+        label: 'test2',
+    },
+  ]
+
+  const logSelectedOption = option => console.log(option);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -154,6 +170,15 @@ const ShippingAddressForm = prop => {
         <div className="acc_cell">
           <div className="acc_group parent">
             <div className="acc_inp type3">
+              <SelectBox
+                defaultInfo={{
+                  type: 'dropdown',
+                  placeholder: '택배 기사님께 요청하실 내용을 선택하세요.'
+                }}
+                selectOptions={deliveryMemoFixedList}
+                selectOption={{logSelectedOption}}
+              />
+              {/* html template sample */}
               <div className="select_ui_zone btm_line">
                 <a className="selected_btn"
                    data-default-text="택배 기사님께 요청하실 내용을 선택하세요.">{/* disabled : 선택불가 품절 */}
