@@ -100,10 +100,10 @@ export default function Login() {
           <div className="container" id="container"> 
             <div className="login">
               <ul className="login__tab">
-                <li className={tabState == "member" ? "current" : ""} data-tab="tab1"><a  onClick={()=>{
+                <li className={tabState == "member" ? "current" : ""} data-tab="tab1"><a href="javascript:void(0)" onClick={()=>{
                   setTabState("member")
                 }}>회원 로그인</a></li>
-                <li className={tabState == "nonmember" ? "current" : ""} data-tab="tab2"><a  onClick={()=>{
+                <li className={tabState == "nonmember" ? "current" : ""} data-tab="tab2"><a href="javascript:void(0)" onClick={()=>{
                   setTabState("nonmember")
                 }}>비회원 로그인</a></li>
               </ul>
@@ -155,8 +155,8 @@ export default function Login() {
                     <label htmlFor="chk01">이메일 아이디 저장</label>
                   </div>
                   <ul className="user_menu">
-                    <li><a  onClick={()=>{history.push('/member/search')}}>아이디 · 비밀번호 찾기</a></li>
-                    <li><a  onClick={()=>{history.push('/member/join-agree')}}>회원가입</a></li>
+                    <li><a href="javascript:void(0)" onClick={()=>{history.push('/member/search')}}>아이디 · 비밀번호 찾기</a></li>
+                    <li><a href="javascript:void(0)" onClick={()=>{history.push('/member/join-agree')}}>회원가입</a></li>
                   </ul>
                 </div>
                 <div className="txt_or">
@@ -166,9 +166,9 @@ export default function Login() {
                 <div className="sns_login_box">
                   <strong className="sns_title">SNS 계정으로 <span>간편하게 로그인하세요.</span></strong>
                   <ul className="sns_list">
-                    <li className="naver"><a >네이버</a></li>
-                    <li className="kakao"><a >카카오톡</a></li>
-                    <li className="facebook"><a >페이스북</a></li>
+                    <li className="naver"><a href="javascript:void(0)">네이버</a></li>
+                    <li className="kakao"><a href="javascript:void(0)">카카오톡</a></li>
+                    <li className="facebook"><a href="javascript:void(0)">페이스북</a></li>
                   </ul>
                 </div>
               </div>
@@ -204,7 +204,7 @@ export default function Login() {
                   <strong className="join_title">아직 소니코리아 회원이 아니세요?</strong>
                   <p className="join_desc">회원가입을 통해 소니스토어에서 <span className="block">다양한 서비스를 이용하실 수 있습니다.</span></p>
                   <div className="btn_box">
-                    <a  onClick={()=>{history.push('/member/join')}} className="btn btn_default">회원가입</a>
+                    <a href="javascript:void(0)" onClick={()=>{history.push('/member/join')}} className="btn btn_default">회원가입</a>
                   </div>
                 </div>
               </div>

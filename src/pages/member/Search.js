@@ -134,8 +134,8 @@ export default function Search() {
             <p className="login__desc">아이디·비밀번호가 기억나지 않으신가요? <span>아래의 인증 방법 중 선택하여 인증해주세요.</span></p>
             <div className="login__search_box">
               <ul className="login__tab search_type">
-                <li className={tabState === 'id' ? 'current' : ''}><a onClick={() => setTabState('id')}>아이디 찾기</a></li>
-                <li className={tabState === 'password' ? 'current' : ''}><a onClick={() => setTabState('password')}>비밀번호
+                <li className={tabState === 'id' ? 'current' : ''}><a href="javascript:void(0)" onClick={() => setTabState('id')}>아이디 찾기</a></li>
+                <li className={tabState === 'password' ? 'current' : ''}><a href="javascript:void(0)" onClick={() => setTabState('password')}>비밀번호
                   찾기</a></li>
               </ul>
 
