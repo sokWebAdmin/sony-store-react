@@ -6,6 +6,7 @@ import Products from '../../components/order/Products';
 import Accordion from '../../components/common/surface/Accordion';
 
 import OrdererForm from '../../components/order/OrdererForm';
+import ShippingAddressForm from '../../components/order/ShippingAddressForm';
 
 //api
 import { getOrderSheets } from '../../api/order';
@@ -89,537 +90,209 @@ export default function OrderStep1 ({ location }) {
                     <div className="acc acc_ui_zone">
                       <Accordion title={'주문자 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <OrdererForm orderer={orderer} setOrderer={setOrderer} />
+                        <OrdererForm orderer={orderer}
+                                     setOrderer={setOrderer} />
                       </Accordion>
 
-                        <div className="acc_item on">
-                          <div className="acc_head">
-                            <a className="acc_btn" title="주문자 정보 열기">
-                              <span className="acc_tit">주문자 정보</span>
-                              <span className="acc_arrow">상세 보기</span>
-                            </a>
-                          </div>
-                          <div className="acc_inner">
-                            <div className="acc_box">
-                              <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="user_name">이름<i
-                                    className="necessary" /></label>
-                                </div>
-                                <div className="acc_cell">
-                                  <div
-                                    className="acc_group parent error">{/* error 문구 제어 */}
-                                    <div className="acc_inp type3">
-                                      <input type="text" className="inp"
-                                             id="user_name"
-                                             placeholder="이름을 입력하세요."
-                                             defaultValue="김소니" />
-                                      <span className="focus_bg" />
-                                    </div>
-                                    <p className="error_txt"><span
-                                      className="ico" />이름을 입력해 주세요.</p>
-                                  </div>
-                                </div>
+                      <Accordion title={'배송지 정보'} defaultVisible={true}>
+                        <p className="acc_dsc_top">표시는 필수입력 정보</p>
+                        <ShippingAddressForm />
+                      </Accordion>
+
+                      <div className="acc_item on">
+                        <div className="acc_head">
+                          <a className="acc_btn" title="할인 정보 열기">
+                            <span className="acc_tit">할인 정보</span>
+                            <span className="acc_arrow">상세 보기</span>
+                          </a>
+                        </div>
+                        <div className="acc_inner">
+                          <div className="acc_box">
+                            <div className="acc_form">
+                              <div className="acc_cell vat">
+                                <label htmlFor="coupon">쿠폰</label>
                               </div>
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="user_email">이메일<i
-                                    className="necessary" /></label>
-                                </div>
-                                <div className="acc_cell">
-                                  <div
-                                    className="acc_group parent error">{/* error 문구 제어 */}
-                                    <div className="acc_inp type3">
-                                      <input type="text" className="inp"
-                                             id="user_email"
-                                             placeholder="이메일 아이디 (예 : sony@sony.co.kr)"
-                                             defaultValue="sony@sony.co.kr" />
-                                      <span className="focus_bg" />
-                                    </div>
-                                    <p className="error_txt"><span
-                                      className="ico" />이메일 아이디를 입력해 주세요.</p>
+                              <div className="acc_cell">
+                                <div className="acc_group">
+                                  <div className="acc_inp disable_type">
+                                    <input type="text" id="coupon"
+                                           className="inp" defaultValue={3000}
+                                           disabled /><span
+                                    className="unit">원</span>
+                                    <span className="focus_bg" />
                                   </div>
-                                </div>
-                              </div>
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="user_number">휴대폰 번호<i
-                                    className="necessary" /></label>
-                                </div>
-                                <div className="acc_cell">
-                                  <div
-                                    className="acc_group parent error">{/* error 문구 제어 */}
-                                    <div className="acc_inp type3">
-                                      <input type="text" className="inp"
-                                             id="user_number"
-                                             defaultValue={'01099999999'} />
-                                      <span className="focus_bg" />
-                                    </div>
-                                    <p className="error_txt"><span
-                                      className="ico" />휴대폰 번호를 입력해 주세요.</p>
+                                  <div className="acc_btn_box">
+                                    <button
+                                      className="button button_negative button-s popup_comm_btn"
+                                      data-popup-name="coupon_inquiry"
+                                      type="button">쿠폰 조회
+                                    </button>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                        {/* // acc_item */}
-                        {/* acc_item */}
-                        <div className="acc_item on">
-                          <div className="acc_head">
-                            <a className="acc_btn" title="배송지 정보 열기">
-                              <span className="acc_tit">배송지 정보</span>
-                              <span className="acc_arrow">상세 보기</span>
-                            </a>
-                          </div>
-                          <div className="acc_inner">
-                            <div className="acc_box">
-                              <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                              <div className="acc_form">
-                                <div className="acc_cell">
-                                  <label htmlFor="delivery_choice">배송지
-                                    선택</label>
-                                </div>
-                                <div className="acc_cell">
-                                  <div className="acc_group parent">
-                                    <div className="acc_inp type4">
-                                      <p className="delivery_txt">배송지를
-                                        선택하세요.</p>
-                                      <div className="delivery_btn_box">
-                                        <button
-                                          className="button button_negative button-s popup_comm_btn"
-                                          type="button"
-                                          data-popup-name="shipping_addr">최근 배송지
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                            <div className="acc_form">
+                              <div className="acc_cell vat">
+                                <label htmlFor="mileage">멤버십 마일리지</label>
                               </div>
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="user_email2">이메일<i
-                                    className="necessary" /></label>
-                                </div>
-                                <div className="acc_cell">
-                                  <div
-                                    className="acc_group parent error">{/* error 문구 제어 */}
-                                    <div className="acc_inp type3">
-                                      <input type="text" className="inp"
-                                             id="user_email2"
-                                             placeholder="이메일 아이디 (예 : sony@sony.co.kr)"
-                                             defaultValue="sony@sony.co.kr" />
-                                      <span className="focus_bg" />
-                                    </div>
-                                    <p className="error_txt"><span
-                                      className="ico" />이메일 아이디를 입력해 주세요.</p>
+                              <div className="acc_cell parent">
+                                <div className="acc_group">
+                                  <div className="acc_inp disable_type">
+                                    <input type="text" id="mileage"
+                                           className="inp"
+                                           placeholder="0" /><span
+                                    className="unit">점</span>
+                                    <span className="focus_bg" />
                                   </div>
-                                  <div className="check email_check">
-                                    <input type="checkbox" className="inp_check"
-                                           id="chkemail" />
-                                    <label htmlFor="chkemail">주문자 정보와 동일</label>
+                                  <div className="acc_btn_box">
+                                    <button
+                                      className="button button_negative button-s"
+                                      type="button">모두 사용
+                                    </button>
+                                    <span
+                                      className="my_point">(<em>800,000 M</em> 보유)</span>
                                   </div>
                                 </div>
-                              </div>
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="user_number2">휴대폰 번호<i
-                                    className="necessary" /></label>
-                                </div>
-                                <div className="acc_cell">
-                                  <div
-                                    className="acc_group parent error">{/* error 문구 제어 */}
-                                    <div className="acc_inp type5">
-                                      <input type="text" className="inp"
-                                             id="user_number2" />
-                                      <span className="focus_bg" />
-                                    </div>
-                                    <p className="error_txt"><span
-                                      className="ico" />휴대폰 번호를 입력해주세요.</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="user_address">주소<i
-                                    className="necessary" /></label>
-                                </div>
-                                <div className="acc_cell">
-                                  <div
-                                    className="acc_group parent error">{/* error 문구 제어 */}
-                                    <div className="acc_inp type4">
-                                      <input type="text" className="inp"
-                                             id="user_address"
-                                             placeholder="주소를 입력하세요."
-                                             defaultValue={'08008'} />
-                                      <span className="focus_bg" />
-                                      <div className="delivery_btn_box type1">
-                                        <button
-                                          className="button button_negative button-s"
-                                          type="button">우편 번호
-                                        </button>
-                                      </div>
-                                      <p className="error_txt"><span
-                                        className="ico" />배송 받으실 주소를 입력해 주세요.
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="acc_group parent">
-                                    <div className="acc_inp type5">
-                                      <input type="text" className="inp"
-                                             defaultValue="서울특별시 영등포구 여의도동 국제금융로 10 One IFC" />
-                                      <span className="focus_bg" />
-                                    </div>
-                                  </div>
-                                  <div
-                                    className="acc_group parent error">{/* error 문구 제어 */}
-                                    <div className="acc_inp type5">
-                                      <input type="text" className="inp"
-                                             placeholder="상세 주소를 입력하세요."
-                                             defaultValue="24cmd (주)소니코리아" />
-                                      <span className="focus_bg" />
-                                    </div>
-                                    <p className="error_txt"><span
-                                      className="ico" />상세 주소를 입력해 주세요.</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="delivery_request">배송 요청
-                                    사항</label>
-                                </div>
-                                <div className="acc_cell">
-                                  <div className="acc_group parent">
-                                    <div className="acc_inp type3">
-                                      <div className="select_ui_zone btm_line">
-                                        <a className="selected_btn"
-                                           data-default-text="택배 기사님께 요청하실 내용을 선택하세요.">{/* disabled : 선택불가 품절 */}
-                                          택배 기사님께 요청하실 내용을 선택하세요.
-                                        </a>
-                                        <div className="select_inner">
-                                          <p className="prd_tag">요청사항</p>
-                                          <ul className="select_opt">
-                                            <li>
-                                              <a
-                                                className="opt_list">{/* disabled : 선택 불가 품절 */}
-                                                <div className="item">배송 전
-                                                  연락바랍니다.
-                                                </div>
-                                              </a>
-                                            </li>
-                                            <li>
-                                              <a className="opt_list">
-                                                <div className="item">부재 시 경비실에
-                                                  맡겨
-                                                  주세요.
-                                                </div>
-                                              </a>
-                                            </li>
-                                            <li>
-                                              <a className="opt_list">
-                                                <div className="item">부재 시 무인
-                                                  택배함에
-                                                  맡겨주세요.
-                                                </div>
-                                              </a>
-                                            </li>
-                                            <li>
-                                              <a className="opt_list">
-                                                <div className="item">부재 시 집 문앞에
-                                                  놔주세요.
-                                                </div>
-                                              </a>
-                                            </li>
-                                            <li>
-                                              <a className="opt_list">
-                                                <div className="item">부재 시 휴대폰으로
-                                                  연락 주세요.
-                                                </div>
-                                              </a>
-                                            </li>
-                                            <li>
-                                              <a className="opt_list">
-                                                <div className="item">파손의 위험이 있는
-                                                  상품이니 조심히 다뤄주세요.
-                                                </div>
-                                              </a>
-                                            </li>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="acc_group parent">
-                                    <div className="acc_inp type3">
-                                      <input type="text" className="inp"
-                                             placeholder="배송 메모를 입력하세요." />
-                                      <span className="focus_bg" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="delivery_choice">배송일
-                                    선택</label>
-                                </div>
-                                <div className="acc_cell vat">
-                                  <div className="acc_group parent">
-                                    <div className="acc_inp">
-                                      <div className="acc_radio">
-                                        <div className="radio_box">
-                                          <input type="radio"
-                                                 className="inp_radio"
-                                                 id="delivery_radio1"
-                                                 name="deliveryradio"
-                                                 defaultChecked="checked" />
-                                          <label htmlFor="delivery_radio1"
-                                                 className="contentType">정상
-                                            배송</label>
-                                        </div>
-                                        <div className="radio_box">
-                                          <input type="radio"
-                                                 className="inp_radio"
-                                                 id="delivery_radio2"
-                                                 name="deliveryradio" />
-                                          <label htmlFor="delivery_radio2"
-                                                 className="contentType">출고일
-                                            지정</label>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="acc_group">
-                                    <div className="calendar_box">
-                                      <input type="text"
-                                             className="inp datepicker"
-                                             autoComplete="off" />
-                                    </div>
-                                  </div>
-                                  <ul className="list_dot">
-                                    <li>정상 배송이 제일 빠른 배송입니다.</li>
-                                    <li>출고일 지정 배송의 경우 주문 날짜의 3일 후부터 선택이
-                                      가능하며,<br />지정된 출고일에 맞춰서 제품이 발송되고, 출고일 기준
-                                      2~3일 이내 수령이 가능합니다.
-                                    </li>
-                                    <li>소니스토어의 모든 제품은 무료 배송 입니다.</li>
-                                    <li>배송기간은 서울, 경기일 경우 2~3일(주문일 포함), 기타 지역은
-                                      3~5일
-                                      정도 걸립니다.<br />(정오(낮12시) 이전 결제완료 기준)
-                                    </li>
-                                    <li>단, 지역 및 교통 사정에 따라 배송이 지연되는 경우가 발생할 수
-                                      있습니다.
-                                    </li>
-                                    <li>일요일, 공휴일은 배송되지 않습니다. (예:토요일 주문 시 월요일에
-                                      접수되어
-                                      화요일 이후 배송)
-                                    </li>
-                                    <li>예약판매는 별도의 배송 일정을 따릅니다.</li>
-                                  </ul>
-                                </div>
+                                <p className="membership_info">* 멤버십 마일리지는 최소
+                                  5,000점 부터 사용 가능합니다.</p>
                               </div>
                             </div>
                           </div>
                         </div>
-                        {/* // acc_item */}
-                        {/* acc_item */}
-                        <div className="acc_item on">
-                          <div className="acc_head">
-                            <a className="acc_btn" title="할인 정보 열기">
-                              <span className="acc_tit">할인 정보</span>
-                              <span className="acc_arrow">상세 보기</span>
-                            </a>
-                          </div>
-                          <div className="acc_inner">
-                            <div className="acc_box">
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="coupon">쿠폰</label>
-                                </div>
-                                <div className="acc_cell">
-                                  <div className="acc_group">
-                                    <div className="acc_inp disable_type">
-                                      <input type="text" id="coupon"
-                                             className="inp" defaultValue={3000}
-                                             disabled /><span
-                                      className="unit">원</span>
-                                      <span className="focus_bg" />
-                                    </div>
-                                    <div className="acc_btn_box">
-                                      <button
-                                        className="button button_negative button-s popup_comm_btn"
-                                        data-popup-name="coupon_inquiry"
-                                        type="button">쿠폰 조회
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="mileage">멤버십 마일리지</label>
-                                </div>
-                                <div className="acc_cell parent">
-                                  <div className="acc_group">
-                                    <div className="acc_inp disable_type">
-                                      <input type="text" id="mileage"
-                                             className="inp"
-                                             placeholder="0" /><span
-                                      className="unit">점</span>
-                                      <span className="focus_bg" />
-                                    </div>
-                                    <div className="acc_btn_box">
-                                      <button
-                                        className="button button_negative button-s"
-                                        type="button">모두 사용
-                                      </button>
-                                      <span
-                                        className="my_point">(<em>800,000 M</em> 보유)</span>
-                                    </div>
-                                  </div>
-                                  <p className="membership_info">* 멤버십 마일리지는 최소
-                                    5,000점 부터 사용 가능합니다.</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                      </div>
+                      {/* // acc_item */}
+                      {/* // acc_item */}
+                      <div className="acc_item on">
+                        <div className="acc_head">
+                          <a className="acc_btn" title="결제 방법 열기">
+                            <span className="acc_tit">결제 방법</span>
+                            <span className="acc_arrow">상세 보기</span>
+                          </a>
                         </div>
-                        {/* // acc_item */}
-                        {/* // acc_item */}
-                        <div className="acc_item on">
-                          <div className="acc_head">
-                            <a className="acc_btn" title="결제 방법 열기">
-                              <span className="acc_tit">결제 방법</span>
-                              <span className="acc_arrow">상세 보기</span>
-                            </a>
-                          </div>
-                          <div className="acc_inner">
-                            <div className="acc_box">
-                              <div className="acc_form">
-                                <div className="acc_cell vat">
-                                  <label htmlFor="payment1">결제 수단 선택</label>
-                                </div>
-                                <div className="acc_cell vat">
-                                  <div className="acc_group parent">
-                                    <div className="acc_radio">
-                                      <div className="radio_box">
-                                        <input type="radio"
-                                               className="inp_radio"
-                                               id="radio_tab1" name="tabradio"
-                                               defaultChecked="checked" />
-                                        <label htmlFor="radio_tab1"
-                                               className="contentType">신용카드</label>
-                                      </div>
-                                      <div className="radio_box">
-                                        <input type="radio"
-                                               className="inp_radio"
-                                               id="radio_tab2"
-                                               name="tabradio" />
-                                        <label htmlFor="radio_tab2"
-                                               className="contentType">가상계좌</label>
-                                      </div>
-                                      <div className="radio_box">
-                                        <input type="radio"
-                                               className="inp_radio"
-                                               id="radio_tab3"
-                                               name="tabradio" />
-                                        <label htmlFor="radio_tab3"
-                                               className="contentType">네이버
-                                          페이</label>
-                                      </div>
+                        <div className="acc_inner">
+                          <div className="acc_box">
+                            <div className="acc_form">
+                              <div className="acc_cell vat">
+                                <label htmlFor="payment1">결제 수단 선택</label>
+                              </div>
+                              <div className="acc_cell vat">
+                                <div className="acc_group parent">
+                                  <div className="acc_radio">
+                                    <div className="radio_box">
+                                      <input type="radio"
+                                             className="inp_radio"
+                                             id="radio_tab1" name="tabradio"
+                                             defaultChecked="checked" />
+                                      <label htmlFor="radio_tab1"
+                                             className="contentType">신용카드</label>
                                     </div>
-                                    <div className="tabResult">
-                                      <div
-                                        className="result_cont radio_tab1 on">
-                                        <div className="check">
-                                          <input type="checkbox"
-                                                 className="inp_check"
-                                                 id="chk01" />
-                                          <label htmlFor="chk01">지금 선택한 결제수단을
-                                            다음에도
-                                            사용</label>
-                                        </div>
-                                        <strong className="info_tit">신용카드 무이자 할부
-                                          유의사항</strong>
+                                    <div className="radio_box">
+                                      <input type="radio"
+                                             className="inp_radio"
+                                             id="radio_tab2"
+                                             name="tabradio" />
+                                      <label htmlFor="radio_tab2"
+                                             className="contentType">가상계좌</label>
+                                    </div>
+                                    <div className="radio_box">
+                                      <input type="radio"
+                                             className="inp_radio"
+                                             id="radio_tab3"
+                                             name="tabradio" />
+                                      <label htmlFor="radio_tab3"
+                                             className="contentType">네이버
+                                        페이</label>
+                                    </div>
+                                  </div>
+                                  <div className="tabResult">
+                                    <div
+                                      className="result_cont radio_tab1 on">
+                                      <div className="check">
+                                        <input type="checkbox"
+                                               className="inp_check"
+                                               id="chk01" />
+                                        <label htmlFor="chk01">지금 선택한 결제수단을
+                                          다음에도
+                                          사용</label>
+                                      </div>
+                                      <strong className="info_tit">신용카드 무이자 할부
+                                        유의사항</strong>
+                                      <ul className="list_dot">
+                                        <li>무이자 할부 개월 수가 다른 제품을 한꺼번에 결제하면 할부
+                                          개월
+                                          수가 낮은 제품을 기준으로 할부가 됩니다.
+                                        </li>
+                                        <li>무이자 할부 개월 수가 다른 제품을 따로 결제하면 해당 제품에
+                                          적용된 무이자 할부 혜택을 받으실 수 없습니다.
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <div className="result_cont radio_tab2">
+                                      <div className="check">
+                                        <input type="checkbox"
+                                               className="inp_check"
+                                               id="chk02" />
+                                        <label htmlFor="chk02">지금 선택한 결제수단을
+                                          다음에도
+                                          사용</label>
+                                      </div>
+                                      <div className="bg_recipe_box">
+                                        <strong className="info_tit2">전자 세금
+                                          계산서
+                                          발행</strong>
                                         <ul className="list_dot">
-                                          <li>무이자 할부 개월 수가 다른 제품을 한꺼번에 결제하면 할부
-                                            개월
-                                            수가 낮은 제품을 기준으로 할부가 됩니다.
+                                          <li>2011년 1월부터 전자세금서 제도를 시행하고 있습니다.
                                           </li>
-                                          <li>무이자 할부 개월 수가 다른 제품을 따로 결제하면 해당 제품에
-                                            적용된 무이자 할부 혜택을 받으실 수 없습니다.
+                                          <li>구매 후 다음달 8일 이후에 요청되는 세금계산서는 발행이
+                                            불가합니다.
                                           </li>
                                         </ul>
-                                      </div>
-                                      <div className="result_cont radio_tab2">
-                                        <div className="check">
-                                          <input type="checkbox"
-                                                 className="inp_check"
-                                                 id="chk02" />
-                                          <label htmlFor="chk02">지금 선택한 결제수단을
-                                            다음에도
-                                            사용</label>
+                                        <div className="btn_recipe_box">
+                                          <button
+                                            className="button button_negative button-m popup_comm_btn"
+                                            data-popup-name="tax_invoice1"
+                                            type="button">전자 세금계산서 발행 안내
+                                          </button>
+                                          <button
+                                            className="button button_positive button-m popup_comm_btn"
+                                            data-popup-name="tax_invoice2"
+                                            type="button">전자 세금계산서 신청하기
+                                          </button>
                                         </div>
-                                        <div className="bg_recipe_box">
-                                          <strong className="info_tit2">전자 세금
-                                            계산서
-                                            발행</strong>
-                                          <ul className="list_dot">
-                                            <li>2011년 1월부터 전자세금서 제도를 시행하고 있습니다.
-                                            </li>
-                                            <li>구매 후 다음달 8일 이후에 요청되는 세금계산서는 발행이
-                                              불가합니다.
-                                            </li>
-                                          </ul>
-                                          <div className="btn_recipe_box">
-                                            <button
-                                              className="button button_negative button-m popup_comm_btn"
-                                              data-popup-name="tax_invoice1"
-                                              type="button">전자 세금계산서 발행 안내
-                                            </button>
-                                            <button
-                                              className="button button_positive button-m popup_comm_btn"
-                                              data-popup-name="tax_invoice2"
-                                              type="button">전자 세금계산서 신청하기
-                                            </button>
-                                          </div>
-                                        </div>
-                                        <strong className="info_tit3">[소비자
-                                          피해보상보험
-                                          서비스 안내]</strong>
-                                        <ul className="list_dot">
-                                          <li>고객님은 안전거래를 위해 현금 결제 시 소니스토어가 가입한
-                                            구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.
-                                          </li>
-                                          <li>보상대상 : 미배송, 반송/환불거부, 쇼핑몰부도</li>
-                                          <li>구매안전서비스를 통하여 주문하시고 서울보증보험에서 발행하는
-                                            보험계약체결내역서를 반드시 확인하시기 바랍니다.
-                                          </li>
-                                        </ul>
                                       </div>
-                                      <div className="result_cont radio_tab3">
-                                        <div className="check">
-                                          <input type="checkbox"
-                                                 className="inp_check"
-                                                 id="chk03" />
-                                          <label htmlFor="chk03">지금 선택한 결제수단을
-                                            다음에도
-                                            사용</label>
-                                        </div>
-                                        <strong className="info_tit">신용카드 무이자 할부
-                                          유의사항</strong>
-                                        <ul className="list_dot">
-                                          <li>무이자 할부 개월 수가 다른 제품을 한꺼번에 결제하면 할부
-                                            개월
-                                            수가 낮은 제품을 기준으로 할부가 됩니다.
-                                          </li>
-                                          <li>무이자 할부 개월 수가 다른 제품을 따로 결제하면 해당 제품에
-                                            적용된 무이자 할부 혜택을 받으실 수 없습니다.
-                                          </li>
-                                        </ul>
+                                      <strong className="info_tit3">[소비자
+                                        피해보상보험
+                                        서비스 안내]</strong>
+                                      <ul className="list_dot">
+                                        <li>고객님은 안전거래를 위해 현금 결제 시 소니스토어가 가입한
+                                          구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.
+                                        </li>
+                                        <li>보상대상 : 미배송, 반송/환불거부, 쇼핑몰부도</li>
+                                        <li>구매안전서비스를 통하여 주문하시고 서울보증보험에서 발행하는
+                                          보험계약체결내역서를 반드시 확인하시기 바랍니다.
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <div className="result_cont radio_tab3">
+                                      <div className="check">
+                                        <input type="checkbox"
+                                               className="inp_check"
+                                               id="chk03" />
+                                        <label htmlFor="chk03">지금 선택한 결제수단을
+                                          다음에도
+                                          사용</label>
                                       </div>
+                                      <strong className="info_tit">신용카드 무이자 할부
+                                        유의사항</strong>
+                                      <ul className="list_dot">
+                                        <li>무이자 할부 개월 수가 다른 제품을 한꺼번에 결제하면 할부
+                                          개월
+                                          수가 낮은 제품을 기준으로 할부가 됩니다.
+                                        </li>
+                                        <li>무이자 할부 개월 수가 다른 제품을 따로 결제하면 해당 제품에
+                                          적용된 무이자 할부 혜택을 받으실 수 없습니다.
+                                        </li>
+                                      </ul>
                                     </div>
                                   </div>
                                 </div>
@@ -627,7 +300,8 @@ export default function OrderStep1 ({ location }) {
                             </div>
                           </div>
                         </div>
-                        {/* // acc_item */}
+                      </div>
+                      {/* // acc_item */}
                     </div>
                     {/* // acc */}
                   </div>
@@ -752,5 +426,5 @@ export default function OrderStep1 ({ location }) {
         </div>
       </div>
     </>
-);
+  );
 }
