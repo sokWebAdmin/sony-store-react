@@ -273,6 +273,18 @@ export default function OrderList() {
                   <p className="txt">제품 서비스 및 보증기간을 확인하세요!</p>
                 </div>
               </a>
+              {/* TODO: svg 파일 누락됨 문의중 https://nhnent.dooray.com/project/posts/3089165614751281840 */}
+              <a
+                href="/dist/html/mypage/oldOrderList.html"
+                class="box_link_inner ico_type4"
+              >
+                <div class="txt_box">
+                  <p class="tit">2021년 9월 이전 주문 내역</p>
+                  <p class="txt">
+                    이전 소니스토어에서 구매하신 내역을 확인하세요!
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
         </div>
