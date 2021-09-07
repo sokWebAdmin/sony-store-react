@@ -5,6 +5,8 @@ import SEOHelmet from '../../components/SEOHelmet';
 import Products from '../../components/order/Products';
 import Accordion from '../../components/common/surface/Accordion';
 
+import OrdererForm from '../../components/order/OrdererForm';
+
 //api
 import { getOrderSheets } from '../../api/order';
 
@@ -17,6 +19,13 @@ import { getUrlParam } from '../../utils/location';
 
 export default function OrderStep1 ({ location }) {
   const [deliveryGroups, setDeliveryGroups] = useState([]);
+
+  // form data
+  const [orderer, setOrderer] = useState({
+    ordererName: '',
+    ordererContact1: '',
+    ordererEmail: '',
+  });
 
   const init = useCallback(() => ({
     async start () {
@@ -35,7 +44,6 @@ export default function OrderStep1 ({ location }) {
   useEffect(() => {
     init().start();
   }, [init]);
-  // useEffect(init.start.bind(init));
 
   return (
     <>
@@ -75,74 +83,15 @@ export default function OrderStep1 ({ location }) {
                     <Products data={deliveryGroups} />
                   </div>
                 </div>
-                {/*// 제품 정보 */}
                 <div className="order_info">
                   {/* 왼쪽메뉴 */}
                   <div className="order_left">
                     <div className="acc acc_ui_zone">
-                      {/* acc_item */}
-                      <Accordion title={'주문자 정보'}>
+                      <Accordion title={'주문자 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <div className="acc_form">
-                          <div className="acc_cell vat">
-                            <label htmlFor="user_name">이름<i
-                              className="necessary" /></label>
-                          </div>
-                          <div className="acc_cell">
-                            <div
-                              className="acc_group parent error">{/* error 문구 제어 */}
-                              <div className="acc_inp type3">
-                                <input type="text" className="inp"
-                                       id="user_name"
-                                       placeholder="이름을 입력하세요."
-                                       defaultValue="김소니" />
-                                <span className="focus_bg" />
-                              </div>
-                              <p className="error_txt"><span
-                                className="ico" />이름을 입력해 주세요.</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="acc_form">
-                          <div className="acc_cell vat">
-                            <label htmlFor="user_email">이메일<i
-                              className="necessary" /></label>
-                          </div>
-                          <div className="acc_cell">
-                            <div
-                              className="acc_group parent error">{/* error 문구 제어 */}
-                              <div className="acc_inp type3">
-                                <input type="text" className="inp"
-                                       id="user_email"
-                                       placeholder="이메일 아이디 (예 : sony@sony.co.kr)"
-                                       defaultValue="sony@sony.co.kr" />
-                                <span className="focus_bg" />
-                              </div>
-                              <p className="error_txt"><span
-                                className="ico" />이메일 아이디를 입력해 주세요.</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="acc_form">
-                          <div className="acc_cell vat">
-                            <label htmlFor="user_number">휴대폰 번호<i
-                              className="necessary" /></label>
-                          </div>
-                          <div className="acc_cell">
-                            <div
-                              className="acc_group parent error">{/* error 문구 제어 */}
-                              <div className="acc_inp type3">
-                                <input type="text" className="inp"
-                                       id="user_number"
-                                       defaultValue={'01099999999'} />
-                                <span className="focus_bg" />
-                              </div>
-                              <p className="error_txt"><span
-                                className="ico" />휴대폰 번호를 입력해 주세요.</p>
-                            </div>
-                          </div>
-                        </div>
+                        <OrdererForm orderer={orderer} setOrderer={setOrderer} />
                       </Accordion>
+
                         <div className="acc_item on">
                           <div className="acc_head">
                             <a className="acc_btn" title="주문자 정보 열기">
