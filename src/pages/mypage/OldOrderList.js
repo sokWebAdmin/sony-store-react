@@ -10,7 +10,8 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function OldOrderList() {
-  //TODO: 스타일 전부 하나씩 scss 파일로 변환 하나설마
+  //TODO: 스타일 전부 하나씩 scss 파일로 변환 해야하나?>
+  // scss import 구문 주석 처리해도 괜찮던데,
   return (
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
