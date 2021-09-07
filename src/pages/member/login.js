@@ -20,9 +20,11 @@ import Cookies from "js-cookie";
 //context
 import GlobalContext from '../../context/global.context';
 import { setAccessToken } from '../../utils/token';
+import { fetchProfile, useProileDispatch } from '../../context/profile.context';
 
 export default function Login() {
-  const {onChangeGlobal, isLogin} = useContext(GlobalContext)
+  const {onChangeGlobal, isLogin} = useContext(GlobalContext);
+  const profileDispatch = useProileDispatch();
 
   const history = useHistory();
 
@@ -65,7 +67,7 @@ export default function Login() {
         const {accessToken, expireIn} = response.data;
         setAccessToken(accessToken, expireIn);
         onChangeGlobal({isLogin: true})
-        await _getProfile();
+        await fetchProfile(profileDispatch);
 
         if(saveEmail === true){
           Cookies.set("sony_email", email);
@@ -74,13 +76,6 @@ export default function Login() {
         }
         history.push('/')
       }
-    }
-  }
-
-  const _getProfile = async() => {
-    const response = await getProfile();
-    if(response.status === 200){
-      onChangeGlobal({profile: response.data})
     }
   }
 

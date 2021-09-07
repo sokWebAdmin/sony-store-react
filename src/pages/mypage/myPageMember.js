@@ -9,8 +9,12 @@ import SEOHelmet from '../../components/SEOHelmet';
 //css
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/mypage.scss"
+import { useProfileState } from '../../context/profile.context';
 
-export default function myPageMember() {
+export default function MyPageMember() {
+  const profileState = useProfileState();
+  console.log(profileState);
+  
 
     return (
         <>

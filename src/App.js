@@ -31,7 +31,7 @@ import videoCourse from './pages/support/videoCourse';
 
 //마이페이지
 import myPageMain from './pages/mypage/myPageMain';
-import myPageMember from './pages/mypage/myPageMember';
+import MyPageMember from './pages/mypage/MyPageMember';
 import orderDetail from './pages/mypage/orderDetail';
 import orderList from './pages/mypage/orderList';
 import rename from './pages/mypage/rename';
@@ -140,7 +140,7 @@ const App = (props) => {
 
               {/* 마이페이지  */}
               <Route exact path="/my-page" component={myPageMain} />
-              <Route exact path="/my-page/member" component={myPageMember} />
+              <Route exact path="/my-page/member" component={MyPageMember} />
               <Route exact path="/my-page/order-detail" component={orderDetail} />
               <Route exact path="/my-page/order-list" component={orderList} />
               <Route exact path="/my-page/rename" component={rename} />
