@@ -1,5 +1,18 @@
 // 주문자 정보
-const OrdererForm = () => {
+const OrdererForm = prop => {
+  // ordererName, ordererContact1, ordererEmail
+  const { orderer, setOrderer } = prop
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+
+    setOrderer(prevState => ({
+      ...prevState,
+      [name]: value
+    }))
+  }
+
+
   return (
     <>
       <div className="acc_form">
@@ -14,6 +27,9 @@ const OrdererForm = () => {
               <input type="text" className="inp"
                      id="user_name"
                      placeholder="이름을 입력하세요."
+                     value={orderer.ordererName}
+                     name="ordererName"
+                     onChange={handleChange}
               />
               <span className="focus_bg" />
             </div>

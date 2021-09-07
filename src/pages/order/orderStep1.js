@@ -20,6 +20,13 @@ import { getUrlParam } from '../../utils/location';
 export default function OrderStep1 ({ location }) {
   const [deliveryGroups, setDeliveryGroups] = useState([]);
 
+  // form data
+  const [orderer, setOrderer] = useState({
+    ordererName: '',
+    ordererContact1: '',
+    ordererEmail: '',
+  });
+
   const init = useCallback(() => ({
     async start () {
       await this.fetchOrderSheet(this.orderSheetNo);
@@ -82,7 +89,7 @@ export default function OrderStep1 ({ location }) {
                     <div className="acc acc_ui_zone">
                       <Accordion title={'주문자 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <OrdererForm />
+                        <OrdererForm orderer={orderer} setOrderer={setOrderer} />
                       </Accordion>
 
                         <div className="acc_item on">
