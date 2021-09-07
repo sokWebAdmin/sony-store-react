@@ -1,5 +1,5 @@
 const heightStyle = (height, headerHeight) => {
-   const marginTop = (headerHeight / 2) *- 1;
+   const marginTop = headerHeight > 0 ? (headerHeight / 2) *- 1 : 0;
 
    if (height - headerHeight < 500) {
       return ({

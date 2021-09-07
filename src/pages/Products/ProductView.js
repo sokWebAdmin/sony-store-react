@@ -96,9 +96,7 @@ export default function ProductView({ match }) {
           <div className="product_view_wrap" style={{backgroundColor:"#fff"}}>
             <div className="product_view_main">
               <div className="prd_main_slider" style={getMainSliderStyle(size)}>
-                <div className="view_slider swiper-container">
-                  { productData.baseInfo.imageUrls && <MainImage imageUrls={ productData.baseInfo.imageUrls } /> }
-                </div>
+                <MainImage imageUrls={ productData.baseInfo.imageUrls } />
               </div>
               <form>
                 <div className="product_view_about">{/* class :  soldout-품절, restock-재입고 텍스트 색상 변경을 위함 */}
