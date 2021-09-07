@@ -12,8 +12,8 @@ export default function DropDownSelector({ selectOptions, onToggleHandler, onCli
         { selectedLabel }
       </a>
       <div className="select_inner" style={{ display }}>
-        <p class="prd_tag">{ tag }</p>
-        <ul class="select_opt">
+        <p className="prd_tag">{ tag }</p>
+        <ul className="select_opt">
         {
           selectOptions.map(option => {
             const { label, optionNo } = option;
