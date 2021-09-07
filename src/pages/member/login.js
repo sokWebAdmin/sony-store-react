@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -38,7 +38,7 @@ export default function Login() {
   const [isPw, setIsPw] = useState(false);
 
   //cookie
-  const [saveEmail, setSaveEmail] = useState(true);
+  const [saveEmail, setSaveEmail] = useState(Cookies.get('sony_email') ?? false);
 
   //action
   const _loginApi = async (email, password) => {
@@ -155,7 +155,7 @@ export default function Login() {
                     <label htmlFor="chk01">이메일 아이디 저장</label>
                   </div>
                   <ul className="user_menu">
-                    <li><a  onClick={()=>{history.push('/member/pw-search')}}>아이디 · 비밀번호 찾기</a></li>
+                    <li><a  onClick={()=>{history.push('/member/search')}}>아이디 · 비밀번호 찾기</a></li>
                     <li><a  onClick={()=>{history.push('/member/join-agree')}}>회원가입</a></li>
                   </ul>
                 </div>
