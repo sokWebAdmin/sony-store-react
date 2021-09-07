@@ -223,9 +223,9 @@ function ButtonGroup({ selectedOption, productNo }) {
             <li className="final">
               <a href="/order/step/1" onClick={ async ( event) => {
 
-                if (isLogin) {
+                // if (isLogin) {
 
-                } else {
+                // } else {
 
                   event.preventDefault();
                   const response = await postOrderSheets({
@@ -247,7 +247,7 @@ function ButtonGroup({ selectedOption, productNo }) {
                     search: '?' + qs.stringify(response.data)
                   });
 
-                }
+                // }
                 
               }} className="btn_style direct" style={{backgroundColor: '#000'}}>바로 구매하기</a>
               <a href="#none" className="btn_style disabled" style={{display: 'none', backgroundColor: '#ddd'}}>품절</a>
