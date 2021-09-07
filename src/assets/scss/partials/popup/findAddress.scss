@@ -1,3 +1,28 @@
 .find_address {
-  background-color: #f00;
+  .search_container {
+    display: flex;
+
+    .search_input {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      border: 0;
+      padding: 10px 0;
+      font-size: 14px;
+      color: #444;
+      transition: all 0.15s ease;
+      border-bottom: 1px solid #e1e1e1;
+      line-height: 1.4;
+      box-sizing: border-box;
+    }
+
+    .search_button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      min-width: 64px;
+      font-size: 12px;;
+    }
+  }
 }

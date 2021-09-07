@@ -27,17 +27,14 @@ const FindAddress = () => {
       {test&& <LayerPopup className="find_address" onClose={close}>
         <>
           <p className="pop_tit">우편번호 찾기</p>
-          <form>
+          <form className="search_container">
             <input
               type="text"
               placeholder="검색어(도로명,지번,건물명)를 입력해주세요"
+              className="search_input"
             />
-            <button type="submit">검색</button>
+            <button type="submit" className="search_button button button_negative">검색</button>
           </form>
-          <div className="btn_article">
-            <button className="button button_negative button-m closed" type="button" onClick={nonMemberOrder}>비회원 구매</button>
-            <button className="button button_positive button-m" type="button" onClick={memberOrder}>회원 구매</button>
-          </div>
         </>
       </LayerPopup>}
       {/*   컴포넌트 내부 마크업   */}
