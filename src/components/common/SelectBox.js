@@ -54,7 +54,7 @@ export default function SelectBox({ defaultInfo, selectOption, selectOptions, cu
   const onToggleHandler = useCallback((event) => {
     event.preventDefault();
     onToggle(!isOpened);
-  }, [onToggle, isOpened])
+  }, [onToggle, isOpened]);
 
   const onClickHandler = useCallback((event, option) => {
     event.preventDefault();
@@ -74,6 +74,7 @@ export default function SelectBox({ defaultInfo, selectOption, selectOptions, cu
   }, [setSelectedValue, selectOption, onToggle, selectedValue.options]);
 
   useEffect(() => {
+
     if (!customOption) return;
 
     if (!customOption?.optionNo) {
@@ -81,12 +82,14 @@ export default function SelectBox({ defaultInfo, selectOption, selectOptions, cu
       return;
     }
 
-    if (!validator.isDuplicated(selectedValue.options, customOption.optionNo)) {
-        setSelectedValue(({ options }) => ({
-          label: customOption.label,
-          options: options.concat(customOption)
-        }));
-      }
+    const isDuplicated = validator.isDuplicated(selectedValue.options, customOption.optionNo);
+    
+    setSelectedValue(({ options }) => ({
+      label: customOption.label,
+      options: isDuplicated 
+                  ? [ ...options ] 
+                  : options.concat(customOption)
+    }));
 
   }, [customOption, initialSelectedState, selectedValue.options]);
 
