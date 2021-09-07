@@ -19,7 +19,7 @@ import GlobalContext from '../context/global.context';
 import { useHistory } from "react-router-dom";
 import { removeAccessToken } from '../utils/token';
 import { getProfile } from '../api/member';
-import { fetchProfile, useProfileState, useProileDispatch } from "../context/profile.context";
+import { fetchMyProfile, fetchProfile, useProfileState, useProileDispatch } from "../context/profile.context";
 
 export default function Header() {
   const history = useHistory();
@@ -32,7 +32,14 @@ export default function Header() {
   const [isInfoOpen, setInfoOpen] = useState(false);
   const [sideBarOpen, setMobileSideBarOpen] = useState(false);
 
-  useEffect(() => isLogin && fetchProfile(profileDispatch), [])
+  useEffect(() => isLogin && fetchProfile(profileDispatch), []);
+  console.log(profile, 'outer');
+  useEffect(() => {
+    console.log(profile, 'profile');
+    if (!profile.customerId) return;
+    console.log(profile.customerId, 'tttttt');
+    profile.customerId && fetchMyProfile(profileDispatch, { type: '30', customerid: profile.customerId })
+  }, [profileDispatch, profile.customerId])
 
   return (
     <>
