@@ -26,3 +26,6 @@ export const sendSMS = (number, type) => {
 export const verifySMS = (number, code, type) => {
   return request("authentications/sms", "get", "mobileNo="+number+"&key="+code+"&usage="+type, null);
 };
+export const getOauthOpenId = (query) => {
+  return request('oauth/openid', 'get', query);
+}
