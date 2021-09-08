@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Switch, useLocation, Route } from 'react-router-dom';
 
 //Component
@@ -75,16 +75,48 @@ import SearchResult from './pages/footer/searchResult';
 import EspMain from './pages/esp/EspMain';
 import EspList from './pages/esp/EspList';
 import { fetchMallInfo, useMallDispatch, useMallState } from './context/mall.context';
+import GlobalContext from './context/global.context';
+import {
+  fetchMyProfile,
+  fetchProfile,
+  resetProfile,
+  useProfileState,
+  useProileDispatch,
+} from './context/profile.context';
 
 const App = (props) => {
   const dispatch = useMallDispatch();
   const state = useMallState();
+  const {isLogin} = useContext(GlobalContext);
+  const profileDispatch = useProileDispatch();
+  const {my, profile} = useProfileState();
 
   useEffect(() => {
     if (state?.mall) return;
     fetchMallInfo(dispatch);
   }, [dispatch, state?.mall]);
 
+  const getMallInfo = async () => {
+    if (isLogin) {
+      if (!profile) {
+        await fetchProfile(profileDispatch);
+        if (!my) {
+          const data = { type: '30', customerid: profile.memberId };
+          await fetchMyProfile(profileDispatch, data);
+        }
+      }
+      if (profile && !my) {
+        const data = { type: '30', customerid: profile.memberId };
+        await fetchMyProfile(profileDispatch, data);
+      }
+    } else {
+      resetProfile(profileDispatch);
+    }
+  }
+
+  useEffect(() => {
+    getMallInfo();
+  }, [isLogin])
 
   let location = useLocation();
 
