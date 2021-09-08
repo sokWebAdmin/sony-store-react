@@ -17,6 +17,7 @@ import moment from 'moment';
 import { useHistory } from 'react-router';
 import FindAddress from '../../components/popup/FindAddress';
 import Repassword from './myPageMember/Repassword';
+import MobileAuth from '../member/MobileAuth';
 
 function getStrDate(date, format = 'YYYY-MM-DD') {
   return moment(date).format(format);
@@ -89,6 +90,9 @@ export default function MyPageMember() {
   };
   // 비밀번호 변경하기
   const [repasswordVisible, setRepasswordVisible] = useState(false);
+  // 휴대폰 번호 변경하기
+  const [remobileVisible, setRemobileVisible] = useState(false);
+  const handleRemobileResult = result => console.log(result);
   
   
   const onClickHandler = (event, type) => {
@@ -104,8 +108,15 @@ export default function MyPageMember() {
         history.push({ pathname: '/my-page/rename' });
         break;
       case 'mobile':
-        // setVisibleFlag(prev => ({ ...prev, remobile: true }))
-        alert('휴대폰 번호 변경 팝업');
+        if (!myForm.mobile) {
+          alert('번호를 입력하세요.');
+          return;
+        }
+        if (!myForm.mobile.match(/^\d{2,3}\d{3,4}\d{4}$/)) {
+          alert('번호를 확인하세요.');
+          return;
+        }
+        setRemobileVisible(true);
         break;
       case 'address':
         // setVisibleFlag(prev => ({ ...prev, address: true }))
@@ -207,9 +218,8 @@ export default function MyPageMember() {
                               type="text" 
                               id="member_tel" 
                               name="mobile" 
-                              className="inp tel_number disabled" 
-                              value={ myForm.mobile } 
-                              disabled="disabled" 
+                              className="inp tel_number" 
+                              value={ myForm.mobile }
                               maxLength={11} 
                               autoComplete="off" 
                               placeholder=""
@@ -220,31 +230,17 @@ export default function MyPageMember() {
                           </div>
                         </div>
                         <div className="btn_box">
-                          <button className="button change_btn" type="button" onClick={ event => onClickHandler(event, 'mobile') }><span>휴대폰</span> 번호 변경</button>
+                          <button className="button change_btn" type="button" onClick={ event => onClickHandler(event, 'mobile') }>인증번호 전송</button>
                         </div>
                       </div>
-                      <div className="info_box type_txt_btn tel_chk">
-                        <div className="data_box">
-                          <div className="inp_box">
-                            <input 
-                              type="text" 
-                              className="inp" 
-                              maxLength={11} 
-                              title="인증번호 입력해주세요." 
-                              disabled="disabled" 
-                              placeholder=" " 
-                              autoComplete="off" 
-                            />
-                            <span className="label">인증번호</span>
-                            <span className="focus_bg" />
-                          </div>
-                          <span className="timer" id="timer">02:55</span>
-                        </div>
-                        <div className="btn_box">
-                          <button className="button btn_primary" disabled="disabled" type="button">인증</button>{/* class : on  */}
-                        </div>
-                        <div className="certify_txt">※ 입력하신 번호로 인증번호가 전송되었습니다.</div>
-                      </div>
+                      {
+                        remobileVisible 
+                          && <MobileAuth 
+                                mobile={ myForm.mobile } 
+                                setVisible={ setRemobileVisible } 
+                                handleResult={ handleRemobileResult }
+                              /> 
+                      }
                     </div>
                   </div>
                   <div className="member_list email">
