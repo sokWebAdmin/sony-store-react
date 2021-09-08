@@ -6,9 +6,11 @@ import LayerPopup from '../common/LayerPopup';
 // api
 import { getAddresses } from '../../api/manage';
 
+// utils
+import { setObjectState } from '../../utils/state';
+
 // stylesheet
 import '../../assets/scss/partials/popup/findAddress.scss';
-import { setObjectState } from '../../utils/state';
 
 const getDefaultPage = () => ({
   current: 1,
@@ -16,10 +18,7 @@ const getDefaultPage = () => ({
 });
 
 // 주소 찾기 팝업
-const FindAddress = () => {
-  // LayerPopup 상태관리
-  const [visible, setVisible] = useState(true);
-
+const FindAddress = ({ setVisible }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const [noSearch, setNoSearch] = useState(true);
@@ -72,7 +71,7 @@ const FindAddress = () => {
 
   return (
     <>
-      {visible && <LayerPopup className="find_address" onClose={close}>
+      <LayerPopup className="find_address" onClose={close}>
         <p className="pop_tit">우편번호 찾기</p>
         <form className="search_container" onSubmit={submit}>
           <input
@@ -136,7 +135,7 @@ const FindAddress = () => {
             }
           </>
         }
-      </LayerPopup>}
+      </LayerPopup>
     </>
   );
 };
