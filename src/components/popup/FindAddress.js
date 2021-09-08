@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // components
 import LayerPopup from '../common/LayerPopup';
@@ -13,7 +13,6 @@ import { setObjectState } from '../../utils/state';
 const getDefaultPage = () => ({
   current: 1,
   size: 10,
-  total: 1,
 });
 
 // 주소 찾기 팝업
@@ -25,12 +24,11 @@ const FindAddress = () => {
 
   const [noSearch, setNoSearch] = useState(true);
   const [items, setItems] = useState([]);
-  const [page, setPage] = useState({
-    current: 1,
-    size: 10,
-  });
+  const [page, setPage] = useState(getDefaultPage());
 
   const [pageTotal, setPageTotal] = useState(0);
+
+  const result = useRef();
 
   const close = () => setVisible(false);
 
@@ -51,7 +49,10 @@ const FindAddress = () => {
     }).then(({ data }) => {
       setItems(data.items);
       updatePagination(data.totalCount);
-    }).then(() => noSearch && setNoSearch(false));
+    }).then(() => {
+      noSearch && setNoSearch(false);
+      result.current.scrollTop = 0;
+    });
   }
 
   useEffect(fetchAddresses, [page]);
@@ -90,7 +91,7 @@ const FindAddress = () => {
         {noSearch
           ? <SearchTip />
           : <>
-            <div className="result">
+            <div className="result" ref={result}>
               {items?.length >= 1 ?
                 <ul className="addresses">
                   {items.map(({ zipCode, address, jibunAddress }, i) => (
