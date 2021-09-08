@@ -61,6 +61,7 @@ import JoinAgree from './pages/member/JoinAgree';
 import joinStep from './pages/member/joinStep';
 import login from './pages/member/login';
 import Search from "./pages/member/Search"
+import InactiveAccounts from './pages/member/inactiveAccounts';
 
 //footer
 import policy from './pages/footer/policy';
@@ -173,6 +174,7 @@ const App = (props) => {
               <Route exact path="/member/joinStep" component={joinStep} />
               <Route exact path="/member/login" component={login} />
               <Route exact path="/member/search" component={Search} />
+              <Route exact path="/member/inactiveAccounts" component={InactiveAccounts} />
 
               {/* Footer  */}
               <Route exact path="/footer/policy" component={policy} />
