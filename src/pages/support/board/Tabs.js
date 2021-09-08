@@ -12,11 +12,11 @@ export default function Tabs() {
 
   const tabs = [
     {
-      name: config?.faq?.name,
+      name: config.faq?.name,
       label: 'faq'
     },
     {
-      name: config?.notice?.name,
+      name: config.notice?.name,
       label: 'notice',
     }
   ];

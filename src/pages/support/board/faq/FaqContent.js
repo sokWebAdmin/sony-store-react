@@ -27,7 +27,7 @@ export default function FaqContent() {
   const dispatch = useBoardDispatch();
   const { config, currentCategoryNo, isAll, faqBoard } = useBoardState();
 
-  const boardNo = useMemo(() => config?.faq.boardNo, [config.faq.boardNo]);
+  const boardNo = useMemo(() => config.faq?.boardNo, [config.faq?.boardNo]);
 
   const [ resetViewMore, setResetViewMore ] = useState(false);
 
