@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import GlobalContext from '../../context/global.context';
 
 // components
@@ -9,11 +9,22 @@ import FindAddress from '../../components/popup/FindAddress';
 import { handleChange, setObjectState } from '../../utils/state';
 
 // const
-import { deliveryMemos } from '../../const/order'
+import { deliveryMemos } from '../../const/order';
+
+// stylesheet
+import '../../assets/scss/interaction/field.dynamic.scss';
+
+const receiverAddressMap = {
+  // from: to
+  address: 'receiverAddress',
+  jibunAddress: 'receiverJibunAddress',
+  zipCode: 'receiverZipCd',
+};
 
 // 배송지 정보
 const ShippingAddressForm = prop => {
   const { isLogin } = useContext(GlobalContext);
+  const detailAddressInput = useRef();
 
   // popup state
   const [findAddressVisible, setFindAddressVisible] = useState(false);
@@ -22,28 +33,40 @@ const ShippingAddressForm = prop => {
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
   const { shipping, setShipping, orderer } = prop;
-  // TODO. 배송일 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
+  // TODO. 배송일자 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
+
+  const bindReceiverAddress = selectedAddress => {
+    if (!selectedAddress) {
+      return;
+    }
+
+    Object.entries(receiverAddressMap).
+      forEach(
+        ([from, to]) => setObjectState(to, selectedAddress[from])(setShipping));
+    detailAddressInput.current.focus();
+  };
 
   const ordererMap = {
     receiverName: orderer.ordererName,
     receiverContact1: orderer.ordererContact1,
-  }
+  };
 
-  const deliveryMemoFixedList = deliveryMemos
+  const deliveryMemoFixedList = deliveryMemos;
 
-  const handleShippingChange = event => handleChange(event)(setShipping)
+  const handleShippingChange = event => handleChange(event)(setShipping);
 
-  const handleShippingChangeParameter = (key, value) => setObjectState(key, value)(setShipping)
+  const handleShippingChangeParameter = (key, value) => setObjectState(key,
+    value)(setShipping);
 
-  const [sameAsOrderer, setSameAsOrderer] = useState(false)
+  const [sameAsOrderer, setSameAsOrderer] = useState(false);
 
   useEffect(() => {
     sameAsOrderer
-      ? Object.entries(ordererMap).forEach(([key, value]) => handleShippingChangeParameter(key, value))
-      : Object.keys(ordererMap).forEach(key => handleShippingChangeParameter(key, ''))
-
-    console.log(shipping)
-    }, [sameAsOrderer])
+      ? Object.entries(ordererMap).
+        forEach(([key, value]) => handleShippingChangeParameter(key, value))
+      : Object.keys(ordererMap).
+        forEach(key => handleShippingChangeParameter(key, ''));
+  }, [sameAsOrderer]);
 
   return (
     <>
@@ -130,22 +153,25 @@ const ShippingAddressForm = prop => {
           <div
             className="acc_group parent">
             <div className="acc_inp type4">
-              <input type="text" className="inp"
+              <input type="text"
+                     className="inp dynamic_input"
                      id="user_address"
                      placeholder="주소를 입력하세요."
                      name="receiverZipCd"
                      value={shipping.receiverZipCd}
                      onChange={handleShippingChange}
+                     readOnly
               />
               <span className="focus_bg" />
               <div className="delivery_btn_box type1">
                 <button
                   onClick={() => setFindAddressVisible(true)}
                   className="button button_negative button-s"
-                  type="button">우편 번호
+                  type="button">우편번호 검색
                 </button>
                 {findAddressVisible &&
-                <FindAddress setVisible={setFindAddressVisible} />}
+                <FindAddress setVisible={setFindAddressVisible}
+                             setAddress={bindReceiverAddress} />}
               </div>
               <p className="error_txt"><span
                 className="ico" />배송 받으실 주소를 입력해 주세요.
@@ -154,10 +180,11 @@ const ShippingAddressForm = prop => {
           </div>
           <div className="acc_group parent">
             <div className="acc_inp type5">
-              <input type="text" className="inp"
+              <input type="text" className="inp dynamic_input"
                      name="receiverAddress"
                      value={shipping.receiverAddress}
                      onChange={handleShippingChange}
+                     readOnly
               />
               <span className="focus_bg" />
             </div>
@@ -170,6 +197,7 @@ const ShippingAddressForm = prop => {
                      name="receiverDetailAddress"
                      value={shipping.receiverDetailAddress}
                      onChange={handleShippingChange}
+                     ref={detailAddressInput}
               />
               <span className="focus_bg" />
             </div>
@@ -188,13 +216,13 @@ const ShippingAddressForm = prop => {
               <SelectBox
                 defaultInfo={{
                   type: 'dropdown',
-                  placeholder: '택배 기사님께 요청하실 내용을 선택하세요.'
+                  placeholder: '택배 기사님께 요청하실 내용을 선택하세요.',
                 }}
                 selectOptions={deliveryMemoFixedList}
                 selectOption={
                   ({ optionNo, label }) => optionNo !== 1
-                  ? handleShippingChangeParameter('deliveryMemo', label)
-                  : handleShippingChangeParameter('deliveryMemo', '')
+                    ? handleShippingChangeParameter('deliveryMemo', label)
+                    : handleShippingChangeParameter('deliveryMemo', '')
                 }
               />
             </div>
@@ -206,8 +234,9 @@ const ShippingAddressForm = prop => {
                      name="deliveryMemo"
                      value={shipping.deliveryMemo}
                      onChange={() => {
-                       alert('select option 을 orderNo: 1 로 리셋해야하는데.. SelectBox랑 협업필요')
-                       handleShippingChange()
+                       alert(
+                         'select option 을 orderNo: 1 로 리셋해야하는데.. SelectBox랑 협업필요');
+                       handleShippingChange();
                      }}
               />
               <span className="focus_bg" />

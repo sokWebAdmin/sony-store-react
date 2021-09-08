@@ -1,0 +1,13 @@
+@mixin killMouseInteraction {
+  & + .focus_bg {
+    display: none !important;
+  }
+}
+
+.dynamic_input {
+  &:read-only, &:disabled {
+    cursor: not-allowed;
+
+    @include killMouseInteraction;
+  }
+}

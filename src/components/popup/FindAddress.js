@@ -17,8 +17,7 @@ const getDefaultPage = () => ({
   size: 10,
 });
 
-// 주소 찾기 팝업
-const FindAddress = ({ setVisible }) => {
+const FindAddress = ({ setVisible, setAddress }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const [noSearch, setNoSearch] = useState(true);
@@ -32,8 +31,14 @@ const FindAddress = ({ setVisible }) => {
   const close = () => setVisible(false);
 
   const submit = event => {
+
     event.preventDefault();
     setPage(getDefaultPage());
+  };
+
+  const select = ({ address, jibunAddress, zipCode }) => {
+    setAddress({ address, jibunAddress, zipCode });
+    close();
   };
 
   function fetchAddresses () {
@@ -56,13 +61,9 @@ const FindAddress = ({ setVisible }) => {
 
   useEffect(fetchAddresses, [page]);
 
-  const onPrev = () => {
-    setCurrentPage(page.current - 1);
-  };
+  const onPrev = () => setCurrentPage(page.current - 1);
 
-  const onNext = () => {
-    setCurrentPage(page.current + 1);
-  };
+  const onNext = () => setCurrentPage(page.current + 1);
 
   const setCurrentPage = number => setObjectState('current', number)(setPage);
 
@@ -93,16 +94,16 @@ const FindAddress = ({ setVisible }) => {
             <div className="result" ref={result}>
               {items?.length >= 1 ?
                 <ul className="addresses">
-                  {items.map(({ zipCode, address, jibunAddress }, i) => (
-                    <li key={i + '_' + zipCode}>
-                      <button>
+                  {items.map((item, i) => (
+                    <li key={i + '_' + item.zipCode}>
+                      <button onClick={() => select(item)}>
                         <div className="address">
                           <div className="road">
                               <span className="badge">
                                   도로명
                               </span>
                             <p>
-                              {address}
+                              {item.address}
                             </p>
                           </div>
                           <div className='ground'>
@@ -110,12 +111,12 @@ const FindAddress = ({ setVisible }) => {
                                 지번
                             </span>
                             <p>
-                              {jibunAddress}
+                              {item.jibunAddress}
                             </p>
                           </div>
                         </div>
                         <span className="zip_code">
-                        {zipCode}
+                        {item.zipCode}
                       </span>
                       </button>
                     </li>
