@@ -1,7 +1,4 @@
 import moment, { Moment, MomentInput, unitOfTime } from 'moment'; // eslint-disable-line
-import { StartAndEndYmdHm } from '@/types';
-import { OptionData } from '@/helpers/type';
-import { DEFAULT_TIME_RANGE } from '@/components/common/datepicker/dateRange';
 
 export const getUnitDigitStr = (num) => {
   return num < 10 ? `0${num}` : `${num}`;
@@ -9,7 +6,7 @@ export const getUnitDigitStr = (num) => {
 
 export function changeDateFormat(time, format) {
   if (typeof time === 'string' && time === '') {
-    return moment().format(format);
+    return moment().language('ko').format(format);
   }
   return moment(time).format(format);
 }
@@ -58,7 +55,7 @@ export function getStrYMDHM(date) {
   return moment(date).format('YYYY-MM-DD HH:mm');
 }
 
-export function addDay(date) {
+export function addDay(date, days) {
   return moment(date)
     .add(days, 'days')
     .format('YYYY-MM-DD');
@@ -68,6 +65,11 @@ export function addMonth(date, months) {
   return moment(date)
     .add(months, 'months')
     .format('YYYY-MM-DD');
+}
+
+export function getDay(date) {
+  const week = ['일', '월', '화', '수', '목', '금', '토', '일']
+  return week[moment(date).day()]
 }
 
 export function getSelectYears(endWord, isPast = true, length = 3) {

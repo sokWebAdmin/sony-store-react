@@ -37,3 +37,7 @@ export const getProfile = () => {
   return request("profile", "get", null, null);
 };
 
+export const getDormancy = () => {
+  return request("profile/dormancy", "get", null, null);
+};
+

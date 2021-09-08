@@ -62,7 +62,11 @@ import JoinAgree from './pages/member/JoinAgree';
 import joinStep from './pages/member/joinStep';
 import login from './pages/member/login';
 import Search from "./pages/member/Search"
+import InactiveAccounts from './pages/member/inactiveAccounts';
+import ActiveAccounts from './pages/member/activeAccounts';
+import LockedAccounts from './pages/member/lockedAccounts';
 import OpenLogin from './components/member/OpenLogin';
+
 
 //footer
 import policy from './pages/footer/policy';
@@ -208,6 +212,9 @@ const App = (props) => {
               <Route exact path="/member/joinStep" component={joinStep} />
               <Route exact path="/member/login" component={login} />
               <Route exact path="/member/search" component={Search} />
+              <Route exact path="/member/inactiveAccounts" component={InactiveAccounts} />
+              <Route exact path="/member/activeAccounts" component={ActiveAccounts} />
+              <Route exact path="/member/lockedAccounts" component={LockedAccounts} />
               <Route exact path="/callback" component={OpenLogin} />
 
               {/* Footer  */}
