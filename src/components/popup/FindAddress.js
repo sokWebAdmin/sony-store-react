@@ -18,7 +18,7 @@ const getDefaultPage = () => ({
 });
 
 // 주소 찾기 팝업
-const FindAddress = ({ setVisible }) => {
+const FindAddress = ({ setVisible, setShipping }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const [noSearch, setNoSearch] = useState(true);

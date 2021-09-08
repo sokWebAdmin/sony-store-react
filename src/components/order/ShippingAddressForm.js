@@ -22,7 +22,7 @@ const ShippingAddressForm = prop => {
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
   const { shipping, setShipping, orderer } = prop;
-  // TODO. 배송일 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
+  // TODO. 배송일자 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
 
   const ordererMap = {
     receiverName: orderer.ordererName,
@@ -145,7 +145,8 @@ const ShippingAddressForm = prop => {
                   type="button">우편 번호
                 </button>
                 {findAddressVisible &&
-                <FindAddress setVisible={setFindAddressVisible} />}
+                <FindAddress setVisible={setFindAddressVisible}
+                             setShipping={setShipping} />}
               </div>
               <p className="error_txt"><span
                 className="ico" />배송 받으실 주소를 입력해 주세요.
