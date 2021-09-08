@@ -37,7 +37,7 @@ export default function Join() {
               </p>
               <div className="btn_box full">
                 <button type="button" className="btn btn_dark" onClick={() => {
-                  history.push('/member/joinStep');
+                  history.push('/member/join-agree');
                 }}>소니스토어 간편 회원 가입
                 </button>
               </div>

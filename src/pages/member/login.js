@@ -152,7 +152,7 @@ export default function Login() {
                   </div>
                   <ul className="user_menu">
                     <li><a href="javascript:void(0)" onClick={()=>{history.push('/member/search')}}>아이디 · 비밀번호 찾기</a></li>
-                    <li><a href="javascript:void(0)" onClick={()=>{history.push('/member/join-agree')}}>회원가입</a></li>
+                    <li><a href="javascript:void(0)" onClick={()=>{history.push('/member/join')}}>회원가입</a></li>
                   </ul>
                 </div>
                 <div className="txt_or">
