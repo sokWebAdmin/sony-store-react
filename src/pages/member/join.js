@@ -11,6 +11,7 @@ import '../../assets/scss/contents.scss';
 
 //context
 import GlobalContext from '../../context/global.context';
+import OpenLogin from '../../components/member/OpenLogin';
 
 export default function Join() {
   const {isLogin} = useContext(GlobalContext)
@@ -46,14 +47,7 @@ export default function Join() {
               <span className="txt">또는</span>
               <span className="bar" />
             </div>
-            <div className="sns_login_box">
-              <strong className="sns_title">SNS 계정으로<span>간편하게 로그인하세요.</span></strong>
-              <ul className="sns_list">
-                <li className="naver"><a href="javascript:void(0)">네이버</a></li>
-                <li className="kakao"><a href="javascript:void(0)">카카오톡</a></li>
-                <li className="facebook"><a href="javascript:void(0)">페이스북</a></li>
-              </ul>
-            </div>
+            <OpenLogin/>
             <div className="caution_txt">
               <p>· 소니코리아 통합 웹회원 정책 상 공식적으로 <strong>만 14세 미만의 경우 회원가입이 불가합니다.</strong></p>
             </div>
