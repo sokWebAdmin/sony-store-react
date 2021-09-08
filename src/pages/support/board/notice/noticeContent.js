@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from "react";
+import ViewMore from "../../../../components/common/ViewMore";
 import { fetchBoards, useBoardDispatch, useBoardState } from "../../../../context/board.context"
 import NoticeItem from "./noticeItem";
 
@@ -22,7 +23,7 @@ const getReqeust = (boardNo, params = {}) => {
 
 export default function NoticeContent() {
   const dispatch = useBoardDispatch();
-  const { config } = useBoardState();
+  const { config, noticeBoard } = useBoardState();
   const boardNo = useMemo(() => config?.notice.boardNo, [config.notice.boardNo])
 
   useEffect(() => {
@@ -31,6 +32,8 @@ export default function NoticeContent() {
       fetchBoards(dispatch, request, 'notice');
     }
   }, [dispatch, boardNo]);
+
+  const viewMore = pageNumber => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }))
 
   return (
     <div className="faq_notice_inner">
@@ -49,9 +52,11 @@ export default function NoticeContent() {
         </div> */}
         <div className="col_table_wrap">
           <NoticeItem />
-          <div className="btn_article comm_more">{/* 목록이 없을 경우 숨김 처리 */}
-            <a href="#" className="more_btn" title="더보기">더보기</a>
-          </div>
+          <ViewMore 
+            totalCount={noticeBoard.totalCount}
+            viewMore={viewMore}
+            pageSize={10}
+          />
         </div>
       </div>
     </div>

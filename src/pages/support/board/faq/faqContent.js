@@ -1,4 +1,5 @@
-import { React, useEffect, useMemo } from 'react';
+import { React, useEffect, useMemo, useState } from 'react';
+import ViewMore from '../../../../components/common/ViewMore';
 
 import { useBoardState, useBoardDispatch, fetchBoards } from "../../../../context/board.context";
 import FaqCategories from './faqCategories';
@@ -24,8 +25,11 @@ const getReqeust = (boardNo, params = {}) => {
 
 export default function FaqContent() {
   const dispatch = useBoardDispatch();
-  const { config, currentCategoryNo, isAll } = useBoardState();
+  const { config, currentCategoryNo, isAll, faqBoard } = useBoardState();
+
   const boardNo = useMemo(() => config?.faq.boardNo, [config.faq.boardNo]);
+
+  const [ resetViewMore, setResetViewMore ] = useState(false);
 
   useEffect(() => {
     if (boardNo > 0) {
@@ -38,15 +42,19 @@ export default function FaqContent() {
     if (currentCategoryNo > 0) {
       const request = getReqeust(boardNo, { categoryNo: currentCategoryNo })
       fetchBoards(dispatch, request);
+      setResetViewMore(true);
       return
     }
 
     if (isAll) {
       const request = getReqeust(boardNo);
       fetchBoards(dispatch, request);
+      setResetViewMore(true);
     }
 
   }, [dispatch, boardNo, currentCategoryNo, isAll]);
+
+  const viewMore = pageNumber => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }));
 
   return (
     <div className="faq_notice_inner">
@@ -54,9 +62,12 @@ export default function FaqContent() {
         <FaqCategories />
         <div className="category_list">
           <FaqItem />
-          <div className="btn_article comm_more">
-            <a href="#none" className="more_btn" title="더보기">더보기</a>
-          </div>
+          <ViewMore 
+            totalCount={faqBoard.totalCount}
+            viewMore={viewMore}
+            pageSize={10}
+            reset={resetViewMore}
+          />
         </div>
       </div>
     </div>
