@@ -1,7 +1,7 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ViewMore from "../../../../components/common/ViewMore";
 import { fetchBoards, useBoardDispatch, useBoardState } from "../../../../context/board.context"
-import NoticeItem from "./noticeItem";
+import NoticeItem from "./NoticeItem";
 
 const getReqeust = (boardNo, params = {}) => {
   const defaultParams = {
@@ -24,16 +24,19 @@ const getReqeust = (boardNo, params = {}) => {
 export default function NoticeContent() {
   const dispatch = useBoardDispatch();
   const { config, noticeBoard } = useBoardState();
-  const boardNo = useMemo(() => config?.notice.boardNo, [config.notice.boardNo])
+  const boardNo = useMemo(() => config?.notice.boardNo, [config.notice.boardNo]);
+  const [isInit, setIsInit] = useState(false);
+
+  useEffect(() => setIsInit(true), [])
 
   useEffect(() => {
     if (boardNo > 0) {
       const request = getReqeust(boardNo);
-      fetchBoards(dispatch, request, 'notice');
+      fetchBoards(dispatch, request, 'notice', true);
     }
-  }, [dispatch, boardNo]);
+  }, [dispatch, boardNo, isInit]);
 
-  const viewMore = pageNumber => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }))
+  const viewMore = pageNumber => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }), 'notice')
 
   return (
     <div className="faq_notice_inner">

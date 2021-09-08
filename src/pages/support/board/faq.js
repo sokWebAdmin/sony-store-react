@@ -13,8 +13,8 @@ import "../../../assets/scss/support.scss";
 import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../../context/board.context';
 
 //components
-import FaqContent from './faq/faqContent';
-import Tabs from './tabs';
+import FaqContent from './faq/FaqContent';
+import Tabs from './Tabs';
 
 export default function Faq() {
   const dispatch = useBoardDispatch();
