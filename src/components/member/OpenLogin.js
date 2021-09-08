@@ -14,7 +14,7 @@ const label = {
   kakao: '카카오톡'
 }
 
-const OpenLogin = () => {
+const OpenLogin = ({message, customCallback}) => {
   let popup = null;
   const history = useHistory();
   const {openIdJoinConfig} = useMallState();
@@ -61,7 +61,7 @@ const OpenLogin = () => {
     return data;
   }
 
-  const openLoginPopup = (result, provider, customCallback) => {
+  const openLoginPopup = () => {
     window.shopOauthCallback = customCallback || _openIdAuthCallback;
   }
 
@@ -85,10 +85,9 @@ const OpenLogin = () => {
 
   return (
     <>
-      {/*{loginUrl && <WindowOpener url={loginUrl} bridge={} />}*/}
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       {openIdJoinConfig && <div className="sns_login_box">
-        <strong className="sns_title">SNS 계정으로 <span>간편하게 로그인하세요.</span></strong>
+        <strong className="sns_title" dangerouslySetInnerHTML={{ __html: message }}/>
         <ul className="sns_list">
           {openIdData.map(({ provider, label }) => {
             return (
@@ -102,5 +101,10 @@ const OpenLogin = () => {
     </>
   );
 };
+
+OpenLogin.defaultProps = {
+  message: 'SNS 계정으로 <span>간편하게 로그인하세요.</span>',
+  customCallback: null,
+}
 
 export default OpenLogin;
