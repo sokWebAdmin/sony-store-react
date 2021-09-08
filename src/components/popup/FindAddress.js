@@ -62,13 +62,9 @@ const FindAddress = ({ setVisible, setAddress }) => {
 
   useEffect(fetchAddresses, [page]);
 
-  const onPrev = () => {
-    setCurrentPage(page.current - 1);
-  };
+  const onPrev = () => setCurrentPage(page.current - 1);
 
-  const onNext = () => {
-    setCurrentPage(page.current + 1);
-  };
+  const onNext = () => setCurrentPage(page.current + 1);
 
   const setCurrentPage = number => setObjectState('current', number)(setPage);
 
