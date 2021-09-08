@@ -27,14 +27,25 @@ const ShippingAddressForm = prop => {
   const { shipping, setShipping, orderer } = prop;
   // TODO. 배송일자 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
 
+  // partial data
+  const [address, setAddress] = useState({
+    // receiverAddress === address
+    // receiverJibunAddress === jibunAddress
+    // receiverZipCd  === zipCode
+
+    address: '',
+    jibunAddress: '',
+    zipCode: '',
+  });
+
   const ordererMap = {
     receiverName: orderer.ordererName,
     receiverContact1: orderer.ordererContact1,
-  }
+  };
 
-  const deliveryMemoFixedList = deliveryMemos
+  const deliveryMemoFixedList = deliveryMemos;
 
-  const handleShippingChange = event => handleChange(event)(setShipping)
+  const handleShippingChange = event => handleChange(event)(setShipping);
 
   const handleShippingChangeParameter = (key, value) => setObjectState(key, value)(setShipping)
 
@@ -147,11 +158,11 @@ const ShippingAddressForm = prop => {
                 <button
                   onClick={() => setFindAddressVisible(true)}
                   className="button button_negative button-s"
-                  type="button">우편 번호
+                  type="button">우편번호 검색
                 </button>
                 {findAddressVisible &&
                 <FindAddress setVisible={setFindAddressVisible}
-                             setShipping={setShipping} />}
+                             setAddress={setAddress} />}
               </div>
               <p className="error_txt"><span
                 className="ico" />배송 받으실 주소를 입력해 주세요.

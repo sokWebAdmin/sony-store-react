@@ -18,7 +18,7 @@ const getDefaultPage = () => ({
 });
 
 // 주소 찾기 팝업
-const FindAddress = ({ setVisible, setShipping }) => {
+const FindAddress = ({ setVisible, setAddress }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const [noSearch, setNoSearch] = useState(true);
@@ -32,9 +32,14 @@ const FindAddress = ({ setVisible, setShipping }) => {
   const close = () => setVisible(false);
 
   const submit = event => {
+
     event.preventDefault();
     setPage(getDefaultPage());
   };
+
+  const select = ({ address, jibunAddress, zipCode }) =>
+    Object.entries({ address, jibunAddress, zipCode }).
+      forEach(([key, value]) => setObjectState(key, value)(setAddress));
 
   function fetchAddresses () {
     if (!searchKeyword) {
@@ -93,16 +98,16 @@ const FindAddress = ({ setVisible, setShipping }) => {
             <div className="result" ref={result}>
               {items?.length >= 1 ?
                 <ul className="addresses">
-                  {items.map(({ zipCode, address, jibunAddress }, i) => (
-                    <li key={i + '_' + zipCode}>
-                      <button>
+                  {items.map((item, i) => (
+                    <li key={i + '_' + item.zipCode}>
+                      <button onClick={() => select(item)}>
                         <div className="address">
                           <div className="road">
                               <span className="badge">
                                   도로명
                               </span>
                             <p>
-                              {address}
+                              {item.address}
                             </p>
                           </div>
                           <div className='ground'>
@@ -110,12 +115,12 @@ const FindAddress = ({ setVisible, setShipping }) => {
                                 지번
                             </span>
                             <p>
-                              {jibunAddress}
+                              {item.jibunAddress}
                             </p>
                           </div>
                         </div>
                         <span className="zip_code">
-                        {zipCode}
+                        {item.zipCode}
                       </span>
                       </button>
                     </li>
