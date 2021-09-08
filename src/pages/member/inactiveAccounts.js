@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 
 //utils
 import { useHistory } from "react-router-dom";
@@ -31,7 +31,8 @@ export default function InactiveAccounts() {
 
   const closeConfirm = (state) => {
     if(state === 'ok') {
-      //인증
+      //TODO 휴대폰인증팝업
+      // history.push('/member/activeAccounts')
     }
    setIsConfirm(false)
   }

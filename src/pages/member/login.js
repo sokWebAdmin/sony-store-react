@@ -65,6 +65,7 @@ export default function Login() {
         alert("아이디/비밀번호를 확인해주세요.");
       } else if(response?.dormantMemberResponse){
         history.push('/member/inactiveAccounts')
+        //TODO 계정 잠금일 경우
       }else {
         const {accessToken, expireIn} = response.data;
         setAccessToken(accessToken, expireIn);
