@@ -55,15 +55,18 @@ const ShippingAddressForm = prop => {
 
   const handleShippingChange = event => handleChange(event)(setShipping);
 
-  const handleShippingChangeParameter = (key, value) => setObjectState(key, value)(setShipping)
+  const handleShippingChangeParameter = (key, value) => setObjectState(key,
+    value)(setShipping);
 
-  const [sameAsOrderer, setSameAsOrderer] = useState(false)
+  const [sameAsOrderer, setSameAsOrderer] = useState(false);
 
   useEffect(() => {
     sameAsOrderer
-      ? Object.entries(ordererMap).forEach(([key, value]) => handleShippingChangeParameter(key, value))
-      : Object.keys(ordererMap).forEach(key => handleShippingChangeParameter(key, ''))
-    }, [sameAsOrderer])
+      ? Object.entries(ordererMap).
+        forEach(([key, value]) => handleShippingChangeParameter(key, value))
+      : Object.keys(ordererMap).
+        forEach(key => handleShippingChangeParameter(key, ''));
+  }, [sameAsOrderer]);
 
   return (
     <>
@@ -213,13 +216,13 @@ const ShippingAddressForm = prop => {
               <SelectBox
                 defaultInfo={{
                   type: 'dropdown',
-                  placeholder: '택배 기사님께 요청하실 내용을 선택하세요.'
+                  placeholder: '택배 기사님께 요청하실 내용을 선택하세요.',
                 }}
                 selectOptions={deliveryMemoFixedList}
                 selectOption={
                   ({ optionNo, label }) => optionNo !== 1
-                  ? handleShippingChangeParameter('deliveryMemo', label)
-                  : handleShippingChangeParameter('deliveryMemo', '')
+                    ? handleShippingChangeParameter('deliveryMemo', label)
+                    : handleShippingChangeParameter('deliveryMemo', '')
                 }
               />
             </div>
@@ -231,8 +234,9 @@ const ShippingAddressForm = prop => {
                      name="deliveryMemo"
                      value={shipping.deliveryMemo}
                      onChange={() => {
-                       alert('select option 을 orderNo: 1 로 리셋해야하는데.. SelectBox랑 협업필요')
-                       handleShippingChange()
+                       alert(
+                         'select option 을 orderNo: 1 로 리셋해야하는데.. SelectBox랑 협업필요');
+                       handleShippingChange();
                      }}
               />
               <span className="focus_bg" />

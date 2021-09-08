@@ -17,7 +17,6 @@ const getDefaultPage = () => ({
   size: 10,
 });
 
-// 주소 찾기 팝업
 const FindAddress = ({ setVisible, setAddress }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
