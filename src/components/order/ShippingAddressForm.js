@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import GlobalContext from '../../context/global.context';
 
 // components
@@ -14,9 +14,17 @@ import { deliveryMemos } from '../../const/order';
 // stylesheet
 import '../../assets/scss/interaction/field.dynamic.scss';
 
+const receiverAddressMap = {
+  // from: to
+  address: 'receiverAddress',
+  jibunAddress: 'receiverJibunAddress',
+  zipCode: 'receiverZipCd',
+};
+
 // 배송지 정보
 const ShippingAddressForm = prop => {
   const { isLogin } = useContext(GlobalContext);
+  const detailAddressInput = useRef();
 
   // popup state
   const [findAddressVisible, setFindAddressVisible] = useState(false);
@@ -27,16 +35,16 @@ const ShippingAddressForm = prop => {
   const { shipping, setShipping, orderer } = prop;
   // TODO. 배송일자 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
 
-  // partial data
-  const [address, setAddress] = useState({
-    // receiverAddress === address
-    // receiverJibunAddress === jibunAddress
-    // receiverZipCd  === zipCode
+  const bindReceiverAddress = selectedAddress => {
+    if (!selectedAddress) {
+      return;
+    }
 
-    address: '',
-    jibunAddress: '',
-    zipCode: '',
-  });
+    Object.entries(receiverAddressMap).
+      forEach(
+        ([from, to]) => setObjectState(to, selectedAddress[from])(setShipping));
+    detailAddressInput.current.focus();
+  };
 
   const ordererMap = {
     receiverName: orderer.ordererName,
@@ -55,8 +63,6 @@ const ShippingAddressForm = prop => {
     sameAsOrderer
       ? Object.entries(ordererMap).forEach(([key, value]) => handleShippingChangeParameter(key, value))
       : Object.keys(ordererMap).forEach(key => handleShippingChangeParameter(key, ''))
-
-    console.log(shipping)
     }, [sameAsOrderer])
 
   return (
@@ -162,7 +168,7 @@ const ShippingAddressForm = prop => {
                 </button>
                 {findAddressVisible &&
                 <FindAddress setVisible={setFindAddressVisible}
-                             setAddress={setAddress} />}
+                             setAddress={bindReceiverAddress} />}
               </div>
               <p className="error_txt"><span
                 className="ico" />배송 받으실 주소를 입력해 주세요.
@@ -188,6 +194,7 @@ const ShippingAddressForm = prop => {
                      name="receiverDetailAddress"
                      value={shipping.receiverDetailAddress}
                      onChange={handleShippingChange}
+                     ref={detailAddressInput}
               />
               <span className="focus_bg" />
             </div>

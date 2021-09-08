@@ -37,9 +37,10 @@ const FindAddress = ({ setVisible, setAddress }) => {
     setPage(getDefaultPage());
   };
 
-  const select = ({ address, jibunAddress, zipCode }) =>
-    Object.entries({ address, jibunAddress, zipCode }).
-      forEach(([key, value]) => setObjectState(key, value)(setAddress));
+  const select = ({ address, jibunAddress, zipCode }) => {
+    setAddress({ address, jibunAddress, zipCode });
+    close();
+  };
 
   function fetchAddresses () {
     if (!searchKeyword) {
