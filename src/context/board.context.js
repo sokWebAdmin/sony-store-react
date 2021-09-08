@@ -61,11 +61,12 @@ function boardReducer(state, action) {
         draft.config = mapConfiguration(action.data, state.config)
       });
     case 'GET_BOARD_LIST':
-      // @fixme: 더보기 기능 완료 후 재확인 필요
       return produce(state, draft => {
         draft[`${action.name}Board`] = {
           totalCount: action.data.totalCount,
-          items: action.data.items,
+          items: action.reset 
+            ? action.data.items 
+            : draft[`${action.name}Board`].items.concat(action.data.items),
         }
       })
     case 'SELECT_CATEGORY':
@@ -77,6 +78,8 @@ function boardReducer(state, action) {
     case 'SELECT_TAB':
       return produce(state, draft => {
         draft.currentTab = action.data.currentTab;
+        draft.faqBoard = { ...defaultData.board };
+        draft.noticeBoard = { ...defaultData.board };
       });
     default:
       throw new Error('INVALID_BOARD_ACTION_TYPE');
@@ -121,10 +124,10 @@ export async function fetchBoardConfig(dispatch, boardNo) {
   }
 }
 
-export async function fetchBoards(dispatch, data, name='faq') {
+export async function fetchBoards(dispatch, data, name='faq', reset = false) {
   try {
     const response = await getBoards(data);
-    dispatch({ type: 'GET_BOARD_LIST', data: response.data, name })
+    dispatch({ type: 'GET_BOARD_LIST', data: response.data, name, reset })
   } catch (e) {
     console.error(e);
   }

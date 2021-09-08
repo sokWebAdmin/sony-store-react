@@ -4,23 +4,26 @@ import { React, useEffect } from 'react';
 import SEOHelmet from '../../../components/SEOHelmet';
 
 //api
-// import { sampleApi } from "../../api/sample";
 
 //css
-import "../../../assets/scss/contents.scss"
-import "../../../assets/scss/support.scss"
-import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../../context/board.context';
-import NoticeContent from './notice/noticeContent';
-import Tabs from './tabs';
+import "../../../assets/scss/contents.scss";
+import "../../../assets/scss/support.scss";
 
-export default function Notice() {
+//context
+import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../../context/board.context';
+
+//components
+import FaqContent from './faq/FaqContent';
+import Tabs from './Tabs';
+
+export default function Faq() {
   const dispatch = useBoardDispatch();
   const { config } = useBoardState();
 
   useEffect(() => {
-    if (config?.notice.boardNo > 0) return;
-    fetchBoardConfig(dispatch, config.notice.boardNo);
-  }, [dispatch, config.notice.boardNo]);
+    if (config.faq?.boardNo > 0) return;
+    fetchBoardConfig(dispatch, config.faq?.boardNo);
+  }, [dispatch, config.faq?.boardNo]);
 
   return (
     <>
@@ -35,10 +38,10 @@ export default function Notice() {
               </div>
               <Tabs />
             </div>
-            <NoticeContent />
+            <FaqContent />
           </div>
         </div>
       </div>
     </>
   );
-}  
+} 

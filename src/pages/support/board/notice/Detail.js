@@ -12,7 +12,7 @@ import "../../../../assets/scss/support.scss"
 import { getBoardByArticleId } from '../../../../api/manage';
 import { useBoardState } from '../../../../context/board.context';
 import { Link } from 'react-router-dom';
-import Tabs from '../tabs';
+import Tabs from '../Tabs';
 
 const fetchNotice = async (boardNo, articleNo, setNotice) => {
   if (!(boardNo > 0)) return;
