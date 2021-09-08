@@ -40,6 +40,10 @@ const FindAddress = () => {
   };
 
   function fetchAddresses () {
+    if (!searchKeyword) {
+      return;
+    }
+
     getAddresses({
       keyword: searchKeyword,
       pageNumber: page.current,
@@ -83,49 +87,54 @@ const FindAddress = () => {
           </button>
         </form>
 
-        {noSearch ? <SearchTip /> : <div className="result">
-          {items.length >= 1 ?
-            <>
-              <ul className="addresses">
-                {items.map(({ zipCode, address, jibunAddress }, i) => (
-                  <li key={i + '_' + zipCode}>
-                    <button>
-                      <div className="address">
-                        <div className="road">
+        {noSearch
+          ? <SearchTip />
+          : <>
+            <div className="result">
+              {items?.length >= 1 ?
+                <ul className="addresses">
+                  {items.map(({ zipCode, address, jibunAddress }, i) => (
+                    <li key={i + '_' + zipCode}>
+                      <button>
+                        <div className="address">
+                          <div className="road">
                               <span className="badge">
                                   도로명
                               </span>
-                          <p>
-                            {address}
-                          </p>
-                        </div>
-                        <div className='ground'>
+                            <p>
+                              {address}
+                            </p>
+                          </div>
+                          <div className='ground'>
                             <span className="badge">
                                 지번
                             </span>
-                          <p>
-                            {jibunAddress}
-                          </p>
+                            <p>
+                              {jibunAddress}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <span className="zip_code">
+                        <span className="zip_code">
                         {zipCode}
                       </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-              <div className="page">
-                <button className="prev" onClick={onPrev}>이전</button>
-                <div className="count">
-                  <span>{page.current}</span>/<span>{pageTotal}</span>
-                </div>
-                <button className="next" onClick={onNext}>다음</button>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                : <NoResult />
+              }
+            </div>
+            {pageTotal > 1 &&
+            <div className="page">
+              <button className="prev" onClick={onPrev}>이전</button>
+              <div className="count">
+                <span>{page.current}</span>/<span>{pageTotal}</span>
               </div>
-            </>
-            : <NoResult />
-          }
-        </div>}
+              <button className="next" onClick={onNext}>다음</button>
+            </div>
+            }
+          </>
+        }
       </LayerPopup>}
     </>
   );
