@@ -10,8 +10,8 @@ import SEOHelmet from '../../../components/SEOHelmet';
 import "../../../assets/scss/contents.scss"
 import "../../../assets/scss/support.scss"
 import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../../context/board.context';
-import NoticeContent from './notice/noticeContent';
-import Tabs from './tabs';
+import NoticeContent from './notice/NoticeContent';
+import Tabs from './Tabs';
 
 export default function Notice() {
   const dispatch = useBoardDispatch();

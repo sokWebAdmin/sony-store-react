@@ -2,8 +2,8 @@ import { React, useEffect, useMemo, useState } from 'react';
 import ViewMore from '../../../../components/common/ViewMore';
 
 import { useBoardState, useBoardDispatch, fetchBoards } from "../../../../context/board.context";
-import FaqCategories from './faqCategories';
-import FaqItem from './faqItem';
+import FaqCategories from './FaqCategories';
+import FaqItem from './FaqItem';
 
 const getReqeust = (boardNo, params = {}) => {
   const defaultParams = {

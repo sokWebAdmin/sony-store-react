@@ -22,9 +22,9 @@ import ErrorServer from './pages/error/errorServer';
 
 //고객지원
 import Agreement from './pages/support/agreement';
-import Faq from './pages/support/board/faq';
-import NoticeDetail from './pages/support/board/notice/detail';
-import Notice from './pages/support/board/notice';
+import Faq from './pages/support/board/Faq';
+import NoticeDetail from './pages/support/board/notice/Detail';
+import Notice from './pages/support/board/Notice';
 import purchaseConsulting from './pages/support/purchaseConsulting';
 import StoreInfo from './pages/support/storeInfo';
 import videoCourse from './pages/support/videoCourse';
