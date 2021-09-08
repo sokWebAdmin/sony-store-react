@@ -3887,3 +3887,72 @@
     margin-top: 30px
   }
 }
+
+.gender_inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 14px;
+  height: 58px;
+  border-bottom: 1px solid #e1e1e1
+}
+
+.gender_tit {
+  -ms-flex-item-align: center;
+  align-self: center;
+  font-size: 18px;
+  color: #888;
+  font-weight: 300
+}
+
+.gender_radio {
+  -ms-flex-item-align: center;
+  align-self: center
+}
+
+.gender_radio .radio_box {
+  float: left;
+  margin-left: 24px
+}
+
+.gender_radio .radio_box .inp_radio + label {
+  font-size: 14px;
+  line-height: 22px
+}
+
+@media screen and (max-width: 1280px) {
+  .gender_inner {
+    margin-top: 26px
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .gender_inner {
+    margin-top: 28px;
+    height: 48px
+  }
+
+  .gender_tit {
+    font-size: 16px;
+    line-height: 15px
+  }
+
+  .gender_radio .radio_box .inp_radio + label {
+    margin-top: 2px;
+    padding-left: 24px;
+    line-height: 16px;
+    vertical-align: top
+  }
+
+  .gender_radio .radio_box .inp_radio + label:before {
+    width: 16px;
+    height: 16px
+  }
+
+  .gender_radio .radio_box .inp_radio + label:after {
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px
+  }
+}
