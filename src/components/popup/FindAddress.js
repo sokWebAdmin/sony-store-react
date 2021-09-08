@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // components
 import LayerPopup from '../common/LayerPopup';
@@ -6,37 +6,72 @@ import LayerPopup from '../common/LayerPopup';
 // api
 import { getAddresses } from '../../api/manage';
 
+// utils
+import { setObjectState } from '../../utils/state';
+
 // stylesheet
 import '../../assets/scss/partials/popup/findAddress.scss';
 
-// 주소 찾기 팝업
-const FindAddress = () => {
-  // LayerPopup 상태관리
-  const [visible, setVisible] = useState(true);
+const getDefaultPage = () => ({
+  current: 1,
+  size: 10,
+});
 
+// 주소 찾기 팝업
+const FindAddress = ({ setVisible }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const [noSearch, setNoSearch] = useState(true);
   const [items, setItems] = useState([]);
+  const [page, setPage] = useState(getDefaultPage());
+
+  const [pageTotal, setPageTotal] = useState(0);
+
+  const result = useRef();
 
   const close = () => setVisible(false);
 
   const submit = event => {
     event.preventDefault();
-    fetchAddresses();
+    setPage(getDefaultPage());
   };
 
   function fetchAddresses () {
+    if (!searchKeyword) {
+      return;
+    }
+
     getAddresses({
       keyword: searchKeyword,
-      pageNumber: 1, // TODO
-      pageSize: 10, // TODO
-    }).then(({ data }) => setItems(data.items)).then(() => setNoSearch(false));
+      pageNumber: page.current,
+      pageSize: page.size,
+    }).then(({ data }) => {
+      setItems(data.items);
+      updatePagination(data.totalCount);
+    }).then(() => {
+      noSearch && setNoSearch(false);
+      result.current.scrollTop = 0;
+    });
   }
+
+  useEffect(fetchAddresses, [page]);
+
+  const onPrev = () => {
+    setCurrentPage(page.current - 1);
+  };
+
+  const onNext = () => {
+    setCurrentPage(page.current + 1);
+  };
+
+  const setCurrentPage = number => setObjectState('current', number)(setPage);
+
+  const updatePagination = itemCount => setPageTotal(
+    Math.ceil(itemCount / page.size));
 
   return (
     <>
-      {visible && <LayerPopup className="find_address" onClose={close}>
+      <LayerPopup className="find_address" onClose={close}>
         <p className="pop_tit">우편번호 찾기</p>
         <form className="search_container" onSubmit={submit}>
           <input
@@ -52,41 +87,59 @@ const FindAddress = () => {
           </button>
         </form>
 
-        {noSearch ? <SearchTip /> : <div className="result">
-          {items.length >= 1 ?
-            <ul className="addresses">
-              {items.map(({ zipCode, address, jibunAddress }, i) => (
-                <li key={i + '_' + zipCode}>
-                  <button>
-                    <div className="address">
-                      <div className="road">
+        {noSearch
+          ? <SearchTip />
+          : <>
+            <div className="result" ref={result}>
+              {items?.length >= 1 ?
+                <ul className="addresses">
+                  {items.map(({ zipCode, address, jibunAddress }, i) => (
+                    <li key={i + '_' + zipCode}>
+                      <button>
+                        <div className="address">
+                          <div className="road">
+                              <span className="badge">
+                                  도로명
+                              </span>
+                            <p>
+                              {address}
+                            </p>
+                          </div>
+                          <div className='ground'>
                             <span className="badge">
-                                도로명
+                                지번
                             </span>
-                        <p>
-                          {address}
-                        </p>
-                      </div>
-                      <div className='ground'>
-                          <span className="badge">
-                              지번
-                          </span>
-                        <p>
-                          {jibunAddress}
-                        </p>
-                      </div>
-                    </div>
-                    <span className="zip_code">
-                      {zipCode}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-            : <NoResult />
-          }
-        </div>}
-      </LayerPopup>}
+                            <p>
+                              {jibunAddress}
+                            </p>
+                          </div>
+                        </div>
+                        <span className="zip_code">
+                        {zipCode}
+                      </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                : <NoResult />
+              }
+            </div>
+            {pageTotal > 1 &&
+            <div className="page">
+              <button className="prev" onClick={onPrev}
+                      disabled={page.current === 1}>이전
+              </button>
+              <div className="count">
+                <span>{page.current}</span>/<span>{pageTotal}</span>
+              </div>
+              <button className="next" onClick={onNext}
+                      disabled={page.current === pageTotal}>다음
+              </button>
+            </div>
+            }
+          </>
+        }
+      </LayerPopup>
     </>
   );
 };

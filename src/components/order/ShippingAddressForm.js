@@ -3,6 +3,7 @@ import GlobalContext from '../../context/global.context';
 
 // components
 import SelectBox from '../../components/common/SelectBox';
+import FindAddress from '../../components/popup/FindAddress';
 
 // utils
 import { handleChange, setObjectState } from '../../utils/state';
@@ -14,8 +15,8 @@ import { deliveryMemos } from '../../const/order'
 const ShippingAddressForm = prop => {
   const { isLogin } = useContext(GlobalContext);
 
-  // @todo
-  const [ customOption, setCustomOption ] = useState(null);
+  // popup state
+  const [findAddressVisible, setFindAddressVisible] = useState(false);
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
@@ -25,7 +26,7 @@ const ShippingAddressForm = prop => {
 
   const ordererMap = {
     receiverName: orderer.ordererName,
-    receiverContact1: orderer.ordererContact1
+    receiverContact1: orderer.ordererContact1,
   }
 
   const deliveryMemoFixedList = deliveryMemos
@@ -139,9 +140,12 @@ const ShippingAddressForm = prop => {
               <span className="focus_bg" />
               <div className="delivery_btn_box type1">
                 <button
+                  onClick={() => setFindAddressVisible(true)}
                   className="button button_negative button-s"
                   type="button">우편 번호
                 </button>
+                {findAddressVisible &&
+                <FindAddress setVisible={setFindAddressVisible} />}
               </div>
               <p className="error_txt"><span
                 className="ico" />배송 받으실 주소를 입력해 주세요.
@@ -188,14 +192,10 @@ const ShippingAddressForm = prop => {
                 }}
                 selectOptions={deliveryMemoFixedList}
                 selectOption={
-                  ({ optionNo, label }) => {
-                    setCustomOption(null);
-                    return optionNo !== 1
-                      ? handleShippingChangeParameter('deliveryMemo', label)
-                      : handleShippingChangeParameter('deliveryMemo', '')
-                  }
+                  ({ optionNo, label }) => optionNo !== 1
+                  ? handleShippingChangeParameter('deliveryMemo', label)
+                  : handleShippingChangeParameter('deliveryMemo', '')
                 }
-                customOption={customOption}
               />
             </div>
           </div>
@@ -207,7 +207,6 @@ const ShippingAddressForm = prop => {
                      value={shipping.deliveryMemo}
                      onChange={() => {
                        alert('select option 을 orderNo: 1 로 리셋해야하는데.. SelectBox랑 협업필요')
-                       setCustomOption({})
                        handleShippingChange()
                      }}
               />
