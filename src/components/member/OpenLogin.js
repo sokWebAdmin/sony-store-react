@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useMallState } from '../../context/mall.context';
 import { KEY, removeAccessToken, setItem } from '../../utils/token';
 import { generateRandomString } from '../../utils/utils';
 import { getOauthLoginUrl } from '../../api/member';
+import Alert from '../common/Alert';
+import { useHistory } from 'react-router-dom';
+import GlobalContext from '../../context/global.context';
+import { resetProfile, useProileDispatch } from '../../context/profile.context';
 
 const label = {
   naver: '네이버',
@@ -12,21 +16,33 @@ const label = {
 
 const OpenLogin = () => {
   let popup = null;
+  const history = useHistory();
   const {openIdJoinConfig} = useMallState();
+  const {onChangeGlobal} = useContext(GlobalContext);
+  const profileDispatch = useProileDispatch();
 
   const openIdData = openIdJoinConfig?.providers.sort((a) => a === 'naver' ? -1 : 1).map(provider => ({ provider, label: label[provider] }))
 
+  // alert
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertCloseFunc, setAlertCloseFun] = useState(null);
+
+  const openAlert = (message, onClose) => {
+    setAlertVisible(true);
+    setAlertMessage(message);
+    setAlertCloseFun(onClose);
+  }
+  const closeModal = () => {
+    setAlertVisible(false);
+    alertCloseFunc?.();
+  }
+
   const openIdLogin = async (type) => {
     const provider = `ncp_${type}`;
-
-    console.log(provider);
-    if (popup && !popup.closed) {
-      popup.close();
-      popup = null;
-    }
-    popup = window.open('about:blank', '간편 로그인', 'width=420px,height=550px,scrollbars=yes');
-    popup.focus();
     const data = await fetchOauthLogin(provider);
+    popup = window.open(data.loginUrl, '간편 로그인', 'width=420px,height=550px,scrollbars=yes');
+    popup.focus();
     openLoginPopup(data, provider);
   }
 
@@ -47,7 +63,6 @@ const OpenLogin = () => {
 
   const openLoginPopup = (result, provider, customCallback) => {
     window.shopOauthCallback = customCallback || _openIdAuthCallback;
-    popup.location.href = result.loginUrl;
   }
 
   const _openIdAuthCallback = (profileResult = null) => {
@@ -56,18 +71,22 @@ const OpenLogin = () => {
 
     if (!profileResult) {
       removeAccessToken();
-      // shopby.alert({ message: '간편 인증에 실패하였습니다.' });
+      onChangeGlobal({isLogin: false});
+      resetProfile(profileDispatch);
+      openAlert('간편 인증에 실패하였습니다.');
       return;
     }
     if (profileResult.memberStatus === 'WAITING') {
-      // shopby.popup('join-open-id', { profile: profileResult }, this._joinOpenId);
+      history.push('/member/join-agree');
     } else {
-      // shopby.alert('로그인이 완료 되었습니다.', shopby.helper.login.goNextUrl);
+      openAlert('로그인이 완료 되었습니다.', () => history.push('/'))
     }
   }
 
   return (
     <>
+      {/*{loginUrl && <WindowOpener url={loginUrl} bridge={} />}*/}
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       {openIdJoinConfig && <div className="sns_login_box">
         <strong className="sns_title">SNS 계정으로 <span>간편하게 로그인하세요.</span></strong>
         <ul className="sns_list">

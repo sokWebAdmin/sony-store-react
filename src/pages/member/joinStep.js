@@ -11,15 +11,19 @@ import {sendSMS, verifySMS} from '../../api/auth';
 import "../../assets/scss/contents.scss"
 
 //utils
-import { emptyCheck, getUrlParam, timeFormat } from '../../utils/utils';
+import { emptyCheck, timeFormat } from '../../utils/utils';
 import { useHistory, useLocation } from "react-router-dom";
+import { getUrlParam } from '../../utils/location';
 
 //context
 import GlobalContext from '../../context/global.context';
 import Alert from '../../components/common/Alert';
+import { getItem, KEY } from '../../utils/token';
+import { useProfileState } from '../../context/profile.context';
 
 export default function JoinStep() {
   const {isLogin} = useContext(GlobalContext)
+  const {profile} = useProfileState();
 
   const history = useHistory();
   const location = useLocation();
@@ -231,13 +235,16 @@ export default function JoinStep() {
     }
   }, [expireAt, time, authSent])
 
-  //componentDidMount
   useEffect(()=>{
-    //로그인 상태인 경우, 메인화면으로 자동 이동처리
     if (isLogin) {
+      const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
+      const redirectedToken = getItem(KEY.OPENID_TOKEN);
+      if (redirectedProvider && redirectedToken) {
+        setEmail(profile.memberId);
+        return;
+      }
       history.push('/');
     }
-
   },[])
 
     return (

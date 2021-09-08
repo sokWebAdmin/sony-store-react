@@ -30,7 +30,7 @@ export const socialLogin = () => {
 };
 
 export const getOauthLoginUrl = (query) => {
-  return request("oauth/openid", 'get', query);
+  return request("oauth/login-url", 'get', query);
 };
 
 export const getProfile = () => {
