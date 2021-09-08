@@ -87,16 +87,12 @@ export default function MyPageMember() {
   };
   // 비밀번호 변경하기
   const [repasswordVisible, setRepasswordVisible] = useState(false);
-  const bindReceiverPassword = newPassword => {
-    console.log(newPassword);
-  }
   
   const onClickHandler = (event, type) => {
     event.preventDefault();
     switch(type) {
       case 'password':
         setRepasswordVisible(true);
-        // alert('비밀번호 변경 팝업');
         break;
       case 'withdrawal':
         history.push({ pathname: '/my-page/withdraw' })
@@ -119,16 +115,18 @@ export default function MyPageMember() {
     }
   };
 
+  const handleChange = ({ target: { name, value }}) => {
+    setMyForm(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
 
   
   const handleSubmit = event => {
     event.preventDefault();
   
-    const test = _.chain(event.target)
-                  .pick(Object.keys(initialState))
-                  .map(({ name, value }) => ({ [name]: value }))
-                  .value();
-    console.log(test);
+    console.log(myForm);
     // @TODO sns 와 email 체크박스는 따로 관리해야 함
   }
 
@@ -162,7 +160,6 @@ export default function MyPageMember() {
                     repasswordVisible &&
                       <Repassword 
                         setVisible={setRepasswordVisible}
-                        setPassword={bindReceiverPassword} 
                       />
                   }
                   <a href="#none" className="button button_secondary button-s" onClick={ event => onClickHandler(event, 'withdrawal') }>회원탈퇴</a>
@@ -185,6 +182,7 @@ export default function MyPageMember() {
                               disabled="disabled" 
                               maxLength={50} 
                               autoComplete="off" 
+                              onChange={handleChange}
                             />
                             <span className="focus_bg" />
                           </div>
@@ -213,7 +211,8 @@ export default function MyPageMember() {
                               disabled="disabled" 
                               maxLength={11} 
                               autoComplete="off" 
-                              placeholder=" " 
+                              placeholder=""
+                              onChange={handleChange} 
                             />
                             <span className="label">휴대폰 번호<span>(- 없이 입력하세요.)</span></span>
                             <span className="focus_bg" />
@@ -263,6 +262,7 @@ export default function MyPageMember() {
                               value={ myForm.customerid } 
                               disabled="disabled" 
                               maxLength={50} 
+                              onChange={handleChange}
                             />
                             <span className="focus_bg" />
                           </div>
@@ -284,6 +284,7 @@ export default function MyPageMember() {
                               name="birthday"
                               className="inp disabled" 
                               value={getStrDate(myForm.birthday)} 
+                              onChange={handleChange}
                               disabled="disabled" 
                               maxLength={8} 
                             />
@@ -332,7 +333,8 @@ export default function MyPageMember() {
                               className="inp disabled" 
                               value={ myForm.homezipcode }
                               disabled="disabled" 
-                              maxLength={50} 
+                              maxLength={50}
+                              onChange={handleChange}
                             />
                             <span className="focus_bg" />
                           </div>
@@ -361,7 +363,8 @@ export default function MyPageMember() {
                               id="member_addr2" 
                               name="homeaddress1"
                               className="inp disabled" 
-                              value={ myForm.homeaddress1 } 
+                              value={ myForm.homeaddress1 }
+                              onChange={handleChange}
                               disabled="disabled" 
                               maxLength={50} 
                             />
@@ -376,6 +379,7 @@ export default function MyPageMember() {
                               name="homeaddress2"
                               className="inp disabled" 
                               value={ myForm.homeaddress2 } 
+                              onChange={handleChange}
                               disabled="disabled" 
                               maxLength={50} 
                             />

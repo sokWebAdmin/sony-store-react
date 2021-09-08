@@ -179,7 +179,6 @@ const App = (props) => {
               <Route exact path="/my-page/order-list" component={orderList} />
               <Route exact path="/my-page/old-order-list" component={OldOrderList} />
               <Route exact path="/my-page/rename" component={Rename} />
-              <Route exact path="/my-page/repassword" component={Repassword} />
               <Route exact path="/my-page/withdraw" component={withdraw} />
               <Route exact path="/my-page/withdraw-complete" component={withdrawComplete} />
 
