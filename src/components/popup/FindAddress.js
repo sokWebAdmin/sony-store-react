@@ -126,11 +126,15 @@ const FindAddress = ({ setVisible }) => {
             </div>
             {pageTotal > 1 &&
             <div className="page">
-              <button className="prev" onClick={onPrev}>이전</button>
+              <button className="prev" onClick={onPrev}
+                      disabled={page.current === 1}>이전
+              </button>
               <div className="count">
                 <span>{page.current}</span>/<span>{pageTotal}</span>
               </div>
-              <button className="next" onClick={onNext}>다음</button>
+              <button className="next" onClick={onNext}
+                      disabled={page.current === pageTotal}>다음
+              </button>
             </div>
             }
           </>
