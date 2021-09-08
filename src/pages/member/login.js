@@ -21,6 +21,7 @@ import Cookies from "js-cookie";
 import GlobalContext from '../../context/global.context';
 import { setAccessToken } from '../../utils/token';
 import { fetchProfile, useProileDispatch } from '../../context/profile.context';
+import OpenLogin from '../../components/member/OpenLogin';
 
 export default function Login() {
   const {onChangeGlobal, isLogin} = useContext(GlobalContext);
@@ -63,6 +64,9 @@ export default function Login() {
       const response = await loginApi(email, password);
       if(response.status !== 200) {
         alert("아이디/비밀번호를 확인해주세요.");
+      } else if(response?.dormantMemberResponse){
+        history.push('/member/inactiveAccounts')
+        //TODO 계정 잠금일 경우
       }else {
         const {accessToken, expireIn} = response.data;
         setAccessToken(accessToken, expireIn);
@@ -151,21 +155,14 @@ export default function Login() {
                   </div>
                   <ul className="user_menu">
                     <li><a href="javascript:void(0)" onClick={()=>{history.push('/member/search')}}>아이디 · 비밀번호 찾기</a></li>
-                    <li><a href="javascript:void(0)" onClick={()=>{history.push('/member/join-agree')}}>회원가입</a></li>
+                    <li><a href="javascript:void(0)" onClick={()=>{history.push('/member/join')}}>회원가입</a></li>
                   </ul>
                 </div>
                 <div className="txt_or">
                   <span className="txt">또는</span>
                   <span className="bar" />
                 </div>
-                <div className="sns_login_box">
-                  <strong className="sns_title">SNS 계정으로 <span>간편하게 로그인하세요.</span></strong>
-                  <ul className="sns_list">
-                    <li className="naver"><a href="javascript:void(0)">네이버</a></li>
-                    <li className="kakao"><a href="javascript:void(0)">카카오톡</a></li>
-                    <li className="facebook"><a href="javascript:void(0)">페이스북</a></li>
-                  </ul>
-                </div>
+                <OpenLogin/>
               </div>
                 
                 {/* 비회원 로그인 */}
