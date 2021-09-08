@@ -31,6 +31,9 @@ export default function OrderList() {
     returnProcessingCnt: 0,
     exchangeProcessingCnt: 0,
   });
+
+  const [orderProducts, setOrderProducts] = useState([]);
+  
   useEffect(() => {
     getProfileOrdersSummaryStatus().then((res) => {
       // FIXME: 모킹 데이터
@@ -41,7 +44,42 @@ export default function OrderList() {
       // console.log('summary:', res.data);
       setSummary(res.data);
     });
+
+    getProfileOrders({ params: {} }).then((res) => {
+      console.log('res.data:', res.data)
+      makeOrderProductsList(res.data);
+      // console.log('orderProducts:', orderProducts);
+    });
   }, []);
+
+  const makeOrderProductsList = (orders) => {
+    // from easy-skin
+    const data = orders.items.flatMap((order) =>
+      order.orderOptions.flatMap((orderOption) => ({
+        orderYmdt: order.orderYmdt.substr(0, 10),
+        orderNo: order.orderNo,
+        productNo: orderOption.productNo,
+        orderOptionNo: orderOption.orderOptionNo,
+        optionNo: orderOption.optionNo,
+        rowSpan:
+          order.orderOptions.indexOf(orderOption) !== 0
+            ? 0
+            : order.orderOptions.length,
+        claimNos: order.orderOptions.map((o) => o.claimNo).join(','),
+        imageUrl: orderOption.imageUrl,
+        productName: orderOption.productName,
+        orderCnt: orderOption.orderCnt,
+        buyAmt: orderOption.price.buyAmt,
+        // orderStatusText: this._createOrderStatusText(orderOption),
+        // nextActionText: this._createNextActionText(orderOption), 어짜피 취소만 존재, 없애도 될듯
+        orderStatusType: orderOption.orderStatusType,
+        orderStatusTypeLabel: orderOption.orderStatusTypeLabel,
+        payType: order.payType,
+      })),
+    );
+
+    setOrderProducts(data);
+  };
 
   return (
     <>
