@@ -11,15 +11,19 @@ import {sendSMS, verifySMS} from '../../api/auth';
 import "../../assets/scss/contents.scss"
 
 //utils
-import { emptyCheck, getUrlParam, timeFormat } from '../../utils/utils';
+import { emptyCheck, timeFormat } from '../../utils/utils';
 import { useHistory, useLocation } from "react-router-dom";
+import { getUrlParam } from '../../utils/location';
 
 //context
 import GlobalContext from '../../context/global.context';
 import Alert from '../../components/common/Alert';
+import { getItem, KEY } from '../../utils/token';
+import { useProfileState } from '../../context/profile.context';
 
 export default function JoinStep() {
   const {isLogin} = useContext(GlobalContext)
+  const {profile} = useProfileState();
 
   const history = useHistory();
   const location = useLocation();
@@ -33,6 +37,7 @@ export default function JoinStep() {
   const [confirm, setConfirm] = useState('');
   const [name, setName] = useState('');
   const [birthday, setBirthday] = useState('');
+  const [gender, setGender] = useState('2');
   const [phone, setPhone] = useState('');
   const [authSent, setAuthSent] = useState(false);
   const [authCode, setAuthCode] = useState('');
@@ -71,6 +76,7 @@ export default function JoinStep() {
   const closeModal = () => {
     setAlertVisible(false);
   }
+  const onChangeGender = (e) => setGender(e.target.value);
   const _registerApi = async() =>{
     //이메일
     if(emptyCheck(email.trim())){
@@ -164,7 +170,7 @@ export default function JoinStep() {
     const data = {
       customerid : email,
       custcategory: "01",
-      gender: "1",
+      gender,
       firstname: name,
       mobile: phone.replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-"),
       birthday: birthday,
@@ -229,13 +235,16 @@ export default function JoinStep() {
     }
   }, [expireAt, time, authSent])
 
-  //componentDidMount
   useEffect(()=>{
-    //로그인 상태인 경우, 메인화면으로 자동 이동처리
     if (isLogin) {
+      const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
+      const redirectedToken = getItem(KEY.OPENID_TOKEN);
+      if (redirectedProvider && redirectedToken) {
+        setEmail(profile.memberId);
+        return;
+      }
       history.push('/');
     }
-
   },[])
 
     return (
@@ -307,6 +316,22 @@ export default function JoinStep() {
                     </div>
                     <div className="error_txt"><span className="ico" />{birthdayWrongType == 1 ? "생년월일을 입력해주세요." : "생년월일 형식이 맞지 않습니다."}</div>
                   </div>
+                </div>
+                <div className="gender">
+                  <div className="gender_inner">
+                    <strong className="gender_tit">성별</strong>
+                    <div className="gender_radio">
+                      <div className="radio_box">
+                        <input type="radio" className="inp_radio" id="tab1" name="genderradio" value="2" checked={gender === '2'} onChange={onChangeGender}/>
+                          <label htmlFor="tab1" className="contentType">여성</label>
+                      </div>
+                      <div className="radio_box">
+                        <input type="radio" className="inp_radio" id="tab2" name="genderradio" value="1" checked={gender === '1'} onChange={onChangeGender}/>
+                          <label htmlFor="tab2" className="contentType">남성</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="error_txt"><span className="ico"></span>성별을 선택해 주세요.</div>
                 </div>
                 <div className={`group btn_type ${isPhone === false && "error"}`}>
                   <div className="inp_box">

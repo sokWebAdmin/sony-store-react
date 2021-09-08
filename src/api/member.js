@@ -29,11 +29,15 @@ export const socialLogin = () => {
   return request("profile/openid", "get", null, null);
 };
 
-export const openIdAuth = (token, type) => {
-  return request("oauth/openid", "get", "provider="+type+"&openAccessToken="+token, null);
+export const getOauthLoginUrl = (query) => {
+  return request("oauth/login-url", 'get', query);
 };
 
 export const getProfile = () => {
   return request("profile", "get", null, null);
+};
+
+export const getDormancy = () => {
+  return request("profile/dormancy", "get", null, null);
 };
 

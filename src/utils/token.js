@@ -1,11 +1,10 @@
-import { useContext } from 'react';
-import GlobalContext from '../context/global.context';
-
 const EXPIRATION_KEY = '_expirationDate';
 
 export const KEY = {
   ACCESS_TOKEN: 'accessToken',
   GUEST_TOKEN: 'guestToken',
+  OPENID_PROVIDER: 'oauthProvider',
+  OPENID_TOKEN: 'oauthToken'
 }
 
 export const setItem = (name, value, expire = 60 * 5 * 1000) => {
@@ -61,8 +60,8 @@ export const getAccessToken = () => {
 
 export const removeAccessToken = () => {
   removeItem(KEY.ACCESS_TOKEN);
-  // removeItem(oauthProvider);
-  // removeItem(oauthToken);
+  removeItem(KEY.OPENID_TOKEN);
+  removeItem(KEY.OPENID_PROVIDER);
 };
 
 export const setGuestToken = (guestToken) => {

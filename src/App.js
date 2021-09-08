@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Switch, useLocation, Route } from 'react-router-dom';
 
 //Component
@@ -35,7 +35,7 @@ import MyPageMember from './pages/mypage/MyPageMember';
 import orderDetail from './pages/mypage/orderDetail';
 import orderList from './pages/mypage/orderList';
 import OldOrderList from './pages/mypage/OldOrderList';
-import rename from './pages/mypage/rename';
+import Rename from './pages/mypage/myPageMember/Rename';
 import withdraw from './pages/mypage/withdraw';
 import withdrawComplete from './pages/mypage/withdrawComplete';
 
@@ -62,6 +62,11 @@ import JoinAgree from './pages/member/JoinAgree';
 import joinStep from './pages/member/joinStep';
 import login from './pages/member/login';
 import Search from "./pages/member/Search"
+import InactiveAccounts from './pages/member/inactiveAccounts';
+import ActiveAccounts from './pages/member/activeAccounts';
+import LockedAccounts from './pages/member/lockedAccounts';
+import OpenLogin from './components/member/OpenLogin';
+
 
 //footer
 import policy from './pages/footer/policy';
@@ -75,16 +80,49 @@ import SearchResult from './pages/footer/searchResult';
 import EspMain from './pages/esp/EspMain';
 import EspList from './pages/esp/EspList';
 import { fetchMallInfo, useMallDispatch, useMallState } from './context/mall.context';
+import GlobalContext from './context/global.context';
+import {
+  fetchMyProfile,
+  fetchProfile,
+  resetProfile,
+  useProfileState,
+  useProileDispatch,
+} from './context/profile.context';
+import Repassword from './pages/mypage/myPageMember/Repassword';
 
 const App = (props) => {
   const dispatch = useMallDispatch();
   const state = useMallState();
+  const {isLogin} = useContext(GlobalContext);
+  const profileDispatch = useProileDispatch();
+  const {my, profile} = useProfileState();
 
   useEffect(() => {
     if (state?.mall) return;
     fetchMallInfo(dispatch);
   }, [dispatch, state?.mall]);
 
+  const getMallInfo = async () => {
+    if (isLogin) {
+      if (!profile) {
+        await fetchProfile(profileDispatch);
+        if (!my) {
+          const data = { type: '30', customerid: profile?.memberId };
+          await fetchMyProfile(profileDispatch, data);
+        }
+      }
+      if (profile && !my) {
+        const data = { type: '30', customerid: profile?.memberId };
+        await fetchMyProfile(profileDispatch, data);
+      }
+    } else {
+      resetProfile(profileDispatch);
+    }
+  }
+
+  useEffect(() => {
+    getMallInfo();
+  }, [isLogin, my, profile])
 
   let location = useLocation();
 
@@ -145,7 +183,7 @@ const App = (props) => {
               <Route exact path="/my-page/order-detail" component={orderDetail} />
               <Route exact path="/my-page/order-list" component={orderList} />
               <Route exact path="/my-page/old-order-list" component={OldOrderList} />
-              <Route exact path="/my-page/rename" component={rename} />
+              <Route exact path="/my-page/rename" component={Rename} />
               <Route exact path="/my-page/withdraw" component={withdraw} />
               <Route exact path="/my-page/withdraw-complete" component={withdrawComplete} />
 
@@ -175,6 +213,10 @@ const App = (props) => {
               <Route exact path="/member/joinStep" component={joinStep} />
               <Route exact path="/member/login" component={login} />
               <Route exact path="/member/search" component={Search} />
+              <Route exact path="/member/inactiveAccounts" component={InactiveAccounts} />
+              <Route exact path="/member/activeAccounts" component={ActiveAccounts} />
+              <Route exact path="/member/lockedAccounts" component={LockedAccounts} />
+              <Route exact path="/callback" component={OpenLogin} />
 
               {/* Footer  */}
               <Route exact path="/footer/policy" component={policy} />

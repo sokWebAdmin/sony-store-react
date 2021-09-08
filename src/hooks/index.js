@@ -10,22 +10,26 @@ export const useToggle = initial => {
   return [toggleValue, toggle];
 }
 
-export const useForm = (initial, validator) => {
-  const [form, setForm] = useState(initial);
-  
-  const onChange = useCallback(({ target }) => {
-    const { name, value } = target;
-    if (validator(value)) {
-      setForm(prevState => ({
-        ...prevState,
-        [name]: value
-      }));
-    }
-  }, [ validator ]);
+export const useAlert = initial => {
+  initial = initial ?? {
+    visible: false,
+    message: '',
+  };
 
-  const reset = useCallback(() => {
-    setForm(initial);
-  }, [initial]);
+  const [alertVisible, setAlertVisible] = useState(initial.visible);
+  const [alertMessage, setAlertMessage] = useState(initial.message);
 
-  return [form, onChange, reset];
+  const openAlert = (message) => {
+    setAlertVisible(true);
+    setAlertMessage(message);
+  };
+
+  const closeModal = () => {
+    setAlertVisible(false);
+  };
+
+  return {
+    openAlert, closeModal, alertVisible, alertMessage
+  };
 }
+
