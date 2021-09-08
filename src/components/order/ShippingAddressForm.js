@@ -9,7 +9,10 @@ import FindAddress from '../../components/popup/FindAddress';
 import { handleChange, setObjectState } from '../../utils/state';
 
 // const
-import { deliveryMemos } from '../../const/order'
+import { deliveryMemos } from '../../const/order';
+
+// stylesheet
+import '../../assets/scss/interaction/field.dynamic.scss';
 
 // 배송지 정보
 const ShippingAddressForm = prop => {
@@ -130,12 +133,14 @@ const ShippingAddressForm = prop => {
           <div
             className="acc_group parent">
             <div className="acc_inp type4">
-              <input type="text" className="inp"
+              <input type="text"
+                     className="inp dynamic_input"
                      id="user_address"
                      placeholder="주소를 입력하세요."
                      name="receiverZipCd"
                      value={shipping.receiverZipCd}
                      onChange={handleShippingChange}
+                     readOnly
               />
               <span className="focus_bg" />
               <div className="delivery_btn_box type1">
@@ -155,10 +160,11 @@ const ShippingAddressForm = prop => {
           </div>
           <div className="acc_group parent">
             <div className="acc_inp type5">
-              <input type="text" className="inp"
+              <input type="text" className="inp dynamic_input"
                      name="receiverAddress"
                      value={shipping.receiverAddress}
                      onChange={handleShippingChange}
+                     readOnly
               />
               <span className="focus_bg" />
             </div>
