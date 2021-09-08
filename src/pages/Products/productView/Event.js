@@ -20,8 +20,8 @@ export default function Event({ events }) {
                 promotionText,
                 url
               }) => (
-                <SwiperSlide key={ eventNo } className="swiper-slide">
-                  <a href={url} target="_blank" rel="noreferrer" alt="event" >
+                <SwiperSlide key={eventNo} className="swiper-slide">
+                  <a href={url ?? '#none'} target="_blank" rel="noreferrer" alt="event" >
                     <div className="exhibitions_box" style={{background: `url(${pcImageUrl}) no-repeat center top`}}>
                       <img className="bg_img" src={ `${pcImageUrl}` } alt="" />{/* 슬라이드 배경 */}
                       <div className="txt_box">
