@@ -18,12 +18,13 @@ import GlobalContext from '../context/global.context';
 //utils
 import { useHistory } from "react-router-dom";
 import { removeAccessToken } from '../utils/token';
-import { useProfileState } from "../context/profile.context";
+import { resetProfile, useProfileState, useProileDispatch } from '../context/profile.context';
 
 export default function Header() {
   const history = useHistory();
   const {onChangeGlobal, isLogin} = useContext(GlobalContext);
   const {profile} = useProfileState();
+  const profileDispatch = useProileDispatch();
 
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
@@ -93,6 +94,7 @@ export default function Header() {
                       setInfoOpen(false)
                       removeAccessToken();
                       onChangeGlobal({isLogin: false})
+                      resetProfile(profileDispatch);
                     }}>로그아웃</button>
                 </div>
                 </div>
