@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // components
 import LayerPopup from '../common/LayerPopup';
@@ -9,6 +9,12 @@ import { getAddresses } from '../../api/manage';
 // stylesheet
 import '../../assets/scss/partials/popup/findAddress.scss';
 import { setObjectState } from '../../utils/state';
+
+const getDefaultPage = () => ({
+  current: 1,
+  size: 10,
+  total: 1,
+});
 
 // 주소 찾기 팝업
 const FindAddress = () => {
@@ -22,14 +28,15 @@ const FindAddress = () => {
   const [page, setPage] = useState({
     current: 1,
     size: 10,
-    total: 1,
   });
+
+  const [pageTotal, setPageTotal] = useState(0);
 
   const close = () => setVisible(false);
 
   const submit = event => {
     event.preventDefault();
-    fetchAddresses();
+    setPage(getDefaultPage());
   };
 
   function fetchAddresses () {
@@ -43,13 +50,20 @@ const FindAddress = () => {
     }).then(() => noSearch && setNoSearch(false));
   }
 
-  function updatePagination (total) {
-    const totalCount = Math.ceil(total / page.size);
+  useEffect(fetchAddresses, [page]);
 
-    setObjectState('total', totalCount)(setPage);
+  const onPrev = () => {
+    setCurrentPage(page.current - 1);
+  };
 
-    console.log(page);
-  }
+  const onNext = () => {
+    setCurrentPage(page.current + 1);
+  };
+
+  const setCurrentPage = number => setObjectState('current', number)(setPage);
+
+  const updatePagination = itemCount => setPageTotal(
+    Math.ceil(itemCount / page.size));
 
   return (
     <>
@@ -71,35 +85,44 @@ const FindAddress = () => {
 
         {noSearch ? <SearchTip /> : <div className="result">
           {items.length >= 1 ?
-            <ul className="addresses">
-              {items.map(({ zipCode, address, jibunAddress }, i) => (
-                <li key={i + '_' + zipCode}>
-                  <button>
-                    <div className="address">
-                      <div className="road">
+            <>
+              <ul className="addresses">
+                {items.map(({ zipCode, address, jibunAddress }, i) => (
+                  <li key={i + '_' + zipCode}>
+                    <button>
+                      <div className="address">
+                        <div className="road">
+                              <span className="badge">
+                                  도로명
+                              </span>
+                          <p>
+                            {address}
+                          </p>
+                        </div>
+                        <div className='ground'>
                             <span className="badge">
-                                도로명
+                                지번
                             </span>
-                        <p>
-                          {address}
-                        </p>
+                          <p>
+                            {jibunAddress}
+                          </p>
+                        </div>
                       </div>
-                      <div className='ground'>
-                          <span className="badge">
-                              지번
-                          </span>
-                        <p>
-                          {jibunAddress}
-                        </p>
-                      </div>
-                    </div>
-                    <span className="zip_code">
-                      {zipCode}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+                      <span className="zip_code">
+                        {zipCode}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <div className="page">
+                <button className="prev" onClick={onPrev}>이전</button>
+                <div className="count">
+                  <span>{page.current}</span>/<span>{pageTotal}</span>
+                </div>
+                <button className="next" onClick={onNext}>다음</button>
+              </div>
+            </>
             : <NoResult />
           }
         </div>}
