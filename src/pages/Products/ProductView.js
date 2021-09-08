@@ -33,6 +33,7 @@ import Event from './productView/Event';
 import BottomContent from './productView/BottomContent';
 import { useHistory } from 'react-router';
 import qs from 'qs';
+import { getEventByProductNo } from '../../api/display';
 
 //image
 
@@ -58,6 +59,7 @@ export default function ProductView({ match, ...props }) {
   const [productOptions, setProductOptions] = useState();
   const [contents, setContents] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [productEvents, setProductEvents] = useState([]);
 
   // product init data
 
@@ -65,7 +67,7 @@ export default function ProductView({ match, ...props }) {
     setProductData(productData);
     setProductOptions(optionData);
     setContents(mapContents(productData.baseInfo));
-  }, [])
+  }, []);
 
   const fetchProductData = useCallback(async (productNo) => {
     const ret = await  Promise.all([
@@ -73,7 +75,7 @@ export default function ProductView({ match, ...props }) {
       getProductOptions(productNo),
     ]);
     mapProductData(ret.map(({ data }) => data));
-  }, [mapProductData]);
+  }, []);
 
   const fetchRelatedProducts = useCallback(async (categories) => {
     if (!categories) return;
@@ -86,10 +88,21 @@ export default function ProductView({ match, ...props }) {
                       .join()
     });
     setRelatedProducts(ret.data.items);
+  }, []);
+
+  const fetchEvent = useCallback(async productNo => {
+    if (!productNo) return;
+
+    const ret = await getEventByProductNo({ pathParams: { productNo }});
+    setProductEvents(ret.data);
   }, [])
 
-  useEffect(() => fetchProductData(productNo), [fetchProductData, productNo]);
-  useEffect(() => fetchRelatedProducts(productData?.categories), [fetchRelatedProducts, productData?.categories])
+  useEffect(() => productNo > 0 && fetchProductData(productNo), [fetchProductData, productNo]);
+  useEffect(() => {
+    if (!productData?.categories) return;
+    fetchRelatedProducts(productData?.categories);
+    fetchEvent(productNo);
+  }, [fetchRelatedProducts, fetchEvent, productNo, productData?.categories])
 
   //
   const showProductDetail = useMemo(() => (headerHeight > 0 || size.height < 1280) && productData, [headerHeight, size.height, productData] )
@@ -116,7 +129,9 @@ export default function ProductView({ match, ...props }) {
             <RelatedProducts 
               products={relatedProducts}
             />
-            <Event />
+            {
+              productEvents.length > 0 && <Event events={productEvents} />
+            }
             <div className="product_cont full">
               <div className="relation_link">
                 <ul className="link_inner">

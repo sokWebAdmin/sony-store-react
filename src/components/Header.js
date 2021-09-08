@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useContext} from "react";
 
 //images
 import logo from "../assets/images/common/logo.svg";
@@ -18,26 +18,17 @@ import GlobalContext from '../context/global.context';
 //utils
 import { useHistory } from "react-router-dom";
 import { removeAccessToken } from '../utils/token';
-import { getProfile } from '../api/member';
-import { fetchMyProfile, fetchProfile, useProfileState, useProileDispatch } from "../context/profile.context";
+import { resetProfile, useProfileState, useProileDispatch } from '../context/profile.context';
 
 export default function Header() {
   const history = useHistory();
   const {onChangeGlobal, isLogin} = useContext(GlobalContext);
+  const {profile} = useProfileState();
   const profileDispatch = useProileDispatch();
-  const profile = useProfileState();
 
-  // const [profile, setProfile] = useState(null);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
   const [sideBarOpen, setMobileSideBarOpen] = useState(false);
-
-  useEffect(() => isLogin && fetchProfile(profileDispatch), []);
-  
-  useEffect(() => {
-    if (!profile.customerId) return;
-    profile.customerId && fetchMyProfile(profileDispatch, { type: '30', customerid: profile.customerId })
-  }, [profileDispatch, profile.customerId])
 
   return (
     <>
@@ -103,6 +94,7 @@ export default function Header() {
                       setInfoOpen(false)
                       removeAccessToken();
                       onChangeGlobal({isLogin: false})
+                      resetProfile(profileDispatch);
                     }}>로그아웃</button>
                 </div>
                 </div>

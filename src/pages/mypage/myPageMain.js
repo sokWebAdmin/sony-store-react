@@ -11,7 +11,7 @@ import "../../assets/scss/contents.scss"
 import "../../assets/scss/mypage.scss"
 
 //utils
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 export default function MyPageMain() {
 
@@ -27,7 +27,7 @@ export default function MyPageMain() {
                 <div className="my_user">
                 <div className="user_profile">
                     <p className="user_name"><span className="name">김소니</span>님 안녕하세요 :)</p>
-                    <a  className="user_modify under_line">회원정보 수정</a>
+                    <Link to="/my-page/member" className="user_modify under_line">회원정보 수정</Link>
                 </div>
                 <div className="user_info">
                     <ul>

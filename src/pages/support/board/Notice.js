@@ -1,29 +1,26 @@
-import { React, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 //SEO
 import SEOHelmet from '../../../components/SEOHelmet';
 
 //api
+// import { sampleApi } from "../../api/sample";
 
 //css
-import "../../../assets/scss/contents.scss";
-import "../../../assets/scss/support.scss";
-
-//context
+import "../../../assets/scss/contents.scss"
+import "../../../assets/scss/support.scss"
 import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../../context/board.context';
+import NoticeContent from './notice/NoticeContent';
+import Tabs from './Tabs';
 
-//components
-import FaqContent from './faq/faqContent';
-import Tabs from './tabs';
-
-export default function Faq() {
+export default function Notice() {
   const dispatch = useBoardDispatch();
   const { config } = useBoardState();
 
   useEffect(() => {
-    if (config.faq?.boardNo > 0) return;
-    fetchBoardConfig(dispatch, config.faq?.boardNo);
-  }, [dispatch, config.faq?.boardNo]);
+    if (config?.notice.boardNo > 0) return;
+    fetchBoardConfig(dispatch, config.notice.boardNo);
+  }, [dispatch, config.notice.boardNo]);
 
   return (
     <>
@@ -38,10 +35,10 @@ export default function Faq() {
               </div>
               <Tabs />
             </div>
-            <FaqContent />
+            <NoticeContent />
           </div>
         </div>
       </div>
     </>
   );
-} 
+}  
