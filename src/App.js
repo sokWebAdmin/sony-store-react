@@ -34,6 +34,7 @@ import myPageMain from './pages/mypage/myPageMain';
 import MyPageMember from './pages/mypage/MyPageMember';
 import orderDetail from './pages/mypage/orderDetail';
 import orderList from './pages/mypage/orderList';
+import OldOrderList from './pages/mypage/OldOrderList';
 import rename from './pages/mypage/rename';
 import withdraw from './pages/mypage/withdraw';
 import withdrawComplete from './pages/mypage/withdrawComplete';
@@ -143,6 +144,7 @@ const App = (props) => {
               <Route exact path="/my-page/member" component={MyPageMember} />
               <Route exact path="/my-page/order-detail" component={orderDetail} />
               <Route exact path="/my-page/order-list" component={orderList} />
+              <Route exact path="/my-page/old-order-list" component={OldOrderList} />
               <Route exact path="/my-page/rename" component={rename} />
               <Route exact path="/my-page/withdraw" component={withdraw} />
               <Route exact path="/my-page/withdraw-complete" component={withdrawComplete} />
