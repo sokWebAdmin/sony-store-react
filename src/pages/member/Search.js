@@ -101,6 +101,12 @@ export default function Search() {
 
   useEffect(() => {
     setSearchValue(initSearchValue);
+    setExpireAt('');
+    setTime(179);
+    setAuthAvailable(false);
+    setAuthSent(false);
+    setAuthCode('');
+    setAuthCheck(false);
   }, [tabState]);
 
   useEffect(() => {

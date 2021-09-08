@@ -64,7 +64,9 @@ function boardReducer(state, action) {
       return produce(state, draft => {
         draft[`${action.name}Board`] = {
           totalCount: action.data.totalCount,
-          items: draft[`${action.name}Board`].items.concat(action.data.items),
+          items: action.reset 
+            ? action.data.items 
+            : draft[`${action.name}Board`].items.concat(action.data.items),
         }
       })
     case 'SELECT_CATEGORY':
@@ -122,10 +124,10 @@ export async function fetchBoardConfig(dispatch, boardNo) {
   }
 }
 
-export async function fetchBoards(dispatch, data, name='faq') {
+export async function fetchBoards(dispatch, data, name='faq', reset = false) {
   try {
     const response = await getBoards(data);
-    dispatch({ type: 'GET_BOARD_LIST', data: response.data, name })
+    dispatch({ type: 'GET_BOARD_LIST', data: response.data, name, reset })
   } catch (e) {
     console.error(e);
   }

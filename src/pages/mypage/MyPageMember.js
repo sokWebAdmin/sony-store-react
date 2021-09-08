@@ -12,6 +12,8 @@ import "../../assets/scss/mypage.scss"
 import { useProfileState } from '../../context/profile.context';
 import _ from 'lodash';
 import moment from 'moment';
+import { useHistory } from 'react-router';
+import FindAddress from '../../components/popup/FindAddress';
 
 function getStrDate(date, format = 'YYYY-MM-DD') {
   return moment(date).format(format);
@@ -54,15 +56,54 @@ const memberGrade = {
 }
 
 export default function MyPageMember() {
+  const history = useHistory();
   const profileState = useProfileState();
 
   const [ myForm, setMyForm ] = useState(initialState);
   const [ error, setError ] = useState([]);
 
-  const onClickHandler = () => {}
+  // 우편번호 찾기
+  const [findAddressVisible, setFindAddressVisible] = useState(false);
+  const bindReceiverAddress = selectedAddress => {
+    if (!selectedAddress) return;
+    const { address, zipCode } = selectedAddress;
+    
+    setMyForm(prev => ({
+      ...prev,
+      homezipcode: zipCode,
+      homeaddress1: address,
+      homeaddress2: '',
+    }))
+  };
+  // 
+  const onClickHandler = (event, type) => {
+    event.preventDefault();
+    switch(type) {
+      case 'password':
+        alert('비밀번호 변경 팝업');
+        break;
+      case 'withdrawal':
+        history.replace({ pathname: '/my-page/withdraw' })
+        break;
+      case 'name':
+        alert('이름변경 팝업')
+        break;
+      case 'mobile':
+        alert('휴대폰 번호 변경 팝업')
+        break;
+      case 'address':
+        setFindAddressVisible(true);
+        break;
+        default:
+          return;
+    }
+  };
+
+
   
   const handleSubmit = event => {
     event.preventDefault();
+  
     const test = _.chain(event.target)
                   .pick(Object.keys(initialState))
                   .map(({ name, value }) => ({ [name]: value }))
@@ -96,8 +137,8 @@ export default function MyPageMember() {
             <form onSubmit={ handleSubmit }>
               <div className="member_info">
                 <div className="member_withdrawal">
-                  <a href="#none" className="button button_secondary button-s" onClick={ onClickHandler }>비밀번호 변경</a>
-                  <a href="#none" className="button button_secondary button-s" onClick={ onClickHandler }>회원탈퇴</a>
+                  <a href="#none" className="button button_secondary button-s" onClick={ event => onClickHandler(event, 'password') }>비밀번호 변경</a>
+                  <a href="#none" className="button button_secondary button-s" onClick={ event => onClickHandler(event, 'withdrawal') }>회원탈퇴</a>
                 </div>
                 <div className="member_info_list">
                   <div className="member_list name">
@@ -123,7 +164,7 @@ export default function MyPageMember() {
                           <p className="name_desc">※ 개명(이름 변경)한 경우 ‘이름 변경’ 버튼을 눌러주세요.</p>
                         </div>
                         <div className="btn_box">
-                          <button className="button change_btn" type="button" onClick={ onClickHandler }>이름변경</button>
+                          <button className="button change_btn" type="button" onClick={ event => onClickHandler(event, 'name') }>이름변경</button>
                         </div>
                       </div>
                     </div>
@@ -152,7 +193,7 @@ export default function MyPageMember() {
                           </div>
                         </div>
                         <div className="btn_box">
-                          <button className="button change_btn" type="button" onClick={ onClickHandler }><span>휴대폰</span> 번호 변경</button>
+                          <button className="button change_btn" type="button" onClick={ event => onClickHandler(event, 'mobile') }><span>휴대폰</span> 번호 변경</button>
                         </div>
                       </div>
                       <div className="info_box type_txt_btn tel_chk">
@@ -298,7 +339,19 @@ export default function MyPageMember() {
                           </div>
                         </div>
                         <div className="btn_box">
-                          <button className="button change_btn" type="button" onClick={ onClickHandler }>우편번호찾기</button>
+                          <button 
+                            className="button change_btn" 
+                            type="button" 
+                            onClick={ event => onClickHandler(event, 'address') }
+                            >우편번호찾기
+                          </button>
+                          {
+                            findAddressVisible &&
+                              <FindAddress 
+                                setVisible={setFindAddressVisible}
+                                setAddress={bindReceiverAddress} 
+                              />
+                          }
                         </div>
                       </div>
                       <div className="info_box">

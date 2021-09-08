@@ -1,24 +1,29 @@
-import produce from "immer";
-import { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import { getProfile } from "../api/member";
 import { getMemberInfo } from "../api/sony/member";
 
-
 const initialState = {
-  customerId: '',
-  my: {},
+  // customerId: '',
+  profile: null,
+  my: null,
 };
 
 function profileReducer(state, action) {
   switch (action.type) {
     case 'GET_PROFILE':
-      return produce(state, draft => {
-        draft.customerId = action.data.memberId
-      })
+      return {
+        ...state,
+        profile: { ...action.data }
+      }
     case 'GET_MY_PROFILE':
       return {
         ...state,
         my: { ...action.data }
+      }
+    case 'RESET_PROFILE':
+      return {
+        profile: null,
+        my: null,
       }
     default:
       throw new Error('INVALID_PROFILE_ACTION_TYPE')
@@ -69,4 +74,8 @@ export async function fetchMyProfile(dispatch, query) {
   } catch(e) {
     console.error(e);
   }
+}
+
+export function resetProfile(dispatch) {
+  dispatch({type: 'RESET_PROFILE'});
 }
