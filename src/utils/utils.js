@@ -62,3 +62,16 @@ export const timeFormat = (time) => {
   if (s.length === 1) s = `0${s}`
   return `${m}:${s}`
 }
+
+/**
+ * n자리 랜덤 문자열 생성기
+ *
+ * @param maxLength - default: 6자리
+ * @returns {string}
+ */
+export const generateRandomString = (maxLength = 6) => {
+  const availableChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  return Array.from(Array(maxLength).keys()).reduce(prev => {
+    return prev + availableChar.charAt(Math.floor(Math.random() * availableChar.length));
+  }, '');
+}

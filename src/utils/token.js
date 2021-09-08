@@ -6,6 +6,8 @@ const EXPIRATION_KEY = '_expirationDate';
 export const KEY = {
   ACCESS_TOKEN: 'accessToken',
   GUEST_TOKEN: 'guestToken',
+  OPENID_PROVIDER: 'oauthProvider',
+  OPENID_TOKEN: 'oauthToken'
 }
 
 export const setItem = (name, value, expire = 60 * 5 * 1000) => {
