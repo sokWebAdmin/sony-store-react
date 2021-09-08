@@ -6,43 +6,41 @@ import { useHistory } from "react-router-dom";
 //css
 import '../../assets/scss/contents.scss';
 
-//context
-import GlobalContext from '../../context/global.context';
-
 import { getDormancy } from '../../api/member';
 
 import { changeDateFormat, getDay } from '../../utils/dateFormat';
+import Confirm from '../../components/common/Confirm';
 
 export default function InactiveAccounts() {
-  const {isLogin} = useContext(GlobalContext)
-
   const history = useHistory();
-
+  const CONFIRM_MESSAGE = '휴대폰 인증 서비스를 사용하여 휴면계정을 활성화 합니다. 계속하시겠습니까?'
   const [dormantDate, setDormantDate] = useState('');
+  const [isConfirm, setIsConfirm] = useState(false);
 
   const getDormancyInfo = useCallback(async () => {
     try{
     const {data} = await getDormancy()
       const date = data.split(' ')[0]
-      const day = getDay('2021.09.08')
-      const formattedDate = `${changeDateFormat('2021.09.08','YYYY.MM.DD')}(${day})`
+      const day = getDay(date)
+      const formattedDate = `${changeDateFormat(date,'YYYY.MM.DD')}(${day})`
       setDormantDate(formattedDate)
     }catch (e){
       console.error(e)
     }
   }, []);
 
-  //componentDidMount
-  useEffect(() => {
-    //로그인 상태인 경우, 메인화면으로 자동 이동처리
-    getDormancyInfo();
-    // if (isLogin) {
-    //   history.push('/');
-    // }
-  }, [getDormancyInfo]);
+  const closeConfirm = (state) => {
+    if(state === 'ok') {
+      //인증
+    }
+   setIsConfirm(false)
+  }
+
+  useEffect(() => {getDormancyInfo()}, [getDormancyInfo]);
 
 
   return (
+    <>
       <div className="contents">
         <div className="container" id="container">
           <div className="accounts inactive">
@@ -58,12 +56,13 @@ export default function InactiveAccounts() {
               <li className="accounts_text_list">휴면계정을 활성화하고자 하는 경우에는 하단의 휴면계정 활성화 하기 버튼을 이용하시기 바랍니다.</li>
             </ul>
             <div className="button_wrap">
-              <button type="button" className="alertLayerBtn button button_positive" data-open-layer="alert_pop2"
-                      data-alert-text="휴대폰 인증 서비스를 사용하여 휴면계정을 <br>활성화 합니다. 계속하시겠습니까?">휴면계정 활성화
+              <button type="button" onClick={() => setIsConfirm(true)} className="alertLayerBtn button button_positive" data-open-layer="alert_pop2">휴면계정 활성화
               </button>
             </div>
           </div>
         </div>
       </div>
+      {isConfirm && <Confirm onClose={closeConfirm}>{CONFIRM_MESSAGE}</Confirm>}
+      </>
   );
 }
