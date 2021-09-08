@@ -2,6 +2,8 @@ import { useEffect, useState, useContext, useRef } from 'react';
 import GlobalContext from '../../context/global.context';
 
 // components
+import DatePicker from '../../components/common/DatePicker';
+
 import SelectBox from '../../components/common/SelectBox';
 import FindAddress from '../../components/popup/FindAddress';
 
@@ -277,6 +279,7 @@ const ShippingAddressForm = prop => {
               <input type="text"
                      className="inp datepicker"
                      autoComplete="off" />
+              <DatePicker />
             </div>
           </div>
           <ul className="list_dot">
