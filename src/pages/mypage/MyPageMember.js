@@ -69,6 +69,8 @@ export default function MyPageMember() {
   const history = useHistory();
   const profileState = useProfileState();
 
+  console.log(history);
+
   const [ myForm, setMyForm ] = useState(initialState);
   const [ error, setError ] = useState([]);
 
@@ -88,6 +90,7 @@ export default function MyPageMember() {
   // 비밀번호 변경하기
   const [repasswordVisible, setRepasswordVisible] = useState(false);
   
+  
   const onClickHandler = (event, type) => {
     event.preventDefault();
     switch(type) {
@@ -98,9 +101,7 @@ export default function MyPageMember() {
         history.push({ pathname: '/my-page/withdraw' })
         break;
       case 'name':
-        // setVisibleFlag(prev => ({ ...prev, rename: true }))
-        history.push({ pathname: '/my-page/rename' })
-        alert('이름변경 팝업');
+        history.push({ pathname: '/my-page/rename' });
         break;
       case 'mobile':
         // setVisibleFlag(prev => ({ ...prev, remobile: true }))
@@ -178,11 +179,11 @@ export default function MyPageMember() {
                               id="member_name" 
                               name="firstname" 
                               className="inp disabled" 
-                              value={ myForm.firstname } 
-                              disabled="disabled" 
+                              value={ myForm.firstname }  
                               maxLength={50} 
-                              autoComplete="off" 
+                              autoComplete={ !(history.location.state?.rename) && 'off' } 
                               onChange={handleChange}
+                              disabled={ !(history.location.state?.rename) && 'disabled' }
                             />
                             <span className="focus_bg" />
                           </div>
