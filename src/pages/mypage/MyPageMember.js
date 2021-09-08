@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -7,13 +8,15 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 
 //css
-import "../../assets/scss/contents.scss"
-import "../../assets/scss/mypage.scss"
+import "../../assets/scss/contents.scss";
+import '../../assets/scss/mypage.scss';
+
 import { useProfileState } from '../../context/profile.context';
 import _ from 'lodash';
 import moment from 'moment';
 import { useHistory } from 'react-router';
 import FindAddress from '../../components/popup/FindAddress';
+import Repassword from './myPageMember/Repassword';
 
 function getStrDate(date, format = 'YYYY-MM-DD') {
   return moment(date).format(format);
@@ -53,6 +56,13 @@ const memberGrade = {
   N: { className: '', label: '일반' },
   M: { className: 'family', label: 'MEMBERSHIP' },
   V: { className: 'vip', label: 'VIP' }
+};
+
+const initialVisibleFlag = {
+  address: false,
+  rename: false,
+  repassword: false,
+  remobile: false,
 }
 
 export default function MyPageMember() {
@@ -67,7 +77,7 @@ export default function MyPageMember() {
   const bindReceiverAddress = selectedAddress => {
     if (!selectedAddress) return;
     const { address, zipCode } = selectedAddress;
-    
+    // window.open
     setMyForm(prev => ({
       ...prev,
       homezipcode: zipCode,
@@ -75,23 +85,33 @@ export default function MyPageMember() {
       homeaddress2: '',
     }))
   };
-  // 
+  // 비밀번호 변경하기
+  const [repasswordVisible, setRepasswordVisible] = useState(false);
+  const bindReceiverPassword = newPassword => {
+    console.log(newPassword);
+  }
+  
   const onClickHandler = (event, type) => {
     event.preventDefault();
     switch(type) {
       case 'password':
-        alert('비밀번호 변경 팝업');
+        setRepasswordVisible(true);
+        // alert('비밀번호 변경 팝업');
         break;
       case 'withdrawal':
-        history.replace({ pathname: '/my-page/withdraw' })
+        history.push({ pathname: '/my-page/withdraw' })
         break;
       case 'name':
-        alert('이름변경 팝업')
+        // setVisibleFlag(prev => ({ ...prev, rename: true }))
+        history.push({ pathname: '/my-page/rename' })
+        alert('이름변경 팝업');
         break;
       case 'mobile':
-        alert('휴대폰 번호 변경 팝업')
+        // setVisibleFlag(prev => ({ ...prev, remobile: true }))
+        alert('휴대폰 번호 변경 팝업');
         break;
       case 'address':
+        // setVisibleFlag(prev => ({ ...prev, address: true }))
         setFindAddressVisible(true);
         break;
         default:
@@ -130,14 +150,21 @@ export default function MyPageMember() {
         <SEOHelmet title={"구매상담 이용약관 동의"} />
         <div className="contents mypage">
           <div className="member_wrap">
-            {/* <div className="common_head first_tit">
+            <div className="common_head first_tit">
               <Link to='/my-page' className="common_head_back">마이페이지</Link>
               <h1 className="common_head_name">회원정보</h1>
-            </div> */}
+            </div>
             <form onSubmit={ handleSubmit }>
               <div className="member_info">
                 <div className="member_withdrawal">
                   <a href="#none" className="button button_secondary button-s" onClick={ event => onClickHandler(event, 'password') }>비밀번호 변경</a>
+                  {
+                    repasswordVisible &&
+                      <Repassword 
+                        setVisible={setRepasswordVisible}
+                        setPassword={bindReceiverPassword} 
+                      />
+                  }
                   <a href="#none" className="button button_secondary button-s" onClick={ event => onClickHandler(event, 'withdrawal') }>회원탈퇴</a>
                 </div>
                 <div className="member_info_list">
@@ -290,34 +317,6 @@ export default function MyPageMember() {
                       </div>
                     </div>
                   </div>
-                  {/* @todo 기획서에 없음 비밀번호 변경 팝업 연결 후 삭제하기 */}
-                  {/* <div className="member_list password">
-                    <div className="tit_inner">
-                      <label htmlFor="member_password" className="tit">비밀번호</label>
-                    </div>
-                    <div className="info_inner">
-                      <div className="info_box type_txt_btn">
-                        <div className="data_box">
-                          <div className="inp_box password_box">
-                            <input 
-                              type="password" 
-                              id="member_password" 
-                              name="password"
-                              className="inp disabled" 
-                              value={ myForm.password }
-                              disabled="disabled" 
-                              maxLength={50} 
-                              autoComplete="off" 
-                            />
-                            <span className="focus_bg" />
-                          </div>
-                        </div>
-                        <div className="btn_box">
-                          <button className="button change_btn popup_comm_btn" type="button" data-popup-name="password_change" onClick={ onClickHandler }>비밀번호 변경</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
                   <div className="member_list address">
                     <div className="tit_inner">
                       <label htmlFor="member_addr" className="tit">주소</label>
@@ -426,7 +425,7 @@ export default function MyPageMember() {
     </div>
   </form>
 </div>{/* // member_wrap */}
-</div>
+        </div>
         </>
     );
 }
