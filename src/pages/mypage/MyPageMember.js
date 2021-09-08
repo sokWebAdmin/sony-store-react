@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -7,13 +8,15 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 
 //css
-import "../../assets/scss/contents.scss"
-import "../../assets/scss/mypage.scss"
+import "../../assets/scss/contents.scss";
+import '../../assets/scss/mypage.scss';
+
 import { useProfileState } from '../../context/profile.context';
 import _ from 'lodash';
 import moment from 'moment';
 import { useHistory } from 'react-router';
 import FindAddress from '../../components/popup/FindAddress';
+import Repassword from './myPageMember/Repassword';
 
 function getStrDate(date, format = 'YYYY-MM-DD') {
   return moment(date).format(format);
@@ -53,6 +56,13 @@ const memberGrade = {
   N: { className: '', label: '일반' },
   M: { className: 'family', label: 'MEMBERSHIP' },
   V: { className: 'vip', label: 'VIP' }
+};
+
+const initialVisibleFlag = {
+  address: false,
+  rename: false,
+  repassword: false,
+  remobile: false,
 }
 
 export default function MyPageMember() {
@@ -67,7 +77,7 @@ export default function MyPageMember() {
   const bindReceiverAddress = selectedAddress => {
     if (!selectedAddress) return;
     const { address, zipCode } = selectedAddress;
-    
+    // window.open
     setMyForm(prev => ({
       ...prev,
       homezipcode: zipCode,
@@ -75,23 +85,29 @@ export default function MyPageMember() {
       homeaddress2: '',
     }))
   };
-  // 
+  // 비밀번호 변경하기
+  const [repasswordVisible, setRepasswordVisible] = useState(false);
+  
   const onClickHandler = (event, type) => {
     event.preventDefault();
     switch(type) {
       case 'password':
-        alert('비밀번호 변경 팝업');
+        setRepasswordVisible(true);
         break;
       case 'withdrawal':
-        history.replace({ pathname: '/my-page/withdraw' })
+        history.push({ pathname: '/my-page/withdraw' })
         break;
       case 'name':
-        alert('이름변경 팝업')
+        // setVisibleFlag(prev => ({ ...prev, rename: true }))
+        history.push({ pathname: '/my-page/rename' })
+        alert('이름변경 팝업');
         break;
       case 'mobile':
-        alert('휴대폰 번호 변경 팝업')
+        // setVisibleFlag(prev => ({ ...prev, remobile: true }))
+        alert('휴대폰 번호 변경 팝업');
         break;
       case 'address':
+        // setVisibleFlag(prev => ({ ...prev, address: true }))
         setFindAddressVisible(true);
         break;
         default:
@@ -99,16 +115,18 @@ export default function MyPageMember() {
     }
   };
 
+  const handleChange = ({ target: { name, value }}) => {
+    setMyForm(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
 
   
   const handleSubmit = event => {
     event.preventDefault();
   
-    const test = _.chain(event.target)
-                  .pick(Object.keys(initialState))
-                  .map(({ name, value }) => ({ [name]: value }))
-                  .value();
-    console.log(test);
+    console.log(myForm);
     // @TODO sns 와 email 체크박스는 따로 관리해야 함
   }
 
@@ -130,14 +148,20 @@ export default function MyPageMember() {
         <SEOHelmet title={"구매상담 이용약관 동의"} />
         <div className="contents mypage">
           <div className="member_wrap">
-            {/* <div className="common_head first_tit">
+            <div className="common_head first_tit">
               <Link to='/my-page' className="common_head_back">마이페이지</Link>
               <h1 className="common_head_name">회원정보</h1>
-            </div> */}
+            </div>
             <form onSubmit={ handleSubmit }>
               <div className="member_info">
                 <div className="member_withdrawal">
                   <a href="#none" className="button button_secondary button-s" onClick={ event => onClickHandler(event, 'password') }>비밀번호 변경</a>
+                  {
+                    repasswordVisible &&
+                      <Repassword 
+                        setVisible={setRepasswordVisible}
+                      />
+                  }
                   <a href="#none" className="button button_secondary button-s" onClick={ event => onClickHandler(event, 'withdrawal') }>회원탈퇴</a>
                 </div>
                 <div className="member_info_list">
@@ -158,6 +182,7 @@ export default function MyPageMember() {
                               disabled="disabled" 
                               maxLength={50} 
                               autoComplete="off" 
+                              onChange={handleChange}
                             />
                             <span className="focus_bg" />
                           </div>
@@ -186,7 +211,8 @@ export default function MyPageMember() {
                               disabled="disabled" 
                               maxLength={11} 
                               autoComplete="off" 
-                              placeholder=" " 
+                              placeholder=""
+                              onChange={handleChange} 
                             />
                             <span className="label">휴대폰 번호<span>(- 없이 입력하세요.)</span></span>
                             <span className="focus_bg" />
@@ -236,6 +262,7 @@ export default function MyPageMember() {
                               value={ myForm.customerid } 
                               disabled="disabled" 
                               maxLength={50} 
+                              onChange={handleChange}
                             />
                             <span className="focus_bg" />
                           </div>
@@ -257,6 +284,7 @@ export default function MyPageMember() {
                               name="birthday"
                               className="inp disabled" 
                               value={getStrDate(myForm.birthday)} 
+                              onChange={handleChange}
                               disabled="disabled" 
                               maxLength={8} 
                             />
@@ -290,34 +318,6 @@ export default function MyPageMember() {
                       </div>
                     </div>
                   </div>
-                  {/* @todo 기획서에 없음 비밀번호 변경 팝업 연결 후 삭제하기 */}
-                  {/* <div className="member_list password">
-                    <div className="tit_inner">
-                      <label htmlFor="member_password" className="tit">비밀번호</label>
-                    </div>
-                    <div className="info_inner">
-                      <div className="info_box type_txt_btn">
-                        <div className="data_box">
-                          <div className="inp_box password_box">
-                            <input 
-                              type="password" 
-                              id="member_password" 
-                              name="password"
-                              className="inp disabled" 
-                              value={ myForm.password }
-                              disabled="disabled" 
-                              maxLength={50} 
-                              autoComplete="off" 
-                            />
-                            <span className="focus_bg" />
-                          </div>
-                        </div>
-                        <div className="btn_box">
-                          <button className="button change_btn popup_comm_btn" type="button" data-popup-name="password_change" onClick={ onClickHandler }>비밀번호 변경</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
                   <div className="member_list address">
                     <div className="tit_inner">
                       <label htmlFor="member_addr" className="tit">주소</label>
@@ -333,7 +333,8 @@ export default function MyPageMember() {
                               className="inp disabled" 
                               value={ myForm.homezipcode }
                               disabled="disabled" 
-                              maxLength={50} 
+                              maxLength={50}
+                              onChange={handleChange}
                             />
                             <span className="focus_bg" />
                           </div>
@@ -362,7 +363,8 @@ export default function MyPageMember() {
                               id="member_addr2" 
                               name="homeaddress1"
                               className="inp disabled" 
-                              value={ myForm.homeaddress1 } 
+                              value={ myForm.homeaddress1 }
+                              onChange={handleChange}
                               disabled="disabled" 
                               maxLength={50} 
                             />
@@ -377,6 +379,7 @@ export default function MyPageMember() {
                               name="homeaddress2"
                               className="inp disabled" 
                               value={ myForm.homeaddress2 } 
+                              onChange={handleChange}
                               disabled="disabled" 
                               maxLength={50} 
                             />
@@ -426,7 +429,7 @@ export default function MyPageMember() {
     </div>
   </form>
 </div>{/* // member_wrap */}
-</div>
+        </div>
         </>
     );
 }

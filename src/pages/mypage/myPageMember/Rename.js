@@ -1,16 +1,16 @@
 import { React } from 'react';
 
 //SEO
-import SEOHelmet from '../../components/SEOHelmet';
+import SEOHelmet from '../../../components/SEOHelmet';
 
 //api
 
 
 //css
-import "../../assets/scss/contents.scss"
-import "../../assets/scss/mypage.scss"
+import "../../../assets/scss/contents.scss"
+import "../../../assets/scss/mypage.scss"
 
-export default function rename() {
+export default function Rename() {
 
     return (
         <>
