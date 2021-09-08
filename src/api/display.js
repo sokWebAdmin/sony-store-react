@@ -23,3 +23,6 @@ export const getEventByEventNo = (eventNo, params) => {
   return request(`display/events/${eventNo}`, "get", query.toString(), {});
 };
 
+export const getEventByProductNo = ({ pathParams }) => {
+  return request(`display/events/products/${pathParams.productNo}`)
+}
