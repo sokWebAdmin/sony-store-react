@@ -9,6 +9,7 @@ import { modifyMy } from "../../../api/sony/member";
 import { fetchProfile, useProfileState } from "../../../context/profile.context";
 import { useHistory } from "react-router";
 import Alert from "../../../components/common/Alert";
+import { useAlert } from "../../../hooks";
 
 const errorMsg = {
   empty: {
@@ -39,15 +40,7 @@ export default function Repassword({ setVisible }) {
   const close = () => setVisible(false);
   
   const [state, setState] = useState(initialState);
-  const [alertVisible, setAlertVisibel] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-
-  const openAlert = message => {
-    setAlertVisibel(true);
-    setAlertMessage(message);
-  }
-
-  const closeModal = () => setAlertVisibel(false);
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
 
   const { password, newPassword, valNewPassword } = state;
   const handleChange = ({ target: { name, value }}) => {

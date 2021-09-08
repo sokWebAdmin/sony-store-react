@@ -10,6 +10,7 @@ const Confirm = ({ children, onClose }) => {
   const close = (status) => {
     document.body.style.overflow = "auto";
     onClose?.(status);
+    return status;
   }
 
   useEffect(() => {
