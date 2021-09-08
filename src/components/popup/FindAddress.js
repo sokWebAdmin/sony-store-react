@@ -8,6 +8,7 @@ import { getAddresses } from '../../api/manage';
 
 // stylesheet
 import '../../assets/scss/partials/popup/findAddress.scss';
+import { setObjectState } from '../../utils/state';
 
 // 주소 찾기 팝업
 const FindAddress = () => {
@@ -18,6 +19,11 @@ const FindAddress = () => {
 
   const [noSearch, setNoSearch] = useState(true);
   const [items, setItems] = useState([]);
+  const [page, setPage] = useState({
+    current: 1,
+    size: 10,
+    total: 1,
+  });
 
   const close = () => setVisible(false);
 
@@ -29,9 +35,20 @@ const FindAddress = () => {
   function fetchAddresses () {
     getAddresses({
       keyword: searchKeyword,
-      pageNumber: 1, // TODO
-      pageSize: 10, // TODO
-    }).then(({ data }) => setItems(data.items)).then(() => setNoSearch(false));
+      pageNumber: page.current,
+      pageSize: page.size,
+    }).then(({ data }) => {
+      setItems(data.items);
+      updatePagination(data.totalCount);
+    }).then(() => noSearch && setNoSearch(false));
+  }
+
+  function updatePagination (total) {
+    const totalCount = Math.ceil(total / page.size);
+
+    setObjectState('total', totalCount)(setPage);
+
+    console.log(page);
   }
 
   return (
