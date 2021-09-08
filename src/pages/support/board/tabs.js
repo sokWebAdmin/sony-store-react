@@ -5,7 +5,7 @@ import { useMemo } from "react";
 
 export default function Tabs() {
   const history = useHistory();
-  const testTab = useMemo(() => history.location.pathname.replace('/', ''), [history.location.pathname]);
+  const testTab = useMemo(() => history.location.pathname.split('/')[1], [history.location.pathname]);
   
   const dispatch = useBoardDispatch();
   const { config } = useBoardState();
@@ -23,6 +23,7 @@ export default function Tabs() {
 
   const onClickTab = (event, currentTab) => {
     event.preventDefault();
+    if (currentTab === testTab) return;
     dispatch({
       type: 'SELECT_TAB',
       data: { currentTab }

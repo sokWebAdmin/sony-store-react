@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ViewMore from "../../../../components/common/ViewMore";
 import { fetchBoards, useBoardDispatch, useBoardState } from "../../../../context/board.context"
 import NoticeItem from "./noticeItem";
@@ -24,14 +24,20 @@ const getReqeust = (boardNo, params = {}) => {
 export default function NoticeContent() {
   const dispatch = useBoardDispatch();
   const { config, noticeBoard } = useBoardState();
-  const boardNo = useMemo(() => config?.notice.boardNo, [config.notice.boardNo])
+  const boardNo = useMemo(() => config?.notice.boardNo, [config.notice.boardNo]);
+  const [isInit, setIsInit] = useState(false);
+
+  useEffect(() => setIsInit(true), [])
 
   useEffect(() => {
     if (boardNo > 0) {
+
+      if (isInit) return;
+
       const request = getReqeust(boardNo);
       fetchBoards(dispatch, request, 'notice');
     }
-  }, [dispatch, boardNo]);
+  }, [dispatch, boardNo, isInit]);
 
   const viewMore = pageNumber => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }))
 
