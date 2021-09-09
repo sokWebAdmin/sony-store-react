@@ -6,6 +6,7 @@ import { useAlert } from "../../../hooks";
 import { loginApi } from "../../../api/auth";
 import { useProfileState } from "../../../context/profile.context";
 import Alert from "../../../components/common/Alert";
+import '../../../assets/scss/partials/popup/authPassword.scss';
 
 export default function AuthPassword({ setVisible, authResult }) {
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
