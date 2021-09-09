@@ -34,25 +34,25 @@ function getStrDate(date, format = 'YYYY-MM-DD') {
  * 
  */
 const initialState = {
-  customerid : 'test',
+  customerid : '',
   custcategory: '',
   gender: '',
-  firstname: 'bomee',
-  mobile: '01044758305',
-  birthday: '19870331',
+  firstname: '',
+  mobile: '',
+  birthday: '',
   email: '',
   viasite: '',
-  sms: true, // sms 수신 동의 여부
+  sms: 'N', // sms 수신 동의 여부
   mobileflag: '',
   servicesite: {
-    news: true // 이벤트 프로모션 알림 메일 동의 여부
+    news: 'N' // 이벤트 프로모션 알림 메일 동의 여부
   }, //nesw 는 email 알림만 있는 것 같은데 확인 필요
   password : '',
   newPassword: '',
   homeaddress1: '', // 주소
   homeaddress2: '', // 상세주소
   homezipcode: '', // 우편번호
-  custgrade: 'N', // 고객등급: N - 일반, M - Membership, V - VIP
+  custgrade: '', // 고객등급: N - 일반, M - Membership, V - VIP
 };
 
 // vvip / vip / family
