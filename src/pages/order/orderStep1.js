@@ -49,7 +49,7 @@ const OrderStep1 = ({ location }) => {
   });
 
   const [discount, setDiscount] = useState({
-    subPayAmt: '',
+    subPayAmt: 0,
     coupons: {},
   });
 

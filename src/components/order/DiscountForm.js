@@ -13,7 +13,9 @@ const DiscountForm = ({ setDiscount, paymentInfo }) => {
   const { accumulationConfig } = useMallState();
 
   // subPayAmt: number , coupons: nested object
-  const handlePaymentChange = event => handleChange(event)(setDiscount);
+  // const handlePaymentChange = event => handleChange(event)(setDiscount);
+
+  const pointInput = useRef();
 
   const pointUnit = accumulationConfig?.accumulationUnit || 'M'; // falsy
 
@@ -71,6 +73,7 @@ const DiscountForm = ({ setDiscount, paymentInfo }) => {
                      placeholder="0"
                      onKeyPress={onKeyboardEventOnlyDigit}
                      onChange={toCurrency}
+                     ref={pointInput}
               /><span
               className="unit">점</span>
               <span className="focus_bg" />
@@ -78,6 +81,13 @@ const DiscountForm = ({ setDiscount, paymentInfo }) => {
             <div className="acc_btn_box">
               <button
                 className="button button_negative button-s"
+                onClick={() => {
+                  if (paymentInfo?.accumulationAmt) {
+                    setObjectState('subPayAmt', paymentInfo.accumulationAmt)(
+                      setDiscount);
+                    pointInput.current.value = accumulationAmt;
+                  }
+                }}
                 type="button">모두 사용
               </button>
               <span
