@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useMemo, useRef } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import GlobalContext from '../../context/global.context';
 
 // components
@@ -40,14 +40,6 @@ const ShippingAddressForm = prop => {
 
   useEffect(() => console.log(getStrYMDHMSS(specifyDeliveryDate)),
     [specifyDeliveryDate]);
-
-  const specifyDelivery3DayMin = useMemo(() => {
-    const threeDayLater = Date.now() + 1000 * 60 * 60 * 24 * 3;
-    return threeDayLater >= specifyDeliveryDate.getTime();
-  });
-
-  useEffect(() => console.log(specifyDelivery3DayMin),
-    [specifyDelivery3DayMin]);
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
@@ -303,7 +295,10 @@ const ShippingAddressForm = prop => {
                 disabled={!specifyDelivery}
                 bindDate={setSpecifyDeliveryDate}
                 option={{
-                  selectableRanges: [[new Date(), new Date(2999, 12, 31)]],
+                  selectableRanges: [
+                    [
+                      new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
+                      new Date(2999, 12, 31)]],
                 }}
               />
             </div>

@@ -19,7 +19,7 @@ const DatePicker = prop => {
 
   const createInstance = (wrapperHTMLElement, inputHTMLElement, option) => {
     datePicker.instance = new TuiDatePicker(wrapperHTMLElement, {
-      date: new Date(),
+      date: option?.selectableRanges[0][0] ?? new Date(),
       language: 'ko',
       input: {
         element: inputHTMLElement,
