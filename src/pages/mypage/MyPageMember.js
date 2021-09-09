@@ -21,18 +21,16 @@ import MobileAuth from '../member/MobileAuth';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
 import { modifyMy } from '../../api/sony/member';
+import ReCAPTCHA from 'react-google-recaptcha';
+import OpenLogin from '../../components/member/OpenLogin';
+import AuthPassword from './myPageMember/AuthPassword';
 
 function getStrDate(date, format = 'YYYY-MM-DD') {
   return moment(date).format(format);
 }
 
-/**
- * {
- *  name: 'email',
- *  reason: 'empty' | 'type' | 'invalid'
- * }
- * 
- */
+const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
+
 const initialState = {
   customerid : '',
   custcategory: '',
@@ -62,12 +60,7 @@ const memberGrade = {
   V: { className: 'vvip', label: 'VIP' }
 };
 
-const initialVisibleFlag = {
-  address: false,
-  rename: false,
-  repassword: false,
-  remobile: false,
-};
+const required = ['firstname', 'mobile', 'homezipcode', 'homeaddress1', 'homeaddress2']
 
 const validateMobile = (mobile, openAlert) => {
   const pattern = /^\d{2,3}\d{3,4}\d{4}$/;
@@ -88,12 +81,10 @@ export default function MyPageMember() {
 
   const { openAlert, closeModal, alertMessage, alertVisible } = useAlert();
 
-  // 수정모드
+  
   const [isEditMode, setIsEditMode] = useState(false);
-
-  const [ myForm, setMyForm ] = useState({...initialState});
   const [ initForm, setInitForm ] = useState({...initialState});
-  const [ error, setError ] = useState([]);
+  const [ myForm, setMyForm ] = useState({...initialState});
 
   // 우편번호 찾기
   const [findAddressVisible, setFindAddressVisible] = useState(false);
@@ -107,13 +98,24 @@ export default function MyPageMember() {
       homeaddress2: '',
     }))
   };
+  
   // 비밀번호 변경하기
   const [repasswordVisible, setRepasswordVisible] = useState(false);
+  
   // 휴대폰 번호 변경하기
   const [remobileVisible, setRemobileVisible] = useState(false);
   const [needsResend, setNeedsResend] = useState(false);
   const [remobileReset, setRemobileReset] = useState(false);
   const handleRemobileResult = result => console.log(result);
+  const remobile = () => {
+    if (validateMobile(myForm.mobile, openAlert)) {
+      setRemobileVisible(true);
+      setNeedsResend(true);
+    }
+  };
+  const resend = () => {
+    setRemobileReset(true);
+  };
 
   // 수신 동의
   const [ active, setActive ] = useState({
@@ -121,22 +123,34 @@ export default function MyPageMember() {
     email: false,
   });
 
-  const remobile = () => {
-    if (validateMobile(myForm.mobile, openAlert)) {
-      setRemobileVisible(true);
-      setNeedsResend(true);
-    }
-  };
+  // 캡챠
+  const [ captcha, setCaptcha ] = useState(false);
+  const handleReCAPTCHAChange = value => value && setCaptcha(true);
+  const handleReCAPTCHAExpired = exp => exp && setCaptcha(false);
+  const handleReCAPTCHAErrored = err => err && setCaptcha(false);
 
-  const resend = () => {
-    setRemobileReset(true);
+  // 비밀번호 확인
+  const [ passwordVisible, setPasswordVisible ] = useState(false);
+
+
+  // 취소
+  const reset = () => {
+    setIsEditMode(false);
+    setRemobileVisible(false);
+    setNeedsResend(false);
+    setMyForm(() => ({ ...initForm }));
+    setActive({
+      sms: profileState.my?.sms === 'Y',
+      email: profileState.my?.servicesite.news === 'Y',
+    });
+    setCaptcha(false);
   }
 
   const noticeEditMode = () => {
     if (isEditMode) return true;
     openAlert('회원정보 수정 버튼을 클릭하세요.');
     return false;
-  }
+  };
   
   
   const handleClick = (event, type) => {
@@ -158,14 +172,7 @@ export default function MyPageMember() {
         noticeEditMode() && setFindAddressVisible(true);
         break;
       case 'cancle':
-        setIsEditMode(false);
-        setRemobileVisible(false);
-        setNeedsResend(false);
-        setMyForm(() => ({ ...initForm }));
-        setActive({
-          sms: profileState.my?.sms === 'Y',
-          email: profileState.my?.servicesite.news === 'Y',
-        });
+        reset();
         break;
         default:
           return;
@@ -189,9 +196,25 @@ export default function MyPageMember() {
     }
   };
 
-  const validate = request => request;
+  const validate = request => {
+    
+    required.forEach(r => {
+      if (!request[r]) {
+        openAlert('회원정보 수정을 완료해주세요.');
+        throw new Error('EMPTY_VALUE');
+      }
+    })
+
+    if (!captcha) {
+      openAlert(`reCAPTCHA('로봇이 아닙니다.') 인증이 필요합니다.`);
+      return false;
+    }
+
+    return request;
+  };
   const handleSubmit = async event => {
     event.preventDefault();
+
     const request = {
       ...myForm,
       sms: active.sms ? 'Y' : 'N',
@@ -202,15 +225,9 @@ export default function MyPageMember() {
     console.log(request);
     const ret = await modifyMy(validate(request));
     console.log(ret);
-    // @TODO sns 와 email 체크박스는 따로 관리해야 함
+
     setIsEditMode(false);
   };
-
-  const addErrorType = type => setError(prev => {
-    if(prev.some(error => error === type)) return;
-    return prev.concat(type);
-  });
-  const removeErrorType = type => setError(prev => prev.filter(error => error !== type));
 
   // 초기화
   useEffect(() => {
@@ -512,10 +529,21 @@ export default function MyPageMember() {
                     </div>
                   </div>
                 </div>
-                {/* 로봇이 아닙니다. */}
-                <div className="macro_chk_box" style={{display: 'block'}}></div>
-                {/* // 로봇이 아닙니다. */}
-              </div>{/* // member_info_list */}
+                {
+                  passwordVisible && <AuthPassword 
+                                        setVisible={ setPasswordVisible } 
+                                        authResult={ result => result && setIsEditMode(true) }
+                                      />
+                }
+                <div className="macro_chk_box" style={{display: `${ isEditMode ? 'block' : 'none' }`, margin: '10px auto'}}>
+                  <ReCAPTCHA 
+                    sitekey={ SITE_KEY }
+                    onChange={handleReCAPTCHAChange}
+                    onExpired={handleReCAPTCHAExpired}
+                    onErrored={handleReCAPTCHAErrored}
+                  />
+                </div>
+              </div>
               <div className="btn_article">
                   {
                     isEditMode ? 
@@ -530,7 +558,7 @@ export default function MyPageMember() {
                       className="button button_positive button-full popup_comm_btn" 
                       data-popup-name="modify_pw_chk" 
                       type="button"
-                      onClick={ () => setIsEditMode(true) }
+                      onClick={ () => setPasswordVisible(true)}
                     >회원정보 수정</button>
                   }
               </div>

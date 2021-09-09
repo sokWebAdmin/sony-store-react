@@ -14,7 +14,7 @@ const label = {
   kakao: '카카오톡',
 };
 
-const OpenLogin = ({ title, message, customCallback }) => {
+const OpenLogin = ({ title, message, customCallback, loginResult }) => {
   let popup = null;
   const history = useHistory();
   const { openIdJoinConfig } = useMallState();
@@ -70,7 +70,6 @@ const OpenLogin = ({ title, message, customCallback }) => {
 
   const _openIdAuthCallback = (profileResult = null) => {
     window.shopOauthCallback = null;
-    console.log(profileResult);
 
     if (!profileResult) {
       removeAccessToken();
@@ -79,10 +78,15 @@ const OpenLogin = ({ title, message, customCallback }) => {
       openAlert('간편 인증에 실패하였습니다.');
       return;
     }
-    if (profileResult.memberStatus === 'WAITING') {
-      history.push('/member/join-agree');
+
+    if (!loginResult) {
+      if (profileResult.memberStatus === 'WAITING') {
+        history.push('/member/join-agree');
+      } else {
+        openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
+      }
     } else {
-      openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
+      loginResult(true);
     }
   };
 
@@ -114,6 +118,8 @@ OpenLogin.defaultProps = {
   title: '',
   message: 'SNS 계정으로 <span>간편하게 로그인하세요.</span>',
   customCallback: null,
+  goHome: true,
+  loginResult: null,
 };
 
 export default OpenLogin;
