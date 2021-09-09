@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { createPortal } from 'react-dom';
 
-const LayerPopup = ({ children, onClose, className, size = 'ms' }) => {
+const LayerPopup = ({ children, onClose, className, size = 'ms', customButton }) => {
   const [container] = useState(() => {
     return document.createElement('div');
   });

@@ -15,7 +15,7 @@ import SelectBox from '../../components/common/SelectBox';
 import { withdrawalReasons } from '../../const/mypage';
 import OpenLogin from '../../components/member/OpenLogin';
 import { withdrawalMember } from '../../api/sony/member';
-import { deleteProfile, postCheckPassword } from '../../api/member';
+import { deleteProfile } from '../../api/member';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
 import { getProfileOrdersSummaryStatus } from '../../api/order';
@@ -148,7 +148,7 @@ export default function Withdraw() {
                   </div>
                   <div className="btn_article">
                     <button className="button button_positive popup_comm_btn button-full" type="button"
-                            onClick={() => onClickWithdraw()}>회원탈퇴
+                            onClick={() => validateWithdraw()}>회원탈퇴
                     </button>
                   </div>
                   <div className="info_withdraw">
