@@ -1,4 +1,4 @@
-import { React, useEffect, useCallback, useState } from 'react';
+import { React, useEffect, useCallback, useState, useContext } from 'react';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
@@ -18,8 +18,11 @@ import '../../assets/scss/order.scss';
 
 // functions
 import { getUrlParam } from '../../utils/location';
+import GlobalContext from '../../context/global.context';
 
-export default function OrderStep1 ({ location }) {
+const OrderStep1 = ({ location }) => {
+  const { isLogin } = useContext(GlobalContext);
+
   const [deliveryGroups, setDeliveryGroups] = useState([]);
 
   // form data
@@ -122,10 +125,11 @@ export default function OrderStep1 ({ location }) {
                                              setShipping={setShipping} />
                       </Accordion>
 
+                      {isLogin &&
                       <Accordion title={'할인 정보'} defaultVisible={true}>
                         <DiscountForm discount={discount}
                                       setDiscount={setDiscount} />
-                      </Accordion>
+                      </Accordion>}
 
                       <div className="acc_item on">
                         <div className="acc_head">
@@ -407,3 +411,5 @@ export default function OrderStep1 ({ location }) {
     </>
   );
 }
+
+export default OrderStep1;
