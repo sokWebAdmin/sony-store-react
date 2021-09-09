@@ -33,12 +33,12 @@ function getStrDate(date, format = 'YYYY-MM-DD') {
  * 
  */
 const initialState = {
-  customerid : 'nanuya0331@gmail.com',
+  customerid : '',
   custcategory: '',
   gender: '',
-  firstname: '윤보미',
-  mobile: '01044758305',
-  birthday: '19870331',
+  firstname: '',
+  mobile: '',
+  birthday: '',
   email: '',
   viasite: '',
   sms: '', // sms 수신 동의 여부
@@ -46,12 +46,12 @@ const initialState = {
   servicesite: {
     news: '' // 이벤트 프로모션 알림 메일 동의 여부
   }, //nesw 는 email 알림만 있는 것 같은데 확인 필요
-  password : '1234567890',
+  password : '',
   newPassword: '',
-  homeaddress1: '서울 서울 서울', // 주소
-  homeaddress2: '서 울 상 세 어 딘 가 12345', // 상세주소
-  homezipcode: '12345', // 우편번호
-  custgrade: 'M', // 고객등급: N - 일반, M - Membership, V - VIP
+  homeaddress1: '', // 주소
+  homeaddress2: '', // 상세주소
+  homezipcode: '', // 우편번호
+  custgrade: '', // 고객등급: N - 일반, M - Membership, V - VIP
 };
 
 // vvip / vip / family
