@@ -18,6 +18,8 @@ import { useHistory } from 'react-router';
 import FindAddress from '../../components/popup/FindAddress';
 import Repassword from './myPageMember/Repassword';
 import MobileAuth from '../member/MobileAuth';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
 
 function getStrDate(date, format = 'YYYY-MM-DD') {
   return moment(date).format(format);
@@ -64,15 +66,32 @@ const initialVisibleFlag = {
   rename: false,
   repassword: false,
   remobile: false,
+};
+
+const validateMobile = (mobile, openAlert) => {
+  const pattern = /^\d{2,3}\d{3,4}\d{4}$/;
+  if (!mobile) {
+    openAlert('번호를 입력하세요.');
+    return false;
+  }
+  if (!pattern.test(mobile)) {
+    openAlert('번호를 확인하세요.');
+    return false;
+  }
+  return true;
 }
 
 export default function MyPageMember() {
   const history = useHistory();
   const profileState = useProfileState();
 
-  console.log(history);
+  const { openAlert, closeModal, alertMessage, alertVisible } = useAlert();
 
-  const [ myForm, setMyForm ] = useState(initialState);
+  // 수정모드
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const [ myForm, setMyForm ] = useState({...initialState});
+  const [ initForm, setInitForm ] = useState({...initialState});
   const [ error, setError ] = useState([]);
 
   // 우편번호 찾기
@@ -80,7 +99,6 @@ export default function MyPageMember() {
   const bindReceiverAddress = selectedAddress => {
     if (!selectedAddress) return;
     const { address, zipCode } = selectedAddress;
-    // window.open
     setMyForm(prev => ({
       ...prev,
       homezipcode: zipCode,
@@ -92,10 +110,29 @@ export default function MyPageMember() {
   const [repasswordVisible, setRepasswordVisible] = useState(false);
   // 휴대폰 번호 변경하기
   const [remobileVisible, setRemobileVisible] = useState(false);
+  const [needsResend, setNeedsResend] = useState(false);
+  const [remobileReset, setRemobileReset] = useState(false);
   const handleRemobileResult = result => console.log(result);
+
+  const remobile = () => {
+    if (validateMobile(myForm.mobile, openAlert)) {
+      setRemobileVisible(true);
+      setNeedsResend(true);
+    }
+  };
+
+  const resend = () => {
+    setRemobileReset(true);
+  }
+
+  const noticeEditMode = () => {
+    if (isEditMode) return true;
+    openAlert('회원정보 수정 버튼을 클릭하세요.');
+    return false;
+  }
   
   
-  const onClickHandler = (event, type) => {
+  const handleClick = (event, type) => {
     event.preventDefault();
     switch(type) {
       case 'password':
@@ -105,22 +142,19 @@ export default function MyPageMember() {
         history.push({ pathname: '/my-page/withdraw' })
         break;
       case 'name':
-        history.push({ pathname: '/my-page/rename' });
+        noticeEditMode() && history.push({ pathname: '/my-page/rename' });
         break;
       case 'mobile':
-        if (!myForm.mobile) {
-          alert('번호를 입력하세요.');
-          return;
-        }
-        if (!myForm.mobile.match(/^\d{2,3}\d{3,4}\d{4}$/)) {
-          alert('번호를 확인하세요.');
-          return;
-        }
-        setRemobileVisible(true);
+        needsResend ? resend() : noticeEditMode() && remobile();
         break;
       case 'address':
-        // setVisibleFlag(prev => ({ ...prev, address: true }))
-        setFindAddressVisible(true);
+        noticeEditMode() && setFindAddressVisible(true);
+        break;
+      case 'cancle':
+        setIsEditMode(false);
+        setRemobileVisible(false);
+        setNeedsResend(false);
+        setMyForm(() => ({ ...initForm }));
         break;
         default:
           return;
@@ -132,7 +166,7 @@ export default function MyPageMember() {
       ...prev,
       [name]: value
     }))
-  }
+  };
 
   
   const handleSubmit = event => {
@@ -140,7 +174,8 @@ export default function MyPageMember() {
   
     console.log(myForm);
     // @TODO sns 와 email 체크박스는 따로 관리해야 함
-  }
+    setIsEditMode(false);
+  };
 
   const addErrorType = type => setError(prev => {
     if(prev.some(error => error === type)) return;
@@ -148,16 +183,24 @@ export default function MyPageMember() {
   });
   const removeErrorType = type => setError(prev => prev.filter(error => error !== type));
 
+  // 초기화
   useEffect(() => {
     setMyForm(prev => ({
       ...prev,
       ...profileState.my
-    }))
+    }));
+    setInitForm(prev => ({
+      ...prev,
+      ...profileState.my
+    }));
   }, [profileState.my])
 
     return (
       <>
         <SEOHelmet title={"구매상담 이용약관 동의"} />
+        {
+          alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>
+        }
         <div className="contents mypage">
           <div className="member_wrap">
             <div className="common_head first_tit">
@@ -167,14 +210,14 @@ export default function MyPageMember() {
             <form onSubmit={ handleSubmit }>
               <div className="member_info">
                 <div className="member_withdrawal">
-                  <a href="#none" className="button button_secondary button-s" onClick={ event => onClickHandler(event, 'password') }>비밀번호 변경</a>
+                  <a href="#none" className="button button_secondary button-s" onClick={ event => handleClick(event, 'password') }>비밀번호 변경</a>
                   {
                     repasswordVisible &&
                       <Repassword 
                         setVisible={setRepasswordVisible}
                       />
                   }
-                  <a href="#none" className="button button_secondary button-s" onClick={ event => onClickHandler(event, 'withdrawal') }>회원탈퇴</a>
+                  <a href="#none" className="button button_secondary button-s" onClick={ event => handleClick(event, 'withdrawal') }>회원탈퇴</a>
                 </div>
                 <div className="member_info_list">
                   <div className="member_list name">
@@ -189,19 +232,19 @@ export default function MyPageMember() {
                               type="text" 
                               id="member_name" 
                               name="firstname" 
-                              className="inp disabled" 
+                              className={`inp ${!isEditMode && 'disabled'}`}
                               value={ myForm.firstname }  
                               maxLength={50} 
-                              autoComplete={ !(history.location.state?.rename) && 'off' } 
+                              autoComplete={ (!(history.location.state?.rename) || !isEditMode) && 'off' } 
                               onChange={handleChange}
-                              disabled={ !(history.location.state?.rename) && 'disabled' }
+                              disabled={ (!(history.location.state?.rename) || !isEditMode) && 'disabled' }
                             />
                             <span className="focus_bg" />
                           </div>
                           <p className="name_desc">※ 개명(이름 변경)한 경우 ‘이름 변경’ 버튼을 눌러주세요.</p>
                         </div>
                         <div className="btn_box">
-                          <button className="button change_btn" type="button" onClick={ event => onClickHandler(event, 'name') }>이름변경</button>
+                          <button className="button change_btn" type="button" onClick={ event => handleClick(event, 'name') }>이름변경</button>
                         </div>
                       </div>
                     </div>
@@ -218,27 +261,35 @@ export default function MyPageMember() {
                               type="text" 
                               id="member_tel" 
                               name="mobile" 
-                              className="inp tel_number" 
+                              className={`inp tel_number ${!isEditMode && 'disabled'}`}
                               value={ myForm.mobile }
                               maxLength={11} 
                               autoComplete="off" 
                               placeholder=""
-                              onChange={handleChange} 
+                              onChange={handleChange}
+                              disabled={ !isEditMode && 'disabled' }
                             />
                             <span className="label">휴대폰 번호<span>(- 없이 입력하세요.)</span></span>
                             <span className="focus_bg" />
                           </div>
                         </div>
                         <div className="btn_box">
-                          <button className="button change_btn" type="button" onClick={ event => onClickHandler(event, 'mobile') }>인증번호 전송</button>
+                          <button 
+                            className="button change_btn" 
+                            type="button"
+                            onClick={ event => handleClick(event, 'mobile') }>{ needsResend ? '재전송' : '인증번호 전송' }</button>
                         </div>
                       </div>
                       {
                         remobileVisible 
                           && <MobileAuth 
                                 mobile={ myForm.mobile } 
+                                visible={remobileVisible}
                                 setVisible={ setRemobileVisible } 
                                 handleResult={ handleRemobileResult }
+                                setNeedsResend={setNeedsResend}
+                                remobileReset={remobileReset}
+                                setRemobileReset={setRemobileReset}
                               /> 
                       }
                     </div>
@@ -254,10 +305,10 @@ export default function MyPageMember() {
                             <input 
                               type="text" 
                               id="member_email" 
-                              className="inp disabled" 
+                              className={`inp ${ !isEditMode && 'disabled' }`} 
                               name="customerid"
                               value={ myForm.customerid } 
-                              disabled="disabled" 
+                              disabled={ !isEditMode && 'disabled' }
                               maxLength={50} 
                               onChange={handleChange}
                             />
@@ -279,10 +330,10 @@ export default function MyPageMember() {
                               type="text" 
                               id="member_birth" 
                               name="birthday"
-                              className="inp disabled" 
+                              className={`inp ${ !isEditMode && 'disabled' }`} 
                               value={getStrDate(myForm.birthday)} 
                               onChange={handleChange}
-                              disabled="disabled" 
+                              disabled={ !isEditMode && 'disabled' }
                               maxLength={8} 
                             />
                             <span className="focus_bg" />
@@ -304,7 +355,7 @@ export default function MyPageMember() {
                                 type="text" 
                                 id="member_grade"
                                 name="custgrade"
-                                className="inp disabled" 
+                                className={`inp disabled`} 
                                 value={ memberGrade[myForm.custgrade].label }
                                 disabled="disabled" 
                                 maxLength={20} 
@@ -327,7 +378,7 @@ export default function MyPageMember() {
                               type="text" 
                               id="member_addr"
                               name="homezipcode"
-                              className="inp disabled" 
+                              className={`inp disabled`} 
                               value={ myForm.homezipcode }
                               disabled="disabled" 
                               maxLength={50}
@@ -340,7 +391,7 @@ export default function MyPageMember() {
                           <button 
                             className="button change_btn" 
                             type="button" 
-                            onClick={ event => onClickHandler(event, 'address') }
+                            onClick={ event => handleClick(event, 'address') }
                             >우편번호찾기
                           </button>
                           {
@@ -359,7 +410,7 @@ export default function MyPageMember() {
                               type="text" 
                               id="member_addr2" 
                               name="homeaddress1"
-                              className="inp disabled" 
+                              className={`inp disabled`} 
                               value={ myForm.homeaddress1 }
                               onChange={handleChange}
                               disabled="disabled" 
@@ -374,10 +425,10 @@ export default function MyPageMember() {
                               type="text" 
                               id="member_addr3" 
                               name="homeaddress2"
-                              className="inp disabled" 
+                              className={`inp ${ !isEditMode && 'disabled' }`} 
                               value={ myForm.homeaddress2 } 
                               onChange={handleChange}
-                              disabled="disabled" 
+                              disabled={ !isEditMode && 'disabled' }
                               maxLength={50} 
                             />
                             <span className="focus_bg" />
@@ -400,6 +451,7 @@ export default function MyPageMember() {
                                 type="checkbox" 
                                 name="email_in" 
                                 className="check_all" 
+                                disabled={ !isEditMode && 'disabled' }
                               />
                               <span className="toggle" />
                             </label>
@@ -407,7 +459,12 @@ export default function MyPageMember() {
                           <div className="switchbtn">
                             <span className="switch_tit">SMS 수신</span>
                             <label className="switch">
-                              <input type="checkbox" name="sms_in" className="check_all" />
+                              <input 
+                                type="checkbox" 
+                                name="sms_in" 
+                                className="check_all" 
+                                disabled={ !isEditMode && 'disabled' }
+                              />
                               <span className="toggle" />
                             </label>
                           </div>
@@ -421,7 +478,23 @@ export default function MyPageMember() {
         {/* // 로봇이 아닙니다. */}
       </div>{/* // member_info_list */}
       <div className="btn_article">
-        <button className="button button_positive button-full popup_comm_btn" data-popup-name="modify_pw_chk" type="submit">회원정보 수정</button>
+          {
+            isEditMode ? 
+              (
+                <>
+                  <button className="button button_negative" type="button" onClick={ event => handleClick(event, 'cancle') }>취소</button>
+                  <button className="button button_positive" type="submit">저장</button>
+                </>
+              )
+              :
+            <button 
+              className="button button_positive button-full popup_comm_btn" 
+              data-popup-name="modify_pw_chk" 
+              type="button"
+              onClick={ () => setIsEditMode(true) }
+            >회원정보 수정</button>
+          }
+        
       </div>
     </div>
   </form>

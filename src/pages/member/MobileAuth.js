@@ -4,7 +4,7 @@ import Alert from "../../components/common/Alert";
 import { useAlert } from "../../hooks";
 import { timeFormat } from "../../utils/utils";
 
-export default function MobileAuth({ mobile, setVisibel, handleResult }) {
+export default function MobileAuth({ mobile, setVisible, handleResult, remobileReset, setRemobileReset, setNeedsResend }) {
   
   const { alertVisible, alertMessage, openAlert, closeModal } = useAlert();
 
@@ -18,22 +18,27 @@ export default function MobileAuth({ mobile, setVisibel, handleResult }) {
 
 
   const _sendSMS = async () => {
-    //@todo type 변경하기
-    const response = await sendSMS(mobile, 'JOIN');
+    const response = await sendSMS(mobile, 'CHANGE_MOBILE_NO');
     if (response.status === 200) {
       setAuthSent(true);
+      setRemobileReset(false);
     } else {
       openAlert(response.data.message);
     }
   };
 
   const _verifySMS = async (phoneNum, code) => {
-    //@todo type 변경하기
-    const response = await verifySMS(phoneNum, code, 'JOIN');
-    if (response.status === 200) {
+    const response = await verifySMS(phoneNum, code, 'CHANGE_MOBILE_NO');
+    
+    if (response.data.result) {
       //인증성공
       setAuthCheck(true);
-      openAlert('인증되었습니다.');
+      openAlert('인증되었습니다.', () => {
+        setVisible(false);
+        setRemobileReset(false);
+        setNeedsResend(false);
+        handleResult(true);
+      });
     } else {
       openAlert(response.data.message);
     }
@@ -46,26 +51,28 @@ export default function MobileAuth({ mobile, setVisibel, handleResult }) {
     setExpireAt(target);
 
     //인증번호 발송
-    // _sendSMS();
+    _sendSMS();
   }, [])
 
-  useEffect(() => setTimer(), [setTimer])
+  useEffect(() => !authSent && setTimer(), [])
+  useEffect(() => {
+    (remobileReset) && setTimer();
+  }, [remobileReset])
 
   useEffect(() => {
-    if (authSent === true) {
-      if (time > 0) {
-        const Counter = setInterval(() => {
-          const gap = Math.floor((new Date(expireAt).getTime() - new Date().getTime()) / 1000);
-          setTime(gap);
-        }, 1000);
-        return () => clearInterval(Counter);
-      }
+    if (!authSent) return;
+
+    if (time > 0) {
+      const counter = setInterval(() => {
+        const diff = Math.floor((new Date(expireAt).getTime() - new Date().getTime()) / 1000);
+        setTime(diff);
+      }, 1000);
+      return () => clearInterval(counter);
     }
   }, [expireAt, time, authSent]);
 
-  const handleChange = ({ target }) => {
-    setAuthCode(target.value);
-  }
+  const handleChange = ({ target }) => setAuthCode(target.value);
+
   const handleVerify = () => {
     if (!authCheck) {
       if (!time) {
@@ -106,7 +113,7 @@ export default function MobileAuth({ mobile, setVisibel, handleResult }) {
         <button 
           style={{ cursor: 'pointer' }} 
           className={`button btn_primary ${ authCode && 'on' }`} 
-          disabled={ authCode && 'disabled' } 
+          disabled={ !authCode && 'disabled' } 
           type="button"
           onClick={ handleVerify }
         >인증</button>
