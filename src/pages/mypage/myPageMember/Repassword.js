@@ -30,12 +30,12 @@ const initialState = {
   valNewPassword: '',
 };
 
-const labels = Object.keys(initialState);
+// const labels = Object.keys(initialState);
 
 export default function Repassword({ setVisible }) {
   const history = useHistory();
   const { profile: { memberId }} = useProfileState();
-  const profileDispatch = useProfileState();
+  // const profileDispatch = useProfileState();
   
   const close = () => setVisible(false);
   
@@ -50,17 +50,21 @@ export default function Repassword({ setVisible }) {
     }));
   };
 
-  const isValid = () => {
-    let isEmpty = true;
-    labels.forEach(label => {
-      if (!state[label]) {
-        openAlert(errorMsg.empty[label]);
-        throw new Error('EMPTY_VALUE');
-      }
-      isEmpty = false;
-    });
 
-    if (isEmpty) return false;
+  const isValid = () => {
+
+    if (!state.password) {
+      openAlert(errorMsg.empty.password);
+      return false;
+    }
+    if (!state.newPassword) {
+      openAlert(errorMsg.empty.newPassword);
+      return false;
+    }
+    if (!state.valNewPassword) {
+      openAlert(errorMsg.empty.valNewPassword);
+      return false;
+    }
 
     const pattern = /^(?=.*[a-zA-Z])(?=.*[0-9]).{12,15}$/;
     if (newPassword !== valNewPassword) {
@@ -73,6 +77,7 @@ export default function Repassword({ setVisible }) {
       return false
     };
 
+    return true;
   };
 
   const isChanged = async () => {
@@ -101,7 +106,8 @@ export default function Repassword({ setVisible }) {
 
   const handleSubmit = async event => {
     event.preventDefault();
-
+    event.stopPropagation();
+    
     if (!isValid() || !(await isChanged())) return;
 
     // fetchProfile(profileDispatch);
