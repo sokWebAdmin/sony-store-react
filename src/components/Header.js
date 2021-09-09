@@ -14,6 +14,12 @@ import Search from './Search';
 
 //context
 import GlobalContext from '../context/global.context';
+import {
+  useHeaderDispatch,
+  useHeaderState,
+  openSideBar,
+  closeSideBar,
+} from '../context/header.context';
 
 //utils
 import { useHistory } from 'react-router-dom';
@@ -28,7 +34,9 @@ export default function Header() {
   const history = useHistory();
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
   const { profile } = useProfileState();
+  const { isSiderbarOpen } = useHeaderState();
   const profileDispatch = useProileDispatch();
+  const headerDispatch = useHeaderDispatch();
 
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
@@ -36,14 +44,15 @@ export default function Header() {
 
   const routePushAndClose = (url) => {
     history.push(url);
-    setMobileSideBarOpen(false);
+    // setMobileSideBarOpen(false);
+    closeSideBar(headerDispatch);
   };
 
   return (
     <>
       <header
         id="header"
-        className={`header ${sideBarOpen == true && 'header--active'}`}
+        className={`header ${isSiderbarOpen === true && 'header--active'}`}
       >
         <div className="header__wrapper">
           <h1 className="header__logo">
@@ -85,7 +94,7 @@ export default function Header() {
               type="button"
               className="btn btn__mo btn__menu__open"
               onClick={() => {
-                setMobileSideBarOpen(true);
+                openSideBar(headerDispatch);
               }}
             >
               <img src={menu} alt="메뉴 열기" />
@@ -94,7 +103,7 @@ export default function Header() {
               type="button"
               className="btn btn__mo btn__mo__hidden btn__menu__close"
               onClick={() => {
-                setMobileSideBarOpen(false);
+                closeSideBar(headerDispatch);
               }}
             >
               <img src={close} alt="메뉴 닫기" />
