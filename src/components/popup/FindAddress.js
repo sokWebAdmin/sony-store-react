@@ -33,6 +33,8 @@ const FindAddress = ({ setVisible, setAddress }) => {
   const submit = event => {
 
     event.preventDefault();
+    event.stopPropagation();
+    
     setPage(getDefaultPage());
   };
 

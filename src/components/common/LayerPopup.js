@@ -29,7 +29,7 @@ const LayerPopup = ({ children, onClose, className, size = 'ms', customButton })
           <div className="pop_cont scrollH">
             {children}
           </div>
-          <button type="button" className="ico_x closed" title="팝업창 닫기" onClick={close}>
+          <button type="button" style={{ cursor: 'pointer' }} className="ico_x closed" title="팝업창 닫기" onClick={close}>
             <span>팝업창 닫기</span>
           </button>
         </div>

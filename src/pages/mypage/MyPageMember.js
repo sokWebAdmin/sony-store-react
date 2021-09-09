@@ -43,9 +43,7 @@ const initialState = {
   mobileflag: '',
   servicesite: {
     news: 'N' // 이벤트 프로모션 알림 메일 동의 여부
-  }, //nesw 는 email 알림만 있는 것 같은데 확인 필요
-  password : '',
-  newPassword: '',
+  },
   homeaddress1: '', // 주소
   homeaddress2: '', // 상세주소
   homezipcode: '', // 우편번호
@@ -105,7 +103,7 @@ export default function MyPageMember() {
   const [remobileVisible, setRemobileVisible] = useState(false);
   const [needsResend, setNeedsResend] = useState(false);
   const [remobileReset, setRemobileReset] = useState(false);
-  const handleRemobileResult = result => console.log(result);
+  const handleRemobileResult = result => !result && setMyForm(prev => ({ ...prev, mobile: '' }));
   const remobile = () => {
     if (validateMobile(myForm.mobile, openAlert)) {
       setRemobileVisible(true);
@@ -195,12 +193,11 @@ export default function MyPageMember() {
     }
   };
 
-  const emptyRequired = request => {
-    return required.some(r => !request[r]);
-  }
+  const emptyRequired = request => required.some(r => !request[r]);
+
   const validate = request => {
     
-    if (emptyRequired) {
+    if (emptyRequired(request)) {
       openAlert('회원정보 수정을 완료해주세요.');
       return false;
     }
@@ -226,6 +223,8 @@ export default function MyPageMember() {
 
     if (request) {
       console.log(request);
+      
+      
       const ret = await modifyMy(request);
       console.log(ret);
 
