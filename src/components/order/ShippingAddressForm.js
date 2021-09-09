@@ -33,9 +33,8 @@ const ShippingAddressForm = prop => {
 
   // components state
   const [specifyDelivery, setSpecifyDelivery] = useState(false); // bool
-  const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(''); // string
-                                                                      // date
-                                                                      // format
+  const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(''); // Date
+                                                                      // object
 
   useEffect(() => console.log(specifyDeliveryDate), [specifyDeliveryDate]);
 

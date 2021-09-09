@@ -34,7 +34,7 @@ const DatePicker = prop => {
 
   const bindInstance = () => {
     datePicker.instance.on('change',
-      () => bindDate(getStrYMDHMSS(datePicker.instance.getDate())));
+      () => bindDate(datePicker.instance.getDate()));
   };
 
   useEffect(
