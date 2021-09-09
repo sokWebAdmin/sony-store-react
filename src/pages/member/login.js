@@ -130,7 +130,7 @@ export default function Login() {
                         <button type="button" title={`${isPwVisible === true ? "비밀번호 숨김" : "비밀번호 표시"}`} onClick={()=>{
                           setPwVisible(!isPwVisible);
                         }}>
-                          <i className="ico ico_eyes" />
+                          <i className={isPwVisible ? 'ico_eyes_open' : 'ico ico_eyes'} />
                         </button>
                       </div>
                     </label>
@@ -182,7 +182,7 @@ export default function Login() {
                     <label className="inp_desc" htmlFor="loginumber">
                       <input type="password" id="loginPw_nonmember" className="inp" placeholder=" " />
                       <span className="label">비밀번호</span>
-                      <div className="eyes"><button type="button" title="비밀번호 숨김"><i className="ico ico_eyes" /></button></div>
+                      <div className="eyes"><button type="button" title="비밀번호 숨김"><i className={isPwVisible ? 'ico_eyes_open' : 'ico ico_eyes'} /></button></div>
                       <span className="focus_bg" />
                     </label>
                   </div>

@@ -282,7 +282,7 @@ export default function JoinStep() {
                       <div className="eyes">
                         <button type="button" title="비밀번호 숨김" onClick={() => {
                           setPwVisible(!isPwVisible);
-                        }}><i className="ico ico_eyes" /></button>
+                        }}><i className={isPwVisible ? 'ico_eyes_open' : 'ico ico_eyes'} /></button>
                       </div>
                     </label>
                   </div>
@@ -301,7 +301,7 @@ export default function JoinStep() {
                       <div className="eyes">
                         <button type="button" title="비밀번호 숨김" onClick={() => {
                           setConfirmVisible(!isConfirmVisible);
-                        }}><i className="ico ico_eyes" /></button>
+                        }}><i className={isPwVisible ? 'ico_eyes_open' : 'ico ico_eyes'} /></button>
                       </div>
                     </label>
                   </div>
