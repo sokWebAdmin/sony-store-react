@@ -42,6 +42,11 @@ export default function AuthPassword({ setVisible, authResult }) {
     close();
   };
 
+  const handleLogin = event => {
+    event.preventDefault();
+    
+  }
+
   const handleClick = type => {
     switch(type) {
       case 'cancle':
@@ -96,8 +101,7 @@ export default function AuthPassword({ setVisible, authResult }) {
               <OpenLogin
                 message="SNS 계정으로 회원 인증"
                 title="가입하신 SNS 계정으로 회원 인증을 해주세요."
-                goHome={false}
-                loginResult={ handleResult }
+                customCallback={ handleLogin }
               />
             </div>
             <div className="guide_list">
