@@ -2,6 +2,14 @@
   position: relative;
   z-index: 1;
 
+  .view_date_input {
+    font-weight: normal !important;
+
+    &:disabled {
+      background-color: #e5e5e5 !important;
+    }
+  }
+
   td.tui-calendar-date {
     vertical-align: middle;
   }

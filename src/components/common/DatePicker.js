@@ -31,8 +31,8 @@ const DatePicker = () => {
   return (
     <div className="date_picker_wrapper">
       <div className="tui-datepicker-input tui-datetime-input tui-has-focus">
-        <input type="text" id="inputIdTest" className="inp"
-               ref={datePickerInput} />
+        <input type="text" className="view_date_input"
+               ref={datePickerInput} disabled />
         <span className="tui-ico-date"></span>
       </div>
       <div ref={wrapper}></div>
