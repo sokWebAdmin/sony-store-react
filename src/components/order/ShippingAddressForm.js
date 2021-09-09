@@ -32,13 +32,15 @@ const ShippingAddressForm = prop => {
   const [findAddressVisible, setFindAddressVisible] = useState(false);
 
   // components state
-  const [specifyDelivery, setSpecifyDelivery] = useState(false);
+  const [specifyDelivery, setSpecifyDelivery] = useState(false); // bool
+  const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(false); // bool
+
+  useEffect(() => console.log(specifyDeliveryDate), [specifyDeliveryDate]);
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
   const { shipping, setShipping, orderer } = prop;
-  // TODO. 배송일자 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
 
   const bindReceiverAddress = selectedAddress => {
     if (!selectedAddress) {
@@ -285,7 +287,9 @@ const ShippingAddressForm = prop => {
           <div className="acc_group">
             <div className="acc_inp">
               <DatePicker
+                style={{ display: specifyDelivery ? 'block' : 'none' }}
                 disabled={!specifyDelivery}
+                bindDate={setSpecifyDeliveryDate}
                 option={{
                   selectableRanges: [[new Date(), new Date(2999, 12, 31)]],
                 }}

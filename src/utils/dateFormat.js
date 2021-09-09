@@ -1,13 +1,10 @@
-import moment, { Moment, MomentInput, unitOfTime } from 'moment'; // eslint-disable-line
-import { StartAndEndYmdHm } from '@/types';
-import { OptionData } from '@/helpers/type';
-import { DEFAULT_TIME_RANGE } from '@/components/common/datepicker/dateRange';
+import moment from 'moment'; // eslint-disable-line
 
 export const getUnitDigitStr = (num) => {
   return num < 10 ? `0${num}` : `${num}`;
 };
 
-export function changeDateFormat(time, format) {
+export function changeDateFormat (time, format) {
   if (typeof time === 'string' && time === '') {
     return moment().format(format);
   }
@@ -58,10 +55,8 @@ export function getStrYMDHM(date) {
   return moment(date).format('YYYY-MM-DD HH:mm');
 }
 
-export function addDay(date) {
-  return moment(date)
-    .add(days, 'days')
-    .format('YYYY-MM-DD');
+export function addDay (date, days) {
+  return moment(date).add(days, 'days').format('YYYY-MM-DD');
 }
 
 export function addMonth(date, months) {
