@@ -67,7 +67,7 @@ export default function OrderList() {
 
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'주문/배송내역'} />
       <div className="contents mypage">
         <div className="container">
           <div className="content">
@@ -143,7 +143,10 @@ export default function OrderList() {
                           productName={orderProduct.productName}
                           optionTitle={orderProduct.optionTitle}
                           orderCnt={orderProduct.orderCnt}
-                          orderStatusTypeLabel={orderProduct.orderStatusTypeLabel}
+                          orderStatusType={orderProduct.orderStatusType}
+                          orderStatusTypeLabel={
+                            orderProduct.orderStatusTypeLabel
+                          }
                           key={orderProduct.orderNo}
                         />
                       ))}

@@ -13,8 +13,17 @@ export default function OrderListItem({
   productName,
   optionTitle,
   orderCnt,
+  orderStatusType,
   orderStatusTypeLabel,
 }) {
+  const showOrderCancel = (orderStatusType) => {
+    return [
+      'DEPOSIT_WAIT',
+      'PAY_DONE',
+      'DELIVERY_PREPARE',
+      'DELIVERY_ING',
+    ].includes(orderStatusType);
+  };
   return (
     <div className="col_table_row">
       <div className="col_table_cell order">
@@ -39,9 +48,11 @@ export default function OrderListItem({
       </div>
       <div className="col_table_cell order">
         <span className="order_status">{orderStatusTypeLabel}</span>
-        <button type="button" className="button button_negative button-s">
-          주문취소
-        </button>
+        {showOrderCancel(orderStatusType) && (
+          <button type="button" className="button button_negative button-s">
+            주문취소
+          </button>
+        )}
       </div>
     </div>
   );
