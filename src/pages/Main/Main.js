@@ -52,12 +52,12 @@ export default function Main() {
 
   //1. 배너 노출 api
   const getBanner = useCallback(async () => {
-    try{
+    try {
       const {data} = await loadBanner('000')
       getNames(data[0]?.accounts)
       debugger
       setBannerInfo(data[0]?.accounts)
-    }catch (e){
+    } catch (e){
       console.error(e)
     }
   }, []);
@@ -132,7 +132,7 @@ export default function Main() {
                           }
                       }}
                     >
-                <Swiper className="swiper-wrapper"
+                  {bannerInfo.length > 0 && <Swiper className="swiper-wrapper"
                         onSwiper={setTopSwiper}
                         resizeObserver={true}
                         observer={true}
@@ -229,7 +229,7 @@ export default function Main() {
                     {/*    <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>*/}
                     {/*  </div>*/}
                     {/*</SwiperSlide>*/}
-                  </Swiper>
+                  </Swiper>}
                   <div className="swiper-pagination"></div>
                 </div>
                 {/* <!-- // key visual --> */}
