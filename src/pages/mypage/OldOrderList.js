@@ -6,8 +6,8 @@ import SEOHelmet from '../../components/SEOHelmet';
 //api
 
 //css
-// import '../../assets/scss/contents.scss';
-// import '../../assets/scss/mypage.scss';
+import '../../assets/scss/contents.scss';
+import '../../assets/scss/mypage.scss';
 
 export default function OldOrderList() {
   //TODO: 스타일 전부 하나씩 scss 파일로 변환 해야하나?>
