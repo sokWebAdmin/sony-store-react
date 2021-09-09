@@ -4,6 +4,7 @@ import { getOldOrders } from '../../api/sony/order';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
+import { Link } from 'react-router-dom';
 
 //api
 
@@ -267,14 +268,14 @@ export default function OrderList() {
               </ul>
             </div>
             <div className="ico_box_link">
-              <a className="box_link_inner ico_type3">
+              <a href="https://www.sony.co.kr/electronics/support" className="box_link_inner ico_type3" target="_blank">
                 <div className="txt_box">
                   <p className="tit">고객지원 센터</p>
                   <p className="txt">제품 서비스 및 보증기간을 확인하세요!</p>
                 </div>
               </a>
               {/* TODO: svg 파일 누락됨 문의중 https://nhnent.dooray.com/project/posts/3089165614751281840 */}
-              <a
+              <Link
                 href="/dist/html/mypage/oldOrderList.html"
                 class="box_link_inner ico_type4"
               >
@@ -284,7 +285,7 @@ export default function OrderList() {
                     이전 소니스토어에서 구매하신 내역을 확인하세요!
                   </p>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
