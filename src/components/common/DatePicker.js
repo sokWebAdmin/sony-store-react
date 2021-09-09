@@ -11,7 +11,7 @@ const datePicker = {
   instance: null,
 };
 
-const createInstance = (wrapperHTMLElement, inputHTMLElement) => {
+const createInstance = (wrapperHTMLElement, inputHTMLElement, option) => {
   datePicker.instance = new TuiDatePicker(wrapperHTMLElement, {
     date: new Date(),
     language: 'ko',
@@ -19,20 +19,18 @@ const createInstance = (wrapperHTMLElement, inputHTMLElement) => {
       element: inputHTMLElement,
       format: 'yyyy-MM-dd',
     },
+    selectableRanges: option?.selectableRanges,
   });
 };
 
 const DatePicker = prop => {
-  const { disabled } = prop;
+  const { disabled, option } = prop;
 
   const datePickerInput = useRef();
   const wrapper = useRef();
 
-  useEffect(() => createInstance(wrapper.current, datePickerInput.current), []);
-
-  function forParent (run) {
-    console.log('run :', run);
-  }
+  useEffect(
+    () => createInstance(wrapper.current, datePickerInput.current, option), []);
 
   return (
     <div className="date_picker_wrapper">

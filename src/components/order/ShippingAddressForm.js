@@ -30,6 +30,8 @@ const ShippingAddressForm = prop => {
 
   // popup state
   const [findAddressVisible, setFindAddressVisible] = useState(false);
+
+  // components state
   const [specifyDelivery, setSpecifyDelivery] = useState(false);
   const specifyToggle = value => setSpecifyDelivery(value !== 'specify');
 
@@ -281,7 +283,12 @@ const ShippingAddressForm = prop => {
           </div>
           <div className="acc_group">
             <div className="acc_inp">
-              <DatePicker disabled={specifyDelivery} />
+              <DatePicker
+                disabled={specifyDelivery}
+                option={{
+                  selectableRanges: [[new Date(), new Date(2999, 12, 31)]],
+                }}
+              />
             </div>
           </div>
           <ul className="list_dot">
