@@ -41,3 +41,10 @@ export const getDormancy = () => {
   return request("profile/dormancy", "get", null, null);
 };
 
+export const deleteProfile = (reason) => {
+  return request('profile', 'delete', {reason})
+}
+
+export const postCheckPassword = (password) => {
+  return request('profile/check-password', 'post', null, {password})
+}
