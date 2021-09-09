@@ -231,6 +231,7 @@ export default function MyPageMember() {
 
   // 초기화
   useEffect(() => {
+    console.log(profileState);
     setMyForm(prev => ({
       ...prev,
       ...profileState.my,
@@ -244,7 +245,7 @@ export default function MyPageMember() {
       sms: profileState.my?.sms === 'Y',
       email: profileState.my?.servicesite.news === 'Y',
     })
-  }, [profileState.my])
+  }, [profileState])
 
     return (
     <>
