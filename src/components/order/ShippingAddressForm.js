@@ -9,12 +9,14 @@ import FindAddress from '../../components/popup/FindAddress';
 
 // utils
 import { handleChange, setObjectState } from '../../utils/state';
+import { getStrYMDHMSS } from '../../utils/dateFormat';
 
 // const
 import { deliveryMemos } from '../../const/order';
 
 // stylesheet
 import '../../assets/scss/interaction/field.dynamic.scss';
+
 
 const receiverAddressMap = {
   // from: to
@@ -36,7 +38,8 @@ const ShippingAddressForm = prop => {
   const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(''); // Date
                                                                       // object
 
-  useEffect(() => console.log(specifyDeliveryDate), [specifyDeliveryDate]);
+  useEffect(() => console.log(getStrYMDHMSS(specifyDeliveryDate)),
+    [specifyDeliveryDate]);
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,

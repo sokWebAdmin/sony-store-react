@@ -7,9 +7,6 @@ import 'tui-date-picker/dist/tui-date-picker.css';
 // style
 import '../../assets/scss/partials/datePicker.scss';
 
-// utils
-import { getStrYMDHMSS } from '../../utils/dateFormat';
-
 const DatePicker = prop => {
   const { style, disabled, bindDate, option } = prop;
 
