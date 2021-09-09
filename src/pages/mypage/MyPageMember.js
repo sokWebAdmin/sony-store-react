@@ -28,7 +28,7 @@ function getStrDate(date, format = 'YYYY-MM-DD') {
   return moment(date).format(format);
 }
 
-const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
+const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY || '6LdoXFUcAAAAALtgWfChyS17dSHKwICv81fHgsA7';
 
 const initialState = {
   customerid : '',
