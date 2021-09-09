@@ -1,6 +1,5 @@
 import LayerPopup from "../../../components/common/LayerPopup";
 
-// @todo import 되지 않음
 import '../../../assets/scss/contents.scss';
 import '../../../assets/scss/partials/popup/repassword.scss';
 import { useState } from "react";
@@ -122,7 +121,7 @@ export default function Repassword({ setVisible }) {
     >
       { alertVisible && <Alert onClose={ closeModal }>{ alertMessage }</Alert> }
       <p className="pop_tit tit_inp">비밀번호 변경</p>
-      <div className="pop_cont_scroll">
+      <div className="pop_cont_scroll" style={{ height: '643px' }}>
         <form onSubmit={ handleSubmit }>
         <div className="form_zone">
           <div className="input_item">

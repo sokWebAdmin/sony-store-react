@@ -26,7 +26,7 @@ const LayerPopup = ({ children, onClose, className, size = 'ms', customButton })
       <div className="layer_mask" tabIndex="0" style={{ display: 'block' }}/>
       <div className={`popup_wrap size_${size} ${className}`} style={{ display: 'block' }}>
         <div className="pop_inner">
-          <div className="pop_cont">
+          <div className="pop_cont scrollH">
             {children}
           </div>
           <button type="button" className="ico_x closed" title="팝업창 닫기" onClick={close}>

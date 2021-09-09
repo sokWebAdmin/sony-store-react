@@ -215,19 +215,22 @@ export default function MyPageMember() {
   const handleSubmit = async event => {
     event.preventDefault();
 
-    const request = {
+    const request = validate({
       ...myForm,
       sms: active.sms ? 'Y' : 'N',
       servicesite: {
         ...myForm.servicesite,
         news: active.email ? 'Y' : 'N'
       }
-    };
-    console.log(request);
-    const ret = await modifyMy(validate(request));
-    console.log(ret);
+    });
 
-    setIsEditMode(false);
+    if (request) {
+      console.log(request);
+      const ret = await modifyMy(request);
+      console.log(ret);
+
+      setIsEditMode(false);
+    }
   };
 
   // 초기화
@@ -487,8 +490,8 @@ export default function MyPageMember() {
                           />
                           <span className="focus_bg" />
                         </div>
-                        <p className="name_desc">※ 주소는 사은품 및 기타 서비스를 제공받으실 때, 꼭 필요한 부분이므로 정확히 기입해 주시기 바랍니다.</p>
                       </div>
+                      <p className="name_desc">※ 주소는 사은품 및 기타 서비스를 제공받으실 때, 꼭 필요한 부분이므로 정확히 기입해 주시기 바랍니다.</p>
                     </div>
                   </div>
                 </div>
