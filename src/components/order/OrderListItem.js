@@ -8,6 +8,7 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderListItem({
   orderNo,
+  payType,
   orderYmdt,
   imageUrl,
   productName,
@@ -29,8 +30,8 @@ export default function OrderListItem({
     return ['DELIVERY_ING', 'DELIVERY_DONE'].includes(orderStatusType);
   };
 
-  const showRefundAccountInfo = (orderStatusType) => {
-    return ['CANCEL_DONE'].includes(orderStatusType);
+  const showRefundAccountInfo = (orderStatusType, payType) => {
+    return orderStatusType === 'CANCEL_DONE' && payType === 'CREDIT_CARD';
   };
 
   return (
@@ -63,6 +64,11 @@ export default function OrderListItem({
         {showDeliveryFind(orderStatusType) && (
           <button type="button" className="button button_negative button-s">
             배송조회
+          </button>
+        )}
+        {showRefundAccountInfo(orderStatusType, payType) && (
+          <button type="button" className="button button_negative button-s">
+            환불계좌정보
           </button>
         )}
       </div>

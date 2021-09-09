@@ -50,19 +50,14 @@ export default function OrderList() {
 
   useEffect(() => {
     getProfileOrders({ params: {} }).then((res) => {
-      console.log('res.data:', res.data);
       makeOrderProductsList(res.data);
-      // console.log('orderProducts:', orderProducts);
     });
   }, []);
 
   const makeOrderProductsList = (profileOrdersResponse) => {
-    console.log('profileOrdersResponse.items:', profileOrdersResponse.items);
     const newOrderProducts = profileOrdersResponse.items.flatMap((item) =>
       makeOrderProduct(item),
     );
-
-    console.log('newOrderProducts:', newOrderProducts);
 
     setOrderProducts(newOrderProducts);
   };
@@ -150,6 +145,7 @@ export default function OrderList() {
                       {orderProducts.map((orderProduct) => (
                         <OrderListItem
                           orderNo={orderProduct.orderNo}
+                          payType={orderProduct.payType}
                           orderYmdt={orderProduct.orderYmdt}
                           imageUrl={orderProduct.imageUrl}
                           productName={orderProduct.productName}
