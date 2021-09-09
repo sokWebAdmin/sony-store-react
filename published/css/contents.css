@@ -3761,6 +3761,10 @@
   background-image: url("../../images/member/bg_locked2.svg")
 }
 
+.accounts.active {
+  background-image: url("../../images/member/bg_locked3.svg")
+}
+
 .accounts_title {
   font-weight: 700;
   font-size: 40px;
