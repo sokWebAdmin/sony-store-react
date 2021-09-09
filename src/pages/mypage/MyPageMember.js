@@ -195,14 +195,15 @@ export default function MyPageMember() {
     }
   };
 
+  const emptyRequired = request => {
+    return required.some(r => !request[r]);
+  }
   const validate = request => {
     
-    required.forEach(r => {
-      if (!request[r]) {
-        openAlert('회원정보 수정을 완료해주세요.');
-        throw new Error('EMPTY_VALUE');
-      }
-    })
+    if (emptyRequired) {
+      openAlert('회원정보 수정을 완료해주세요.');
+      return false;
+    }
 
     if (!captcha) {
       openAlert(`reCAPTCHA('로봇이 아닙니다.') 인증이 필요합니다.`);
