@@ -2,12 +2,19 @@ import { useEffect, useState, useContext, useMemo, useRef } from 'react';
 
 // global context
 import { useMallState } from '../../context/mall.context';
+import { toCurrencyString } from '../../utils/unit';
 
 // 배송지 정보
-const DiscountForm = prop => {
+const DiscountForm = ({ paymentInfo }) => {
   const { accumulationConfig } = useMallState();
 
-  const pointUnit = accumulationConfig?.accumulationUnit || 'M';
+  const pointUnit = accumulationConfig?.accumulationUnit || 'M'; // 이건 빈 값이 있어서
+                                                                 // falsy 검사
+                                                                 // 해야함
+
+  const accumulationAmt = useMemo(
+    () => paymentInfo?.accumulationAmt ? toCurrencyString(
+      paymentInfo.accumulationAmt) : 0);
 
   return (
     <>
@@ -53,7 +60,7 @@ const DiscountForm = prop => {
                 type="button">모두 사용
               </button>
               <span
-                className="my_point">(<em>800,000 {pointUnit}</em> 보유)</span>
+                className="my_point">(<em>{accumulationAmt} {pointUnit}</em> 보유)</span>
             </div>
           </div>
           <p className="membership_info">* 멤버십 마일리지는 최소

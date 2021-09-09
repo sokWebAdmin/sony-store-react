@@ -24,6 +24,7 @@ const OrderStep1 = ({ location }) => {
   const { isLogin } = useContext(GlobalContext);
 
   const [deliveryGroups, setDeliveryGroups] = useState([]);
+  const [paymentInfo, setPaymentInfo] = useState(null);
 
   // form data
   const [orderer, setOrderer] = useState({
@@ -60,8 +61,9 @@ const OrderStep1 = ({ location }) => {
       return getUrlParam('orderSheetNo') ?? -1;
     },
     async fetchOrderSheet (orderSheetNo) {
-
-      const { data: { deliveryGroups } } = await getOrderSheets(orderSheetNo);
+      const { data: { deliveryGroups, paymentInfo } } = await getOrderSheets(
+        orderSheetNo);
+      setPaymentInfo(paymentInfo);
       setDeliveryGroups(deliveryGroups);
     },
   }), []);
@@ -128,7 +130,8 @@ const OrderStep1 = ({ location }) => {
                       {isLogin &&
                       <Accordion title={'할인 정보'} defaultVisible={true}>
                         <DiscountForm discount={discount}
-                                      setDiscount={setDiscount} />
+                                      setDiscount={setDiscount}
+                                      paymentInfo={paymentInfo} />
                       </Accordion>}
 
                       <div className="acc_item on">
