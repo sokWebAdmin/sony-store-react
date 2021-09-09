@@ -6,7 +6,7 @@ import '../../../assets/scss/partials/popup/repassword.scss';
 import { useState } from "react";
 import _ from "lodash";
 import { modifyMy } from "../../../api/sony/member";
-import { fetchProfile, useProfileState } from "../../../context/profile.context";
+import { useProfileState } from "../../../context/profile.context";
 import { useHistory } from "react-router";
 import Alert from "../../../components/common/Alert";
 import { useAlert } from "../../../hooks";

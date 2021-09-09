@@ -18,14 +18,17 @@ export const useAlert = initial => {
 
   const [alertVisible, setAlertVisible] = useState(initial.visible);
   const [alertMessage, setAlertMessage] = useState(initial.message);
+  const [alertCloseFn, setAlertCloseFn] = useState(null);
 
-  const openAlert = (message) => {
+  const openAlert = (message, onClose) => {
     setAlertVisible(true);
     setAlertMessage(message);
+    onClose && setAlertCloseFn(onClose);
   };
 
   const closeModal = () => {
     setAlertVisible(false);
+    alertCloseFn?.();
   };
 
   return {
