@@ -222,13 +222,16 @@ export default function MyPageMember() {
     });
 
     if (request) {
-      console.log(request);
-      
       
       const ret = await modifyMy(request);
-      console.log(ret);
 
-      setIsEditMode(false);
+      if (ret.data.errorCode === '0000') {
+        setIsEditMode(false);
+      } else {
+        openAlert(ret.data.errorMessage);
+        console.log('에러 발생한 항목 : ', ret.data.description);
+        console.log(`에러 발생 항목 요청 값 : ${ ret.data.description } : ${ request[ret.data.description] }`);
+      }
     }
   };
 

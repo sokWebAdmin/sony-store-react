@@ -85,7 +85,7 @@ export default function Repassword({ setVisible }) {
     console.log(ret);
     
     if (ret.data.errorCode === '0000' && ret.data.body) {
-      openAlert(`비밀번호를 정상적으로 변경하였습니다. \n 소니스토어 메인 화면으로 이동합니다.`);
+      // await openAlert(`비밀번호를 정상적으로 변경하였습니다. \n 소니스토어 메인 화면으로 이동합니다.`);
       return true;
     }
 
@@ -110,7 +110,8 @@ export default function Repassword({ setVisible }) {
     if (!isValid() || !(await isChanged())) return;
 
     // fetchProfile(profileDispatch);
-    history.push('/');
+    openAlert(`비밀번호를 정상적으로 변경하였습니다. \n 소니스토어 메인 화면으로 이동합니다.`, () => history.push('/'))
+    // history.push('/');
   }
 
 
