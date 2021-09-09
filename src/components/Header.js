@@ -44,7 +44,6 @@ export default function Header() {
 
   const routePushAndClose = (url) => {
     history.push(url);
-    // setMobileSideBarOpen(false);
     closeSideBar(headerDispatch);
   };
 

@@ -35,7 +35,6 @@ export default function Gnb() {
 
   const routePushAndClose = (url) => {
     history.push(url);
-    // setMobileSideBarOpen(false);
     closeSideBar(headerDispatch);
   };
 
