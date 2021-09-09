@@ -48,7 +48,7 @@ export default function OrderList() {
 
     getProfileOrders({ params: {} }).then((res) => {
       console.log('res.data:', res.data)
-      makeOrderProductsList(res.data);
+      // makeOrderProductsList(res.data);
       // console.log('orderProducts:', orderProducts);
     });
   }, []);
