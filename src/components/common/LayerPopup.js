@@ -16,6 +16,7 @@ const LayerPopup = ({ children, onClose, className, size = 'ms' }) => {
     container.classList.add('modal');
     document.body.appendChild(container);
     return () => {
+      document.body.style.overflow = "auto";
       document.body.removeChild(container);
     }
   }, [container]);
