@@ -33,7 +33,6 @@ const ShippingAddressForm = prop => {
 
   // components state
   const [specifyDelivery, setSpecifyDelivery] = useState(false);
-  const specifyToggle = value => setSpecifyDelivery(value !== 'specify');
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
@@ -263,7 +262,8 @@ const ShippingAddressForm = prop => {
                          className="inp_radio"
                          id="delivery_radio1"
                          name="deliveryRadio"
-                         onChange={evt => specifyToggle(evt.target.value)}
+                         checked={!specifyDelivery}
+                         onChange={() => setSpecifyDelivery(false)}
                   />
                   <label htmlFor="delivery_radio1"
                          className="contentType">정상 배송</label>
@@ -273,7 +273,8 @@ const ShippingAddressForm = prop => {
                          className="inp_radio"
                          id="delivery_radio2"
                          value="specify"
-                         onChange={evt => specifyToggle(evt.target.value)}
+                         checked={specifyDelivery}
+                         onChange={() => setSpecifyDelivery(true)}
                          name="deliveryRadio" />
                   <label htmlFor="delivery_radio2"
                          className="contentType">출고일 지정</label>
@@ -284,7 +285,7 @@ const ShippingAddressForm = prop => {
           <div className="acc_group">
             <div className="acc_inp">
               <DatePicker
-                disabled={specifyDelivery}
+                disabled={!specifyDelivery}
                 option={{
                   selectableRanges: [[new Date(), new Date(2999, 12, 31)]],
                 }}
