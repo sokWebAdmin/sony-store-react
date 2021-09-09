@@ -276,7 +276,7 @@ export default function OrderList() {
               </a>
               {/* TODO: svg 파일 누락됨 문의중 https://nhnent.dooray.com/project/posts/3089165614751281840 */}
               <Link
-                href="/dist/html/mypage/oldOrderList.html"
+                to="/my-page/old-order-list"
                 class="box_link_inner ico_type4"
               >
                 <div class="txt_box">
