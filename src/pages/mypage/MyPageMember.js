@@ -12,7 +12,6 @@ import "../../assets/scss/contents.scss";
 import '../../assets/scss/mypage.scss';
 
 import { useProfileState } from '../../context/profile.context';
-import _ from 'lodash';
 import moment from 'moment';
 import { useHistory } from 'react-router';
 import FindAddress from '../../components/popup/FindAddress';
@@ -22,10 +21,10 @@ import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
 import { modifyMy } from '../../api/sony/member';
 import ReCAPTCHA from 'react-google-recaptcha';
-import OpenLogin from '../../components/member/OpenLogin';
 import AuthPassword from './myPageMember/AuthPassword';
 
 function getStrDate(date, format = 'YYYY-MM-DD') {
+  if (!date) return;
   return moment(date).format(format);
 }
 
