@@ -89,6 +89,7 @@ import {
   useProileDispatch,
 } from './context/profile.context';
 import Repassword from './pages/mypage/myPageMember/Repassword';
+import Benefit from './pages/membership/Benefit';
 
 const App = (props) => {
   const dispatch = useMallDispatch();
@@ -206,6 +207,9 @@ const App = (props) => {
               <Route exact path="/event/employee" component={employee} />
               <Route exact path="/event/asc" component={asc} />
               <Route exact path="/event/refined" component={refined} />
+
+              {/* 멤버쉽 */}
+              <Route exact path="/membership/benefit" component={Benefit} />
 
               {/* member  */}
               <Route exact path="/member/join" component={join} />
