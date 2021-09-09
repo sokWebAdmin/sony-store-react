@@ -46,41 +46,23 @@ export default function OrderList() {
       // console.log('summary:', res.data);
       setSummary(res.data);
     });
+  }, []);
 
+  useEffect(() => {
     getProfileOrders({ params: {} }).then((res) => {
       console.log('res.data:', res.data);
-      // makeOrderProductsList(res.data);
+      makeOrderProductsList(res.data);
       // console.log('orderProducts:', orderProducts);
     });
   }, []);
 
-  const makeOrderProductsList = (orders) => {
-    // from easy-skin
-    const data = orders.items.flatMap((order) =>
-      order.orderOptions.flatMap((orderOption) => ({
-        orderYmdt: order.orderYmdt.substr(0, 10),
-        orderNo: order.orderNo,
-        productNo: orderOption.productNo,
-        orderOptionNo: orderOption.orderOptionNo,
-        optionNo: orderOption.optionNo,
-        rowSpan:
-          order.orderOptions.indexOf(orderOption) !== 0
-            ? 0
-            : order.orderOptions.length,
-        claimNos: order.orderOptions.map((o) => o.claimNo).join(','),
-        imageUrl: orderOption.imageUrl,
-        productName: orderOption.productName,
-        orderCnt: orderOption.orderCnt,
-        buyAmt: orderOption.price.buyAmt,
-        // orderStatusText: this._createOrderStatusText(orderOption),
-        // nextActionText: this._createNextActionText(orderOption), 어짜피 취소만 존재, 없애도 될듯
-        orderStatusType: orderOption.orderStatusType,
-        orderStatusTypeLabel: orderOption.orderStatusTypeLabel,
-        payType: order.payType,
-      })),
-    );
+  const makeOrderProductsList = (profileOrdersResponse) => {
+    const newOrderProducts = profileOrdersResponse.items
+      .map(({ orderOptions }) => orderOptions)
+      .flatMap((orderOption) => orderOption);
+    console.log('newOrderProducts:', newOrderProducts);
 
-    setOrderProducts(data);
+    setOrderProducts([...newOrderProducts]);
   };
 
   return (
@@ -151,11 +133,22 @@ export default function OrderList() {
                       <div className="col_table_cell">처리상태</div>
                     </div>
                   </div>
-                  <div className="col_table_body">
-                    <OrderListItem />
-                    <OrderListItem />
-                    <OrderListItem />
-                    <div className="col_table_row">
+                  {orderProducts.length > 0 && (
+                    <div className="col_table_body">
+                      {orderProducts.map((orderProduct) => (
+                        <OrderListItem
+                          orderNo={orderProduct.orderNo}
+                          orderStatusDate={orderProduct.orderStatusDate}
+                          imageUrl={orderProduct.imageUrl}
+                          productName={orderProduct.productName}
+                          optionTitle={orderProduct.optionTitle}
+                          orderCnt={orderProduct.orderCnt}
+                          orderStatusTypeLabel={orderProduct.orderStatusTypeLabel}
+                          key={orderProduct.orderNo}
+                        />
+                      ))}
+
+                      {/* <div className="col_table_row">
                       <div className="col_table_cell order">
                         <span className="order_date">21.05.12</span>
                         <a className="order_number">20210512-663W24</a>
@@ -190,16 +183,20 @@ export default function OrderList() {
                           환불 계좌 정보
                         </button>
                       </div>
+                    </div> */}
                     </div>
+                  )}
+                </div>
+                {orderProducts.length > 0 && (
+                  <div className="btn_article">
+                    <a className="more_btn">더보기</a>
                   </div>
-                </div>
-                <div className="btn_article">
-                  <a className="more_btn">더보기</a>
-                </div>
+                )}
+
                 {/* 내역 없는 경우 .col_table_body, .btn_article 노출 안되어야 합니다. */}
-                {/* <div class="no-data">
-      내역이 없습니다
-    </div> */}
+                {orderProducts.length === 0 && (
+                  <div class="no-data">내역이 없습니다</div>
+                )}
               </div>
               {/*// 주문 정보 */}
             </div>
