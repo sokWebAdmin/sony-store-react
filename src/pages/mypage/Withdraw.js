@@ -16,16 +16,28 @@ import { withdrawalReasons } from '../../const/mypage';
 import OpenLogin from '../../components/member/OpenLogin';
 import { withdrawalMember } from '../../api/sony/member';
 import { deleteProfile } from '../../api/member';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
 
 export default function Withdraw() {
   const history = useHistory();
   const { profile } = useProfileState();
 
+  const {openAlert, closeModal, alertVisible, alertMessage} = useAlert();
   const [password, setPassword] = useState('');
   const [withdrawReason, setWithdrawReason] = useState(null);
 
   const validateWithdraw = () => {
+    if (!withdrawReason) {
+      openAlert('탈퇴사유를 선택해주세요.');
+      return false;
+    }
+    if (!password) {
+      openAlert('비밀번호를 입력해주세요.');
+      return false;
+    }
 
+    return true;
   }
 
   const onClickWithdraw = async () => {
@@ -47,6 +59,7 @@ export default function Withdraw() {
   return (
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       <div className="contents mypage">
         <div className="container" id="container">
           <div className="content">
