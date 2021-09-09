@@ -36,8 +36,8 @@ import orderDetail from './pages/mypage/orderDetail';
 import orderList from './pages/mypage/orderList';
 import OldOrderList from './pages/mypage/OldOrderList';
 import Rename from './pages/mypage/myPageMember/Rename';
-import withdraw from './pages/mypage/withdraw';
-import withdrawComplete from './pages/mypage/withdrawComplete';
+import Withdraw from './pages/mypage/Withdraw';
+import WithdrawComplete from './pages/mypage/WithdrawComplete';
 
 //order
 import orderAgree from './pages/order/orderAgree';
@@ -184,8 +184,8 @@ const App = (props) => {
               <Route exact path="/my-page/order-list" component={orderList} />
               <Route exact path="/my-page/old-order-list" component={OldOrderList} />
               <Route exact path="/my-page/rename" component={Rename} />
-              <Route exact path="/my-page/withdraw" component={withdraw} />
-              <Route exact path="/my-page/withdraw-complete" component={withdrawComplete} />
+              <Route exact path="/my-page/withdraw" component={Withdraw} />
+              <Route exact path="/my-page/withdraw-complete" component={WithdrawComplete} />
 
               {/* 상품 상세페이지 */}
               <Route exact path="/product-view/:productNo" component={ProductView} />
