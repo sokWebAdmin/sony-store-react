@@ -18,50 +18,59 @@ import { withdrawalMember } from '../../api/sony/member';
 import { deleteProfile, postCheckPassword } from '../../api/member';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
-import { getProfileOrders } from '../../api/order';
+import { getProfileOrdersSummaryStatus } from '../../api/order';
+import LayerPopup from '../../components/common/LayerPopup';
+import { loginApi } from '../../api/auth';
 
 export default function Withdraw() {
   const history = useHistory();
   const { profile } = useProfileState();
 
   const {openAlert, closeModal, alertVisible, alertMessage} = useAlert();
+  const {openAlert: openConfirm, closeModal: closeConfirm, alertVisible: confirmVisible} = useAlert();
+  const [isPwVisible, setPwVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [withdrawReason, setWithdrawReason] = useState(null);
 
   const validateWithdraw = async () => {
     if (!withdrawReason) {
       openAlert('탈퇴사유를 선택해주세요.');
-      return false;
+      return;
     }
-    const orders = await getProfileOrders({
-      params: {
-        orderRequestTypes: 'DEPOSIT_WAIT,PAY_DONE,PRODUCT_PREPARE,DELIVERY_PREPARE,DELIVERY_ING,DELIVERY_DONE,PAY_WAIT,EXCHANGE_WAIT,DELIVERY',
-        hasTotalCount: true,
-      }
-    });
-    if (orders.status !== 200) {
+    const orderSummary = await getProfileOrdersSummaryStatus();
+    if (orderSummary.status !== 200) {
       openAlert('잠시 후 다시 시도해 주세요.');
-      return false;
+      return;
     }
-    if (orders.status === 200 && orders.totalCount > 0) {
+    const {
+      deliveryIngCnt,
+      deliveryPrepareCnt,
+      payDoneCnt,
+      cancelProcessingCnt,
+      exchangeProcessingCnt,
+      returnProcessingCnt,
+    } = orderSummary;
+    const hasOrder = deliveryIngCnt > 0 || deliveryPrepareCnt > 0 || payDoneCnt > 0;
+    const hasClaim = cancelProcessingCnt > 0 || exchangeProcessingCnt > 0 || returnProcessingCnt > 0;
+    const hasProcessOrder = hasOrder || hasClaim;
+    if (hasProcessOrder) {
       openAlert('진행중인 주문이 있어서 주문진행 완료 후 탈퇴가 가능합니다.');
-      return false;
+      return;
     }
     if (!password) {
       openAlert('비밀번호를 입력해주세요.');
-      return false;
+      return;
     }
-    const checkPassword = await postCheckPassword(password);
-    if (checkPassword.status === 400) {
+    const checkPassword = await loginApi(profile.memberId, password);
+    if (checkPassword.status !== 200) {
       openAlert('비밀번호가 올바르지 않습니다.');
-      return false;
+      return;
     }
 
-    return true;
+    openConfirm();
   }
 
   const onClickWithdraw = async () => {
-    if (!await validateWithdraw()) return;
     const response = await deleteProfile(withdrawReason.label);
     if (response.status !== 200) {
       openAlert('잠시 후 다시 시도해 주세요.');
@@ -81,6 +90,24 @@ export default function Withdraw() {
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+      {confirmVisible && <LayerPopup size="m" className="login_chk_order">
+        <p className="pop_tit" style={{ color: '#ff4e00' }}>다시 한번 확인해주세요.</p>
+        <p className="pop_txt">회원 탈퇴 시 보유하신 멤버십 마일리지(소니스토어)와<br/>
+          정품 등록정보(소니코리아 고객지원 사이트)는 자동 삭제됩니다.<br/>
+          탈퇴하신 이후에는 마일리지 복구는 불가능합니다.<br/>
+          SIPS회원일 경우 SIPS회원에서도 탈퇴됩니다. </p>
+        <p className="badge__text__new" style={{ margin: '30px', textAlign: 'center', fontWeight: 'bold' }}>정말로 탈퇴하시겠습니까?</p>
+        <div className='btn_box'>
+          <button className="button button_positive button-m" type="button" onClick={() => onClickWithdraw()}>회원탈퇴
+          </button>
+          <button className="button button_primary button-m" type="button"
+                  onClick={() => history.push('/membership/benefit')}
+                  style={{ backgorundColor: '#ff4e00' }}
+          >마일리지 확인
+          </button>
+          <button className="button button_negative button-m" type="button" onClick={closeConfirm}>취소</button>
+        </div>
+      </LayerPopup>}
       <div className="contents mypage">
         <div className="container" id="container">
           <div className="content">
@@ -96,12 +123,14 @@ export default function Withdraw() {
                   <div className="group">
                     <div className="inp_box password_box">
                       <label className="inp_desc" htmlFor="popPw">
-                        <input type="password" id="popPw" className="inp center" placeholder="" value={password}
+                        <input type={isPwVisible ? 'text' : 'password'} id="popPw" className="inp center" placeholder="" value={password}
                                onChange={(e) => setPassword(e.target.value)} />
                         <span className="label">비밀번호</span>
                         <span className="focus_bg" />
                         <div className="eyes">
-                          <button type="button" title="비밀번호 숨김"><i className="ico ico_eyes" /></button>
+                          <button type="button" title="비밀번호 숨김" onClick={() => setPwVisible(!isPwVisible)}>
+                            <i className={isPwVisible ? 'ico_eyes_open' : 'ico ico_eyes'} />
+                          </button>
                         </div>
                       </label>
                     </div>
