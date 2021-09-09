@@ -15,9 +15,10 @@ import SelectBox from '../../components/common/SelectBox';
 import { withdrawalReasons } from '../../const/mypage';
 import OpenLogin from '../../components/member/OpenLogin';
 import { withdrawalMember } from '../../api/sony/member';
-import { deleteProfile } from '../../api/member';
+import { deleteProfile, postCheckPassword } from '../../api/member';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
+import { getProfileOrders } from '../../api/order';
 
 export default function Withdraw() {
   const history = useHistory();
@@ -27,13 +28,32 @@ export default function Withdraw() {
   const [password, setPassword] = useState('');
   const [withdrawReason, setWithdrawReason] = useState(null);
 
-  const validateWithdraw = () => {
+  const validateWithdraw = async () => {
     if (!withdrawReason) {
       openAlert('탈퇴사유를 선택해주세요.');
       return false;
     }
+    const orders = await getProfileOrders({
+      params: {
+        orderRequestTypes: 'DEPOSIT_WAIT,PAY_DONE,PRODUCT_PREPARE,DELIVERY_PREPARE,DELIVERY_ING,DELIVERY_DONE,PAY_WAIT,EXCHANGE_WAIT,DELIVERY',
+        hasTotalCount: true,
+      }
+    });
+    if (orders.status !== 200) {
+      openAlert('잠시 후 다시 시도해 주세요.');
+      return false;
+    }
+    if (orders.status === 200 && orders.totalCount > 0) {
+      openAlert('진행중인 주문이 있어서 주문진행 완료 후 탈퇴가 가능합니다.');
+      return false;
+    }
     if (!password) {
       openAlert('비밀번호를 입력해주세요.');
+      return false;
+    }
+    const checkPassword = await postCheckPassword(password);
+    if (checkPassword.status === 400) {
+      openAlert('비밀번호가 올바르지 않습니다.');
       return false;
     }
 
@@ -41,10 +61,11 @@ export default function Withdraw() {
   }
 
   const onClickWithdraw = async () => {
-    if (!validateWithdraw()) return;
+    if (!await validateWithdraw()) return;
     const response = await deleteProfile(withdrawReason.label);
     if (response.status !== 200) {
-
+      openAlert('잠시 후 다시 시도해 주세요.');
+      return;
     }
     const checkWithdraw = await withdrawalMember({
       customerid: profile.memberId,
