@@ -275,10 +275,7 @@ const ShippingAddressForm = prop => {
             </div>
           </div>
           <div className="acc_group">
-            <div className="calendar_box">
-              <input type="text"
-                     className="inp datepicker"
-                     autoComplete="off" />
+            <div className="acc_inp">
               <DatePicker />
             </div>
           </div>
