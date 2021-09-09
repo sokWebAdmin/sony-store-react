@@ -42,9 +42,19 @@ export default function AuthPassword({ setVisible, authResult }) {
     close();
   };
 
-  const handleLogin = event => {
-    event.preventDefault();
-    
+  const handleLogin = profileResult => {
+    console.log('handleLogin profileResult : ', profileResult);
+    if (!profileResult) {
+      openAlert('간편 인증에 실패하였습니다.', () => {
+        authResult(false);
+        close();
+      });
+      return;
+    }
+    openAlert('인증이 완료되었습니다.', () => {
+      authResult(true);
+      close();
+    })
   }
 
   const handleClick = type => {
