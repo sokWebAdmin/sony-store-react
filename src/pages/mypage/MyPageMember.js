@@ -43,9 +43,7 @@ const initialState = {
   mobileflag: '',
   servicesite: {
     news: 'N' // 이벤트 프로모션 알림 메일 동의 여부
-  }, //nesw 는 email 알림만 있는 것 같은데 확인 필요
-  password : '',
-  newPassword: '',
+  },
   homeaddress1: '', // 주소
   homeaddress2: '', // 상세주소
   homezipcode: '', // 우편번호
@@ -105,7 +103,7 @@ export default function MyPageMember() {
   const [remobileVisible, setRemobileVisible] = useState(false);
   const [needsResend, setNeedsResend] = useState(false);
   const [remobileReset, setRemobileReset] = useState(false);
-  const handleRemobileResult = result => console.log(result);
+  const handleRemobileResult = result => !result && setMyForm(prev => ({ ...prev, mobile: '' }));
   const remobile = () => {
     if (validateMobile(myForm.mobile, openAlert)) {
       setRemobileVisible(true);
@@ -195,14 +193,14 @@ export default function MyPageMember() {
     }
   };
 
+  const emptyRequired = request => required.some(r => !request[r]);
+
   const validate = request => {
     
-    required.forEach(r => {
-      if (!request[r]) {
-        openAlert('회원정보 수정을 완료해주세요.');
-        throw new Error('EMPTY_VALUE');
-      }
-    })
+    if (emptyRequired(request)) {
+      openAlert('회원정보 수정을 완료해주세요.');
+      return false;
+    }
 
     if (!captcha) {
       openAlert(`reCAPTCHA('로봇이 아닙니다.') 인증이 필요합니다.`);
@@ -214,19 +212,24 @@ export default function MyPageMember() {
   const handleSubmit = async event => {
     event.preventDefault();
 
-    const request = {
+    const request = validate({
       ...myForm,
       sms: active.sms ? 'Y' : 'N',
       servicesite: {
         ...myForm.servicesite,
         news: active.email ? 'Y' : 'N'
       }
-    };
-    console.log(request);
-    const ret = await modifyMy(validate(request));
-    console.log(ret);
+    });
 
-    setIsEditMode(false);
+    if (request) {
+      console.log(request);
+      
+      
+      const ret = await modifyMy(request);
+      console.log(ret);
+
+      setIsEditMode(false);
+    }
   };
 
   // 초기화
@@ -486,8 +489,8 @@ export default function MyPageMember() {
                           />
                           <span className="focus_bg" />
                         </div>
-                        <p className="name_desc">※ 주소는 사은품 및 기타 서비스를 제공받으실 때, 꼭 필요한 부분이므로 정확히 기입해 주시기 바랍니다.</p>
                       </div>
+                      <p className="name_desc">※ 주소는 사은품 및 기타 서비스를 제공받으실 때, 꼭 필요한 부분이므로 정확히 기입해 주시기 바랍니다.</p>
                     </div>
                   </div>
                 </div>

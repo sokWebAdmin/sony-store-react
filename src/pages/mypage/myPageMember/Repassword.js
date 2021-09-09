@@ -1,6 +1,5 @@
 import LayerPopup from "../../../components/common/LayerPopup";
 
-// @todo import 되지 않음
 import '../../../assets/scss/contents.scss';
 import '../../../assets/scss/partials/popup/repassword.scss';
 import { useState } from "react";
@@ -30,12 +29,12 @@ const initialState = {
   valNewPassword: '',
 };
 
-const labels = Object.keys(initialState);
+// const labels = Object.keys(initialState);
 
 export default function Repassword({ setVisible }) {
   const history = useHistory();
   const { profile: { memberId }} = useProfileState();
-  const profileDispatch = useProfileState();
+  // const profileDispatch = useProfileState();
   
   const close = () => setVisible(false);
   
@@ -50,17 +49,21 @@ export default function Repassword({ setVisible }) {
     }));
   };
 
-  const isValid = () => {
-    let isEmpty = true;
-    labels.forEach(label => {
-      if (!state[label]) {
-        openAlert(errorMsg.empty[label]);
-        throw new Error('EMPTY_VALUE');
-      }
-      isEmpty = false;
-    });
 
-    if (isEmpty) return false;
+  const isValid = () => {
+
+    if (!state.password) {
+      openAlert(errorMsg.empty.password);
+      return false;
+    }
+    if (!state.newPassword) {
+      openAlert(errorMsg.empty.newPassword);
+      return false;
+    }
+    if (!state.valNewPassword) {
+      openAlert(errorMsg.empty.valNewPassword);
+      return false;
+    }
 
     const pattern = /^(?=.*[a-zA-Z])(?=.*[0-9]).{12,15}$/;
     if (newPassword !== valNewPassword) {
@@ -73,6 +76,7 @@ export default function Repassword({ setVisible }) {
       return false
     };
 
+    return true;
   };
 
   const isChanged = async () => {
@@ -101,7 +105,8 @@ export default function Repassword({ setVisible }) {
 
   const handleSubmit = async event => {
     event.preventDefault();
-
+    event.stopPropagation();
+    
     if (!isValid() || !(await isChanged())) return;
 
     // fetchProfile(profileDispatch);
@@ -116,7 +121,7 @@ export default function Repassword({ setVisible }) {
     >
       { alertVisible && <Alert onClose={ closeModal }>{ alertMessage }</Alert> }
       <p className="pop_tit tit_inp">비밀번호 변경</p>
-      <div className="pop_cont_scroll">
+      <div className="pop_cont_scroll" style={{ height: '643px' }}>
         <form onSubmit={ handleSubmit }>
         <div className="form_zone">
           <div className="input_item">

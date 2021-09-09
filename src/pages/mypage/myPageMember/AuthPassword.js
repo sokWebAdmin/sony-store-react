@@ -6,6 +6,8 @@ import { useAlert } from "../../../hooks";
 import { loginApi } from "../../../api/auth";
 import { useProfileState } from "../../../context/profile.context";
 import Alert from "../../../components/common/Alert";
+import '../../../assets/scss/contents.scss';
+import '../../../assets/scss/partials/popup/authPassword.scss';
 
 export default function AuthPassword({ setVisible, authResult }) {
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
@@ -41,6 +43,21 @@ export default function AuthPassword({ setVisible, authResult }) {
     authResult(true);
     close();
   };
+
+  const handleLogin = profileResult => {
+    console.log('handleLogin profileResult : ', profileResult);
+    if (!profileResult) {
+      openAlert('간편 인증에 실패하였습니다.', () => {
+        authResult(false);
+        close();
+      });
+      return;
+    }
+    openAlert('인증이 완료되었습니다.', () => {
+      authResult(true);
+      close();
+    })
+  }
 
   const handleClick = type => {
     switch(type) {
@@ -96,8 +113,7 @@ export default function AuthPassword({ setVisible, authResult }) {
               <OpenLogin
                 message="SNS 계정으로 회원 인증"
                 title="가입하신 SNS 계정으로 회원 인증을 해주세요."
-                goHome={false}
-                loginResult={ handleResult }
+                customCallback={ handleLogin }
               />
             </div>
             <div className="guide_list">
