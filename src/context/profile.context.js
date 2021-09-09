@@ -69,9 +69,9 @@ export async function fetchProfile(dispatch) {
 export async function fetchMyProfile(dispatch, query) {
   try {
     const response = await getMemberInfo(query);
-    console.log(response);
-    response.errorCode === '0000' &&
-      dispatch({ type: 'GET_MY_PROFILE', data: response.body });
+    console.log(response.data);
+    response.data.errorCode === '0000' &&
+      dispatch({ type: 'GET_MY_PROFILE', data: response.data.body });
   } catch(e) {
     console.error(e);
   }
