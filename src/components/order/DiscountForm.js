@@ -12,6 +12,8 @@ import { handleChange, setObjectState } from '../../utils/state';
 const DiscountForm = ({ setDiscount, paymentInfo }) => {
   const { accumulationConfig } = useMallState();
 
+  console.log(accumulationConfig?.accumulationUseMinPrice);
+
   // subPayAmt: number , coupons: nested object
   // const handlePaymentChange = event => handleChange(event)(setDiscount);
 
@@ -94,8 +96,9 @@ const DiscountForm = ({ setDiscount, paymentInfo }) => {
                 className="my_point">(<em>{accumulationAmt} {pointUnit}</em> 보유)</span>
             </div>
           </div>
-          <p className="membership_info">* 멤버십 마일리지는 최소
-            5,000점 부터 사용 가능합니다.</p>
+          {accumulationConfig?.accumulationUseMinPrice > 0 &&
+          <p className="membership_info">* 멤버십 마일리지는 최소 {toCurrencyString(
+            accumulationConfig.accumulationUseMinPrice)}점 부터 사용 가능합니다.</p>}
         </div>
       </div>
     </>
