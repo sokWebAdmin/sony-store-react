@@ -43,6 +43,11 @@ export default function OrderStep1 ({ location }) {
     deliveryMemo: '', // not a shipping address member
   });
 
+  const [discount, setDiscount] = useState({
+    subPayAmt: '',
+    coupons: {},
+  });
+
   const init = useCallback(() => ({
     async start () {
       await this.fetchOrderSheet(this.orderSheetNo);
