@@ -61,25 +61,26 @@ export default function Login() {
     }
 
     if(validation){
-      const response = await loginApi(email, password);
-      if(response.status !== 200) {
-        alert("아이디/비밀번호를 확인해주세요.");
-      } else if(response?.dormantMemberResponse){
-        history.push('/member/inactiveAccounts')
-        //TODO 계정 잠금일 경우
-      }else {
-        const {accessToken, expireIn} = response.data;
-        setAccessToken(accessToken, expireIn);
-        onChangeGlobal({isLogin: true})
-        await fetchProfile(profileDispatch);
+        const response = await loginApi(email, password);
+        const code = JSON.parse(response.data.message).errorCode
+        if (code === '3000') {
+          alert("아이디/비밀번호를 확인해주세요.");
+        } else if (response?.dormantMemberResponse) {
+          history.push('/member/inactiveAccounts')
+          //TODO 계정 잠금일 경우
+        } else {
+          const { accessToken, expireIn } = response.data;
+          setAccessToken(accessToken, expireIn);
+          onChangeGlobal({ isLogin: true })
+          await fetchProfile(profileDispatch);
 
-        if(saveEmail === true){
-          Cookies.set("sony_email", email);
-        }else{
-          Cookies.remove("sony_email");
+          if (saveEmail === true) {
+            Cookies.set("sony_email", email);
+          } else {
+            Cookies.remove("sony_email");
+          }
+          history.push('/')
         }
-        history.push('/')
-      }
     }
   }
 
