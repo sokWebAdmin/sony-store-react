@@ -4,17 +4,35 @@ import { useEffect, useState, useContext, useMemo, useRef } from 'react';
 import { useMallState } from '../../context/mall.context';
 import { toCurrencyString } from '../../utils/unit';
 
+// utils
+import { onKeyboardEventOnlyDigit } from '../../utils/listener';
+import { handleChange, setObjectState } from '../../utils/state';
+
 // 배송지 정보
-const DiscountForm = ({ paymentInfo }) => {
+const DiscountForm = ({ setDiscount, paymentInfo }) => {
   const { accumulationConfig } = useMallState();
 
-  const pointUnit = accumulationConfig?.accumulationUnit || 'M'; // 이건 빈 값이 있어서
-                                                                 // falsy 검사
-                                                                 // 해야함
+  // subPayAmt: number , coupons: nested object
+  const handlePaymentChange = event => handleChange(event)(setDiscount);
+
+  const pointUnit = accumulationConfig?.accumulationUnit || 'M'; // falsy
 
   const accumulationAmt = useMemo(
     () => paymentInfo?.accumulationAmt ? toCurrencyString(
       paymentInfo.accumulationAmt) : 0);
+
+  const toCurrency = event => {
+    const amount = event.target.value.replaceAll(',', '') * 1;
+
+    if (amount > paymentInfo?.accumulationAmt) {
+      event.target.value = accumulationAmt;
+      setObjectState('subPayAmt', paymentInfo.accumulationAmt)(setDiscount);
+      return;
+    }
+
+    event.target.value = toCurrencyString(amount);
+    setObjectState('subPayAmt', amount)(setDiscount);
+  };
 
   return (
     <>
@@ -50,7 +68,10 @@ const DiscountForm = ({ paymentInfo }) => {
             <div className="acc_inp disable_type">
               <input type="text" id="mileage"
                      className="inp"
-                     placeholder="0" /><span
+                     placeholder="0"
+                     onKeyPress={onKeyboardEventOnlyDigit}
+                     onChange={toCurrency}
+              /><span
               className="unit">점</span>
               <span className="focus_bg" />
             </div>
