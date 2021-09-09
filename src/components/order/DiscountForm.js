@@ -1,8 +1,13 @@
-// import { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useContext, useMemo, useRef } from 'react';
+
+// global context
+import { useMallState } from '../../context/mall.context';
 
 // 배송지 정보
 const DiscountForm = prop => {
-  console.log(prop);
+  const { accumulationConfig } = useMallState();
+
+  const pointUnit = accumulationConfig?.accumulationUnit || 'M';
 
   return (
     <>
@@ -14,7 +19,7 @@ const DiscountForm = prop => {
           <div className="acc_group">
             <div className="acc_inp disable_type">
               <input type="text" id="coupon"
-                     className="inp" defaultValue={3000}
+                     className="inp"
                      disabled /><span
               className="unit">원</span>
               <span className="focus_bg" />
@@ -48,7 +53,7 @@ const DiscountForm = prop => {
                 type="button">모두 사용
               </button>
               <span
-                className="my_point">(<em>800,000 M</em> 보유)</span>
+                className="my_point">(<em>800,000 {pointUnit}</em> 보유)</span>
             </div>
           </div>
           <p className="membership_info">* 멤버십 마일리지는 최소
