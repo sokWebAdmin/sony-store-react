@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 //api
 
@@ -38,7 +39,9 @@ export default function OrderListItem({
     <div className="col_table_row">
       <div className="col_table_cell order">
         <span className="order_date">{orderYmdt}</span>
-        <a className="order_number">{orderNo}</a>
+        <Link to="/my-page/order-detail" className="order_number">
+          {orderNo}
+        </Link>
       </div>
       <div className="col_table_cell prd_wrap">
         <div className="prd">
