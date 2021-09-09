@@ -24,6 +24,11 @@ export default function OrderListItem({
       'DELIVERY_ING',
     ].includes(orderStatusType);
   };
+
+  const showDeliveryFind = (orderStatusType) => {
+    return ['DELIVERY_ING', 'DELIVERY_DONE'].includes(orderStatusType);
+  };
+
   return (
     <div className="col_table_row">
       <div className="col_table_cell order">
@@ -51,6 +56,11 @@ export default function OrderListItem({
         {showOrderCancel(orderStatusType) && (
           <button type="button" className="button button_negative button-s">
             주문취소
+          </button>
+        )}
+        {showDeliveryFind(orderStatusType) && (
+          <button type="button" className="button button_negative button-s">
+            배송조회
           </button>
         )}
       </div>
