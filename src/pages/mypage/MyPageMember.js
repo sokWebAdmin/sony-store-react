@@ -218,6 +218,7 @@ export default function MyPageMember() {
       ...myForm,
       sms: active.sms ? 'Y' : 'N',
       servicesite: {
+        ...myForm.servicesite,
         news: active.email ? 'Y' : 'N'
       }
     };
