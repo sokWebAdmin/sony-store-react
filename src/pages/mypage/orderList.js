@@ -150,7 +150,7 @@ export default function OrderList() {
                       {orderProducts.map((orderProduct) => (
                         <OrderListItem
                           orderNo={orderProduct.orderNo}
-                          orderStatusDate={orderProduct.orderStatusDate}
+                          orderYmdt={orderProduct.orderYmdt}
                           imageUrl={orderProduct.imageUrl}
                           productName={orderProduct.productName}
                           optionTitle={orderProduct.optionTitle}

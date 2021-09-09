@@ -8,7 +8,7 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderListItem({
   orderNo,
-  orderStatusDate,
+  orderYmdt,
   imageUrl,
   productName,
   optionTitle,
@@ -36,9 +36,7 @@ export default function OrderListItem({
   return (
     <div className="col_table_row">
       <div className="col_table_cell order">
-        <span className="order_date">
-          {orderStatusDate && orderStatusDate.registerYmdt}
-        </span>
+        <span className="order_date">{orderYmdt}</span>
         <a className="order_number">{orderNo}</a>
       </div>
       <div className="col_table_cell prd_wrap">
