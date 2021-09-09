@@ -12,8 +12,6 @@ import { handleChange, setObjectState } from '../../utils/state';
 const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
     const { accumulationConfig } = useMallState();
 
-    console.log(accumulationConfig?.accumulationUseMinPrice);
-
     // subPayAmt: number , coupons: nested object
     const { subPayAmt } = discount;
     // const handlePaymentChange = event => handleChange(event)(setDiscount);
