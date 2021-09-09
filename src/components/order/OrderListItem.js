@@ -29,6 +29,10 @@ export default function OrderListItem({
     return ['DELIVERY_ING', 'DELIVERY_DONE'].includes(orderStatusType);
   };
 
+  const showRefundAccountInfo = (orderStatusType) => {
+    return ['CANCEL_DONE'].includes(orderStatusType);
+  };
+
   return (
     <div className="col_table_row">
       <div className="col_table_cell order">

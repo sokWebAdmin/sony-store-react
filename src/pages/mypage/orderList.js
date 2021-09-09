@@ -57,12 +57,24 @@ export default function OrderList() {
   }, []);
 
   const makeOrderProductsList = (profileOrdersResponse) => {
-    const newOrderProducts = profileOrdersResponse.items
-      .map(({ orderOptions }) => orderOptions)
-      .flatMap((orderOption) => orderOption);
+    console.log('profileOrdersResponse.items:', profileOrdersResponse.items);
+    const newOrderProducts = profileOrdersResponse.items.flatMap((item) =>
+      makeOrderProduct(item),
+    );
+
     console.log('newOrderProducts:', newOrderProducts);
 
-    setOrderProducts([...newOrderProducts]);
+    setOrderProducts(newOrderProducts);
+  };
+
+  const makeOrderProduct = (orderItem) => {
+    const { payType, orderYmdt } = orderItem;
+
+    return orderItem.orderOptions.map((orderOption) => ({
+      payType,
+      orderYmdt,
+      ...orderOption,
+    }));
   };
 
   return (
