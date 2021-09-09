@@ -50,49 +50,61 @@ export default function Repassword({ setVisible }) {
     }));
   };
 
-  const checkEmptyValue = () => {
+  const isValid = () => {
+    let isEmpty = true;
     labels.forEach(label => {
       if (!state[label]) {
         openAlert(errorMsg.empty[label]);
-        throw new Error('EMPTY_VALUE_ERROR');
+        throw new Error('EMPTY_VALUE');
       }
-    });   
+      isEmpty = false;
+    });
+
+    if (isEmpty) return false;
+
+    const pattern = /^(?=.*[a-zA-Z])(?=.*[0-9]).{12,15}$/;
+    if (newPassword !== valNewPassword) {
+      openAlert(errorMsg.valid.valNewPassword);
+      return false
+    };
+
+    if (!(pattern.test(newPassword))) {
+      openAlert(errorMsg.valid.newPassword);
+      return false
+    };
+
   };
 
-  const submitPassword = async () => {
-    // 에러코드 보고 프론트에서 유효성 검사할지 백에서 할지 확인필요
+  const isChanged = async () => {
+    
     const ret = await modifyMy({ password, newPassword, customerid: memberId });
     console.log(ret);
     
-    if (ret.resultCode === '0000') {
+    if (ret.data.errorCode === '0000' && ret.data.body) {
+      openAlert(`비밀번호를 정상적으로 변경하였습니다. \n 소니스토어 메인 화면으로 이동합니다.`);
       return true;
     }
 
-    // 여기서 에러코드 다양하게 확인 필요
-    if (ret.resultCode === '현재 비번 오류') {
+    if (ret.data.errorCode === '2000') {
       openAlert(errorMsg.valid.password);
-      throw new Error('');
+      return false;
     }
 
-    if (ret.resultCode === '새 비번 오류') {
+    if (ret.data.errorCode === '1002') {
       openAlert(errorMsg.valid.newPassword);
-      throw new Error('');
+      return false;
     }
 
-    if (ret.resultCode === '새 비번 확인 오류') {
-      openAlert(errorMsg.valid.valNewPassword);
-      throw new Error('');
-    }
+    openAlert(ret.data.errorMessage);
+    return false;
   };
 
   const handleSubmit = async event => {
     event.preventDefault();
-    
-    checkEmptyValue();
-    submitPassword();
-    fetchProfile(profileDispatch);
-    
-    await openAlert(`비밀번호를 정상적으로 변경하였습니다. \n 소니스토어 메인 화면으로 이동합니다.`);
+
+    if (!isValid() || !(await isChanged())) return;
+
+    // fetchProfile(profileDispatch);
     history.push('/');
   }
 

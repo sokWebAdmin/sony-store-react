@@ -350,13 +350,13 @@ export default function MyPageMember() {
                       <div className="info_box">
                         <div className="data_box">
                           <div className="inp_box">
-                            <span className={ `ico_grade ${ memberGrade[myForm.custgrade].className }` }>
+                            <span className={ `ico_grade ${ memberGrade[myForm.custgrade]?.className }` }>
                               <input 
                                 type="text" 
                                 id="member_grade"
                                 name="custgrade"
                                 className={`inp disabled`} 
-                                value={ memberGrade[myForm.custgrade].label }
+                                value={ memberGrade[myForm.custgrade]?.label }
                                 disabled="disabled" 
                                 maxLength={20} 
                               />
