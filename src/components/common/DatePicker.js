@@ -7,9 +7,6 @@ import 'tui-date-picker/dist/tui-date-picker.css';
 // style
 import '../../assets/scss/partials/datePicker.scss';
 
-// utils
-import { getStrYMDHMSS } from '../../utils/dateFormat';
-
 const DatePicker = prop => {
   const { style, disabled, bindDate, option } = prop;
 
@@ -22,7 +19,7 @@ const DatePicker = prop => {
 
   const createInstance = (wrapperHTMLElement, inputHTMLElement, option) => {
     datePicker.instance = new TuiDatePicker(wrapperHTMLElement, {
-      date: new Date(),
+      date: option?.selectableRanges[0][0] ?? new Date(),
       language: 'ko',
       input: {
         element: inputHTMLElement,
@@ -34,7 +31,7 @@ const DatePicker = prop => {
 
   const bindInstance = () => {
     datePicker.instance.on('change',
-      () => bindDate(getStrYMDHMSS(datePicker.instance.getDate())));
+      () => bindDate(datePicker.instance.getDate()));
   };
 
   useEffect(

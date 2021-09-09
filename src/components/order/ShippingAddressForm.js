@@ -9,12 +9,14 @@ import FindAddress from '../../components/popup/FindAddress';
 
 // utils
 import { handleChange, setObjectState } from '../../utils/state';
+import { getStrYMDHMSS } from '../../utils/dateFormat';
 
 // const
 import { deliveryMemos } from '../../const/order';
 
 // stylesheet
 import '../../assets/scss/interaction/field.dynamic.scss';
+
 
 const receiverAddressMap = {
   // from: to
@@ -33,11 +35,11 @@ const ShippingAddressForm = prop => {
 
   // components state
   const [specifyDelivery, setSpecifyDelivery] = useState(false); // bool
-  const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(''); // string
-                                                                      // date
-                                                                      // format
+  const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(new Date()); // Date
+  // object
 
-  useEffect(() => console.log(specifyDeliveryDate), [specifyDeliveryDate]);
+  useEffect(() => console.log(getStrYMDHMSS(specifyDeliveryDate)),
+    [specifyDeliveryDate]);
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
@@ -293,7 +295,10 @@ const ShippingAddressForm = prop => {
                 disabled={!specifyDelivery}
                 bindDate={setSpecifyDeliveryDate}
                 option={{
-                  selectableRanges: [[new Date(), new Date(2999, 12, 31)]],
+                  selectableRanges: [
+                    [
+                      new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
+                      new Date(2999, 12, 31)]],
                 }}
               />
             </div>
