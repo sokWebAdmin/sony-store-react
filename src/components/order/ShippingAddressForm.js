@@ -43,7 +43,7 @@ const ShippingAddressForm = prop => {
 
   const specifyDelivery3DayMin = useMemo(() => {
     const threeDayLater = Date.now() + 1000 * 60 * 60 * 24 * 3;
-    return threeDayLater >= Date.now(specifyDeliveryDate);
+    return threeDayLater >= specifyDeliveryDate.getTime();
   });
 
   useEffect(() => console.log(specifyDelivery3DayMin),
