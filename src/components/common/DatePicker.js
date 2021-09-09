@@ -22,17 +22,23 @@ const createInstance = (wrapperHTMLElement, inputHTMLElement) => {
   });
 };
 
-const DatePicker = () => {
+const DatePicker = prop => {
+  const { disabled } = prop;
+
   const datePickerInput = useRef();
   const wrapper = useRef();
 
   useEffect(() => createInstance(wrapper.current, datePickerInput.current), []);
 
+  function forParent (run) {
+    console.log('run :', run);
+  }
+
   return (
     <div className="date_picker_wrapper">
       <div className="tui-datepicker-input tui-datetime-input tui-has-focus">
         <input type="text" className="view_date_input"
-               ref={datePickerInput} disabled />
+               ref={datePickerInput} disabled={disabled} />
         <span className="tui-ico-date"></span>
       </div>
       <div ref={wrapper}></div>
