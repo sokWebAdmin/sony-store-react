@@ -186,6 +186,12 @@ export default function MyPageMember() {
           [name]: value,
         }));
         break;
+      case 'mobile':
+        setMyForm(prev => ({
+          ...prev,
+          mobile: value.replace(/[^0-9]/g, '')
+        }));
+        break;
       default:
       setMyForm(prev => ({
         ...prev,
@@ -228,6 +234,7 @@ export default function MyPageMember() {
       const ret = await modifyMy(request);
 
       if (ret.data.errorCode === '0000') {
+        openAlert('회원 정보 수정이 완료되었습니다.');
         setIsEditMode(false);
       } else {
         openAlert(ret.data.errorMessage);
@@ -347,7 +354,7 @@ export default function MyPageMember() {
                             id="member_tel" 
                             name="mobile" 
                             className={`inp tel_number ${!isEditMode && 'disabled'}`}
-                            value={ myForm.mobile }
+                            value={ addHyphenToPhoneNo(myForm.mobile) }
                             maxLength={11} 
                             autoComplete="off" 
                             placeholder=""

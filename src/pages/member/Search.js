@@ -62,7 +62,7 @@ export default function Search() {
       if (response.resultCode === '0000') {
         setResult(response.body.customerid);
       } else {
-        openAlert(response.resultMessage);
+        openAlert(response.errorMessage);
       }
     } else {
       const response = await getMemberInfo({
@@ -73,7 +73,7 @@ export default function Search() {
       if (response.resultCode === '0000') {
         openAlert(`${response.body.customerid} 메일을 보냈습니다.`, true);
       } else {
-        openAlert(response.resultMessage);
+        openAlert(response.errorMessage);
       }
     }
   };
