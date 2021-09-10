@@ -27,7 +27,6 @@ export default function OrderDetail() {
   }, []);
 
   const makeOrderProducts = (orderDetailResponse) => {
-    console.log('orderDetailResponse:', orderDetailResponse);
     const { orderOptionsGroupByPartner } = orderDetailResponse;
     return orderOptionsGroupByPartner
       .flatMap(({ orderOptionsGroupByDelivery }) => orderOptionsGroupByDelivery)
@@ -39,6 +38,7 @@ export default function OrderDetail() {
         productNo: orderOption.productNo,
         productName: orderOption.productName,
         orderCnt: orderOption.orderCnt,
+        buyPrice: orderOption.price.buyPrice,
         buyAmt: orderOption.price.buyAmt,
       }));
   };
@@ -134,7 +134,16 @@ export default function OrderDetail() {
                     </div>
                   </div>
                   <div className="col_table_body">
-                    <OrderDetailProductItem />
+                    {orderProducts.length > 0 &&
+                      orderProducts.map((orderProduct) => (
+                        <OrderDetailProductItem
+                          productName={orderProduct.productName}
+                          optionTitle={orderProduct.optionTitle}
+                          buyPrice={orderProduct.buyPrice}
+                          buyAmt={orderProduct.buyAmt}
+                          orderCnt={orderProduct.orderCnt}
+                        />
+                      ))}
                   </div>
                 </div>
               </div>
