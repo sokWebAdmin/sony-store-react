@@ -41,6 +41,10 @@ export const getDormancy = () => {
   return request("profile/dormancy", "get", null, null);
 };
 
+export const putDormancy = (data) => {
+  return request("profile/dormancy", "put", null, data);
+};
+
 export const deleteProfile = (reason) => {
   return request('profile', 'delete', {reason})
 }

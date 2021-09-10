@@ -12,7 +12,7 @@ export default function ActiveAccounts() {
   return (
       <div className="contents">
         <div className="container" id="container">
-          <div className="accounts inactive">
+          <div className="accounts active">
             <h1 className="accounts_title">휴먼계정 해제 안내</h1>
             <h2 className="accounts_desc">휴먼계정 해제 요청이 정상적으로 처리 되었습니다.</h2>
             <p className="accounts_text">고객님의 휴면계정이 활성화 되었습니다.<br />소니스토어와 함께 다양한 혜택을 누리세요.</p>

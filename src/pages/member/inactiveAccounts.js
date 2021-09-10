@@ -10,12 +10,14 @@ import { getDormancy } from '../../api/member';
 
 import { changeDateFormat, getDay } from '../../utils/dateFormat';
 import Confirm from '../../components/common/Confirm';
+import Authentication from '../../components/popup/Authentication';
 
 export default function InactiveAccounts() {
   const history = useHistory();
   const CONFIRM_MESSAGE = '휴대폰 인증 서비스를 사용하여 휴면계정을 활성화 합니다. 계속하시겠습니까?'
   const [dormantDate, setDormantDate] = useState('');
   const [isConfirm, setIsConfirm] = useState(false);
+  const [authenticationVisible, setAuthenticationVisible] = useState(false);
 
   const getDormancyInfo = useCallback(async () => {
     try{
@@ -31,8 +33,7 @@ export default function InactiveAccounts() {
 
   const closeConfirm = (state) => {
     if(state === 'ok') {
-      //TODO 휴대폰인증팝업
-      // history.push('/member/activeAccounts')
+      setAuthenticationVisible(true)
     }
    setIsConfirm(false)
   }
@@ -64,6 +65,7 @@ export default function InactiveAccounts() {
         </div>
       </div>
       {isConfirm && <Confirm onClose={closeConfirm}>{CONFIRM_MESSAGE}</Confirm>}
+      {authenticationVisible && <Authentication setVisible={setAuthenticationVisible} />}
       </>
   );
 }
