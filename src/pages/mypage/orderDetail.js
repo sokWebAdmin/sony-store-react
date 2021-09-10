@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { Link, useLocation } from 'react-router-dom';
 import { useQuery } from '../../hooks';
 import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
 
@@ -16,13 +15,40 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderDetail() {
   const query = useQuery();
+  const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '' });
   const [orderProducts, setOrderProducts] = useState([]);
+  const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' });
+  const [shippingAddress, setShippingAddress] = useState({
+    receiverName: '',
+    receiverContact1: '',
+    receiverAddress: '',
+    receiverDetailAddress: '',
+    deliveryMemo: '',
+  });
 
   useEffect(() => {
     getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } }).then((res) => {
+      const { orderNo, orderYmdt } = res.data;
+      setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0] });
       setOrderProducts(makeOrderProducts(res.data));
       console.log('orderProducts:', orderProducts);
-      console.log('res:', res);
+
+      const {
+        orderer: { ordererName, ordererContact1 },
+      } = res.data;
+      setOrdererInfo({ ordererName, ordererContact1 });
+
+      const {
+        shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
+        deliveryMemo,
+      } = res.data;
+      setShippingAddress({
+        receiverName,
+        receiverAddress,
+        receiverDetailAddress,
+        receiverContact1,
+        deliveryMemo,
+      });
     });
   }, []);
 
@@ -114,11 +140,11 @@ export default function OrderDetail() {
               </dl>
               <dl className="o_summary_date">
                 <dt className="o_summary_term">주문날짜</dt>
-                <dd className="o_summary_desc">2021-05-12</dd>
+                <dd className="o_summary_desc">{orderInfo.orderYmdt}</dd>
               </dl>
               <dl className="o_summary_number">
                 <dt className="o_summary_term">주문번호</dt>
-                <dd className="o_summary_desc">20210512-663W24</dd>
+                <dd className="o_summary_desc">{orderInfo.orderNo}</dd>
               </dl>
             </div>
             {/* 제품 정보 */}
@@ -137,6 +163,7 @@ export default function OrderDetail() {
                     {orderProducts.length > 0 &&
                       orderProducts.map((orderProduct) => (
                         <OrderDetailProductItem
+                          key={orderProduct.orderNo}
                           productName={orderProduct.productName}
                           optionTitle={orderProduct.optionTitle}
                           buyPrice={orderProduct.buyPrice}
@@ -155,16 +182,20 @@ export default function OrderDetail() {
               <div className="order_info_inner">
                 <dl className="order">
                   <dt className="order_term">주문자 정보</dt>
-                  <dd className="order_desc">김소니(01056781234)</dd>
+                  <dd className="order_desc">
+                    {ordererInfo.ordererName}({ordererInfo.ordererContact1})
+                  </dd>
                   <dt className="order_term">수령인</dt>
-                  <dd className="order_desc">김소니(01056781234)</dd>
+                  <dd className="order_desc">
+                    {shippingAddress.receiverName}({shippingAddress.ordererContact1})
+                  </dd>
                   <dt className="order_term">배송지</dt>
                   <dd className="order_desc">
-                    서울특별시 영등포구 여의도동 국제금융로 10 One IFC 24층 ㈜ 소니코리아 서울특별시 영등포구 여의도동
-                    국제금융로 10 One IFC 24층 ㈜ 소니코리아
+                    {shippingAddress.receiverAddress}
+                    {shippingAddress.receiverDetailAddress}
                   </dd>
                   <dt className="order_term">배송 요청사항</dt>
-                  <dd className="order_desc">파손의 위험이 있는 상품이니 조심히 다뤄주세요.</dd>
+                  <dd className="order_desc">{shippingAddress.deliveryMemo ? shippingAddress.deliveryMemo : '없음'}</dd>
                   <dt className="order_term">배송일 선택</dt>
                   <dd className="order_desc">정상 배송 </dd>
                 </dl>
