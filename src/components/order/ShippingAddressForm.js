@@ -2,17 +2,21 @@ import { useEffect, useState, useContext, useRef } from 'react';
 import GlobalContext from '../../context/global.context';
 
 // components
+import DatePicker from '../../components/common/DatePicker';
+
 import SelectBox from '../../components/common/SelectBox';
 import FindAddress from '../../components/popup/FindAddress';
 
 // utils
 import { handleChange, setObjectState } from '../../utils/state';
+import { getStrYMDHMSS } from '../../utils/dateFormat';
 
 // const
 import { deliveryMemos } from '../../const/order';
 
 // stylesheet
 import '../../assets/scss/interaction/field.dynamic.scss';
+
 
 const receiverAddressMap = {
   // from: to
@@ -29,11 +33,18 @@ const ShippingAddressForm = prop => {
   // popup state
   const [findAddressVisible, setFindAddressVisible] = useState(false);
 
+  // components state
+  const [specifyDelivery, setSpecifyDelivery] = useState(false); // bool
+  const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(new Date()); // Date
+  // object
+
+  useEffect(() => console.log(getStrYMDHMSS(specifyDeliveryDate)),
+    [specifyDeliveryDate]);
+
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
   const { shipping, setShipping, orderer } = prop;
-  // TODO. 배송일자 선택 바인딩 안됨. 매칭되는 프로퍼티 확인 필요
 
   const bindReceiverAddress = selectedAddress => {
     if (!selectedAddress) {
@@ -256,8 +267,10 @@ const ShippingAddressForm = prop => {
                   <input type="radio"
                          className="inp_radio"
                          id="delivery_radio1"
-                         name="deliveryradio"
-                         defaultChecked="checked" />
+                         name="deliveryRadio"
+                         checked={!specifyDelivery}
+                         onChange={() => setSpecifyDelivery(false)}
+                  />
                   <label htmlFor="delivery_radio1"
                          className="contentType">정상 배송</label>
                 </div>
@@ -265,7 +278,10 @@ const ShippingAddressForm = prop => {
                   <input type="radio"
                          className="inp_radio"
                          id="delivery_radio2"
-                         name="deliveryradio" />
+                         value="specify"
+                         checked={specifyDelivery}
+                         onChange={() => setSpecifyDelivery(true)}
+                         name="deliveryRadio" />
                   <label htmlFor="delivery_radio2"
                          className="contentType">출고일 지정</label>
                 </div>
@@ -273,10 +289,18 @@ const ShippingAddressForm = prop => {
             </div>
           </div>
           <div className="acc_group">
-            <div className="calendar_box">
-              <input type="text"
-                     className="inp datepicker"
-                     autoComplete="off" />
+            <div className="acc_inp">
+              <DatePicker
+                style={{ display: specifyDelivery ? 'block' : 'none' }}
+                disabled={!specifyDelivery}
+                bindDate={setSpecifyDeliveryDate}
+                option={{
+                  selectableRanges: [
+                    [
+                      new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
+                      new Date(2999, 12, 31)]],
+                }}
+              />
             </div>
           </div>
           <ul className="list_dot">

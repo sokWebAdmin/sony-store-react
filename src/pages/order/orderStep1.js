@@ -1,4 +1,4 @@
-import { React, useEffect, useCallback, useState } from 'react';
+import { React, useEffect, useCallback, useState, useContext } from 'react';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
@@ -7,6 +7,7 @@ import Accordion from '../../components/common/surface/Accordion';
 
 import OrdererForm from '../../components/order/OrdererForm';
 import ShippingAddressForm from '../../components/order/ShippingAddressForm';
+import DiscountForm from '../../components/order/DiscountForm';
 
 //api
 import { getOrderSheets } from '../../api/order';
@@ -17,9 +18,13 @@ import '../../assets/scss/order.scss';
 
 // functions
 import { getUrlParam } from '../../utils/location';
+import GlobalContext from '../../context/global.context';
 
-export default function OrderStep1 ({ location }) {
+const OrderStep1 = ({ location }) => {
+  const { isLogin } = useContext(GlobalContext);
+
   const [deliveryGroups, setDeliveryGroups] = useState([]);
+  const [paymentInfo, setPaymentInfo] = useState(null);
 
   // form data
   const [orderer, setOrderer] = useState({
@@ -43,6 +48,11 @@ export default function OrderStep1 ({ location }) {
     deliveryMemo: '', // not a shipping address member
   });
 
+  const [discount, setDiscount] = useState({
+    subPayAmt: 0,
+    coupons: {},
+  });
+
   const init = useCallback(() => ({
     async start () {
       await this.fetchOrderSheet(this.orderSheetNo);
@@ -51,8 +61,9 @@ export default function OrderStep1 ({ location }) {
       return getUrlParam('orderSheetNo') ?? -1;
     },
     async fetchOrderSheet (orderSheetNo) {
-
-      const { data: { deliveryGroups } } = await getOrderSheets(orderSheetNo);
+      const { data: { deliveryGroups, paymentInfo } } = await getOrderSheets(
+        orderSheetNo);
+      setPaymentInfo(paymentInfo);
       setDeliveryGroups(deliveryGroups);
     },
   }), []);
@@ -116,6 +127,13 @@ export default function OrderStep1 ({ location }) {
                                              setShipping={setShipping} />
                       </Accordion>
 
+                      {isLogin &&
+                      <Accordion title={'할인 정보'} defaultVisible={true}>
+                        <DiscountForm discount={discount}
+                                      setDiscount={setDiscount}
+                                      paymentInfo={paymentInfo} />
+                      </Accordion>}
+
                       <div className="acc_item on">
                         <div className="acc_head">
                           <a className="acc_btn" title="할인 정보 열기">
@@ -125,55 +143,6 @@ export default function OrderStep1 ({ location }) {
                         </div>
                         <div className="acc_inner">
                           <div className="acc_box">
-                            <div className="acc_form">
-                              <div className="acc_cell vat">
-                                <label htmlFor="coupon">쿠폰</label>
-                              </div>
-                              <div className="acc_cell">
-                                <div className="acc_group">
-                                  <div className="acc_inp disable_type">
-                                    <input type="text" id="coupon"
-                                           className="inp" defaultValue={3000}
-                                           disabled /><span
-                                    className="unit">원</span>
-                                    <span className="focus_bg" />
-                                  </div>
-                                  <div className="acc_btn_box">
-                                    <button
-                                      className="button button_negative button-s popup_comm_btn"
-                                      data-popup-name="coupon_inquiry"
-                                      type="button">쿠폰 조회
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="acc_form">
-                              <div className="acc_cell vat">
-                                <label htmlFor="mileage">멤버십 마일리지</label>
-                              </div>
-                              <div className="acc_cell parent">
-                                <div className="acc_group">
-                                  <div className="acc_inp disable_type">
-                                    <input type="text" id="mileage"
-                                           className="inp"
-                                           placeholder="0" /><span
-                                    className="unit">점</span>
-                                    <span className="focus_bg" />
-                                  </div>
-                                  <div className="acc_btn_box">
-                                    <button
-                                      className="button button_negative button-s"
-                                      type="button">모두 사용
-                                    </button>
-                                    <span
-                                      className="my_point">(<em>800,000 M</em> 보유)</span>
-                                  </div>
-                                </div>
-                                <p className="membership_info">* 멤버십 마일리지는 최소
-                                  5,000점 부터 사용 가능합니다.</p>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -445,3 +414,5 @@ export default function OrderStep1 ({ location }) {
     </>
   );
 }
+
+export default OrderStep1;

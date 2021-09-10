@@ -34,10 +34,11 @@ export default function MobileAuth({ mobile, setVisible, handleResult, remobileR
       //인증성공
       setAuthCheck(true);
       openAlert('인증되었습니다.', () => {
-        setVisible(false);
+        document.body.style.overflow = "auto";
         setRemobileReset(false);
         setNeedsResend(false);
         handleResult(true);
+        setVisible(false);
       });
     } else {
       openAlert(response.data.message);

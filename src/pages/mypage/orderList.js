@@ -5,6 +5,7 @@ import {
 } from '../../api/order';
 
 import OrderStatusSummary from '../../components/order/OrderStatusSummary';
+import OrderListItem from '../../components/order/OrderListItem';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -34,7 +35,7 @@ export default function OrderList() {
   });
 
   const [orderProducts, setOrderProducts] = useState([]);
-  
+
   useEffect(() => {
     getProfileOrdersSummaryStatus().then((res) => {
       // FIXME: 모킹 데이터
@@ -45,46 +46,35 @@ export default function OrderList() {
       // console.log('summary:', res.data);
       setSummary(res.data);
     });
+  }, []);
 
+  useEffect(() => {
     getProfileOrders({ params: {} }).then((res) => {
-      console.log('res.data:', res.data)
-      // makeOrderProductsList(res.data);
-      // console.log('orderProducts:', orderProducts);
+      makeOrderProductsList(res.data);
     });
   }, []);
 
-  const makeOrderProductsList = (orders) => {
-    // from easy-skin
-    const data = orders.items.flatMap((order) =>
-      order.orderOptions.flatMap((orderOption) => ({
-        orderYmdt: order.orderYmdt.substr(0, 10),
-        orderNo: order.orderNo,
-        productNo: orderOption.productNo,
-        orderOptionNo: orderOption.orderOptionNo,
-        optionNo: orderOption.optionNo,
-        rowSpan:
-          order.orderOptions.indexOf(orderOption) !== 0
-            ? 0
-            : order.orderOptions.length,
-        claimNos: order.orderOptions.map((o) => o.claimNo).join(','),
-        imageUrl: orderOption.imageUrl,
-        productName: orderOption.productName,
-        orderCnt: orderOption.orderCnt,
-        buyAmt: orderOption.price.buyAmt,
-        // orderStatusText: this._createOrderStatusText(orderOption),
-        // nextActionText: this._createNextActionText(orderOption), 어짜피 취소만 존재, 없애도 될듯
-        orderStatusType: orderOption.orderStatusType,
-        orderStatusTypeLabel: orderOption.orderStatusTypeLabel,
-        payType: order.payType,
-      })),
+  const makeOrderProductsList = (profileOrdersResponse) => {
+    const newOrderProducts = profileOrdersResponse.items.flatMap((item) =>
+      makeOrderProduct(item),
     );
 
-    setOrderProducts(data);
+    setOrderProducts(newOrderProducts);
+  };
+
+  const makeOrderProduct = (orderItem) => {
+    const { payType, orderYmdt } = orderItem;
+
+    return orderItem.orderOptions.map((orderOption) => ({
+      payType,
+      orderYmdt,
+      ...orderOption,
+    }));
   };
 
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'주문/배송내역'} />
       <div className="contents mypage">
         <div className="container">
           <div className="content">
@@ -150,43 +140,26 @@ export default function OrderList() {
                       <div className="col_table_cell">처리상태</div>
                     </div>
                   </div>
-                  <div className="col_table_body">
-                    <div className="col_table_row">
-                      <div className="col_table_cell order">
-                        <span className="order_date">21.05.12</span>
-                        <a className="order_number">20210512-663W24</a>
-                      </div>
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_01.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">
-                              AK-47 Hi-Res 헤드폰 앰프
-                            </div>
-                            <p className="prd_info_option">128Bit/피아노블랙</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell order">
-                        <span className="order_status">결제완료</span>
-                        <button
-                          type="button"
-                          className="button button_negative button-s"
-                        >
-                          주문취소
-                        </button>
-                      </div>
-                    </div>
-                    <div className="col_table_row">
+                  {orderProducts.length > 0 && (
+                    <div className="col_table_body">
+                      {orderProducts.map((orderProduct) => (
+                        <OrderListItem
+                          orderNo={orderProduct.orderNo}
+                          payType={orderProduct.payType}
+                          orderYmdt={orderProduct.orderYmdt}
+                          imageUrl={orderProduct.imageUrl}
+                          productName={orderProduct.productName}
+                          optionTitle={orderProduct.optionTitle}
+                          orderCnt={orderProduct.orderCnt}
+                          orderStatusType={orderProduct.orderStatusType}
+                          orderStatusTypeLabel={
+                            orderProduct.orderStatusTypeLabel
+                          }
+                          key={orderProduct.orderNo}
+                        />
+                      ))}
+
+                      {/* <div className="col_table_row">
                       <div className="col_table_cell order">
                         <span className="order_date">21.05.12</span>
                         <a className="order_number">20210512-663W24</a>
@@ -221,16 +194,20 @@ export default function OrderList() {
                           환불 계좌 정보
                         </button>
                       </div>
+                    </div> */}
                     </div>
+                  )}
+                </div>
+                {orderProducts.length > 0 && (
+                  <div className="btn_article">
+                    <a className="more_btn">더보기</a>
                   </div>
-                </div>
-                <div className="btn_article">
-                  <a className="more_btn">더보기</a>
-                </div>
+                )}
+
                 {/* 내역 없는 경우 .col_table_body, .btn_article 노출 안되어야 합니다. */}
-                {/* <div class="no-data">
-      내역이 없습니다
-    </div> */}
+                {orderProducts.length === 0 && (
+                  <div class="no-data">내역이 없습니다</div>
+                )}
               </div>
               {/*// 주문 정보 */}
             </div>
@@ -260,7 +237,11 @@ export default function OrderList() {
               </ul>
             </div>
             <div className="ico_box_link">
-              <a href="https://www.sony.co.kr/electronics/support" className="box_link_inner ico_type3" target="_blank">
+              <a
+                href="https://www.sony.co.kr/electronics/support"
+                className="box_link_inner ico_type3"
+                target="_blank"
+              >
                 <div className="txt_box">
                   <p className="tit">고객지원 센터</p>
                   <p className="txt">제품 서비스 및 보증기간을 확인하세요!</p>

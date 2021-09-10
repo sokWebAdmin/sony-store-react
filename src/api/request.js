@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { isMobile } from 'react-device-detect';
-import { getAccessToken, getGuestToken } from '../utils/token';
+import { getAccessToken, getGuestToken, removeAccessToken } from '../utils/token';
 
 const SERVER = process.env.REACT_APP_API_URL;
 const version = '1.0';
@@ -45,6 +45,11 @@ const request = async (url, method, query = {}, requestBody = null) => {
     data: requestBody,
     validateStatus: status => status,
   }).then((response) => {
+    if (response.status === 401 && !url.includes('authentications')) {
+      alert('토큰이 만료되었습니다.');
+      removeAccessToken();
+      window.location.replace('/');
+    }
     if (method === 'get') {
       if (response.status === 404) {
         window.location.replace('/404');

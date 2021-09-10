@@ -245,11 +245,11 @@
         <li class="accounts_text_list">휴면계정 대상 회원님은 시행 일자인 <strong>2021.00.00(월) 이후부터</strong> 보유 쿠폰 및 기타 혜택이 소멸되며, 소니스토어 (http://store.sony.co.kr) 사이트 이용이 불가능합니다.</li>
         <li class="accounts_text_list">휴면계정을 활성화하고자 하는 경우에는 하단의 휴면계정 활성화 하기 버튼을 이용하시기 바랍니다.</li>
       </ul>
+      <!-- 2021-09-09 휴대폰 본인 인증 팝업 추가로 인한 수정 -->
       <div class="button_wrap">
-        <button type="button" class="alertLayerBtn button button_positive" data-open-layer="alert_pop2" data-alert-text="휴대폰 인증 서비스를 사용하여 휴면계정을 <br>활성화 합니다. 계속하시겠습니까?">휴면계정 활성화</button>
-      </div>
+        <button type="button" class="alertLayerBtn button button_positive" onclick="common.makeConfirm2('complete', '휴대폰 인증 서비스를 사용하여 휴면계정을 <br>활성화 합니다. 계속하시겠습니까?', 'certifi_pop')">휴면계정 활성화</button>      </div>
     </div>
-
+    <!--// 2021-09-09 휴대폰 본인 인증 팝업 추가로 인한 수정 -->
   </div>
   <footer class="footer">
     <nav class="sidebar">
@@ -380,20 +380,67 @@
         });
       });
   </script></div>
-
-<div class="alert_layer layer alert_pop2">
-  <div class="layer_wrap">
-    <div class="layer_container">
-      <div class="layer_content">
-        <p class="alert_text"></p>
-        <div class="btn_box">
-          <button type="button" class="close btn btn_default">취소</button>
-          <button type="button" class="btn btn_dark">확인</button>
+<!-- 2021-09-09 휴대폰 본인 인증 팝업 추가  -->
+<div class="popup_wrap size_ms certifi_pop" tabindex="0">
+  <div class="pop_inner">
+    <div class="pop_cont">
+      <p class="pop_tit">휴대폰 본인 인증</p>
+      <div class="pop_cont_scroll">
+        <form action="">
+        <div class="form_zone">
+          <div class="input_item">
+            <div class="group error"><!-- error클래스 error_txt 제어 -->
+              <div class="inp_box">
+                <label class="inp_desc" for="refund_account">
+                  <input type="text" id="refund_account" class="inp center" placeholder="&nbsp;" autocomplete="off">
+                  <span class="label">이름<span>(띄어쓰기 없이 입력하세요.)</span></span>
+                  <span class="focus_bg"></span>
+                </label>
+              </div>
+              <div class="error_txt"><span class="ico"></span>이름을 입력해 주세요.</div>
+            </div>
+            <div class="group btn_type error"><!-- error클래스 error_txt 제어 -->
+              <div class="inp_box">
+                <label class="inp_desc" for="refund_name">
+                  <input type="text" id="refund_name" class="inp center" placeholder="&nbsp;" autocomplete="off" maxlength="11">
+                  <span class="label">휴대폰번호<span>(-없이 입력하세요.)</span></span>
+                  <span class="focus_bg"></span>
+                </label>
+                <div class="error_txt"><span class="ico"></span>휴대폰 번호를 입력해 주세요.</div>
+                <div class="btn_box">
+                  <button type="button" class="btn btn_disable">인증번호</button>
+                  <!--<button type="button" class="btn btn_primary">인증번호</button> 휴대폰 번호 입력시 활성화 버튼-->
+                  <!--<button type="button" class="btn btn_default">재전송</button> 재전송시 버튼 -->
+                </div>
+              </div>
+            </div>
+            <div class="group btn_type">
+              <div class="inp_box">
+                <label class="inp_desc" for="certifynumber">
+                  <input type="text" id="certifynumber" class="inp" placeholder="&nbsp;" autocomplete="off" tabindex="6">
+                  <span class="label">인증번호</span>
+                  <span class="timer" id="timer">00:23</span>
+                  <span class="focus_bg"></span>
+                </label>
+                <div class="btn_box">
+                  <button type="button" class="btn btn_primary">인증</button>
+                </div>
+              </div>
+              <div class="certify_txt">※ 입력하신 번호로 인증번호가 전송되었습니다.</div>
+            </div>            
+          </div>
         </div>
+        </form>
+      </div>      
+      <div class="btn_article">
+        <button class="button button_positive button-m closed" onclick="common.makeAlert('complete', '인증되었습니다.')" type="button">확인</button>
       </div>
     </div>
+    <button href="#" class="ico_x closed" title="팝업창 닫기">
+      <span>팝업창 닫기</span>
+    </button>
   </div>
 </div>
-
+<!--// 2021-09-09 휴대폰 본인 인증 팝업 추가  -->
 </body>
 </html>
