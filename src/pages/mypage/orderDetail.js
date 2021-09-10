@@ -1,7 +1,8 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { Link, useLocation } from 'react-router-dom';
 import { useQuery } from '../../hooks';
+import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -15,11 +16,32 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderDetail() {
   const query = useQuery();
+  const [orderProducts, setOrderProducts] = useState([]);
 
   useEffect(() => {
-    const res = getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } });
-    console.log('res:', res);
+    getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } }).then((res) => {
+      setOrderProducts(makeOrderProducts(res.data));
+      console.log('orderProducts:', orderProducts);
+      console.log('res:', res);
+    });
   }, []);
+
+  const makeOrderProducts = (orderDetailResponse) => {
+    console.log('orderDetailResponse:', orderDetailResponse);
+    const { orderOptionsGroupByPartner } = orderDetailResponse;
+    return orderOptionsGroupByPartner
+      .flatMap(({ orderOptionsGroupByDelivery }) => orderOptionsGroupByDelivery)
+      .flatMap(({ orderOptions }) => orderOptions)
+      .map((orderOption) => ({
+        orderNo: orderOption.orderNo,
+        orderOptionNo: orderOption.orderOptionNo,
+        optionTitle: orderOption.optionTitle,
+        productNo: orderOption.productNo,
+        productName: orderOption.productName,
+        orderCnt: orderOption.orderCnt,
+        buyAmt: orderOption.price.buyAmt,
+      }));
+  };
 
   // TODO: 마크업처럼 스타일리 안되는데 추후 확인
   const onPrint = () => {
@@ -112,90 +134,7 @@ export default function OrderDetail() {
                     </div>
                   </div>
                   <div className="col_table_body">
-                    <div className="col_table_row">
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_01.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">AK-47 Hi-Res 헤드폰 앰프</div>
-                            <p className="prd_info_option">128Bit/피아노블랙</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_price">
-                        4,299,000 <span className="won">원</span>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell prd_total">
-                        8,598,000 <span className="won">원</span>
-                      </div>
-                    </div>
-                    <div className="col_table_row">
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_02.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">AK-74 Hi-Res Aux 3.5mm 케이블 (16.5m)</div>
-                            <p className="prd_info_option">
-                              AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux
-                              케이블 AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux 케이블 벗지않는 선글라스
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_price">
-                        9,000 <span className="won">원</span>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell prd_total">
-                        18,000 <span className="won">원</span>
-                      </div>
-                    </div>
-                    <div className="col_table_row">
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_03.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">PLAYSTATION 5 DIGITAL (CFI-1018B01)</div>
-                            <p className="prd_info_option">
-                              4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트
-                              화이트)
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_price">
-                        4,299,000 <span className="won">원</span>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell prd_total">
-                        8,598,000 <span className="won">원</span>
-                      </div>
-                    </div>
+                    <OrderDetailProductItem />
                   </div>
                 </div>
               </div>
