@@ -14,6 +14,22 @@ import '../../assets/scss/mypage.scss';
 export default function OrderDetail() {
   console.log('useLocation().search:', useLocation().search);
   const { orderNo } = new URLSearchParams(useLocation().search);
+
+  // TODO: 마크업처럼 스타일리 안되는데 추후 확인
+  const onPrint = () => {
+    const html = document.querySelector('html');
+    const printContents = document.querySelector('.content').innerHTML;
+    const printDiv = document.createElement('div');
+    printDiv.className = 'print-div';
+
+    html.appendChild(printDiv);
+    printDiv.innerHTML = printContents;
+    document.body.style.display = 'none';
+    window.print();
+    document.body.style.display = 'block';
+    printDiv.style.display = 'none';
+  };
+
   console.log('orderNo:', orderNo);
   useEffect(() => {
     // console.log('orderNo:', orderNo);
@@ -260,7 +276,7 @@ export default function OrderDetail() {
               <button type="button" className="button button_negative">
                 주문 취소
               </button>
-              <button type="button" className="button button_negative only-pc" onclick="onPrint()">
+              <button type="button" className="button button_negative only-pc" onClick={() => onPrint()}>
                 주문 정보 프린트
               </button>
               <a className="button button_positive">목록</a>
