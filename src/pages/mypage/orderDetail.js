@@ -1,15 +1,24 @@
-import { React } from 'react';
+import { React, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
+import { getProfileOrderByOrderNo } from '../../api/order';
 
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
-export default function orderDetail() {
+export default function OrderDetail() {
+  console.log('useLocation().search:', useLocation().search);
+  const { orderNo } = new URLSearchParams(useLocation().search);
+  console.log('orderNo:', orderNo);
+  useEffect(() => {
+    // console.log('orderNo:', orderNo);
+    // getProfileOrderByOrderNo();
+  }, []);
   return (
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
@@ -17,12 +26,9 @@ export default function orderDetail() {
         <div className="container">
           <div className="content">
             <div className="common_head">
-              <a
-                href="../../html/mypage/orderList.html"
-                className="common_head_back"
-              >
+              <Link to="/my-page/order-list" className="common_head_back">
                 주문/배송내역
-              </a>
+              </Link>
               <h1 className="common_head_name">주문 상세 조회</h1>
             </div>
             <div className="my_order order_process">
@@ -62,10 +68,7 @@ export default function orderDetail() {
                 <dt className="o_summary_term">처리상태</dt>
                 <dd className="o_summary_desc">
                   <strong>배송준비</strong>
-                  <button
-                    type="button"
-                    className="button button_positive button-s"
-                  >
+                  <button type="button" className="button button_positive button-s">
                     배송조회
                   </button>
                 </dd>
@@ -103,9 +106,7 @@ export default function orderDetail() {
                             />
                           </div>
                           <div className="prd_info">
-                            <div className="prd_info_name">
-                              AK-47 Hi-Res 헤드폰 앰프
-                            </div>
+                            <div className="prd_info_name">AK-47 Hi-Res 헤드폰 앰프</div>
                             <p className="prd_info_option">128Bit/피아노블랙</p>
                           </div>
                         </div>
@@ -131,14 +132,10 @@ export default function orderDetail() {
                             />
                           </div>
                           <div className="prd_info">
-                            <div className="prd_info_name">
-                              AK-74 Hi-Res Aux 3.5mm 케이블 (16.5m)
-                            </div>
+                            <div className="prd_info_name">AK-74 Hi-Res Aux 3.5mm 케이블 (16.5m)</div>
                             <p className="prd_info_option">
-                              AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도
-                              Aux 케이블 AK-47 전용 고해상도 Aux 케이블 AK-47
-                              전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux
-                              케이블 벗지않는 선글라스
+                              AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux
+                              케이블 AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux 케이블 벗지않는 선글라스
                             </p>
                           </div>
                         </div>
@@ -164,12 +161,10 @@ export default function orderDetail() {
                             />
                           </div>
                           <div className="prd_info">
-                            <div className="prd_info_name">
-                              PLAYSTATION 5 DIGITAL (CFI-1018B01)
-                            </div>
+                            <div className="prd_info_name">PLAYSTATION 5 DIGITAL (CFI-1018B01)</div>
                             <p className="prd_info_option">
-                              4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
-                              1인치 핸디캠/ LIMITED EDITION(사일런트 화이트)
+                              4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트
+                              화이트)
                             </p>
                           </div>
                         </div>
@@ -200,14 +195,11 @@ export default function orderDetail() {
                   <dd className="order_desc">김소니(01056781234)</dd>
                   <dt className="order_term">배송지</dt>
                   <dd className="order_desc">
-                    서울특별시 영등포구 여의도동 국제금융로 10 One IFC 24층 ㈜
-                    소니코리아 서울특별시 영등포구 여의도동 국제금융로 10 One
-                    IFC 24층 ㈜ 소니코리아
+                    서울특별시 영등포구 여의도동 국제금융로 10 One IFC 24층 ㈜ 소니코리아 서울특별시 영등포구 여의도동
+                    국제금융로 10 One IFC 24층 ㈜ 소니코리아
                   </dd>
                   <dt className="order_term">배송 요청사항</dt>
-                  <dd className="order_desc">
-                    파손의 위험이 있는 상품이니 조심히 다뤄주세요.
-                  </dd>
+                  <dd className="order_desc">파손의 위험이 있는 상품이니 조심히 다뤄주세요.</dd>
                   <dt className="order_term">배송일 선택</dt>
                   <dd className="order_desc">정상 배송 </dd>
                 </dl>
@@ -227,21 +219,15 @@ export default function orderDetail() {
                   <dd className="purchase_desc purchase_discount">
                     - 2,300 <span className="won">원</span>
                   </dd>
-                  <dt className="purchase_term purchase_discount_sub">
-                    프로모션 할인
-                  </dt>
+                  <dt className="purchase_term purchase_discount_sub">프로모션 할인</dt>
                   <dd className="purchase_desc purchase_discount_sub">
                     - 2,000 <span className="won">원</span>
                   </dd>
-                  <dt className="purchase_term purchase_discount_sub">
-                    쿠폰 사용
-                  </dt>
+                  <dt className="purchase_term purchase_discount_sub">쿠폰 사용</dt>
                   <dd className="purchase_desc purchase_discount_sub">
                     - 0 <span className="won">원</span>
                   </dd>
-                  <dt className="purchase_term purchase_discount_sub">
-                    마일리지 사용
-                  </dt>
+                  <dt className="purchase_term purchase_discount_sub">마일리지 사용</dt>
                   <dd className="purchase_desc purchase_discount_sub">
                     - 300 <span className="won">원</span>
                   </dd>
@@ -251,9 +237,7 @@ export default function orderDetail() {
                       4,299,000 <span className="won">원</span>
                     </div>
                     {/* 결제정보 현금 */}
-                    <div className="purchase_detail_method">
-                      가상 계좌 : KB국민은행(1234-2345-32456)
-                    </div>
+                    <div className="purchase_detail_method">가상 계좌 : KB국민은행(1234-2345-32456)</div>
                     <button
                       type="button"
                       className="button button_negative button-s popup_comm_btn"
@@ -276,11 +260,7 @@ export default function orderDetail() {
               <button type="button" className="button button_negative">
                 주문 취소
               </button>
-              <button
-                type="button"
-                className="button button_negative only-pc"
-                onclick="onPrint()"
-              >
+              <button type="button" className="button button_negative only-pc" onclick="onPrint()">
                 주문 정보 프린트
               </button>
               <a className="button button_positive">목록</a>
