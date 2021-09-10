@@ -1,7 +1,7 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { Link, useLocation } from 'react-router-dom';
 import { useQuery } from '../../hooks';
+import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -15,11 +15,59 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderDetail() {
   const query = useQuery();
+  const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '' });
+  const [orderProducts, setOrderProducts] = useState([]);
+  const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' });
+  const [shippingAddress, setShippingAddress] = useState({
+    receiverName: '',
+    receiverContact1: '',
+    receiverAddress: '',
+    receiverDetailAddress: '',
+    deliveryMemo: '',
+  });
 
   useEffect(() => {
-    const res = getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } });
-    console.log('res:', res);
+    getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } }).then((res) => {
+      const { orderNo, orderYmdt } = res.data;
+      setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0] });
+      setOrderProducts(makeOrderProducts(res.data));
+      console.log('orderProducts:', orderProducts);
+
+      const {
+        orderer: { ordererName, ordererContact1 },
+      } = res.data;
+      setOrdererInfo({ ordererName, ordererContact1 });
+
+      const {
+        shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
+        deliveryMemo,
+      } = res.data;
+      setShippingAddress({
+        receiverName,
+        receiverAddress,
+        receiverDetailAddress,
+        receiverContact1,
+        deliveryMemo,
+      });
+    });
   }, []);
+
+  const makeOrderProducts = (orderDetailResponse) => {
+    const { orderOptionsGroupByPartner } = orderDetailResponse;
+    return orderOptionsGroupByPartner
+      .flatMap(({ orderOptionsGroupByDelivery }) => orderOptionsGroupByDelivery)
+      .flatMap(({ orderOptions }) => orderOptions)
+      .map((orderOption) => ({
+        orderNo: orderOption.orderNo,
+        orderOptionNo: orderOption.orderOptionNo,
+        optionTitle: orderOption.optionTitle,
+        productNo: orderOption.productNo,
+        productName: orderOption.productName,
+        orderCnt: orderOption.orderCnt,
+        buyPrice: orderOption.price.buyPrice,
+        buyAmt: orderOption.price.buyAmt,
+      }));
+  };
 
   // TODO: 마크업처럼 스타일리 안되는데 추후 확인
   const onPrint = () => {
@@ -92,11 +140,11 @@ export default function OrderDetail() {
               </dl>
               <dl className="o_summary_date">
                 <dt className="o_summary_term">주문날짜</dt>
-                <dd className="o_summary_desc">2021-05-12</dd>
+                <dd className="o_summary_desc">{orderInfo.orderYmdt}</dd>
               </dl>
               <dl className="o_summary_number">
                 <dt className="o_summary_term">주문번호</dt>
-                <dd className="o_summary_desc">20210512-663W24</dd>
+                <dd className="o_summary_desc">{orderInfo.orderNo}</dd>
               </dl>
             </div>
             {/* 제품 정보 */}
@@ -112,90 +160,17 @@ export default function OrderDetail() {
                     </div>
                   </div>
                   <div className="col_table_body">
-                    <div className="col_table_row">
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_01.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">AK-47 Hi-Res 헤드폰 앰프</div>
-                            <p className="prd_info_option">128Bit/피아노블랙</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_price">
-                        4,299,000 <span className="won">원</span>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell prd_total">
-                        8,598,000 <span className="won">원</span>
-                      </div>
-                    </div>
-                    <div className="col_table_row">
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_02.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">AK-74 Hi-Res Aux 3.5mm 케이블 (16.5m)</div>
-                            <p className="prd_info_option">
-                              AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux
-                              케이블 AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux 케이블 벗지않는 선글라스
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_price">
-                        9,000 <span className="won">원</span>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell prd_total">
-                        18,000 <span className="won">원</span>
-                      </div>
-                    </div>
-                    <div className="col_table_row">
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_03.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">PLAYSTATION 5 DIGITAL (CFI-1018B01)</div>
-                            <p className="prd_info_option">
-                              4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트
-                              화이트)
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_price">
-                        4,299,000 <span className="won">원</span>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell prd_total">
-                        8,598,000 <span className="won">원</span>
-                      </div>
-                    </div>
+                    {orderProducts.length > 0 &&
+                      orderProducts.map((orderProduct) => (
+                        <OrderDetailProductItem
+                          key={orderProduct.orderNo}
+                          productName={orderProduct.productName}
+                          optionTitle={orderProduct.optionTitle}
+                          buyPrice={orderProduct.buyPrice}
+                          buyAmt={orderProduct.buyAmt}
+                          orderCnt={orderProduct.orderCnt}
+                        />
+                      ))}
                   </div>
                 </div>
               </div>
@@ -207,16 +182,20 @@ export default function OrderDetail() {
               <div className="order_info_inner">
                 <dl className="order">
                   <dt className="order_term">주문자 정보</dt>
-                  <dd className="order_desc">김소니(01056781234)</dd>
+                  <dd className="order_desc">
+                    {ordererInfo.ordererName}({ordererInfo.ordererContact1})
+                  </dd>
                   <dt className="order_term">수령인</dt>
-                  <dd className="order_desc">김소니(01056781234)</dd>
+                  <dd className="order_desc">
+                    {shippingAddress.receiverName}({shippingAddress.ordererContact1})
+                  </dd>
                   <dt className="order_term">배송지</dt>
                   <dd className="order_desc">
-                    서울특별시 영등포구 여의도동 국제금융로 10 One IFC 24층 ㈜ 소니코리아 서울특별시 영등포구 여의도동
-                    국제금융로 10 One IFC 24층 ㈜ 소니코리아
+                    {shippingAddress.receiverAddress}
+                    {shippingAddress.receiverDetailAddress}
                   </dd>
                   <dt className="order_term">배송 요청사항</dt>
-                  <dd className="order_desc">파손의 위험이 있는 상품이니 조심히 다뤄주세요.</dd>
+                  <dd className="order_desc">{shippingAddress.deliveryMemo ? shippingAddress.deliveryMemo : '없음'}</dd>
                   <dt className="order_term">배송일 선택</dt>
                   <dd className="order_desc">정상 배송 </dd>
                 </dl>
