@@ -19,12 +19,7 @@ export default function OrderListItem({
   orderStatusTypeLabel,
 }) {
   const showOrderCancel = (orderStatusType) => {
-    return [
-      'DEPOSIT_WAIT',
-      'PAY_DONE',
-      'DELIVERY_PREPARE',
-      'DELIVERY_ING',
-    ].includes(orderStatusType);
+    return ['DEPOSIT_WAIT', 'PAY_DONE', 'DELIVERY_PREPARE', 'DELIVERY_ING'].includes(orderStatusType);
   };
 
   const showDeliveryFind = (orderStatusType) => {
@@ -39,7 +34,7 @@ export default function OrderListItem({
     <div className="col_table_row">
       <div className="col_table_cell order">
         <span className="order_date">{orderYmdt}</span>
-        <Link to="/my-page/order-detail" className="order_number">
+        <Link to={`/my-page/order-detail?orderNo=${orderNo}`} className="order_number">
           {orderNo}
         </Link>
       </div>
