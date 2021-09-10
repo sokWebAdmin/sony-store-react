@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Tabs from "../../../components/common/Tabs";
 
 export default function BottomContent({ contents }) {
 
@@ -7,24 +8,11 @@ export default function BottomContent({ contents }) {
   return (
     <div className="product_cont">
       <div className="detail_tab tab_ui size3">
-        <ul>
-          {
-            contents.map(
-              ({ tabName, label }) => (
-                <li key={`tab_${tabName}`} className={`tabs ${tabState === tabName && 'on'}`}>
-                  <a 
-                    className="btn"
-                    href={`#${tabName}`} 
-                    onClick={ event => {
-                      event.preventDefault();
-                      setTabState(tabName);
-                    }}
-                  >{ label }</a>
-                </li>
-              )
-            )
-          }
-        </ul>
+        <Tabs 
+          tabs={ contents }
+          tabState={ tabState }
+          setTabState={ setTabState }
+        />
       </div>
       <div className="detail_info_zone tab_ui_info">
         {

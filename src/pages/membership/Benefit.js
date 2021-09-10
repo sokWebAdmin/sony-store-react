@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import SEOHelmet from '../../components/SEOHelmet';
 
 //lib-css
@@ -8,18 +8,36 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 import "swiper/swiper.scss"
 
 //css
-import "../../assets/scss/contents.scss"
-import "../../assets/scss/membership.scss"
+import "../../assets/scss/contents.scss";
+import "../../assets/scss/membership.scss";
+import "../../assets/scss/mypage.scss";
+import Vvip from '../../assets/images/membership/membership_vvip2.svg';
+import Vip from '../../assets/images/membership/membership_vip2.svg';
+import Family from '../../assets/images/membership/membership_family2.svg';
+import Gift from '../../assets/images/membership/premium1.jpg';
+import Delivery from '../../assets/images/membership/premium2.jpg';
+import ConvertService from '../../assets/images/membership/premium3.jpg';
+import AfterService from '../../assets/images/membership/premium4.jpg';
+
+import Tabs from '../../components/common/Tabs';
+
+const tabs = [
+  { tabName: 'mileage', label: '마일리지' },
+  { tabName: 'premium', label: '프리미엄 서비스' },
+  { tabName: 'coupon', label: '쿠폰 안내' },
+];
 
 const Benefit = () => {
+
+  const [ tabState, setTabState ] = useState('mileage');
+
   return (
     <>
       <SEOHelmet title={'등급/혜택 안내'} />
       <div className="contents membership">
         <div className="content">
           <div className="membership">
-            {/* <!-- vvip 추가되면 temp 클래스 삭제 --> */}
-            <div className="membership_kvarea temp">
+            <div className="membership_kvarea">
               <div className="membership_kvarea_titlebox">
                 <span className="subtitle">등급 &amp; 혜택 안내</span>
                 <h1 className="title">소니스토어 멤버십</h1>
@@ -31,14 +49,16 @@ const Benefit = () => {
             </div>
             <div className="membership_tabarea">
               <div className="detail_tab tab_ui size3">
-                <ul>
-                  <li className="tabs on"><a href="#" className="btn">마일리지</a></li>
-                  <li className="tabs"><a href="#" className="btn">프리미엄 서비스</a></li>
-                  <li className="tabs"><a href="#" className="btn">쿠폰 안내</a></li>
-                </ul>
+                <Tabs 
+                  tabs={tabs}
+                  tabState={tabState}
+                  setTabState={setTabState}
+                />
               </div>
               <div className="detail_veiw_area tab_ui_info">
-                <div className="tab_ui_inner view temp">
+
+                {/* 마일리지 */}
+                <div className={ `tab_ui_inner ${ tabState === 'mileage' && 'view' }` }>
                   <div className="mileage_info">
                     <div className="mileage_info_inner">
                       <strong className="mileage_info_inner_tit">마일리지 안내</strong>
@@ -52,9 +72,9 @@ const Benefit = () => {
                     <div className="col_table">
                       <div className="col_table_head">
                         <div className="col_table_row">
-                          <div className="col_table_cell">구분</div>
-                          {/* <!-- vvip --> */}
-                          {/* <!-- <div className="col_table_cell">VVIP 회원</div> --> */}
+                          <div className="col_table_cell">회원구분</div>
+                          
+                          <div className="col_table_cell">VVIP 회원</div>
                           <div className="col_table_cell">VIP 회원</div>
                           <div className="col_table_cell">MEMBERSHIP 회원</div>
                         </div>
@@ -64,25 +84,25 @@ const Benefit = () => {
                           <div className="col_table_cell">
                             <strong className="emp">회원등급</strong>
                           </div>
-                          {/* <!-- vvip --> */}
-                          {/* <!-- <div className="col_table_cell">
-                            <img src="/dist/images/membership/membership_vvip2.svg" alt="vvip">
-                          </div> --> */}
+
                           <div className="col_table_cell">
-                            <img src="/dist/images/membership/membership_vip2.svg" alt="vip" />
+                            <img src={ Vvip } alt="vvip" />
                           </div>
                           <div className="col_table_cell">
-                            <img src="/dist/images/membership/membership_family2.svg" alt="membership" />
+                            <img src={ Vip } alt="vip" />
+                          </div>
+                          <div className="col_table_cell">
+                            <img src={ Family } alt="membership" />
                           </div>
                         </div>
                         <div className="col_table_row">
                           <div className="col_table_cell">
                             <strong className="emp">등급기준</strong>
                           </div>
-                          {/* <!-- vvip --> */}
-                          {/* <!-- <div className="col_table_cell">
+                          
+                          <div className="col_table_cell">
                             구매금액(누적)이 <strong className="emp">2,000만원 이상</strong>이 되는 시점 익일부터 VVIP 혜택 2년 간 적용
-                          </div> --> */}
+                          </div>
                           <div className="col_table_cell">
                             구매금액(누적)이 <strong className="emp">200만원 이상</strong>이 되는 시점 익일부터 VIP 혜택 2년 간 적용
                           </div>
@@ -94,10 +114,10 @@ const Benefit = () => {
                           <div className="col_table_cell">
                             <strong className="emp">적립혜택</strong>
                           </div>
-                          {/* <!-- vvip -->
-                          <!-- <div className="col_table_cell">
+                          
+                          <div className="col_table_cell">
                             제품 구매 시 결제 금액의 <strong className="emp">6%</strong> 적립
-                          </div> --> */}
+                          </div>
                           <div className="col_table_cell">
                             제품 구매 시 결제 금액의 <strong className="emp">4%</strong> 적립
                           </div>
@@ -117,21 +137,20 @@ const Benefit = () => {
                         <col width="35%" />
                         <col width="65%" />
                       </colgroup>
-                      <tbody>
-                        {/* <!-- vvip --> */}
-                        {/* <!-- <tr>
+                      <tbody>   
+                        <tr>
                           <th scope="row">
-                            <img src="/dist/images/membership/membership_vvip2.svg" alt="vvip">
+                            <img src={ Vvip } alt="vvip" />
                             <p className="name">VVIP 회원</p>
                           </th>
                           <td>
                             <p className="benefit">구매 금액(누적)이 <strong>2,000만원 이상</strong>이 되는 시점 익일부터 VVIP 혜택 2년 간 적용</p>
                             <p className="benefit">제품 구매 시 결제 금액의 <strong>6%</strong> 적립</p>
                           </td>
-                        </tr> --> */}
+                        </tr>
                         <tr>
                           <th scope="row">
-                            <img src="/dist/images/membership/membership_vip2.svg" alt="vip" />
+                            <img src={ Vip } alt="vip" />
                             <p className="name">VIP 회원</p>
                           </th>
                           <td>
@@ -141,7 +160,7 @@ const Benefit = () => {
                         </tr>
                         <tr>
                           <th scope="row">
-                            <img src="/dist/images/membership/membership_family2.svg" alt="membership" />
+                            <img src={ Family } alt="membership" />
                             <p className="name">MEMBERSHIP <br />회원</p>
                           </th>
                           <td>
@@ -201,8 +220,10 @@ const Benefit = () => {
                     </div>
                   </div>
                 </div>
-                <div className="tab_ui_inner">
-                  {/* <!-- 프리미엄 서비스 --> */}
+                {/* 마일리지 */}
+
+                {/* 프리미엄 서비스 */}
+                <div className={ `tab_ui_inner ${ tabState === 'premium' && 'view' }` }>
                   <div className="prmm_smry">
                     <h2 className="prmm_smry_title">프리미엄 서비스란?</h2>
                     <p className="prmm_smry_desc">고객님께서 소니제품을 구입하거나 사용 시에 보다 편리하게 사용하실<br /> 수 있도록 제공해 드리는 <strong className="primary-color">소니스토어만의 특별한 서비스</strong>입니다.</p>
@@ -216,7 +237,7 @@ const Benefit = () => {
                   <div className="prmm_dtl">
                     <ul className="prmm_dtl_lists">
                       <li className="prmm_dtl_list">
-                        <div className="prmm_dtl_pic"><img src="/dist/images/membership/premium1.jpg" alt="선물하기 서비스" className="prmm_dtl_img" /></div>
+                        <div className="prmm_dtl_pic"><img src={ Gift } alt="선물하기 서비스" className="prmm_dtl_img" /></div>
                         <h3 className="prmm_dtl_title">선물하기 서비스</h3>
                         <ul className="prmm_dtl_prctns">
                           <li className="prmm_dtl_prctn">선물하기 서비스는 <strong className="primary-color">소니스토어 회원만</strong> 온라인 또는 앱에서 이용가능한 서비스입니다.</li>
@@ -225,7 +246,7 @@ const Benefit = () => {
                         <p className="prmm_dtl_note">* 제품 1건 결제(구매 수량은 여러개 가능), 복수 배송지 불가</p>
                       </li>
                       <li className="prmm_dtl_list">
-                        <div className="prmm_dtl_pic"><img src="/dist/images/membership/premium2.jpg" alt="택배/퀵 서비스" className="prmm_dtl_img" /></div>
+                        <div className="prmm_dtl_pic"><img src={ Delivery } alt="택배/퀵 서비스" className="prmm_dtl_img" /></div>
                         <h3 className="prmm_dtl_title">택배/퀵 서비스</h3>
                         <ul className="prmm_dtl_prctns">
                           <li className="prmm_dtl_prctn">택배/퀵 서비스는 소니스토어에서 구매한 제품에 한하여, <span style={{ 'font-family':'Segoe UI, Tahoma, Geneva, Verdana, sans-serif' }}></span>제품 가격에 따라 배송 비용이 할증될 수 있습니다.</li>
@@ -236,16 +257,16 @@ const Benefit = () => {
                         <p className="prmm_dtl_note">* 비용은 고객 부담입니다.</p>
                       </li>
                       <li className="prmm_dtl_list">
-                        <div className="prmm_dtl_pic"><img src="/dist/images/membership/premium3.jpg" alt="영상변환 서비스" className="prmm_dtl_img" /></div>
+                        <div className="prmm_dtl_pic"><img src={ ConvertService } alt="영상변환 서비스" className="prmm_dtl_img" /></div>
                         <h3 className="prmm_dtl_title">영상변환 서비스</h3>
                         <ul className="prmm_dtl_prctns">
                           <li className="prmm_dtl_prctn">영상변환 서비스는 고객님께서 소장하고 계시는 비디오 테이프를 <strong className="primary-color">USB 메모리 또는 DVD 디스크</strong>로 변환하여 드리는 서비스입니다.</li>
                           <li className="prmm_dtl_prctn">변환 가능한 테이프는 <strong className="primary-color">6mm, 8mm 또는 VHS 테이프</strong>이며, 가까운 서비스 센터로 비디오 테이프를 가지고 방문하시면 변환 서비스를 받으실 수 있습니다.</li>
                         </ul>
-                        <a href="#" className="prmm_dtl_link">자세히 보기</a>
+                        <a href="https://www.sony.co.kr/scs/handler/Service-Media" className="prmm_dtl_link">자세히 보기</a>
                       </li>
                       <li className="prmm_dtl_list">
-                        <div className="prmm_dtl_pic"><img src="/dist/images/membership/premium4.jpg" alt="연장 서비스 플랜" className="prmm_dtl_img" /></div>
+                        <div className="prmm_dtl_pic"><img src={ AfterService } alt="연장 서비스 플랜" className="prmm_dtl_img" /></div>
                         <h3 className="prmm_dtl_title">연장 서비스 플랜</h3>
                         <ul className="prmm_dtl_prctns">
                           <li className="prmm_dtl_prctn">연장 서비스 플랜은 소정의 비용으로 제품 구입일로부터 2년 또는 3년 동안 횟수와 금액 상관 없이 안심하고 무상 수리를 받을 수 있는 프리미엄 서비스입니다.</li>
@@ -253,15 +274,17 @@ const Benefit = () => {
                           <li className="prmm_dtl_prctn">연장 서비스 플랜 적용은 <strong className="primary-color">상품 구매일로부터 7일 이후</strong> 자동 적용됩니다.</li>
                           <li className="prmm_dtl_prctn">연장 서비스 플랜 상품은 <strong className="primary-color">무형 상품</strong>으로 별도 배송되지 않습니다.</li>
                         </ul>
-                        <a href="#" className="prmm_dtl_link">자세히 보기</a>
+                        <a href="https://www.sony.co.kr/scs/handler/SCSWarranty-ESPOrderConfirm" className="prmm_dtl_link">자세히 보기</a>
                       </li>
                     </ul>
                   </div>
-                  {/* <!-- //프리미엄 서비스 --> */}
                 </div>
-                <div className="tab_ui_inner">
+                {/* 프리미엄 서비스 */}
+
+                {/* 쿠폰 안내 */}
+                <div className={ `tab_ui_inner ${ tabState === 'coupon' && 'view' }` }>
                   <div className="coupon_zone">
-                    <div className="coupon_inner">
+                    <div className="coupon_inner on">
                       <div className="coupon_list">
                         <div className="coupon_box">
                           <span className="coupon_type two">ALL<br /> COUPON</span>
@@ -314,10 +337,10 @@ const Benefit = () => {
                           </div>
                         </div>
                       </div>
-                      {/* <!-- vvip 쿠폰 --> */}
-                      {/* <!-- <div className="coupon_list">
+                      
+                      <div className="coupon_list">
                         <div className="coupon_box vvip">
-                          <span className="coupon_type two">VVIP<br> COUPON</span>
+                          <span className="coupon_type two">VVIP<br /> COUPON</span>
                           <div className="coupon">
                             <div className="coupon_head">
                               <span className="coupon_expiration">발행일로부터 90일</span>
@@ -337,7 +360,7 @@ const Benefit = () => {
                           </div>
                         </div>
                         <div className="coupon_box vvip">
-                          <span className="coupon_type two">VVIP<br> COUPON</span>
+                          <span className="coupon_type two">VVIP<br /> COUPON</span>
                           <div className="coupon">
                             <div className="coupon_head">
                               <span className="coupon_expiration">발행일로부터 30일</span>
@@ -356,10 +379,10 @@ const Benefit = () => {
                             </ul>
                           </div>
                         </div>
-                      </div> --> */}
-                      {/* <!-- <div className="coupon_list">
+                      </div>
+                      <div className="coupon_list">
                         <div className="coupon_box vvip">
-                          <span className="coupon_type two">VVIP<br> COUPON</span>
+                          <span className="coupon_type two">VVIP<br /> COUPON</span>
                           <div className="coupon">
                             <div className="coupon_head">
                               <span className="coupon_expiration">발행일로부터 90일</span>
@@ -379,7 +402,7 @@ const Benefit = () => {
                           </div>
                         </div>
                         <div className="coupon_box vvip">
-                          <span className="coupon_type two">VVIP<br> COUPON</span>
+                          <span className="coupon_type two">VVIP<br /> COUPON</span>
                           <div className="coupon">
                             <div className="coupon_head">
                               <span className="coupon_expiration">발행일로부터 30일</span>
@@ -398,15 +421,15 @@ const Benefit = () => {
                             </ul>
                           </div>
                         </div>
-                      </div> -->
-                      <!-- <div className="coupon_list">
+                      </div> 
+                      <div className="coupon_list">
                         <div className="coupon_box vvip">
-                          <span className="coupon_type two">VVIP<br> COUPON</span>
+                          <span className="coupon_type two">VVIP<br /> COUPON</span>
                           <div className="coupon">
                             <div className="coupon_head">
                               <span className="coupon_expiration">발행일로부터 30일</span>
                               <p className="tit">생일 축하 기념 <span className="percentage">10%</span> 할인</p>
-                              <p className="cut_tit">VVIP 회원 대상으로 회원 가입 시 입력된 생일<br className="mo_none"> 당일 발급</p>
+                              <p className="cut_tit">VVIP 회원 대상으로 회원 가입 시 입력된 생일<br className="mo_none" /> 당일 발급</p>
                             </div>
                             <ul className="coupon_desc">
                               <li className="lists">
@@ -420,7 +443,7 @@ const Benefit = () => {
                             </ul>
                           </div>
                         </div>
-                      </div> --> */}
+                      </div>
                     </div>
                     <div className="guide_list">
                       <p className="tit ico_tit">주의사항</p>
@@ -433,6 +456,7 @@ const Benefit = () => {
                     </div>
                   </div>
                 </div>
+                {/* 쿠폰 안내 */}
               </div>
             </div>
           </div>
