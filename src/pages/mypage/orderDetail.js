@@ -1,5 +1,5 @@
 import { React, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -26,9 +26,9 @@ export default function OrderDetail() {
         <div className="container">
           <div className="content">
             <div className="common_head">
-              <a href="../../html/mypage/orderList.html" className="common_head_back">
+              <Link to="/my-page/order-list" className="common_head_back">
                 주문/배송내역
-              </a>
+              </Link>
               <h1 className="common_head_name">주문 상세 조회</h1>
             </div>
             <div className="my_order order_process">
