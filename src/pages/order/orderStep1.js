@@ -136,20 +136,6 @@ const OrderStep1 = ({ location }) => {
 
                       <div className="acc_item on">
                         <div className="acc_head">
-                          <a className="acc_btn" title="할인 정보 열기">
-                            <span className="acc_tit">할인 정보</span>
-                            <span className="acc_arrow">상세 보기</span>
-                          </a>
-                        </div>
-                        <div className="acc_inner">
-                          <div className="acc_box">
-                          </div>
-                        </div>
-                      </div>
-                      {/* // acc_item */}
-                      {/* // acc_item */}
-                      <div className="acc_item on">
-                        <div className="acc_head">
                           <a className="acc_btn" title="결제 방법 열기">
                             <span className="acc_tit">결제 방법</span>
                             <span className="acc_arrow">상세 보기</span>
