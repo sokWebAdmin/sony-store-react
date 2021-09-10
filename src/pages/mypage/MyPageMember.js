@@ -22,6 +22,7 @@ import Alert from '../../components/common/Alert';
 import { modifyMy } from '../../api/sony/member';
 import ReCAPTCHA from 'react-google-recaptcha';
 import AuthPassword from './myPageMember/AuthPassword';
+import { addHyphenToPhoneNo } from '../../utils/utils';
 
 function getStrDate(date, format = 'YYYY-MM-DD') {
   if (!date) return;
@@ -218,7 +219,8 @@ export default function MyPageMember() {
       servicesite: {
         ...myForm.servicesite,
         news: active.email ? 'Y' : 'N'
-      }
+      },
+      mobile: addHyphenToPhoneNo(myForm.mobile)
     });
 
     if (request) {
