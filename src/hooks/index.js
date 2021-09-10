@@ -1,16 +1,17 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-export const useToggle = initial => {
+export const useToggle = (initial) => {
   const [toggleValue, setToggleValue] = useState(initial);
 
   const toggle = useCallback(() => {
-    setToggleValue(prevState => !prevState);
-  }, [ ])
-  
-  return [toggleValue, toggle];
-}
+    setToggleValue((prevState) => !prevState);
+  }, []);
 
-export const useAlert = initial => {
+  return [toggleValue, toggle];
+};
+
+export const useAlert = (initial) => {
   initial = initial ?? {
     visible: false,
     message: '',
@@ -32,7 +33,11 @@ export const useAlert = initial => {
   };
 
   return {
-    openAlert, closeModal, alertVisible, alertMessage
+    openAlert,
+    closeModal,
+    alertVisible,
+    alertMessage,
   };
-}
+};
 
+export const useQuery = () => new URLSearchParams(useLocation().search);

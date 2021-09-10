@@ -11,7 +11,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import "../../assets/scss/contents.scss";
 import '../../assets/scss/mypage.scss';
 
-import { useProfileState } from '../../context/profile.context';
+import { fetchMyProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
 import moment from 'moment';
 import { useHistory } from 'react-router';
 import FindAddress from '../../components/popup/FindAddress';
@@ -76,6 +76,7 @@ const validateMobile = (mobile, openAlert) => {
 export default function MyPageMember() {
   const history = useHistory();
   const profileState = useProfileState();
+  const profileDispatch = useProileDispatch();
 
   const { openAlert, closeModal, alertMessage, alertVisible } = useAlert();
 
@@ -117,7 +118,7 @@ export default function MyPageMember() {
 
   // 수신 동의
   const [ active, setActive ] = useState({
-    sns: false,
+    sms: false,
     email: false,
   });
 
@@ -177,13 +178,13 @@ export default function MyPageMember() {
     }
   };
 
-  const handleChange = ({ target: { name, value }}) => {
+  const handleChange = ({ target: { name, value, checked }}) => {
     switch (name) {
       case 'sms':
       case 'email':
         setActive(prev => ({
           ...prev,
-          [name]: value,
+          [name]: checked,
         }));
         break;
       case 'mobile':
@@ -234,6 +235,7 @@ export default function MyPageMember() {
       const ret = await modifyMy(request);
 
       if (ret.data.errorCode === '0000') {
+        fetchMyProfile(profileDispatch, { type: '30', customerid: request.customerid });
         openAlert('회원 정보 수정이 완료되었습니다.');
         setIsEditMode(false);
       } else {
@@ -355,7 +357,7 @@ export default function MyPageMember() {
                             name="mobile" 
                             className={`inp tel_number ${!isEditMode && 'disabled'}`}
                             value={ addHyphenToPhoneNo(myForm.mobile) }
-                            maxLength={11} 
+                            maxLength={13} 
                             autoComplete="off" 
                             placeholder=""
                             onChange={handleChange}

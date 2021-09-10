@@ -59,7 +59,7 @@ export default function Search() {
         firstname: searchValue.memberName,
         mobile: searchValue.mobileNo
       });
-      if (response.resultCode === '0000') {
+      if (response.errorCode === '0000') {
         setResult(response.body.customerid);
       } else {
         openAlert(response.errorMessage);
@@ -70,7 +70,7 @@ export default function Search() {
         customerid: searchValue.email,
         mobile: searchValue.mobileNo
       });
-      if (response.resultCode === '0000') {
+      if (response.errorCode === '0000') {
         openAlert(`${response.body.customerid} 메일을 보냈습니다.`, true);
       } else {
         openAlert(response.errorMessage);

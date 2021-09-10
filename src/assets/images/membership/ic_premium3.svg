@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56">
+    <defs>
+        <style>
+            .cls-2,.cls-5{fill:none}.cls-2{stroke:#222;stroke-width:2px}.cls-4{stroke:none}
+        </style>
+    </defs>
+    <g id="ic_Video" transform="translate(-1048 -1008.732)">
+        <path id="사각형_575" data-name="사각형 575" transform="translate(1048 1008.732)" style="fill:transparent" d="M0 0h56v56H0z"/>
+        <g id="그룹_6802" data-name="그룹 6802">
+            <g id="사각형_1967" data-name="사각형 1967" class="cls-2">
+                <path class="cls-4" d="M0 0h52v36H0z" transform="translate(1050 1018.732)"/>
+                <path class="cls-5" d="M1 1h50v34H1z" transform="translate(1050 1018.732)"/>
+            </g>
+            <g id="사각형_1968" data-name="사각형 1968" style="stroke:#5865f5;stroke-width:2px;fill:none">
+                <path class="cls-4" d="M0 0h52v12H0z" transform="translate(1050 1018.732)"/>
+                <path class="cls-5" d="M1 1h50v10H1z" transform="translate(1050 1018.732)"/>
+            </g>
+            <g id="그룹_6801" data-name="그룹 6801">
+                <g id="사각형_1969" data-name="사각형 1969" class="cls-2" transform="translate(1056 1033.732)">
+                    <rect class="cls-4" width="40" height="15" rx="7.5"/>
+                    <rect class="cls-5" x="1" y="1" width="38" height="13" rx="6.5"/>
+                </g>
+                <g id="사각형_1970" data-name="사각형 1970" class="cls-2">
+                    <path class="cls-4" d="M0 0h24v15H0z" transform="translate(1064 1033.732)"/>
+                    <path class="cls-5" d="M1 1h22v13H1z" transform="translate(1064 1033.732)"/>
+                </g>
+                <g id="사각형_1971" data-name="사각형 1971" class="cls-2">
+                    <path class="cls-4" d="M0 0h10v3H0z" transform="translate(1071 1039.732)"/>
+                    <path class="cls-5" d="M1 1h8v1H1z" transform="translate(1071 1039.732)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

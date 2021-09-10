@@ -88,7 +88,6 @@ import {
   useProfileState,
   useProileDispatch,
 } from './context/profile.context';
-import Repassword from './pages/mypage/myPageMember/Repassword';
 import Benefit from './pages/membership/Benefit';
 
 const App = (props) => {

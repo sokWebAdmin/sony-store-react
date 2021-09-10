@@ -5,7 +5,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //api
 import { registerApi } from '../../api/sony/member';
-import { sendSMS, verifySMS } from '../../api/auth';
+import { loginApi, sendSMS, verifySMS } from '../../api/auth';
 
 //css
 import '../../assets/scss/contents.scss';
@@ -18,11 +18,12 @@ import { getUrlParam } from '../../utils/location';
 //context
 import GlobalContext from '../../context/global.context';
 import Alert from '../../components/common/Alert';
-import { getItem, KEY } from '../../utils/token';
-import { useProfileState } from '../../context/profile.context';
+import { getItem, KEY, setAccessToken } from '../../utils/token';
+import { fetchProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
 
 export default function JoinStep() {
-  const { isLogin } = useContext(GlobalContext);
+  const { onChangeGlobal, isLogin } = useContext(GlobalContext);
+  const profileDispatch = useProileDispatch();
   const { profile } = useProfileState();
 
   const history = useHistory();
@@ -68,14 +69,18 @@ export default function JoinStep() {
   // alert
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [alertCloseFunc, setAlertCloseFun] = useState(null);
 
-  const openAlert = (message) => {
+  const openAlert = (message, onClose) => {
     setAlertVisible(true);
     setAlertMessage(message);
+    setAlertCloseFun(onClose);
   };
   const closeModal = () => {
     setAlertVisible(false);
+    alertCloseFunc?.();
   };
+
   const onChangeGender = (e) => setGender(e.target.value);
   const _registerApi = async () => {
     //이메일
@@ -185,8 +190,18 @@ export default function JoinStep() {
     if (response.status === 200) {
       if (response.data.errorCode === '0000') {
         //성공
-        openAlert('회원가입이 완료되었습니다.');
-        history.push('/member/login');
+        openAlert('회원가입이 완료되었습니다.', async () => {
+          const response = await loginApi(email, password);
+          if (response.status === 200) {
+            const { accessToken, expireIn } = response.data;
+            setAccessToken(accessToken, expireIn);
+            onChangeGlobal({ isLogin: true });
+            await fetchProfile(profileDispatch);
+            history.replace('/');
+          } else {
+            history.push('/member/login');
+          }
+        });
       } else {
         openAlert(response.data.errorMessage);
       }

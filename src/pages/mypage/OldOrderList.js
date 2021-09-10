@@ -1,18 +1,46 @@
-import React, { useEffect } from 'react';
-import { getOldOrders } from '../../api/sony/order';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import OldOrderListItem from '../../components/order/OldOrderListItem';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
+import { getOldOrders } from '../../api/sony/order';
 
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function OldOrderList() {
+  //FIXME: 개발후 삭제
+  const mockData = [
+    {
+      orderid: '20210727-2V3743',
+      createdate: '2021-07-27 17:06:13',
+      customernr: '2780336',
+      totalprice: 1800,
+      status: '01',
+      seqno: 'HDR-AZ1/W',
+    },
+    {
+      orderid: '20210720-203G03',
+      createdate: '2021-07-20 12:02:46',
+      customernr: '2780336',
+      totalprice: 1500,
+      status: '07',
+      seqno: 'A5000L/B',
+    },
+  ];
+
+  // const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
+  const [oldOrderProducts, setOldOrderProducts] = useState([]);
+
   useEffect(() => {
-    getOldOrders().then((res) => console.log('뭐:', res));
+    getOldOrders().then((res) => {
+      console.log('response:', res);
+      setOldOrderProducts(res.data.body);
+    });
   }, []);
 
   //TODO: 스타일 전부 하나씩 scss 파일로 변환 해야하나?>
@@ -24,12 +52,9 @@ export default function OldOrderList() {
         <div class="container">
           <div class="content">
             <div class="common_head">
-              <a
-                href="/dist/html/mypage/orderList.html"
-                class="common_head_back"
-              >
+              <Link to="/my-page/order-list" class="common_head_back">
                 주문/배송내역
-              </a>
+              </Link>
               <h1 class="common_head_name">이전 주문/배송내역</h1>
             </div>
 
@@ -56,25 +81,12 @@ export default function OldOrderList() {
                   </ul>
                   <div class="date_rang">
                     <div class="calendar_box">
-                      <input
-                        type="text"
-                        id="datepicker1"
-                        class="inp datepicker"
-                        autocomplete="off"
-                      />
+                      <input type="text" id="datepicker1" class="inp datepicker" autocomplete="off" />
                     </div>
                     <div class="calendar_box">
-                      <input
-                        type="text"
-                        id="datepicker2"
-                        class="inp datepicker"
-                        autocomplete="off"
-                      />
+                      <input type="text" id="datepicker2" class="inp datepicker" autocomplete="off" />
                     </div>
-                    <button
-                      class="button button_positive button-s"
-                      type="button"
-                    >
+                    <button class="button button_positive button-s" type="button">
                       조회
                     </button>
                   </div>
@@ -90,85 +102,29 @@ export default function OldOrderList() {
                       <div class="col_table_cell">처리상태</div>
                     </div>
                   </div>
-                  <div class="col_table_body">
-                    <div class="col_table_row">
-                      <div class="col_table_cell order">
-                        <span class="order_date">21.05.12</span>
-                        <a href="#" class="order_number">
-                          20210512-663W24
-                        </a>
-                      </div>
-                      <div class="col_table_cell prd_wrap">
-                        <div class="prd">
-                          <div class="prd_info">
-                            <div class="prd_info_name">
-                              AK-47 Hi-Res 헤드폰 앰프
-                            </div>
-                            <p class="prd_info_option">128Bit/피아노블랙</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col_table_cell order">
-                        <span class="order_status">결제완료</span>
-                      </div>
+                  {oldOrderProducts.length > 0 && (
+                    <div class="col_table_body">
+                      {oldOrderProducts.map((oldOrderProduct) => (
+                        <OldOrderListItem
+                          orderid={oldOrderProduct.orderid}
+                          createdate={oldOrderProduct.createdate}
+                          status={oldOrderProduct.status}
+                          seqno={oldOrderProduct.seqno}
+                        />
+                      ))}
                     </div>
-                    <div class="col_table_row">
-                      <div class="col_table_cell order">
-                        <span class="order_date">21.05.12</span>
-                        <a href="#" class="order_number">
-                          20210512-663W24
-                        </a>
-                      </div>
-                      <div class="col_table_cell prd_wrap">
-                        <div class="prd">
-                          <div class="prd_info">
-                            <div class="prd_info_name">
-                              PLAYSTATION 5 DIGITAL (CFI-1018B01)
-                            </div>
-                            <p class="prd_info_option">
-                              4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급
-                              1인치 핸디캠/ LIMITED EDITION(사일런트 화이트)
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col_table_cell order">
-                        <span class="order_status">배송완료</span>
-                      </div>
-                    </div>
-                    <div class="col_table_row">
-                      <div class="col_table_cell order">
-                        <span class="order_date">21.05.12</span>
-                        <a href="#" class="order_number">
-                          20210512-663W24
-                        </a>
-                      </div>
-                      <div class="col_table_cell prd_wrap">
-                        <div class="prd">
-                          <div class="prd_info">
-                            <div class="prd_info_name">
-                              AK-47 Hi-Res 헤드폰 앰프
-                            </div>
-                            <p class="prd_info_option">128Bit/피아노블랙</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col_table_cell order">
-                        <span class="order_status">주문취소</span>
-                      </div>
-                    </div>
+                  )}
+                </div>
+                {oldOrderProducts.length > 0 && (
+                  <div class="btn_article">
+                    <a href="#" class="more_btn">
+                      더보기
+                    </a>
                   </div>
-                </div>
-                <div class="btn_article">
-                  <a href="#" class="more_btn">
-                    더보기
-                  </a>
-                </div>
+                )}
 
                 {/* 내역 없는 경우 .col_table_body, .btn_article 노출 안되어야 합니다.  */}
-                {/* <div class="no-data">
-            내역이 없습니다
-          </div>  */}
+                {oldOrderProducts.length === 0 && <div class="no-data">내역이 없습니다</div>}
               </div>
             </div>
           </div>
