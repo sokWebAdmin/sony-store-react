@@ -115,7 +115,7 @@ const ShippingAddressForm = prop => {
                      id="user_name2"
                      placeholder="이름을 입력하세요."
                      name="receiverName"
-                     value={shipping.receiverName}
+                     value={shipping.receiverName || ''}
                      onChange={handleShippingChange}
               />
               <span className="focus_bg" />
@@ -145,7 +145,7 @@ const ShippingAddressForm = prop => {
               <input type="text" className="inp"
                      id="user_number2"
                      name="receiverContact1"
-                     value={shipping.receiverContact1}
+                     value={shipping.receiverContact1 || ''}
                      onChange={handleShippingChange}
               />
               <span className="focus_bg" />
@@ -169,7 +169,7 @@ const ShippingAddressForm = prop => {
                      id="user_address"
                      placeholder="주소를 입력하세요."
                      name="receiverZipCd"
-                     value={shipping.receiverZipCd}
+                     value={shipping.receiverZipCd || ''}
                      onChange={handleShippingChange}
                      readOnly
               />
@@ -193,7 +193,7 @@ const ShippingAddressForm = prop => {
             <div className="acc_inp type5">
               <input type="text" className="inp dynamic_input"
                      name="receiverAddress"
-                     value={shipping.receiverAddress}
+                     value={shipping.receiverAddress || ''}
                      onChange={handleShippingChange}
                      readOnly
               />
@@ -206,7 +206,7 @@ const ShippingAddressForm = prop => {
               <input type="text" className="inp"
                      placeholder="상세 주소를 입력하세요."
                      name="receiverDetailAddress"
-                     value={shipping.receiverDetailAddress}
+                     value={shipping.receiverDetailAddress || ''}
                      onChange={handleShippingChange}
                      ref={detailAddressInput}
               />
@@ -243,7 +243,7 @@ const ShippingAddressForm = prop => {
               <input type="text" className="inp"
                      placeholder="배송 메모를 입력하세요."
                      name="deliveryMemo"
-                     value={shipping.deliveryMemo}
+                     value={shipping.deliveryMemo || ''}
                      onChange={() => {
                        alert(
                          'select option 을 orderNo: 1 로 리셋해야하는데.. SelectBox랑 협업필요');

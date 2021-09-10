@@ -1,4 +1,13 @@
-import { React, useEffect, useCallback, useState, useContext } from 'react';
+import {
+  React,
+  useEffect,
+  useCallback,
+  useState,
+  useContext,
+  useMemo,
+} from 'react';
+import orderPayment from '../../components/order/orderPayment.js';
+import paymentType from '../../const/paymentType';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
@@ -8,6 +17,8 @@ import Accordion from '../../components/common/surface/Accordion';
 import OrdererForm from '../../components/order/OrdererForm';
 import ShippingAddressForm from '../../components/order/ShippingAddressForm';
 import DiscountForm from '../../components/order/DiscountForm';
+import PaymentForm from '../../components/order/PaymentForm';
+import Calculator from '../../components/order/Calculator';
 
 //api
 import { getOrderSheets } from '../../api/order';
@@ -19,6 +30,7 @@ import '../../assets/scss/order.scss';
 // functions
 import { getUrlParam } from '../../utils/location';
 import GlobalContext from '../../context/global.context';
+import { truncate } from '../../utils/unit';
 
 const OrderStep1 = ({ location }) => {
   const { isLogin } = useContext(GlobalContext);
@@ -33,7 +45,7 @@ const OrderStep1 = ({ location }) => {
     ordererEmail: '',
   });
 
-  const [shipping, setShipping] = useState({
+  const [shippingAddress, setShippingAddress] = useState({
     addressNo: '',
     countryCd: '',
     addressName: '',
@@ -53,8 +65,14 @@ const OrderStep1 = ({ location }) => {
     coupons: {},
   });
 
+  const [payment, setPayment] = useState({
+    pgType: paymentType.creditCard.pgType,
+    payType: paymentType.creditCard.payType,
+  });
+
   const init = useCallback(() => ({
     async start () {
+      // orderPayment.init();
       await this.fetchOrderSheet(this.orderSheetNo);
     },
     get orderSheetNo () {
@@ -68,9 +86,63 @@ const OrderStep1 = ({ location }) => {
     },
   }), []);
 
+  const getPaymentInfo = () => ({
+    orderSheetNo: getUrlParam('orderSheetNo'),
+    orderTitle: truncate(representativeProductName),
+    ...payment, // payType, pgType
+    orderer: { ...orderer },
+    member: isLogin,
+    updateMember: isLogin,
+    tempPassword: isLogin ? null : '111111a!', // TODO. 비회원 임시 비번 넣으라
+    shippingAddress: { ...shippingAddress },
+    saveAddressBook: true, // TODO. 북마크 기능?
+    useDefaultAddress: true, // TODO. 기본 주소?
+    paymentAmt: paymentInfo.paymentAmt,
+    accumulationAmt: paymentInfo.accumulationAmt,
+    availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
+    subPayAmt: 0, // TODO. 이건 뭐자?
+  });
+
+  const submit = () => {
+    const paymentInfo = getPaymentInfo();
+    orderPayment.run(paymentInfo);
+    console.log('submit');
+  };
+
+  const testRun = () => { // TODO. 주문서 협업용
+    setOrderer({
+      ordererName: '주문자이름',
+      ordererContact1: '00000000000',
+      ordererEmail: 'orderer@nhn-commerce.com',
+    });
+
+    setShippingAddress({
+      addressName: '주소명',
+      addressNo: 0,
+      countryCd: 'KR',
+      receiverAddress: '전라남도 해남군 송지면 산정길 60',
+      receiverContact1: '01035186502',
+      receiverContact2: '',
+      receiverDetailAddress: '312',
+      receiverJibunAddress: '전라남도 해남군 송지면 산정리 707-3',
+      receiverName: 'receiverName',
+      receiverZipCd: '59063',
+    });
+
+    setPayment({
+      pgType: 'KCP',
+      payType: 'VIRTUAL_ACCOUNT',
+    });
+
+    alert('완료');
+  };
+
   useEffect(() => {
-    init().start();
+    init().start({});/**/
   }, [init]);
+
+  const representativeProductName = useMemo(
+    () => deliveryGroups[0]?.orderProducts[0]?.productName);
 
   return (
     <>
@@ -111,6 +183,17 @@ const OrderStep1 = ({ location }) => {
                   </div>
                 </div>
                 <div className="order_info">
+                  {/* alpha test element */}
+                  {process.env.NODE_ENV === 'development' &&
+                  <button className="button" onClick={testRun} style={{
+                    display: 'block',
+                    width: '100%',
+                    fontWeight: 'bold',
+                    color: 'white',
+                    backgroundColor: '#ea3c36',
+                    margin: '0 0 50px 0',
+                  }}>⛹️ 이거 누르면 필드 자동입력. Case : [ 회원 ]</button>}
+
                   {/* 왼쪽메뉴 */}
                   <div className="order_left">
                     <div className="acc acc_ui_zone">
@@ -122,9 +205,9 @@ const OrderStep1 = ({ location }) => {
 
                       <Accordion title={'배송지 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <ShippingAddressForm shipping={shipping}
+                        <ShippingAddressForm shipping={shippingAddress}
                                              orderer={orderer}
-                                             setShipping={setShipping} />
+                                             setShipping={setShippingAddress} />
                       </Accordion>
 
                       {isLogin &&
@@ -134,20 +217,12 @@ const OrderStep1 = ({ location }) => {
                                       paymentInfo={paymentInfo} />
                       </Accordion>}
 
-                      <div className="acc_item on">
-                        <div className="acc_head">
-                          <a className="acc_btn" title="할인 정보 열기">
-                            <span className="acc_tit">할인 정보</span>
-                            <span className="acc_arrow">상세 보기</span>
-                          </a>
-                        </div>
-                        <div className="acc_inner">
-                          <div className="acc_box">
-                          </div>
-                        </div>
-                      </div>
-                      {/* // acc_item */}
-                      {/* // acc_item */}
+                      <Accordion title={'결제 방법'} defaultVisible={true}>
+                        <PaymentForm
+                          payment={payment}
+                          setPayment={setPayment} />
+                      </Accordion>
+
                       <div className="acc_item on">
                         <div className="acc_head">
                           <a className="acc_btn" title="결제 방법 열기">
@@ -156,135 +231,7 @@ const OrderStep1 = ({ location }) => {
                           </a>
                         </div>
                         <div className="acc_inner">
-                          <div className="acc_box">
-                            <div className="acc_form">
-                              <div className="acc_cell vat">
-                                <label htmlFor="payment1">결제 수단 선택</label>
-                              </div>
-                              <div className="acc_cell vat">
-                                <div className="acc_group parent">
-                                  <div className="acc_radio">
-                                    <div className="radio_box">
-                                      <input type="radio"
-                                             className="inp_radio"
-                                             id="radio_tab1" name="tabradio"
-                                             defaultChecked="checked" />
-                                      <label htmlFor="radio_tab1"
-                                             className="contentType">신용카드</label>
-                                    </div>
-                                    <div className="radio_box">
-                                      <input type="radio"
-                                             className="inp_radio"
-                                             id="radio_tab2"
-                                             name="tabradio" />
-                                      <label htmlFor="radio_tab2"
-                                             className="contentType">가상계좌</label>
-                                    </div>
-                                    <div className="radio_box">
-                                      <input type="radio"
-                                             className="inp_radio"
-                                             id="radio_tab3"
-                                             name="tabradio" />
-                                      <label htmlFor="radio_tab3"
-                                             className="contentType">네이버
-                                        페이</label>
-                                    </div>
-                                  </div>
-                                  <div className="tabResult">
-                                    <div
-                                      className="result_cont radio_tab1 on">
-                                      <div className="check">
-                                        <input type="checkbox"
-                                               className="inp_check"
-                                               id="chk01" />
-                                        <label htmlFor="chk01">지금 선택한 결제수단을
-                                          다음에도
-                                          사용</label>
-                                      </div>
-                                      <strong className="info_tit">신용카드 무이자 할부
-                                        유의사항</strong>
-                                      <ul className="list_dot">
-                                        <li>무이자 할부 개월 수가 다른 제품을 한꺼번에 결제하면 할부
-                                          개월
-                                          수가 낮은 제품을 기준으로 할부가 됩니다.
-                                        </li>
-                                        <li>무이자 할부 개월 수가 다른 제품을 따로 결제하면 해당 제품에
-                                          적용된 무이자 할부 혜택을 받으실 수 없습니다.
-                                        </li>
-                                      </ul>
-                                    </div>
-                                    <div className="result_cont radio_tab2">
-                                      <div className="check">
-                                        <input type="checkbox"
-                                               className="inp_check"
-                                               id="chk02" />
-                                        <label htmlFor="chk02">지금 선택한 결제수단을
-                                          다음에도
-                                          사용</label>
-                                      </div>
-                                      <div className="bg_recipe_box">
-                                        <strong className="info_tit2">전자 세금
-                                          계산서
-                                          발행</strong>
-                                        <ul className="list_dot">
-                                          <li>2011년 1월부터 전자세금서 제도를 시행하고 있습니다.
-                                          </li>
-                                          <li>구매 후 다음달 8일 이후에 요청되는 세금계산서는 발행이
-                                            불가합니다.
-                                          </li>
-                                        </ul>
-                                        <div className="btn_recipe_box">
-                                          <button
-                                            className="button button_negative button-m popup_comm_btn"
-                                            data-popup-name="tax_invoice1"
-                                            type="button">전자 세금계산서 발행 안내
-                                          </button>
-                                          <button
-                                            className="button button_positive button-m popup_comm_btn"
-                                            data-popup-name="tax_invoice2"
-                                            type="button">전자 세금계산서 신청하기
-                                          </button>
-                                        </div>
-                                      </div>
-                                      <strong className="info_tit3">[소비자
-                                        피해보상보험
-                                        서비스 안내]</strong>
-                                      <ul className="list_dot">
-                                        <li>고객님은 안전거래를 위해 현금 결제 시 소니스토어가 가입한
-                                          구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.
-                                        </li>
-                                        <li>보상대상 : 미배송, 반송/환불거부, 쇼핑몰부도</li>
-                                        <li>구매안전서비스를 통하여 주문하시고 서울보증보험에서 발행하는
-                                          보험계약체결내역서를 반드시 확인하시기 바랍니다.
-                                        </li>
-                                      </ul>
-                                    </div>
-                                    <div className="result_cont radio_tab3">
-                                      <div className="check">
-                                        <input type="checkbox"
-                                               className="inp_check"
-                                               id="chk03" />
-                                        <label htmlFor="chk03">지금 선택한 결제수단을
-                                          다음에도
-                                          사용</label>
-                                      </div>
-                                      <strong className="info_tit">신용카드 무이자 할부
-                                        유의사항</strong>
-                                      <ul className="list_dot">
-                                        <li>무이자 할부 개월 수가 다른 제품을 한꺼번에 결제하면 할부
-                                          개월
-                                          수가 낮은 제품을 기준으로 할부가 됩니다.
-                                        </li>
-                                        <li>무이자 할부 개월 수가 다른 제품을 따로 결제하면 해당 제품에
-                                          적용된 무이자 할부 혜택을 받으실 수 없습니다.
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+
                         </div>
                       </div>
                       {/* // acc_item */}
@@ -296,112 +243,9 @@ const OrderStep1 = ({ location }) => {
                   <div className="order_right">
                     <div className="acc acc_ui_zone">
                       {/* acc_item */}
-                      <div className="acc_item on">
-                        <div className="acc_head pc_none">
-                          <a className="acc_btn" title="결제 예정 금액열기">
-                            <span className="acc_tit">결제 예정 금액</span>
-                            <span className="acc_arrow">상세 보기</span>
-                          </a>
-                        </div>
-                        <div className="acc_inner">
-                          <div className="payment_box">
-                            <div className="inner">
-                              <div className="payment_list">
-                                <dl className="total">
-                                  <dt className="tit">결제 예정 금액</dt>
-                                  <dd className="price">4,299,000<span
-                                    className="unit">원</span></dd>
-                                </dl>
-                                <div className="order_detailbox">
-                                  <div className="view_headline">
-                                    <span className="view_tit">주문 금액</span>
-                                    <em
-                                      className="view_price"><strong>4,299,000</strong>원</em>
-                                  </div>
-                                  <div className="view_detail">
-                                    <span className="view_tit">제품 금액</span>
-                                    <em
-                                      className="view_price"><strong>4,299,000</strong>원</em>
-                                  </div>
-                                  <div className="view_detail">
-                                    <span className="view_tit">구매 수량</span>
-                                    <em
-                                      className="view_price"><strong>1</strong>개</em>
-                                  </div>
-                                </div>
-                                <div className="saleToggle">
-                                  <div className="sale_item">{/* on 클래스 제어 */}
-                                    <div className="sale_head">
-                                      <a href="#none" className="sale_btn"
-                                         title="할인 금액 열기">
-                                        <div className="view_headline">
-                                          <span
-                                            className="sale_tit">할인 금액</span>
-                                          <em
-                                            className="view_price minus"><strong>-
-                                            2,300</strong>원</em>
-                                        </div>
-                                        <span className="acc_arrow">상세 보기</span>
-                                      </a>
-                                    </div>
-                                    <div className="sale_inner"
-                                         style={{ display: 'none' }}>
-                                      <div className="sale_box">
-                                        <div className="view_detail">
-                                          <span
-                                            className="sale_tit">프로모션 할인</span>
-                                          <em className="view_price"><strong>-
-                                            0</strong>원</em>
-                                        </div>
-                                        <div className="view_detail">
-                                          <span
-                                            className="sale_tit">쿠폰 사용</span>
-                                          <em className="view_price"><strong>-
-                                            0</strong>원</em>
-                                        </div>
-                                        <div className="view_detail">
-                                          <span
-                                            className="sale_tit">마일리지 사용</span>
-                                          <em className="view_price"><strong>-
-                                            0</strong>원</em>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  {/* // acc_item */}
-                                </div>
-                              </div>
-                              <div className="essential">
-                                <div className="check">
-                                  <input type="checkbox" className="inp_check"
-                                         id="essential" />
-                                  <label htmlFor="essential">[필수] 주문할 제품의 거래조건을
-                                    확인 하였으며, 구매에 동의하시겠습니까? (전자상거래법 제8조
-                                    제2항)</label>
-                                </div>
-                                {/* pc 결제 버튼 */}
-                                <div className="pc_pay_btn">
-                                  <button
-                                    className="button button_positive button-full"
-                                    type="button">결제
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                            <ul className="list_dot">
-                              <li>결제가 팝업창에서 이루어집니다.</li>
-                              <li>브라우저 설정에서 팝업창 차단을 해제해 주세요.</li>
-                            </ul>
-                            {/* 모바일일때 버튼 */}
-                            <div className="mo_pay_btn">
-                              <button
-                                className="button button_positive button-full"
-                                type="button">총 <em>4,299,000</em> 원
-                                (1개) <span>결제하기</span></button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <Accordion title={'결제 예정 금액'} defaultVisible={true}>
+                        <Calculator submit={submit} />
+                      </Accordion>
                     </div>
                   </div>
                   {/*// 오른쪽메뉴 */}
@@ -413,6 +257,6 @@ const OrderStep1 = ({ location }) => {
       </div>
     </>
   );
-}
+};
 
 export default OrderStep1;

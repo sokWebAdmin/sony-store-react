@@ -4,29 +4,41 @@ import { useEffect, useState, useContext, useMemo, useRef } from 'react';
 import { useMallState } from '../../context/mall.context';
 import { toCurrencyString } from '../../utils/unit';
 
+// components
+import UseCoupon from '../popup/UseCoupon';
+
 // utils
 import { onKeyboardEventOnlyDigit } from '../../utils/listener';
 import { handleChange, setObjectState } from '../../utils/state';
 
 // 배송지 정보
 const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
-    const { accumulationConfig } = useMallState();
+  const { accumulationConfig } = useMallState();
 
-    // subPayAmt: number , coupons: nested object
-    const { subPayAmt } = discount;
-    // const handlePaymentChange = event => handleChange(event)(setDiscount);
+  // subPayAmt: number , coupons: nested object
+  const { subPayAmt } = discount;
+  // const handlePaymentChange = event => handleChange(event)(setDiscount);
+  /**
+   * Coupon
+   */
 
-    const pointInput = useRef();
+  const [useCouponVisible, setUseCouponVisible] = useState(false);
+                                                                  // visible 처리
 
-    const pointUnit = accumulationConfig?.accumulationUnit || 'M'; // falsy
+  /**
+   * Point
+   */
+  const pointInput = useRef();
 
-    const accumulationAmt = useMemo(
-      () => paymentInfo?.accumulationAmt ? toCurrencyString(
-        paymentInfo.accumulationAmt) : 0);
+  const pointUnit = accumulationConfig?.accumulationUnit || 'M'; // falsy
 
-    const accumulationUseMinPriceWarnStyle = useMemo(() =>
-      (accumulationConfig?.accumulationUseMinPrice && subPayAmt !== 0 &&
-        accumulationConfig.accumulationUseMinPrice > subPayAmt) ?
+  const accumulationAmt = useMemo(
+    () => paymentInfo?.accumulationAmt ? toCurrencyString(
+      paymentInfo.accumulationAmt) : 0);
+
+  const accumulationUseMinPriceWarnStyle = useMemo(() =>
+    (accumulationConfig?.accumulationUseMinPrice && subPayAmt !== 0 &&
+      accumulationConfig.accumulationUseMinPrice > subPayAmt) ?
         { color: '#e70000' } : {});
 
     const toCurrency = event => {
@@ -55,7 +67,6 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
                        className="inp"
                        disabled /><span
                 className="unit">원</span>
-                <span className="focus_bg" />
               </div>
               <div className="acc_btn_box">
                 <button
@@ -63,6 +74,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
                   data-popup-name="coupon_inquiry"
                   type="button">쿠폰 조회
                 </button>
+                {useCouponVisible && <UseCoupon />}
               </div>
             </div>
           </div>
