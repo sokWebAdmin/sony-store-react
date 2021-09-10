@@ -5,11 +5,10 @@ import LayerPopup from '../common/LayerPopup';
 
 
 // stylesheet
-import '../../assets/scss/partials/popup/findAddress.scss';
 import { timeFormat } from '../../utils/utils';
 import { sendSMS, verifySMS } from '../../api/auth';
 
-const Authentication = ({ setVisible }) => {
+export default function Authentication ({ setVisible }) {
   const initMemberInfo = { mobileNo: '', memberName: '' };
   const [memberInfo, setMemberInfo] = useState(initMemberInfo);
   const [error, setError] = useState({ mobileNo: false, memberName: false });
@@ -86,7 +85,7 @@ const Authentication = ({ setVisible }) => {
     setAuthSent(false);
     setAuthCode('');
     setAuthCheck(false);
-  }, [initMemberInfo]);
+  }, []);
 
   useEffect(() => {
     if (memberInfo.mobileNo.match(/^\d{2,3}\d{3,4}\d{4}$/) && validationMemberInfo() === true) {
@@ -109,7 +108,6 @@ const Authentication = ({ setVisible }) => {
   }, [expireAt, time, authSent]);
 
   return (
-    <>
       <LayerPopup className="authentication" onClose={close}>
         <div className="popup_wrap size_ms certifi_pop" tabIndex="0">
           <div className="pop_inner">
@@ -147,7 +145,7 @@ const Authentication = ({ setVisible }) => {
                                 if (authAvailable === true) {
                                   //유효기간 설정
                                   let now = new Date().getTime();
-                                  const target = new Date(now + (3 * 60000));
+                                  const target = new Date(now + (3 * 60000)).toString();
                                   setTime(179);
                                   setExpireAt(target);
 
@@ -162,7 +160,7 @@ const Authentication = ({ setVisible }) => {
                                         if (authAvailable === true) {
                                           //유효기간 설정
                                           let now = new Date().getTime();
-                                          const target = new Date(now + (3 * 60000));
+                                          const target = new Date(now + (3 * 60000)).toString();
                                           setTime(179);
                                           setExpireAt(target);
 
@@ -220,7 +218,7 @@ const Authentication = ({ setVisible }) => {
               </div>
               <div className="btn_article">
                 <button className="button button_positive button-m closed" onClick={onClickAuthentication}
-                        onClick="common.makeAlert('complete', '인증되었습니다.')" type="button">확인
+              type="button">확인
                 </button>
               </div>
             </div>
@@ -230,9 +228,5 @@ const Authentication = ({ setVisible }) => {
           </div>
         </div>
       </LayerPopup>
-    </>
   );
 };
-
-
-export default Authentication;
