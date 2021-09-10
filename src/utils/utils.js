@@ -66,6 +66,12 @@ export const generateRandomString = (maxLength = 6) => {
   }, '');
 }
 
+/**
+ * 전화번호에 '-' 삽입
+ * 
+ * @param {string} phoneNo 
+ * @returns {string} ex) 010-0000-0000 
+ */
 export const addHyphenToPhoneNo = phoneNo => {
   return phoneNo.replace(/[^0-9]/g, '').replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-")
 }
