@@ -69,14 +69,18 @@ export default function JoinStep() {
   // alert
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [alertCloseFunc, setAlertCloseFun] = useState(null);
 
-  const openAlert = (message) => {
+  const openAlert = (message, onClose) => {
     setAlertVisible(true);
     setAlertMessage(message);
+    setAlertCloseFun(onClose);
   };
   const closeModal = () => {
     setAlertVisible(false);
+    alertCloseFunc?.();
   };
+
   const onChangeGender = (e) => setGender(e.target.value);
   const _registerApi = async () => {
     //이메일
@@ -186,17 +190,18 @@ export default function JoinStep() {
     if (response.status === 200) {
       if (response.data.errorCode === '0000') {
         //성공
-        openAlert('회원가입이 완료되었습니다.');
-        const response = await loginApi(email, password);
-        if (response.status === 200) {
-          const { accessToken, expireIn } = response.data;
-          setAccessToken(accessToken, expireIn);
-          onChangeGlobal({ isLogin: true });
-          await fetchProfile(profileDispatch);
-          history.replace('/');
-        } else {
-          history.push('/member/login');
-        }
+        openAlert('회원가입이 완료되었습니다.', async () => {
+          const response = await loginApi(email, password);
+          if (response.status === 200) {
+            const { accessToken, expireIn } = response.data;
+            setAccessToken(accessToken, expireIn);
+            onChangeGlobal({ isLogin: true });
+            await fetchProfile(profileDispatch);
+            history.replace('/');
+          } else {
+            history.push('/member/login');
+          }
+        });
       } else {
         openAlert(response.data.errorMessage);
       }
