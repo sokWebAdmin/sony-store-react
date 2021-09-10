@@ -19,12 +19,11 @@ const PaymentForm = ({ payment, setPayment }) => {
               {
                 Object.values(paymentType).map((p =>
                     (
-                      <div className="radio_box">
+                      <div className="radio_box" key={p.payType}>
                         <input type="radio"
                                className="inp_radio"
                                id={p.payType} name="paymentType"
-                               defaultChecked="checked"
-                               checked={payment.payType === p.payType}
+                               defaultChecked={payment.payType === p.payType}
                                onChange={() => changePaymentType(p)} />
                         <label htmlFor={p.payType}
                                className="contentType">{p.label}</label>
