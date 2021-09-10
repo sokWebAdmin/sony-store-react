@@ -118,7 +118,7 @@ export default function MyPageMember() {
 
   // 수신 동의
   const [ active, setActive ] = useState({
-    sns: false,
+    sms: false,
     email: false,
   });
 
@@ -178,13 +178,13 @@ export default function MyPageMember() {
     }
   };
 
-  const handleChange = ({ target: { name, value }}) => {
+  const handleChange = ({ target: { name, value, checked }}) => {
     switch (name) {
       case 'sms':
       case 'email':
         setActive(prev => ({
           ...prev,
-          [name]: value,
+          [name]: checked,
         }));
         break;
       case 'mobile':
