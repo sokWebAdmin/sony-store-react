@@ -88,7 +88,7 @@ export default function Withdraw() {
 
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'회원 탈퇴'} />
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       {confirmVisible && <LayerPopup size="m" className="login_chk_order">
         <p className="pop_tit" style={{ color: '#ff4e00' }}>다시 한번 확인해주세요.</p>
