@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+    <defs>
+        <style>
+            .cls-3{fill:none;stroke:#5865f5;stroke-miterlimit:10;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="Shopping_Icon" transform="translate(-718 -508)">
+        <g id="그룹_6670" data-name="그룹 6670" transform="translate(-115.938 -212)">
+            <path id="패스_762" data-name="패스 762" d="M833.938 724v46h24.833l-3.066 8h-7.767v2h36v-2h-7.767l-3.066-8h24.833v-46zm24.119 53.855 2.956-7.71h9.85l2.956 7.71zM895.938 768h-60v-10h60zm-60-12v-30h60v30z" style="fill:#222"/>
+            <g id="사각형_1842" data-name="사각형 1842" class="cls-3">
+                <path style="stroke:none" d="M0 0h22v16H0z" transform="translate(855 736)"/>
+                <path style="fill:none" d="M1 1h20v14H1z" transform="translate(855 736)"/>
+            </g>
+            <path id="패스_2120" data-name="패스 2120" class="cls-3" d="M862 742v-6.5a4 4 0 0 1 8 0v6.5"/>
+        </g>
+    </g>
+</svg>

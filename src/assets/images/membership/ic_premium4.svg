@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke-linejoin:round;stroke-width:2px;stroke:#222}
+        </style>
+    </defs>
+    <g id="ic_refur_56" transform="translate(-2051 -3640.624)">
+        <g id="ic_d-2" data-name="ic d-2" transform="translate(1539 3129.625)">
+            <path id="사각형_575-2" data-name="사각형 575-2" transform="rotate(-89.835 540.236 26.68)" style="fill:transparent" d="M0 0h55.839v55.839H0z"/>
+            <g id="그룹_5556" data-name="그룹 5556" transform="translate(518.96 517.955)">
+                <g id="그룹_5555" data-name="그룹 5555" transform="translate(.083)">
+                    <path id="패스_1277" data-name="패스 1277" class="cls-2" d="m547.26 539.158 13.707 13.783-8.143 8.1-13.739-13.818" transform="translate(-519.205 -519.117)"/>
+                    <path id="패스_1278" data-name="패스 1278" class="cls-2" d="m530.644 525.063-1.412 4.108-4.117 1.388-6.072-6.107 5.528-5.5z" transform="translate(-519.043 -518.955)"/>
+                    <path id="선_152" data-name="선 152" class="cls-2" transform="translate(10.138 10.164)" d="m0 0 7.782 7.828"/>
+                </g>
+                <path id="패스_1279" data-name="패스 1279" d="m560.277 524.557-4.438 4.374-4.929-4.914 4.439-4.375a8.8 8.8 0 0 0-9.376 1.91 8.606 8.606 0 0 0-2.2 8.644l-13.79 13.591a8.785 8.785 0 0 0-8.448 2.213 8.61 8.61 0 0 0-1.981 9.283l4.439-4.374 4.93 4.914-4.439 4.375a8.793 8.793 0 0 0 9.376-1.911 8.6 8.6 0 0 0 2.28-8.361l14.008-13.806a8.777 8.777 0 0 0 8.149-2.285 8.605 8.605 0 0 0 1.98-9.278z" transform="translate(-518.96 -518.955)" style="stroke:#5865f5;fill:none;stroke-linejoin:round;stroke-width:2px"/>
+            </g>
+        </g>
+    </g>
+</svg>

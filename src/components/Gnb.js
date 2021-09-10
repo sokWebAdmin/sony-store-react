@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import GlobalContext from '../context/global.context';
 import {
@@ -241,7 +242,10 @@ export default function Gnb() {
             <a>멤버십</a>
             <ul className="gnb__menu__secondary">
               <li>
-                <a>등급&amp;혜택 안내</a>
+                <Link 
+                  to="/membership/benefit"
+                  onClick={() => closeSideBar(headerDispatch)}
+                >등급&amp;혜택 안내</Link>
               </li>
             </ul>
           </li>
