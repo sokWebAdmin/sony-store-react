@@ -1,5 +1,7 @@
 import { React, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+// import { Link, useLocation } from 'react-router-dom';
+import { useQuery } from '../../hooks';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -12,8 +14,12 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function OrderDetail() {
-  console.log('useLocation().search:', useLocation().search);
-  const { orderNo } = new URLSearchParams(useLocation().search);
+  const query = useQuery();
+
+  useEffect(() => {
+    const res = getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } });
+    console.log('res:', res);
+  }, []);
 
   // TODO: 마크업처럼 스타일리 안되는데 추후 확인
   const onPrint = () => {
@@ -30,11 +36,6 @@ export default function OrderDetail() {
     printDiv.style.display = 'none';
   };
 
-  console.log('orderNo:', orderNo);
-  useEffect(() => {
-    // console.log('orderNo:', orderNo);
-    // getProfileOrderByOrderNo();
-  }, []);
   return (
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
