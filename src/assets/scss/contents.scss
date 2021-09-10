@@ -3234,6 +3234,9 @@
     &.inactive {
       background-image: url("../images/member/bg_locked1.svg");
     }
+    &.active {
+      background-image: url("../images/member/bg_locked3.svg");
+    }
     &.locked {
       background-image: url("../images/member/bg_locked2.svg");
     }
