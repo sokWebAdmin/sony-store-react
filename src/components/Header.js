@@ -22,7 +22,7 @@ import {
 } from '../context/header.context';
 
 //utils
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { removeAccessToken } from '../utils/token';
 import {
   resetProfile,
@@ -47,6 +47,11 @@ export default function Header() {
     closeSideBar(headerDispatch);
   };
 
+  const closeSubSlider = () => {
+    setInfoOpen(false);
+    closeSideBar(headerDispatch);
+  }
+
   return (
     <>
       <header
@@ -55,13 +60,11 @@ export default function Header() {
       >
         <div className="header__wrapper">
           <h1 className="header__logo">
-            <a
-              onClick={() => {
-                history.push('/');
-              }}
+            <Link
+              to="/"
             >
               <img src={logo} alt="SONY" />
-            </a>
+            </Link>
           </h1>
           <div className="header__menu">
             <button
@@ -74,6 +77,7 @@ export default function Header() {
             </button>
             <a className="btn btn__desktop btn__mypage">
               <img
+                style={{ cursor: 'pointer' }}
                 src={mypage}
                 alt="마이페이지"
                 onClick={() => {
@@ -115,16 +119,15 @@ export default function Header() {
               <>
                 <div className={`member ${isInfoOpen && 'member--visible'}`}>
                   <div className="member__inner">
-                    <a
-                      onClick={() => {
-                        routePushAndClose('/member/login');
-                      }}
+                    <Link
+                      to="/member/login"
+                      onClick={closeSubSlider}
                       className="member__msg member__msg__login"
                     >
                       로그인이
                       <br />
                       필요합니다
-                    </a>
+                    </Link>
                     <button
                       type="button"
                       className="btn btn__login"
@@ -138,31 +141,28 @@ export default function Header() {
                     <div className="member__menu">
                       <ul>
                         <li className="member__menu__mypage">
-                          <a
-                            onClick={() => {
-                              routePushAndClose('/member/join');
-                            }}
+                          <Link
+                            to="/member/join"
+                            onClick={closeSubSlider}
                           >
                             회원가입
-                          </a>
+                          </Link>
                         </li>
                         <li className="member__menu__order">
-                          <a
-                            onClick={() => {
-                              routePushAndClose('/my-page/order-list');
-                            }}
+                          <Link
+                            to="/my-page/order-list"
+                            onClick={closeSubSlider}
                           >
                             주문/배송 조회
-                          </a>
+                          </Link>
                         </li>
                         <li className="member__menu__cart">
-                          <a
-                            onClick={() => {
-                              routePushAndClose('/cart');
-                            }}
+                          <Link
+                            to="/cart"
+                            onClick={closeSubSlider}
                           >
                             장바구니<span className="badge">99</span>
-                          </a>
+                          </Link>
                         </li>
                       </ul>
                     </div>
@@ -183,31 +183,28 @@ export default function Header() {
                     <div className="member__menu">
                       <ul>
                         <li className="member__menu__mypage">
-                          <a
-                            onClick={() => {
-                              routePushAndClose('/my-page');
-                            }}
+                          <Link
+                            to="/my-page"
+                            onClick={closeSubSlider}
                           >
                             마이페이지
-                          </a>
+                          </Link>
                         </li>
                         <li className="member__menu__order">
-                          <a
-                            onClick={() => {
-                              routePushAndClose('/my-page/order-list');
-                            }}
+                          <Link
+                            to="/my-page/order-list"
+                            onClick={closeSubSlider}
                           >
                             주문/배송 조회
-                          </a>
+                          </Link>
                         </li>
                         <li className="member__menu__cart">
-                          <a
-                            onClick={() => {
-                              routePushAndClose('/cart');
-                            }}
+                          <Link
+                            to="/cart"
+                            onClick={closeSubSlider}
                           >
                             장바구니<span className="badge">99</span>
-                          </a>
+                          </Link>
                         </li>
                       </ul>
                     </div>

@@ -11,7 +11,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import "../../assets/scss/contents.scss";
 import '../../assets/scss/mypage.scss';
 
-import { useProfileState } from '../../context/profile.context';
+import { fetchMyProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
 import moment from 'moment';
 import { useHistory } from 'react-router';
 import FindAddress from '../../components/popup/FindAddress';
@@ -76,6 +76,7 @@ const validateMobile = (mobile, openAlert) => {
 export default function MyPageMember() {
   const history = useHistory();
   const profileState = useProfileState();
+  const profileDispatch = useProileDispatch();
 
   const { openAlert, closeModal, alertMessage, alertVisible } = useAlert();
 
@@ -234,6 +235,7 @@ export default function MyPageMember() {
       const ret = await modifyMy(request);
 
       if (ret.data.errorCode === '0000') {
+        fetchMyProfile(profileDispatch, { type: '30', customerid: request.customerid });
         openAlert('회원 정보 수정이 완료되었습니다.');
         setIsEditMode(false);
       } else {
