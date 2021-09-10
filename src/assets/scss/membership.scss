@@ -1020,3 +1020,89 @@
     padding-right: 5px
   }
 }
+
+.coupon .ico_txt:after {
+  background: url('../images//mypage/ico_mypage_coupon.svg') no-repeat 0 0;
+}
+
+.coupon_list {
+  position: relative;
+  padding-top: 24px;
+  border-top: 2px solid #222;
+
+  &:after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+
+  .coupon_box {
+    float: left;
+    position: relative;
+    width: calc((100% - 24px)/2);
+    padding-right: 60px;
+    margin-bottom: 25px;
+
+    &:nth-child(2n) {
+      margin-left: 24px;
+    }
+
+    &:after {
+      display: block;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 70px;
+      height: 100%;
+      border-radius: 4px;
+      background: url('../images//mypage/bg_coupon_sony.svg') no-repeat center center;
+      background-size: 70px 225px;
+      content: "";
+    }
+  }
+
+  .coupon {
+    position: relative;
+    padding: 28px 34px 31px 34px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+  }
+
+  .coupon_no {
+    position: absolute;
+    top: 34px;
+    right: 34px;
+    color: #888;
+  }
+
+  .tit {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.6px;
+    color: #222;
+  }
+
+  .percentage {
+    color: #5865f5;
+  }
+
+  .cut_txt {
+    margin-top: 13px;
+    font-size: 12px;
+    letter-spacing: -0.3px;
+    color: #222;
+  }
+
+  .expiration_txt {
+    margin-top: 44px;
+    font-size: 14px;
+
+    &>strong {
+      display: inline-block;
+      margin-right: 8px;
+    }
+  }
+}
