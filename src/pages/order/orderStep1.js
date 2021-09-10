@@ -1,4 +1,5 @@
 import { React, useEffect, useCallback, useState, useContext } from 'react';
+import paymentModule from '../../module/payment';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
@@ -55,6 +56,7 @@ const OrderStep1 = ({ location }) => {
 
   const init = useCallback(() => ({
     async start () {
+      await paymentModule.importScript();
       await this.fetchOrderSheet(this.orderSheetNo);
     },
     get orderSheetNo () {

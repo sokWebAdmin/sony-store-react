@@ -22,7 +22,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
    * Coupon
    */
 
-  const [useCouponVisible, setUseCouponVisible] = useState(true); // TODO. 임시
+  const [useCouponVisible, setUseCouponVisible] = useState(false);
                                                                   // visible 처리
 
   /**
@@ -74,7 +74,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
                   data-popup-name="coupon_inquiry"
                   type="button">쿠폰 조회
                 </button>
-                <UseCoupon />
+                {useCouponVisible && <UseCoupon />}
               </div>
             </div>
           </div>
