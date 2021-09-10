@@ -1,4 +1,11 @@
-import { React, useEffect, useCallback, useState, useContext } from 'react';
+import {
+  React,
+  useEffect,
+  useCallback,
+  useState,
+  useContext,
+  useMemo,
+} from 'react';
 import orderPayment from '../../components/order/orderPayment.js';
 import paymentType from '../../const/paymentType';
 
@@ -11,6 +18,7 @@ import OrdererForm from '../../components/order/OrdererForm';
 import ShippingAddressForm from '../../components/order/ShippingAddressForm';
 import DiscountForm from '../../components/order/DiscountForm';
 import PaymentForm from '../../components/order/PaymentForm';
+import Calculator from '../../components/order/Calculator';
 
 //api
 import { getOrderSheets } from '../../api/order';
@@ -22,6 +30,7 @@ import '../../assets/scss/order.scss';
 // functions
 import { getUrlParam } from '../../utils/location';
 import GlobalContext from '../../context/global.context';
+import { truncate } from '../../utils/unit';
 
 const OrderStep1 = ({ location }) => {
   const { isLogin } = useContext(GlobalContext);
@@ -36,7 +45,7 @@ const OrderStep1 = ({ location }) => {
     ordererEmail: '',
   });
 
-  const [shipping, setShipping] = useState({
+  const [shippingAddress, setShippingAddress] = useState({
     addressNo: '',
     countryCd: '',
     addressName: '',
@@ -77,9 +86,35 @@ const OrderStep1 = ({ location }) => {
     },
   }), []);
 
+  const getPaymentInfo = () => ({
+    orderSheetNo: getUrlParam('orderSheetNo'),
+    orderTitle: truncate(representativeProductName),
+    ...payment, // payType, pgType
+    orderer,
+    member: isLogin,
+    updateMember: isLogin,
+    tempPassword: isLogin ? null : '111111a!', // TODO. 비회원 임시 비번 넣으라
+    shippingAddress,
+    saveAddressBook: true, // TODO. 북마크 기능?
+    useDefaultAddress: true, // TODO. 기본 주소?
+    paymentAmt: paymentInfo.paymentAmt,
+    accumulationAmt: paymentInfo.accumulationAmt,
+    availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
+    subPayAmt: 0, // TODO. 이건 뭐자?
+  });
+
+  const submit = () => {
+    const paymentInfo = getPaymentInfo();
+    orderPayment.run(paymentInfo);
+    console.log('submit');
+  };
+
   useEffect(() => {
-    init().start();
+    init().start({});/**/
   }, [init]);
+
+  const representativeProductName = useMemo(
+    () => deliveryGroups[0]?.orderProducts[0]?.productName);
 
   return (
     <>
@@ -131,9 +166,9 @@ const OrderStep1 = ({ location }) => {
 
                       <Accordion title={'배송지 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <ShippingAddressForm shipping={shipping}
+                        <ShippingAddressForm shipping={shippingAddress}
                                              orderer={orderer}
-                                             setShipping={setShipping} />
+                                             setShipping={setShippingAddress} />
                       </Accordion>
 
                       {isLogin &&
@@ -169,112 +204,9 @@ const OrderStep1 = ({ location }) => {
                   <div className="order_right">
                     <div className="acc acc_ui_zone">
                       {/* acc_item */}
-                      <div className="acc_item on">
-                        <div className="acc_head pc_none">
-                          <a className="acc_btn" title="결제 예정 금액열기">
-                            <span className="acc_tit">결제 예정 금액</span>
-                            <span className="acc_arrow">상세 보기</span>
-                          </a>
-                        </div>
-                        <div className="acc_inner">
-                          <div className="payment_box">
-                            <div className="inner">
-                              <div className="payment_list">
-                                <dl className="total">
-                                  <dt className="tit">결제 예정 금액</dt>
-                                  <dd className="price">4,299,000<span
-                                    className="unit">원</span></dd>
-                                </dl>
-                                <div className="order_detailbox">
-                                  <div className="view_headline">
-                                    <span className="view_tit">주문 금액</span>
-                                    <em
-                                      className="view_price"><strong>4,299,000</strong>원</em>
-                                  </div>
-                                  <div className="view_detail">
-                                    <span className="view_tit">제품 금액</span>
-                                    <em
-                                      className="view_price"><strong>4,299,000</strong>원</em>
-                                  </div>
-                                  <div className="view_detail">
-                                    <span className="view_tit">구매 수량</span>
-                                    <em
-                                      className="view_price"><strong>1</strong>개</em>
-                                  </div>
-                                </div>
-                                <div className="saleToggle">
-                                  <div className="sale_item">{/* on 클래스 제어 */}
-                                    <div className="sale_head">
-                                      <a href="#none" className="sale_btn"
-                                         title="할인 금액 열기">
-                                        <div className="view_headline">
-                                          <span
-                                            className="sale_tit">할인 금액</span>
-                                          <em
-                                            className="view_price minus"><strong>-
-                                            2,300</strong>원</em>
-                                        </div>
-                                        <span className="acc_arrow">상세 보기</span>
-                                      </a>
-                                    </div>
-                                    <div className="sale_inner"
-                                         style={{ display: 'none' }}>
-                                      <div className="sale_box">
-                                        <div className="view_detail">
-                                          <span
-                                            className="sale_tit">프로모션 할인</span>
-                                          <em className="view_price"><strong>-
-                                            0</strong>원</em>
-                                        </div>
-                                        <div className="view_detail">
-                                          <span
-                                            className="sale_tit">쿠폰 사용</span>
-                                          <em className="view_price"><strong>-
-                                            0</strong>원</em>
-                                        </div>
-                                        <div className="view_detail">
-                                          <span
-                                            className="sale_tit">마일리지 사용</span>
-                                          <em className="view_price"><strong>-
-                                            0</strong>원</em>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  {/* // acc_item */}
-                                </div>
-                              </div>
-                              <div className="essential">
-                                <div className="check">
-                                  <input type="checkbox" className="inp_check"
-                                         id="essential" />
-                                  <label htmlFor="essential">[필수] 주문할 제품의 거래조건을
-                                    확인 하였으며, 구매에 동의하시겠습니까? (전자상거래법 제8조
-                                    제2항)</label>
-                                </div>
-                                {/* pc 결제 버튼 */}
-                                <div className="pc_pay_btn">
-                                  <button
-                                    className="button button_positive button-full"
-                                    type="button">결제
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                            <ul className="list_dot">
-                              <li>결제가 팝업창에서 이루어집니다.</li>
-                              <li>브라우저 설정에서 팝업창 차단을 해제해 주세요.</li>
-                            </ul>
-                            {/* 모바일일때 버튼 */}
-                            <div className="mo_pay_btn">
-                              <button
-                                className="button button_positive button-full"
-                                type="button">총 <em>4,299,000</em> 원
-                                (1개) <span>결제하기</span></button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <Accordion title={'결제 예정 금액'} defaultVisible={true}>
+                        <Calculator submit={submit} />
+                      </Accordion>
                     </div>
                   </div>
                   {/*// 오른쪽메뉴 */}
