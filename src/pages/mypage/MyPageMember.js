@@ -357,7 +357,7 @@ export default function MyPageMember() {
                             name="mobile" 
                             className={`inp tel_number ${!isEditMode && 'disabled'}`}
                             value={ addHyphenToPhoneNo(myForm.mobile) }
-                            maxLength={11} 
+                            maxLength={13} 
                             autoComplete="off" 
                             placeholder=""
                             onChange={handleChange}
