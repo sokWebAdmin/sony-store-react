@@ -46,8 +46,10 @@ export default function OrderListItem({
       <div class="col_table_cell prd_wrap">
         <div class="prd">
           <div class="prd_info">
-            <div class="prd_info_name">AK-47 Hi-Res 헤드폰 앰프</div>
-            <p class="prd_info_option">128Bit/피아노블랙</p>
+            <div class="prd_info_name">{seqno}</div>
+
+            {/* <div class="prd_info_name">AK-47 Hi-Res 헤드폰 앰프</div>
+            <p class="prd_info_option">128Bit/피아노블랙</p> */}
           </div>
         </div>
       </div>

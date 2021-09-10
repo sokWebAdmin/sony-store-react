@@ -13,6 +13,7 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function OldOrderList() {
+  //FIXME: 개발후 삭제
   const mockData = [
     {
       orderid: '20210727-2V3743',
@@ -32,12 +33,13 @@ export default function OldOrderList() {
     },
   ];
 
-  const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
+  // const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
+  const [oldOrderProducts, setOldOrderProducts] = useState([]);
 
   useEffect(() => {
     getOldOrders().then((res) => {
-      // console.log('response:', res);
-      // setOldOrderProducts(res.data.body);
+      console.log('response:', res);
+      setOldOrderProducts(res.data.body);
     });
   }, []);
 
@@ -100,26 +102,29 @@ export default function OldOrderList() {
                       <div class="col_table_cell">처리상태</div>
                     </div>
                   </div>
-                  <div class="col_table_body">
-                    {oldOrderProducts.map((oldOrderProduct) => (
-                      <OldOrderListItem
-                        orderid={oldOrderProduct.orderid}
-                        createdate={oldOrderProduct.createdate}
-                        status={oldOrderProduct.status}
-                      />
-                    ))}
+                  {oldOrderProducts.length > 0 && (
+                    <div class="col_table_body">
+                      {oldOrderProducts.map((oldOrderProduct) => (
+                        <OldOrderListItem
+                          orderid={oldOrderProduct.orderid}
+                          createdate={oldOrderProduct.createdate}
+                          status={oldOrderProduct.status}
+                          seqno={oldOrderProduct.seqno}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {oldOrderProducts.length > 0 && (
+                  <div class="btn_article">
+                    <a href="#" class="more_btn">
+                      더보기
+                    </a>
                   </div>
-                </div>
-                <div class="btn_article">
-                  <a href="#" class="more_btn">
-                    더보기
-                  </a>
-                </div>
+                )}
 
                 {/* 내역 없는 경우 .col_table_body, .btn_article 노출 안되어야 합니다.  */}
-                {/* <div class="no-data">
-            내역이 없습니다
-          </div>  */}
+                {oldOrderProducts.length === 0 && <div class="no-data">내역이 없습니다</div>}
               </div>
             </div>
           </div>
