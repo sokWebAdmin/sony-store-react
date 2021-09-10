@@ -1,7 +1,11 @@
 import paymentType from '../../const/paymentType';
+import { setObjectState } from '../../utils/state';
 
-const PaymentForm = () => {
-  const changePaymentType = type => console.log(type);
+const PaymentForm = ({ payment, setPayment }) => {
+  const changePaymentType = ({ pgType, payType }) => {
+    setObjectState('pgType', pgType)(setPayment);
+    setObjectState('payType', payType)(setPayment);
+  };
 
   return (
     <>
@@ -13,19 +17,20 @@ const PaymentForm = () => {
           <div className="acc_group parent">
             <div className="acc_radio">
               {
-                Object.values(paymentType).map(type =>
-                  (
-                    <div className="radio_box">
-                      <input type="radio"
-                             className="inp_radio"
-                             id={type.payType} name="paymentType"
-                             defaultChecked="checked"
-                             onChange={() => changePaymentType(type)} />
-                      <label htmlFor={type.payType}
-                             className="contentType">{type.label}</label>
-                    </div>
-                  ),
-                )
+                Object.values(paymentType).map((p =>
+                    (
+                      <div className="radio_box">
+                        <input type="radio"
+                               className="inp_radio"
+                               id={p.payType} name="paymentType"
+                               defaultChecked="checked"
+                               checked={payment.payType === p.payType}
+                               onChange={() => changePaymentType(p)} />
+                        <label htmlFor={p.payType}
+                               className="contentType">{p.label}</label>
+                      </div>
+                    )
+                ))
               }
             </div>
             <div className="tabResult">

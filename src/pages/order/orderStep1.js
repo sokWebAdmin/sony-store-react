@@ -1,5 +1,6 @@
 import { React, useEffect, useCallback, useState, useContext } from 'react';
 import orderPayment from '../../components/order/orderPayment.js';
+import paymentType from '../../const/paymentType';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
@@ -53,6 +54,11 @@ const OrderStep1 = ({ location }) => {
   const [discount, setDiscount] = useState({
     subPayAmt: 0,
     coupons: {},
+  });
+
+  const [payment, setPayment] = useState({
+    pgType: paymentType.creditCard.pgType,
+    payType: paymentType.creditCard.payType,
   });
 
   const init = useCallback(() => ({
@@ -138,7 +144,9 @@ const OrderStep1 = ({ location }) => {
                       </Accordion>}
 
                       <Accordion title={'결제 방법'} defaultVisible={true}>
-                        <PaymentForm />
+                        <PaymentForm
+                          payment={payment}
+                          setPayment={setPayment} />
                       </Accordion>
 
                       <div className="acc_item on">
