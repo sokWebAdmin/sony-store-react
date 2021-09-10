@@ -5,26 +5,37 @@ import LayerPopup from '../common/LayerPopup';
 
 
 // stylesheet
+import '../../assets/scss/contents.scss';
 import { timeFormat } from '../../utils/utils';
 import { sendSMS, verifySMS } from '../../api/auth';
+import Alert from '../common/Alert';
+import { putDormancy } from '../../api/member';
+import { useHistory } from 'react-router-dom';
 
 export default function Authentication ({ setVisible }) {
+  const history = useHistory();
   const initMemberInfo = { mobileNo: '', memberName: '' };
   const [memberInfo, setMemberInfo] = useState(initMemberInfo);
   const [error, setError] = useState({ mobileNo: false, memberName: false });
   const [time, setTime] = useState(179);
+  const [code, setCode] = useState('')
   const [expireAt, setExpireAt] = useState('');
   const [authAvailable, setAuthAvailable] = useState(false);
   const [authSent, setAuthSent] = useState(false);
   const [authCode, setAuthCode] = useState('');
   const [authCheck, setAuthCheck] = useState(false);
   // alert
-  const [afterAlert, setAfterAlert] = useState(false);
-  const close = () => setVisible(false);
-  const openAlert = (message, afterProcess = false) => {
-    if (afterProcess) {
-      setAfterAlert(true);
-    }
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+
+  const closePopup = () => setVisible(false);
+  const openAlert = (message) => {
+    setAlertVisible(true);
+    setAlertMessage(message);
+  };
+
+  const closeModal = () => {
+    setAlertVisible(false);
   };
 
   const onChangeValues = (type, value) => {
@@ -37,43 +48,64 @@ export default function Authentication ({ setVisible }) {
   const validationMemberInfo = () => {
     let isSuccess = true;
     if(memberInfo.memberName === '') {
-      setError({
-        ...error,
+      setError(prev => ({
+      ...prev,
         memberName: true,
-      });
+      }));
       isSuccess = false
     }
    if(memberInfo.mobileNo === '') {
-     setError({
-       ...error,
+     setError(prev => ({
+       ...prev,
        mobileNo: true,
-     });
+     }));
+     isSuccess = false
+   }
+
+   if(code === '') {
+     openAlert('인증번호를 입력해주세요.');
      isSuccess = false
    }
   return isSuccess
 }
 
-  const onClickAuthentication = () => {
+  const onClickAuthentication = async () => {
     if(validationMemberInfo() === false) return;
-    //TODO 후먼해제
+    const request = {
+      authType: "SMS",
+      mobileNo: memberInfo.mobileNo,
+      certificationNumber: code
+    }
+
+   const response = await putDormancy(request)
+    if(response.status === 204){
+      closePopup()
+      history.push('/member/activeAccounts');
+    } else{
+      openAlert(response.data.message);
+    }
   }
 
-  const _sendSMS = async (phoneNum) => {
-    const response = await sendSMS(phoneNum, 'RELEASE_DORMANT');
+  const _sendSMS = async (phoneNum, name) => {
+    const response = await sendSMS(phoneNum, 'RELEASE_DORMANT', name);
     if (response.status === 200) {
       setAuthSent(true);
     } else {
       openAlert(response.data.message);
+      setAuthSent(true);
+
     }
   };
 
   const _verifySMS = async (phoneNum, code) => {
+    setCode(code)
     const response = await verifySMS(phoneNum, code, 'RELEASE_DORMANT');
     if (response.status === 200) {
       setAuthCheck(true);
       openAlert('인증되었습니다.');
     } else {
       openAlert(response.data.message);
+
     }
   };
 
@@ -88,12 +120,27 @@ export default function Authentication ({ setVisible }) {
   }, []);
 
   useEffect(() => {
-    if (memberInfo.mobileNo.match(/^\d{2,3}\d{3,4}\d{4}$/) && validationMemberInfo() === true) {
+    if (memberInfo.mobileNo.match(/^\d{2,3}\d{3,4}\d{4}$/) && memberInfo.memberName !== '') {
       setAuthAvailable(true);
     } else {
       setAuthAvailable(false);
     }
-  }, [memberInfo.mobileNo, validationMemberInfo]);
+  }, [memberInfo.mobileNo]);
+
+  useEffect(() => {
+   if(memberInfo.mobileNo !== ''){
+     setError(prev => ({
+       ...prev,
+       mobileNo: false,
+     }));
+   }
+    if(memberInfo.memberName !== ''){
+      setError(prev => ({
+        ...prev,
+        memberName: false,
+      }));
+    }
+  }, [memberInfo.mobileNo, memberInfo.memberName]);
 
   useEffect(() => {
     if (authSent === true) {
@@ -108,12 +155,10 @@ export default function Authentication ({ setVisible }) {
   }, [expireAt, time, authSent]);
 
   return (
-      <LayerPopup className="authentication" onClose={close}>
-        <div className="popup_wrap size_ms certifi_pop" tabIndex="0">
-          <div className="pop_inner">
-            <div className="pop_cont">
+  <LayerPopup className="certifi_pop" onClose={closePopup}>
+    {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
               <p className="pop_tit">휴대폰 본인 인증</p>
-              <div className="pop_cont_scroll">
+              <div className="pop_cont_scroll contents">
                 <form action="">
                   <div className="form_zone">
                     <div className="input_item">
@@ -123,11 +168,11 @@ export default function Authentication ({ setVisible }) {
                             <input type="text" id="name" className="inp center" placeholder="&nbsp;"
                                    autoComplete="off" value={memberInfo.memberName} tabIndex={1}
                                    onChange={(e) => onChangeValues('memberName', e.target.value)} />
-                              <span className="label">이름<span>(띄어쓰기 없이 입력하세요.)</span></span>
+                              <span className="label">이름<span style={{marginLeft:"12px", fontSize:"14px", color:"#bbb", fontWeight:"100"}}>(띄어쓰기 없이 입력하세요.)</span></span>
                               <span className="focus_bg"></span>
                           </label>
                         </div>
-                        <div className="error_txt"><span className="ico"></span>이름을 입력해 주세요.</div>
+                        {error.memberName && <div className="error_txt"><span className="ico"></span>이름을 입력해 주세요.</div>}
                       </div>
                       <div className="group btn_type error">
                         <div className="inp_box">
@@ -135,10 +180,10 @@ export default function Authentication ({ setVisible }) {
                             <input type="text" id="phoneNumber" className="inp center" placeholder="&nbsp;"
                                    autoComplete="off" maxLength="11" tabIndex={2} value={memberInfo.mobileNo}
                                    onChange={(e) => onChangeValues('mobileNo', e.target.value)} />
-                              <span className="label">휴대폰번호<span>(-없이 입력하세요.)</span></span>
+                              <span className="label">휴대폰번호<span style={{marginLeft:"12px", fontSize:"14px", color:"#bbb", fontWeight:"100"}}>(-없이 입력하세요.)</span></span>
                               <span className="focus_bg"></span>
                           </label>
-                          <div className="error_txt"><span className="ico"></span>휴대폰 번호를 입력해 주세요.</div>
+                          {error.mobileNo && <div className="error_txt"><span className="ico"></span>휴대폰 번호를 입력해 주세요.</div>}
                           <div className="btn_box">
                             {(authSent && authCheck === false) ?
                               <button type="button" className={`btn btn_default`} onClick={() => {
@@ -150,7 +195,7 @@ export default function Authentication ({ setVisible }) {
                                   setExpireAt(target);
 
                                   //인증번호 발송
-                                  _sendSMS(memberInfo.mobileNo);
+                                  _sendSMS(memberInfo.mobileNo, memberInfo.memberName);
                                 }
                               }}>재전송</button>
                               :
@@ -165,7 +210,7 @@ export default function Authentication ({ setVisible }) {
                                           setExpireAt(target);
 
                                           //인증번호 발송
-                                          _sendSMS(memberInfo.mobileNo);
+                                          _sendSMS(memberInfo.mobileNo, memberInfo.memberName);
                                         }
                                       }}>인증번호</button>
                             }
@@ -178,7 +223,7 @@ export default function Authentication ({ setVisible }) {
                         {
                           authSent === true &&
                           <div className="group btn_type">
-                            <div className="inp_box">
+                            <div className="inp_box" style={{position:'relative', paddingRight:'186px'}}>
                               <label className="inp_desc" htmlFor="certifyNumber">
                                 <input type="text" id="certifyNumber" className="inp" placeholder=" " autoComplete="off"
                                        tabIndex={6} value={authCode} onChange={(e) => {
@@ -193,6 +238,7 @@ export default function Authentication ({ setVisible }) {
                               <div className="btn_box">
                                 <button type="button" className={`btn ${authCheck !== true ? 'btn_primary' : 'btn_disable'}`}
                                         onClick={() => {
+                                          debugger
                                           if (authCheck !== true) {
                                             if (time === 0) {
                                               openAlert('인증시간이 만료되었습니다. 재전송 후 인증해주세요.');
@@ -221,12 +267,9 @@ export default function Authentication ({ setVisible }) {
               type="button">확인
                 </button>
               </div>
-            </div>
-            <button href="#" className="ico_x closed" title="팝업창 닫기" onClick={close}>
+            <button href="#" className="ico_x closed" title="팝업창 닫기" onClick={closePopup}>
               <span>팝업창 닫기</span>
             </button>
-          </div>
-        </div>
       </LayerPopup>
   );
 };
