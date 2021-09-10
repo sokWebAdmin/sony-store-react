@@ -16,20 +16,29 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
   const { accumulationConfig } = useMallState();
 
   // subPayAmt: number , coupons: nested object
-    const { subPayAmt } = discount;
-    // const handlePaymentChange = event => handleChange(event)(setDiscount);
+  const { subPayAmt } = discount;
+  // const handlePaymentChange = event => handleChange(event)(setDiscount);
+  /**
+   * Coupon
+   */
 
-    const pointInput = useRef();
+  const [useCouponVisible, setUseCouponVisible] = useState(true); // TODO. 임시
+                                                                  // visible 처리
 
-    const pointUnit = accumulationConfig?.accumulationUnit || 'M'; // falsy
+  /**
+   * Point
+   */
+  const pointInput = useRef();
 
-    const accumulationAmt = useMemo(
-      () => paymentInfo?.accumulationAmt ? toCurrencyString(
-        paymentInfo.accumulationAmt) : 0);
+  const pointUnit = accumulationConfig?.accumulationUnit || 'M'; // falsy
 
-    const accumulationUseMinPriceWarnStyle = useMemo(() =>
-      (accumulationConfig?.accumulationUseMinPrice && subPayAmt !== 0 &&
-        accumulationConfig.accumulationUseMinPrice > subPayAmt) ?
+  const accumulationAmt = useMemo(
+    () => paymentInfo?.accumulationAmt ? toCurrencyString(
+      paymentInfo.accumulationAmt) : 0);
+
+  const accumulationUseMinPriceWarnStyle = useMemo(() =>
+    (accumulationConfig?.accumulationUseMinPrice && subPayAmt !== 0 &&
+      accumulationConfig.accumulationUseMinPrice > subPayAmt) ?
         { color: '#e70000' } : {});
 
     const toCurrency = event => {
