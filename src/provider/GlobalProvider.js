@@ -6,6 +6,7 @@ import { MallProvider } from '../context/mall.context';
 import { ProfileProvider } from '../context/profile.context';
 import { HeaderProvider } from '../context/header.context';
 import { getAccessToken } from '../utils/token';
+import { CategoryProvider } from '../context/category.context';
 
 const GlobalProvider = ({ children }) => {
   const onChangeGlobal = (values) => {
@@ -26,9 +27,11 @@ const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider value={option}>
       <ProfileProvider>
         <MallProvider>
-          <BoardProvider>
-            <HeaderProvider>{children}</HeaderProvider>
-          </BoardProvider>
+          <CategoryProvider>
+            <BoardProvider>
+              <HeaderProvider>{children}</HeaderProvider>
+            </BoardProvider>
+          </CategoryProvider>
         </MallProvider>
       </ProfileProvider>
     </GlobalContext.Provider>
