@@ -29,7 +29,7 @@ export default function OrderDetail() {
   });
 
   const [amountInfo, setAmountInfo] = useState({
-    // 결제정보
+    // 결제금액정보
     totalProductAmt: 0, // 총 주문 금액
     //TODO: 아래 할인 필드들은 뭔지 확인
     immediateDiscountAmt: 0, //     프로모션 할인,  immediateDiscountAmt 맞는지 확인
@@ -37,7 +37,13 @@ export default function OrderDetail() {
     subPayAmt: 0, // 마일리지 사용? subPayAmt 맞는지 확인
     totalDiscountAmount: 0, // 총 할인 금액
     payAmt: 0, // 결제 금액
+  });
+
+  const [payInfo, setPayInfo] = useState({
+    // 결제 정보
     payType: '', // 가상계좌 VIRTUAL_ACCOUNT, 신용카드 CREDIT_CARD
+    cardInfo: null, // 가상계좌일 때 NUll
+    bankInfo: null, // 신용카드일 때 Null
   });
 
   useEffect(() => {
@@ -50,6 +56,7 @@ export default function OrderDetail() {
         deliveryMemo,
         lastOrderAmount: { totalProductAmt, immediateDiscountAmt, productCouponDiscountAmt, subPayAmt, payAmt },
         payType,
+        payInfo: { cardInfo, bankInfo },
       } = res.data;
       setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0] });
       setOrderProducts(makeOrderProducts(res.data));
@@ -68,8 +75,35 @@ export default function OrderDetail() {
         subPayAmt,
         totalDiscountAmount: immediateDiscountAmt + productCouponDiscountAmt + subPayAmt,
         payAmt,
+      });
+
+      setPayInfo({
         // payType,
+        // cardInfo,
+        // bankInfo,
         payType: 'CREDIT_CARD',
+        cardInfo: {
+          approveYmdt: '2021-09-11 22:29:43',
+          cardAmt: 202000,
+          cardApprovalNumber: '51587665',
+          cardCode: 'CCBC',
+          cardCompany: 'BC',
+          cardName: 'BC카드',
+          cardNo: '920020******9787',
+          installmentPeriod: 0,
+          noInterest: false,
+        },
+        bankInfo: {
+          account: 'T0309260000174',
+          bank: 'IBK',
+          bankAmt: 202000,
+          bankCode: '003',
+          bankName: '기업은행',
+          depositAmt: 0,
+          depositYmdt: null,
+          depositorName: '한국사이버결제',
+          paymentExpirationYmdt: '2021-09-18 23:59:59',
+        },
       });
 
       console.log('res.data:', res.data);
@@ -92,6 +126,14 @@ export default function OrderDetail() {
         buyPrice: orderOption.price.buyPrice,
         buyAmt: orderOption.price.buyAmt,
       }));
+  };
+
+  const getInstallmentPeriod = (cardInfo) => {
+    const { installmentPeriod, noInterest } = cardInfo;
+    if (installmentPeriod === 0) {
+      return '일시불';
+    }
+    return `${installmentPeriod}개월 할부${noInterest ? '(무)' : ''}`;
   };
 
   // TODO: 마크업처럼 스타일리 안되는데 추후 확인
@@ -259,9 +301,11 @@ export default function OrderDetail() {
                       {amountInfo.payAmt} <span className="won">원</span>
                     </div>
                     {/* 결제정보 현금 */}
-                    {amountInfo.payType === 'VIRTUAL_ACCOUNT' && (
+                    {payInfo.payType === 'VIRTUAL_ACCOUNT' && (
                       <>
-                        <div className="purchase_detail_method">가상 계좌 : KB국민은행(1234-2345-32456)</div>
+                        <div className="purchase_detail_method">
+                          가상 계좌 : {payInfo.bankInfo.bankName}({payInfo.bankInfo.account})
+                        </div>
                         <button
                           type="button"
                           className="button button_negative button-s popup_comm_btn"
@@ -271,9 +315,11 @@ export default function OrderDetail() {
                         </button>
                       </>
                     )}
-                    {amountInfo.payType === 'CREDIT_CARD' && (
+                    {payInfo.payType === 'CREDIT_CARD' && (
                       <>
-                        <div class="purchase_detail_method">삼성카드 / 일시불</div>
+                        <div class="purchase_detail_method">
+                          {payInfo.cardInfo.cardName} / {getInstallmentPeriod(payInfo.cardInfo)}
+                        </div>
                         <button type="button" class="button button_negative button-s">
                           신용카드 영수증
                         </button>
