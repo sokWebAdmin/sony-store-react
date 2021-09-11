@@ -123,6 +123,7 @@ export default function OrderDetail() {
       .flatMap(({ orderOptions }) => orderOptions)
       .map((orderOption) => ({
         orderNo: orderOption.orderNo,
+        imageUrl: orderOption.imageUrl,
         orderOptionNo: orderOption.orderOptionNo,
         optionTitle: orderOption.optionTitle,
         productNo: orderOption.productNo,
@@ -225,6 +226,7 @@ export default function OrderDetail() {
                         <OrderDetailProductItem
                           key={orderProduct.orderNo}
                           productName={orderProduct.productName}
+                          imageUrl={orderProduct.imageUrl}
                           optionTitle={orderProduct.optionTitle}
                           buyPrice={orderProduct.buyPrice}
                           buyAmt={orderProduct.buyAmt}
