@@ -45,6 +45,7 @@ export default function Gnb() {
           {
             gnbCategories.map((gc, index) => {
               return <li
+                key={`gnb-menu-${index}`}
                 className={`${activeIndex === index ? 'active' : ''} ${activeMIndex === index ? 'mo--active' : ''}`}
                 onMouseOver={() => {
                   setActiveIndex(index);
@@ -64,8 +65,8 @@ export default function Gnb() {
                 </a>
                 <ul className="gnb__menu__secondary">
                   {
-                    gc.children.map(gcc => {
-                      return <li>
+                    gc.children.map((gcc, gccIndex) => {
+                      return <li key={`gnb-menu-${index}-${gccIndex}`}>
                         <a
                           href="#"
                           onClick={e => {
