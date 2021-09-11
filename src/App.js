@@ -89,6 +89,7 @@ import {
   useProileDispatch,
 } from './context/profile.context';
 import Benefit from './pages/membership/Benefit';
+import { initCategory, useCategoryDispatch } from './context/category.context';
 
 const App = (props) => {
   const dispatch = useMallDispatch();
@@ -96,6 +97,8 @@ const App = (props) => {
   const {isLogin} = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
   const {my, profile} = useProfileState();
+
+  const categoryDispatch = useCategoryDispatch();
 
   useEffect(() => {
     if (state?.mall) return;
@@ -141,6 +144,14 @@ const App = (props) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!state?.categories) {
+      return;
+    }
+
+    initCategory(categoryDispatch, state.categories);
+  }, [state?.categories]);
+
   return (
     <div className="App" onScroll={handleScroll}>
       {isStatus ? (
@@ -156,10 +167,10 @@ const App = (props) => {
               <Route exact path="/main" component={Main} />
 
               {/* 상품목록 */}
-              <Route exact path="/products/:type" component={ProductList} />
+              <Route exact path="/products/*" component={ProductList} />
 
               {/* 세부분류 상품목록 */}
-              <Route exact path="/products/:type/:detail_type" component={DetailList} />
+              {/*<Route exact path="/products/:type/:detail_type" component={DetailList} />*/}
 
               {/* 추천상품 */}
               <Route exact path="/recommend" component={Recommend} />
