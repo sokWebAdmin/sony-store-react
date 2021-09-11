@@ -82,6 +82,8 @@ export default function OrderDetail() {
         // payType,
         // cardInfo,
         // bankInfo,
+
+        // FIXME: 목데이터, 개발완료되면 지우고 위 payType, cardInfo, bankInfo 주석 풀면 됨
         payType: 'CREDIT_CARD',
         cardInfo: {
           approveYmdt: '2021-09-11 22:29:43',
@@ -339,7 +341,9 @@ export default function OrderDetail() {
               <button type="button" className="button button_negative only-pc" onClick={() => onPrint()}>
                 주문 정보 프린트
               </button>
-              <a className="button button_positive">목록</a>
+              <Link to="/my-page/order-list" className="button button_positive">
+                목록
+              </Link>
             </div>
             {/* // buttons */}
           </div>
