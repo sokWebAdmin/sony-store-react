@@ -1,4 +1,5 @@
 import React from 'react';
+import { toCurrencyString } from '../../utils/unit';
 
 export default function OrderDetailProductItem({ productName, optionTitle, buyPrice, buyAmt, orderCnt }) {
   return (
@@ -15,13 +16,13 @@ export default function OrderDetailProductItem({ productName, optionTitle, buyPr
         </div>
       </div>
       <div className="col_table_cell prd_price">
-        {buyPrice} <span className="won">원</span>
+        {toCurrencyString(buyPrice)} <span className="won">원</span>
       </div>
       <div className="col_table_cell prd_count">
-        {orderCnt} <span className="unit">개</span>
+        {toCurrencyString(orderCnt)} <span className="unit">개</span>
       </div>
       <div className="col_table_cell prd_total">
-        {buyAmt} <span className="won">원</span>
+        {toCurrencyString(buyAmt)} <span className="won">원</span>
       </div>
     </div>
   );

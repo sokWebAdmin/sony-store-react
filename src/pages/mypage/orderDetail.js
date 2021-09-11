@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '../../hooks';
+import { toCurrencyString } from '../../utils/unit';
 import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
 
 //SEO
@@ -276,29 +277,29 @@ export default function OrderDetail() {
                 <dl className="purchase">
                   <dt className="purchase_term purchase_price">총 주문금액</dt>
                   <dd className="purchase_desc purchase_price">
-                    {amountInfo.totalProductAmt}
+                    {toCurrencyString(amountInfo.totalProductAmt)}
                     <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount">할인 금액</dt>
                   <dd className="purchase_desc purchase_discount">
-                    - {amountInfo.totalDiscountAmount} <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.totalDiscountAmount)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">프로모션 할인</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - {amountInfo.immediateDiscountAmt} <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.immediateDiscountAmt)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">쿠폰 사용</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - {amountInfo.productCouponDiscountAmt} <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.productCouponDiscountAmt)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">마일리지 사용</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - {amountInfo.subPayAmt} <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.subPayAmt)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_detail">결제 내역</dt>
                   <dd className="purchase_desc purchase_detail">
                     <div className="purchase_detail_price">
-                      {amountInfo.payAmt} <span className="won">원</span>
+                      {toCurrencyString(amountInfo.payAmt)} <span className="won">원</span>
                     </div>
                     {/* 결제정보 현금 */}
                     {payInfo.payType === 'VIRTUAL_ACCOUNT' && (
@@ -325,12 +326,6 @@ export default function OrderDetail() {
                         </button>
                       </>
                     )}
-
-                    {/*// 결제정보 현금 */}
-                    {/* 결제정보 신용카드
-        <div class="purchase_detail_method">삼성카드 / 일시불</div>
-        <button type="button" class="button button_negative button-s">신용카드 영수증</button>
-        */}
                   </dd>
                 </dl>
               </div>
