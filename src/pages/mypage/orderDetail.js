@@ -28,20 +28,16 @@ export default function OrderDetail() {
 
   useEffect(() => {
     getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } }).then((res) => {
-      const { orderNo, orderYmdt } = res.data;
-      setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0] });
-      setOrderProducts(makeOrderProducts(res.data));
-      console.log('orderProducts:', orderProducts);
-
       const {
+        orderNo,
+        orderYmdt,
         orderer: { ordererName, ordererContact1 },
-      } = res.data;
-      setOrdererInfo({ ordererName, ordererContact1 });
-
-      const {
         shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
         deliveryMemo,
       } = res.data;
+      setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0] });
+      setOrderProducts(makeOrderProducts(res.data));
+      setOrdererInfo({ ordererName, ordererContact1 });
       setShippingAddress({
         receiverName,
         receiverAddress,
@@ -49,6 +45,9 @@ export default function OrderDetail() {
         receiverContact1,
         deliveryMemo,
       });
+
+      console.log('res.data:', res.data);
+      console.log('orderProducts:', orderProducts);
     });
   }, []);
 
