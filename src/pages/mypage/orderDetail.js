@@ -16,14 +16,27 @@ import '../../assets/scss/mypage.scss';
 export default function OrderDetail() {
   const query = useQuery();
   const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '' });
-  const [orderProducts, setOrderProducts] = useState([]);
-  const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' });
+  const [orderProducts, setOrderProducts] = useState([]); // 주문 상품
+  const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' }); // 주문 정보
   const [shippingAddress, setShippingAddress] = useState({
+    // 주문 정보 주소
+    // TODO: 배송일 선택 필드 확인 https://nhnent.dooray.com/project/posts/3089925914259872916
     receiverName: '',
     receiverContact1: '',
     receiverAddress: '',
     receiverDetailAddress: '',
     deliveryMemo: '',
+  });
+
+  const [amountInfo, setAmountInfo] = useState({
+    // 결제정보
+    totalProductAmt: 0, // 총 주문 금액
+    //TODO: 아래 할인 필드들은 뭔지 확인
+    immediateDiscountAmt: 0, //     프로모션 할인,  immediateDiscountAmt 맞는지 확인
+    productCouponDiscountAmt: 0, // 쿠폰 사용, productCouponDiscountAmt 맞는지 확인
+    subPayAmt: 0, // 마일리지 사용? subPayAmt 맞는지 확인
+    totalDiscountAmount: 0, // 총 할인 금액
+    payAmt: 0, // 결제 금액
   });
 
   useEffect(() => {
@@ -34,6 +47,7 @@ export default function OrderDetail() {
         orderer: { ordererName, ordererContact1 },
         shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
         deliveryMemo,
+        lastOrderAmount: { totalProductAmt, immediateDiscountAmt, productCouponDiscountAmt, subPayAmt, payAmt },
       } = res.data;
       setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0] });
       setOrderProducts(makeOrderProducts(res.data));
@@ -44,6 +58,14 @@ export default function OrderDetail() {
         receiverDetailAddress,
         receiverContact1,
         deliveryMemo,
+      });
+      setAmountInfo({
+        totalProductAmt,
+        immediateDiscountAmt,
+        productCouponDiscountAmt,
+        subPayAmt,
+        totalDiscountAmount: immediateDiscountAmt + productCouponDiscountAmt + subPayAmt,
+        payAmt,
       });
 
       console.log('res.data:', res.data);
@@ -208,28 +230,29 @@ export default function OrderDetail() {
                 <dl className="purchase">
                   <dt className="purchase_term purchase_price">총 주문금액</dt>
                   <dd className="purchase_desc purchase_price">
-                    4,299,000<span className="won">원</span>
+                    {amountInfo.totalProductAmt}
+                    <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount">할인 금액</dt>
                   <dd className="purchase_desc purchase_discount">
-                    - 2,300 <span className="won">원</span>
+                    - {amountInfo.totalDiscountAmount} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">프로모션 할인</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - 2,000 <span className="won">원</span>
+                    - {amountInfo.immediateDiscountAmt} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">쿠폰 사용</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - 0 <span className="won">원</span>
+                    - {amountInfo.productCouponDiscountAmt} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">마일리지 사용</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - 300 <span className="won">원</span>
+                    - {amountInfo.subPayAmt} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_detail">결제 내역</dt>
                   <dd className="purchase_desc purchase_detail">
                     <div className="purchase_detail_price">
-                      4,299,000 <span className="won">원</span>
+                      {amountInfo.payAmt} <span className="won">원</span>
                     </div>
                     {/* 결제정보 현금 */}
                     <div className="purchase_detail_method">가상 계좌 : KB국민은행(1234-2345-32456)</div>
