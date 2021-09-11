@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '../../hooks';
 import { toCurrencyString } from '../../utils/unit';
+import OrderProcess from '../../components/order/OrderProcess';
 import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
 
 //SEO
@@ -184,38 +185,7 @@ export default function OrderDetail() {
               </Link>
               <h1 className="common_head_name">주문 상세 조회</h1>
             </div>
-            <div className="my_order order_process">
-              <ul className="order_list">
-                {/* 현상태만 class: on 추가, .ico_txt 내부에 <strong> 추가 */}
-                <li className="step_1">
-                  <div className="ship_box">
-                    <span className="ico_txt">입금대기</span>
-                  </div>
-                </li>
-                <li className="step_2">
-                  <div className="ship_box">
-                    <span className="ico_txt">결제완료</span>
-                  </div>
-                </li>
-                <li className="step_3 on">
-                  <div className="ship_box">
-                    <span className="ico_txt">
-                      <strong>배송준비</strong>
-                    </span>
-                  </div>
-                </li>
-                <li className="step_4">
-                  <div className="ship_box">
-                    <span className="ico_txt">배송중</span>
-                  </div>
-                </li>
-                <li className="step_5">
-                  <div className="ship_box">
-                    <span className="ico_txt">배송완료</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
+            <OrderProcess defaultOrderStatusType={orderInfo.defaultOrderStatusType} />
             <div className="o_summary">
               <dl className="o_summary_status">
                 <dt className="o_summary_term">처리상태</dt>
