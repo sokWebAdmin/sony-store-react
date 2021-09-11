@@ -37,6 +37,7 @@ export default function OrderDetail() {
     subPayAmt: 0, // 마일리지 사용? subPayAmt 맞는지 확인
     totalDiscountAmount: 0, // 총 할인 금액
     payAmt: 0, // 결제 금액
+    payType: '', // 가상계좌 VIRTUAL_ACCOUNT, 신용카드 CREDIT_CARD
   });
 
   useEffect(() => {
@@ -48,6 +49,7 @@ export default function OrderDetail() {
         shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
         deliveryMemo,
         lastOrderAmount: { totalProductAmt, immediateDiscountAmt, productCouponDiscountAmt, subPayAmt, payAmt },
+        payType,
       } = res.data;
       setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0] });
       setOrderProducts(makeOrderProducts(res.data));
@@ -66,6 +68,8 @@ export default function OrderDetail() {
         subPayAmt,
         totalDiscountAmount: immediateDiscountAmt + productCouponDiscountAmt + subPayAmt,
         payAmt,
+        // payType,
+        payType: 'CREDIT_CARD',
       });
 
       console.log('res.data:', res.data);
@@ -255,14 +259,27 @@ export default function OrderDetail() {
                       {amountInfo.payAmt} <span className="won">원</span>
                     </div>
                     {/* 결제정보 현금 */}
-                    <div className="purchase_detail_method">가상 계좌 : KB국민은행(1234-2345-32456)</div>
-                    <button
-                      type="button"
-                      className="button button_negative button-s popup_comm_btn"
-                      data-popup-name="cash_receipt"
-                    >
-                      현금영수증 신청
-                    </button>
+                    {amountInfo.payType === 'VIRTUAL_ACCOUNT' && (
+                      <>
+                        <div className="purchase_detail_method">가상 계좌 : KB국민은행(1234-2345-32456)</div>
+                        <button
+                          type="button"
+                          className="button button_negative button-s popup_comm_btn"
+                          data-popup-name="cash_receipt"
+                        >
+                          현금영수증 신청
+                        </button>
+                      </>
+                    )}
+                    {amountInfo.payType === 'CREDIT_CARD' && (
+                      <>
+                        <div class="purchase_detail_method">삼성카드 / 일시불</div>
+                        <button type="button" class="button button_negative button-s">
+                          신용카드 영수증
+                        </button>
+                      </>
+                    )}
+
                     {/*// 결제정보 현금 */}
                     {/* 결제정보 신용카드
         <div class="purchase_detail_method">삼성카드 / 일시불</div>
