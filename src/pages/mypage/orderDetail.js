@@ -16,7 +16,7 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderDetail() {
   const query = useQuery();
-  const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '' });
+  const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '', defaultOrderStatusType: '' });
   const [orderProducts, setOrderProducts] = useState([]); // 주문 상품
   const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' }); // 주문 정보
   const [shippingAddress, setShippingAddress] = useState({
@@ -52,6 +52,7 @@ export default function OrderDetail() {
       const {
         orderNo,
         orderYmdt,
+        defaultOrderStatusType,
         orderer: { ordererName, ordererContact1 },
         shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
         deliveryMemo,
@@ -59,7 +60,7 @@ export default function OrderDetail() {
         payType,
         payInfo: { cardInfo, bankInfo },
       } = res.data;
-      setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0] });
+      setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
       setOrderProducts(makeOrderProducts(res.data));
       setOrdererInfo({ ordererName, ordererContact1 });
       setShippingAddress({
@@ -129,6 +130,23 @@ export default function OrderDetail() {
         buyPrice: orderOption.price.buyPrice,
         buyAmt: orderOption.price.buyAmt,
       }));
+  };
+
+  const getOrderStatus = (defaultOrderStatusType) => {
+    const orderStatus = {
+      DEPOSIT_WAIT: '입금대기',
+      PAY_DONE: '결제완료',
+      PRODUCT_PREPARE: '결제완료', // 샵바이에는 상품준비중상태가 있지만 소니에는 없음.
+      DELIVERY_PREPARE: '배송준비',
+      DELIVERY_ING: '배송중',
+      DELIVERY_DONE: '배송완료',
+    };
+
+    return orderStatus[defaultOrderStatusType];
+  };
+
+  const showFindDelivery = (defaultOrderStatusType) => {
+    return defaultOrderStatusType === 'DELIVERY_ING' || defaultOrderStatusType === 'DELIVERY_DONE';
   };
 
   const getInstallmentPeriod = (cardInfo) => {
@@ -202,10 +220,12 @@ export default function OrderDetail() {
               <dl className="o_summary_status">
                 <dt className="o_summary_term">처리상태</dt>
                 <dd className="o_summary_desc">
-                  <strong>배송준비</strong>
-                  <button type="button" className="button button_positive button-s">
-                    배송조회
-                  </button>
+                  <strong>{getOrderStatus(orderInfo.defaultOrderStatusType)}</strong>
+                  {showFindDelivery(orderInfo.defaultOrderStatusType) && (
+                    <button type="button" className="button button_positive button-s">
+                      배송조회
+                    </button>
+                  )}
                 </dd>
               </dl>
               <dl className="o_summary_date">
