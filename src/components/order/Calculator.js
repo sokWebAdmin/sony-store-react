@@ -7,7 +7,7 @@ import { toCurrencyString } from '../../utils/unit.js';
 const Calculator = ({ payment, paymentInfo }) => {
 
   const toCurrency = val => val
-    ? toCurrencyString(paymentInfo.paymentAmt)
+    ? toCurrencyString(val)
     : '0';
 
   const [agree, setAgree] = useState(false);
@@ -50,7 +50,8 @@ const Calculator = ({ payment, paymentInfo }) => {
                     <em
                       className="view_price minus"><strong>-
                       {toCurrency(
-                        paymentInfo?.totalImmediateDiscountAmt)}</strong>원</em>
+                        paymentInfo?.cartAmt -
+                        paymentInfo?.paymentAmt)}</strong>원</em>
                   </div>
               </div>
               <div className="sale_inner"

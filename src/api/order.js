@@ -17,3 +17,7 @@ export const getProfileOrderByOrderNo = ({ path: { orderNo } }) => request(
 
 export const getOrderSheetCoupon = query =>
   request(`order-sheets/${query.orderSheetNo}/coupons`, 'get');
+
+export const postOrderSheetCalculate = ({ pathVariable, requestBody }) =>
+  request(`order-sheets/${pathVariable.orderSheetNo}/calculate`, 'post', null,
+    requestBody);

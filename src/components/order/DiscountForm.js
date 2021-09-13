@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 
 // global context
 import { useMallState } from '../../context/mall.context';
@@ -9,10 +9,12 @@ import UseCoupon from '../popup/UseCoupon';
 
 // utils
 import { onKeyboardEventOnlyDigit } from '../../utils/listener';
-import { handleChange, setObjectState } from '../../utils/state';
+import { setObjectState } from '../../utils/state';
+import { debounce } from 'lodash';
+import useDebounce from '../../hooks';
 
 // 배송지 정보
-const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderProducts }) => {
+const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderProducts, calculate }) => {
   const { accumulationConfig } = useMallState();
 
   // subPayAmt: number , coupons: nested object
@@ -28,33 +30,42 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
   /**
    * Point
    */
+  const [inputSubPayAmt, setInputSubPayAmt] = useState('');
+
+  const debounced = useDebounce(inputSubPayAmt, 1000);
+  useEffect(() => {
+    if (debounced) {
+      accumulationUseMinPriceWarn
+        ? setObjectState('subPayAmt', 0)(setDiscount)
+        : setObjectState('subPayAmt', inputSubPayAmt)(setDiscount);
+    }
+  }, [debounced]);
+
   const pointInput = useRef();
 
   const pointUnit = accumulationConfig?.accumulationUnit || 'M'; // falsy
 
   const accumulationAmt = useMemo(
     () => paymentInfo?.accumulationAmt ? toCurrencyString(
-      paymentInfo.accumulationAmt) : 0);
+      paymentInfo.accumulationAmt) : 0, [paymentInfo]);
 
-  const accumulationUseMinPriceWarnStyle = useMemo(() =>
-    (accumulationConfig?.accumulationUseMinPrice && subPayAmt !== 0 &&
-      accumulationConfig.accumulationUseMinPrice > subPayAmt) ?
-      { color: '#e70000' } : {});
+  const accumulationUseMinPriceWarn = useMemo(() =>
+    (accumulationConfig?.accumulationUseMinPrice && inputSubPayAmt > 0 &&
+      accumulationConfig.accumulationUseMinPrice > inputSubPayAmt) ||
+    (paymentInfo?.cartAmt && inputSubPayAmt > 0 && paymentInfo.cartAmt <
+      inputSubPayAmt), [accumulationConfig, inputSubPayAmt]);
+
+  const checkValidPoint = () => accumulationUseMinPriceWarn &&
+    setInputSubPayAmt(0);
 
   const toCurrency = event => {
     const amount = event.target.value.replaceAll(',', '') * 1;
 
-    if (amount > paymentInfo?.accumulationAmt) {
-      event.target.value = accumulationAmt;
-      setObjectState('subPayAmt', paymentInfo.accumulationAmt)(setDiscount);
-      return;
-    }
+    event.target.value = toCurrencyString(amount);
+    setInputSubPayAmt(amount.toString());
+  };
 
-      event.target.value = toCurrencyString(amount);
-      setObjectState('subPayAmt', amount)(setDiscount);
-    };
-
-    return (
+  return (
       <>
         <div className="acc_form">
           <div className="acc_cell vat">
@@ -92,6 +103,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                                                discount={discount}
                                                setDiscount={setDiscount}
                                                setReject={setNoCoupon}
+                                               calculate={calculate}
                 />}
               </div>
             </div>
@@ -109,7 +121,9 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                        placeholder="0"
                        onKeyPress={onKeyboardEventOnlyDigit}
                        onChange={toCurrency}
+                       onBlur={checkValidPoint}
                        ref={pointInput}
+                       value={inputSubPayAmt}
                 /><span
                 className="unit">점</span>
                 <span className="focus_bg" />
@@ -119,9 +133,10 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                   className="button button_negative button-s"
                   onClick={() => {
                     if (paymentInfo?.accumulationAmt) {
-                      setObjectState('subPayAmt', paymentInfo.accumulationAmt)(
-                        setDiscount);
-                      pointInput.current.value = accumulationAmt;
+                      setInputSubPayAmt(
+                        paymentInfo.accumulationAmt > paymentInfo.cartAmt
+                          ? paymentInfo.cartAmt
+                          : paymentInfo.accumulationAmt);
                     }
                   }}
                   type="button">모두 사용
@@ -132,9 +147,13 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
             </div>
             {accumulationConfig?.accumulationUseMinPrice > 0 &&
             <p className="membership_info"
-               style={accumulationUseMinPriceWarnStyle}>* 멤버십 마일리지는
+               style={accumulationUseMinPriceWarn
+                 ? { color: '#e70000' }
+                 : { color: 'inherit' }}>* 멤버십 마일리지는
               최소 {toCurrencyString(
-                accumulationConfig.accumulationUseMinPrice)}점 부터 사용 가능합니다.</p>}
+                accumulationConfig.accumulationUseMinPrice)}점 {paymentInfo?.cartAmt &&
+              <span>, 최대 {toCurrencyString(paymentInfo.cartAmt)}</span>
+              } 사용 가능합니다.</p>}
           </div>
         </div>
       </>
