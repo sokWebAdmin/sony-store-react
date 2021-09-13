@@ -20,7 +20,7 @@ export default function EventList() {
     <>
       <SEOHelmet title='기획전' />
       <div className="contents events">
-        <div className="container full">{/* full : max-width 1920 */}
+        <div className="container full">
           <div className="content">
             <EventTop/>
             <EventBottom/>
