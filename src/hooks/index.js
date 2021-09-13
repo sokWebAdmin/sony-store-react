@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export const useToggle = (initial) => {
@@ -41,3 +41,15 @@ export const useAlert = (initial) => {
 };
 
 export const useQuery = () => new URLSearchParams(useLocation().search);
+
+export const useMediaQuery = (query) => {
+  const mediaMatch = window.matchMedia(query);
+  const [matches, setMatches] = useState(mediaMatch.matches);
+
+  useEffect(() => {
+    const handler = e => setMatches(e.matches);
+    mediaMatch.addEventListener('change', handler);
+    return () => mediaMatch.addEventListener('change', handler);
+  });
+  return matches;
+};
