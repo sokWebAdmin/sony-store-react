@@ -30,13 +30,12 @@ export default function OrderDetail() {
     deliveryMemo: '',
   });
 
+  // 결제금액정보
   const [amountInfo, setAmountInfo] = useState({
-    // 결제금액정보
     totalProductAmt: 0, // 총 주문 금액
-    //TODO: 아래 할인 필드들은 뭔지 확인
-    immediateDiscountAmt: 0, //     프로모션 할인,  immediateDiscountAmt 맞는지 확인
-    productCouponDiscountAmt: 0, // 쿠폰 사용, productCouponDiscountAmt 맞는지 확인
-    subPayAmt: 0, // 마일리지 사용? subPayAmt 맞는지 확인
+    promotionDiscountAmt: 0,
+    couponDiscountAmt: 0,
+    mileageAmt: 0,
     totalDiscountAmount: 0, // 총 할인 금액
     payAmt: 0, // 결제 금액
   });
@@ -57,7 +56,15 @@ export default function OrderDetail() {
         orderer: { ordererName, ordererContact1 },
         shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
         deliveryMemo,
-        lastOrderAmount: { totalProductAmt, immediateDiscountAmt, productCouponDiscountAmt, subPayAmt, payAmt },
+        lastOrderAmount: {
+          totalProductAmt,
+          immediateDiscountAmt,
+          additionalDiscountAmt,
+          cartCouponDiscountAmt,
+          productCouponDiscountAmt,
+          subPayAmt,
+          payAmt,
+        },
         payType,
         payInfo: { cardInfo, bankInfo },
       } = res.data;
@@ -71,12 +78,15 @@ export default function OrderDetail() {
         receiverContact1,
         deliveryMemo,
       });
+
+      const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
+      const couponDiscountAmt = cartCouponDiscountAmt + productCouponDiscountAmt;
       setAmountInfo({
         totalProductAmt,
-        immediateDiscountAmt,
-        productCouponDiscountAmt,
-        subPayAmt,
-        totalDiscountAmount: immediateDiscountAmt + productCouponDiscountAmt + subPayAmt,
+        promotionDiscountAmt,
+        couponDiscountAmt,
+        mileageAmt: subPayAmt,
+        totalDiscountAmount: promotionDiscountAmt + couponDiscountAmt + subPayAmt,
         payAmt,
       });
 
@@ -280,15 +290,15 @@ export default function OrderDetail() {
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">프로모션 할인</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - {toCurrencyString(amountInfo.immediateDiscountAmt)} <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.promotionDiscountAmt)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">쿠폰 사용</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - {toCurrencyString(amountInfo.productCouponDiscountAmt)} <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.couponDiscountAmt)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">마일리지 사용</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - {toCurrencyString(amountInfo.subPayAmt)} <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.mileageAmt)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_detail">결제 내역</dt>
                   <dd className="purchase_desc purchase_detail">
@@ -312,10 +322,10 @@ export default function OrderDetail() {
                     )}
                     {payInfo.payType === 'CREDIT_CARD' && (
                       <>
-                        <div class="purchase_detail_method">
+                        <div className="purchase_detail_method">
                           {payInfo.cardInfo.cardName} / {getInstallmentPeriod(payInfo.cardInfo)}
                         </div>
-                        <button type="button" class="button button_negative button-s">
+                        <button type="button" className="button button_negative button-s">
                           신용카드 영수증
                         </button>
                       </>
