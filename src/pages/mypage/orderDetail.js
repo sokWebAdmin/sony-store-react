@@ -138,7 +138,7 @@ export default function OrderDetail() {
     const orderStatus = {
       DEPOSIT_WAIT: '입금대기',
       PAY_DONE: '결제완료',
-      PRODUCT_PREPARE: '결제완료', // 샵바이에는 상품준비중상태가 있지만 소니에는 없음.
+      PRODUCT_PREPARE: '배송준비', // 샵바이에는 상품준비중상태가 있지만 소니에는 없음.
       DELIVERY_PREPARE: '배송준비',
       DELIVERY_ING: '배송중',
       DELIVERY_DONE: '배송완료',

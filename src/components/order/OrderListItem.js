@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import RefundAccount from '../../pages/order/RefundAccount';
 
 //api
 
@@ -18,6 +19,16 @@ export default function OrderListItem({
   orderStatusType,
   orderStatusTypeLabel,
 }) {
+  const [refundAccountVisible, setRefundAccountVisible] = useState(false);
+  const orderStatusMap = {
+    DEPOSIT_WAIT: '입금대기',
+    PAY_DONE: '결제완료',
+    PRODUCT_PREPARE: '배송준비', // 샵바이에는 상품준비중상태가 있지만 소니에는 없음.
+    DELIVERY_PREPARE: '배송준비',
+    DELIVERY_ING: '배송중',
+    DELIVERY_DONE: '배송완료',
+  };
+
   const showOrderCancel = (orderStatusType) => {
     return ['DEPOSIT_WAIT', 'PAY_DONE', 'DELIVERY_PREPARE', 'DELIVERY_ING'].includes(orderStatusType);
   };
@@ -27,8 +38,10 @@ export default function OrderListItem({
   };
 
   const showRefundAccountInfo = (orderStatusType, payType) => {
-    return orderStatusType === 'CANCEL_DONE' && payType === 'CREDIT_CARD';
+    return payType === 'VIRTUAL_ACCOUNT';
   };
+
+  const onClickRefundAccount = () => setRefundAccountVisible(true);
 
   return (
     <div className="col_table_row">
@@ -53,7 +66,7 @@ export default function OrderListItem({
         {orderCnt} <span className="unit">개</span>
       </div>
       <div className="col_table_cell order">
-        <span className="order_status">{orderStatusTypeLabel}</span>
+        <span className="order_status">{orderStatusMap[orderStatusType]}</span>
         {showOrderCancel(orderStatusType) && (
           <button type="button" className="button button_negative button-s">
             주문취소
@@ -65,9 +78,12 @@ export default function OrderListItem({
           </button>
         )}
         {showRefundAccountInfo(orderStatusType, payType) && (
-          <button type="button" className="button button_negative button-s">
-            환불계좌정보
-          </button>
+          <>
+            <button type="button" className="button button_negative button-s" onClick={onClickRefundAccount}>
+              환불계좌정보
+            </button>
+            {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} />}
+          </>
         )}
       </div>
     </div>

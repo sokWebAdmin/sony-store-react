@@ -4,6 +4,7 @@ import { getProfileOrders, getProfileOrdersSummaryStatus } from '../../api/order
 
 import OrderStatusSummary from '../../components/order/OrderStatusSummary';
 import OrderListItem from '../../components/order/OrderListItem';
+import RefundAccount from '../order/RefundAccount';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -15,6 +16,8 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function OrderList() {
+  const [refundAccountVisible, setRefundAccountVisible] = useState(false);
+
   const [summary, setSummary] = useState({
     depositWaitCnt: 0,
     payDoneCnt: 0,
@@ -135,43 +138,6 @@ export default function OrderList() {
                           key={orderProduct.orderNo}
                         />
                       ))}
-
-                      {/* <div className="col_table_row">
-                      <div className="col_table_cell order">
-                        <span className="order_date">21.05.12</span>
-                        <a className="order_number">20210512-663W24</a>
-                      </div>
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_02.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">
-                              AK-47 Hi-Res 헤드폰 앰프
-                            </div>
-                            <p className="prd_info_option">128Bit/피아노블랙</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell order">
-                        <span className="order_status">주문취소</span>
-                        <button
-                          type="button"
-                          className="button button_negative button-s popup_comm_btn"
-                          data-popup-name="refund_account"
-                        >
-                          환불 계좌 정보
-                        </button>
-                      </div>
-                    </div> */}
                     </div>
                   )}
                 </div>
@@ -221,6 +187,7 @@ export default function OrderList() {
           </div>
         </div>
       </div>
+      {/* {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} />} */}
     </>
   );
 }
