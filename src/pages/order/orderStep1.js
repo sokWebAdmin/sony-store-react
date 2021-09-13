@@ -58,7 +58,9 @@ const OrderStep1 = ({ location }) => {
 
   const [discount, setDiscount] = useState({
     subPayAmt: 0,
-    coupons: {},
+    coupons: {
+      productCoupons: [],
+    },
   });
 
   const orderSheetNo = useMemo(() => getUrlParam('orderSheetNo'), [location]);

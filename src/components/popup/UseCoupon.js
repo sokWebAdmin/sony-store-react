@@ -8,14 +8,15 @@ import SelectBox from '../common/SelectBox';
 import { getOrderSheetCoupon } from '../../api/order.js';
 import { toCurrencyString } from '../../utils/unit.js';
 
-const UseCoupon = ({ setVisible, orderSheetNo, orderProducts }) => {
+const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDiscount }) => {
   const close = () => setVisible(false);
 
   const [productCoupons, setProductCoupons] = useState(
     { productNo: null, items: [] });
   const [products, setProducts] = useState([]);
+  const [useProductCouponProductNo, setUseProductCouponProductNo] = useState(0); // 0 ===
   const [useProductCouponNo, setUseProductCouponNo] = useState(0); // 0 ===
-                                                                  // 사용안함으로 취급
+  // 사용안함으로 취급
 
   const created = async () => {
     const originProducts = await fetchCoupons();
@@ -38,8 +39,20 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts }) => {
     });
   };
 
-  const changeUseProductCoupon = ({ optionNo }) => setUseProductCouponNo(
-    optionNo);
+  const submit = () => {
+    setDiscount({
+      ...discount,
+      coupons: {
+        productCoupons: [
+          {
+            couponIssueNo: useProductCouponNo,
+            productNo: useProductCouponProductNo,
+          },
+        ],
+      },
+    });
+    close();
+  };
 
   function mapProducts (products) {
     return products.map(
@@ -113,11 +126,15 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts }) => {
                   label: item.displayCouponName,
                 }))
               }
-              selectOption={changeUseProductCoupon}
+              selectOption={({ optionNo }) => {
+                setUseProductCouponProductNo(productCoupons.productNo);
+                setUseProductCouponNo(optionNo);
+              }}
             />
             : <h1>적용 가능한 쿠폰이 없습니다.</h1>}
           <div className="btn_article">
             <button className="button button_positive button-m button-full"
+                    onClick={submit}
                     type="button">쿠폰적용
             </button>
           </div>

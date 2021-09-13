@@ -80,6 +80,8 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                   <UseCoupon orderSheetNo={orderSheetNo}
                              setVisible={setUseCouponVisible}
                              orderProducts={orderProducts}
+                             discount={discount}
+                             setDiscount={setDiscount}
                   />
                 }
               </div>
