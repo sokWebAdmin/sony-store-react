@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getDisplayEvents, getEventByEventNo } from '../../api/display';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { getUrlParam } from '../../utils/location';
 import moment from 'moment';
 
@@ -14,14 +14,15 @@ const tabs = [
 ]
 const tags = {
   all: '',
-  only: '단독',
+  only: '소니스토어단독',
   'benefit-zone': '혜택존',
   'pre-order': '예약판매',
-  refined: '정품등록',
-  'live-on': 'LIVE_ON',
+  refined: '정품등록이벤트',
+  'live-on': 'LIVEON',
 }
 
 const EventBottom = () => {
+  const history = useHistory();
   const [events, setEvents] = useState([]);
   const [tabState, setTabState] = useState(getUrlParam('tab') || 'all');
   const [newest, setNewest] = useState(true);
@@ -58,8 +59,7 @@ const EventBottom = () => {
   const formatYmdt = (ymdt) => new Date(ymdt).toISOString().slice(0, 10);
 
   const onClickEventDetail = async (eventNo) => {
-    const test = await getEventByEventNo(eventNo, {});
-    console.log(test.data);
+    history.push(`/event/detail/${eventNo}`)
   };
 
   const openShareEventLayer = () => {
