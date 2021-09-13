@@ -6,8 +6,9 @@ import SelectBox from '../common/SelectBox';
 
 // api
 import { getOrderSheetCoupon } from '../../api/order.js';
+import { toCurrencyString } from '../../utils/unit.js';
 
-const UseCoupon = ({ setVisible, orderSheetNo }) => {
+const UseCoupon = ({ setVisible, orderSheetNo, orderProducts }) => {
   const close = () => setVisible(false);
 
   const [coupons, setCoupons] = useState(null);
@@ -17,79 +18,64 @@ const UseCoupon = ({ setVisible, orderSheetNo }) => {
 
   const fetchCoupons = async () => {
     const { data } = await getOrderSheetCoupon({ orderSheetNo });
-    setProducts([...data.products]);
+    setProducts(mapProducts([...data.products]));
     console.log(products);
   };
+
+  function mapProducts (products) {
+    return products.map(
+      ({ productNo, productName, mainOption, buyAmt, totalOrderCnt }) => ({
+        productNo,
+        productName,
+        imageUrl: orderProducts.find(
+          products => products.id === productNo)?.imageUrl ?? '',
+        mainOption,
+        amount: toCurrencyString(buyAmt),
+        totalOrderCnt,
+      }));
+  }
 
   useEffect(created, []);
 
   return (
-    <LayerPopup className="find_address" size={'m'} popContClassName={'scrollH'}
+    <LayerPopup className="find_address"
+                size={'m'}
+                popContClassName={'scrollH'}
                 onClose={close}>
       <p className="pop_tit">쿠폰 조회 및 적용</p>
       <div className="pop_cont_scroll" style={{ height: '651px' }}>
         <div className="chk_select_zone">
           <ul className="chk_select_inner">
-            <li className="chk_select_list">
-              <div className="chk_select_item table label_click">
-                <div className="radio_box radio_only chk_select">
-                  <input type="radio" className="inp_radio" id="prd_coupon1"
-                         name="prd_coupon" checked="checked" />
-                  <label htmlFor="prd_coupon1"
-                         className="contentType">radio1</label>
-                </div>
-                <div className="chk_select_info">
-                  <div className="info_cell prd_thumb">
+            {products.map(product => (
+              <li className="chk_select_list" key={product.productNo}>
+                <div className="chk_select_item table label_click">
+                  <div className="radio_box radio_only chk_select">
+                    <input type="radio" className="inp_radio" id="prd_coupon1"
+                           name="prd_coupon" defaultChecked={true} />
+                    <label htmlFor="prd_coupon1"
+                           className="contentType">radio1</label>
+                  </div>
+                  <div className="chk_select_info">
+                    <div className="info_cell prd_thumb">
                   <span className="img"><img
-                    src="../../images/_tmp/coupon_prd_thumb.png"
-                    alt="" /></span>
-                  </div>
-                  <div className="info_cell prd_info">
-                    <p className="prd_tit">PLAYSTATION 5 DIGITAL
-                      (CFI-1018B01)</p>
-                    <p className="prd_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된
-                      전문가급
-                      1인치 핸디캠/ LIMITED …</p>
-                  </div>
-                  <div className="info_cell prd_price">
-                    <p className="prd_tit"><span
-                      className="price">4,299,000</span>원</p>
-                    <p className="prd_desc"><span className="count">1</span>개
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li className="chk_select_list">
-              <div className="chk_select_item table label_click">
-                <div className="radio_box radio_only chk_select">
-                  <input type="radio" className="inp_radio" id="prd_coupon2"
-                         name="prd_coupon" />
-                  <label htmlFor="prd_coupon2"
-                         className="contentType">radio1</label>
-                </div>
-                <div className="chk_select_info">
-                  <div className="info_cell prd_thumb">
-                  <span className="img"><img
-                    src="../../images/_tmp/coupon_prd_thumb.png"
-                    alt="" /></span>
-                  </div>
-                  <div className="info_cell prd_info">
-                    <p className="prd_tit">PLAYSTATION 5 DIGITAL
-                      (CFI-1018B01)</p>
-                    <p className="prd_desc">4K HDR(HLG), Fast Hybrid AF가 탑재된
-                      전문가급
-                      1인치 핸디캠/ LIMITED …</p>
-                  </div>
-                  <div className="info_cell prd_price">
-                    <p className="prd_tit"><span
-                      className="price">4,299,000</span>원</p>
-                    <p className="prd_desc"><span className="count">1</span>개
-                    </p>
+                    src={product.imageUrl}
+                    alt={product.productName} /></span>
+                    </div>
+                    <div className="info_cell prd_info">
+                      <p className="prd_tit">{product.productName}</p>
+                      <p className="prd_desc">{product.mainOption}</p>
+                    </div>
+                    <div className="info_cell prd_price">
+                      <p className="prd_tit"><span
+                        className="price">{product.amount}</span>원</p>
+                      <p className="prd_desc"><span
+                        className="count">{product.totalOrderCnt}</span>개
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="coupon_info">
@@ -130,7 +116,7 @@ const UseCoupon = ({ setVisible, orderSheetNo }) => {
         </div>
       </div>
     </LayerPopup>
-  )
+  );
 };
 
 export default UseCoupon;

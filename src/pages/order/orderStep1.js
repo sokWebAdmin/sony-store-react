@@ -30,6 +30,7 @@ import GlobalContext from '../../context/global.context';
 const OrderStep1 = ({ location }) => {
   const { isLogin } = useContext(GlobalContext);
 
+  const [products, setProducts] = useState([]);
   const [deliveryGroups, setDeliveryGroups] = useState([]);
   const [paymentInfo, setPaymentInfo] = useState(null);
 
@@ -113,7 +114,8 @@ const OrderStep1 = ({ location }) => {
                       </div>
                     </div>
 
-                    <Products data={deliveryGroups} />
+                    <Products data={deliveryGroups} products={products}
+                              setProducts={setProducts} />
                   </div>
                 </div>
                 <div className="order_info">
@@ -138,7 +140,9 @@ const OrderStep1 = ({ location }) => {
                         <DiscountForm discount={discount}
                                       setDiscount={setDiscount}
                                       paymentInfo={paymentInfo}
-                                      orderSheetNo={orderSheetNo} />
+                                      orderSheetNo={orderSheetNo}
+                                      orderProducts={products}
+                        />
                       </Accordion>}
 
                       <div className="acc_item on">

@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { toCurrencyString } from '../../utils/unit';
 
 const Products = props => {
-  const { data } = props;
-  const [products, setProducts] = useState([]);
+  const { products, setProducts, data } = props;
 
   const dataMapping = deliveryGroups =>
     deliveryGroups?.flatMap(deliveryGroup => makeOrderProductInfo(deliveryGroup));
