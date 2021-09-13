@@ -4,20 +4,45 @@ import SwiperCore, { Autoplay, Controller, Navigation, Pagination, Scrollbar } f
 import { loadBanner } from '../../api/display';
 import { getStrDate } from '../../utils/dateFormat';
 import { Link } from 'react-router-dom';
-import { isMobile } from "react-device-detect";
+import { useMediaQuery } from '../../hooks';
 
 const EventTop = () => {
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
+  const underPc = useMediaQuery('(max-width: 1280px)');
   const [banners, setBanners] = useState([]);
+  const [bannersMo, setBannersMo] = useState([]);
 
   const fetchBanners = async () => {
-    const { data } = await loadBanner(isMobile ? '007' : '006');
+    const { data } = await loadBanner('006');
+    const response = await loadBanner('007');
     setBanners(data[0].accounts[0].banners);
+    setBannersMo(response.data[0].accounts[0].banners);
   };
 
   useEffect(() => {
     fetchBanners();
   }, []);
+
+  const bannerMap = (banner) => {
+    const splitName = banner?.name?.split('/');
+    const title = splitName.join('<br/>')
+    return (
+      <SwiperSlide className="swiper-slide" key={banner.name}>
+        <div className="slider_box"
+             style={{ background: `url('${banner.imageUrl}') center 80% / cover no-repeat` }}>
+          <img className="bg_img" src={banner.imageUrl} alt={banner.name} />
+          <div className="desc_box">
+            <p className="tit" style={{ color: banner.nameColor }} dangerouslySetInnerHTML={{ __html: title }}/>
+            <p className="txt">{banner.description}</p>
+            <p className="event_duration">{getStrDate(banner.displayStartYmdt)} ~ {getStrDate(banner.displayEndYmdt)}</p>
+            <div className="btn_article">
+              <Link to={banner.landingUrl} className="event_link">자세히 보기</Link>
+            </div>
+          </div>
+        </div>
+      </SwiperSlide>
+    )
+  };
 
   return (
     <>
@@ -51,26 +76,8 @@ const EventTop = () => {
                   },
                 }}
         >
-          {banners.length && banners.map((banner) => {
-            const splitName = banner?.name?.split('/');
-            const title = splitName.join('<br/>')
-            return (
-              <SwiperSlide className="swiper-slide" key={banner.name}>
-                <div className="slider_box"
-                     style={{ background: `url('${banner.imageUrl}') center 80% / cover no-repeat` }}>
-                  <img className="bg_img" src={banner.imageUrl} alt={banner.name} />
-                  <div className="desc_box">
-                    <p className="tit" style={{ color: banner.nameColor }} dangerouslySetInnerHTML={{ __html: title }}/>
-                    <p className="txt">{banner.description}</p>
-                    <p className="event_duration">{getStrDate(banner.displayStartYmdt)} ~ {getStrDate(banner.displayEndYmdt)}</p>
-                    <div className="btn_article">
-                      <Link to={banner.landingUrl} className="event_link">자세히 보기</Link>
-                    </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-            )
-          })}
+          {banners.length && !underPc && banners.map(bannerMap)}
+          {bannersMo.length && underPc && bannersMo.map(bannerMap)}
         </Swiper>
         <div className="arrow_btn">
           <a href="javascript:void(0)" className="arrow swiper-button-prev"><span className="ico_btn">이전</span></a>
