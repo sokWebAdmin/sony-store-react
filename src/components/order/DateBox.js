@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 export default function DateBox({ search }) {
   const [selectMenu, setSelectMenu] = useState('threeM');
+  const [period, setPeriod] = useState({ startDate: new Date().toString(), endDate: new Date().toString() });
 
   const onClickTab = (menu) => {
     console.log('클릭:', menu);
@@ -29,6 +30,17 @@ export default function DateBox({ search }) {
         </li>
       </ul>
       <div class="date_rang">
+        {/* <DatePicker
+                style={{ display: specifyDelivery ? 'block' : 'none' }}
+                disabled={!specifyDelivery}
+                bindDate={setSpecifyDeliveryDate}
+                option={{
+                  selectableRanges: [
+                    [
+                      new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
+                      new Date(2999, 12, 31)]],
+                }}
+              /> */}
         <div class="calendar_box">
           <input type="text" id="datepicker1" class="inp datepicker" autocomplete="off" />
         </div>

@@ -46,6 +46,10 @@ export default function OldOrderList() {
 
   const search = () => {
     console.log('검색!');
+    return getOldOrders().then((res) => {
+      console.log('response:', res);
+      setOldOrderProducts(res.data.body);
+    });
   };
 
   //TODO: 스타일 전부 하나씩 scss 파일로 변환 해야하나?>
