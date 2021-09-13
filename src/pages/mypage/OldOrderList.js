@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import DateBox from '../../components/order/DateBox';
 import OldOrderListItem from '../../components/order/OldOrderListItem';
 
 //SEO
@@ -43,6 +44,14 @@ export default function OldOrderList() {
     });
   }, []);
 
+  const search = () => {
+    console.log('검색!');
+    return getOldOrders().then((res) => {
+      console.log('response:', res);
+      setOldOrderProducts(res.data.body);
+    });
+  };
+
   //TODO: 스타일 전부 하나씩 scss 파일로 변환 해야하나?>
   // scss import 구문 주석 처리해도 괜찮던데,
   return (
@@ -61,36 +70,7 @@ export default function OldOrderList() {
             <div class="cont recent_order prev_order">
               <div class="tit_head mileage_inquiry">
                 <h3 class="cont_tit">2021년 9월 이전 주문 내역</h3>
-                <div class="date_box">
-                  <ul class="date3_tab">
-                    <li class="tabs on">
-                      <a href="#" class="date3_btn">
-                        3개월
-                      </a>
-                    </li>
-                    <li class="tabs">
-                      <a href="#" class="date3_btn">
-                        6개월
-                      </a>
-                    </li>
-                    <li class="tabs">
-                      <a href="#" class="date3_btn">
-                        1년
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="date_rang">
-                    <div class="calendar_box">
-                      <input type="text" id="datepicker1" class="inp datepicker" autocomplete="off" />
-                    </div>
-                    <div class="calendar_box">
-                      <input type="text" id="datepicker2" class="inp datepicker" autocomplete="off" />
-                    </div>
-                    <button class="button button_positive button-s" type="button">
-                      조회
-                    </button>
-                  </div>
-                </div>
+                <DateBox search={search} />
               </div>
 
               <div class="col_table_wrap order_list">

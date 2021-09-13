@@ -7,8 +7,8 @@ import 'tui-date-picker/dist/tui-date-picker.css';
 // style
 import '../../assets/scss/partials/datePicker.scss';
 
-const DatePicker = prop => {
-  const { style, disabled, bindDate, option } = prop;
+const DatePicker = (prop) => {
+  const { style, disabled, bindDate, option, height, dateValue } = prop;
 
   const datePickerInput = useRef();
   const wrapper = useRef();
@@ -19,7 +19,7 @@ const DatePicker = prop => {
 
   const createInstance = (wrapperHTMLElement, inputHTMLElement, option) => {
     datePicker.instance = new TuiDatePicker(wrapperHTMLElement, {
-      date: option?.selectableRanges[0][0] ?? new Date(),
+      date: dateValue ?? option?.selectableRanges[0][0] ?? new Date(),
       language: 'ko',
       input: {
         element: inputHTMLElement,
@@ -30,21 +30,18 @@ const DatePicker = prop => {
   };
 
   const bindInstance = () => {
-    datePicker.instance.on('change',
-      () => bindDate(datePicker.instance.getDate()));
+    datePicker.instance.on('change', () => bindDate(datePicker.instance.getDate()));
   };
 
-  useEffect(
-    () => {
-      createInstance(wrapper.current, datePickerInput.current, option);
-      bindInstance();
-    }, []);
+  useEffect(() => {
+    createInstance(wrapper.current, datePickerInput.current, option);
+    bindInstance();
+  }, [dateValue]);
 
   return (
     <div className="date_picker_wrapper" style={style}>
-      <div className="tui-datepicker-input tui-datetime-input tui-has-focus">
-        <input type="text" className="view_date_input"
-               ref={datePickerInput} disabled={disabled} />
+      <div className="tui-datepicker-input tui-datetime-input tui-has-focus" style={{ height }}>
+        <input type="text" className="view_date_input" ref={datePickerInput} disabled={disabled} />
         <span className="tui-ico-date"></span>
       </div>
       <div ref={wrapper}></div>
