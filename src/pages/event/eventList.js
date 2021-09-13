@@ -20,8 +20,6 @@ import 'swiper/swiper.scss';
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/event.scss';
 
-// TODO: 기획전 리스트 api 연결까지 진행
-
 export default function EventList() {
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 

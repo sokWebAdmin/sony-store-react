@@ -90,6 +90,9 @@ import {
 } from './context/profile.context';
 import Benefit from './pages/membership/Benefit';
 import { initCategory, useCategoryDispatch } from './context/category.context';
+import Only from './pages/event/Only';
+import PreOrder from './pages/event/PreOrder';
+import BenefitZone from './pages/event/BenefitZone';
 
 const App = (props) => {
   const dispatch = useMallDispatch();
@@ -211,12 +214,15 @@ const App = (props) => {
               <Route exact path="/order/step/3" component={orderStep3} />
 
               {/* 이벤트  */}
-              <Route exact path="/event/live-on" component={liveon} />
               <Route exact path="/event/list" component={eventList} />
+              <Route exact path="/event/only" component={Only} />
+              <Route exact path="/event/benefit-zone" component={BenefitZone} />
+              <Route exact path="/event/pre-order" component={PreOrder} />
+              {/*<Route exact path="/event/asc" component={asc} />*/}
+              <Route exact path="/event/refined" component={refined} />
+              <Route exact path="/event/live-on" component={liveon} />
               <Route exact path="/event/refurbish" component={refurbish} />
               <Route exact path="/event/employee" component={employee} />
-              <Route exact path="/event/asc" component={asc} />
-              <Route exact path="/event/refined" component={refined} />
 
               {/* 멤버쉽 */}
               <Route exact path="/membership/benefit" component={Benefit} />
