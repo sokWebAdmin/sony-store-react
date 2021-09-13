@@ -5,89 +5,126 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //api
 
+//lib
+import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller  } from 'swiper/core';
+import { Swiper, SwiperSlide } from 'swiper/react';
+//lib-css
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
+import "swiper/swiper.scss"
+
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/support.scss';
 
-export default function StoreInfo() {
-  const [isMapOpen, setIsMapOpen] = useState(false);
+import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
 
+const MAP_CLIENT_ID = process.env.REACT_APP_MAP_CLIENT_ID || 'cvkvsq54we';
+
+const COORDINATE = {
+  lat: 37.52369,
+  lng: 127.03901
+};
+
+function NaverMapAPI({isMapOpen}) {
+  const navermaps = window.naver.maps;
   const storeMapStyle = {
     width: '100%',
+    height: '90vh',
     background: '#ddd',
     display: isMapOpen ? 'block' : 'none',
   };
+  return (
+    <NaverMap
+      mapDivId={'maps-getting-started-uncontrolled'}
+      style={storeMapStyle}
+      defaultCenter={ COORDINATE }
+      defaultZoom={13}
+      zoom={13}
+      scaleControl={false}
+      logoControl={false}
+      zoomControl={true}
+      mapTypeControl={true}
+      mapTypeControlOptions={{
+        style: window.naver.maps.MapTypeControlStyle.BUTTON,
+        position: window.naver.maps.Position.TOP_RIGHT,
+      }}
+    >
+      <Marker 
+        mapDivId={'maps-getting-started-uncontrolled'}
+        key={1}
+        position={new navermaps.LatLng(COORDINATE)}
+        icon={{
+          url: '../../images/support/naver_map_marker.svg',
+          size: new navermaps.Size(50, 67)
+        }}
+      />
+    </NaverMap>
+  );
+}
 
-  // TODO: 맵 이미지 or API 문의중 https://nhnent.dooray.com/project/posts/3088453851789491392
+const storeImages = [
+  {
+    src:'../../images/event/img_store1.jpg',
+    alt: '소니스토어 압구정점 내부 이미지 1'
+  },
+  {
+    src:'../../images/event/img_store2.jpg',
+    alt: '소니스토어 압구정점 내부 이미지 2'
+  },
+  {
+    src:'../../images/event/img_store3.jpg',
+    alt: '소니스토어 압구정점 내부 이미지 3'
+  },
+  {
+    src:'../../images/event/img_store4.jpg',
+    alt: '소니스토어 압구정점 내부 이미지 4'
+  },
+  {
+    src:'../../images/event/img_store5.jpg',
+    alt: '소니스토어 압구정점 내부 이미지 5'
+  },
+];
+
+export default function StoreInfo() {
+  const [isMapOpen, setIsMapOpen] = useState(false);
+
+  SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
+
   const onOpenMap = () => {
     setIsMapOpen(!isMapOpen);
   };
 
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'소니스토어 직영점'} />
       <div className="contents support">
         <div className="container full">
           <div className="content">
             <div className="store_info_wrap">
               <div className="store_info_wrap_slider swiper-container">
-                <ul className="swiper-wrapper">
-                  <li className="swiper-slide">
-                    <div className="slider_box">
-                      <div className="bg_img">
+                <Swiper
+                  className="swiper-wrapper"
+                  loop={true}
+                  slidesPerView={1}
+                  spaceBetween={0}
+                  autoplay={{ delay: 3000 }}
+                >
+                  {
+                    storeImages.map(({ src, alt }, idx) => (
+                      <SwiperSlide key={idx} className="swiper-slide">
+                        <div className="bg_img">
                         <img
-                          src="/images/event/img_store1.jpg"
-                          alt="소니스토어 압구정점 내부 이미지 1"
+                          src={`${src}`}
+                          alt={`${alt}`}
                         />
                         <span className="bg" />
                       </div>
-                    </div>
-                  </li>
-                  <li className="swiper-slide">
-                    <div className="slider_box">
-                      <div className="bg_img">
-                        <img
-                          src="/images/event/img_store2.jpg"
-                          alt="소니스토어 압구정점 내부 이미지 2"
-                        />
-                        <span className="bg" />
-                      </div>
-                    </div>
-                  </li>
-                  <li className="swiper-slide">
-                    <div className="slider_box">
-                      <div className="bg_img">
-                        <img
-                          src="/images/event/img_store3.jpg"
-                          alt="소니스토어 압구정점 내부 이미지 3"
-                        />
-                        <span className="bg" />
-                      </div>
-                    </div>
-                  </li>
-                  <li className="swiper-slide">
-                    <div className="slider_box">
-                      <div className="bg_img">
-                        <img
-                          src="/images/event/img_store4.jpg"
-                          alt="소니스토어 압구정점 내부 이미지 4"
-                        />
-                        <span className="bg" />
-                      </div>
-                    </div>
-                  </li>
-                  <li className="swiper-slide">
-                    <div className="slider_box">
-                      <div className="bg_img">
-                        <img
-                          src="/images/event/img_store5.jpg"
-                          alt="소니스토어 압구정점 내부 이미지 5"
-                        />
-                        <span className="bg" />
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                      </SwiperSlide>
+                    ))
+                  }
+                </Swiper>
               </div>
               <div className="store_info_wrap_txtbox">
                 <strong className="info_txt">직영점 안내</strong>
@@ -114,7 +151,7 @@ export default function StoreInfo() {
                     <div className="swiper-slide box tel">
                       <span className="box_tit">매장 전화번호</span>
                       <div className="box_time">
-                        <span className="code">02)</span>
+                        <span className="code">{ '02)' }</span>
                         <span className="time">515-7946</span>
                       </div>
                     </div>
@@ -149,7 +186,7 @@ export default function StoreInfo() {
                     className="button button_secondary button-s map_open"
                     onClick={onOpenMap}
                   >
-                    지도보기
+                    { isMapOpen ? '지도접기' : '지도보기' }
                   </button>
                 </div>
                 <div className="way_box_transp pc">
@@ -180,7 +217,13 @@ export default function StoreInfo() {
               </div>
               {/* 지도 영역 */}
               {/* pc width: 100%;height:100%*/}
-              <div className="storeMap" style={storeMapStyle}></div>
+              {/* <div className="storeMap" style={storeMapStyle}> */}
+                <RenderAfterNavermapsLoaded
+                  ncpClientId={ MAP_CLIENT_ID }
+                >
+                  <NaverMapAPI isMapOpen={isMapOpen}/>
+                </RenderAfterNavermapsLoaded>
+              {/* </div> */}
               {/*// 지도 영역 */}
               <div className="way_box_transp mo">
                 <ul className="route">
