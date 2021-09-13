@@ -226,18 +226,6 @@ const OrderStep1 = ({ location }) => {
                           payment={payment}
                           setPayment={setPayment} />
                       </Accordion>
-
-                      <div className="acc_item on">
-                        <div className="acc_head">
-                          <a className="acc_btn" title="결제 방법 열기">
-                            <span className="acc_tit">결제 방법</span>
-                            <span className="acc_arrow">상세 보기</span>
-                          </a>
-                        </div>
-                        <div className="acc_inner">
-
-                        </div>
-                      </div>
                       {/* // acc_item */}
                     </div>
                     {/* // acc */}
