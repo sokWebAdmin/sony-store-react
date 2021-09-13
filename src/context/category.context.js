@@ -8,13 +8,13 @@ const initialState = {
   gnbCategories: []
 };
 
-const getCategoryByNo = (categories, categoryNo) => {
+const getCategoryByKey = (categories, key, value) => {
   let arrTarget = [...categories];
 
   while (arrTarget.length > 0) {
     const target = arrTarget.shift();
 
-    if (target.categoryNo === categoryNo) {
+    if (target[key] === value) {
       return target;
     }
 
@@ -26,17 +26,22 @@ const getCategoryByNo = (categories, categoryNo) => {
   return null;
 }
 
-const getConvertCategories = categories => {
+const getConvertCategories = (categories, parentCategory) => {
   return categories
     .filter(c => categoriesExtraDataMap.some(ce => ce.categoryNo === c.categoryNo))
     .map(c => {
       const extra = categoriesExtraDataMap.filter(ce => ce.categoryNo === c.categoryNo)[0] || {};
 
-      return {
+      const category = {
         ...c,
-        children: getConvertCategories(c.children),
-        ...extra
+        children: getConvertCategories(c.children, c),
+        ...extra,
+        parent: parentCategory
       };
+
+      category.children = getConvertCategories(c.children, category);
+
+      return category;
     });
 };
 
@@ -50,7 +55,7 @@ const getConvertCategories = categories => {
 const initCategoryState = multiLevelCategories => {
   const categories = getConvertCategories(multiLevelCategories);
 
-  const espCategory = getCategoryByNo(multiLevelCategories, espCategoryNo) || {};
+  const espCategory = getCategoryByKey(multiLevelCategories, 'categoryNo', espCategoryNo) || {};
 
   const newGnbCategories = [...gnbCategories];
   newGnbCategories[1].children = categories.map(c => {
@@ -101,3 +106,9 @@ export const useCategoryState = () => {
 export const initCategory = (dispatch, data) => {
   dispatch({type: 'INIT_CATEGORY', data: data?.multiLevelCategories || []});
 };
+
+export const useGetCategoryByKey = (key, value) => {
+  const { state } = useContext(CategoryContext);
+
+  return getCategoryByKey(state.categories, key, value);
+}

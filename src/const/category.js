@@ -19,6 +19,8 @@ if (process.env.NODE_ENV === 'development') {
     categoryNo: 60859,
     url: '/products/camera',
     bannerSectionCodes: '000',
+    isAvailableMoveESP: true,
+    isAvailableMoveProductCompare: true
   });
   // 카메라 > 렌즈교환식카메라
   categoriesExtraDataMap.push({
@@ -46,6 +48,8 @@ if (process.env.NODE_ENV === 'development') {
     categoryNo: 60865,
     url: '/products/videocamera',
     bannerSectionCodes: '000',
+    isAvailableMoveESP: true,
+    isAvailableMoveProductCompare: true
   });
   // 비디오 카메라 > 시네마라인카메라
   categoriesExtraDataMap.push({
@@ -78,6 +82,7 @@ if (process.env.NODE_ENV === 'development') {
     categoryNo: 60871,
     url: '/products/audio',
     bannerSectionCodes: '000',
+    isAvailableMoveProductCompare: true
   });
   // 오디오 > 헤드폰/이어폰
   categoriesExtraDataMap.push({
@@ -140,6 +145,7 @@ if (process.env.NODE_ENV === 'development') {
     categoryNo: 60883,
     url: '/products/accessory',
     bannerSectionCodes: '000',
+    isAvailableMoveAccessoryCompatibility: true
   });
   // 액세서리 > 카메라 액세서리
   categoriesExtraDataMap.push({

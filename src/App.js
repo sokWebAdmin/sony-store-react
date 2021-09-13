@@ -9,9 +9,8 @@ import Footer from './components/Footer';
 import Main from './pages/Main/Main';
 
 //product
-import ProductList from './pages/Products/ProductList';
-import DetailList from './pages/Products/DetailList';
-import ProductView from './pages/Products/ProductView';
+import Category from './pages/products/Category';
+import ProductView from './pages/products/ProductView';
 
 //recommend
 import Recommend from './pages/recommend/Recommend';
@@ -172,7 +171,7 @@ const App = (props) => {
               <Route exact path="/main" component={Main} />
 
               {/* 상품목록 */}
-              <Route exact path="/products/*" component={ProductList} />
+              <Route exact path="/products/*" component={Category} />
 
               {/* 세부분류 상품목록 */}
               {/*<Route exact path="/products/:type/:detail_type" component={DetailList} />*/}
