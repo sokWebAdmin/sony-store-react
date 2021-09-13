@@ -135,6 +135,7 @@ export default function OrderList() {
                           orderCnt={orderProduct.orderCnt}
                           orderStatusType={orderProduct.orderStatusType}
                           orderStatusTypeLabel={orderProduct.orderStatusTypeLabel}
+                          delivery={orderProduct.delivery}
                           key={orderProduct.orderNo}
                         />
                       ))}

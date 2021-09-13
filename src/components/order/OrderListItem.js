@@ -17,7 +17,7 @@ export default function OrderListItem({
   optionTitle,
   orderCnt,
   orderStatusType,
-  orderStatusTypeLabel,
+  delivery,
 }) {
   const [refundAccountVisible, setRefundAccountVisible] = useState(false);
   const orderStatusMap = {
@@ -42,6 +42,10 @@ export default function OrderListItem({
   };
 
   const onClickRefundAccount = () => setRefundAccountVisible(true);
+
+  const openFindDeliveryPopup = () => {
+    window.open(delivery.retrieveInvoiceUrl);
+  };
 
   return (
     <div className="col_table_row">
@@ -73,7 +77,7 @@ export default function OrderListItem({
           </button>
         )}
         {showDeliveryFind(orderStatusType) && (
-          <button type="button" className="button button_negative button-s">
+          <button type="button" className="button button_negative button-s" onClick={openFindDeliveryPopup}>
             배송조회
           </button>
         )}
