@@ -107,6 +107,7 @@ export default function Search() {
     setAuthSent(false);
     setAuthCode('');
     setAuthCheck(false);
+    setResult(null);
   }, [tabState]);
 
   useEffect(() => {
