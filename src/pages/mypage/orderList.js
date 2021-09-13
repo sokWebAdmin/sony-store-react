@@ -306,6 +306,7 @@ export default function OrderList() {
                       {orderProducts.map((orderProduct) => (
                         <OrderListItem
                           orderNo={orderProduct.orderNo}
+                          orderOptionNo={orderProduct.orderOptionNo}
                           payType={orderProduct.payType}
                           orderYmdt={orderProduct.orderYmdt}
                           imageUrl={orderProduct.imageUrl}
