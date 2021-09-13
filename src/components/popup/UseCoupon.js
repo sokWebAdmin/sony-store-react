@@ -8,21 +8,32 @@ import SelectBox from '../common/SelectBox';
 import { getOrderSheetCoupon } from '../../api/order.js';
 import { toCurrencyString } from '../../utils/unit.js';
 
-const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDiscount }) => {
+const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDiscount, show, setReject }) => {
   const close = () => setVisible(false);
 
   const [productCoupons, setProductCoupons] = useState(
     { productNo: null, items: [] });
   const [products, setProducts] = useState([]);
-  const [useProductCouponProductNo, setUseProductCouponProductNo] = useState(0); // 0 ===
-  const [useProductCouponNo, setUseProductCouponNo] = useState(0); // 0 ===
-  // 사용안함으로 취급
+  const [useProductCouponProductNo, setUseProductCouponProductNo] = useState(0);
+  const [useProductCouponNo, setUseProductCouponNo] = useState(0);
 
   const created = async () => {
     const originProducts = await fetchCoupons();
+
+    validation(originProducts);
+
     if (products) {
       firstChoice(originProducts);
     }
+  };
+
+  const validation = products => products.some(
+    ({ productCoupons }) => !!productCoupons.length) || reject();
+
+  const reject = () => {
+    alert('사용 가능한 쿠폰이 없습니다.');
+    setReject(true);
+    close();
   };
 
   const fetchCoupons = async () => {
@@ -73,7 +84,9 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
     <LayerPopup className="find_address"
                 size={'m'}
                 popContClassName={'scrollH'}
-                onClose={close}>
+                onClose={close}
+                show={show}
+    >
       <p className="pop_tit">쿠폰 조회 및 적용</p>
       <div className="pop_cont_scroll" style={{ height: '651px' }}>
         <div className="chk_select_zone">
@@ -90,9 +103,9 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
                   </div>
                   <div className="chk_select_info">
                     <div className="info_cell prd_thumb">
-                  <span className="img"><img
-                    src={product.imageUrl}
-                    alt={product.productName} /></span>
+                    <span className="img"><img
+                      src={product.imageUrl}
+                      alt={product.productName} /></span>
                     </div>
                     <div className="info_cell prd_info">
                       <p className="prd_tit">{product.productName}</p>
@@ -130,8 +143,9 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
                 setUseProductCouponProductNo(productCoupons.productNo);
                 setUseProductCouponNo(optionNo);
               }}
+
             />
-            : <h1>적용 가능한 쿠폰이 없습니다.</h1>}
+            : <h1>사용 가능한 쿠폰이 없습니다.</h1>}
           <div className="btn_article">
             <button className="button button_positive button-m button-full"
                     onClick={submit}
