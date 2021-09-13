@@ -27,7 +27,7 @@ export default function OrderListItem({
   };
 
   const showRefundAccountInfo = (orderStatusType, payType) => {
-    return orderStatusType === 'CANCEL_DONE' && payType === 'CREDIT_CARD';
+    return payType === 'VIRTUAL_ACCOUNT';
   };
 
   return (
