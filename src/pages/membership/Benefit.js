@@ -79,13 +79,13 @@ const Benefit = () => {
                           </div>
 
                           <div className="col_table_cell">
-                            <img src="/images/membership/membership_vvip2.svg" alt="vvip" />
+                            <img src="../../images/membership/membership_vvip2.svg" alt="vvip" />
                           </div>
                           <div className="col_table_cell">
-                            <img src='/images/membership/membership_vip2.svg' alt="vip" />
+                            <img src='../../images/membership/membership_vip2.svg' alt="vip" />
                           </div>
                           <div className="col_table_cell">
-                            <img src='/images/membership/membership_family2.svg' alt="membership" />
+                            <img src='../../images/membership/membership_family2.svg' alt="membership" />
                           </div>
                         </div>
                         <div className="col_table_row">
@@ -133,7 +133,7 @@ const Benefit = () => {
                       <tbody>   
                         <tr>
                           <th scope="row">
-                            <img src='/images/membership/membership_vvip2.svg' alt="vvip" />
+                            <img src='../../images/membership/membership_vvip2.svg' alt="vvip" />
                             <p className="name">VVIP 회원</p>
                           </th>
                           <td>
@@ -143,7 +143,7 @@ const Benefit = () => {
                         </tr>
                         <tr>
                           <th scope="row">
-                            <img src='/images/membership/membership_vip2.svg' alt="vip" />
+                            <img src='../../images/membership/membership_vip2.svg' alt="vip" />
                             <p className="name">VIP 회원</p>
                           </th>
                           <td>
@@ -153,7 +153,7 @@ const Benefit = () => {
                         </tr>
                         <tr>
                           <th scope="row">
-                            <img src='/images/membership/membership_family2.svg' alt="membership" />
+                            <img src='../../images/membership/membership_family2.svg' alt="membership" />
                             <p className="name">MEMBERSHIP <br />회원</p>
                           </th>
                           <td>
@@ -230,7 +230,7 @@ const Benefit = () => {
                   <div className="prmm_dtl">
                     <ul className="prmm_dtl_lists">
                       <li className="prmm_dtl_list">
-                        <div className="prmm_dtl_pic"><img src='/images/membership/premium1.jpg' alt="선물하기 서비스" className="prmm_dtl_img" /></div>
+                        <div className="prmm_dtl_pic"><img src='../../images/membership/premium1.jpg' alt="선물하기 서비스" className="prmm_dtl_img" /></div>
                         <h3 className="prmm_dtl_title">선물하기 서비스</h3>
                         <ul className="prmm_dtl_prctns">
                           <li className="prmm_dtl_prctn">선물하기 서비스는 <strong className="primary-color">소니스토어 회원만</strong> 온라인 또는 앱에서 이용가능한 서비스입니다.</li>
@@ -239,7 +239,7 @@ const Benefit = () => {
                         <p className="prmm_dtl_note">* 제품 1건 결제(구매 수량은 여러개 가능), 복수 배송지 불가</p>
                       </li>
                       <li className="prmm_dtl_list">
-                        <div className="prmm_dtl_pic"><img src='/images/membership/premium2.jpg' alt="택배/퀵 서비스" className="prmm_dtl_img" /></div>
+                        <div className="prmm_dtl_pic"><img src='../../images/membership/premium2.jpg' alt="택배/퀵 서비스" className="prmm_dtl_img" /></div>
                         <h3 className="prmm_dtl_title">택배/퀵 서비스</h3>
                         <ul className="prmm_dtl_prctns">
                           <li className="prmm_dtl_prctn">택배/퀵 서비스는 소니스토어에서 구매한 제품에 한하여, <span style={{ 'font-family':'Segoe UI, Tahoma, Geneva, Verdana, sans-serif' }}></span>제품 가격에 따라 배송 비용이 할증될 수 있습니다.</li>
@@ -250,7 +250,7 @@ const Benefit = () => {
                         <p className="prmm_dtl_note">* 비용은 고객 부담입니다.</p>
                       </li>
                       <li className="prmm_dtl_list">
-                        <div className="prmm_dtl_pic"><img src='/images/membership/premium3.jpg' alt="영상변환 서비스" className="prmm_dtl_img" /></div>
+                        <div className="prmm_dtl_pic"><img src='../../images/membership/premium3.jpg' alt="영상변환 서비스" className="prmm_dtl_img" /></div>
                         <h3 className="prmm_dtl_title">영상변환 서비스</h3>
                         <ul className="prmm_dtl_prctns">
                           <li className="prmm_dtl_prctn">영상변환 서비스는 고객님께서 소장하고 계시는 비디오 테이프를 <strong className="primary-color">USB 메모리 또는 DVD 디스크</strong>로 변환하여 드리는 서비스입니다.</li>
@@ -259,7 +259,7 @@ const Benefit = () => {
                         <a href="https://www.sony.co.kr/scs/handler/Service-Media" className="prmm_dtl_link">자세히 보기</a>
                       </li>
                       <li className="prmm_dtl_list">
-                        <div className="prmm_dtl_pic"><img src='/images/membership/premium4.jpg' alt="연장 서비스 플랜" className="prmm_dtl_img" /></div>
+                        <div className="prmm_dtl_pic"><img src='../../images/membership/premium4.jpg' alt="연장 서비스 플랜" className="prmm_dtl_img" /></div>
                         <h3 className="prmm_dtl_title">연장 서비스 플랜</h3>
                         <ul className="prmm_dtl_prctns">
                           <li className="prmm_dtl_prctn">연장 서비스 플랜은 소정의 비용으로 제품 구입일로부터 2년 또는 3년 동안 횟수와 금액 상관 없이 안심하고 무상 수리를 받을 수 있는 프리미엄 서비스입니다.</li>
