@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef } from 'react';
 
 // global context
 import { useMallState } from '../../context/mall.context';
@@ -12,7 +12,7 @@ import { onKeyboardEventOnlyDigit } from '../../utils/listener';
 import { handleChange, setObjectState } from '../../utils/state';
 
 // 배송지 정보
-const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
+const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderProducts }) => {
   const { accumulationConfig } = useMallState();
 
   // subPayAmt: number , coupons: nested object
@@ -21,9 +21,9 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
   /**
    * Coupon
    */
-
+  const [useCouponLoaded, setUseCouponLoaded] = useState(false);
   const [useCouponVisible, setUseCouponVisible] = useState(false);
-                                                                  // visible 처리
+  const [noCoupon, setNoCoupon] = useState(false);
 
   /**
    * Point
@@ -39,16 +39,16 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
   const accumulationUseMinPriceWarnStyle = useMemo(() =>
     (accumulationConfig?.accumulationUseMinPrice && subPayAmt !== 0 &&
       accumulationConfig.accumulationUseMinPrice > subPayAmt) ?
-        { color: '#e70000' } : {});
+      { color: '#e70000' } : {});
 
-    const toCurrency = event => {
-      const amount = event.target.value.replaceAll(',', '') * 1;
+  const toCurrency = event => {
+    const amount = event.target.value.replaceAll(',', '') * 1;
 
-      if (amount > paymentInfo?.accumulationAmt) {
-        event.target.value = accumulationAmt;
-        setObjectState('subPayAmt', paymentInfo.accumulationAmt)(setDiscount);
-        return;
-      }
+    if (amount > paymentInfo?.accumulationAmt) {
+      event.target.value = accumulationAmt;
+      setObjectState('subPayAmt', paymentInfo.accumulationAmt)(setDiscount);
+      return;
+    }
 
       event.target.value = toCurrencyString(amount);
       setObjectState('subPayAmt', amount)(setDiscount);
@@ -72,9 +72,25 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
                 <button
                   className="button button_negative button-s popup_comm_btn"
                   data-popup-name="coupon_inquiry"
+                  onClick={() => {
+                    if (noCoupon) {
+                      alert('사용 가능한 쿠폰이 없습니다.');
+                      return;
+                    }
+
+                    !useCouponLoaded && setUseCouponLoaded(true);
+                    setUseCouponVisible(true);
+                  }}
                   type="button">쿠폰 조회
                 </button>
-                {useCouponVisible && <UseCoupon />}
+                {useCouponLoaded && <UseCoupon show={useCouponVisible}
+                                               orderSheetNo={orderSheetNo}
+                                               setVisible={setUseCouponVisible}
+                                               orderProducts={orderProducts}
+                                               discount={discount}
+                                               setDiscount={setDiscount}
+                                               setReject={setNoCoupon}
+                />}
               </div>
             </div>
           </div>

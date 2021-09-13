@@ -34,6 +34,7 @@ import { truncate } from '../../utils/unit';
 const OrderStep1 = ({ location }) => {
   const { isLogin } = useContext(GlobalContext);
 
+  const [products, setProducts] = useState([]);
   const [deliveryGroups, setDeliveryGroups] = useState([]);
   const [paymentInfo, setPaymentInfo] = useState(null);
 
@@ -61,8 +62,12 @@ const OrderStep1 = ({ location }) => {
 
   const [discount, setDiscount] = useState({
     subPayAmt: 0,
-    coupons: {},
+    coupons: {
+      productCoupons: [],
+    },
   });
+
+  const orderSheetNo = useMemo(() => getUrlParam('orderSheetNo'), [location]);
 
   const [payment, setPayment] = useState({
     pgType: paymentType.creditCard.pgType,
@@ -71,11 +76,7 @@ const OrderStep1 = ({ location }) => {
 
   const init = useCallback(() => ({
     async start () {
-      // orderPayment.init();
-      await this.fetchOrderSheet(this.orderSheetNo);
-    },
-    get orderSheetNo () {
-      return getUrlParam('orderSheetNo') ?? -1;
+      await this.fetchOrderSheet(orderSheetNo);
     },
     async fetchOrderSheet (orderSheetNo) {
       const { data: { deliveryGroups, paymentInfo } } = await getOrderSheets(
@@ -178,7 +179,8 @@ const OrderStep1 = ({ location }) => {
                       </div>
                     </div>
 
-                    <Products data={deliveryGroups} />
+                    <Products data={deliveryGroups} products={products}
+                              setProducts={setProducts} />
                   </div>
                 </div>
                 <div className="order_info">
@@ -213,7 +215,10 @@ const OrderStep1 = ({ location }) => {
                       <Accordion title={'할인 정보'} defaultVisible={true}>
                         <DiscountForm discount={discount}
                                       setDiscount={setDiscount}
-                                      paymentInfo={paymentInfo} />
+                                      paymentInfo={paymentInfo}
+                                      orderSheetNo={orderSheetNo}
+                                      orderProducts={products}
+                        />
                       </Accordion>}
 
                       <Accordion title={'결제 방법'} defaultVisible={true}>
@@ -221,18 +226,6 @@ const OrderStep1 = ({ location }) => {
                           payment={payment}
                           setPayment={setPayment} />
                       </Accordion>
-
-                      <div className="acc_item on">
-                        <div className="acc_head">
-                          <a className="acc_btn" title="결제 방법 열기">
-                            <span className="acc_tit">결제 방법</span>
-                            <span className="acc_arrow">상세 보기</span>
-                          </a>
-                        </div>
-                        <div className="acc_inner">
-
-                        </div>
-                      </div>
                       {/* // acc_item */}
                     </div>
                     {/* // acc */}

@@ -30,7 +30,7 @@
           <button type="button" class="btn btn__mo btn__mo__hidden btn__menu__close"><img src="../../images/common/ic_close.svg" alt="메뉴 닫기"></button>
         </div>
         <div class="header__inner">
-    
+
           <!-- 비회원/로그인 전 -->
           <!--
           <div class="member">
@@ -47,7 +47,7 @@
             </div>
           </div>
           -->
-    
+
           <!-- 회원/로그인 -->
           <div class="member">
             <div class="member__inner">
@@ -150,6 +150,7 @@
             <ul>
               <li class="appmenu__qr"><a href="#">QR스캔</a></li>
               <li class="appmenu__setting"><a href="#">설정</a></li>
+              <li class="appmenu__push"><a href="../../html/app/pushList.html">PUSH 알림 메시지함</a></li>
             </ul>
           </div>
         </div>
@@ -237,7 +238,7 @@
     </header>
     <div class="container full">
       <div class="content">
-        <div class="store_info_wrap"> 
+        <div class="store_info_wrap">
           <div class="store_info_wrap_slider swiper-container">
             <ul class="swiper-wrapper">
               <li class="swiper-slide">
@@ -271,15 +272,7 @@
                     <span class="bg"></span>
                   </div>
                 </div>
-              </li>  
-              <li class="swiper-slide">
-                <div class="slider_box">
-                  <div class="bg_img">
-                    <img src="../../images/event/img_store5.jpg" alt="소니스토어 압구정점 내부 이미지 5">
-                    <span class="bg"></span>
-                  </div>
-                </div>
-              </li>                                       
+              </li>
             </ul>
           </div>
           <div class="store_info_wrap_txtbox">
@@ -290,11 +283,11 @@
           </div>
           <div class="store_info_wrap_guidebox">
             <div class="guidebox_slider swiper-container">
-              <div class="swiper-wrapper">         
+              <div class="swiper-wrapper">
                 <div class="swiper-slide box">
                   <span class="box_tit">매장 운영시간</span>
                   <div class="box_time">
-                    <em class="everyday">매일</em> 
+                    <em class="everyday">매일</em>
                     <span class="time">11:00 ~ 20:00</span>
                   </div>
                   <p class="box_desc">(설, 추석명절 휴무)</p>
@@ -302,7 +295,7 @@
                 <div class="swiper-slide box tel">
                   <span class="box_tit">매장 전화번호</span>
                   <div class="box_time">
-                    <span class="code">02)</span> 
+                    <span class="code">02)</span>
                     <span class="time">515-7946</span>
                   </div>
                 </div>
@@ -336,7 +329,7 @@
               <strong class="way_box_addr_tit">오시는 길</strong>
               <p class="way_box_addr_txt">서울특별시 강남구 선릉로 801 <span class="block">(신사동 배강빌딩)</span></p>
               <button type="button" class="button button_secondary button-s map_open">지도보기</button>
-            </div>          
+            </div>
             <div class="way_box_transp pc">
               <ul class="route">
                 <li class="route_subway">
@@ -350,15 +343,40 @@
                 <li class="route_car">
                   <strong class="route_tit">승용차</strong>
                   <p class="route_method">도산대로 학동사거리 배강빌딩 1층</p>
-                </li>                                
+                </li>
               </ul>
             </div>
           </div>
           <!-- 지도 영역 -->
-          <!-- pc width: 100%;height:100%-->
-          <div class="storeMap" style="width:100%;background:#ddd">
-            
-          </div>
+          <div class="storeMap" id="testMap"></div>
+          <!-- 20170221 네이버 지도 적용 v3.0 -->
+          <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zswllr62pw"></script>
+          <script type="text/javascript">
+            var map_y = 37.52369;
+            var map_x = 127.03901;
+
+            var map = new naver.maps.Map('testMap', {
+              center : new naver.maps.LatLng(map_y, map_x),
+              scaleControl: false,
+              logoControl: false,
+              mapDataControl: false,
+              zoomControl: true,
+              zoom : 13,
+              mapTypeControl: true,
+                mapTypeControlOptions: {
+                  style: naver.maps.MapTypeControlStyle.BUTTON,
+                  position: naver.maps.Position.TOP_RIGHT
+                }
+            });
+
+            var marker = new naver.maps.Marker({
+              position: new naver.maps.LatLng(map_y, map_x),
+              map: map,
+              icon:{url:'/webroot/newStore/images/support/naver_map_marker.svg',
+                size: new naver.maps.Size(50, 67)
+              }
+            });
+          </script>
           <!--// 지도 영역 -->
           <div class="way_box_transp mo">
             <ul class="route">
@@ -373,9 +391,9 @@
               <li class="route_car">
                 <strong class="route_tit">승용차</strong>
                 <p class="route_method">도산대로 학동사거리 <span class="br">배강빌딩 1층</span></p>
-              </li>                                
+              </li>
             </ul>
-          </div>                 
+          </div>
         </div>
       </div>
     <footer class="footer">
@@ -464,7 +482,7 @@
         </address>
       </div>
     </footer>
-    
+
     <!-- 소비자피해보상 보험 팝업 -->
     <div class="layer modal__customer__insurance">
       <div class="layer_wrap">
@@ -484,23 +502,23 @@
           </div>
           <button href="#" class="layer_close close" title="팝업창 닫기">
             <span>팝업창 닫기</span>
-        </button>        
-        </div>    
+        </button>
+        </div>
       </div>
     </div>
     <!--// 소비자피해보상 보험 팝업 -->
-    
+
     <script>
          //팝업 열기
         function openModal(modalname) {
             $("." + modalname).fadeIn(300);
-            $("body,html").css({"overflow":"hidden"});        
+            $("body,html").css({"overflow":"hidden"});
             return false;
         }
         // 팝업 닫기
         $(document).ready(function(){
           $layer = $(".layer");
-    
+
           $('.close').click(function() {
               $layer.fadeOut(300);
               $('body,html').css({"overflow":"visible"});
@@ -513,10 +531,10 @@
 <script type="text/javascript">
  //store_info_wrap_slider
   var mySwiper = new Swiper('.store_info_wrap_slider', {
-    slidesPerView: 1, 
-    spaceBetween: 0, 
-    loop: true, 
-    autoplay: { 
+    slidesPerView: 1,
+    spaceBetween: 0,
+    loop: true,
+    autoplay: {
       delay: 3000,
     },
   });
@@ -554,9 +572,9 @@
           $(this).text("지도접기");
         }else{
           $(this).text("지도보기");
-        };  
+        };
         $('.storeMap').slideToggle('slow', function() {
-          $('.storeMap').toggleClass('open', $(this).is(':visible'));  
+          $('.storeMap').toggleClass('open', $(this).is(':visible'));
         });
     });
   });
