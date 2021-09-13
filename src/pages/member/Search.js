@@ -59,8 +59,10 @@ export default function Search() {
         firstname: searchValue.memberName,
         mobile: searchValue.mobileNo
       });
+      console.log(response, response.errorCode, response.errorCode === '0000');
       if (response.errorCode === '0000') {
         setResult(response.body.customerid);
+        console.log(response.body.customerid);
       } else {
         openAlert(response.errorMessage);
       }
