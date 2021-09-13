@@ -26,3 +26,7 @@ export const getEventByEventNo = (eventNo, params) => {
 export const getEventByProductNo = ({ pathParams }) => {
   return request(`display/events/products/${pathParams.productNo}`)
 }
+
+export const getDisplaySectionsSectionNo = ({ pathParams, params }) => {
+  return request(`display/sections/${pathParams.sectionNo}`, 'get', params)
+}
