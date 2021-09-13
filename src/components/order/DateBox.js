@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
+// components
+import DatePicker from '../../components/common/DatePicker';
 
 export default function DateBox({ search }) {
   const [selectMenu, setSelectMenu] = useState('threeM');
@@ -30,23 +33,25 @@ export default function DateBox({ search }) {
         </li>
       </ul>
       <div class="date_rang">
-        {/* <DatePicker
-                style={{ display: specifyDelivery ? 'block' : 'none' }}
-                disabled={!specifyDelivery}
-                bindDate={setSpecifyDeliveryDate}
-                option={{
-                  selectableRanges: [
-                    [
-                      new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
-                      new Date(2999, 12, 31)]],
-                }}
-              /> */}
-        <div class="calendar_box">
+        <DatePicker
+          bindDate={(stringDateFormat) => alert(stringDateFormat)} // 여기에 선택된 일자 string 으로 넘어옴
+          option={{
+            selectableRanges: [[new Date(), new Date(2999, 12, 31)]], // range 설정
+          }}
+        />
+        <span style={{ lineHeight: '32px' }}>&nbsp;~&nbsp;</span>
+        <DatePicker
+          bindDate={(stringDateFormat) => alert(stringDateFormat)} // 여기에 선택된 일자 string 으로 넘어옴
+          option={{
+            selectableRanges: [[new Date(), new Date(2999, 12, 31)]], // range 설정
+          }}
+        />
+        {/* <div class="calendar_box">
           <input type="text" id="datepicker1" class="inp datepicker" autocomplete="off" />
         </div>
         <div class="calendar_box">
           <input type="text" id="datepicker2" class="inp datepicker" autocomplete="off" />
-        </div>
+        </div> */}
         <button class="button button_positive button-s" type="button">
           조회
         </button>
