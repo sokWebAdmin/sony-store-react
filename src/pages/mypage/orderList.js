@@ -135,7 +135,6 @@ export default function OrderList() {
                           orderCnt={orderProduct.orderCnt}
                           orderStatusType={orderProduct.orderStatusType}
                           orderStatusTypeLabel={orderProduct.orderStatusTypeLabel}
-                          setRefundAccountVisible={setRefundAccountVisible}
                           key={orderProduct.orderNo}
                         />
                       ))}

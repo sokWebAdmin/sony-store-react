@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import RefundAccount from '../../pages/order/RefundAccount';
 
 //api
 
@@ -17,8 +18,8 @@ export default function OrderListItem({
   orderCnt,
   orderStatusType,
   orderStatusTypeLabel,
-  setRefundAccountVisible,
 }) {
+  const [refundAccountVisible, setRefundAccountVisible] = useState(false);
   const orderStatusMap = {
     DEPOSIT_WAIT: '입금대기',
     PAY_DONE: '결제완료',
@@ -77,9 +78,12 @@ export default function OrderListItem({
           </button>
         )}
         {showRefundAccountInfo(orderStatusType, payType) && (
-          <button type="button" className="button button_negative button-s" onClick={onClickRefundAccount}>
-            환불계좌정보
-          </button>
+          <>
+            <button type="button" className="button button_negative button-s" onClick={onClickRefundAccount}>
+              환불계좌정보
+            </button>
+            {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} />}
+          </>
         )}
       </div>
     </div>
