@@ -106,8 +106,7 @@ const EventBottom = () => {
                     </ul>
                   </div>
                 </div>
-                <a href="../../html/evnet/endList.html" className="button button_positive button-s link_btn">종료된
-                  기획전</a>
+                <Link to="/event/expired" className="button button_positive button-s link_btn">종료된 기획전</Link>
               </div>
               <div className="item_list">
                 <div className="item_row">
