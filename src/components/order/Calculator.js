@@ -44,8 +44,6 @@ const Calculator = ({ payment, paymentInfo }) => {
           <div className="saleToggle">
             <div className="sale_item">{/* on 클래스 제어 */}
               <div className="sale_head">
-                <a href="#none" className="sale_btn"
-                   title="할인 금액 열기">
                   <div className="view_headline">
                                           <span
                                             className="sale_tit">총 할인 금액</span>
@@ -54,7 +52,6 @@ const Calculator = ({ payment, paymentInfo }) => {
                       {toCurrency(
                         paymentInfo?.totalImmediateDiscountAmt)}</strong>원</em>
                   </div>
-                </a>
               </div>
               <div className="sale_inner"
                    style={{ display: 'none' }}>
