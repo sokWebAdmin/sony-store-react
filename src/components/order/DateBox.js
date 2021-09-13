@@ -13,6 +13,14 @@ export default function DateBox({ search }) {
     search();
   };
 
+  const onChangeStartDate = (startDate) => {
+    setPeriod({ ...period, startDate });
+  };
+
+  const onChangeEndDate = (endDate) => {
+    setPeriod({ ...period, endDate });
+  };
+
   return (
     <div class="date_box">
       <ul class="date3_tab">
@@ -35,17 +43,17 @@ export default function DateBox({ search }) {
       <div class="date_rang">
         <DatePicker
           height={'32px'}
-          bindDate={(stringDateFormat) => alert(stringDateFormat)} // 여기에 선택된 일자 string 으로 넘어옴
+          bindDate={onChangeStartDate}
           option={{
-            selectableRanges: [[new Date(), new Date(2999, 12, 31)]], // range 설정
+            selectableRanges: [[null, new Date()]],
           }}
         />
         <span style={{ lineHeight: '32px' }}>&nbsp;~&nbsp;</span>
         <DatePicker
           height={'32px'}
-          bindDate={(stringDateFormat) => alert(stringDateFormat)} // 여기에 선택된 일자 string 으로 넘어옴
+          bindDate={onChangeEndDate}
           option={{
-            selectableRanges: [[new Date(), new Date(2999, 12, 31)]], // range 설정
+            selectableRanges: [[null, new Date()]],
           }}
         />
         {/* <div class="calendar_box">
