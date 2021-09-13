@@ -54,20 +54,18 @@ export default function Search() {
 
   const searchMember = async () => {
     if (tabState === 'id') {
-      const response = await getMemberInfo({
+      const { data: response } = await getMemberInfo({
         type: '10',
         firstname: searchValue.memberName,
         mobile: searchValue.mobileNo
       });
-      console.log(response, response.errorCode, response.errorCode === '0000');
       if (response.errorCode === '0000') {
         setResult(response.body.customerid);
-        console.log(response.body.customerid);
       } else {
         openAlert(response.errorMessage);
       }
     } else {
-      const response = await getMemberInfo({
+      const { data: response } = await getMemberInfo({
         type: '20',
         customerid: searchValue.email,
         mobile: searchValue.mobileNo
