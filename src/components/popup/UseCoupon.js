@@ -11,16 +11,35 @@ import { toCurrencyString } from '../../utils/unit.js';
 const UseCoupon = ({ setVisible, orderSheetNo, orderProducts }) => {
   const close = () => setVisible(false);
 
-  const [coupons, setCoupons] = useState(null);
+  const [productCoupons, setProductCoupons] = useState(
+    { productNo: null, items: [] });
   const [products, setProducts] = useState([]);
+  const [useProductCouponNo, setUseProductCouponNo] = useState(0); // 0 ===
+                                                                  // 사용안함으로 취급
 
-  const created = () => fetchCoupons();
+  const created = async () => {
+    const originProducts = await fetchCoupons();
+    if (products) {
+      firstChoice(originProducts);
+    }
+  };
 
   const fetchCoupons = async () => {
     const { data } = await getOrderSheetCoupon({ orderSheetNo });
-    setProducts(mapProducts([...data.products]));
-    console.log(products);
+    await setProducts(mapProducts([...data.products]));
+    return [...data.products];
   };
+
+  const firstChoice = originProducts => {
+    const FIRST_PRODUCT = { ...originProducts[0] };
+    setProductCoupons({
+      productNo: FIRST_PRODUCT.productNo,
+      items: FIRST_PRODUCT.productCoupons,
+    });
+  };
+
+  const changeUseProductCoupon = ({ optionNo }) => setUseProductCouponNo(
+    optionNo);
 
   function mapProducts (products) {
     return products.map(
@@ -46,12 +65,13 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts }) => {
       <div className="pop_cont_scroll" style={{ height: '651px' }}>
         <div className="chk_select_zone">
           <ul className="chk_select_inner">
-            {products.map(product => (
+            {products.map((product, i) => (
               <li className="chk_select_list" key={product.productNo}>
                 <div className="chk_select_item table label_click">
                   <div className="radio_box radio_only chk_select">
                     <input type="radio" className="inp_radio" id="prd_coupon1"
-                           name="prd_coupon" defaultChecked={true} />
+                           name="prd_coupon" defaultChecked={i === 0}
+                    />
                     <label htmlFor="prd_coupon1"
                            className="contentType">radio1</label>
                   </div>
@@ -79,22 +99,23 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts }) => {
           </ul>
         </div>
         <div className="coupon_info">
-          <SelectBox
-            defaultInfo={{
-              type: 'dropdownHighlight',
-              placeholder: '쿠폰을 선택해주세요.',
-            }}
-            selectOptions={[
-              {
-                optionNo: 1,
-                label: '첫 구매 감사 5% 할인 쿠폰 (2021.08.10까지)',
-              },
-              {
-                optionNo: 2,
-                label: '쿠폰 적용 안함',
-              },
-            ]}
-          />
+          {productCoupons.items.length > 0 ?
+            <SelectBox
+              defaultInfo={{
+                type: 'dropdownHighlight',
+                placeholder: '쿠폰을 선택해주세요.',
+              }}
+              selectOptions={
+                [
+                  { couponIssueNo: 0, displayCouponName: '쿠폰 적용 안함' },
+                  ...productCoupons.items].map(item => ({
+                  optionNo: item.couponIssueNo,
+                  label: item.displayCouponName,
+                }))
+              }
+              selectOption={changeUseProductCoupon}
+            />
+            : <h1>적용 가능한 쿠폰이 없습니다.</h1>}
           <div className="btn_article">
             <button className="button button_positive button-m button-full"
                     type="button">쿠폰적용
