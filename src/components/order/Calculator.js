@@ -1,30 +1,25 @@
 import { React } from 'react';
+import { toCurrencyString } from '../../utils/unit.js';
 
-const Calculator = ({ submit }) => {
+const Calculator = ({ submit, paymentInfo }) => {
+
+  const toCurrency = val => val ? toCurrencyString(paymentInfo.paymentAmt) : '0';
+
   return (
     <div className="payment_box">
       <div className="inner">
         <div className="payment_list">
           <dl className="total">
-            <dt className="tit">결제 예정 금액</dt>
-            <dd className="price">N<span
+            <dt className="tit">최종 결제 금액</dt>
+            <dd className="price">{toCurrency(paymentInfo?.paymentAmt)}<span
               className="unit">원</span></dd>
           </dl>
           <div className="order_detailbox">
             <div className="view_headline">
-              <span className="view_tit">주문 금액</span>
+              <span className="view_tit">결제 예정 금액</span>
               <em
-                className="view_price"><strong>N</strong>원</em>
-            </div>
-            <div className="view_detail">
-              <span className="view_tit">제품 금액</span>
-              <em
-                className="view_price"><strong>N</strong>원</em>
-            </div>
-            <div className="view_detail">
-              <span className="view_tit">구매 수량</span>
-              <em
-                className="view_price"><strong>1</strong>개</em>
+                className="view_price"><strong>{toCurrency(
+                paymentInfo?.totalStandardAmt)}</strong>원</em>
             </div>
           </div>
           <div className="saleToggle">
@@ -34,12 +29,12 @@ const Calculator = ({ submit }) => {
                    title="할인 금액 열기">
                   <div className="view_headline">
                                           <span
-                                            className="sale_tit">할인 금액</span>
+                                            className="sale_tit">총 할인 금액</span>
                     <em
                       className="view_price minus"><strong>-
-                      N</strong>원</em>
+                      {toCurrency(
+                        paymentInfo?.totalImmediateDiscountAmt)}</strong>원</em>
                   </div>
-                  <span className="acc_arrow">상세 보기</span>
                 </a>
               </div>
               <div className="sale_inner"

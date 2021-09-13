@@ -100,7 +100,7 @@ const OrderStep1 = ({ location }) => {
     paymentAmt: paymentInfo.paymentAmt,
     accumulationAmt: paymentInfo.accumulationAmt,
     availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
-    subPayAmt: 0, // TODO. 이건 뭐자?
+    subPayAmt: 0,
   });
 
   const submit = () => {
@@ -236,7 +236,7 @@ const OrderStep1 = ({ location }) => {
                     <div className="acc acc_ui_zone">
                       {/* acc_item */}
                       <Accordion title={'결제 예정 금액'} defaultVisible={true}>
-                        <Calculator submit={submit} />
+                        <Calculator submit={submit} paymentInfo={paymentInfo} />
                       </Accordion>
                     </div>
                   </div>
