@@ -216,6 +216,7 @@ export default function Header() {
                         removeAccessToken();
                         onChangeGlobal({ isLogin: false });
                         resetProfile(profileDispatch);
+                        history.push('/member/login');
                       }}
                     >
                       로그아웃
