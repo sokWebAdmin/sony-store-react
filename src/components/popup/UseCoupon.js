@@ -11,13 +11,14 @@ const UseCoupon = ({ setVisible, orderSheetNo }) => {
   const close = () => setVisible(false);
 
   const [coupons, setCoupons] = useState(null);
+  const [products, setProducts] = useState([]);
 
   const created = () => fetchCoupons();
 
   const fetchCoupons = async () => {
     const { data } = await getOrderSheetCoupon({ orderSheetNo });
-    setCoupons(data);
-    console.log(coupons);
+    setProducts([...data.products]);
+    console.log(products);
   };
 
   useEffect(created, []);
