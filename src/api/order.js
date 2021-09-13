@@ -12,5 +12,8 @@ export const getProfileOrders = ({ params }) =>
 export const getProfileOrdersSummaryStatus = () =>
   request('profile/orders/summary/status', 'get', null);
 
+export const getProfileOrderByOrderNo = ({ path: { orderNo } }) => request(
+  `profile/orders/${orderNo}`, 'get');
+
 export const getOrderSheetCoupon = query =>
   request(`order-sheets/${query.orderSheetNo}/coupons`, 'get');
