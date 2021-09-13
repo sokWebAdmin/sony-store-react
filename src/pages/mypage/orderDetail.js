@@ -1,7 +1,9 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { Link, useLocation } from 'react-router-dom';
 import { useQuery } from '../../hooks';
+import { toCurrencyString } from '../../utils/unit';
+import OrderProcess from '../../components/order/OrderProcess';
+import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -15,11 +17,147 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderDetail() {
   const query = useQuery();
+  const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '', defaultOrderStatusType: '' });
+  const [orderProducts, setOrderProducts] = useState([]); // 주문 상품
+  const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' }); // 주문 정보
+  const [shippingAddress, setShippingAddress] = useState({
+    // 주문 정보 주소
+    // TODO: 배송일 선택 필드 확인 https://nhnent.dooray.com/project/posts/3089925914259872916
+    receiverName: '',
+    receiverContact1: '',
+    receiverAddress: '',
+    receiverDetailAddress: '',
+    deliveryMemo: '',
+  });
+
+  const [amountInfo, setAmountInfo] = useState({
+    // 결제금액정보
+    totalProductAmt: 0, // 총 주문 금액
+    //TODO: 아래 할인 필드들은 뭔지 확인
+    immediateDiscountAmt: 0, //     프로모션 할인,  immediateDiscountAmt 맞는지 확인
+    productCouponDiscountAmt: 0, // 쿠폰 사용, productCouponDiscountAmt 맞는지 확인
+    subPayAmt: 0, // 마일리지 사용? subPayAmt 맞는지 확인
+    totalDiscountAmount: 0, // 총 할인 금액
+    payAmt: 0, // 결제 금액
+  });
+
+  const [payInfo, setPayInfo] = useState({
+    // 결제 정보
+    payType: '', // 가상계좌 VIRTUAL_ACCOUNT, 신용카드 CREDIT_CARD
+    cardInfo: null, // 가상계좌일 때 NUll
+    bankInfo: null, // 신용카드일 때 Null
+  });
 
   useEffect(() => {
-    const res = getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } });
-    console.log('res:', res);
+    getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } }).then((res) => {
+      const {
+        orderNo,
+        orderYmdt,
+        defaultOrderStatusType,
+        orderer: { ordererName, ordererContact1 },
+        shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
+        deliveryMemo,
+        lastOrderAmount: { totalProductAmt, immediateDiscountAmt, productCouponDiscountAmt, subPayAmt, payAmt },
+        payType,
+        payInfo: { cardInfo, bankInfo },
+      } = res.data;
+      setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
+      setOrderProducts(makeOrderProducts(res.data));
+      setOrdererInfo({ ordererName, ordererContact1 });
+      setShippingAddress({
+        receiverName,
+        receiverAddress,
+        receiverDetailAddress,
+        receiverContact1,
+        deliveryMemo,
+      });
+      setAmountInfo({
+        totalProductAmt,
+        immediateDiscountAmt,
+        productCouponDiscountAmt,
+        subPayAmt,
+        totalDiscountAmount: immediateDiscountAmt + productCouponDiscountAmt + subPayAmt,
+        payAmt,
+      });
+
+      setPayInfo({
+        // payType,
+        // cardInfo,
+        // bankInfo,
+
+        // FIXME: 목데이터, 개발완료되면 지우고 위 payType, cardInfo, bankInfo 주석 풀면 됨
+        payType: 'CREDIT_CARD',
+        cardInfo: {
+          approveYmdt: '2021-09-11 22:29:43',
+          cardAmt: 202000,
+          cardApprovalNumber: '51587665',
+          cardCode: 'CCBC',
+          cardCompany: 'BC',
+          cardName: 'BC카드',
+          cardNo: '920020******9787',
+          installmentPeriod: 0,
+          noInterest: false,
+        },
+        bankInfo: {
+          account: 'T0309260000174',
+          bank: 'IBK',
+          bankAmt: 202000,
+          bankCode: '003',
+          bankName: '기업은행',
+          depositAmt: 0,
+          depositYmdt: null,
+          depositorName: '한국사이버결제',
+          paymentExpirationYmdt: '2021-09-18 23:59:59',
+        },
+      });
+
+      console.log('res.data:', res.data);
+      console.log('orderProducts:', orderProducts);
+    });
   }, []);
+
+  const makeOrderProducts = (orderDetailResponse) => {
+    const { orderOptionsGroupByPartner } = orderDetailResponse;
+    return orderOptionsGroupByPartner
+      .flatMap(({ orderOptionsGroupByDelivery }) => orderOptionsGroupByDelivery)
+      .flatMap(({ orderOptions }) => orderOptions)
+      .map((orderOption) => ({
+        orderNo: orderOption.orderNo,
+        imageUrl: orderOption.imageUrl,
+        orderOptionNo: orderOption.orderOptionNo,
+        optionTitle: orderOption.optionTitle,
+        productNo: orderOption.productNo,
+        productName: orderOption.productName,
+        orderCnt: orderOption.orderCnt,
+        buyPrice: orderOption.price.buyPrice,
+        buyAmt: orderOption.price.buyAmt,
+      }));
+  };
+
+  const getOrderStatus = (defaultOrderStatusType) => {
+    const orderStatus = {
+      DEPOSIT_WAIT: '입금대기',
+      PAY_DONE: '결제완료',
+      PRODUCT_PREPARE: '결제완료', // 샵바이에는 상품준비중상태가 있지만 소니에는 없음.
+      DELIVERY_PREPARE: '배송준비',
+      DELIVERY_ING: '배송중',
+      DELIVERY_DONE: '배송완료',
+    };
+
+    return orderStatus[defaultOrderStatusType];
+  };
+
+  const showFindDelivery = (defaultOrderStatusType) => {
+    return defaultOrderStatusType === 'DELIVERY_ING' || defaultOrderStatusType === 'DELIVERY_DONE';
+  };
+
+  const getInstallmentPeriod = (cardInfo) => {
+    const { installmentPeriod, noInterest } = cardInfo;
+    if (installmentPeriod === 0) {
+      return '일시불';
+    }
+    return `${installmentPeriod}개월 할부${noInterest ? '(무)' : ''}`;
+  };
 
   // TODO: 마크업처럼 스타일리 안되는데 추후 확인
   const onPrint = () => {
@@ -48,55 +186,26 @@ export default function OrderDetail() {
               </Link>
               <h1 className="common_head_name">주문 상세 조회</h1>
             </div>
-            <div className="my_order order_process">
-              <ul className="order_list">
-                {/* 현상태만 class: on 추가, .ico_txt 내부에 <strong> 추가 */}
-                <li className="step_1">
-                  <div className="ship_box">
-                    <span className="ico_txt">입금대기</span>
-                  </div>
-                </li>
-                <li className="step_2">
-                  <div className="ship_box">
-                    <span className="ico_txt">결제완료</span>
-                  </div>
-                </li>
-                <li className="step_3 on">
-                  <div className="ship_box">
-                    <span className="ico_txt">
-                      <strong>배송준비</strong>
-                    </span>
-                  </div>
-                </li>
-                <li className="step_4">
-                  <div className="ship_box">
-                    <span className="ico_txt">배송중</span>
-                  </div>
-                </li>
-                <li className="step_5">
-                  <div className="ship_box">
-                    <span className="ico_txt">배송완료</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
+            <OrderProcess defaultOrderStatusType={orderInfo.defaultOrderStatusType} />
             <div className="o_summary">
               <dl className="o_summary_status">
                 <dt className="o_summary_term">처리상태</dt>
                 <dd className="o_summary_desc">
-                  <strong>배송준비</strong>
-                  <button type="button" className="button button_positive button-s">
-                    배송조회
-                  </button>
+                  <strong>{getOrderStatus(orderInfo.defaultOrderStatusType)}</strong>
+                  {showFindDelivery(orderInfo.defaultOrderStatusType) && (
+                    <button type="button" className="button button_positive button-s">
+                      배송조회
+                    </button>
+                  )}
                 </dd>
               </dl>
               <dl className="o_summary_date">
                 <dt className="o_summary_term">주문날짜</dt>
-                <dd className="o_summary_desc">2021-05-12</dd>
+                <dd className="o_summary_desc">{orderInfo.orderYmdt}</dd>
               </dl>
               <dl className="o_summary_number">
                 <dt className="o_summary_term">주문번호</dt>
-                <dd className="o_summary_desc">20210512-663W24</dd>
+                <dd className="o_summary_desc">{orderInfo.orderNo}</dd>
               </dl>
             </div>
             {/* 제품 정보 */}
@@ -112,90 +221,18 @@ export default function OrderDetail() {
                     </div>
                   </div>
                   <div className="col_table_body">
-                    <div className="col_table_row">
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_01.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">AK-47 Hi-Res 헤드폰 앰프</div>
-                            <p className="prd_info_option">128Bit/피아노블랙</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_price">
-                        4,299,000 <span className="won">원</span>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell prd_total">
-                        8,598,000 <span className="won">원</span>
-                      </div>
-                    </div>
-                    <div className="col_table_row">
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_02.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">AK-74 Hi-Res Aux 3.5mm 케이블 (16.5m)</div>
-                            <p className="prd_info_option">
-                              AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux
-                              케이블 AK-47 전용 고해상도 Aux 케이블 AK-47 전용 고해상도 Aux 케이블 벗지않는 선글라스
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_price">
-                        9,000 <span className="won">원</span>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell prd_total">
-                        18,000 <span className="won">원</span>
-                      </div>
-                    </div>
-                    <div className="col_table_row">
-                      <div className="col_table_cell prd_wrap">
-                        <div className="prd">
-                          <div className="prd_thumb">
-                            <img
-                              className="prd_thumb_pic"
-                              src="../../images/_tmp/item640x640_03.png"
-                              alt="상품명입력"
-                            />
-                          </div>
-                          <div className="prd_info">
-                            <div className="prd_info_name">PLAYSTATION 5 DIGITAL (CFI-1018B01)</div>
-                            <p className="prd_info_option">
-                              4K HDR(HLG), Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트
-                              화이트)
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col_table_cell prd_price">
-                        4,299,000 <span className="won">원</span>
-                      </div>
-                      <div className="col_table_cell prd_count">
-                        2 <span className="unit">개</span>
-                      </div>
-                      <div className="col_table_cell prd_total">
-                        8,598,000 <span className="won">원</span>
-                      </div>
-                    </div>
+                    {orderProducts.length > 0 &&
+                      orderProducts.map((orderProduct) => (
+                        <OrderDetailProductItem
+                          key={orderProduct.orderNo}
+                          productName={orderProduct.productName}
+                          imageUrl={orderProduct.imageUrl}
+                          optionTitle={orderProduct.optionTitle}
+                          buyPrice={orderProduct.buyPrice}
+                          buyAmt={orderProduct.buyAmt}
+                          orderCnt={orderProduct.orderCnt}
+                        />
+                      ))}
                   </div>
                 </div>
               </div>
@@ -207,16 +244,20 @@ export default function OrderDetail() {
               <div className="order_info_inner">
                 <dl className="order">
                   <dt className="order_term">주문자 정보</dt>
-                  <dd className="order_desc">김소니(01056781234)</dd>
+                  <dd className="order_desc">
+                    {ordererInfo.ordererName}({ordererInfo.ordererContact1})
+                  </dd>
                   <dt className="order_term">수령인</dt>
-                  <dd className="order_desc">김소니(01056781234)</dd>
+                  <dd className="order_desc">
+                    {shippingAddress.receiverName}({shippingAddress.ordererContact1})
+                  </dd>
                   <dt className="order_term">배송지</dt>
                   <dd className="order_desc">
-                    서울특별시 영등포구 여의도동 국제금융로 10 One IFC 24층 ㈜ 소니코리아 서울특별시 영등포구 여의도동
-                    국제금융로 10 One IFC 24층 ㈜ 소니코리아
+                    {shippingAddress.receiverAddress}
+                    {shippingAddress.receiverDetailAddress}
                   </dd>
                   <dt className="order_term">배송 요청사항</dt>
-                  <dd className="order_desc">파손의 위험이 있는 상품이니 조심히 다뤄주세요.</dd>
+                  <dd className="order_desc">{shippingAddress.deliveryMemo ? shippingAddress.deliveryMemo : '없음'}</dd>
                   <dt className="order_term">배송일 선택</dt>
                   <dd className="order_desc">정상 배송 </dd>
                 </dl>
@@ -230,43 +271,55 @@ export default function OrderDetail() {
                 <dl className="purchase">
                   <dt className="purchase_term purchase_price">총 주문금액</dt>
                   <dd className="purchase_desc purchase_price">
-                    4,299,000<span className="won">원</span>
+                    {toCurrencyString(amountInfo.totalProductAmt)}
+                    <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount">할인 금액</dt>
                   <dd className="purchase_desc purchase_discount">
-                    - 2,300 <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.totalDiscountAmount)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">프로모션 할인</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - 2,000 <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.immediateDiscountAmt)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">쿠폰 사용</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - 0 <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.productCouponDiscountAmt)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_discount_sub">마일리지 사용</dt>
                   <dd className="purchase_desc purchase_discount_sub">
-                    - 300 <span className="won">원</span>
+                    - {toCurrencyString(amountInfo.subPayAmt)} <span className="won">원</span>
                   </dd>
                   <dt className="purchase_term purchase_detail">결제 내역</dt>
                   <dd className="purchase_desc purchase_detail">
                     <div className="purchase_detail_price">
-                      4,299,000 <span className="won">원</span>
+                      {toCurrencyString(amountInfo.payAmt)} <span className="won">원</span>
                     </div>
                     {/* 결제정보 현금 */}
-                    <div className="purchase_detail_method">가상 계좌 : KB국민은행(1234-2345-32456)</div>
-                    <button
-                      type="button"
-                      className="button button_negative button-s popup_comm_btn"
-                      data-popup-name="cash_receipt"
-                    >
-                      현금영수증 신청
-                    </button>
-                    {/*// 결제정보 현금 */}
-                    {/* 결제정보 신용카드
-        <div class="purchase_detail_method">삼성카드 / 일시불</div>
-        <button type="button" class="button button_negative button-s">신용카드 영수증</button>
-        */}
+                    {payInfo.payType === 'VIRTUAL_ACCOUNT' && (
+                      <>
+                        <div className="purchase_detail_method">
+                          가상 계좌 : {payInfo.bankInfo.bankName}({payInfo.bankInfo.account})
+                        </div>
+                        <button
+                          type="button"
+                          className="button button_negative button-s popup_comm_btn"
+                          data-popup-name="cash_receipt"
+                        >
+                          현금영수증 신청
+                        </button>
+                      </>
+                    )}
+                    {payInfo.payType === 'CREDIT_CARD' && (
+                      <>
+                        <div class="purchase_detail_method">
+                          {payInfo.cardInfo.cardName} / {getInstallmentPeriod(payInfo.cardInfo)}
+                        </div>
+                        <button type="button" class="button button_negative button-s">
+                          신용카드 영수증
+                        </button>
+                      </>
+                    )}
                   </dd>
                 </dl>
               </div>
@@ -280,7 +333,9 @@ export default function OrderDetail() {
               <button type="button" className="button button_negative only-pc" onClick={() => onPrint()}>
                 주문 정보 프린트
               </button>
-              <a className="button button_positive">목록</a>
+              <Link to="/my-page/order-list" className="button button_positive">
+                목록
+              </Link>
             </div>
             {/* // buttons */}
           </div>
