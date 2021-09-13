@@ -133,9 +133,6 @@ const EventBottom = () => {
               <span className="ico_no_data">등록된 이벤트가 없습니다.</span>
             </div>)}
           </div>
-          <div className="btn_article comm_more line">{/* 목록이 없을 경우 숨김 처리 */}
-            <a href="javascript:void(0)" className="more_btn" title="기획전 더보기">더보기</a>
-          </div>
         </div>
       </div>
     </>
