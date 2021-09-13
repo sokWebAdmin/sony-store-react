@@ -1,9 +1,28 @@
-import { React } from 'react';
+import { useState, useRef } from 'react';
+
+import Alert from '../common/Alert';
+
 import { toCurrencyString } from '../../utils/unit.js';
 
-const Calculator = ({ submit, paymentInfo }) => {
+const Calculator = ({ payment, paymentInfo }) => {
 
-  const toCurrency = val => val ? toCurrencyString(paymentInfo.paymentAmt) : '0';
+  const toCurrency = val => val
+    ? toCurrencyString(paymentInfo.paymentAmt)
+    : '0';
+
+  const [agree, setAgree] = useState(false);
+  const [agreeAlert, setAgreeAlert] = useState(false);
+  const agreeEl = useRef();
+
+  const submit = () => {
+    if (!agree) {
+      setAgreeAlert(true);
+      agreeEl.current.focus();
+      return;
+    }
+
+    payment();
+  };
 
   return (
     <div className="payment_box">
@@ -65,12 +84,23 @@ const Calculator = ({ submit, paymentInfo }) => {
           </div>
         </div>
         <div className="essential">
+          <div style={{ marginBottom: '20px' }}>
+            <p style={{ marginBottom: '10px', color: '#e70000' }}>주문 내용을 확인해
+              주세요!</p>
+            <p>주문할 상품의 거래조건을 확인(공급관련정보, 청약철회 및 해제, 교환/반품 절차, 분쟁처리사항, 거래약관) 하였으며,
+              구매에 동의하시겠습니까?(전자상거래법 제8조 제2항)</p>
+          </div>
           <div className="check">
             <input type="checkbox" className="inp_check"
-                   id="essential" />
-            <label htmlFor="essential">[필수] 주문할 제품의 거래조건을
-              확인 하였으며, 구매에 동의하시겠습니까? (전자상거래법 제8조
-              제2항)</label>
+                   id="essential"
+                   checked={agree}
+                   onChange={() => setAgree(!agree)}
+                   ref={agreeEl}
+            />
+            <label htmlFor="essential">결제 내역을 확인하였으며, 구매에 동의합니다.</label>
+            {agreeAlert &&
+            <Alert onClose={() => setAgreeAlert(false)}>구매에 동의해주셔야 구매가
+              가능합니다.</Alert>}
           </div>
           {/* pc 결제 버튼 */}
           <div className="pc_pay_btn">
@@ -91,7 +121,7 @@ const Calculator = ({ submit, paymentInfo }) => {
       <div className="mo_pay_btn">
         <button
           className="button button_positive button-full"
-          onClick={submit}
+          onClick={() => submit()}
           type="button">총 <em>N</em> 원
           (1개) <span>결제하기</span></button>
       </div>

@@ -236,7 +236,8 @@ const OrderStep1 = ({ location }) => {
                     <div className="acc acc_ui_zone">
                       {/* acc_item */}
                       <Accordion title={'결제 예정 금액'} defaultVisible={true}>
-                        <Calculator submit={submit} paymentInfo={paymentInfo} />
+                        <Calculator payment={submit}
+                                    paymentInfo={paymentInfo} />
                       </Accordion>
                     </div>
                   </div>
