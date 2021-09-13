@@ -8,3 +8,10 @@
   height: 0;
   transition: height 0.35s ease;
 }
+
+.on {
+  .parentNode {
+    display: block !important;
+    height: auto !important;
+  }
+}

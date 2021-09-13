@@ -54,7 +54,7 @@ export default function Search() {
 
   const searchMember = async () => {
     if (tabState === 'id') {
-      const response = await getMemberInfo({
+      const { data: response } = await getMemberInfo({
         type: '10',
         firstname: searchValue.memberName,
         mobile: searchValue.mobileNo
@@ -65,7 +65,7 @@ export default function Search() {
         openAlert(response.errorMessage);
       }
     } else {
-      const response = await getMemberInfo({
+      const { data: response } = await getMemberInfo({
         type: '20',
         customerid: searchValue.email,
         mobile: searchValue.mobileNo
