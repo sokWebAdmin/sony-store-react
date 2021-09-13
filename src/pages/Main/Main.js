@@ -93,16 +93,20 @@ export default function Main() {
   const getBanners = useCallback(async () => {
     try {
       //배너 코드 객체로 관리하기
+      //응답이 순서를 보징하지 않음
       const {data} = await loadBanner('000,001,002,003,004,005')
-      setSlideMoBanners(data[1]?.accounts)
-      setEventBanners(data[3])
-      setAcademyPcBanners(data[4])
-      setAcademyMoBanners(data[5])
+      setSlideMoBanners(data.find(({code}) => code === '001')?.accounts)
+      setEventBanners(data.find(({code}) => code === '003'))
+      setAcademyPcBanners(data.find(({code}) => code === '004'))
+      setAcademyMoBanners(data.find(({code}) => code === '005'))
 
-      getSlideBannerNames(data[0]?.accounts)
-      setSlidePcBanners(data[0]?.accounts)
-      getRecommendedBannerNames(data[2]?.accounts)
-      setRecommendedBanners(data[2]?.accounts)
+
+      const slidePcBanners = data.find(({code}) => code === '000')?.accounts
+      getSlideBannerNames(slidePcBanners)
+      setSlidePcBanners(slidePcBanners)
+      const recommendedBanners = data.find(({code}) => code === '002')?.accounts
+      getRecommendedBannerNames(recommendedBanners)
+      setRecommendedBanners(recommendedBanners)
     } catch (e){
       console.error(e)
     }
@@ -383,7 +387,7 @@ export default function Main() {
                           }}>
                             <span className="recommend__item__copy" dangerouslySetInnerHTML={ {__html: recommendedBanner.banners[0].nameList} }></span>
                             <div className="recommend__item__pic">
-                              <img src={recommendedSections[index]?.listImageUrls[0]} alt={recommendedSections[index]?.productName} />
+                              <img src={recommendedSections[index]?.listImageUrls[0]} alt={`"${recommendedBanner?.banners[0]?.name}"`} />
                             </div>
                             <span className="recommend__item__desc">{recommendedSections[index]?.productName}</span>
                             <span className="recommend__item__name">{recommendedSections[index]?.productNameEn}</span>
