@@ -32,7 +32,9 @@ export default function OrderListItem({
   };
 
   const showOrderCancel = (orderStatusType) => {
-    return ['DEPOSIT_WAIT', 'PAY_DONE', 'DELIVERY_PREPARE', 'DELIVERY_ING'].includes(orderStatusType);
+    return ['DEPOSIT_WAIT', 'PAY_DONE', 'PRODUCT_PREPARE', 'DELIVERY_PREPARE', 'DELIVERY_ING'].includes(
+      orderStatusType,
+    );
   };
 
   const showDeliveryFind = (orderStatusType) => {
