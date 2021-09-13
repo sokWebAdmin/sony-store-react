@@ -866,14 +866,11 @@
     padding: 112px 0 !important;    
     width: 1200px !important;
     height: 100% !important;
-    background: url(../images/event/bg_employee_pc.png) no-repeat 0 0 !important;
     background-position: 100% 0 !important;
     &.refurbish {
-      background: url(../images/event/bg_refurbish_pc.png) no-repeat 0 0 !important;
       background-position: 100% 10px !important;
     }
     &.refined {
-      background: url(../images/event/bg_refined_pc.png) no-repeat 0 0 !important;
       background-position: 100% 0 !important;
     }    
   }
@@ -931,17 +928,14 @@
     min-height: 290px !important;
     &_inner {
       padding: 32px 0 144px !important;
-      background: url(../images/event/bg_employee_mo.png) no-repeat 0 0 !important;
       background-position: 50% 100% !important;
       background-size: 200px 65% !important;  
       &.refurbish {
-        background: url(../images/event/bg_refurbish_mo.png) no-repeat 0 0 !important;
         background-position: 50% 90px !important;
         background-size: contain !important; 
       }
       &.refined {
         padding: 32px 0 162px !important;
-        background: url(../images/event/bg_refined_mo.png) no-repeat 0 0 !important;
         background-position: 50% 100% !important;
         background-size: 200px 65% !important;  
       }      
@@ -1074,7 +1068,7 @@
     border: 1px solid #e70000 !important;
     color: #e70000 !important;
     font-size: 16px !important;
-    z-index: 1 !important;
+    z-index: 10 !important;
     font-weight: 700 !important;
     line-height: 1 !important;
     .unit {
