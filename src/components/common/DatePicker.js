@@ -8,7 +8,7 @@ import 'tui-date-picker/dist/tui-date-picker.css';
 import '../../assets/scss/partials/datePicker.scss';
 
 const DatePicker = (prop) => {
-  const { style, disabled, bindDate, option, height } = prop;
+  const { style, disabled, bindDate, option, height, dateValue } = prop;
 
   const datePickerInput = useRef();
   const wrapper = useRef();
@@ -19,7 +19,7 @@ const DatePicker = (prop) => {
 
   const createInstance = (wrapperHTMLElement, inputHTMLElement, option) => {
     datePicker.instance = new TuiDatePicker(wrapperHTMLElement, {
-      date: option?.selectableRanges[0][0] ?? new Date(),
+      date: dateValue ?? option?.selectableRanges[0][0] ?? new Date(),
       language: 'ko',
       input: {
         element: inputHTMLElement,
@@ -36,7 +36,7 @@ const DatePicker = (prop) => {
   useEffect(() => {
     createInstance(wrapper.current, datePickerInput.current, option);
     bindInstance();
-  }, []);
+  }, [dateValue]);
 
   return (
     <div className="date_picker_wrapper" style={style}>

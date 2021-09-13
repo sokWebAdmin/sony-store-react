@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
+import { addMonth } from '../../utils/dateFormat';
 
 // components
 import DatePicker from '../../components/common/DatePicker';
 
 export default function DateBox({ search }) {
   const [selectMenu, setSelectMenu] = useState('threeM');
-  const [period, setPeriod] = useState({ startDate: new Date().toString(), endDate: new Date().toString() });
+  const [period, setPeriod] = useState({ startDate: new Date(addMonth(new Date(), -3)), endDate: new Date() });
 
   const onClickTab = (menu) => {
-    console.log('클릭:', menu);
+    const setPeriodDate = {
+      threeM: () => setPeriod({ ...period, startDate: new Date(addMonth(new Date(), -3)) }),
+      sixM: () => setPeriod({ ...period, startDate: new Date(addMonth(new Date(), -6)) }),
+      oneY: () => setPeriod({ ...period, startDate: new Date(addMonth(new Date(), -12)) }),
+    };
+
     setSelectMenu(menu);
-    search();
+    setPeriodDate[menu]();
   };
 
   const onChangeStartDate = (startDate) => {
@@ -19,6 +25,11 @@ export default function DateBox({ search }) {
 
   const onChangeEndDate = (endDate) => {
     setPeriod({ ...period, endDate });
+  };
+
+  const onClickSearch = () => {
+    console.log('period:', period);
+    search();
   };
 
   return (
@@ -42,6 +53,7 @@ export default function DateBox({ search }) {
       </ul>
       <div class="date_rang">
         <DatePicker
+          dateValue={period.startDate}
           height={'32px'}
           bindDate={onChangeStartDate}
           option={{
@@ -50,19 +62,14 @@ export default function DateBox({ search }) {
         />
         <span style={{ lineHeight: '32px' }}>&nbsp;~&nbsp;</span>
         <DatePicker
+          dateValue={period.endDate}
           height={'32px'}
           bindDate={onChangeEndDate}
           option={{
             selectableRanges: [[null, new Date()]],
           }}
         />
-        {/* <div class="calendar_box">
-          <input type="text" id="datepicker1" class="inp datepicker" autocomplete="off" />
-        </div>
-        <div class="calendar_box">
-          <input type="text" id="datepicker2" class="inp datepicker" autocomplete="off" />
-        </div> */}
-        <button class="button button_positive button-s" type="button">
+        <button class="button button_positive button-s" type="button" onClick={onClickSearch}>
           조회
         </button>
       </div>
