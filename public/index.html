@@ -26,10 +26,15 @@
     -->
 
     <!-- pay scripts -->
-    <script src="https://alpha-shop-api.e-ncp.com/payments/ncp_pay_alpha.js"></script>
-    <script src="https://testpay.kcp.co.kr/plugin/payplus_web.jsp"></script>
-    <script src="https://pretest.uplus.co.kr:9443/xpay/js/xpay_crossplatform.js"></script>
     <title>SonyStore</title>
+    <% if (process.env.NODE_ENV !== 'production') { %>
+    <script src="https://alpha-shop-api.e-ncp.com/payments/ncp_pay_alpha.js"></script>
+    <script src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js"></script>
+    <% } %>
+    <% if (process.env.NODE_ENV === 'production') { %>
+    <script src="https://shop-api.e-ncp.com/payments/ncp_pay.js"></script>
+    <script src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js"></script>
+    <% } %>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
