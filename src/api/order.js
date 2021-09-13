@@ -9,3 +9,6 @@ export const getProfileOrders = ({ params }) => request('profile/orders', 'get',
 export const getProfileOrderByOrderNo = ({ path: { orderNo } }) => request(`profile/orders/${orderNo}`, 'get');
 
 export const getProfileOrdersSummaryStatus = () => request('profile/orders/summary/status', 'get', null);
+
+export const postProfileOrderCancelByOrderOptionNo = ({ path: { orderOptionNo }, requestBody }) =>
+  request(`​/profile​/order-options​/${orderOptionNo}​/claims​/cancel`, 'post', null, requestBody);

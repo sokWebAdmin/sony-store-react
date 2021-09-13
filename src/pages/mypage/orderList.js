@@ -318,6 +318,51 @@ export default function OrderList() {
                           key={orderProduct.orderNo}
                         />
                       ))}
+                      <div class="col_table_row">
+                        <div class="col_table_cell order">
+                          <span class="order_date">2021-09-13 17:31:52</span>
+                          <a class="order_number" href="/my-page/order-detail?orderNo=202109131731524695">
+                            202109131731524695
+                          </a>
+                        </div>
+                        <div class="col_table_cell prd_wrap">
+                          <div class="prd">
+                            <div class="prd_thumb">
+                              <img
+                                class="prd_thumb_pic"
+                                src="//rlyfaazj0.toastcdn.net/product/00002173/101891968/6164a54b-ceb2-402f-b349-07e154c36e6f.png"
+                                alt="상품명입력"
+                              />
+                            </div>
+                            <div class="prd_info">
+                              <div class="prd_info_name">조회수순 정렬 확인용, 조회수 낮음B-A보다 최신상품</div>
+                              <p class="prd_info_option">조회수순 정렬 확인용, 조회수 낮음B-A보다 </p>
+                            </div>
+                          </div>
+                          <div class="prd">
+                            <div class="prd_thumb">
+                              <img
+                                class="prd_thumb_pic"
+                                src="//rlyfaazj0.toastcdn.net/20210712/112405.423641000/09.jpg"
+                                alt="상품명입력"
+                              />
+                            </div>
+                            <div class="prd_info">
+                              <div class="prd_info_name">배송비 20만원</div>
+                              <p class="prd_info_option">1: 11</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col_table_cell prd_count">
+                          3 <span class="unit">개</span>
+                        </div>
+                        <div class="col_table_cell order">
+                          <span class="order_status">결제완료</span>
+                          <button type="button" class="button button_negative button-s">
+                            주문취소
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
