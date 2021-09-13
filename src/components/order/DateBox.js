@@ -34,6 +34,7 @@ export default function DateBox({ search }) {
       </ul>
       <div class="date_rang">
         <DatePicker
+          height={'32px'}
           bindDate={(stringDateFormat) => alert(stringDateFormat)} // 여기에 선택된 일자 string 으로 넘어옴
           option={{
             selectableRanges: [[new Date(), new Date(2999, 12, 31)]], // range 설정
@@ -41,6 +42,7 @@ export default function DateBox({ search }) {
         />
         <span style={{ lineHeight: '32px' }}>&nbsp;~&nbsp;</span>
         <DatePicker
+          height={'32px'}
           bindDate={(stringDateFormat) => alert(stringDateFormat)} // 여기에 선택된 일자 string 으로 넘어옴
           option={{
             selectableRanges: [[new Date(), new Date(2999, 12, 31)]], // range 설정

@@ -8,7 +8,7 @@ import 'tui-date-picker/dist/tui-date-picker.css';
 import '../../assets/scss/partials/datePicker.scss';
 
 const DatePicker = (prop) => {
-  const { style, disabled, bindDate, option } = prop;
+  const { style, disabled, bindDate, option, height } = prop;
 
   const datePickerInput = useRef();
   const wrapper = useRef();
@@ -40,7 +40,7 @@ const DatePicker = (prop) => {
 
   return (
     <div className="date_picker_wrapper" style={style}>
-      <div className="tui-datepicker-input tui-datetime-input tui-has-focus" style={{ height: '32px' }}>
+      <div className="tui-datepicker-input tui-datetime-input tui-has-focus" style={{ height }}>
         <input type="text" className="view_date_input" ref={datePickerInput} disabled={disabled} />
         <span className="tui-ico-date"></span>
       </div>
