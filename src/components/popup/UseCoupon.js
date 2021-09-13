@@ -1,10 +1,11 @@
 import LayerPopup from '../common/LayerPopup';
+import SelectBox from '../common/SelectBox';
 
 const UseCoupon = ({ setVisible }) => {
   const close = () => setVisible(false);
 
   return (
-    <LayerPopup className="find_address" popContClassName={'scrollH'}
+    <LayerPopup className="find_address" size={'m'} popContClassName={'scrollH'}
                 onClose={close}>
       <p className="pop_tit">쿠폰 조회 및 적용</p>
       <div className="pop_cont_scroll" style={{ height: '651px' }}>
@@ -73,28 +74,22 @@ const UseCoupon = ({ setVisible }) => {
           </ul>
         </div>
         <div className="coupon_info">
-          <div className="select_ui_zone tit_btm_line">
-            <a href="#" className="selected_btn"
-               data-default-text="쿠폰을 선택해주세요.">
-              쿠폰을 선택해주세요.
-            </a>
-            <div className="select_inner">
-              <p className="prd_tag">제품</p>
-              <ul className="select_opt">
-                <li>
-                  <a href="#" className="opt_list">
-                    <div className="item">첫 구매 감사 5% 할인 쿠폰 (2021.08.10까지)</div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#"
-                     className="opt_list not_opt">
-                    <div className="item">쿠폰 적용 안함</div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <SelectBox
+            defaultInfo={{
+              type: 'dropdownHighlight',
+              placeholder: '쿠폰을 선택해주세요.',
+            }}
+            selectOptions={[
+              {
+                optionNo: 1,
+                label: '첫 구매 감사 5% 할인 쿠폰 (2021.08.10까지)',
+              },
+              {
+                optionNo: 2,
+                label: '쿠폰 적용 안함',
+              },
+            ]}
+          />
           <div className="btn_article">
             <button className="button button_positive button-m button-full"
                     type="button">쿠폰적용
