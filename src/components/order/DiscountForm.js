@@ -65,6 +65,8 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
               <div className="acc_inp disable_type">
                 <input type="text" id="coupon"
                        className="inp"
+                       value={paymentInfo?.productCouponAmt ? toCurrencyString(
+                         paymentInfo?.productCouponAmt) : '0'}
                        disabled /><span
                 className="unit">원</span>
               </div>
