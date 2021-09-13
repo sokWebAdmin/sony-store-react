@@ -24,11 +24,7 @@ export default function OrderStatusSummary({
   },
 }) {
   const totalCancelCnt = cancelProcessingCnt + cancelDoneCnt;
-  const totalExchangeAndReturnCnt =
-    exchangeDoneCnt +
-    returnDoneCnt +
-    returnProcessingCnt +
-    exchangeProcessingCnt;
+  const totalExchangeAndReturnCnt = exchangeDoneCnt + returnDoneCnt + returnProcessingCnt + exchangeProcessingCnt;
 
   const hasOrder = (statusCount) => {
     return statusCount > 0 ? 'on' : '';
@@ -62,7 +58,7 @@ export default function OrderStatusSummary({
               <div className="ship_box">
                 <span className="ico_txt">배송준비</span>
                 <a className="val_txt">
-                  <span className="val">{deliveryPrepareCnt}</span>
+                  <span className="val">{deliveryPrepareCnt + productPrepareCnt}</span>
                   <span>건</span>
                 </a>
               </div>

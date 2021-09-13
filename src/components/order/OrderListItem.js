@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { postProfileOrderCancelByOrderOptionNo } from '../../api/order';
 import { Link } from 'react-router-dom';
 import RefundAccount from '../../pages/order/RefundAccount';
 
@@ -10,6 +11,7 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderListItem({
   orderNo,
+  orderOptionNo,
   payType,
   orderYmdt,
   imageUrl,
@@ -17,7 +19,7 @@ export default function OrderListItem({
   optionTitle,
   orderCnt,
   orderStatusType,
-  orderStatusTypeLabel,
+  delivery,
 }) {
   const [refundAccountVisible, setRefundAccountVisible] = useState(false);
   const orderStatusMap = {
@@ -42,6 +44,44 @@ export default function OrderListItem({
   };
 
   const onClickRefundAccount = () => setRefundAccountVisible(true);
+
+  const openFindDeliveryPopup = () => {
+    window.open(delivery.retrieveInvoiceUrl);
+  };
+
+  const onClickOrderCancel = (payType) => {
+    //TODO: 컨펌, 얼럿 UI 있는지 확인. 로직 검증을 위해 임시로 윈도우컨펌얼럿으로
+
+    if (!window.confirm('주문 취소 신청 후에는 변경하실 수 없습니다.\n취소 접수를 하시겠습니까?')) {
+      return;
+    }
+
+    const virtualAccountSuccess =
+      '주문 취소 요청이 정상적으로 완료되었습니다.\n주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 쇼요됩니다.\n환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.';
+    const creditCardSuccess =
+      '주문 취소 요청이 정상적으로 완료되었습니다.\n주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 쇼요됩니다.';
+    const successMessage = payType === 'VIRTUAL_ACCOUNT' ? virtualAccountSuccess : creditCardSuccess;
+
+    return postProfileOrderCancelByOrderOptionNo({
+      path: { orderOptionNo },
+      requestBody: {
+        claimType: 'CANCEL',
+        claimReasonType: 'CHANGE_MIND', // TODO: etc로 변경? 확인해야함
+        claimReasonDetail: null,
+        bankAccountInfo: null,
+        saveBankAccountInfo: false,
+        responsibleObjectType: null,
+        productCnt: orderCnt,
+      },
+    })
+      .then(() => {
+        alert(successMessage);
+      })
+      .catch(() => {
+        // FIXME: 않이 외 에러 catch가 않되?
+        alert('취소 실패하였습니다. 다시 시도해주세요.'); // TODO: 실패 메세지 기획 없음
+      });
+  };
 
   return (
     <div className="col_table_row">
@@ -68,12 +108,12 @@ export default function OrderListItem({
       <div className="col_table_cell order">
         <span className="order_status">{orderStatusMap[orderStatusType]}</span>
         {showOrderCancel(orderStatusType) && (
-          <button type="button" className="button button_negative button-s">
+          <button type="button" className="button button_negative button-s" onClick={onClickOrderCancel}>
             주문취소
           </button>
         )}
         {showDeliveryFind(orderStatusType) && (
-          <button type="button" className="button button_negative button-s">
+          <button type="button" className="button button_negative button-s" onClick={openFindDeliveryPopup}>
             배송조회
           </button>
         )}
