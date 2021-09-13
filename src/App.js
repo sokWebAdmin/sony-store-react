@@ -93,6 +93,7 @@ import { initCategory, useCategoryDispatch } from './context/category.context';
 import Only from './pages/event/Only';
 import PreOrder from './pages/event/PreOrder';
 import BenefitZone from './pages/event/BenefitZone';
+import Expired from './pages/event/Expired';
 
 const App = (props) => {
   const dispatch = useMallDispatch();
@@ -216,6 +217,7 @@ const App = (props) => {
               {/* 이벤트  */}
               <Route exact path="/event/list" component={eventList} />
               <Route exact path="/event/only" component={Only} />
+              <Route exact path="/event/expired" component={Expired} />
               <Route exact path="/event/benefit-zone" component={BenefitZone} />
               <Route exact path="/event/pre-order" component={PreOrder} />
               {/*<Route exact path="/event/asc" component={asc} />*/}
