@@ -12,7 +12,7 @@ import { onKeyboardEventOnlyDigit } from '../../utils/listener';
 import { handleChange, setObjectState } from '../../utils/state';
 
 // 배송지 정보
-const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
+const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo }) => {
   const { accumulationConfig } = useMallState();
 
   // subPayAmt: number , coupons: nested object
@@ -77,7 +77,8 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo }) => {
                 </button>
                 {
                   useCouponVisible &&
-                  <UseCoupon setVisible={setUseCouponVisible} />
+                  <UseCoupon orderSheetNo={orderSheetNo}
+                             setVisible={setUseCouponVisible} />
                 }
               </div>
             </div>

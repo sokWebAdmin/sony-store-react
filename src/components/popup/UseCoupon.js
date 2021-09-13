@@ -1,8 +1,26 @@
+import { useState, useEffect } from 'react';
+
+// components
 import LayerPopup from '../common/LayerPopup';
 import SelectBox from '../common/SelectBox';
 
-const UseCoupon = ({ setVisible }) => {
+// api
+import { getOrderSheetCoupon } from '../../api/order.js';
+
+const UseCoupon = ({ setVisible, orderSheetNo }) => {
   const close = () => setVisible(false);
+
+  const [coupons, setCoupons] = useState(null);
+
+  const created = () => fetchCoupons();
+
+  const fetchCoupons = async () => {
+    const { data } = await getOrderSheetCoupon({ orderSheetNo });
+    setCoupons(data);
+    console.log(coupons);
+  };
+
+  useEffect(created, []);
 
   return (
     <LayerPopup className="find_address" size={'m'} popContClassName={'scrollH'}

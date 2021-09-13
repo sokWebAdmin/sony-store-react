@@ -47,7 +47,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
   }).then((response) => {
     if (method === 'get') {
       if (response.status === 404) {
-        window.location.replace('/404');
+        // window.location.replace('/404');
       } else if (response.status === 500) {
         window.location.replace('/error-server');
       } else {

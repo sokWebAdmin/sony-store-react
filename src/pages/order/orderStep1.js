@@ -1,4 +1,11 @@
-import { React, useEffect, useCallback, useState, useContext } from 'react';
+import {
+  React,
+  useEffect,
+  useCallback,
+  useState,
+  useContext,
+  useMemo,
+} from 'react';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
@@ -53,12 +60,11 @@ const OrderStep1 = ({ location }) => {
     coupons: {},
   });
 
+  const orderSheetNo = useMemo(() => getUrlParam('orderSheetNo'), [location]);
+
   const init = useCallback(() => ({
     async start () {
-      await this.fetchOrderSheet(this.orderSheetNo);
-    },
-    get orderSheetNo () {
-      return getUrlParam('orderSheetNo') ?? -1;
+      await this.fetchOrderSheet(orderSheetNo);
     },
     async fetchOrderSheet (orderSheetNo) {
       const { data: { deliveryGroups, paymentInfo } } = await getOrderSheets(
@@ -131,7 +137,8 @@ const OrderStep1 = ({ location }) => {
                       <Accordion title={'할인 정보'} defaultVisible={true}>
                         <DiscountForm discount={discount}
                                       setDiscount={setDiscount}
-                                      paymentInfo={paymentInfo} />
+                                      paymentInfo={paymentInfo}
+                                      orderSheetNo={orderSheetNo} />
                       </Accordion>}
 
                       <div className="acc_item on">
@@ -399,6 +406,6 @@ const OrderStep1 = ({ location }) => {
       </div>
     </>
   );
-}
+};
 
 export default OrderStep1;
