@@ -12,7 +12,7 @@ export const loadBanner = (bannerCode)=> {
 
 // event
 export const getDisplayEvents = (keyword = '') => {
-  const query = keyword.length > 0 ? `keyword=${keyword}` : null;
+  const query = keyword.length > 0 ? {keyword} : null;
   return request("display/events", "get", query, {});
 };
 /*
