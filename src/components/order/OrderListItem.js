@@ -17,6 +17,7 @@ export default function OrderListItem({
   orderCnt,
   orderStatusType,
   orderStatusTypeLabel,
+  setRefundAccountVisible,
 }) {
   const showOrderCancel = (orderStatusType) => {
     return ['DEPOSIT_WAIT', 'PAY_DONE', 'DELIVERY_PREPARE', 'DELIVERY_ING'].includes(orderStatusType);
@@ -29,6 +30,8 @@ export default function OrderListItem({
   const showRefundAccountInfo = (orderStatusType, payType) => {
     return payType === 'VIRTUAL_ACCOUNT';
   };
+
+  const onClickRefundAccount = () => setRefundAccountVisible(true);
 
   return (
     <div className="col_table_row">
@@ -65,7 +68,7 @@ export default function OrderListItem({
           </button>
         )}
         {showRefundAccountInfo(orderStatusType, payType) && (
-          <button type="button" className="button button_negative button-s">
+          <button type="button" className="button button_negative button-s" onClick={onClickRefundAccount}>
             환불계좌정보
           </button>
         )}
