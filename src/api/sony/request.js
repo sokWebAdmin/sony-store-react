@@ -25,7 +25,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
     if (response.errorCode === '9995' || response.errorCode === '9997' || response.errorCode === '9998' || response.errorCode === '9999') {
       window.location.replace('/error-server');
     } else {
-      return response;
+      return response.data;
     }
   });
 };
