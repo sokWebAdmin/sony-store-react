@@ -1,5 +1,4 @@
 import {
-  React,
   useEffect,
   useCallback,
   useState,
@@ -130,7 +129,7 @@ const OrderStep1 = ({ location }) => {
     });
 
     setPayment({
-      pgType: 'KCP',
+      pgType: 'INICIS',
       payType: 'VIRTUAL_ACCOUNT',
     });
 

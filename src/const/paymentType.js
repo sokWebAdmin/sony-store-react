@@ -1,11 +1,11 @@
 const paymentType = {
   creditCard: {
-    pgType: 'KCP',
+    pgType: 'INICIS',
     payType: 'CREDIT_CARD',
     label: '신용 카드',
   },
   virtualAccount: {
-    pgType: 'KCP',
+    pgType: 'INICIS',
     payType: 'VIRTUAL_ACCOUNT',
     label: '가상 계좌',
   },

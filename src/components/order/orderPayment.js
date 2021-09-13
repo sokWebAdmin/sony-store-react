@@ -1,4 +1,3 @@
-// import paymentModule from '../../module/payment';
 import { isMobile } from 'react-device-detect';
 import { getAccessToken } from '../../utils/token';
 
@@ -8,20 +7,18 @@ const orderPayment = {
   },
   get config () {
     return {
-      clientId: 'MzuMctQTZBXWmdTlujFy3Q==', // TODO
+      clientId: 'MzuMctQTZBXWmdTlujFy3Q==',
       accessToken: getAccessToken(),
       platform: isMobile ? 'MOBILE_WEB' : 'PC',
       confirmUrl: `${window.location.origin}/order/complete`,
     };
   },
-  // init () {
-  //   paymentModule.importScripts();
-  // },
   setConfiguration () {
     this.NCPPay.setConfiguration(this.config);
     console.log('set config : ', this.config);
   },
   post (requestBody) {
+    console.log(requestBody);
     this.NCPPay.reservation(requestBody);
   },
   run (requestBody) {
