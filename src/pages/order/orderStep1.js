@@ -105,10 +105,18 @@ const OrderStep1 = ({ location }) => {
       setPaymentInfo(paymentInfo);
     }
   };
-  useEffect(() => calculate(), [discount]);
+  useEffect(() => {
+    if (!discount.subPayAmt && !discount.coupons.productCoupons.length) {
+      return;
+    }
+    calculate();
+  }, [discount]);
   useEffect(() => {
     const prevZip = prevShippingAddress?.shippingAddress.receiverZipCd;
     const zip = shippingAddress.receiverZipCd;
+    if (!zip) {
+      return;
+    }
 
     if (prevZip !== zip) {
       calculate();
@@ -255,7 +263,6 @@ const OrderStep1 = ({ location }) => {
                                       paymentInfo={paymentInfo}
                                       orderSheetNo={orderSheetNo}
                                       orderProducts={products}
-                                      calculate={calculate}
                         />
                       </Accordion>}
 

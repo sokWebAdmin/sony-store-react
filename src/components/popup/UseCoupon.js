@@ -8,7 +8,7 @@ import SelectBox from '../common/SelectBox';
 import { getOrderSheetCoupon } from '../../api/order.js';
 import { toCurrencyString } from '../../utils/unit.js';
 
-const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDiscount, show, setReject, calculate }) => {
+const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDiscount, show, setReject }) => {
   const close = () => setVisible(false);
 
   const [productCoupons, setProductCoupons] = useState(
