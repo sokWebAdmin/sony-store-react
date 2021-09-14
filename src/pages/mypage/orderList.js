@@ -41,7 +41,8 @@ export default function OrderList() {
     endDate: new Date(),
   });
   const [orderProducts, setOrderProducts] = useState([]);
-  const nextPage = useRef(1);
+  const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(true);
+  const nextPage = useRef(2);
 
   useEffect(() => {
     getProfileOrdersSummaryStatus().then((res) => {
@@ -58,6 +59,9 @@ export default function OrderList() {
   useEffect(() => {
     getProfileOrders({ params: {} }).then((res) => {
       const newOrderProducts = makeOrderProductsList(res.data);
+
+      showLoadMoreBtn(newOrderProducts);
+
       setOrderProducts(newOrderProducts);
     });
   }, []);
@@ -263,6 +267,7 @@ export default function OrderList() {
     const res = await getProfileOrders({ params: { startYmd, endYmd, pageSize, pageNumber, orderRequestTypes } });
     const newOrderProducts = makeOrderProductsList(res.data);
 
+    showLoadMoreBtn(newOrderProducts);
     setOrderProducts(newOrderProducts);
     setSearchPeriod({ startDate, endDate });
     nextPage.current = 2;
@@ -275,16 +280,26 @@ export default function OrderList() {
 
   const loadMore = async (pageNumber, pageSize) => {
     const { startDate, endDate } = searchPeriod;
-    const startYmd = changeDateFormat(startDate, 'YYYY-MM-DD').replaceAll('-', '');
-    const endYmd = changeDateFormat(endDate, 'YYYY-MM-DD').replaceAll('-', '');
+    const startYmd = changeDateFormat(startDate, 'YYYY-MM-DD');
+    const endYmd = changeDateFormat(endDate, 'YYYY-MM-DD');
 
     const res = await getProfileOrders({
       params: { startYmd, endYmd, pageNumber, pageSize },
     });
     const newOrderProducts = makeOrderProductsList(res.data);
 
+    showLoadMoreBtn(newOrderProducts);
     setOrderProducts([...orderProducts, ...newOrderProducts]);
     nextPage.current += 1;
+  };
+
+  const showLoadMoreBtn = (newOrderProducts) => {
+    if (newOrderProducts.length === 0) {
+      setLoadMoreBtnVisible(false);
+      return;
+    }
+
+    setLoadMoreBtnVisible(true);
   };
 
   return (
@@ -337,13 +352,20 @@ export default function OrderList() {
                     </div>
                   )}
                 </div>
-                {orderProducts.length > 0 && (
+                {loadMoreBtnVisible && (
                   <div className="btn_article">
                     <a href="#" className="more_btn" onClick={onClickLoadMore}>
                       더보기
                     </a>
                   </div>
                 )}
+                {/* {orderProducts.length > 0 && (
+                  <div className="btn_article">
+                    <a href="#" className="more_btn" onClick={onClickLoadMore}>
+                      더보기
+                    </a>
+                  </div>
+                )} */}
 
                 {/* 내역 없는 경우 .col_table_body, .btn_article 노출 안되어야 합니다. */}
                 {orderProducts.length === 0 && <div class="no-data">내역이 없습니다</div>}
