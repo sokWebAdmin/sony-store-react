@@ -57,14 +57,27 @@ export default function OrderList() {
   }, []);
 
   useEffect(() => {
-    getProfileOrders({ params: {} }).then((res) => {
-      const newOrderProducts = makeOrderProductsList(res.data);
-
-      showLoadMoreBtn(newOrderProducts);
-
-      setOrderProducts(newOrderProducts);
+    search({
+      startDate: new Date(addMonth(new Date(), -3)),
+      endDate: new Date(),
+      pageNumber: 1,
+      pageSize: 10,
+      orderRequestTypes: '',
     });
   }, []);
+
+  const search = async ({ startDate, endDate, pageNumber = 1, pageSize = 10, orderRequestTypes = '' }) => {
+    const startYmd = changeDateFormat(startDate, 'YYYY-MM-DD');
+    const endYmd = changeDateFormat(endDate, 'YYYY-MM-DD');
+
+    const res = await getProfileOrders({ params: { startYmd, endYmd, pageSize, pageNumber, orderRequestTypes } });
+    const newOrderProducts = makeOrderProductsList(res.data);
+
+    showLoadMoreBtn(newOrderProducts);
+    setOrderProducts(newOrderProducts);
+    setSearchPeriod({ startDate, endDate });
+    nextPage.current = 2;
+  };
 
   const makeOrderProductsList = (profileOrdersResponse) => {
     // FIXME: 목데이터 지우기
@@ -260,19 +273,6 @@ export default function OrderList() {
     }));
   };
 
-  const search = async ({ startDate, endDate, pageNumber = 1, pageSize = 10, orderRequestTypes = '' }) => {
-    const startYmd = changeDateFormat(startDate, 'YYYY-MM-DD');
-    const endYmd = changeDateFormat(endDate, 'YYYY-MM-DD');
-
-    const res = await getProfileOrders({ params: { startYmd, endYmd, pageSize, pageNumber, orderRequestTypes } });
-    const newOrderProducts = makeOrderProductsList(res.data);
-
-    showLoadMoreBtn(newOrderProducts);
-    setOrderProducts(newOrderProducts);
-    setSearchPeriod({ startDate, endDate });
-    nextPage.current = 2;
-  };
-
   const onClickLoadMore = (e) => {
     e.preventDefault();
     loadMore(nextPage.current, 10);
@@ -293,6 +293,7 @@ export default function OrderList() {
     nextPage.current += 1;
   };
 
+  // 다음 페이지가 없는 경우 loadmore 버튼 숨김
   const showLoadMoreBtn = (newOrderProducts) => {
     if (newOrderProducts.length === 0) {
       setLoadMoreBtnVisible(false);
