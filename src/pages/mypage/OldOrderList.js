@@ -16,24 +16,24 @@ import '../../assets/scss/mypage.scss';
 
 export default function OldOrderList() {
   //FIXME: 개발후 삭제
-  // const mockData = [
-  //   {
-  //     orderid: '20210727-2V3743',
-  //     createdate: '2021-07-27 17:06:13',
-  //     customernr: '2780336',
-  //     totalprice: 1800,
-  //     status: '01',
-  //     seqno: 'HDR-AZ1/W',
-  //   },
-  //   {
-  //     orderid: '20210720-203G03',
-  //     createdate: '2021-07-20 12:02:46',
-  //     customernr: '2780336',
-  //     totalprice: 1500,
-  //     status: '07',
-  //     seqno: 'A5000L/B',
-  //   },
-  // ];
+  const mockData = [
+    {
+      orderid: '20210727-2V3743',
+      createdate: '2021-07-27 17:06:13',
+      customernr: '2780336',
+      totalprice: 1800,
+      status: '01',
+      seqno: 'HDR-AZ1/W',
+    },
+    {
+      orderid: '20210720-203G03',
+      createdate: '2021-07-20 12:02:46',
+      customernr: '2780336',
+      totalprice: 1500,
+      status: '07',
+      seqno: 'A5000L/B',
+    },
+  ];
 
   const [searchPeriod, setSearchPeriod] = useState({
     startDate: new Date(addMonth(new Date(), -3)),
@@ -47,19 +47,20 @@ export default function OldOrderList() {
     search({
       startDate: new Date(addMonth(new Date(), -3)),
       endDate: new Date(),
-      pageIdx: 1,
-      rowsPerPage: 10,
+      pageNumber: 1,
+      pageSize: 10,
       orderType: null,
     });
   }, []);
 
-  const search = async ({ startDate, endDate, pageIdx, rowsPerPage }) => {
+  const search = async ({ startDate, endDate, pageNumber, pageSize }) => {
     const schStrtDt = changeDateFormat(startDate, 'YYYY-MM-DD').replaceAll('-', '');
     const schEndDt = changeDateFormat(endDate, 'YYYY-MM-DD').replaceAll('-', '');
 
-    const res = await getOldOrders({ requsetBody: { schStrtDt, schEndDt, pageIdx, rowsPerPage, orderType: null } });
+    const res = await getOldOrders({
+      requsetBody: { schStrtDt, schEndDt, pageIdx: pageNumber, rowsPerPage: pageSize, orderType: null },
+    });
 
-    console.log('response:', res);
     setOldOrderProducts(res.data.body);
     setSearchPeriod({ startDate, endDate });
     nextPage.current = 2;
@@ -89,32 +90,32 @@ export default function OldOrderList() {
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
       <div className="contents mypage">
-        <div class="container">
-          <div class="content">
-            <div class="common_head">
-              <Link to="/my-page/order-list" class="common_head_back">
+        <div className="container">
+          <div className="content">
+            <div className="common_head">
+              <Link to="/my-page/order-list" className="common_head_back">
                 주문/배송내역
               </Link>
-              <h1 class="common_head_name">이전 주문/배송내역</h1>
+              <h1 className="common_head_name">이전 주문/배송내역</h1>
             </div>
 
-            <div class="cont recent_order prev_order">
-              <div class="tit_head mileage_inquiry">
-                <h3 class="cont_tit">2021년 9월 이전 주문 내역</h3>
+            <div className="cont recent_order prev_order">
+              <div className="tit_head mileage_inquiry">
+                <h3 className="cont_tit">2021년 9월 이전 주문 내역</h3>
                 <DateBox search={search} />
               </div>
 
-              <div class="col_table_wrap order_list">
-                <div class="col_table">
-                  <div class="col_table_head">
-                    <div class="col_table_row">
-                      <div class="col_table_cell">주문날짜/번호</div>
-                      <div class="col_table_cell">제품</div>
-                      <div class="col_table_cell">처리상태</div>
+              <div className="col_table_wrap order_list">
+                <div className="col_table">
+                  <div className="col_table_head">
+                    <div className="col_table_row">
+                      <div className="col_table_cell">주문날짜/번호</div>
+                      <div className="col_table_cell">제품</div>
+                      <div className="col_table_cell">처리상태</div>
                     </div>
                   </div>
                   {oldOrderProducts.length > 0 && (
-                    <div class="col_table_body">
+                    <div className="col_table_body">
                       {oldOrderProducts.map((oldOrderProduct) => (
                         <OldOrderListItem
                           orderid={oldOrderProduct.orderid}
@@ -127,15 +128,15 @@ export default function OldOrderList() {
                   )}
                 </div>
                 {oldOrderProducts.length > 0 && (
-                  <div class="btn_article">
-                    <a href="#" class="more_btn" onClick={onClickLoadMore}>
+                  <div className="btn_article">
+                    <a href="#" className="more_btn" onClick={onClickLoadMore}>
                       더보기
                     </a>
                   </div>
                 )}
 
                 {/* 내역 없는 경우 .col_table_body, .btn_article 노출 안되어야 합니다.  */}
-                {oldOrderProducts.length === 0 && <div class="no-data">내역이 없습니다</div>}
+                {oldOrderProducts.length === 0 && <div className="no-data">내역이 없습니다</div>}
               </div>
             </div>
           </div>
