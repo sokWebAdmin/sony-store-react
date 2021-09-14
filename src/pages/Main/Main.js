@@ -53,8 +53,10 @@ export default function Main() {
   //6. 아카데미 mo : 005
   const [academyMoBanners, setAcademyMoBanners] = useState([]);
 
-  //6. 추천제품 상품섹션 : 006
+  //6. 추천제품 상품섹션
   const [recommendedSections, setRecommendedSections] = useState([]);
+
+  const [eventSections, setEventSections] = useState([]);
 
 
   const getRecommendedBannerNames = (bannerInfoList) => {
@@ -116,24 +118,33 @@ export default function Main() {
   const getSections = useCallback(async () => {
     // 5742: 추천상품 5833:이벤트
     try {
-      const request = {
+      const params =  {
+        by: 'ADMIN_SETTING',
+        soldout: true,
+        pageNumber: 1,
+        pageSize: 30
+      }
+      const recommendedRequest = {
         pathParams: {
           sectionNo: 5742
         },
-        params: {
-          by: 'ADMIN_SETTING',
-          soldout: true,
-          pageNumber: 1,
-          pageSize: 30
-        }
+        params
       }
-      const {data} = await getDisplaySectionsSectionNo(request)
+      const eventRequest = {
+        pathParams: {
+          sectionNo: 5833
+        },
+        params
+      }
+      const {data} = await getDisplaySectionsSectionNo(recommendedRequest)
       setRecommendedSections(data[0].products)
-      console.log(recommendedSections);
+      const eventResponse = await getDisplaySectionsSectionNo(eventRequest)
+      setEventSections(eventResponse.data[0])
     } catch (e){
       console.error(e)
     }
-  }, []);
+  }, [setEventSections, setRecommendedSections]);
+
 
   useEffect(() => {getBanners(); getSections()}, [getBanners, getSections]);
 
@@ -477,10 +488,11 @@ export default function Main() {
                       <div className="event__main__info">
                         <div className="event__copy">
                           <p className="event__copy__head">
-                            <span>디퓨저 사운드 스피커</span>
-                            <span>청음 이벤트</span>
+                            {eventSections?.label?.split('/').map((eventLabel,index) => (
+                              <span key={index}>{eventLabel}</span>
+                            ))}
                           </p>
-                          <p className="event__copy__desc">소니스토어 압구정에서 청음 시 최대 20% 할인!</p>
+                          <p className="event__copy__desc">{eventSections?.sectionExplain}</p>
                         </div>
                       </div>
                       <div className="event__main swiper-container">
@@ -497,6 +509,17 @@ export default function Main() {
                             prevEl: '.swiper-button-prev',
                           }}
                           >
+                          {eventSections?.products?.map((eventSection, index) =>(
+                            <SwiperSlide className="swiper-slide" key={index}>
+                              <Link to={eventSection}><img src={eventSection?.listImageUrls[0]} alt="상품명" /></Link>
+                              <div className="event__main__inner">
+                                <div className="event__product">
+                                  <span className="event__product__name">{eventSection.productNameEn}</span>
+                                  <span className="event__product__price">{eventSection.salePrice}</span>
+                                </div>
+                              </div>
+                            </SwiperSlide>
+                          ))}
                           <SwiperSlide className="swiper-slide">
                             <a  onClick={()=>{history.push('/product-view/1')}}><img src="/images/_tmp/item640x640_01.png" alt="상품명" /></a>
                             <div className="event__main__inner">
