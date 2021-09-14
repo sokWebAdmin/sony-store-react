@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '../../hooks';
 import { toCurrencyString } from '../../utils/unit';
-import OrderProcess from '../../components/order/OrderProcess';
+import OrderProcess from '../../components/myPage/order/OrderProcess';
 import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
 
 //SEO

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { postProfileOrderCancelByOrderOptionNo } from '../../api/order';
+import { postProfileOrderCancelByOrderOptionNo } from '../../../api/order';
 import { Link } from 'react-router-dom';
-import RefundAccount from '../../pages/order/RefundAccount';
+import RefundAccount from '../../../pages/order/RefundAccount';
 
 //api
 
 //css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/mypage.scss';
+import '../../../assets/scss/contents.scss';
+import '../../../assets/scss/mypage.scss';
 
 export default function OrderListItem({
   orderNo,
