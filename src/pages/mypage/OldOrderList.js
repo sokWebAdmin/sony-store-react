@@ -16,40 +16,24 @@ import '../../assets/scss/mypage.scss';
 
 export default function OldOrderList() {
   //FIXME: 개발후 삭제
-  const mockData = [
-    {
-      orderid: '20210727-2V3743',
-      createdate: '2021-07-27 17:06:13',
-      customernr: '2780336',
-      totalprice: 1800,
-      status: '01',
-      seqno: 'HDR-AZ1/W',
-    },
-    {
-      orderid: '20210720-203G03',
-      createdate: '2021-07-20 12:02:46',
-      customernr: '2780336',
-      totalprice: 1500,
-      status: '07',
-      seqno: 'A5000L/B',
-    },
-    {
-      orderid: '20210720-203G03',
-      createdate: '2021-07-20 12:02:46',
-      customernr: '2780336',
-      totalprice: 1500,
-      status: '07',
-      seqno: 'A5000L/B',
-    },
-    {
-      orderid: '20210720-203G03',
-      createdate: '2021-07-20 12:02:46',
-      customernr: '2780336',
-      totalprice: 1500,
-      status: '07',
-      seqno: 'A5000L/B',
-    },
-  ];
+  // const mockData = [
+  //   {
+  //     orderid: '20210727-2V3743',
+  //     createdate: '2021-07-27 17:06:13',
+  //     customernr: '2780336',
+  //     totalprice: 1800,
+  //     status: '01',
+  //     seqno: 'HDR-AZ1/W',
+  //   },
+  //   {
+  //     orderid: '20210720-203G03',
+  //     createdate: '2021-07-20 12:02:46',
+  //     customernr: '2780336',
+  //     totalprice: 1500,
+  //     status: '07',
+  //     seqno: 'A5000L/B',
+  //   },
+  // ];
 
   const [searchPeriod, setSearchPeriod] = useState({
     startDate: new Date(addMonth(new Date(), -3)),
@@ -78,7 +62,12 @@ export default function OldOrderList() {
     console.log('response:', res);
     setOldOrderProducts(res.data.body);
     setSearchPeriod({ startDate, endDate });
-    nextPage.current += 1;
+    nextPage.current = 2;
+  };
+
+  const onClickLoadMore = (e) => {
+    e.preventDefault();
+    loadMore(nextPage.current, 10);
   };
 
   const loadMore = async (pageIdx, rowsPerPage) => {
@@ -139,7 +128,7 @@ export default function OldOrderList() {
                 </div>
                 {oldOrderProducts.length > 0 && (
                   <div class="btn_article">
-                    <a href="#" class="more_btn" onClick={() => loadMore(nextPage.current, 10)}>
+                    <a href="#" class="more_btn" onClick={onClickLoadMore}>
                       더보기
                     </a>
                   </div>
