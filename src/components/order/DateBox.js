@@ -29,7 +29,7 @@ export default function DateBox({ search }) {
 
   const onClickSearch = () => {
     const { startDate, endDate } = period;
-    search({ startDate, endDate, pageIdx: 1, rowsPerPage: 10 });
+    search({ startDate, endDate, pageNumber: 1, pageSize: 10 });
   };
 
   return (

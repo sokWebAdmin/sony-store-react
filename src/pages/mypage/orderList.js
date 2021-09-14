@@ -51,7 +51,8 @@ export default function OrderList() {
 
   useEffect(() => {
     getProfileOrders({ params: {} }).then((res) => {
-      makeOrderProductsList(res.data);
+      const newOrderProducts = makeOrderProductsList(res.data);
+      setOrderProducts(newOrderProducts);
     });
   }, []);
 
@@ -236,8 +237,9 @@ export default function OrderList() {
     // 목데이터 end
 
     const newOrderProducts = profileOrdersResponse.items.flatMap((item) => makeOrderProduct(item));
+    return newOrderProducts;
 
-    setOrderProducts([...orderProducts, ...newOrderProducts]);
+    // setOrderProducts([...orderProducts, ...newOrderProducts]);
   };
 
   const makeOrderProduct = (orderItem) => {
@@ -250,7 +252,12 @@ export default function OrderList() {
     }));
   };
 
-  const search = () => {};
+  const search = async ({ startYmd, endYmd, pageNumber = 1, pageSize = 10, orderRequestTypes = null }) => {
+    const res = await getProfileOrders({ params: { startYmd, endYmd, pageSize, pageNumber, orderRequestTypes } });
+    const newOrderProducts = makeOrderProductsList(res.data);
+
+    setOrderProducts([...orderProducts, ...newOrderProducts]);
+  };
 
   return (
     <>
@@ -304,7 +311,9 @@ export default function OrderList() {
                 </div>
                 {orderProducts.length > 0 && (
                   <div className="btn_article">
-                    <a className="more_btn">더보기</a>
+                    <a href="#" className="more_btn">
+                      더보기
+                    </a>
                   </div>
                 )}
 

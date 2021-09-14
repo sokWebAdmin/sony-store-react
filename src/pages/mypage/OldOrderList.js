@@ -47,17 +47,19 @@ export default function OldOrderList() {
     search({
       startDate: new Date(addMonth(new Date(), -3)),
       endDate: new Date(),
-      pageIdx: 1,
-      rowsPerPage: 10,
+      pageNumber: 1,
+      pageSize: 10,
       orderType: null,
     });
   }, []);
 
-  const search = async ({ startDate, endDate, pageIdx, rowsPerPage }) => {
+  const search = async ({ startDate, endDate, pageNumber, pageSize }) => {
     const schStrtDt = changeDateFormat(startDate, 'YYYY-MM-DD').replaceAll('-', '');
     const schEndDt = changeDateFormat(endDate, 'YYYY-MM-DD').replaceAll('-', '');
 
-    const res = await getOldOrders({ requsetBody: { schStrtDt, schEndDt, pageIdx, rowsPerPage, orderType: null } });
+    const res = await getOldOrders({
+      requsetBody: { schStrtDt, schEndDt, pageIdx: pageNumber, rowsPerPage: pageSize, orderType: null },
+    });
 
     console.log('response:', res);
     setOldOrderProducts(res.data.body);
