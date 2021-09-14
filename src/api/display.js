@@ -1,13 +1,13 @@
 import request from "./request";
 
 // category
-export const getCategoryList = (categoryNo, orderBy)=> {
+export const getCategoryList = (categoryNo, orderBy) => {
   return request("categories", "get", null, {});
 };
 
 // banner
-export const loadBanner = (bannerCode)=> {
-  return request("display/banners/"+bannerCode, "get", null, {});
+export const loadBanner = (bannerCode) => {
+  return request(`display/banners/${bannerCode}`, "get", null, {});
 };
 
 // event

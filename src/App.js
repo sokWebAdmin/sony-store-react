@@ -173,9 +173,6 @@ const App = (props) => {
               {/* 상품목록 */}
               <Route exact path="/products/*" component={Category} />
 
-              {/* 세부분류 상품목록 */}
-              {/*<Route exact path="/products/:type/:detail_type" component={DetailList} />*/}
-
               {/* 추천상품 */}
               <Route exact path="/recommend" component={Recommend} />
 

@@ -8,7 +8,7 @@ const initialState = {
   gnbCategories: []
 };
 
-const getCategoryByKey = (categories, key, value) => {
+export const getCategoryByKey = (categories, key, value) => {
   let arrTarget = [...categories];
 
   while (arrTarget.length > 0) {

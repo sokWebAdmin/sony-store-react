@@ -22,7 +22,7 @@ import "swiper/swiper.scss"
 
 //utils
 import {useWindowSize} from '../../utils/utils'
-import Product from '../../components/Product';
+import Product from '../../components/products/Product';
 
 export default function SearchResult({match}) {
     const {keyword} = match.params;

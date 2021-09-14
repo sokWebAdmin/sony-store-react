@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 60859,
     url: '/products/camera',
-    bannerSectionCodes: '000',
+    bannerSectionCodes: '008',
     isAvailableMoveESP: true,
     isAvailableMoveProductCompare: true
   });
