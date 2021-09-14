@@ -46,6 +46,7 @@ const OrderStep1 = ({ location }) => {
   const [products, setProducts] = useState([]);
   const [deliveryGroups, setDeliveryGroups] = useState([]);
   const [paymentInfo, setPaymentInfo] = useState(null);
+  const [recentAddresses, setRecentAddresses] = useState([]);
 
   // form refs
   const ordererForm = createRef();
@@ -133,15 +134,17 @@ const OrderStep1 = ({ location }) => {
     },
     guestAgreeCheck () {
       if (!orderAgree) {
-        console.log(location);
-        history.push(`/order/agree?accessOrderSheetNo=${orderSheetNo}`);
+        history.push(
+          `/order/agree?accessOrderSheetNo=${orderSheetNo}`);
       }
     },
     async fetchOrderSheet (orderSheetNo) {
-      const { data: { deliveryGroups, paymentInfo } } = await getOrderSheets(
+      const { data: { ordererContact, deliveryGroups, paymentInfo, orderSheetAddress } } = await getOrderSheets(
         orderSheetNo);
+      setOrderer(ordererContact);
       setPaymentInfo(paymentInfo);
       setDeliveryGroups(deliveryGroups);
+      setRecentAddresses(orderSheetAddress.recentAddresses);
     },
   }), []);
 
@@ -253,7 +256,9 @@ const OrderStep1 = ({ location }) => {
                         <ShippingAddressForm ref={shippingAddressForm}
                                              shipping={shippingAddress}
                                              orderer={orderer}
-                                             setShipping={setShippingAddress} />
+                                             setShipping={setShippingAddress}
+                                             recentAddresses={recentAddresses}
+                        />
                       </Accordion>
 
                       {isLogin &&

@@ -13,6 +13,7 @@ import DatePicker from '../../components/common/DatePicker';
 
 import SelectBox from '../../components/common/SelectBox';
 import FindAddress from '../../components/popup/FindAddress';
+import PickRecentAddresses from '../../components/popup/PickRecentAddresses';
 
 // utils
 import { handleChange, setObjectState } from '../../utils/state';
@@ -37,6 +38,8 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
 
   // popup state
   const [findAddressVisible, setFindAddressVisible] = useState(false);
+  const [pickRecentAddressesVisible, setPickRecentAddressesVisible] = useState(
+    false);
 
   // components state
   const [specifyDelivery, setSpecifyDelivery] = useState(false); // bool
@@ -49,7 +52,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
-  const { shipping, setShipping, orderer } = prop;
+  const { shipping, setShipping, orderer, recentAddresses } = prop;
 
   const receiverName = useRef();
   const receiverContact1 = useRef();
@@ -141,8 +144,12 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
                 <button
                   className="button button_negative button-s popup_comm_btn"
                   type="button"
-                  data-popup-name="shipping_addr">최근 배송지
+                  data-popup-name="shipping_addr"
+                  onClick={() => setPickRecentAddressesVisible(true)}
+                >최근 배송지
                 </button>
+                {pickRecentAddressesVisible &&
+                <PickRecentAddresses recentAddresses={recentAddresses} />}
               </div>
             </div>
           </div>
