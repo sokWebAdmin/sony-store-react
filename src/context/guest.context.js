@@ -42,7 +42,6 @@ export function GuestProvider({ children }) {
 
 export function useGuestDispatch() {
   const context = useContext(GuestDispatchContext);
-  console.log(context);
   if (!context) {
     throw new Error('INVALID_GuestDispatchContext');
   }
@@ -57,10 +56,6 @@ export function useGuestState() {
   return context;
 }
 
-export function setOrderAgree(dispatch, data) {
-  dispatch({ type: 'SET_ORDER_AGREE', data: {orderAgree: data} });
-}
-
-export function getOrderAgree(dispatch) {
-  dispatch({type: 'GET_ORDER_AGREE'})
+export function setOrderAgree (dispatch, boolean) {
+  dispatch({ type: 'SET_ORDER_AGREE', data: { orderAgree: boolean } });
 }

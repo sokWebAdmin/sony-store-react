@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
 //context
@@ -18,11 +18,15 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 import GlobalContext from '../../context/global.context';
 import Alert from '../../components/common/Alert';
+import { getUrlParam } from '../../utils/location.js';
 
-export default function OrderAgree () {
+export default function OrderAgree ({ location }) {
   const { isLogin } = useContext(GlobalContext);
   const history = useHistory();
   const guestDispatch = useGuestDispatch();
+
+  const accessOrderSheetNo = useMemo(() => getUrlParam('accessOrderSheetNo'),
+    [location]);
 
   const [viewTerms, setViewTerms] = useState(false);
   const [viewPrivacy, setViewPrivacy] = useState(false);
@@ -62,13 +66,8 @@ export default function OrderAgree () {
     }
 
     setOrderAgree(guestDispatch, true);
-
-    /**
-     * 시나리오
-     *
-     * 여기서 guest.orderAgree context true 로 주고 주문서 페이지로 gogo
-     * 주문서 페이지는 guest.orderAgree check 후 false 면 다시 여길로 보냄 (안전빵)
-     */
+    accessOrderSheetNo ? history.push(
+      `/order/step/1?orderSheetNo=${accessOrderSheetNo}`) : history.push('/');
 
   };
 

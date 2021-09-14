@@ -115,14 +115,9 @@ const OrderStep1 = ({ location }) => {
       await this.fetchOrderSheet(orderSheetNo);
     },
     guestAgreeCheck () {
-      /**
-       * 시나리오
-       *
-       * 여기서 guest.orderAgree context 체크 하고 false 면 쿼리 심어주고 동의 페이지로 gogo
-       */
-      if (orderAgree) { // guest.orderAgree context
+      if (!orderAgree) {
         console.log(location);
-        history.push(`/order/agree?${qs.stringify(orderSheetNo)}`);
+        history.push(`/order/agree?accessOrderSheetNo=${orderSheetNo}`);
       }
     },
     async fetchOrderSheet (orderSheetNo) {
