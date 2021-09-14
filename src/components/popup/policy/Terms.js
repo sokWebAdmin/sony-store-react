@@ -1,6 +1,6 @@
-export default function Terms () {
+export default function Terms ({ toggle }) {
   return (
-    <div className="layer agree_layer modal1">
+    <div className="layer agree_layer modal1" style={{ display: 'block' }}>
       <div className="layer_wrap">
         <div className="layer_container">
           <div className="layer_title">
@@ -761,7 +761,7 @@ export default function Terms () {
             </div>
           </div>
           <button className="layer_close close" title="팝업창 닫기"
-                  onClick={() => closeAgreeLayer()}>
+                  onClick={() => toggle(false)}>
             <span>팝업창 닫기</span>
           </button>
         </div>
