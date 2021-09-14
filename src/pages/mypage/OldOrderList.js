@@ -65,6 +65,11 @@ export default function OldOrderList() {
     nextPage.current = 2;
   };
 
+  const onClickLoadMore = (e) => {
+    e.preventDefault();
+    loadMore(nextPage.current, 10);
+  };
+
   const loadMore = async (pageIdx, rowsPerPage) => {
     const { startDate, endDate } = searchPeriod;
     console.log('searchPeriod:', searchPeriod);
@@ -123,14 +128,7 @@ export default function OldOrderList() {
                 </div>
                 {oldOrderProducts.length > 0 && (
                   <div class="btn_article">
-                    <a
-                      href="#"
-                      class="more_btn"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        loadMore(nextPage.current, 10);
-                      }}
-                    >
+                    <a href="#" class="more_btn" onClick={onClickLoadMore}>
                       더보기
                     </a>
                   </div>

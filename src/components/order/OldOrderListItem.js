@@ -36,25 +36,25 @@ export default function OrderListItem({
     return labels[status];
   };
   return (
-    <div class="col_table_row">
-      <div class="col_table_cell order">
-        <span class="order_date">{createdate}</span>
-        <a href="#" class="order_number">
+    <div className="col_table_row">
+      <div className="col_table_cell order">
+        <span className="order_date">{createdate}</span>
+        <a href="#" className="order_number">
           {orderid}
         </a>
       </div>
-      <div class="col_table_cell prd_wrap">
-        <div class="prd">
-          <div class="prd_info">
-            <div class="prd_info_name">{seqno}</div>
+      <div className="col_table_cell prd_wrap">
+        <div className="prd">
+          <div className="prd_info">
+            <div className="prd_info_name">{seqno}</div>
 
-            {/* <div class="prd_info_name">AK-47 Hi-Res 헤드폰 앰프</div>
-            <p class="prd_info_option">128Bit/피아노블랙</p> */}
+            {/* <div className="prd_info_name">AK-47 Hi-Res 헤드폰 앰프</div>
+            <p className="prd_info_option">128Bit/피아노블랙</p> */}
           </div>
         </div>
       </div>
-      <div class="col_table_cell order">
-        <span class="order_status">{statusLabel(status)}</span>
+      <div className="col_table_cell order">
+        <span className="order_status">{statusLabel(status)}</span>
       </div>
     </div>
   );
