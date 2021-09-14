@@ -373,7 +373,7 @@ export default function Main() {
                             className="recommend__item__copy"
                             dangerouslySetInnerHTML={{ __html: recommendedBanner.banners[0].nameList }}
                           />
-                          <div className="recommend__item__pic" style={{ minHeight: '467px', textAlign: 'center' }}>
+                          <div className="recommend__item__pic" style={{ minHeight: '384px', textAlign: 'center' }}>
                             <img
                               src={recommendedSections[index]?.listImageUrls[0]}
                               alt={`"${recommendedBanner?.banners[0]?.name}"`}
@@ -386,7 +386,7 @@ export default function Main() {
                     ))}
                   </Swiper>
                 )}
-                <div className="swiper-scrollbar rec-scrollbar" style={{ position: 'absolute' }}></div>
+                <div className="swiper-scrollbar rec-scrollbar"></div>
               </div>
             </div>
             {/* <!-- // recommended --> */}
