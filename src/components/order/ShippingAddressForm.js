@@ -46,6 +46,8 @@ const ShippingAddressForm = prop => {
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
   const { shipping, setShipping, orderer } = prop;
 
+  useEffect(() => setSameAsOrderer(false), [orderer]);
+
   const bindReceiverAddress = selectedAddress => {
     if (!selectedAddress) {
       return;
@@ -64,7 +66,13 @@ const ShippingAddressForm = prop => {
 
   const deliveryMemoFixedList = deliveryMemos;
 
-  const handleShippingChange = event => handleChange(event)(setShipping);
+  const handleShippingChange = event => {
+    const { name } = event.target;
+    const noSame = ['receiverName', 'receiverContact1'].some(v => v === name);
+    noSame && setSameAsOrderer(false);
+
+    handleChange(event)(setShipping);
+  };
 
   const handleShippingChangeParameter = (key, value) => setObjectState(key,
     value)(setShipping);
@@ -72,11 +80,8 @@ const ShippingAddressForm = prop => {
   const [sameAsOrderer, setSameAsOrderer] = useState(false);
 
   useEffect(() => {
-    sameAsOrderer
-      ? Object.entries(ordererMap).
-        forEach(([key, value]) => handleShippingChangeParameter(key, value))
-      : Object.keys(ordererMap).
-        forEach(key => handleShippingChangeParameter(key, ''));
+    sameAsOrderer && Object.entries(ordererMap).
+      forEach(([key, value]) => handleShippingChangeParameter(key, value));
   }, [sameAsOrderer]);
 
   return (
