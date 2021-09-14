@@ -97,16 +97,21 @@ export default function Main() {
       //배너 코드 객체로 관리하기
       //응답이 순서를 보징하지 않음
       const {data} = await loadBanner('000,001,002,003,004,005')
-      setSlideMoBanners(data.find(({code}) => code === '001')?.accounts)
-      setEventBanners(data.find(({code}) => code === '003'))
-      setAcademyPcBanners(data.find(({code}) => code === '004'))
-      setAcademyMoBanners(data.find(({code}) => code === '005'))
+
+      const moBanners = data.find(({code}) => code === '001')?.accounts || []
+      setSlideMoBanners(moBanners)
+      const eventBanners = data.find(({code}) => code === '003') || []
+      setEventBanners(eventBanners)
+      const academyPcBanners = data.find(({code}) => code === '004') || []
+      setAcademyPcBanners(academyPcBanners)
+      const academyMoBanners = data.find(({code}) => code === '005') || []
+      setAcademyMoBanners(academyMoBanners)
 
 
-      const slidePcBanners = data.find(({code}) => code === '000')?.accounts
+      const slidePcBanners = data.find(({code}) => code === '000')?.accounts || []
       getSlideBannerNames(slidePcBanners)
       setSlidePcBanners(slidePcBanners)
-      const recommendedBanners = data.find(({code}) => code === '002')?.accounts
+      const recommendedBanners = data.find(({code}) => code === '002')?.accounts || []
       getRecommendedBannerNames(recommendedBanners)
       setRecommendedBanners(recommendedBanners)
     } catch (e){
@@ -143,7 +148,7 @@ export default function Main() {
     } catch (e){
       console.error(e)
     }
-  }, [setEventSections, setRecommendedSections]);
+  }, []);
 
 
   useEffect(() => {getBanners(); getSections()}, [getBanners, getSections]);
@@ -497,7 +502,7 @@ export default function Main() {
                       </div>
                       <div className="event__main swiper-container">
                         <button type="button" className="swiper-button-prev"></button>
-                        <Swiper className="swiper-wrapper"
+                        {eventSections?.products?.length > 0 && <Swiper className="swiper-wrapper"
                           slidesPerView={1}
                           observer={true}
                           resizeObserver={true}
@@ -520,34 +525,7 @@ export default function Main() {
                               </div>
                             </SwiperSlide>
                           ))}
-                          <SwiperSlide className="swiper-slide">
-                            <a  onClick={()=>{history.push('/product-view/1')}}><img src="/images/_tmp/item640x640_01.png" alt="상품명" /></a>
-                            <div className="event__main__inner">
-                              <div className="event__product">
-                                <span className="event__product__name">SRS-RA3000BMKR2</span>
-                                <span className="event__product__price">399,000</span>
-                              </div>
-                            </div>
-                          </SwiperSlide>
-                          <SwiperSlide className="swiper-slide">
-                            <a  onClick={()=>{history.push('/product-view/1')}}><img src="/images/_tmp/item640x640_02.png" alt="상품명" /></a>
-                            <div className="event__main__inner">
-                              <div className="event__product">
-                                <span className="event__product__name">WWE-RA3000BMKR2</span>
-                                <span className="event__product__price">299,000</span>
-                              </div>
-                            </div>
-                          </SwiperSlide>
-                          <SwiperSlide className="swiper-slide">
-                            <a  onClick={()=>{history.push('/product-view/1')}}><img src="/images/_tmp/item640x640_03.png" alt="상품명" /></a>
-                            <div className="event__main__inner">
-                              <div className="event__product">
-                                <span className="event__product__name">WOW-RA3000BMKR2</span>
-                                <span className="event__product__price">199,000</span>
-                              </div>
-                            </div>
-                          </SwiperSlide>
-                        </Swiper>
+                        </Swiper>}
                         <button type="button" className="swiper-button-next"></button>
                       </div>
                     </div>
