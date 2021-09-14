@@ -72,6 +72,7 @@ const OrderStep1 = ({ location }) => {
     receiverContact1: null,
     receiverContact2: null,
     customsIdNumber: null,
+    requestShippingDate: null,
     deliveryMemo: null, // TODO: not a shipping address member. req에 넣어주셈
   });
   const prevShippingAddress = usePrevious(

@@ -39,15 +39,18 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
   // popup state
   const [findAddressVisible, setFindAddressVisible] = useState(false);
   const [pickRecentAddressesVisible, setPickRecentAddressesVisible] = useState(
-    true);
+    false);
 
   // components state
   const [specifyDelivery, setSpecifyDelivery] = useState(false); // bool
   const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(new Date()); // Date
   // object
 
-  useEffect(() => console.log(getStrYMDHMSS(specifyDeliveryDate)),
-    [specifyDeliveryDate]); // TODO. 이거 API 필드에 껴맞추라
+  useEffect(
+    () => specifyDelivery ? handleShippingChangeParameter('requestShippingDate',
+      getStrYMDHMSS(specifyDeliveryDate)) : handleShippingChangeParameter(
+      'requestShippingDate', null)
+    , [specifyDeliveryDate, specifyDelivery]);
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
@@ -94,8 +97,10 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
     handleChange(event)(setShipping);
   };
 
-  const handleShippingChangeParameter = (key, value) => setObjectState(key,
-    value)(setShipping);
+  function handleShippingChangeParameter (key, value) {
+    setObjectState(key,
+      value)(setShipping);
+  }
 
   const [sameAsOrderer, setSameAsOrderer] = useState(false);
 
