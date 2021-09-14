@@ -360,13 +360,6 @@ export default function OrderList() {
                     </a>
                   </div>
                 )}
-                {/* {orderProducts.length > 0 && (
-                  <div className="btn_article">
-                    <a href="#" className="more_btn" onClick={onClickLoadMore}>
-                      더보기
-                    </a>
-                  </div>
-                )} */}
 
                 {/* 내역 없는 경우 .col_table_body, .btn_article 노출 안되어야 합니다. */}
                 {orderProducts.length === 0 && <div class="no-data">내역이 없습니다</div>}
