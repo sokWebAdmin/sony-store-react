@@ -1,12 +1,16 @@
+import { useContext, useState } from "react";
+import { useHistory } from "react-router";
 import _ from "lodash";
 import qs from 'qs';
-import { postOrderSheets } from "../../../api/order";
-import { useHistory } from "react-router";
-import CountBox from "../../../components/common/CountBox";
-import SelectBox from "../../../components/common/SelectBox";
-import { wonComma } from "../../../utils/utils";
-import { useContext, useState } from "react";
-import GlobalContext from "../../../context/global.context";
+
+import { postOrderSheets } from "../../api/order";
+
+import CountBox from "../common/CountBox";
+import SelectBox from "../common/SelectBox";
+
+import { wonComma } from "../../utils/utils";
+
+import GlobalContext from "../../context/global.context";
 
 // 배송
 function Delivery({

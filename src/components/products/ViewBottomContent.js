@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Tabs from "../../../components/common/Tabs";
+import Tabs from "../common/Tabs";
 
 export default function BottomContent({ contents }) {
 
