@@ -28,8 +28,8 @@ export default function DateBox({ search }) {
   };
 
   const onClickSearch = () => {
-    console.log('period:', period);
-    search();
+    const { startDate, endDate } = period;
+    search({ startDate, endDate, pageIdx: 1, rowsPerPage: 10 });
   };
 
   return (

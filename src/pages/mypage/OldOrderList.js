@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { addMonth, changeDateFormat } from '../../utils/dateFormat';
 import DateBox from '../../components/order/DateBox';
 import OldOrderListItem from '../../components/order/OldOrderListItem';
 
@@ -32,28 +33,70 @@ export default function OldOrderList() {
       status: '07',
       seqno: 'A5000L/B',
     },
+    {
+      orderid: '20210720-203G03',
+      createdate: '2021-07-20 12:02:46',
+      customernr: '2780336',
+      totalprice: 1500,
+      status: '07',
+      seqno: 'A5000L/B',
+    },
+    {
+      orderid: '20210720-203G03',
+      createdate: '2021-07-20 12:02:46',
+      customernr: '2780336',
+      totalprice: 1500,
+      status: '07',
+      seqno: 'A5000L/B',
+    },
   ];
 
-  // const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
-  const [oldOrderProducts, setOldOrderProducts] = useState([]);
+  const [searchPeriod, setSearchPeriod] = useState({
+    startDate: new Date(addMonth(new Date(), -3)),
+    endDate: new Date(),
+  });
+  const nextPage = useRef(1);
+  // const [searchPage, setSearchPage] = useState(1);
+  const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
+  // const [oldOrderProducts, setOldOrderProducts] = useState([]);
 
   useEffect(() => {
-    getOldOrders().then((res) => {
-      console.log('response:', res);
-      setOldOrderProducts(res.data.body);
+    search({
+      startDate: new Date(addMonth(new Date(), -3)),
+      endDate: new Date(),
+      pageIdx: 1,
+      rowsPerPage: 10,
+      orderType: null,
     });
   }, []);
 
-  const search = () => {
-    console.log('검색!');
-    return getOldOrders().then((res) => {
-      console.log('response:', res);
-      setOldOrderProducts(res.data.body);
-    });
+  const search = async ({ startDate, endDate, pageIdx, rowsPerPage }) => {
+    const schStrtDt = changeDateFormat(startDate, 'YYYY-MM-DD').replaceAll('-', '');
+    const schEndDt = changeDateFormat(endDate, 'YYYY-MM-DD').replaceAll('-', '');
+
+    const res = await getOldOrders({ requsetBody: { schStrtDt, schEndDt, pageIdx, rowsPerPage, orderType: null } });
+
+    console.log('response:', res);
+    setOldOrderProducts(res.data.body);
+    setSearchPeriod({ startDate, endDate });
+    nextPage.current += 1;
   };
 
-  //TODO: 스타일 전부 하나씩 scss 파일로 변환 해야하나?>
-  // scss import 구문 주석 처리해도 괜찮던데,
+  const loadMore = async (pageIdx, rowsPerPage) => {
+    const { startDate, endDate } = searchPeriod;
+    console.log('searchPeriod:', searchPeriod);
+    console.log('pageIdx:', pageIdx);
+    const schStrtDt = changeDateFormat(startDate, 'YYYY-MM-DD').replaceAll('-', '');
+    const schEndDt = changeDateFormat(endDate, 'YYYY-MM-DD').replaceAll('-', '');
+
+    const res = await getOldOrders({
+      requsetBody: { schStrtDt, schEndDt, pageIdx, rowsPerPage, orderType: null },
+    });
+    setOldOrderProducts([...oldOrderProducts, ...res.data.body]);
+
+    nextPage.current += 1;
+  };
+
   return (
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
@@ -97,7 +140,7 @@ export default function OldOrderList() {
                 </div>
                 {oldOrderProducts.length > 0 && (
                   <div class="btn_article">
-                    <a href="#" class="more_btn">
+                    <a href="#" class="more_btn" onClick={() => loadMore(nextPage.current, 10)}>
                       더보기
                     </a>
                   </div>

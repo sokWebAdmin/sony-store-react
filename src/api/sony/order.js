@@ -1,9 +1,3 @@
 import request from './request';
 
-export const getOldOrders = () =>
-  request('IF_ORD_0001.do', 'post', null, {
-    // FIXME: 임시데이터
-    schStrtDt: '20210709',
-    schEndDt: '20210731',
-    orderType: 'B2C',
-  });
+export const getOldOrders = ({ requsetBody }) => request('IF_ORD_0001.do', 'post', null, requsetBody);
