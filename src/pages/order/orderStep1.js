@@ -21,6 +21,7 @@ import OrdererForm from '../../components/order/OrdererForm';
 import ShippingAddressForm from '../../components/order/ShippingAddressForm';
 import DiscountForm from '../../components/order/DiscountForm';
 import PaymentForm from '../../components/order/PaymentForm';
+import GuestPasswordForm from '../../components/order/GuestPasswordForm';
 import Calculator from '../../components/order/Calculator';
 
 //api
@@ -158,7 +159,6 @@ const OrderStep1 = ({ location }) => {
   const submit = () => {
     const paymentInfo = getPaymentInfo();
     orderPayment.run(paymentInfo);
-    console.log('submit');
   };
 
   useEffect(() => {
@@ -241,7 +241,11 @@ const OrderStep1 = ({ location }) => {
                           payment={payment}
                           setPayment={setPayment} />
                       </Accordion>
-                      {/* // acc_item */}
+
+                      {!isLogin &&
+                      <Accordion title={'비밀번호 설정'} defaultVisible={true}>
+                        <GuestPasswordForm />
+                      </Accordion>}
                     </div>
                     {/* // acc */}
                   </div>
