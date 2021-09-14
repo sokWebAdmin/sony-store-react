@@ -77,6 +77,8 @@ const OrderStep1 = ({ location }) => {
     },
   });
 
+  const [tempPassword, setTempPassword] = useState(null);
+
   const orderSheetNo = useMemo(() => getUrlParam('orderSheetNo'), [location]);
 
   const [payment, setPayment] = useState({
@@ -244,7 +246,10 @@ const OrderStep1 = ({ location }) => {
 
                       {!isLogin &&
                       <Accordion title={'비밀번호 설정'} defaultVisible={true}>
-                        <GuestPasswordForm />
+                        <GuestPasswordForm
+                          tempPassword={tempPassword}
+                          setTempPassword={setTempPassword}
+                        />
                       </Accordion>}
                     </div>
                     {/* // acc */}
