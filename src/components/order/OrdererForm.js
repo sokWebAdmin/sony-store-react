@@ -20,19 +20,19 @@ const OrdererForm = forwardRef((prop, ref) => {
 
   useImperativeHandle(ref, () => ({
     fieldValidation () {
-      const emptyIndex = Object.values(orderer).findIndex(value => value === '');
-      if (emptyIndex === -1) {
+      const refs = { ordererName, ordererEmail, ordererContact1 };
+
+      const emptyRef = Object.entries(refs).find(([k]) => !orderer[k])?.[1];
+      if (!emptyRef) {
         return true;
       }
 
-      const refs = [ordererName, ordererEmail, ordererContact1];
-      attachError(refs[emptyIndex]);
+      attachError(emptyRef);
       return false;
     },
   }));
 
   function attachError (ref) {
-    console.log('attachError');
     const el = ref.current;
     el.parentNode.classList.add('error');
     el.focus();
@@ -79,7 +79,7 @@ const OrdererForm = forwardRef((prop, ref) => {
                      value={orderer.ordererEmail}
                      name="ordererEmail"
                      onChange={handleOrdererChange}
-                     ref={ordererContact1}
+                     ref={ordererEmail}
               />
               <span className="focus_bg" />
               <p className="error_txt"><span
@@ -102,7 +102,7 @@ const OrdererForm = forwardRef((prop, ref) => {
                      value={orderer.ordererContact1}
                      name="ordererContact1"
                      onChange={handleOrdererChange}
-                     ref={ordererEmail}
+                     ref={ordererContact1}
               />
               <span className="focus_bg" />
               <p className="error_txt"><span
