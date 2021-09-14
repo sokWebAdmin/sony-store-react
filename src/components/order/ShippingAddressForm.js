@@ -13,6 +13,7 @@ import DatePicker from '../../components/common/DatePicker';
 
 import SelectBox from '../../components/common/SelectBox';
 import FindAddress from '../../components/popup/FindAddress';
+import PickRecentAddresses from '../../components/popup/PickRecentAddresses';
 
 // utils
 import { handleChange, setObjectState } from '../../utils/state';
@@ -37,19 +38,24 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
 
   // popup state
   const [findAddressVisible, setFindAddressVisible] = useState(false);
+  const [pickRecentAddressesVisible, setPickRecentAddressesVisible] = useState(
+    false);
 
   // components state
   const [specifyDelivery, setSpecifyDelivery] = useState(false); // bool
   const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(new Date()); // Date
   // object
 
-  useEffect(() => console.log(getStrYMDHMSS(specifyDeliveryDate)),
-    [specifyDeliveryDate]); // TODO. 이거 API 필드에 껴맞추라
+  useEffect(
+    () => specifyDelivery ? handleShippingChangeParameter('requestShippingDate',
+      getStrYMDHMSS(specifyDeliveryDate)) : handleShippingChangeParameter(
+      'requestShippingDate', null)
+    , [specifyDeliveryDate, specifyDelivery]);
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
-  const { shipping, setShipping, orderer } = prop;
+  const { shipping, setShipping, orderer, recentAddresses } = prop;
 
   const receiverName = useRef();
   const receiverContact1 = useRef();
@@ -78,6 +84,10 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
   const deliveryMemoFixedList = deliveryMemos;
 
   const handleShippingChange = event => {
+    if (!event?.target) {
+      return;
+    }
+
     const { name } = event.target;
     const noSame = ['receiverName', 'receiverContact1'].some(v => v === name);
     if (noSame) {
@@ -91,8 +101,10 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
     handleChange(event)(setShipping);
   };
 
-  const handleShippingChangeParameter = (key, value) => setObjectState(key,
-    value)(setShipping);
+  function handleShippingChangeParameter (key, value) {
+    setObjectState(key,
+      value)(setShipping);
+  }
 
   const [sameAsOrderer, setSameAsOrderer] = useState(false);
 
@@ -136,13 +148,23 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
         <div className="acc_cell">
           <div className="acc_group parent">
             <div className="acc_inp type4">
-              <p className="delivery_txt">배송지를 선택하세요.</p>
+              <p className="delivery_txt">{shipping.addressName
+                ? shipping.addressName
+                : '배송지를 선택하세요.'}</p>
               <div className="delivery_btn_box">
                 <button
                   className="button button_negative button-s popup_comm_btn"
                   type="button"
-                  data-popup-name="shipping_addr">최근 배송지
+                  data-popup-name="shipping_addr"
+                  onClick={() => setPickRecentAddressesVisible(true)}
+                >최근 배송지
                 </button>
+                {pickRecentAddressesVisible &&
+                <PickRecentAddresses shipping={shipping}
+                                     setShipping={setShipping}
+                                     recentAddresses={recentAddresses}
+                                     close={() => setPickRecentAddressesVisible(
+                                       false)} />}
               </div>
             </div>
           </div>
@@ -297,11 +319,9 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
                      placeholder="배송 메모를 입력하세요."
                      name="deliveryMemo"
                      value={shipping.deliveryMemo || ''}
-                     onChange={() => {
-                       alert(
-                         'select option 을 orderNo: 1 로 리셋해야하는데.. SelectBox랑 협업필요');
-                       handleShippingChange();
-                     }}
+                     onChange={
+                       handleShippingChange
+                     }
               />
               <span className="focus_bg" />
             </div>
@@ -351,7 +371,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
                   selectableRanges: [
                     [
                       new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
-                      new Date(2999, 12, 31)]],
+                      new Date(2999, 11, 31)]],
                 }}
               />
             </div>

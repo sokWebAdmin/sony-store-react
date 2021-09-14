@@ -46,6 +46,7 @@ const OrderStep1 = ({ location }) => {
   const [products, setProducts] = useState([]);
   const [deliveryGroups, setDeliveryGroups] = useState([]);
   const [paymentInfo, setPaymentInfo] = useState(null);
+  const [recentAddresses, setRecentAddresses] = useState([]);
 
   // form refs
   const ordererForm = createRef();
@@ -71,7 +72,8 @@ const OrderStep1 = ({ location }) => {
     receiverContact1: null,
     receiverContact2: null,
     customsIdNumber: null,
-    deliveryMemo: null, // not a shipping address member
+    requestShippingDate: null,
+    deliveryMemo: null,
   });
   const prevShippingAddress = usePrevious(
     { shippingAddress, setShippingAddress });
@@ -105,10 +107,18 @@ const OrderStep1 = ({ location }) => {
       setPaymentInfo(paymentInfo);
     }
   };
-  useEffect(() => calculate(), [discount]);
+  useEffect(() => {
+    if (!discount.subPayAmt && !discount.coupons.productCoupons.length) {
+      return;
+    }
+    calculate();
+  }, [discount]);
   useEffect(() => {
     const prevZip = prevShippingAddress?.shippingAddress.receiverZipCd;
     const zip = shippingAddress.receiverZipCd;
+    if (!zip) {
+      return;
+    }
 
     if (prevZip !== zip) {
       calculate();
@@ -125,32 +135,41 @@ const OrderStep1 = ({ location }) => {
     },
     guestAgreeCheck () {
       if (!orderAgree) {
-        console.log(location);
-        history.push(`/order/agree?accessOrderSheetNo=${orderSheetNo}`);
+        history.push(
+          `/order/agree?accessOrderSheetNo=${orderSheetNo}`);
       }
     },
     async fetchOrderSheet (orderSheetNo) {
-      const { data: { deliveryGroups, paymentInfo } } = await getOrderSheets(
+      const { data: { ordererContact, deliveryGroups, paymentInfo, orderSheetAddress } } = await getOrderSheets(
         orderSheetNo);
+      setOrderer(ordererContact);
       setPaymentInfo(paymentInfo);
       setDeliveryGroups(deliveryGroups);
+      setRecentAddresses(orderSheetAddress.recentAddresses.slice(0, 5));
     },
   }), []);
 
-  const getPaymentInfo = () => ({
-    orderSheetNo: getUrlParam('orderSheetNo'),
-    orderTitle: truncate(representativeProductName),
-    ...payment, // payType, pgType
-    orderer: { ...orderer },
-    member: isLogin,
-    updateMember: false, // not spec
-    tempPassword,
-    shippingAddress: { ...shippingAddress },
-    paymentAmt: paymentInfo.paymentAmt,
-    accumulationAmt: paymentInfo.accumulationAmt,
-    availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
-    ...discount,
-  });
+  const getPaymentInfo = () => {
+    const result = {
+      orderSheetNo: getUrlParam('orderSheetNo'),
+      orderTitle: truncate(representativeProductName),
+      ...payment, // payType, pgType
+      orderer: { ...orderer },
+      member: isLogin,
+      updateMember: false,
+      tempPassword,
+      shippingAddress: { ...shippingAddress },
+      paymentAmt: paymentInfo.paymentAmt,
+      accumulationAmt: paymentInfo.accumulationAmt,
+      availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
+      ...discount,
+      deliveryMemo: shippingAddress.deliveryMemo,
+    };
+
+    delete result.shippingAddress.deliveryMemo;
+
+    return result;
+  };
 
   const getCalculateInfo = () => ({
     accumulationUseAmt: discount?.subPayAmt || 0,
@@ -245,7 +264,9 @@ const OrderStep1 = ({ location }) => {
                         <ShippingAddressForm ref={shippingAddressForm}
                                              shipping={shippingAddress}
                                              orderer={orderer}
-                                             setShipping={setShippingAddress} />
+                                             setShipping={setShippingAddress}
+                                             recentAddresses={recentAddresses}
+                        />
                       </Accordion>
 
                       {isLogin &&
@@ -255,7 +276,6 @@ const OrderStep1 = ({ location }) => {
                                       paymentInfo={paymentInfo}
                                       orderSheetNo={orderSheetNo}
                                       orderProducts={products}
-                                      calculate={calculate}
                         />
                       </Accordion>}
 

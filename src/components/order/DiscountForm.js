@@ -14,7 +14,7 @@ import { debounce } from 'lodash';
 import useDebounce from '../../hooks';
 
 // 배송지 정보
-const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderProducts, calculate }) => {
+const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderProducts }) => {
   const { accumulationConfig } = useMallState();
 
   // subPayAmt: number , coupons: nested object
@@ -103,7 +103,6 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                                                discount={discount}
                                                setDiscount={setDiscount}
                                                setReject={setNoCoupon}
-                                               calculate={calculate}
                 />}
               </div>
             </div>

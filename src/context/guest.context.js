@@ -1,13 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
-/**
- * spec
- *
- * 1. guest.orderAgree context 체크
- * 2. guest.orderAgree context 셋
- */
 const initialState = {
-  orderAgree: true,
+  orderAgree: false,
 };
 
 function GuestReducer(state, action) {
