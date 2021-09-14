@@ -61,7 +61,7 @@ export default function OrderAgree () {
       return;
     }
 
-    setOrderAgree(guestDispatch);
+    setOrderAgree(guestDispatch, true);
 
     /**
      * 시나리오

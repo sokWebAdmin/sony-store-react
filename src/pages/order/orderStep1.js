@@ -34,10 +34,12 @@ import '../../assets/scss/order.scss';
 import { getUrlParam } from '../../utils/location';
 import { truncate } from '../../utils/unit';
 import qs from 'qs';
+import { useGuestState } from '../../context/guest.context';
 
 const OrderStep1 = ({ location }) => {
   const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
+  const {orderAgree} = useGuestState();
 
   const [products, setProducts] = useState([]);
   const [deliveryGroups, setDeliveryGroups] = useState([]);
@@ -118,8 +120,7 @@ const OrderStep1 = ({ location }) => {
        *
        * 여기서 guest.orderAgree context 체크 하고 false 면 쿼리 심어주고 동의 페이지로 gogo
        */
-
-      if (1 + 1) { // guest.orderAgree context
+      if (orderAgree) { // guest.orderAgree context
         console.log(location);
         history.push(`/order/agree?${qs.stringify(orderSheetNo)}`);
       }

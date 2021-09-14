@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 
 /**
  * spec
@@ -10,12 +10,16 @@ const initialState = {
   orderAgree: false,
 };
 
-function GuestReducer (state, action) {
+function GuestReducer(state, action) {
   switch (action.type) {
     case 'SET_ORDER_AGREE':
       return {
         ...state,
         ...action.data, // type, data
+      };
+    case 'GET_ORDER_AGREE':
+      return {
+        ...state,
       };
     default:
       throw new Error('INVALID_Guest_ACTION_TYPE');
@@ -25,22 +29,18 @@ function GuestReducer (state, action) {
 const GuestStateContext = createContext(null);
 const GuestDispatchContext = createContext(null);
 
-export function GuestProvider ({ children }) {
+export function GuestProvider({ children }) {
   const [state, dispatch] = useReducer(GuestReducer, initialState);
   return (
-    <GuestStateContext.Provider value={dispatch}>
-      <GuestDispatchContext.Provider value={state}>
+    <GuestDispatchContext.Provider value={dispatch}>
+      <GuestStateContext.Provider value={state}>
         {children}
-      </GuestDispatchContext.Provider>
-    </GuestStateContext.Provider>
+      </GuestStateContext.Provider>
+    </GuestDispatchContext.Provider>
   );
 }
 
-export function setOrderAgree (dispatch) {
-  console.log(dispatch);
-}
-
-export function useGuestDispatch () {
+export function useGuestDispatch() {
   const context = useContext(GuestDispatchContext);
   console.log(context);
   if (!context) {
@@ -49,10 +49,18 @@ export function useGuestDispatch () {
   return context;
 }
 
-export function useGuestState () {
+export function useGuestState() {
   const context = useContext(GuestStateContext);
   if (!context) {
     throw new Error('INVALID_GuestStateContext');
   }
-  return context
+  return context;
+}
+
+export function setOrderAgree(dispatch, data) {
+  dispatch({ type: 'SET_ORDER_AGREE', data: {orderAgree: data} });
+}
+
+export function getOrderAgree(dispatch) {
+  dispatch({type: 'GET_ORDER_AGREE'})
 }
