@@ -1,4 +1,11 @@
-import { useEffect, useState, useContext, useRef } from 'react';
+import {
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import GlobalContext from '../../context/global.context';
 
 // components
@@ -26,7 +33,7 @@ const receiverAddressMap = {
 };
 
 // 배송지 정보
-const ShippingAddressForm = prop => {
+const ShippingAddressForm = forwardRef((prop, ref) => {
   const { isLogin } = useContext(GlobalContext);
   const detailAddressInput = useRef();
 
@@ -83,6 +90,12 @@ const ShippingAddressForm = prop => {
     sameAsOrderer && Object.entries(ordererMap).
       forEach(([key, value]) => handleShippingChangeParameter(key, value));
   }, [sameAsOrderer]);
+
+  useImperativeHandle(ref, () => ({
+    fieldValidation () {
+      console.log('booyah');
+    },
+  }));
 
   return (
     <>
@@ -332,6 +345,6 @@ const ShippingAddressForm = prop => {
       </div>
     </>
   );
-};
+});
 
 export default ShippingAddressForm;

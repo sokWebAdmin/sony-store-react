@@ -18,7 +18,6 @@ const OrdererForm = forwardRef((prop, ref) => {
   const ordererContact1 = useRef();
   const ordererEmail = useRef();
 
-  console.log(ref);
   useImperativeHandle(ref, () => ({
     fieldValidation () {
       const emptyIndex = Object.values(orderer).findIndex(value => value === '');

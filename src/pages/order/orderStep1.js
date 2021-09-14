@@ -4,7 +4,6 @@ import {
   useState,
   useContext,
   useMemo,
-  forwardRef,
   createRef,
 } from 'react';
 import GlobalContext from '../../context/global.context';
@@ -50,6 +49,8 @@ const OrderStep1 = ({ location }) => {
 
   // form refs
   const ordererForm = createRef();
+  const shippingAddressForm = createRef();
+
   // form data
   const [orderer, setOrderer] = useState({
     ordererName: '',
@@ -171,9 +172,11 @@ const OrderStep1 = ({ location }) => {
   };
 
   const formValidation = () => {
-    ordererForm.current.fieldValidation();
+    const entries = [
+      ordererForm.current.fieldValidation,
+      shippingAddressForm.current.fieldValidation];
 
-    return false;
+    return entries.every(func => func());
   };
 
   useEffect(() => {
@@ -236,7 +239,8 @@ const OrderStep1 = ({ location }) => {
 
                       <Accordion title={'배송지 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <ShippingAddressForm shipping={shippingAddress}
+                        <ShippingAddressForm ref={shippingAddressForm}
+                                             shipping={shippingAddress}
                                              orderer={orderer}
                                              setShipping={setShippingAddress} />
                       </Accordion>
