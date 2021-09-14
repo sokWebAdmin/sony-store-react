@@ -20,7 +20,7 @@ import PaymentForm from '../../components/order/PaymentForm';
 import Calculator from '../../components/order/Calculator';
 
 //api
-import { getOrderSheets } from '../../api/order';
+import { getOrderSheets, postOrderSheetCalculate } from '../../api/order';
 
 //css
 import '../../assets/scss/contents.scss';
@@ -46,18 +46,18 @@ const OrderStep1 = ({ location }) => {
   });
 
   const [shippingAddress, setShippingAddress] = useState({
-    addressNo: '',
-    countryCd: '',
-    addressName: '',
-    receiverName: '',
-    receiverZipCd: '',
-    receiverAddress: '',
-    receiverDetailAddress: '',
-    receiverJibunAddress: '',
-    receiverContact1: '',
-    receiverContact2: '',
-    customsIdNumber: '',
-    deliveryMemo: '', // not a shipping address member
+    addressNo: null,
+    countryCd: null,
+    addressName: null,
+    receiverName: null,
+    receiverZipCd: null,
+    receiverAddress: null,
+    receiverDetailAddress: null,
+    receiverJibunAddress: null,
+    receiverContact1: null,
+    receiverContact2: null,
+    customsIdNumber: null,
+    deliveryMemo: null, // not a shipping address member
   });
 
   const [discount, setDiscount] = useState({
@@ -73,6 +73,21 @@ const OrderStep1 = ({ location }) => {
     pgType: paymentType.creditCard.pgType,
     payType: paymentType.creditCard.payType,
   });
+
+  const calculate = async () => {
+    const request = {
+      pathVariable: {
+        orderSheetNo,
+      },
+      requestBody: getCalculateInfo(),
+    };
+
+    const { data: { paymentInfo } } = await postOrderSheetCalculate(request);
+    if (paymentInfo) {
+      setPaymentInfo(paymentInfo);
+    }
+  };
+  useEffect(() => calculate(), [discount]);
 
   const init = useCallback(() => ({
     async start () {
@@ -100,7 +115,17 @@ const OrderStep1 = ({ location }) => {
     paymentAmt: paymentInfo.paymentAmt,
     accumulationAmt: paymentInfo.accumulationAmt,
     availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
-    subPayAmt: 0, // TODO. 이건 뭐자?
+    ...discount,
+  });
+
+  const getCalculateInfo = () => ({
+    accumulationUseAmt: discount?.subPayAmt || 0,
+    addressRequest: { ...shippingAddress },
+    couponRequest: {
+      productCoupons: discount?.coupons?.productCoupons?.[0]
+        ? [{ ...discount.coupons.productCoupons[0] }]
+        : null,
+    },
   });
 
   const submit = () => {
@@ -218,6 +243,7 @@ const OrderStep1 = ({ location }) => {
                                       paymentInfo={paymentInfo}
                                       orderSheetNo={orderSheetNo}
                                       orderProducts={products}
+                                      calculate={calculate}
                         />
                       </Accordion>}
 
@@ -236,7 +262,8 @@ const OrderStep1 = ({ location }) => {
                     <div className="acc acc_ui_zone">
                       {/* acc_item */}
                       <Accordion title={'결제 예정 금액'} defaultVisible={true}>
-                        <Calculator submit={submit} />
+                        <Calculator payment={submit}
+                                    paymentInfo={paymentInfo} />
                       </Accordion>
                     </div>
                   </div>
