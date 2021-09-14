@@ -44,7 +44,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
   // object
 
   useEffect(() => console.log(getStrYMDHMSS(specifyDeliveryDate)),
-    [specifyDeliveryDate]);
+    [specifyDeliveryDate]); // TODO. 이거 API 필드에 껴맞추라
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
