@@ -3,9 +3,9 @@ import { addMonth, changeDateFormat } from '../../utils/dateFormat';
 import { Link } from 'react-router-dom';
 import { getProfileOrders, getProfileOrdersSummaryStatus } from '../../api/order';
 
-import OrderStatusSummary from '../../components/order/OrderStatusSummary';
-import DateBox from '../../components/order/DateBox';
-import OrderListItem from '../../components/order/OrderListItem';
+import OrderStatusSummary from '../../components/myPage/order/OrderStatusSummary';
+import DateBox from '../../components/myPage/DateBox';
+import OrderListItem from '../../components/myPage/order/OrderListItem';
 import RefundAccount from '../order/RefundAccount';
 
 //SEO

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 //api
 
 //css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/mypage.scss';
+import '../../../assets/scss/contents.scss';
+import '../../../assets/scss/mypage.scss';
 
 export default function OrderListItem({
   orderid,

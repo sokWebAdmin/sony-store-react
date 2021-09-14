@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { addMonth, changeDateFormat } from '../../utils/dateFormat';
-import DateBox from '../../components/order/DateBox';
-import OldOrderListItem from '../../components/order/OldOrderListItem';
+import DateBox from '../../components/myPage/DateBox';
+import OldOrderListItem from '../../components/myPage/order/OldOrderListItem';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';

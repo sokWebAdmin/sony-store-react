@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 //api
 
 //css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/mypage.scss';
+import '../../../assets/scss/contents.scss';
+import '../../../assets/scss/mypage.scss';
 
 export default function OrderStatusSummary({
   summary: {

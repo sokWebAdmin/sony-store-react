@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { addMonth } from '../../utils/dateFormat';
 
 // components
-import DatePicker from '../../components/common/DatePicker';
+import DatePicker from '../common/DatePicker';
 
 export default function DateBox({ search }) {
   const [selectMenu, setSelectMenu] = useState('threeM');
