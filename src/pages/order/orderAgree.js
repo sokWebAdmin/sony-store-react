@@ -21,11 +21,25 @@ export default function OrderAgree () {
 
   const [viewTerms, setViewTerms] = useState(false);
   const [viewPrivacy, setViewPrivacy] = useState(false);
+  const [allAgree, setAllAgree] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [agreePrivacy, setAgreePrivacy] = useState(false);
 
   useEffect(() => {
     const viewSomeAgree = (viewTerms || viewPrivacy);
     document.body.style.overflow = viewSomeAgree ? 'hidden' : 'none';
   }, [viewTerms, viewPrivacy]);
+
+  useEffect(() => {
+    setAllAgree(agreeTerms && agreePrivacy);
+  }, [agreeTerms, agreePrivacy]);
+
+  const changeAllAgree = () => {
+    setAgreeTerms(!allAgree);
+    setAgreePrivacy(!allAgree);
+
+    setAllAgree(true);
+  };
 
   useEffect(() => {
     if (isLogin) {
@@ -50,7 +64,8 @@ export default function OrderAgree () {
                   동의<span>(선택 항목 포함)</span></strong>
                 <div className="switchbtn">
                   <label className="switch">
-                    <input type="checkbox" name="all" className="check_all" />
+                    <input type="checkbox" name="all" className="check_all"
+                           checked={allAgree} onChange={changeAllAgree} />
                     <span className="toggle" />
                   </label>
                 </div>
@@ -58,7 +73,9 @@ export default function OrderAgree () {
               <div className="bg_check_box">
                 <div className="chk_cell">
                   <div className="check">
-                    <input type="checkbox" className="inp_check" id="chk01" />
+                    <input type="checkbox" className="inp_check" id="chk01"
+                           checked={agreeTerms}
+                           onChange={() => setAgreeTerms(!agreeTerms)} />
                     <label htmlFor="chk01">[필수] 소니스토어 쇼핑몰 이용약관 동의</label>
                   </div>
                   <a href="javascript:void(0)" className="btn_view"
@@ -67,7 +84,9 @@ export default function OrderAgree () {
                 </div>
                 <div className="chk_cell">
                   <div className="check">
-                    <input type="checkbox" className="inp_check" id="chk03" />
+                    <input type="checkbox" className="inp_check" id="chk03"
+                           checked={agreePrivacy}
+                           onChange={() => setAgreePrivacy(!agreePrivacy)} />
                     <label htmlFor="chk03">[필수] 개인정보 수집 및 이용에 대한 안내</label>
                   </div>
                   <a href="javascript:void(0)"
