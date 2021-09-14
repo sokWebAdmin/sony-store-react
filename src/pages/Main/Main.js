@@ -386,7 +386,7 @@ export default function Main() {
                     ))}
                   </Swiper>
                 )}
-                <div className="swiper-scrollbar rec-scrollbar"></div>
+                <div className="swiper-scrollbar rec-scrollbar" style={{ position: 'absolute' }} />
               </div>
             </div>
             {/* <!-- // recommended --> */}
