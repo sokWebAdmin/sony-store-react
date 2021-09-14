@@ -4,6 +4,8 @@ import {
   useState,
   useContext,
   useMemo,
+  forwardRef,
+  createRef,
 } from 'react';
 import GlobalContext from '../../context/global.context';
 import { useHistory } from 'react-router';
@@ -40,12 +42,14 @@ import { useGuestState } from '../../context/guest.context';
 const OrderStep1 = ({ location }) => {
   const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
-  const {orderAgree} = useGuestState();
+  const { orderAgree } = useGuestState();
 
   const [products, setProducts] = useState([]);
   const [deliveryGroups, setDeliveryGroups] = useState([]);
   const [paymentInfo, setPaymentInfo] = useState(null);
 
+  // form refs
+  const ordererForm = createRef();
   // form data
   const [orderer, setOrderer] = useState({
     ordererName: '',
@@ -159,8 +163,17 @@ const OrderStep1 = ({ location }) => {
   });
 
   const submit = () => {
+    if (!fieldValidation()) {
+      return;
+    }
     const paymentInfo = getPaymentInfo();
     orderPayment.run(paymentInfo);
+  };
+
+  const fieldValidation = () => {
+    ordererForm.current.callMe();
+
+    return false;
   };
 
   useEffect(() => {
@@ -216,7 +229,8 @@ const OrderStep1 = ({ location }) => {
                     <div className="acc acc_ui_zone">
                       <Accordion title={'주문자 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <OrdererForm orderer={orderer}
+                        <OrdererForm ref={ordererForm}
+                                     orderer={orderer}
                                      setOrderer={setOrderer} />
                       </Accordion>
 

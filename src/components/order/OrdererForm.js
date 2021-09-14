@@ -1,11 +1,19 @@
-import { handleChange } from '../../utils/state'
+import { useImperativeHandle, forwardRef } from 'react';
+import { handleChange } from '../../utils/state';
 
 // 주문자 정보
-const OrdererForm = prop => {
+const OrdererForm = forwardRef((prop, ref) => {
   // ordererName, ordererContact1, ordererEmail
-  const { orderer, setOrderer } = prop
+  const { orderer, setOrderer } = prop;
 
-  const handleOrdererChange = event => handleChange(event)(setOrderer)
+  const handleOrdererChange = event => handleChange(event)(setOrderer);
+
+  console.log(ref);
+  useImperativeHandle(ref, () => ({
+    callMe () {
+      console.log('booyah');
+    },
+  }));
 
   return (
     <>
@@ -79,6 +87,6 @@ const OrdererForm = prop => {
       </div>
     </>
   );
-};
+});
 
 export default OrdererForm
