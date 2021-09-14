@@ -39,7 +39,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
   // popup state
   const [findAddressVisible, setFindAddressVisible] = useState(false);
   const [pickRecentAddressesVisible, setPickRecentAddressesVisible] = useState(
-    false);
+    true);
 
   // components state
   const [specifyDelivery, setSpecifyDelivery] = useState(false); // bool
