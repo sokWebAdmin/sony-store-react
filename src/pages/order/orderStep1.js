@@ -5,6 +5,10 @@ import {
   useContext,
   useMemo,
 } from 'react';
+import GlobalContext from '../../context/global.context';
+import { useHistory } from 'react-router';
+import { usePrevious } from '../../hooks';
+
 import orderPayment from '../../components/order/orderPayment.js';
 import paymentType from '../../const/paymentType';
 
@@ -28,11 +32,11 @@ import '../../assets/scss/order.scss';
 
 // functions
 import { getUrlParam } from '../../utils/location';
-import GlobalContext from '../../context/global.context';
 import { truncate } from '../../utils/unit';
-import { usePrevious } from '../../hooks';
+import qs from 'qs';
 
 const OrderStep1 = ({ location }) => {
+  const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
 
   const [products, setProducts] = useState([]);
@@ -103,7 +107,22 @@ const OrderStep1 = ({ location }) => {
 
   const init = useCallback(() => ({
     async start () {
+      if (!isLogin) {
+        this.guestAgreeCheck();
+      }
       await this.fetchOrderSheet(orderSheetNo);
+    },
+    guestAgreeCheck () {
+      /**
+       * 시나리오
+       *
+       * 여기서 guest.orderAgree context 체크 하고 false 면 쿼리 심어주고 동의 페이지로 gogo
+       */
+
+      if (1 + 1) { // guest.orderAgree context
+        console.log(location);
+        history.push(`/order/agree?${qs.stringify(orderSheetNo)}`);
+      }
     },
     async fetchOrderSheet (orderSheetNo) {
       const { data: { deliveryGroups, paymentInfo } } = await getOrderSheets(
@@ -175,7 +194,7 @@ const OrderStep1 = ({ location }) => {
   };
 
   useEffect(() => {
-    init().start({});/**/
+    init().start();
   }, [init]);
 
   const representativeProductName = useMemo(
