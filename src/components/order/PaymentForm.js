@@ -35,14 +35,6 @@ const PaymentForm = ({ payment, setPayment }) => {
             <div className="tabResult">
               <div
                 className="result_cont radio_tab1 on">
-                <div className="check">
-                  <input type="checkbox"
-                         className="inp_check"
-                         id="chk01" />
-                  <label htmlFor="chk01">지금 선택한 결제수단을
-                    다음에도
-                    사용</label>
-                </div>
                 <strong className="info_tit">신용카드 무이자 할부
                   유의사항</strong>
                 <ul className="list_dot">

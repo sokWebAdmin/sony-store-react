@@ -1,4 +1,11 @@
-import { useEffect, useState, useContext, useRef } from 'react';
+import {
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import GlobalContext from '../../context/global.context';
 
 // components
@@ -17,7 +24,6 @@ import { deliveryMemos } from '../../const/order';
 // stylesheet
 import '../../assets/scss/interaction/field.dynamic.scss';
 
-
 const receiverAddressMap = {
   // from: to
   address: 'receiverAddress',
@@ -26,9 +32,8 @@ const receiverAddressMap = {
 };
 
 // 배송지 정보
-const ShippingAddressForm = prop => {
+const ShippingAddressForm = forwardRef((prop, ref) => {
   const { isLogin } = useContext(GlobalContext);
-  const detailAddressInput = useRef();
 
   // popup state
   const [findAddressVisible, setFindAddressVisible] = useState(false);
@@ -39,12 +44,19 @@ const ShippingAddressForm = prop => {
   // object
 
   useEffect(() => console.log(getStrYMDHMSS(specifyDeliveryDate)),
-    [specifyDeliveryDate]);
+    [specifyDeliveryDate]); // TODO. 이거 API 필드에 껴맞추라
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,
   // receiverAddress, receiverDetailAddress, receiverJibunAddress,
   // receiverContact1, receiverContact2, customsIdNumber, deliveryMemo
   const { shipping, setShipping, orderer } = prop;
+
+  const receiverName = useRef();
+  const receiverContact1 = useRef();
+  const receiverZipCd = useRef();
+  const receiverDetailAddress = useRef();
+
+  useEffect(() => setSameAsOrderer(false), [orderer]);
 
   const bindReceiverAddress = selectedAddress => {
     if (!selectedAddress) {
@@ -54,7 +66,8 @@ const ShippingAddressForm = prop => {
     Object.entries(receiverAddressMap).
       forEach(
         ([from, to]) => setObjectState(to, selectedAddress[from])(setShipping));
-    detailAddressInput.current.focus();
+
+    receiverDetailAddress.current.focus();
   };
 
   const ordererMap = {
@@ -64,7 +77,19 @@ const ShippingAddressForm = prop => {
 
   const deliveryMemoFixedList = deliveryMemos;
 
-  const handleShippingChange = event => handleChange(event)(setShipping);
+  const handleShippingChange = event => {
+    const { name } = event.target;
+    const noSame = ['receiverName', 'receiverContact1'].some(v => v === name);
+    if (noSame) {
+      setSameAsOrderer(false);
+    }
+
+    if (event.target.value.trim()) {
+      event.target.parentNode.classList.remove(
+        'error');
+    }
+    handleChange(event)(setShipping);
+  };
 
   const handleShippingChangeParameter = (key, value) => setObjectState(key,
     value)(setShipping);
@@ -72,12 +97,34 @@ const ShippingAddressForm = prop => {
   const [sameAsOrderer, setSameAsOrderer] = useState(false);
 
   useEffect(() => {
-    sameAsOrderer
-      ? Object.entries(ordererMap).
-        forEach(([key, value]) => handleShippingChangeParameter(key, value))
-      : Object.keys(ordererMap).
-        forEach(key => handleShippingChangeParameter(key, ''));
+    sameAsOrderer && Object.entries(ordererMap).
+      forEach(([key, value]) => handleShippingChangeParameter(key, value));
   }, [sameAsOrderer]);
+
+  useImperativeHandle(ref, () => ({
+    fieldValidation () {
+      const refs = {
+        receiverName,
+        receiverContact1,
+        receiverZipCd,
+        receiverDetailAddress,
+      };
+
+      const emptyRef = Object.entries(refs).find(([k]) => !shipping[k])?.[1];
+      if (!emptyRef) {
+        return true;
+      }
+
+      attachError(emptyRef);
+      return false;
+    },
+  }));
+
+  function attachError (ref) {
+    const el = ref.current;
+    el.parentNode.classList.add('error');
+    el.focus();
+  }
 
   return (
     <>
@@ -115,13 +162,14 @@ const ShippingAddressForm = prop => {
                      id="user_name2"
                      placeholder="이름을 입력하세요."
                      name="receiverName"
+                     ref={receiverName}
                      value={shipping.receiverName || ''}
                      onChange={handleShippingChange}
               />
               <span className="focus_bg" />
+              <p className="error_txt"><span
+                className="ico" />이름을 입력해 주세요.</p>
             </div>
-            <p className="error_txt"><span
-              className="ico" />이름을 입력해 주세요.</p>
           </div>
           <div className="check email_check">
             <input type="checkbox" className="inp_check"
@@ -145,13 +193,14 @@ const ShippingAddressForm = prop => {
               <input type="text" className="inp"
                      id="user_number2"
                      name="receiverContact1"
+                     ref={receiverContact1}
                      value={shipping.receiverContact1 || ''}
                      onChange={handleShippingChange}
               />
               <span className="focus_bg" />
+              <p className="error_txt"><span
+                className="ico" />휴대폰 번호를 입력해주세요.</p>
             </div>
-            <p className="error_txt"><span
-              className="ico" />휴대폰 번호를 입력해주세요.</p>
           </div>
         </div>
       </div>
@@ -169,6 +218,7 @@ const ShippingAddressForm = prop => {
                      id="user_address"
                      placeholder="주소를 입력하세요."
                      name="receiverZipCd"
+                     ref={receiverZipCd}
                      value={shipping.receiverZipCd || ''}
                      onChange={handleShippingChange}
                      readOnly
@@ -176,7 +226,10 @@ const ShippingAddressForm = prop => {
               <span className="focus_bg" />
               <div className="delivery_btn_box type1">
                 <button
-                  onClick={() => setFindAddressVisible(true)}
+                  onClick={() => {
+                    setFindAddressVisible(true);
+                    receiverZipCd.current.parentNode.classList.remove('error');
+                  }}
                   className="button button_negative button-s"
                   type="button">우편번호 검색
                 </button>
@@ -206,14 +259,14 @@ const ShippingAddressForm = prop => {
               <input type="text" className="inp"
                      placeholder="상세 주소를 입력하세요."
                      name="receiverDetailAddress"
+                     ref={receiverDetailAddress}
                      value={shipping.receiverDetailAddress || ''}
                      onChange={handleShippingChange}
-                     ref={detailAddressInput}
               />
               <span className="focus_bg" />
+              <p className="error_txt"><span
+                className="ico" />상세 주소를 입력해 주세요.</p>
             </div>
-            <p className="error_txt"><span
-              className="ico" />상세 주소를 입력해 주세요.</p>
           </div>
         </div>
       </div>
@@ -327,6 +380,6 @@ const ShippingAddressForm = prop => {
       </div>
     </>
   );
-};
+});
 
 export default ShippingAddressForm;

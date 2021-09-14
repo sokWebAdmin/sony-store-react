@@ -4,6 +4,7 @@ import {
   useState,
   useContext,
   useMemo,
+  createRef,
 } from 'react';
 import GlobalContext from '../../context/global.context';
 import { useHistory } from 'react-router';
@@ -40,11 +41,16 @@ import { useGuestState } from '../../context/guest.context';
 const OrderStep1 = ({ location }) => {
   const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
-  const {orderAgree} = useGuestState();
+  const { orderAgree } = useGuestState();
 
   const [products, setProducts] = useState([]);
   const [deliveryGroups, setDeliveryGroups] = useState([]);
   const [paymentInfo, setPaymentInfo] = useState(null);
+
+  // form refs
+  const ordererForm = createRef();
+  const shippingAddressForm = createRef();
+  const guestPasswordForm = createRef();
 
   // form data
   const [orderer, setOrderer] = useState({
@@ -137,11 +143,9 @@ const OrderStep1 = ({ location }) => {
     ...payment, // payType, pgType
     orderer: { ...orderer },
     member: isLogin,
-    updateMember: isLogin,
-    tempPassword: isLogin ? null : '111111a!', // TODO. 비회원 임시 비번 넣으라
+    updateMember: false, // not spec
+    tempPassword,
     shippingAddress: { ...shippingAddress },
-    saveAddressBook: true, // TODO. 북마크 기능?
-    useDefaultAddress: true, // TODO. 기본 주소?
     paymentAmt: paymentInfo.paymentAmt,
     accumulationAmt: paymentInfo.accumulationAmt,
     availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
@@ -159,8 +163,23 @@ const OrderStep1 = ({ location }) => {
   });
 
   const submit = () => {
+    if (!formValidation()) {
+      return;
+    }
     const paymentInfo = getPaymentInfo();
     orderPayment.run(paymentInfo);
+  };
+
+  const formValidation = () => {
+    const entries = [
+      ordererForm.current.fieldValidation,
+      shippingAddressForm.current.fieldValidation];
+
+    if (!isLogin) {
+      entries.push(guestPasswordForm.current.fieldValidation);
+    }
+
+    return entries.every(func => func());
   };
 
   useEffect(() => {
@@ -216,13 +235,15 @@ const OrderStep1 = ({ location }) => {
                     <div className="acc acc_ui_zone">
                       <Accordion title={'주문자 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <OrdererForm orderer={orderer}
+                        <OrdererForm ref={ordererForm}
+                                     orderer={orderer}
                                      setOrderer={setOrderer} />
                       </Accordion>
 
                       <Accordion title={'배송지 정보'} defaultVisible={true}>
                         <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <ShippingAddressForm shipping={shippingAddress}
+                        <ShippingAddressForm ref={shippingAddressForm}
+                                             shipping={shippingAddress}
                                              orderer={orderer}
                                              setShipping={setShippingAddress} />
                       </Accordion>
@@ -247,6 +268,7 @@ const OrderStep1 = ({ location }) => {
                       {!isLogin &&
                       <Accordion title={'비밀번호 설정'} defaultVisible={true}>
                         <GuestPasswordForm
+                          ref={guestPasswordForm}
                           tempPassword={tempPassword}
                           setTempPassword={setTempPassword}
                         />
