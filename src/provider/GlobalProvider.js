@@ -7,6 +7,7 @@ import { ProfileProvider } from '../context/profile.context';
 import { HeaderProvider } from '../context/header.context';
 import { getAccessToken } from '../utils/token';
 import { CategoryProvider } from '../context/category.context';
+import { GuestProvider } from '../context/guest.context';
 
 const GlobalProvider = ({ children }) => {
   const onChangeGlobal = (values) => {
@@ -29,7 +30,9 @@ const GlobalProvider = ({ children }) => {
         <MallProvider>
           <CategoryProvider>
             <BoardProvider>
-              <HeaderProvider>{children}</HeaderProvider>
+              <GuestProvider>
+                <HeaderProvider>{children}</HeaderProvider>
+              </GuestProvider>
             </BoardProvider>
           </CategoryProvider>
         </MallProvider>

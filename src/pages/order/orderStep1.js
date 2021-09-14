@@ -5,6 +5,10 @@ import {
   useContext,
   useMemo,
 } from 'react';
+import GlobalContext from '../../context/global.context';
+import { useHistory } from 'react-router';
+import { usePrevious } from '../../hooks';
+
 import orderPayment from '../../components/order/orderPayment.js';
 import paymentType from '../../const/paymentType';
 
@@ -17,6 +21,7 @@ import OrdererForm from '../../components/order/OrdererForm';
 import ShippingAddressForm from '../../components/order/ShippingAddressForm';
 import DiscountForm from '../../components/order/DiscountForm';
 import PaymentForm from '../../components/order/PaymentForm';
+import GuestPasswordForm from '../../components/order/GuestPasswordForm';
 import Calculator from '../../components/order/Calculator';
 
 //api
@@ -28,12 +33,14 @@ import '../../assets/scss/order.scss';
 
 // functions
 import { getUrlParam } from '../../utils/location';
-import GlobalContext from '../../context/global.context';
 import { truncate } from '../../utils/unit';
-import { usePrevious } from '../../hooks';
+import qs from 'qs';
+import { useGuestState } from '../../context/guest.context';
 
 const OrderStep1 = ({ location }) => {
+  const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
+  const {orderAgree} = useGuestState();
 
   const [products, setProducts] = useState([]);
   const [deliveryGroups, setDeliveryGroups] = useState([]);
@@ -70,6 +77,8 @@ const OrderStep1 = ({ location }) => {
     },
   });
 
+  const [tempPassword, setTempPassword] = useState(null);
+
   const orderSheetNo = useMemo(() => getUrlParam('orderSheetNo'), [location]);
 
   const [payment, setPayment] = useState({
@@ -103,7 +112,16 @@ const OrderStep1 = ({ location }) => {
 
   const init = useCallback(() => ({
     async start () {
+      if (!isLogin) {
+        this.guestAgreeCheck();
+      }
       await this.fetchOrderSheet(orderSheetNo);
+    },
+    guestAgreeCheck () {
+      if (!orderAgree) {
+        console.log(location);
+        history.push(`/order/agree?accessOrderSheetNo=${orderSheetNo}`);
+      }
     },
     async fetchOrderSheet (orderSheetNo) {
       const { data: { deliveryGroups, paymentInfo } } = await getOrderSheets(
@@ -143,39 +161,10 @@ const OrderStep1 = ({ location }) => {
   const submit = () => {
     const paymentInfo = getPaymentInfo();
     orderPayment.run(paymentInfo);
-    console.log('submit');
-  };
-
-  const testRun = () => { // TODO. 주문서 협업용
-    setOrderer({
-      ordererName: '주문자이름',
-      ordererContact1: '00000000000',
-      ordererEmail: 'orderer@nhn-commerce.com',
-    });
-
-    setShippingAddress({
-      addressName: '주소명',
-      addressNo: 0,
-      countryCd: 'KR',
-      receiverAddress: '전라남도 해남군 송지면 산정길 60',
-      receiverContact1: '01035186502',
-      receiverContact2: '',
-      receiverDetailAddress: '312',
-      receiverJibunAddress: '전라남도 해남군 송지면 산정리 707-3',
-      receiverName: 'receiverName',
-      receiverZipCd: '59063',
-    });
-
-    setPayment({
-      pgType: 'INICIS',
-      payType: 'VIRTUAL_ACCOUNT',
-    });
-
-    alert('완료');
   };
 
   useEffect(() => {
-    init().start({});/**/
+    init().start();
   }, [init]);
 
   const representativeProductName = useMemo(
@@ -222,16 +211,6 @@ const OrderStep1 = ({ location }) => {
                 </div>
                 <div className="order_info">
                   {/* alpha test element */}
-                  {process.env.NODE_ENV === 'development' &&
-                  <button className="button" onClick={testRun} style={{
-                    display: 'block',
-                    width: '100%',
-                    fontWeight: 'bold',
-                    color: 'white',
-                    backgroundColor: '#ea3c36',
-                    margin: '0 0 50px 0',
-                  }}>⛹️ 이거 누르면 필드 자동입력. Case : [ 회원 ]</button>}
-
                   {/* 왼쪽메뉴 */}
                   <div className="order_left">
                     <div className="acc acc_ui_zone">
@@ -264,7 +243,14 @@ const OrderStep1 = ({ location }) => {
                           payment={payment}
                           setPayment={setPayment} />
                       </Accordion>
-                      {/* // acc_item */}
+
+                      {!isLogin &&
+                      <Accordion title={'비밀번호 설정'} defaultVisible={true}>
+                        <GuestPasswordForm
+                          tempPassword={tempPassword}
+                          setTempPassword={setTempPassword}
+                        />
+                      </Accordion>}
                     </div>
                     {/* // acc */}
                   </div>
