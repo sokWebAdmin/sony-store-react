@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 //util
 import { Link, useHistory } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } from 'swiper/core';
 import categoryRight from '../../assets/images/category/btn_category_right.svg';
 
-export default function CategoryHeader({category}) {
+export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
   const history = useHistory();
   
   let backgroundImage = '';
@@ -22,7 +22,15 @@ export default function CategoryHeader({category}) {
     rootParent = category.parent;
   }
 
-  const [subCategory, setSubCategory] = useState(0);
+  const [currentCategoryNo, setCurrentCategoryNo] = useState(category.categoryNo);
+
+  useEffect(() => {
+    setCurrentCategoryNo(category.categoryNo);
+  }, [category]);
+
+  useEffect(() => {
+    changeCurrentCategoryByNo(currentCategoryNo);
+  }, [currentCategoryNo]);
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 
@@ -98,16 +106,16 @@ export default function CategoryHeader({category}) {
             prevEl: '.swiper-button-prev',
           }}
         >
-          <SwiperSlide className={`swiper-slide all ${subCategory === 0 ? "category__header__menu--active" : ""}`}>
+          <SwiperSlide className={`swiper-slide all ${currentCategoryNo === category.categoryNo ? "category__header__menu--active" : ""}`}>
             <a href="#" onClick={e => {
-              setSubCategory(0);
+              setCurrentCategoryNo(category.categoryNo);
               e.preventDefault();
             }}><span>전체보기</span></a>
           </SwiperSlide>
           {category?.children.map(c => {
-            return <SwiperSlide className={`swiper-slide ${subCategory === c.categoryNo ? "category__header__menu--active" : "" }`} key={`sub-category-${c.categoryNo}`}>
+            return <SwiperSlide className={`swiper-slide ${currentCategoryNo === c.categoryNo ? "category__header__menu--active" : "" }`} key={`sub-category-${c.categoryNo}`}>
               <a href="#" onClick={e => {
-                setSubCategory(c.categoryNo);
+                setCurrentCategoryNo(c.categoryNo);
                 e.preventDefault();
               }}><span>{c.label}</span></a>
             </SwiperSlide>
