@@ -72,7 +72,7 @@ const OrderStep1 = ({ location }) => {
     receiverContact1: null,
     receiverContact2: null,
     customsIdNumber: null,
-    deliveryMemo: null, // not a shipping address member
+    deliveryMemo: null, // TODO: not a shipping address member. req에 넣어주셈
   });
   const prevShippingAddress = usePrevious(
     { shippingAddress, setShippingAddress });
@@ -144,7 +144,7 @@ const OrderStep1 = ({ location }) => {
       setOrderer(ordererContact);
       setPaymentInfo(paymentInfo);
       setDeliveryGroups(deliveryGroups);
-      setRecentAddresses(orderSheetAddress.recentAddresses);
+      setRecentAddresses(orderSheetAddress.recentAddresses.slice(0, 5));
     },
   }), []);
 

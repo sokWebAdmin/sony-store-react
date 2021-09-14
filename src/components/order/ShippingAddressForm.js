@@ -139,7 +139,9 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
         <div className="acc_cell">
           <div className="acc_group parent">
             <div className="acc_inp type4">
-              <p className="delivery_txt">배송지를 선택하세요.</p>
+              <p className="delivery_txt">{shipping.addressName
+                ? shipping.addressName
+                : '배송지를 선택하세요.'}</p>
               <div className="delivery_btn_box">
                 <button
                   className="button button_negative button-s popup_comm_btn"
@@ -149,7 +151,11 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
                 >최근 배송지
                 </button>
                 {pickRecentAddressesVisible &&
-                <PickRecentAddresses recentAddresses={recentAddresses} />}
+                <PickRecentAddresses shipping={shipping}
+                                     setShipping={setShipping}
+                                     recentAddresses={recentAddresses}
+                                     close={() => setPickRecentAddressesVisible(
+                                       false)} />}
               </div>
             </div>
           </div>
