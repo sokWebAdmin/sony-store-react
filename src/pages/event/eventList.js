@@ -18,7 +18,9 @@ import EventBottom from '../../components/event/Bottom';
 export default function EventList() {
   return (
     <>
-      <SEOHelmet title='기획전' />
+      <SEOHelmet title='기획전'>
+        <script src="https://developers.kakao.com/sdk/js/kakao.js"/>
+      </SEOHelmet>
       <div className="contents events">
         <div className="container full">
           <div className="content">
