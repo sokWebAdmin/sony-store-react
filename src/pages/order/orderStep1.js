@@ -163,15 +163,15 @@ const OrderStep1 = ({ location }) => {
   });
 
   const submit = () => {
-    if (!fieldValidation()) {
+    if (!formValidation()) {
       return;
     }
     const paymentInfo = getPaymentInfo();
     orderPayment.run(paymentInfo);
   };
 
-  const fieldValidation = () => {
-    ordererForm.current.callMe();
+  const formValidation = () => {
+    ordererForm.current.fieldValidation();
 
     return false;
   };

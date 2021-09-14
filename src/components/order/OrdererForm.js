@@ -1,4 +1,4 @@
-import { useImperativeHandle, forwardRef } from 'react';
+import { useImperativeHandle, forwardRef, useRef } from 'react';
 import { handleChange } from '../../utils/state';
 
 // 주문자 정보
@@ -6,14 +6,38 @@ const OrdererForm = forwardRef((prop, ref) => {
   // ordererName, ordererContact1, ordererEmail
   const { orderer, setOrderer } = prop;
 
-  const handleOrdererChange = event => handleChange(event)(setOrderer);
+  const handleOrdererChange = event => {
+    if (event.target.value.trim()) {
+      event.target.parentNode.classList.remove(
+        'error');
+    }
+    handleChange(event)(setOrderer);
+  };
+
+  const ordererName = useRef();
+  const ordererContact1 = useRef();
+  const ordererEmail = useRef();
 
   console.log(ref);
   useImperativeHandle(ref, () => ({
-    callMe () {
-      console.log('booyah');
+    fieldValidation () {
+      const emptyIndex = Object.values(orderer).findIndex(value => value === '');
+      if (emptyIndex === -1) {
+        return true;
+      }
+
+      const refs = [ordererName, ordererEmail, ordererContact1];
+      attachError(refs[emptyIndex]);
+      return false;
     },
   }));
+
+  function attachError (ref) {
+    console.log('attachError');
+    const el = ref.current;
+    el.parentNode.classList.add('error');
+    el.focus();
+  }
 
   return (
     <>
@@ -32,11 +56,12 @@ const OrdererForm = forwardRef((prop, ref) => {
                      value={orderer.ordererName}
                      name="ordererName"
                      onChange={handleOrdererChange}
+                     ref={ordererName}
               />
               <span className="focus_bg" />
+              <p className="error_txt"><span
+                className="ico" />이름을 입력해 주세요.</p>
             </div>
-            <p className="error_txt"><span
-              className="ico" />이름을 입력해 주세요.</p>
           </div>
         </div>
       </div>
@@ -55,11 +80,12 @@ const OrdererForm = forwardRef((prop, ref) => {
                      value={orderer.ordererEmail}
                      name="ordererEmail"
                      onChange={handleOrdererChange}
+                     ref={ordererContact1}
               />
               <span className="focus_bg" />
+              <p className="error_txt"><span
+                className="ico" />이메일 아이디를 입력해 주세요.</p>
             </div>
-            <p className="error_txt"><span
-              className="ico" />이메일 아이디를 입력해 주세요.</p>
           </div>
         </div>
       </div>
@@ -77,11 +103,12 @@ const OrdererForm = forwardRef((prop, ref) => {
                      value={orderer.ordererContact1}
                      name="ordererContact1"
                      onChange={handleOrdererChange}
+                     ref={ordererEmail}
               />
               <span className="focus_bg" />
+              <p className="error_txt"><span
+                className="ico" />휴대폰 번호를 입력해 주세요.</p>
             </div>
-            <p className="error_txt"><span
-              className="ico" />휴대폰 번호를 입력해 주세요.</p>
           </div>
         </div>
       </div>
