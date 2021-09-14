@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getDisplayEvents, getEventByEventNo } from '../../api/display';
+import { getDisplayEvents } from '../../api/display';
 import { Link, useHistory } from 'react-router-dom';
 import { getUrlParam } from '../../utils/location';
 import moment from 'moment';
+import LayerPopup from '../common/LayerPopup';
+import { useAlert } from '../../hooks';
+import Alert from '../common/Alert';
+import SEOHelmet from '../SEOHelmet';
 
 const tabs = [
   {key: 'all', label: '전체'},
@@ -26,6 +30,15 @@ const EventBottom = () => {
   const [events, setEvents] = useState([]);
   const [tabState, setTabState] = useState(getUrlParam('tab') || 'all');
   const [newest, setNewest] = useState(true);
+  const [showShareLayer, setShowShareLayer] = useState(false);
+  const {
+    openAlert,
+    closeModal,
+    alertVisible,
+    alertMessage,
+  } = useAlert();
+  const [productNo, setProductNo] = useState('');
+  const [label, setLabel] = useState('');
 
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
@@ -62,8 +75,24 @@ const EventBottom = () => {
     history.push(`/event/detail/${eventNo}`)
   };
 
-  const openShareEventLayer = () => {
-    alert('TODO: share event layer')
+  const openShareEventLayer = (eventNo, label) => {
+    setProductNo(eventNo);
+    setLabel(label);
+    setShowShareLayer(true);
+  }
+
+  const copyLink = (link) => {
+    navigator.clipboard.writeText(link).then(() => {
+      openAlert('링크가 복사되었습니다.');
+    });
+  }
+
+  const closeShareLayer = () => {
+    setShowShareLayer(false);
+  }
+
+  const shareFacebook = () => {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${document.location.origin}/event/detail/${productNo}`, '_blank')
   }
 
   useEffect(() => {
@@ -72,10 +101,58 @@ const EventBottom = () => {
 
   useEffect(() => {
     events.length && sortEvents();
-  }, [newest])
+  }, [newest]);
+
+  const shareKakaoButton = () => {
+    if (window.Kakao) {
+      const kakao = window.Kakao
+      if (!kakao.isInitialized()) {
+        kakao.init(process.env.REACT_APP_KAKAO_SHARE_KEY)
+      }
+      kakao.Link.sendDefault({
+        objectType: 'text',
+        text: label,
+        link: {
+          mobileWebUrl: `${document.location.origin}/event/detail/${productNo}`,
+          webUrl: `${document.location.origin}/event/detail/${productNo}`,
+        },
+      })
+    }
+  }
+
+  const shareKakaoStoryButton = () => {
+    if (window.Kakao) {
+      const kakao = window.Kakao
+      if (!kakao.isInitialized()) {
+        kakao.init(process.env.REACT_APP_KAKAO_SHARE_KEY)
+      }
+      kakao.Story.share({
+        text: label,
+        url: `${document.location.origin}/event/detail/${productNo}`,
+      })
+    }
+  }
 
   return (
     <>
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+      {showShareLayer && <LayerPopup className="pop_share" onClose={closeShareLayer}>
+        <p className="pop_tit">공유하기</p>
+        <div className="copy_box">
+          <span className="copy_txt">{document.location.origin}/event/detail/{productNo}</span>
+          <a href="javascript:void(0)" className="copy_url" onClick={() => copyLink(`${document.location.origin}/event/detail/${productNo}`)}>링크 복사</a>
+        </div>
+        <div className="share_list">
+          <ul>
+            <li className="lists"><a href="javascript:void(0)" className="share_btn kakaotalk" onClick={() => shareKakaoButton()}>카카오톡</a></li>
+            <li className="lists"><a href="javascript:void(0)" className="share_btn kakaostory" onClick={() => shareKakaoStoryButton()}>카카오스토리</a></li>
+            <li className="lists"><a href={`https://www.facebook.com/sharer/sharer.php?u=${document.location.origin}/event/detail/${productNo}`} className="share_btn facebook" target="_blank">페이스북</a></li>
+            <li className="lists"><a href={`https://twitter.com/intent/tweet?url=${document.location.origin}/event/detail/${productNo}`} className="share_btn twitter" target="_blank">트위터</a></li>
+            <li className="lists"><a href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(`${document.location.origin}/event/detail/${productNo}`)}`} className="share_btn line" target="_blank">라인</a></li>
+            <li className="lists"><a href={`https://band.us/plugin/share?body=${label}&route=${document.location.origin}/event/detail/${productNo}`} className="share_btn band" target="_blank">밴드</a></li>
+          </ul>
+        </div>
+      </LayerPopup>}
       <div className="event_zone">
         <div className="tab_ui scroll category_evnet">
           <ul>
@@ -112,7 +189,12 @@ const EventBottom = () => {
                 <div className="item_row">
                   {events && events.map(({eventNo, label, pcImageUrl, startYmdt, endYmdt}) => {
                     return (
-                      <div className="event_item" key={eventNo} onClick={() => onClickEventDetail(eventNo)}>
+                      <div className="event_item" key={eventNo} onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        event.nativeEvent.stopImmediatePropagation();
+                        onClickEventDetail(eventNo);
+                      }}>
                         <a href="javascript:" className="item">
                           <div className="img"><img src={pcImageUrl} alt={label} /></div>
                           <div className="event_desc">
@@ -120,14 +202,18 @@ const EventBottom = () => {
                             <p className="event_duration">{formatYmdt(startYmdt)} ~ {formatYmdt(endYmdt)}</p>
                           </div>
                         </a>
-                        <a href="javascript:void(0)" className="event_share popup_comm_btn" onClick={() => openShareEventLayer()}>공유하기</a>
+                        <a href="javascript:void(0)" className="event_share popup_comm_btn" onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          e.nativeEvent.stopImmediatePropagation();
+                          openShareEventLayer(eventNo, label);
+                        }}>공유하기</a>
                       </div>
                     )
                   })}
                 </div>
               </div>
             </div>
-            {/* 등록된 이벤트가 없을 경우 */}
             {events.length === 0 && (<div className="no_data">
               <span className="ico_no_data">등록된 이벤트가 없습니다.</span>
             </div>)}
