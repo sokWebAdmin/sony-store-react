@@ -1336,8 +1336,8 @@ const JoinAgree = () => {
                       <table>
                         <caption>회원가입, 수집하는 개인정보 항목 목록 표</caption>
                         <colgroup>
-                          <col style="width:35%"/>
-                            <col/>
+                          <col style={{width:'35%'}} />
+                          <col/>
                         </colgroup>
                         <thead>
                         <tr>

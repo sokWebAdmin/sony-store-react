@@ -103,7 +103,15 @@ export default function JoinStep() {
       setIsPassword(false);
       return;
     } else {
-      if (password.match(/^[a-zA-Z0-9]{10,15}$/)) {
+      const patternNumber = /[0-9]/g;
+      const patternEnglish = /[a-zA-Z]/g;
+      const patternSpecial = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
+
+      const checkNumber = patternNumber.test(password) ? 1 : 0;
+      const checkEnglish = patternEnglish.test(password) ? 1 : 0;
+      const checkSpecial = patternSpecial.test(password) ? 1 : 0;
+      const checkSum = checkNumber + checkEnglish + checkSpecial;
+      if (checkSum === 3 && password.length >= 12) {
         setIsPassword(true);
       } else {
         setPwWrongType(2);
@@ -274,7 +282,7 @@ export default function JoinStep() {
               <div className={`group ${isEmail === false && 'error'}`}>
                 <div className="inp_box">
                   <label className="inp_desc" htmlFor="loginName">
-                    <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off" tabIndex={1}
+                    <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off"
                            value={email} onChange={(e) => {
                       setEmail(e.target.value);
                     }} />
@@ -289,10 +297,10 @@ export default function JoinStep() {
                   <div className="inp_box password_box">
                     <label className="inp_desc" htmlFor="loginPw1">
                       <input type={`${isPwVisible === true ? 'text' : 'password'}`} id="loginPw1" className="inp"
-                             placeholder=" " autoComplete="off" tabIndex={2} value={password} onChange={(e) => {
+                             placeholder=" " autoComplete="off" value={password} onChange={(e) => {
                         setPassword(e.target.value);
                       }} />
-                      <span className="label">비밀번호<span>(영문/숫자 조합 10~15자리 미만)</span></span>
+                      <span className="label">비밀번호<span>(대/소문자, 숫자, 특수문자 포함 3종 12자리 이상)</span></span>
                       <span className="focus_bg" />
                       <div className="eyes">
                         <button type="button" title="비밀번호 숨김" onClick={() => {
@@ -308,7 +316,7 @@ export default function JoinStep() {
                   <div className="inp_box password_box">
                     <label className="inp_desc" htmlFor="loginPw2">
                       <input type={`${isConfirmVisible === true ? 'text' : 'password'}`} id="loginPw2" className="inp"
-                             placeholder=" " autoComplete="off" tabIndex={3} value={confirm} onChange={(e) => {
+                             placeholder=" " autoComplete="off" value={confirm} onChange={(e) => {
                         setConfirm(e.target.value);
                       }} />
                       <span className="label">비밀번호 확인</span>
@@ -316,7 +324,7 @@ export default function JoinStep() {
                       <div className="eyes">
                         <button type="button" title="비밀번호 숨김" onClick={() => {
                           setConfirmVisible(!isConfirmVisible);
-                        }}><i className={isPwVisible ? 'ico_eyes_open' : 'ico ico_eyes'} /></button>
+                        }}><i className={isConfirmVisible ? 'ico_eyes_open' : 'ico ico_eyes'} /></button>
                       </div>
                     </label>
                   </div>
@@ -328,7 +336,7 @@ export default function JoinStep() {
                 <div className={`group ${isName === false && 'error'}`}>
                   <div className="inp_box">
                     <label className="inp_desc" htmlFor="username">
-                      <input type="text" id="username" className="inp" placeholder=" " autoComplete="off" tabIndex={4}
+                      <input type="text" id="username" className="inp" placeholder=" " autoComplete="off"
                              value={name} onChange={(e) => {
                         setName(e.target.value);
                       }} />
@@ -374,7 +382,7 @@ export default function JoinStep() {
               <div className={`group btn_type ${isPhone === false && 'error'}`}>
                 <div className="inp_box">
                   <label className="inp_desc" htmlFor="phonenumber">
-                    <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off" tabIndex={5}
+                    <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off"
                            value={phone} onChange={(e) => {
                       setPhone(e.target.value);
                     }} readOnly={authSent ? true : false} />
@@ -423,7 +431,7 @@ export default function JoinStep() {
                   <div className="inp_box">
                     <label className="inp_desc" htmlFor="certifynumber">
                       <input type="text" id="certifynumber" className="inp" placeholder=" " autoComplete="off"
-                             tabIndex={6} value={authCode} onChange={(e) => {
+                             value={authCode} onChange={(e) => {
                         setAuthCode(e.target.value);
                       }} readOnly={authCheck ? true : false} />
                       <span className="label">인증번호</span>
