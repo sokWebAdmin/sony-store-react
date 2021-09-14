@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export const useToggle = (initial) => {
@@ -84,3 +84,11 @@ export const useMediaQuery = (query) => {
   });
   return matches;
 };
+
+export function usePrevious (value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}

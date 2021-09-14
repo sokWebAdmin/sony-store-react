@@ -30,6 +30,7 @@ import '../../assets/scss/order.scss';
 import { getUrlParam } from '../../utils/location';
 import GlobalContext from '../../context/global.context';
 import { truncate } from '../../utils/unit';
+import { usePrevious } from '../../hooks';
 
 const OrderStep1 = ({ location }) => {
   const { isLogin } = useContext(GlobalContext);
@@ -59,6 +60,8 @@ const OrderStep1 = ({ location }) => {
     customsIdNumber: null,
     deliveryMemo: null, // not a shipping address member
   });
+  const prevShippingAddress = usePrevious(
+    { shippingAddress, setShippingAddress });
 
   const [discount, setDiscount] = useState({
     subPayAmt: 0,
@@ -88,6 +91,15 @@ const OrderStep1 = ({ location }) => {
     }
   };
   useEffect(() => calculate(), [discount]);
+  useEffect(() => {
+    const prevZip = prevShippingAddress?.shippingAddress.receiverZipCd;
+    const zip = shippingAddress.receiverZipCd;
+
+    if (prevZip !== zip) {
+      calculate();
+    }
+
+  }, [shippingAddress]);
 
   const init = useCallback(() => ({
     async start () {
