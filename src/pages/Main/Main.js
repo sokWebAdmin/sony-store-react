@@ -48,10 +48,10 @@ export default function Main() {
   const [eventBanners, setEventBanners] = useState([]);
 
   //5. 아카데미 pc : 004
-  const [academyPcBanners, setAcademyPcBanners] = useState([]);
+  const [academyPcBanners, setAcademyPcBanners] = useState({});
 
   //6. 아카데미 mo : 005
-  const [academyMoBanners, setAcademyMoBanners] = useState([]);
+  const [academyMoBanners, setAcademyMoBanners] = useState({});
 
   //6. 추천제품 상품섹션
   const [recommendedSections, setRecommendedSections] = useState([]);
@@ -91,6 +91,15 @@ export default function Main() {
     })
   }
 
+  const getAcademyPcBannerNames = (bannerInfoList) => {
+    const bannerNames = bannerInfoList.banners[0].name.split('/');
+    bannerInfoList.banners[0].nameList = bannerNames.reduce((acc, bannerName, index) => {
+      const {length} = bannerNames
+      acc += index - 1 === length ? bannerName : bannerName + '<br />'
+      return acc
+    }, '')
+  }
+
   //1. 배너 노출 api
   const getBanners = useCallback(async () => {
     try {
@@ -102,9 +111,10 @@ export default function Main() {
       setSlideMoBanners(moBanners)
       const eventBanners = data.find(({code}) => code === '003')?.accounts || []
       setEventBanners(eventBanners)
-      const academyPcBanners = data.find(({code}) => code === '004') || []
+      const academyPcBanners = data.find(({code}) => code === '004')?.accounts[0] || {}
+      getAcademyPcBannerNames(academyPcBanners)
       setAcademyPcBanners(academyPcBanners)
-      const academyMoBanners = data.find(({code}) => code === '005') || []
+      const academyMoBanners = data.find(({code}) => code === '005')?.accounts[0] || {}
       setAcademyMoBanners(academyMoBanners)
 
 
@@ -114,6 +124,7 @@ export default function Main() {
       const recommendedBanners = data.find(({code}) => code === '002')?.accounts || []
       getRecommendedBannerNames(recommendedBanners)
       setRecommendedBanners(recommendedBanners)
+      debugger
     } catch (e){
       console.error(e)
     }
@@ -145,6 +156,7 @@ export default function Main() {
       setRecommendedSections(data[0].products)
       const eventResponse = await getDisplaySectionsSectionNo(eventRequest)
       setEventSections(eventResponse.data[0])
+      debugger
     } catch (e){
       console.error(e)
     }
@@ -152,13 +164,6 @@ export default function Main() {
 
 
   useEffect(() => {getBanners(); getSections()}, [getBanners, getSections]);
-
-  //2. 배너 설정
-  //랜딩 유알엘로 이동, 이미지 유알엘은 노출
-  //사이즈 설정
-  // 비디오> 이미지 순
-
-
 
   //top
   const [topSwiper, setTopSwiper] = useState(null);
@@ -253,70 +258,6 @@ export default function Main() {
                       </div>
                     </SwiperSlide>
                   ))}
-                    
-                    {/*<SwiperSlide className="swiper-slide video-slide" data-swiper-autoplay="10000">*/}
-                    {/*  <video className="video-slide-player" preload="true" autoPlay muted={true} playsInline>*/}
-                    {/*      <source src={ size.width > breakPoint ? `images/_tmp/demo_1920x1080-1.mp4` : `images/_tmp/demo_1920x1080-1.mp4`} type="video/mp4" />*/}
-                    {/*  </video>*/}
-                    {/*  <div className="kv__slide">*/}
-                    {/*    <div className="kv__head">*/}
-                    {/*        <div className="kv__head__copy">*/}
-                    {/*          <span className="copy-0"><span>Silent</span></span>*/}
-                    {/*          <span className="copy-1"><span>White</span></span>*/}
-                    {/*        </div>*/}
-
-                    {/*        <div className="kv__head__copy"><span className="copy-2"><span>WH-1000</span></span><span className="copy-3"><span>XM4</span></span></div>*/}
-                    {/*    </div>*/}
-                    {/*    <span className="kv__product"><span>무선 노이즈 캔슬링 헤드폰</span></span>*/}
-                    {/*    <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>*/}
-                    {/*  </div>*/}
-                    {/*</SwiperSlide>*/}
-                    {/*<SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/pc_kv_img1.jpg)` : `url(/images/_tmp/mo_kv_img1.jpg)`}}>*/}
-                    {/*  <div className="kv__slide">*/}
-                    {/*    <div className="kv__head">*/}
-                    {/*      <div className="kv__head__copy">*/}
-                    {/*        <span className="copy-0"><span>One</span></span><span className="copy-1"><span>hand</span></span>*/}
-                    {/*      </div>*/}
-                    {/*      <div className="kv__head__copy"><span className="copy-2"><span>Full-Frame</span></span></div>*/}
-                    {/*      <div className="kv__head__copy"><span className="copy-3"><span>α7c</span></span></div>*/}
-                    {/*    </div>*/}
-                    {/*    <span className="kv__product"><span>원핸드 컴팩트 풀프레임 카메라</span></span>*/}
-                    {/*    <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>*/}
-                    {/*  </div>*/}
-                    {/*</SwiperSlide>*/}
-                    {/*<SwiperSlide className="swiper-slide video-slide" data-swiper-autoplay="10000">*/}
-                    {/*  <video className="video-slide-player" preload="true" autoPlay muted={true} playsInline>*/}
-                    {/*      <source src={ size.width > breakPoint ? `images/_tmp/demo_608x1080-1.mp4` : `images/_tmp/demo_608x1080-1.mp4`} type="video/mp4" />*/}
-                    {/*  </video>*/}
-                    {/*  <div className="kv__slide">*/}
-                    {/*    <div className="kv__head">*/}
-                    {/*      <div className="kv__head__copy"><span className="copy-0"><span>Vlog</span></span><span className="copy-1"><span>camera</span></span></div>*/}
-                    {/*      <div className="kv__head__copy"><span className="copy-2"><span>ZV-1</span></span></div>*/}
-                    {/*    </div>*/}
-                    {/*    <span className="kv__product"><span>예뻐지는 데일리 카메라</span></span>*/}
-                    {/*    <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>*/}
-                    {/*  </div>*/}
-                    {/*</SwiperSlide>*/}
-                    {/*<SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/pc_kv_img2.jpg)` : `url(/images/_tmp/mo_kv_img2.jpg)`}}>*/}
-                    {/*  <div className="kv__slide">*/}
-                    {/*    <div className="kv__head">*/}
-                    {/*      <div className="kv__head__copy"><span className="copy-0"><span>WH-</span></span></div>*/}
-                    {/*      <div className="kv__head__copy"><span className="copy-1"><span>1000XM4</span></span></div>*/}
-                    {/*    </div>*/}
-                    {/*    <span className="kv__product"><span>무선 노이즈 캔슬링 헤드폰</span></span>*/}
-                    {/*    <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>*/}
-                    {/*  </div>*/}
-                    {/*</SwiperSlide>*/}
-                    {/*<SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/pc_kv_img3.jpg)` : `url(/images/_tmp/mo_kv_img3.jpg)`}}>*/}
-                    {/*  <div className="kv__slide">*/}
-                    {/*    <div className="kv__head">*/}
-                    {/*      <div className="kv__head__copy"><span className="copy-0"><span>Vlog</span></span><span className="copy-1"><span>Camera</span></span></div>*/}
-                    {/*      <div className="kv__head__copy"><span className="copy-2"><span>ZV-1</span></span></div>*/}
-                    {/*    </div>*/}
-                    {/*    <span className="kv__product"><span>예뻐지는 데일리 카메라</span></span>*/}
-                    {/*    <a  onClick={()=>{history.push('/product-view/1')}} className="kv__link"><span>자세히 보기</span></a>*/}
-                    {/*  </div>*/}
-                    {/*</SwiperSlide>*/}
                   </Swiper>}
                   <div className="swiper-pagination"></div>
                 </div>
@@ -337,10 +278,6 @@ export default function Main() {
                       {recommendedBanners.map((recommendedBanner, index) => (
                         <SwiperSlide key={index} className="swiper-slide" style={{backgroundImage: `url(${recommendedBanner?.banners[0]?.imageUrl})`}} />
                       ))}
-                      {/*<SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/main_recomm_pc1.jpg)` : `url(/images/_tmp/main_recomm_mo1.jpg)`}}></SwiperSlide>*/}
-                      {/*<SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/main_recomm_pc2.jpg)` : `url(/images/_tmp/main_recomm_mo2.jpg)`}}></SwiperSlide>*/}
-                      {/*<SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/main_recomm_pc3.jpg)` : `url(/images/_tmp/main_recomm_mo3.jpg)`}}></SwiperSlide>*/}
-                      {/*<SwiperSlide className="swiper-slide" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/main_recomm_pc4.jpg)` : `url(/images/_tmp/main_recomm_mo4.jpg)`}}></SwiperSlide>*/}
                       </Swiper>}
                   </div>
                   <div className="recommend__swiper swiper-container">
@@ -393,7 +330,7 @@ export default function Main() {
                     >
                       {recommendedBanners.map((recommendedBanner, index) => (
                         <SwiperSlide className="recommend__item swiper-slide" key={index}>
-                          <Link to={recommendedBanner.banners[0].landingUrl} onClick={(e)=>{
+                          <Link to={`product-view/${recommendedSections[index]?.productNo}`} onClick={(e)=>{
                             if(window.innerWidth > breakPoint){
                               if(e.currentTarget.parentElement.classList.contains("swiper-slide-next")){
                                 e.preventDefault();
@@ -401,84 +338,15 @@ export default function Main() {
                               }
                             }
                           }}>
-                            <span className="recommend__item__copy" dangerouslySetInnerHTML={ {__html: recommendedBanner.banners[0].nameList} }></span>
-                            <div className="recommend__item__pic">
-                              <img src={recommendedSections[index]?.listImageUrls[0]} alt={`"${recommendedBanner?.banners[0]?.name}"`} />
+                            <span className="recommend__item__copy" dangerouslySetInnerHTML={ {__html: recommendedBanner.banners[0].nameList} }/>
+                            <div className="recommend__item__pic" style={{minHeight: '467px', textAlign: 'center'}}>
+                              <img src={recommendedSections[index]?.listImageUrls[0]} alt={`"${recommendedBanner?.banners[0]?.name}"`}/>
                             </div>
                             <span className="recommend__item__desc">{recommendedSections[index]?.productName}</span>
                             <span className="recommend__item__name">{recommendedSections[index]?.productNameEn}</span>
                           </Link>
                         </SwiperSlide>
                       ))}
-
-                      {/*<SwiperSlide className="recommend__item swiper-slide">*/}
-                      {/*  <a  onClick={()=>{history.push('/product-view/1')}} onClick={(e)=>{*/}
-                      {/*    if(window.innerWidth > breakPoint){*/}
-                      {/*      if(e.currentTarget.parentElement.classList.contains("swiper-slide-next")){*/}
-                      {/*        e.preventDefault();*/}
-                      {/*        recRightSwiper.slideNext();*/}
-                      {/*      }*/}
-                      {/*    }*/}
-                      {/*  }}>*/}
-                      {/*    <span className="recommend__item__copy">몰입을 넘어 소통까지<br />벗지않는 헤드폰</span>*/}
-                      {/*    <div className="recommend__item__pic">*/}
-                      {/*      <img src="/images/_tmp/main_recomm_item1.png" alt="모델명1" />*/}
-                      {/*    </div>*/}
-                      {/*    <span className="recommend__item__desc">무선 노이즈 캔슬링 헤드폰</span>*/}
-                      {/*    <span className="recommend__item__name">WH-1000XM1</span>*/}
-                      {/*  </a>*/}
-                      {/*</SwiperSlide>*/}
-                      {/*<SwiperSlide className="recommend__item swiper-slide">*/}
-                      {/*  <a  onClick={()=>{history.push('/product-view/1')}} onClick={(e)=>{*/}
-                      {/*    if(window.innerWidth > breakPoint){*/}
-                      {/*      if(e.currentTarget.parentElement.classList.contains("swiper-slide-next")){*/}
-                      {/*        e.preventDefault();*/}
-                      {/*        recRightSwiper.slideNext();*/}
-                      {/*      }*/}
-                      {/*    }*/}
-                      {/*  }}>*/}
-                      {/*    <span className="recommend__item__copy">소리로 공간을 디자인하다</span>*/}
-                      {/*    <div className="recommend__item__pic">*/}
-                      {/*      <img src="/images/_tmp/main_recomm_item2.png" alt="모델명2" />*/}
-                      {/*    </div>*/}
-                      {/*    <span className="recommend__item__desc">디퓨저 사운드 스피커</span>*/}
-                      {/*    <span className="recommend__item__name">SRS-RA5000</span>*/}
-                      {/*  </a>*/}
-                      {/*</SwiperSlide>*/}
-                      {/*<SwiperSlide className="recommend__item swiper-slide">*/}
-                      {/*<a  onClick={()=>{history.push('/product-view/1')}} onClick={(e)=>{*/}
-                      {/*    if(window.innerWidth > breakPoint){*/}
-                      {/*      if(e.currentTarget.parentElement.classList.contains("swiper-slide-next")){*/}
-                      {/*        e.preventDefault();*/}
-                      {/*        recRightSwiper.slideNext();*/}
-                      {/*      }*/}
-                      {/*    }*/}
-                      {/*  }}>*/}
-                      {/*    <span className="recommend__item__copy">모든 영상가를 자유롭게 하다</span>*/}
-                      {/*    <div className="recommend__item__pic">*/}
-                      {/*      <img src="/images/_tmp/main_recomm_item3.png" alt="모델명3" />*/}
-                      {/*    </div>*/}
-                      {/*    <span className="recommend__item__desc">FX3 풀프레임 시네마 라인 카메라</span>*/}
-                      {/*    <span className="recommend__item__name">Alpha-FX3</span>*/}
-                      {/*  </a>*/}
-                      {/*</SwiperSlide>*/}
-                      {/*<SwiperSlide className="recommend__item swiper-slide">*/}
-                      {/*<a  onClick={()=>{history.push('/product-view/1')}} onClick={(e)=>{*/}
-                      {/*    if(window.innerWidth > breakPoint){*/}
-                      {/*      if(e.currentTarget.parentElement.classList.contains("swiper-slide-next")){*/}
-                      {/*        e.preventDefault();*/}
-                      {/*        recRightSwiper.slideNext();*/}
-                      {/*      }*/}
-                      {/*    }*/}
-                      {/*  }}>*/}
-                      {/*    <span className="recommend__item__copy">F1.2 렌즈의 초격차 한계를 뛰어넘다</span>*/}
-                      {/*    <div className="recommend__item__pic">*/}
-                      {/*      <img src="/images/_tmp/main_recomm_item4.png" alt="모델명4" />*/}
-                      {/*    </div>*/}
-                      {/*    <span className="recommend__item__desc">FE 50mm F1.2 GM</span>*/}
-                      {/*    <span className="recommend__item__name">SEL50F12GM</span>*/}
-                      {/*  </a>*/}
-                      {/*</SwiperSlide>*/}
                     </Swiper>}
                     <div className="swiper-scrollbar rec-scrollbar" style={{position:"absolute"}}></div>
                   </div>
@@ -516,7 +384,7 @@ export default function Main() {
                           >
                           {eventSections?.products?.map((eventSection, index) =>(
                             <SwiperSlide className="swiper-slide" key={index}>
-                              <Link to={eventSection}><img src={eventSection?.listImageUrls[0]} alt="상품명" /></Link>
+                              <Link to={`product-view/${eventSection.productNo}`} style={{textAlign: 'center'}}><img src={eventSection?.listImageUrls[0]} alt="상품명" /></Link>
                               <div className="event__main__inner">
                                 <div className="event__product">
                                   <span className="event__product__name">{eventSection.productNameEn}</span>
@@ -587,7 +455,7 @@ export default function Main() {
                       <div className="swiper-scrollbar event-scrollbar" style={{position:"absolute"}}></div>
                     </div>
                   </div>
-                  <a  className="btn__event__more">더 보러 가기</a>
+                  <Link to='event/list' className="btn__event__more">더 보러 가기</Link>
                 </div>
                 {/* <!-- // event --> */}
 
@@ -596,22 +464,22 @@ export default function Main() {
                   <h2 className="main__product__title">PRODUCT</h2>
                   <div className="main__product__inner">
                     <ul className="main__product__lists">
-                      <li className="main__product__list camera"><a  onClick={()=>{history.push('/products/camera')}}>Camera</a></li>
-                      <li className="main__product__list vcamera"><a  onClick={()=>{history.push('/products/videocamera')}}>Video Camera</a></li>
-                      <li className="main__product__list audio"><a  onClick={()=>{history.push('/products/audio')}}>Audio</a></li>
-                      <li className="main__product__list ps"><a  onClick={()=>{history.push('/products/playstation')}}>PlayStation®</a></li>
+                      <li className="main__product__list camera"><Link  to='/products/camera'>Camera</Link></li>
+                      <li className="main__product__list vcamera"><Link  to='/products/videocamera'>Video Camera</Link></li>
+                      <li className="main__product__list audio"><Link  to='/products/audio'>Audio</Link></li>
+                      <li className="main__product__list ps"><Link  to='/products/playstation'>PlayStation®</Link></li>
                     </ul>
                   </div>
                 </div>
                 {/* <!-- // product --> */}
 
                 {/* <!-- academy banner --> */}
-                <div className="main__banner" style={{backgroundImage: size.width > breakPoint ? `url(/images/_tmp/main_banner_pc.png)` : ( size.width > breakPointTablet ? `url(/images/_tmp/main_banner_tab.png)` : `url(/images/_tmp/main_banner_mo.png)`)}}>
+                  { academyPcBanners?.banners && <div className="main__banner" style={{backgroundImage: size.width > breakPoint ? `url(${academyPcBanners.banners[0]?.imageUrl})` : `url(${academyMoBanners?.banners[0]?.imageUrl})`}} >
                   <div className="main__banner__inner">
-                    <h2 className="main__banner__title">알파 아카데미<br />4월 강좌 수강신청</h2>
-                    <a  className="main__banner__link">자세히 보기</a>
+                   <h2 className="main__banner__title" dangerouslySetInnerHTML={ {__html: academyPcBanners?.banners[0]?.nameList}}/>
+                    <Link  className="main__banner__link" to={academyPcBanners.banners[0]?.landingUrl}>자세히 보기</Link>
                   </div>
-                </div>
+                </div>}
               {/* // academy banner */}
 
                 {/* customer service */}
@@ -619,10 +487,10 @@ export default function Main() {
                   <h2 className="main__help__title">무엇을<br />도와드릴까요?</h2>
                   <ul className="main__help__lists">
                     <li className="main__help__list notice">
-                      <a  onClick={()=>{history.push('/notice')}}>공지사항 & FAQ</a>
+                      <Link to='/notice'>공지사항 & FAQ</Link>
                     </li>
                     <li className="main__help__list location">
-                      <a href="store-info">매장안내</a>
+                      <Link to='/store-info'>매장안내</Link>
                     </li>
                     <li className="main__help__list customer">
                       <a >고객센터</a>
