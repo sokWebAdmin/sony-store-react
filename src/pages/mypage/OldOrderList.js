@@ -56,9 +56,8 @@ export default function OldOrderList() {
     endDate: new Date(),
   });
   const nextPage = useRef(1);
-  // const [searchPage, setSearchPage] = useState(1);
-  const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
-  // const [oldOrderProducts, setOldOrderProducts] = useState([]);
+  // const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
+  const [oldOrderProducts, setOldOrderProducts] = useState([]);
 
   useEffect(() => {
     search({
