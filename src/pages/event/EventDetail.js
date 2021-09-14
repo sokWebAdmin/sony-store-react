@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getEventByEventNo } from '../../api/display';
 import { useMediaQuery } from '../../hooks';
+import { toCurrencyString } from '../../utils/unit';
 
 const EventDetail = () => {
   const { eventNo } = useParams();
@@ -57,12 +58,20 @@ const EventDetail = () => {
                             {product.promotionText}
                           </p>
                           <div className="product_name_price">
-                            <div className="original">
-                              {product.salePrice.toLocaleString()} <span className="unit">원</span>
-                            </div>
-                            <div className="sale">
-                              {product.salePrice.toLocaleString()} <span className="unit">원</span>
-                            </div>
+                            {product.salePrice !== product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt ?
+                              <>
+                                <div className="original">
+                                  {toCurrencyString(product.salePrice)} <span className="unit">원</span>
+                                </div>
+                                <div className="sale">
+                                  {toCurrencyString(product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt)} <span className="unit">원</span>
+                                </div>
+                              </> :
+                              <>
+                                <div className="sale">
+                                  {toCurrencyString(product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt)} <span className="unit">원</span>
+                                </div>
+                              </>}
                           </div>
                           <div className="product_btn_wrap">
                             <button
