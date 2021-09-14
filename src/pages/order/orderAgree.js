@@ -1,15 +1,26 @@
-import { React } from 'react';
+import { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
 
-//css
+//stylesheet
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
+import GlobalContext from '../../context/global.context';
 
-export default function orderAgree () {
+export default function OrderAgree () {
+  const { isLogin } = useContext(GlobalContext);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (isLogin) {
+      alert('잘못된 접근입니다.');
+      history.push('/');
+    }
+  }, [isLogin]);
 
   return (
     <>
@@ -892,8 +903,6 @@ export default function orderAgree () {
           </div>
         </div>
       </div>
-
-
     </>
   );
 }
