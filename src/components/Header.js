@@ -14,21 +14,12 @@ import Search from './Search';
 
 //context
 import GlobalContext from '../context/global.context';
-import {
-  useHeaderDispatch,
-  useHeaderState,
-  openSideBar,
-  closeSideBar,
-} from '../context/header.context';
+import { useHeaderDispatch, useHeaderState, openSideBar, closeSideBar } from '../context/header.context';
 
 //utils
 import { Link, useHistory } from 'react-router-dom';
 import { removeAccessToken } from '../utils/token';
-import {
-  resetProfile,
-  useProfileState,
-  useProileDispatch,
-} from '../context/profile.context';
+import { resetProfile, useProfileState, useProileDispatch } from '../context/profile.context';
 
 export default function Header() {
   const history = useHistory();
@@ -50,19 +41,14 @@ export default function Header() {
   const closeSubSlider = () => {
     setInfoOpen(false);
     closeSideBar(headerDispatch);
-  }
+  };
 
   return (
     <>
-      <header
-        id="header"
-        className={`header ${isSiderbarOpen === true && 'header--active'}`}
-      >
+      <header id="header" className={`header ${isSiderbarOpen === true && 'header--active'}`}>
         <div className="header__wrapper">
           <h1 className="header__logo">
-            <Link
-              to="/"
-            >
+            <Link to="/">
               <img src={logo} alt="SONY" />
             </Link>
           </h1>
@@ -119,11 +105,7 @@ export default function Header() {
               <>
                 <div className={`member ${isInfoOpen && 'member--visible'}`}>
                   <div className="member__inner">
-                    <Link
-                      to="/member/login"
-                      onClick={closeSubSlider}
-                      className="member__msg member__msg__login"
-                    >
+                    <Link to="/member/login" onClick={closeSubSlider} className="member__msg member__msg__login">
                       로그인이
                       <br />
                       필요합니다
@@ -141,26 +123,17 @@ export default function Header() {
                     <div className="member__menu">
                       <ul>
                         <li className="member__menu__mypage">
-                          <Link
-                            to="/member/join"
-                            onClick={closeSubSlider}
-                          >
+                          <Link to="/member/join" onClick={closeSubSlider}>
                             회원가입
                           </Link>
                         </li>
                         <li className="member__menu__order">
-                          <Link
-                            to="/my-page/order-list"
-                            onClick={closeSubSlider}
-                          >
+                          <Link to={isLogin ? '/my-page/order-list' : '/member/login'} onClick={closeSubSlider}>
                             주문/배송 조회
                           </Link>
                         </li>
                         <li className="member__menu__cart">
-                          <Link
-                            to="/cart"
-                            onClick={closeSubSlider}
-                          >
+                          <Link to="/cart" onClick={closeSubSlider}>
                             장바구니<span className="badge">99</span>
                           </Link>
                         </li>
@@ -183,26 +156,17 @@ export default function Header() {
                     <div className="member__menu">
                       <ul>
                         <li className="member__menu__mypage">
-                          <Link
-                            to="/my-page"
-                            onClick={closeSubSlider}
-                          >
+                          <Link to="/my-page" onClick={closeSubSlider}>
                             마이페이지
                           </Link>
                         </li>
                         <li className="member__menu__order">
-                          <Link
-                            to="/my-page/order-list"
-                            onClick={closeSubSlider}
-                          >
+                          <Link to={isLogin ? '/my-page/order-list' : '/member/login'} onClick={closeSubSlider}>
                             주문/배송 조회
                           </Link>
                         </li>
                         <li className="member__menu__cart">
-                          <Link
-                            to="/cart"
-                            onClick={closeSubSlider}
-                          >
+                          <Link to="/cart" onClick={closeSubSlider}>
                             장바구니<span className="badge">99</span>
                           </Link>
                         </li>
