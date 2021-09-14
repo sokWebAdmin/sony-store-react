@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { addMonth, changeDateFormat } from '../../utils/dateFormat';
 import { Link } from 'react-router-dom';
 import { getProfileOrders, getProfileOrdersSummaryStatus } from '../../api/order';
 
@@ -35,7 +36,12 @@ export default function OrderList() {
     exchangeProcessingCnt: 0,
   });
 
+  const [searchPeriod, setSearchPeriod] = useState({
+    startDate: new Date(addMonth(new Date(), -3)),
+    endDate: new Date(),
+  });
   const [orderProducts, setOrderProducts] = useState([]);
+  const nextPage = useRef(1);
 
   useEffect(() => {
     getProfileOrdersSummaryStatus().then((res) => {
@@ -238,8 +244,6 @@ export default function OrderList() {
 
     const newOrderProducts = profileOrdersResponse.items.flatMap((item) => makeOrderProduct(item));
     return newOrderProducts;
-
-    // setOrderProducts([...orderProducts, ...newOrderProducts]);
   };
 
   const makeOrderProduct = (orderItem) => {
@@ -252,19 +256,36 @@ export default function OrderList() {
     }));
   };
 
-  const search = async ({ startYmd, endYmd, pageNumber = 1, pageSize = 10, orderRequestTypes = null }) => {
+  const search = async ({ startDate, endDate, pageNumber = 1, pageSize = 10, orderRequestTypes = '' }) => {
+    const startYmd = changeDateFormat(startDate, 'YYYY-MM-DD');
+    const endYmd = changeDateFormat(endDate, 'YYYY-MM-DD');
+
     const res = await getProfileOrders({ params: { startYmd, endYmd, pageSize, pageNumber, orderRequestTypes } });
     const newOrderProducts = makeOrderProductsList(res.data);
 
-    setOrderProducts([...orderProducts, ...newOrderProducts]);
+    setOrderProducts(newOrderProducts);
+    setSearchPeriod({ startDate, endDate });
+    nextPage.current = 2;
   };
 
   const onClickLoadMore = (e) => {
     e.preventDefault();
-    loadMore();
+    loadMore(nextPage.current, 10);
   };
 
-  const loadMore = async (pageNumber, pageSize) => {};
+  const loadMore = async (pageNumber, pageSize) => {
+    const { startDate, endDate } = searchPeriod;
+    const startYmd = changeDateFormat(startDate, 'YYYY-MM-DD').replaceAll('-', '');
+    const endYmd = changeDateFormat(endDate, 'YYYY-MM-DD').replaceAll('-', '');
+
+    const res = await getProfileOrders({
+      params: { startYmd, endYmd, pageNumber, pageSize },
+    });
+    const newOrderProducts = makeOrderProductsList(res.data);
+
+    setOrderProducts([...orderProducts, ...newOrderProducts]);
+    nextPage.current += 1;
+  };
 
   return (
     <>
@@ -334,8 +355,8 @@ export default function OrderList() {
               <ul className="list_dot">
                 <li>주문 취소 접수 후에는 사용하신 쿠폰은 사라지며, 재 주문 시에 다시 복원되지 않습니다.</li>
                 <li>
-                  처리 상태가 <strong>배송중, 배송 완료 상태</strong>인 경우는 온라인 상으로 주문 취소 접수가 되지 않으며,
-                  소니코리아 고객지원센터(
+                  처리 상태가 <strong>배송중, 배송 완료 상태</strong>인 경우는 온라인 상으로 주문 취소 접수가 되지
+                  않으며, 소니코리아 고객지원센터(
                   <strong>1588-0911</strong>)를 통해서 주문 취소 요청을 하실 수 있습니다.
                 </li>
                 <li>주문 마감 기간의 경우는 주문 취소 접수가 되지 않을 수 있습니다.</li>

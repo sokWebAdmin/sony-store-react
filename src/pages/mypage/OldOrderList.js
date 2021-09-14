@@ -61,7 +61,6 @@ export default function OldOrderList() {
       requsetBody: { schStrtDt, schEndDt, pageIdx: pageNumber, rowsPerPage: pageSize, orderType: null },
     });
 
-    console.log('response:', res);
     setOldOrderProducts(res.data.body);
     setSearchPeriod({ startDate, endDate });
     nextPage.current = 2;
