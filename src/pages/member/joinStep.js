@@ -105,7 +105,7 @@ export default function JoinStep() {
     } else {
       const patternNumber = /[0-9]/g;
       const patternEnglish = /[a-zA-Z]/g;
-      const patternSpecial = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
+      const patternSpecial = /[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]/g;
 
       const checkNumber = patternNumber.test(password) ? 1 : 0;
       const checkEnglish = patternEnglish.test(password) ? 1 : 0;
