@@ -84,6 +84,10 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
   const deliveryMemoFixedList = deliveryMemos;
 
   const handleShippingChange = event => {
+    if (!event?.target) {
+      return;
+    }
+
     const { name } = event.target;
     const noSame = ['receiverName', 'receiverContact1'].some(v => v === name);
     if (noSame) {
@@ -315,11 +319,9 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
                      placeholder="배송 메모를 입력하세요."
                      name="deliveryMemo"
                      value={shipping.deliveryMemo || ''}
-                     onChange={() => {
-                       alert(
-                         'select option 을 orderNo: 1 로 리셋해야하는데.. SelectBox랑 협업필요');
-                       handleShippingChange();
-                     }}
+                     onChange={
+                       handleShippingChange
+                     }
               />
               <span className="focus_bg" />
             </div>
@@ -369,7 +371,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
                   selectableRanges: [
                     [
                       new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
-                      new Date(2999, 12, 31)]],
+                      new Date(2999, 11, 31)]],
                 }}
               />
             </div>
