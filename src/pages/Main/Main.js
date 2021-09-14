@@ -22,7 +22,7 @@ import "swiper/swiper.scss"
 import "../../assets/scss/main.scss"
 
 //utils
-import {useWindowSize} from '../../utils/utils'
+import { useWindowSize, wonComma } from '../../utils/utils';
 import { breakPoint, breakPointTablet } from '../../utils/constants';
 import { useHistory } from "react-router-dom";
 
@@ -100,7 +100,7 @@ export default function Main() {
 
       const moBanners = data.find(({code}) => code === '001')?.accounts || []
       setSlideMoBanners(moBanners)
-      const eventBanners = data.find(({code}) => code === '003') || []
+      const eventBanners = data.find(({code}) => code === '003')?.accounts || []
       setEventBanners(eventBanners)
       const academyPcBanners = data.find(({code}) => code === '004') || []
       setAcademyPcBanners(academyPcBanners)
@@ -520,7 +520,7 @@ export default function Main() {
                               <div className="event__main__inner">
                                 <div className="event__product">
                                   <span className="event__product__name">{eventSection.productNameEn}</span>
-                                  <span className="event__product__price">{eventSection.salePrice}</span>
+                                  <span className="event__product__price">{wonComma(eventSection.salePrice)}</span>
                                 </div>
                               </div>
                             </SwiperSlide>
@@ -530,7 +530,7 @@ export default function Main() {
                       </div>
                     </div>
                     <div className="event__sub swiper-container">
-                      <Swiper className="swiper-wrapper"
+                      {eventBanners.length > 0 && <Swiper className="swiper-wrapper"
                         slidesPerView={3}
                         observer={true}
                         resizeObserver={true}
@@ -569,40 +569,21 @@ export default function Main() {
                           },
                         }}
                         >
-                        <SwiperSlide className="swiper-slide" style={{backgroundImage: `url("/images/_tmp/main_event2-1.jpg")`}}>
-                          <a >
-                            <div className="event__sub__inner">
-                              <p className="event__copy__head">
-                                <span>성공적인 재택생활</span>
-                                <span>꿀-팁</span>
-                              </p>
-                              <p className="event__copy__desc">1000X 노이즈 캔슬링으로 더하는 성공적인 재택생활! </p>
-                            </div>
-                          </a>
-                        </SwiperSlide>
-                        <SwiperSlide className="swiper-slide" style={{backgroundImage: `url("/images/_tmp/main_event2-2.jpg")`}}>
-                          <a >
-                            <div className="event__sub__inner">
-                              <p className="event__copy__head">
-                                <span>이번주는 오리지널</span>
-                                <span>시리즈 정주행</span>
-                              </p>
-                              <p className="event__copy__desc">WH-1000XM4 구매 시 특별 혜택 증정</p>
-                            </div>
-                          </a>
-                        </SwiperSlide>
-                        <SwiperSlide className="swiper-slide" style={{backgroundImage: `url("/images/_tmp/main_event2-3.jpg")`}}>
-                          <a >
-                            <div className="event__sub__inner">
-                              <p className="event__copy__head">
-                                <span>카메라 무상 수리 서비스</span>
-                                <span>1+1년 연장 프로모션</span>
-                              </p>
-                              <p className="event__copy__desc">카메라 구매 시 무상 수리 서비스 1년 추가 연장</p>
-                            </div>
-                          </a>
-                        </SwiperSlide>
-                      </Swiper>
+                        {eventBanners.map((eventBanner, index) => (
+                          <SwiperSlide key={index} className="swiper-slide" style={{backgroundImage: `url("${eventBanner?.banners[0]?.imageUrl}")`}}>
+                            <Link to={eventBanner?.banners[0].landingUrl}>
+                              <div className="event__sub__inner">
+                                <p className="event__copy__head">
+                                  {eventBanner?.banners[0]?.name?.split('/')?.map((bannerName, index) => (
+                                    <span key={index}>{bannerName}</span>
+                                  ))}
+                                </p>
+                                <p className="event__copy__desc">{eventBanner?.banners[0]?.description}</p>
+                              </div>
+                            </Link>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>}
                       <div className="swiper-scrollbar event-scrollbar" style={{position:"absolute"}}></div>
                     </div>
                   </div>
