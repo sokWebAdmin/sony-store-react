@@ -90,8 +90,8 @@ const OrderStep1 = ({ location }) => {
   const orderSheetNo = useMemo(() => getUrlParam('orderSheetNo'), [location]);
 
   const [payment, setPayment] = useState({
-    pgType: paymentType.virtualAccount.pgType, // paymentType.creditCard.pgType
-    payType: paymentType.virtualAccount.payType, // paymentType.creditCard.payType
+    pgType: paymentType.creditCard.pgType,
+    payType: paymentType.creditCard.payType,
   });
 
   const calculate = async () => {
