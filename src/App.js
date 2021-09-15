@@ -44,6 +44,7 @@ import orderComplete from './pages/order/orderComplete';
 import cart from './pages/order/cart';
 import cartEmpty from './pages/order/cartEmpty';
 import orderSheet from './pages/order/orderSheet';
+import giftReceive from './pages/order/giftReceive';
 
 //event
 import liveon from './pages/event/liveon';
@@ -209,7 +210,7 @@ const App = (props) => {
               <Route exact path="/cart-empty" component={cartEmpty} />
               <Route exact path="/order/sheet" component={orderSheet} />
               <Route exact path="/gift/sheet" component={orderSheet} />
-              <Route exact path="/gift/sheet" component={orderSheet} />
+              <Route exact path="/gift/receive" component={giftReceive} />
 
               {/* 이벤트  */}
               <Route exact path="/event/list" component={eventList} />
