@@ -49,8 +49,7 @@ export default function OrderListItem({
   };
 
   const showRefundAccountInfo = (claimStatusType, payType) => {
-    // return claimStatusType === 'CANCEL_REQUEST' && payType === 'VIRTUAL_ACCOUNT';
-    return payType === 'VIRTUAL_ACCOUNT';
+    return claimStatusType === 'CANCEL_REQUEST' && payType === 'VIRTUAL_ACCOUNT';
   };
 
   const onClickRefundAccount = () => setRefundAccountVisible(true);
