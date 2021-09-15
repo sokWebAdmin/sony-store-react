@@ -73,7 +73,7 @@ const GiftReceive = ({ location }) => {
     Object.entries(receiverAddressMap).
       forEach(
         ([from, to]) => setObjectState(to, selectedAddress[from])(
-          setLatestShipping()));
+          setLatestShipping));
 
     receiverDetailAddress.current.focus();
   };
@@ -116,8 +116,7 @@ const GiftReceive = ({ location }) => {
   }
 
   function handleShippingChangeParameter (key, value) {
-    setObjectState(key,
-      value)(setLatestShipping());
+    setObjectState(key, value)(setLatestShipping);
   }
 
   return (
