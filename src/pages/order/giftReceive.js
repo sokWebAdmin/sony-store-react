@@ -3,7 +3,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //css
 import '../../assets/scss/contents.scss';
-import '../../assets/scss/order.scss';
+import '../../assets/css/order.css';
 
 const GiftReceive = () => {
   return (

@@ -31,7 +31,7 @@ import { getOrderSheets, postOrderSheetCalculate } from '../../api/order';
 
 //css
 import '../../assets/scss/contents.scss';
-import '../../assets/css/order.css';
+import '../../assets/scss/order.scss';
 
 // functions
 import { getUrlParam } from '../../utils/location';
