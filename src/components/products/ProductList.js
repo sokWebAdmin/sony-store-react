@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Product from './Product';
 import Banner from './Banner';
 import { getProductSearch } from '../../api/product';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const orderList = [
   {orderBy: 'RECENT_PRODUCT', title: '최신순', query: { 'order.by': 'RECENT_PRODUCT' }},
@@ -106,7 +107,12 @@ export default function ProductList({category}) {
         </div>
       </div>
 
-      <div className="product__list">
+      <InfiniteScroll
+        className="product__list"
+        dataLength={products.length}
+        next={() => { setPage({ number: page.number + 1, update: true }); }}
+        hasMore={true}
+      >
         {products.map((product, index) => {
           return <React.Fragment key={`category-product-${index}`}>
             {
@@ -114,18 +120,9 @@ export default function ProductList({category}) {
             }
             <Product product={product} />
           </React.Fragment>
-          })
+        })
         }
-      </div>
-
-      {
-        products.length > 0 && products.length < totalCount - 1 &&
-        <div className="btn_area">
-          <button type="button" className="btn_more" title="기획전 더보기" style={{backgroundColor: 'gray'}} onClick={() => {
-            setPage({ number: page.number + 1, update: true });
-          }}>더보기 버튼 - 마크업 요청중<span className="ico_plus"></span></button>
-        </div>
-      }
+      </InfiniteScroll>
     </div>
   );
 }
