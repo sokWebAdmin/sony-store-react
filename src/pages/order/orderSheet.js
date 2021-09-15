@@ -20,6 +20,7 @@ import Accordion from '../../components/common/surface/Accordion';
 
 import OrdererForm from '../../components/order/OrdererForm';
 import ShippingAddressForm from '../../components/order/ShippingAddressForm';
+import GiftReceiverForm from '../../components/order/GiftReceiverForm';
 import DiscountForm from '../../components/order/DiscountForm';
 import PaymentForm from '../../components/order/PaymentForm';
 import GuestPasswordForm from '../../components/order/GuestPasswordForm';
@@ -132,12 +133,19 @@ const OrderSheet = ({ location }) => {
     async start () {
       console.log('is gift order :', isGiftOrder);
 
+      if (!isLogin && isGiftOrder) {
+        alert('로그인시 선물하기가 가능합니다.');
+        location.goBack();
+        return;
+      }
+
       if (!isLogin) {
         const notAgree = !this.guestAgreeCheck();
         if (notAgree) {
           return;
         }
       }
+
       await this.fetchOrderSheet(orderSheetNo);
     },
     guestAgreeCheck () {
@@ -274,15 +282,24 @@ const OrderSheet = ({ location }) => {
                                      setOrderer={setOrderer} />
                       </Accordion>
 
-                      <Accordion title={'배송지 정보'} defaultVisible={true}>
-                        <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <ShippingAddressForm ref={shippingAddressForm}
-                                             shipping={shippingAddress}
-                                             orderer={orderer}
-                                             setShipping={setShippingAddress}
-                                             recentAddresses={recentAddresses}
-                        />
-                      </Accordion>
+                      {!isGiftOrder ?
+                        <Accordion title={'배송지 정보'}
+                                   defaultVisible={true}>
+                          <p className="acc_dsc_top">표시는 필수입력 정보</p>
+                          <ShippingAddressForm ref={shippingAddressForm}
+                                               shipping={shippingAddress}
+                                               orderer={orderer}
+                                               setShipping={setShippingAddress}
+                                               recentAddresses={recentAddresses}
+                          />
+                        </Accordion>
+                        :
+                        <Accordion title={'선물 받으신 분'}
+                                   defaultVisible={true}>
+                          <p className="acc_dsc_top">표시는 필수입력 정보</p>
+                          <GiftReceiverForm />
+                        </Accordion>
+                      }
 
                       {isLogin &&
                       <Accordion title={'할인 정보'} defaultVisible={true}>
