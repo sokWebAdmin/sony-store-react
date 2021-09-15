@@ -71,6 +71,7 @@ const OrderSheet = ({ location }) => {
     receiverAddress: null,
     receiverDetailAddress: null,
     receiverJibunAddress: null,
+    shippingInfoLaterInputContact: '',
     receiverContact1: '',
     receiverContact2: null,
     customsIdNumber: null,
@@ -191,6 +192,28 @@ const OrderSheet = ({ location }) => {
     };
 
     delete result.shippingAddress.deliveryMemo;
+
+    return result;
+  };
+
+  const getGiftPaymentInfo = () => {
+    const result = {
+      orderSheetNo: getUrlParam('orderSheetNo'),
+      orderTitle: truncate(representativeProductName),
+      ...payment, // payType, pgType
+      orderer: { ...orderer },
+      member: isLogin,
+      updateMember: false,
+      tempPassword,
+      shippingAddress: { ...shippingAddress },
+      paymentAmt: paymentInfo.paymentAmt,
+      accumulationAmt: paymentInfo.accumulationAmt,
+      availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
+      ...discount,
+    };
+
+    delete result.shippingAddress.deliveryMemo;
+    delete shippingAddress.receiverContact1;
 
     return result;
   };
