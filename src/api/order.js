@@ -25,3 +25,7 @@ export const postOrderSheetCalculate = ({ pathVariable, requestBody }) =>
 export const postProfileOrderCancelByOrderOptionNo = ({ path: { orderOptionNo }, requestBody }) =>
   request(`​/profile​/order-options​/${orderOptionNo}​/claims​/cancel`, 'post',
     null, requestBody);
+
+export const postGuestOrdersOrderNo = (orderNo, requestBody) => {
+  return request(`guest/orders/${orderNo}`, null, requestBody);
+}
