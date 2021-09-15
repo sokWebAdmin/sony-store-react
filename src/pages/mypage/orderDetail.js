@@ -17,6 +17,7 @@ import { postProfileClaimOrderCancelByOrderNo, postGuestClaimOrderCancelByOrderN
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
+import { ajaxPrefilter } from 'jquery';
 
 export default function OrderDetail() {
   const query = useQuery();
@@ -194,7 +195,14 @@ export default function OrderDetail() {
       guest: () => postGuestClaimOrderCancelByOrderNo(request),
     };
 
-    return orderCancelMap[isLogin ? 'profile' : 'guest']().then();
+    return orderCancelMap[isLogin ? 'profile' : 'guest']().then((res) => {
+      if (res.data.status === 404 || res.data.status === 400) {
+        alert(res.data.message);
+        return;
+      }
+
+      window.alert('주문취소 신청이 완료되었습니다.');
+    });
   };
 
   return (
