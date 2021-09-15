@@ -1,10 +1,33 @@
 import { useState } from 'react';
 
 import LayerPopup from '../../components/common/LayerPopup';
+import { handleChange } from '../../utils/state';
 
-const InvoicePublish = ({ close }) => {
+const InvoicePublish = ({ basketid, close }) => {
 
   const [processDone, setProcessDone] = useState(false);
+  const [formData, setFormData] = useState({
+    regnum: '',
+    company: '',
+    president: '',
+    address: '',
+    kind: '',
+    item: '',
+  });
+
+  const onChangeInput = event => {
+    if (event.target.value.trim()) {
+      event.target.parentNode.classList.remove(
+        'error');
+    }
+    handleChange(event)(setFormData);
+  };
+
+  const submit = evt => {
+    evt.preventDefault();
+
+    console.log(evt);
+  };
 
   return (
     <LayerPopup
@@ -14,14 +37,15 @@ const InvoicePublish = ({ close }) => {
     >
       <p className="pop_tit">전자 세금계산서 신청</p>
       <div className="pop_cont_scroll tax_invoice2" style={{ height: '651px' }}>
-        <form>
+        <form onSubmit={submit}>
           <div className="form_zone">
             <div className="input_item">
               <span className="input_tit"><label htmlFor="corp_num"
                                                  className="tit">사업자등록번호</label></span>
               <span className="input_box">
                 <input type="text" id="corp_num" className="input"
-                       placeholder="사업자 등록 번호를 입력하세요. ( - 포함 등록)" />
+                       placeholder="사업자 등록 번호를 입력하세요. ( - 포함 등록)" name="regnum"
+                       value={formData.regnum} onChange={onChangeInput} />
                 <span className="focus_bg"></span>
               </span>
             </div>
@@ -30,7 +54,8 @@ const InvoicePublish = ({ close }) => {
                                                  className="tit">법인명(단체명)</label></span>
               <span className="input_box">
                 <input type="text" id="corp_group" className="input"
-                       placeholder="법인(단체)명을 입력하세요." />
+                       placeholder="법인(단체)명을 입력하세요." name="company"
+                       value={formData.company} onChange={onChangeInput} />
                 <span className="focus_bg"></span>
               </span>
             </div>
@@ -39,7 +64,8 @@ const InvoicePublish = ({ close }) => {
                                                  className="tit">대표자명</label></span>
               <span className="input_box">
                 <input type="text" id="corp_name" className="input"
-                       placeholder="대표자 이름을 입력하세요." />
+                       placeholder="대표자 이름을 입력하세요." name="president"
+                       value={formData.president} onChange={onChangeInput} />
                 <span className="focus_bg"></span>
               </span>
             </div>
@@ -48,7 +74,8 @@ const InvoicePublish = ({ close }) => {
                                                  className="tit">사업장 소재지</label></span>
               <span className="input_box">
                 <input type="text" id="corp_addr" className="input"
-                       placeholder="사업장 소재지를 입력하세요. (ex : 서울)" />
+                       placeholder="사업장 소재지를 입력하세요. (ex : 서울)" name="address"
+                       value={formData.address} onChange={onChangeInput} />
                 <span className="focus_bg"></span>
               </span>
             </div>
@@ -61,7 +88,8 @@ const InvoicePublish = ({ close }) => {
                                                      className="tit">업태</label></span>
                   <span className="input_box">
                     <input type="text" id="corp_type1" className="input"
-                           placeholder="(ex : 도매, 소매, 서비스)" />
+                           placeholder="(ex : 도매, 소매, 서비스)" name="kind"
+                           value={formData.kind} onChange={onChangeInput} />
                     <span className="focus_bg"></span>
                   </span>
                 </span>
@@ -70,7 +98,8 @@ const InvoicePublish = ({ close }) => {
                                                      className="tit">종목</label></span>
                   <span className="input_box">
                     <input type="text" id="corp_type2" className="input"
-                           placeholder="(ex : 무역, 통신판매)" />
+                           placeholder="(ex : 무역, 통신판매)" name="item"
+                           value={formData.item} onChange={onChangeInput} />
                    <span className="focus_bg"></span>
                   </span>
                 </span>
@@ -78,7 +107,7 @@ const InvoicePublish = ({ close }) => {
             </div>
           </div>
           <div className="btn_article">
-            <button className="button button_positive button-m" type="button">전자
+            <button className="button button_positive button-m" type="submit">전자
               세금계산서 신청하기
             </button>
           </div>
