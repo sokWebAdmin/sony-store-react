@@ -33,7 +33,7 @@ const PaymentForm = ({ payment, setPayment }) => {
               }
             </div>
             <div className="tabResult">
-              <div
+              {payment.payType === 'CREDIT_CARD' && <div
                 className="result_cont radio_tab1 on">
                 <strong className="info_tit">신용카드 무이자 할부
                   유의사항</strong>
@@ -46,16 +46,9 @@ const PaymentForm = ({ payment, setPayment }) => {
                     적용된 무이자 할부 혜택을 받으실 수 없습니다.
                   </li>
                 </ul>
-              </div>
-              <div className="result_cont radio_tab2">
-                <div className="check">
-                  <input type="checkbox"
-                         className="inp_check"
-                         id="chk02" />
-                  <label htmlFor="chk02">지금 선택한 결제수단을
-                    다음에도
-                    사용</label>
-                </div>
+              </div>}
+              {payment.payType === 'VIRTUAL_ACCOUNT' &&
+              <div className="result_cont radio_tab2 on">
                 <div className="bg_recipe_box">
                   <strong className="info_tit2">전자 세금
                     계산서
@@ -92,7 +85,7 @@ const PaymentForm = ({ payment, setPayment }) => {
                     보험계약체결내역서를 반드시 확인하시기 바랍니다.
                   </li>
                 </ul>
-              </div>
+              </div>}
               <div className="result_cont radio_tab3">
                 <div className="check">
                   <input type="checkbox"
