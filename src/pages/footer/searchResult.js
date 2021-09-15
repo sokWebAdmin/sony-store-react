@@ -184,6 +184,7 @@ export default function SearchResult({match}) {
               (isAll || tabState === 'CATEGORY') 
                 && 
                 <CategoryResult 
+                  keyword={keyword}
                   categoryList={categoryList}
                   categoryCount={categoryCount}
                 />

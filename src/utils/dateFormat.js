@@ -210,3 +210,12 @@ export function addDay4YMDHMSS(date, days) {
     .add(days, 'days')
     .format('YYYY-MM-DD HH:mm:ss');
 }
+
+/**
+ * 
+ * @param {string} date
+ * @returns {string} 2021. 09. 15
+ */
+export function formatDateWithDot (date) {
+  return getStrDate(date).replaceAll('-', '. ');
+}

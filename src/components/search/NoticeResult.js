@@ -1,13 +1,10 @@
 import React from "react"
 import { Link } from "react-router-dom";
+import { formatDateWithDot } from "../../utils/dateFormat";
 const getHightKeyword = (title, keyword) => {
   const [ prev, next ] = title.split(keyword);
   return `${prev}<strong class="keword">${keyword}</strong>${next}`
 };
-const formatDate = registerDate => {
-  const [date, _] = registerDate.split(' ');
-  return date.replaceAll('-', '. ');
-}
 
 export default function NoticeResult({ noticeList, noticeCount, keyword }) {
   return (
@@ -35,7 +32,7 @@ export default function NoticeResult({ noticeList, noticeCount, keyword }) {
                 <Link to={`/notice/${notice.articleNo}`}>
                   <span className="num">{ notice.articleNo }</span>
                   <span className="tit" dangerouslySetInnerHTML={{ __html: getHightKeyword(notice.title, keyword) }}></span>
-                  <span className="date">{ formatDate(notice.registerYmdt) }</span>
+                  <span className="date">{ formatDateWithDot(notice.registerYmdt) }</span>
                 </Link>
               </li>
             ))
