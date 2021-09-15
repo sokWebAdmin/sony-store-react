@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useHistory } from 'react-router';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -6,20 +7,51 @@ import SEOHelmet from '../../components/SEOHelmet';
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/css/order.css';
+import { getUrlParam } from '../../utils/location';
 
-const GiftReceive = () => {
+// api
+import { shippingsEncryptedShippingNoLaterInput } from '../../api/order.js';
+
+const TEST_ENCRYPTED_SHIPPING_NO = 'eW5Pb3NJVndBcTFNZ3RZTHhxQ3dQdz09';
+
+const GiftReceive = ({ location }) => {
+  const history = useHistory();
+
+  const [latestShipping, setLatestShipping] = useState(null);
+
   const init = () => {
-    startTestEnvironment();
+    encryptedShippingNo
+      ? fetchLatestShipping().then(laterInputCompletedCheck)
+      : guard();
   };
 
-  useEffect(init, []);
+  const encryptedShippingNo = useMemo(() => getUrlParam('code'), [location]);
 
-  function startTestEnvironment () {
-    const TEST_ENCRYPTED_SHIPPING_NO = 'eW5Pb3NJVndBcTFNZ3RZTHhxQ3dQdz09';
-
-    window.history.pushState(null, '', `?code=${TEST_ENCRYPTED_SHIPPING_NO}`);
+  async function fetchLatestShipping () {
+    try {
+      const { data } = await shippingsEncryptedShippingNoLaterInput(
+        encryptedShippingNo);
+      setLatestShipping(data);
+      return data;
+    }
+    catch (err) {
+      console.error(err);
+    }
   }
 
+  function guard () {
+    alert('잘못된 접근입니다.');
+    history.push('/');
+  }
+
+  function laterInputCompletedCheck ({ laterInputCompleted }) {
+    if (laterInputCompleted) {
+      alert('이미 배송지 정보가 입력된 주문입니다.');
+      history.push('/');
+    }
+  }
+
+  useEffect(init, []);
   return (
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />

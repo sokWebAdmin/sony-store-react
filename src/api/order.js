@@ -25,3 +25,6 @@ export const postOrderSheetCalculate = ({ pathVariable, requestBody }) =>
 export const postProfileOrderCancelByOrderOptionNo = ({ path: { orderOptionNo }, requestBody }) =>
   request(`​/profile​/order-options​/${orderOptionNo}​/claims​/cancel`, 'post',
     null, requestBody);
+
+export const shippingsEncryptedShippingNoLaterInput = encryptedShippingNo =>
+  request(`shippings/${encryptedShippingNo}/later-input`, 'get');
