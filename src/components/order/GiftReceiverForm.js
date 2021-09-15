@@ -1,4 +1,24 @@
-const GiftReceiverForm = () => {
+import { useEffect } from 'react';
+
+const GiftReceiverForm = ({ shipping, setShipping }) => {
+
+  const shippingStateDefaultValueInject = () => {
+    const usedFieldKeys = ['receiverName', 'receiverContact1'];
+    const injectValue = '-';
+    const injectObject = Object.keys(shipping).
+      filter(key => !usedFieldKeys.some(uKey => uKey === key)).
+      reduce((acc, key) => {
+        acc = { ...acc, ...{ [key]: injectValue } };
+        return acc;
+      }, {});
+    setShipping({ // async
+      ...shipping,
+      ...injectObject,
+    });
+  };
+
+  useEffect(shippingStateDefaultValueInject, []);
+
   return (
     <>
       <div className="acc_form">
