@@ -293,7 +293,9 @@ const OrderStep1 = ({ location }) => {
                       <Accordion title={'결제 방법'} defaultVisible={true}>
                         <PaymentForm
                           payment={payment}
-                          setPayment={setPayment} />
+                          setPayment={setPayment}
+                          orderSheetNo={orderSheetNo}
+                        />
                       </Accordion>
 
                       {!isLogin &&

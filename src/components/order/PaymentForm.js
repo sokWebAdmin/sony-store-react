@@ -4,7 +4,7 @@ import paymentType from '../../const/paymentType';
 import InvoiceGuide from '../popup/InvoiceGuide';
 import InvoicePublish from '../popup/InvoicePublish';
 
-const PaymentForm = ({ payment, setPayment }) => {
+const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
   const changePaymentType = ({ pgType, payType }) => {
     setPayment({
       pgType,
@@ -84,6 +84,7 @@ const PaymentForm = ({ payment, setPayment }) => {
                       type="button">전자 세금계산서 신청하기
                     </button>
                     {viewInvoicePublish && <InvoicePublish
+                      basketid={orderSheetNo}
                       close={() => setViewInvoicePublish(false)} />}
                   </div>
                 </div>

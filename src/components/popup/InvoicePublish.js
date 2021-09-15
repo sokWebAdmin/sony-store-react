@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 
 import LayerPopup from '../../components/common/LayerPopup';
 import { handleChange } from '../../utils/state';
+import { postInvoice } from '../../api/sony/order';
 
 const InvoicePublish = ({ basketid, close }) => {
 
@@ -39,8 +40,24 @@ const InvoicePublish = ({ basketid, close }) => {
       return;
     }
 
-    console.log(evt);
+    post();
   };
+
+  async function post () {
+    const request = {
+      basketid,
+      ...formData,
+    };
+    try {
+      const res = await postInvoice(request);
+      if (res?.status === '200' || res?.status === 200) {
+        setProcessDone(true);
+      }
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
 
   function fieldValidation () {
     const refs = {
