@@ -54,7 +54,7 @@ const GiftReceive = ({ location }) => {
   const init = () => {
     encryptedShippingNo
       ? fetchLatestShipping().
-        // then(laterInputCompletedCheck).
+        then(laterInputCompletedCheck). // 수정 가능하게 하려면 이거 없애면 됨
         then(blankFieldCorrection).
         then(setLatestShipping)
       : guard();
