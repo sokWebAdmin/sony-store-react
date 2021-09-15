@@ -225,17 +225,17 @@ function ButtonGroup({ selectedOption, productNo }) {
             <li className="cart"><a href="#none" onClick={()=>{history.push('/cart')}} className="btn_icon" data-popup="popup_cart">장바구니</a></li>
             <li className="gift"><a href="#none" className="btn_icon" data-popup="popup_gift">선물</a></li>
             <li className="final">
-              <a href="/order/step/1" onClick={ async ( event) => {
+              <a href="/order/sheet" onClick={async (event) => {
 
                 // if (isLogin) {
 
                 // } else {
 
-                  event.preventDefault();
-                  const response = await postOrderSheets({
-                    productCoupons: null,
-                    trackingKey: null,
-                    cartNos: null,
+                event.preventDefault();
+                const response = await postOrderSheets({
+                  productCoupons: null,
+                  trackingKey: null,
+                  cartNos: null,
                     channelType: null,
                     products: selectedOption.map(p => ({
                       channelType: null,
@@ -247,8 +247,8 @@ function ButtonGroup({ selectedOption, productNo }) {
                   });
 
                   history.push({
-                    pathname: '/order/step/1',
-                    search: '?' + qs.stringify(response.data)
+                    pathname: '/order/sheet',
+                    search: '?' + qs.stringify(response.data),
                   });
 
                 // }

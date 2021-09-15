@@ -181,7 +181,7 @@ export default function Cart () {
                 <button type="submit"
                         className="button button_positive popup_comm_btn"
                         data-popup-name="login_chk_order" onClick={() => {
-                  history.push('//order/step/1');
+                  history.push('//order/sheet');
                 }}>구매하기
                 </button>
               </div>

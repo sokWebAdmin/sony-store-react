@@ -43,9 +43,7 @@ import orderAgree from './pages/order/orderAgree';
 import orderComplete from './pages/order/orderComplete';
 import cart from './pages/order/cart';
 import cartEmpty from './pages/order/cartEmpty';
-import orderStep1 from './pages/order/orderStep1';
-import orderStep2 from './pages/order/orderStep2';
-import orderStep3 from './pages/order/orderStep3';
+import orderSheet from './pages/order/orderSheet';
 
 //event
 import liveon from './pages/event/liveon';
@@ -197,23 +195,25 @@ const App = (props) => {
               <Route exact path="/my-page/old-order-list" component={OldOrderList} />
               <Route exact path="/my-page/rename" component={Rename} />
               <Route exact path="/my-page/withdraw" component={Withdraw} />
-              <Route exact path="/my-page/withdraw-complete" component={WithdrawComplete} />
+              <Route exact path="/my-page/withdraw-complete"
+                     component={WithdrawComplete} />
 
               {/* 상품 상세페이지 */}
-              <Route exact path="/product-view/:productNo" component={ProductView} />
+              <Route exact path="/product-view/:productNo"
+                     component={ProductView} />
 
               {/* 주문 */}
               <Route exact path="/order/agree" component={orderAgree} />
               <Route exact path="/order/complete" component={orderComplete} />
               <Route exact path="/cart" component={cart} />
               <Route exact path="/cart-empty" component={cartEmpty} />
-              <Route exact path="/order/step/1" component={orderStep1} />
-              <Route exact path="/order/step/2" component={orderStep2} />
-              <Route exact path="/order/step/3" component={orderStep3} />
+              <Route exact path="/order/sheet" component={orderSheet} />
+              <Route exact path="/gift/sheet" component={orderSheet} />
 
               {/* 이벤트  */}
               <Route exact path="/event/list" component={eventList} />
-              <Route exact path="/event/detail/:eventNo" component={EventDetail} />
+              <Route exact path="/event/detail/:eventNo"
+                     component={EventDetail} />
               <Route exact path="/event/only" component={Only} />
               <Route exact path="/event/expired" component={Expired} />
               <Route exact path="/event/benefit-zone" component={BenefitZone} />
