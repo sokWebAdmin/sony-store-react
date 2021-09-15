@@ -1,11 +1,11 @@
 import LayerPopup from '../../components/common/LayerPopup';
 import { useEffect, useState } from 'react';
-import { getProfileClaimApplyInfoByOrderOptionNo } from '../../api/claim';
+import { getProfileClaimApplyInfoByOrderOptionNo, putProfileClaimRefundAccountByClaimNo } from '../../api/claim';
 
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
-export default function RefundAccount({ setVisible, orderOptionNo }) {
+export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   const close = () => setVisible(false);
   const [form, setForm] = useState({
     bank: '',
@@ -33,6 +33,15 @@ export default function RefundAccount({ setVisible, orderOptionNo }) {
     if (!window.confirm('현재의 주문에 대해서 환불계좌를 확정하시겠습니까?')) {
       return;
     }
+
+    return putProfileClaimRefundAccountByClaimNo({ path: { claimNo }, requestBody: { ...form } }).then((res) => {
+      if (res.data.status === 400) {
+        alert(res.data.message);
+        return;
+      }
+
+      alert('환불계좌 등록이 완료되었습니다.');
+    });
   };
 
   const validate = (form) => {
@@ -106,7 +115,13 @@ export default function RefundAccount({ setVisible, orderOptionNo }) {
               <div className="group">
                 <div className="inp_box">
                   <label className="inp_desc" htmlFor="refund_account">
-                    <input type="text" id="refund_account" className="inp center" placeholder="&nbsp;" />
+                    <input
+                      type="text"
+                      id="refund_account"
+                      className="inp center"
+                      placeholder="&nbsp;"
+                      onChange={(e) => setForm({ ...form, account: e.target.value })}
+                    />
                     <span className="label">계좌번호</span>
                     <span className="focus_bg"></span>
                   </label>
@@ -118,7 +133,13 @@ export default function RefundAccount({ setVisible, orderOptionNo }) {
               <div className="group">
                 <div className="inp_box">
                   <label className="inp_desc" htmlFor="refund_name">
-                    <input type="text" id="refund_name" className="inp center" placeholder="&nbsp;" />
+                    <input
+                      type="text"
+                      id="refund_name"
+                      className="inp center"
+                      placeholder="&nbsp;"
+                      onChange={(e) => setForm({ ...form, depositorName: e.target.value })}
+                    />
                     <span className="label">예금주명</span>
                     <span className="focus_bg"></span>
                   </label>

@@ -338,6 +338,8 @@ export default function OrderList() {
                           optionTitle={orderProduct.optionTitle}
                           orderCnt={orderProduct.orderCnt}
                           orderStatusType={orderProduct.orderStatusType}
+                          claimNo={orderProduct.claimNo}
+                          claimStatusType={orderProduct.claimStatusType}
                           orderStatusTypeLabel={orderProduct.orderStatusTypeLabel}
                           delivery={orderProduct.delivery}
                           key={orderProduct.orderNo}

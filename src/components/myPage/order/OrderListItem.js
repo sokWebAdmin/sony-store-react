@@ -19,6 +19,8 @@ export default function OrderListItem({
   optionTitle,
   orderCnt,
   orderStatusType,
+  claimNo,
+  claimStatusType,
   delivery,
 }) {
   const [refundAccountVisible, setRefundAccountVisible] = useState(false);
@@ -31,6 +33,11 @@ export default function OrderListItem({
     DELIVERY_DONE: '배송완료',
   };
 
+  const claimStatusMap = {
+    CANCEL_REQUEST: '주문취소',
+    CANCEL_DONE: '취소완료',
+  };
+
   const showOrderCancel = (orderStatusType) => {
     return ['DEPOSIT_WAIT', 'PAY_DONE', 'PRODUCT_PREPARE', 'DELIVERY_PREPARE', 'DELIVERY_ING'].includes(
       orderStatusType,
@@ -41,7 +48,8 @@ export default function OrderListItem({
     return ['DELIVERY_ING', 'DELIVERY_DONE'].includes(orderStatusType);
   };
 
-  const showRefundAccountInfo = (orderStatusType, payType) => {
+  const showRefundAccountInfo = (claimStatusType, payType) => {
+    // return claimStatusType === 'CANCEL_REQUEST' && payType === 'VIRTUAL_ACCOUNT';
     return payType === 'VIRTUAL_ACCOUNT';
   };
 
@@ -108,7 +116,7 @@ export default function OrderListItem({
         {orderCnt} <span className="unit">개</span>
       </div>
       <div className="col_table_cell order">
-        <span className="order_status">{orderStatusMap[orderStatusType]}</span>
+        <span className="order_status">{orderStatusMap[orderStatusType] ?? claimStatusMap[claimStatusType]}</span>
         {showOrderCancel(orderStatusType) && (
           <button type="button" className="button button_negative button-s" onClick={onClickOrderCancel}>
             주문취소
@@ -119,13 +127,13 @@ export default function OrderListItem({
             배송조회
           </button>
         )}
-        {showRefundAccountInfo(orderStatusType, payType) && (
+        {showRefundAccountInfo(claimStatusType, payType) && (
           <>
             <button type="button" className="button button_negative button-s" onClick={onClickRefundAccount}>
               환불계좌정보
             </button>
             {refundAccountVisible && (
-              <RefundAccount setVisible={setRefundAccountVisible} orderOptionNo={orderOptionNo} />
+              <RefundAccount setVisible={setRefundAccountVisible} claimNo={claimNo} orderOptionNo={orderOptionNo} />
             )}
           </>
         )}
