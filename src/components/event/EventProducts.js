@@ -47,6 +47,8 @@ const EventProducts = ({event}) => {
                     </>}
                 </div>
                 <div className="product_btn_wrap">
+                  <button type="button" className="button button_secondary button-s"><i className="ico gift" />선물
+                  </button>
                   <button
                     type="button"
                     className="button button_positive button-s"
