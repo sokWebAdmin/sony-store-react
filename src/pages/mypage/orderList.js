@@ -300,7 +300,7 @@ export default function OrderList() {
     <>
       <SEOHelmet title={'주문/배송내역'} />
       <div className="contents mypage">
-        <div className="container">
+        <div className="container my">
           <div className="content">
             <div className="common_head">
               <Link to="/my-page" className="common_head_back">

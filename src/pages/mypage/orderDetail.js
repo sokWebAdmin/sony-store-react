@@ -192,7 +192,7 @@ export default function OrderDetail() {
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
       <div className="contents mypage">
-        <div className="container">
+        <div className="container my">
           <div className="content">
             <div className="common_head">
               <Link to="/my-page/order-list" className="common_head_back">
