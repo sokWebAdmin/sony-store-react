@@ -5,3 +5,6 @@ export const getOldOrders = ({ requsetBody }) => request('IF_ORD_0001.do',
 
 export const postInvoice = requestBody => request('IF_ORD_0004.do', 'post',
   null, requestBody);
+
+export const getInvoice = baseketid => request(
+  `IF_ORD_0004.do?baseketid=${baseketid}`, 'get');
