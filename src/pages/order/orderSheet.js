@@ -133,8 +133,6 @@ const OrderSheet = ({ location }) => {
 
   const init = useCallback(() => ({
     async start () {
-      console.log('is gift order :', isGiftOrder);
-
       if (!isLogin && isGiftOrder) {
         alert('로그인시 선물하기가 가능합니다.');
         location.goBack();
@@ -146,6 +144,13 @@ const OrderSheet = ({ location }) => {
         if (notAgree) {
           return;
         }
+      }
+
+      /* DEVELOPMENT ONLY */
+      if (process.env.NODE_ENV === 'development') {
+        window['kcpInject'] = () => setPayment({
+          ...payment, pgType: 'KCP',
+        });
       }
 
       await this.fetchOrderSheet(orderSheetNo);
