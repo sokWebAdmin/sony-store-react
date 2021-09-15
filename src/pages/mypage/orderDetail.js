@@ -1,15 +1,18 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '../../hooks';
 import { toCurrencyString } from '../../utils/unit';
 import OrderProcess from '../../components/myPage/order/OrderProcess';
 import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
 
+import GlobalContext from '../../context/global.context';
+
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
 import { getProfileOrderByOrderNo } from '../../api/order';
+import { postProfileClaimOrderCancelByOrderNo, postGuestClaimOrderCancelByOrderNo } from '../../api/claim';
 
 //css
 import '../../assets/scss/contents.scss';
@@ -17,6 +20,7 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderDetail() {
   const query = useQuery();
+  const { isLogin } = useContext(GlobalContext);
   const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '', defaultOrderStatusType: '' });
   const [orderProducts, setOrderProducts] = useState([]); // 주문 상품
   const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' }); // 주문 정보
@@ -172,6 +176,27 @@ export default function OrderDetail() {
     window.open(receiptInfoUrl);
   };
 
+  const onOrderCancel = (orderNo) => {
+    const request = {
+      path: { orderNo },
+      requestBody: {
+        claimType: 'CANCEL',
+        claimReasonType: 'CHANGE_MIND',
+        claimReasonDetail: '',
+        bankAccountInfo: null,
+        saveBankAccountInfo: false,
+        responsibleObjectType: null,
+      },
+    };
+
+    const orderCancelMap = {
+      profile: () => postProfileClaimOrderCancelByOrderNo(request),
+      guest: () => postGuestClaimOrderCancelByOrderNo(request),
+    };
+
+    return orderCancelMap[isLogin ? 'profile' : 'guest']().then();
+  };
+
   return (
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
@@ -323,7 +348,11 @@ export default function OrderDetail() {
             {/* buttons */}
             <div className="cont button_wrap">
               {showOrderCancel(orderInfo.defaultOrderStatusType) && (
-                <button type="button" className="button button_negative">
+                <button
+                  type="button"
+                  className="button button_negative"
+                  onClick={() => onOrderCancel(query.get('orderNo'))}
+                >
                   주문 취소
                 </button>
               )}
