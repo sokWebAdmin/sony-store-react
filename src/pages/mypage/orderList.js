@@ -18,8 +18,6 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function OrderList() {
-  const [refundAccountVisible, setRefundAccountVisible] = useState(false);
-
   const [summary, setSummary] = useState({
     depositWaitCnt: 0,
     payDoneCnt: 0,
@@ -36,6 +34,7 @@ export default function OrderList() {
     exchangeProcessingCnt: 0,
   });
 
+  const [refundAccountVisible, setRefundAccountVisible] = useState(false);
   const [searchPeriod, setSearchPeriod] = useState({
     startDate: new Date(addMonth(new Date(), -3)),
     endDate: new Date(),
@@ -46,12 +45,6 @@ export default function OrderList() {
 
   useEffect(() => {
     getProfileOrdersSummaryStatus().then((res) => {
-      // FIXME: 모킹 데이터
-      // res.data.depositWaitCnt = 1;
-      // res.data.cancelProcessingCnt = 2;
-      // res.data.cancelDoneCnt = 3;
-      // res.data.deliveryIngCnt = 4;
-      // console.log('summary:', res.data);
       setSummary(res.data);
     });
   }, []);
@@ -80,185 +73,6 @@ export default function OrderList() {
   };
 
   const makeOrderProductsList = (profileOrdersResponse) => {
-    // FIXME: 목데이터 지우기
-    // profileOrdersResponse.items.push({
-    //   orderYmdt: '2021-09-13 17:31:52',
-    //   orderNo: '202109131731524695',
-    //   payType: 'CREDIT_CARD',
-    //   pgType: 'KCP',
-    //   pgMallKey: '',
-    //   pgOrderNo: '21506963131959',
-    //   escrow: false,
-    //   member: true,
-    //   nextActions: [
-    //     {
-    //       nextActionType: 'CANCEL_ALL',
-    //       uri: '/profile/orders/202109131731524695/claim',
-    //     },
-    //   ],
-    //   firstOrderAmt: {
-    //     payAmt: 208700,
-    //     subPayAmt: 0,
-    //     standardAmt: 9000,
-    //     deliveryAmt: 200000,
-    //     remoteDeliveryAmt: 0,
-    //     immediateDiscountAmt: 300,
-    //     additionalDiscountAmt: 0,
-    //     cartCouponDiscountAmt: 0,
-    //     productCouponDiscountAmt: 0,
-    //     deliveryCouponDiscountAmt: 0,
-    //     totalProductAmt: 8700,
-    //     chargeAmt: 208700,
-    //   },
-    //   lastOrderAmt: {
-    //     payAmt: 208700,
-    //     subPayAmt: 0,
-    //     standardAmt: 9000,
-    //     deliveryAmt: 200000,
-    //     remoteDeliveryAmt: 0,
-    //     immediateDiscountAmt: 300,
-    //     additionalDiscountAmt: 0,
-    //     cartCouponDiscountAmt: 0,
-    //     productCouponDiscountAmt: 0,
-    //     deliveryCouponDiscountAmt: 0,
-    //     totalProductAmt: 8700,
-    //     chargeAmt: 208700,
-    //   },
-    //   orderOptions: [
-    //     {
-    //       orderNo: '202109131731524695',
-    //       orderOptionNo: 295708,
-    //       productNo: 101978834,
-    //       optionNo: 35982957,
-    //       additionalProductNo: 0,
-    //       imageUrl: '//rlyfaazj0.toastcdn.net/20210712/112405.423641000/09.jpg',
-    //       brandName: null,
-    //       brandNameEn: null,
-    //       productName: '배송비 20만원',
-    //       productNameEn: '',
-    //       optionName: '1',
-    //       optionValue: '11',
-    //       optionUsed: true,
-    //       optionType: 'NORMAL_OPTION',
-    //       orderCnt: 3,
-    //       orderStatusType: 'PAY_DONE',
-    //       claimStatusType: null,
-    //       orderStatusDate: {
-    //         registerYmdt: '2021-09-13 17:31:52',
-    //         buyConfirmYmdt: null,
-    //         reviewableYmdt: null,
-    //       },
-    //       claimNo: null,
-    //       accumulationAmt: 1140,
-    //       refundable: true,
-    //       deliveryInternationalYn: false,
-    //       reservationDeliveryYmdt: null,
-    //       exchangeYn: 'N',
-    //       member: true,
-    //       deliverable: true,
-    //       inputs: [],
-    //       nextActions: [
-    //         {
-    //           nextActionType: 'CANCEL',
-    //           uri: '/profile/order-options/295708/claim',
-    //         },
-    //       ],
-    //       optionManagementCd: '',
-    //       delivery: {
-    //         invoiceNo: null,
-    //         deliveryCompanyType: null,
-    //         retrieveInvoiceUrl: null,
-    //         deliveryType: 'PARCEL_DELIVERY',
-    //         deliveryCompanyTypeLabel: null,
-    //       },
-    //       price: {
-    //         standardPrice: 2000,
-    //         immediateDiscountedPrice: 2000,
-    //         buyPrice: 2000,
-    //         standardAmt: 6000,
-    //         immediateDiscountedAmt: 6000,
-    //         buyAmt: 6000,
-    //         salePrice: 2000,
-    //         addPrice: 0,
-    //         immediateDiscountAmt: 0,
-    //         additionalDiscountAmt: 0,
-    //         accumulationRate: 19,
-    //       },
-    //       reservation: false,
-    //       optionTitle: '1: 11',
-    //       orderStatusTypeLabel: '결제완료',
-    //       claimStatusTypeLabel: null,
-    //     },
-    //     {
-    //       orderNo: '202109131731524695',
-    //       orderOptionNo: 295707,
-    //       productNo: 101891968,
-    //       optionNo: 4348934,
-    //       additionalProductNo: 0,
-    //       imageUrl: '//rlyfaazj0.toastcdn.net/product/00002173/101891968/6164a54b-ceb2-402f-b349-07e154c36e6f.png',
-    //       brandName: null,
-    //       brandNameEn: null,
-    //       productName: '조회수순 정렬 확인용, 조회수 낮음B-A보다 최신상품',
-    //       productNameEn: '',
-    //       optionName: '조회수순 정렬 확인용, 조회수 낮음B-A보다 ',
-    //       optionValue: '조회수순 정렬 확인용, 조회수 낮음B-A보다 최신상품',
-    //       optionUsed: false,
-    //       optionType: 'PRODUCT_ONLY',
-    //       orderCnt: 3,
-    //       orderStatusType: 'PAY_DONE',
-    //       claimStatusType: null,
-    //       orderStatusDate: {
-    //         registerYmdt: '2021-09-13 17:31:52',
-    //         buyConfirmYmdt: null,
-    //         reviewableYmdt: null,
-    //       },
-    //       claimNo: null,
-    //       accumulationAmt: 513,
-    //       refundable: true,
-    //       deliveryInternationalYn: false,
-    //       reservationDeliveryYmdt: null,
-    //       exchangeYn: 'N',
-    //       member: true,
-    //       deliverable: true,
-    //       inputs: [],
-    //       nextActions: [
-    //         {
-    //           nextActionType: 'CANCEL',
-    //           uri: '/profile/order-options/295707/claim',
-    //         },
-    //       ],
-    //       optionManagementCd: '',
-    //       delivery: {
-    //         invoiceNo: null,
-    //         deliveryCompanyType: 'POST',
-    //         retrieveInvoiceUrl: null,
-    //         deliveryType: 'PARCEL_DELIVERY',
-    //         deliveryCompanyTypeLabel: '우체국',
-    //       },
-    //       price: {
-    //         standardPrice: 1000,
-    //         immediateDiscountedPrice: 900,
-    //         buyPrice: 900,
-    //         standardAmt: 3000,
-    //         immediateDiscountedAmt: 2700,
-    //         buyAmt: 2700,
-    //         salePrice: 1000,
-    //         addPrice: 0,
-    //         immediateDiscountAmt: 100,
-    //         additionalDiscountAmt: 0,
-    //         accumulationRate: 19,
-    //       },
-    //       reservation: false,
-    //       optionTitle: '조회수순 정렬 확인용, 조회수 낮음B-A보다 ',
-    //       orderStatusTypeLabel: '결제완료',
-    //       claimStatusTypeLabel: null,
-    //     },
-    //   ],
-    //   payTypeLabel: '신용카드',
-    // });
-
-    // 목데이터 end
-
     const newOrderProducts = profileOrdersResponse.items.flatMap((item) => makeOrderProduct(item));
     return newOrderProducts;
   };
@@ -307,7 +121,7 @@ export default function OrderList() {
     <>
       <SEOHelmet title={'주문/배송내역'} />
       <div className="contents mypage">
-        <div className="container">
+        <div className="container my">
           <div className="content">
             <div className="common_head">
               <Link to="/my-page" className="common_head_back">
@@ -345,6 +159,8 @@ export default function OrderList() {
                           optionTitle={orderProduct.optionTitle}
                           orderCnt={orderProduct.orderCnt}
                           orderStatusType={orderProduct.orderStatusType}
+                          claimNo={orderProduct.claimNo}
+                          claimStatusType={orderProduct.claimStatusType}
                           orderStatusTypeLabel={orderProduct.orderStatusTypeLabel}
                           delivery={orderProduct.delivery}
                           key={orderProduct.orderNo}
@@ -354,7 +170,7 @@ export default function OrderList() {
                   )}
                 </div>
                 {loadMoreBtnVisible && (
-                  <div className="btn_article">
+                  <div className="my btn_article" style={{ textAlign: 'center' }}>
                     <a href="#" className="more_btn" onClick={onClickLoadMore}>
                       더보기
                     </a>
@@ -401,7 +217,6 @@ export default function OrderList() {
           </div>
         </div>
       </div>
-      {/* {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} />} */}
     </>
   );
 }

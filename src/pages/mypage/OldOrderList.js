@@ -39,7 +39,7 @@ export default function OldOrderList() {
     startDate: new Date(addMonth(new Date(), -3)),
     endDate: new Date(),
   });
-  const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(true);
+  const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(false);
   const nextPage = useRef(2);
 
   // const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
@@ -100,9 +100,9 @@ export default function OldOrderList() {
 
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'이전 주문/배송내역'} />
       <div className="contents mypage">
-        <div className="container">
+        <div className="container my">
           <div className="content">
             <div className="common_head">
               <Link to="/my-page/order-list" className="common_head_back">
@@ -140,7 +140,7 @@ export default function OldOrderList() {
                   )}
                 </div>
                 {loadMoreBtnVisible && (
-                  <div className="btn_article">
+                  <div className="my btn_article" style={{ textAlign: 'center' }}>
                     <a href="#" className="more_btn" onClick={onClickLoadMore}>
                       더보기
                     </a>
