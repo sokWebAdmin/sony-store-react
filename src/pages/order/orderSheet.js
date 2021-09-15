@@ -52,6 +52,7 @@ const OrderSheet = ({ location }) => {
   // form refs
   const ordererForm = createRef();
   const shippingAddressForm = createRef();
+  const giftReceiverForm = createRef();
   const guestPasswordForm = createRef();
 
   // form data
@@ -65,12 +66,12 @@ const OrderSheet = ({ location }) => {
     addressNo: null,
     countryCd: null,
     addressName: null,
-    receiverName: null,
+    receiverName: '',
     receiverZipCd: null,
     receiverAddress: null,
     receiverDetailAddress: null,
     receiverJibunAddress: null,
-    receiverContact1: null,
+    receiverContact1: '',
     receiverContact2: null,
     customsIdNumber: null,
     requestShippingDate: null,
@@ -215,11 +216,14 @@ const OrderSheet = ({ location }) => {
   const formValidation = () => {
     const entries = [
       ordererForm.current.fieldValidation,
-      shippingAddressForm.current.fieldValidation];
+    ];
 
     if (!isLogin) {
       entries.push(guestPasswordForm.current.fieldValidation);
     }
+    isGiftOrder
+      ? entries.push(giftReceiverForm.current.fieldValidation)
+      : entries.push(shippingAddressForm.current.fieldValidation);
 
     return entries.every(func => func());
   };
@@ -298,6 +302,7 @@ const OrderSheet = ({ location }) => {
                                    defaultVisible={true}>
                           <p className="acc_dsc_top">표시는 필수입력 정보</p>
                           <GiftReceiverForm
+                            ref={giftReceiverForm}
                             shipping={shippingAddress}
                             setShipping={setShippingAddress}
                           />
