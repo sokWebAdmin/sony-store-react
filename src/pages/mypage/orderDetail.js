@@ -91,34 +91,9 @@ export default function OrderDetail() {
       });
 
       setPayInfo({
-        // payType,
-        // cardInfo,
-        // bankInfo,
-
-        // FIXME: 목데이터, 개발완료되면 지우고 위 payType, cardInfo, bankInfo 주석 풀면 됨
-        payType: 'CREDIT_CARD',
-        cardInfo: {
-          approveYmdt: '2021-09-11 22:29:43',
-          cardAmt: 202000,
-          cardApprovalNumber: '51587665',
-          cardCode: 'CCBC',
-          cardCompany: 'BC',
-          cardName: 'BC카드',
-          cardNo: '920020******9787',
-          installmentPeriod: 0,
-          noInterest: false,
-        },
-        bankInfo: {
-          account: 'T0309260000174',
-          bank: 'IBK',
-          bankAmt: 202000,
-          bankCode: '003',
-          bankName: '기업은행',
-          depositAmt: 0,
-          depositYmdt: null,
-          depositorName: '한국사이버결제',
-          paymentExpirationYmdt: '2021-09-18 23:59:59',
-        },
+        payType,
+        cardInfo,
+        bankInfo,
       });
 
       console.log('res.data:', res.data);
