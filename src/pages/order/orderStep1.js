@@ -129,7 +129,10 @@ const OrderStep1 = ({ location }) => {
   const init = useCallback(() => ({
     async start () {
       if (!isLogin) {
-        this.guestAgreeCheck();
+        const notAgree = !this.guestAgreeCheck();
+        if (notAgree) {
+          return;
+        }
       }
       await this.fetchOrderSheet(orderSheetNo);
     },
@@ -138,14 +141,22 @@ const OrderStep1 = ({ location }) => {
         history.push(
           `/order/agree?accessOrderSheetNo=${orderSheetNo}`);
       }
+
+      return orderAgree;
     },
     async fetchOrderSheet (orderSheetNo) {
-      const { data: { ordererContact, deliveryGroups, paymentInfo, orderSheetAddress } } = await getOrderSheets(
-        orderSheetNo);
-      setOrderer(ordererContact);
-      setPaymentInfo(paymentInfo);
-      setDeliveryGroups(deliveryGroups);
-      setRecentAddresses(orderSheetAddress.recentAddresses.slice(0, 5));
+      try {
+        const { data: { ordererContact, deliveryGroups, paymentInfo, orderSheetAddress } } = await getOrderSheets(
+          orderSheetNo);
+        isLogin && setOrderer(ordererContact);
+        setPaymentInfo(paymentInfo);
+        setDeliveryGroups(deliveryGroups);
+        orderSheetAddress &&
+        setRecentAddresses(orderSheetAddress.recentAddresses.slice(0, 5));
+      }
+      catch (err) {
+        console.log(err);
+      }
     },
   }), []);
 
