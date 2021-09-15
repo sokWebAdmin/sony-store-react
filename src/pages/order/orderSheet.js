@@ -20,6 +20,7 @@ import Accordion from '../../components/common/surface/Accordion';
 
 import OrdererForm from '../../components/order/OrdererForm';
 import ShippingAddressForm from '../../components/order/ShippingAddressForm';
+import GiftReceiverForm from '../../components/order/GiftReceiverForm';
 import DiscountForm from '../../components/order/DiscountForm';
 import PaymentForm from '../../components/order/PaymentForm';
 import GuestPasswordForm from '../../components/order/GuestPasswordForm';
@@ -51,6 +52,7 @@ const OrderSheet = ({ location }) => {
   // form refs
   const ordererForm = createRef();
   const shippingAddressForm = createRef();
+  const giftReceiverForm = createRef();
   const guestPasswordForm = createRef();
 
   // form data
@@ -64,12 +66,13 @@ const OrderSheet = ({ location }) => {
     addressNo: null,
     countryCd: null,
     addressName: null,
-    receiverName: null,
+    receiverName: '',
     receiverZipCd: null,
     receiverAddress: null,
     receiverDetailAddress: null,
     receiverJibunAddress: null,
-    receiverContact1: null,
+    shippingInfoLaterInputContact: '',
+    receiverContact1: '',
     receiverContact2: null,
     customsIdNumber: null,
     requestShippingDate: null,
@@ -132,12 +135,19 @@ const OrderSheet = ({ location }) => {
     async start () {
       console.log('is gift order :', isGiftOrder);
 
+      if (!isLogin && isGiftOrder) {
+        alert('로그인시 선물하기가 가능합니다.');
+        location.goBack();
+        return;
+      }
+
       if (!isLogin) {
         const notAgree = !this.guestAgreeCheck();
         if (notAgree) {
           return;
         }
       }
+
       await this.fetchOrderSheet(orderSheetNo);
     },
     guestAgreeCheck () {
@@ -186,6 +196,28 @@ const OrderSheet = ({ location }) => {
     return result;
   };
 
+  const getGiftPaymentInfo = () => {
+    const result = {
+      orderSheetNo: getUrlParam('orderSheetNo'),
+      orderTitle: truncate(representativeProductName),
+      ...payment, // payType, pgType
+      orderer: { ...orderer },
+      member: isLogin,
+      updateMember: false,
+      tempPassword,
+      shippingAddress: { ...shippingAddress },
+      paymentAmt: paymentInfo.paymentAmt,
+      accumulationAmt: paymentInfo.accumulationAmt,
+      availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
+      ...discount,
+    };
+
+    delete result.shippingAddress.deliveryMemo;
+    delete shippingAddress.receiverContact1;
+
+    return result;
+  };
+
   const getCalculateInfo = () => ({
     accumulationUseAmt: discount?.subPayAmt || 0,
     addressRequest: { ...shippingAddress },
@@ -207,11 +239,14 @@ const OrderSheet = ({ location }) => {
   const formValidation = () => {
     const entries = [
       ordererForm.current.fieldValidation,
-      shippingAddressForm.current.fieldValidation];
+    ];
 
     if (!isLogin) {
       entries.push(guestPasswordForm.current.fieldValidation);
     }
+    isGiftOrder
+      ? entries.push(giftReceiverForm.current.fieldValidation)
+      : entries.push(shippingAddressForm.current.fieldValidation);
 
     return entries.every(func => func());
   };
@@ -274,15 +309,28 @@ const OrderSheet = ({ location }) => {
                                      setOrderer={setOrderer} />
                       </Accordion>
 
-                      <Accordion title={'배송지 정보'} defaultVisible={true}>
-                        <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                        <ShippingAddressForm ref={shippingAddressForm}
-                                             shipping={shippingAddress}
-                                             orderer={orderer}
-                                             setShipping={setShippingAddress}
-                                             recentAddresses={recentAddresses}
-                        />
-                      </Accordion>
+                      {!isGiftOrder ?
+                        <Accordion title={'배송지 정보'}
+                                   defaultVisible={true}>
+                          <p className="acc_dsc_top">표시는 필수입력 정보</p>
+                          <ShippingAddressForm ref={shippingAddressForm}
+                                               shipping={shippingAddress}
+                                               orderer={orderer}
+                                               setShipping={setShippingAddress}
+                                               recentAddresses={recentAddresses}
+                          />
+                        </Accordion>
+                        :
+                        <Accordion title={'선물 받으신 분'}
+                                   defaultVisible={true}>
+                          <p className="acc_dsc_top">표시는 필수입력 정보</p>
+                          <GiftReceiverForm
+                            ref={giftReceiverForm}
+                            shipping={shippingAddress}
+                            setShipping={setShippingAddress}
+                          />
+                        </Accordion>
+                      }
 
                       {isLogin &&
                       <Accordion title={'할인 정보'} defaultVisible={true}>
