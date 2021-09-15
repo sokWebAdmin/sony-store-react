@@ -1,11 +1,17 @@
+import { useState } from 'react';
+
 import paymentType from '../../const/paymentType';
-import { setObjectState } from '../../utils/state';
+import InvoiceGuide from '../popup/InvoiceGuide';
 
 const PaymentForm = ({ payment, setPayment }) => {
   const changePaymentType = ({ pgType, payType }) => {
-    setObjectState('pgType', pgType)(setPayment);
-    setObjectState('payType', payType)(setPayment);
+    setPayment({
+      pgType,
+      payType,
+    });
   };
+
+  const [viewInvoiceGuide, setViewInvoiceGuide] = useState(false);
 
   return (
     <>
@@ -64,8 +70,11 @@ const PaymentForm = ({ payment, setPayment }) => {
                     <button
                       className="button button_negative button-m popup_comm_btn"
                       data-popup-name="tax_invoice1"
+                      onClick={() => setViewInvoiceGuide(true)}
                       type="button">전자 세금계산서 발행 안내
                     </button>
+                    {viewInvoiceGuide &&
+                    <InvoiceGuide close={() => setViewInvoiceGuide(false)} />}
                     <button
                       className="button button_positive button-m popup_comm_btn"
                       data-popup-name="tax_invoice2"
