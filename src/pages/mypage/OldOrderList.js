@@ -42,8 +42,8 @@ export default function OldOrderList() {
   const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(true);
   const nextPage = useRef(2);
 
-  const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
-  // const [oldOrderProducts, setOldOrderProducts] = useState([]);
+  // const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
+  const [oldOrderProducts, setOldOrderProducts] = useState([]);
 
   useEffect(() => {
     search({
