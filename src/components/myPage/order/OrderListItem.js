@@ -124,7 +124,9 @@ export default function OrderListItem({
             <button type="button" className="button button_negative button-s" onClick={onClickRefundAccount}>
               환불계좌정보
             </button>
-            {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} />}
+            {refundAccountVisible && (
+              <RefundAccount setVisible={setRefundAccountVisible} orderOptionNo={orderOptionNo} />
+            )}
           </>
         )}
       </div>

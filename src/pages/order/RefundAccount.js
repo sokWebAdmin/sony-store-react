@@ -1,15 +1,19 @@
 import LayerPopup from '../../components/common/LayerPopup';
 import { useEffect } from 'react';
-import { getProfileClaimApplyInfoByorderOptionNo } from '../../api/claim';
+import { getProfileClaimApplyInfoByOrderOptionNo } from '../../api/claim';
 
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
-export default function RefundAccount({ setVisible }) {
+export default function RefundAccount({ setVisible, orderOptionNo }) {
   const close = () => setVisible(false);
 
   useEffect(async () => {
-    // const res = await getProfileClaimApplyInfoByorderOptionNo({ path: { orderOptionNo }, params: { claimType } });
+    const res = await getProfileClaimApplyInfoByOrderOptionNo({
+      path: { orderOptionNo },
+      params: { claimType: 'CANCEL' },
+    });
+    console.log('res:', res);
   }, []);
 
   return (
