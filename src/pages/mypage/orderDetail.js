@@ -290,13 +290,6 @@ export default function OrderDetail() {
                         <div className="purchase_detail_method">
                           가상 계좌 : {payInfo.bankInfo.bankName}({payInfo.bankInfo.account})
                         </div>
-                        <button
-                          type="button"
-                          className="button button_negative button-s popup_comm_btn"
-                          data-popup-name="cash_receipt"
-                        >
-                          현금영수증 신청
-                        </button>
                       </>
                     )}
                     {payInfo.payType === 'CREDIT_CARD' && (
