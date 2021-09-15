@@ -25,7 +25,7 @@ export default function OrderListItem({
   const orderStatusMap = {
     DEPOSIT_WAIT: '입금대기',
     PAY_DONE: '결제완료',
-    PRODUCT_PREPARE: '배송준비', // 샵바이에는 상품준비중상태가 있지만 소니에는 없음.
+    PRODUCT_PREPARE: '배송준비', // 소니에서는 상품준비중을 배송준비중으로 표기
     DELIVERY_PREPARE: '배송준비',
     DELIVERY_ING: '배송중',
     DELIVERY_DONE: '배송완료',

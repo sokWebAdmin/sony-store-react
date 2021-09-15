@@ -394,7 +394,6 @@ export default function OrderList() {
           </div>
         </div>
       </div>
-      {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} />}
     </>
   );
 }

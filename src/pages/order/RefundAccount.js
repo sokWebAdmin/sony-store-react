@@ -1,9 +1,16 @@
 import LayerPopup from '../../components/common/LayerPopup';
+import { useEffect } from 'react';
+import { getProfileClaimApplyInfoByorderOptionNo } from '../../api/claim';
+
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function RefundAccount({ setVisible }) {
   const close = () => setVisible(false);
+
+  useEffect(async () => {
+    // const res = await getProfileClaimApplyInfoByorderOptionNo({ path: { orderOptionNo }, params: { claimType } });
+  }, []);
 
   return (
     <>
