@@ -31,12 +31,11 @@ import { getOrderSheets, postOrderSheetCalculate } from '../../api/order';
 
 //css
 import '../../assets/scss/contents.scss';
-import '../../assets/scss/order.scss';
+import '../../assets/css/order.css';
 
 // functions
 import { getUrlParam } from '../../utils/location';
 import { truncate } from '../../utils/unit';
-import qs from 'qs';
 import { useGuestState } from '../../context/guest.context';
 
 const OrderSheet = ({ location }) => {
