@@ -7,7 +7,11 @@ import '../../assets/scss/mypage.scss';
 
 export default function RefundAccount({ setVisible, orderOptionNo }) {
   const close = () => setVisible(false);
-  const [selectBank, setSelectBank] = useState('');
+  const [form, setForm] = useState({
+    bank: '',
+    account: '',
+    depositorName: '',
+  });
   const [bankSelectBoxVisible, setBankSelectBoxVisible] = useState(false);
   const [bankSelectList, setBackSelectList] = useState([]);
 
@@ -19,6 +23,38 @@ export default function RefundAccount({ setVisible, orderOptionNo }) {
     setBackSelectList(res.data.availableBanks);
     console.log('res:', res.data.availableBanks);
   }, []);
+
+  const onSubmitRefundAccount = (form) => {
+    if (!validate(form)) {
+      return;
+    }
+
+    //TODO: ui 컨펌으로 변경
+    if (!window.confirm('현재의 주문에 대해서 환불계좌를 확정하시겠습니까?')) {
+      return;
+    }
+  };
+
+  const validate = (form) => {
+    //TODO: ui 얼럿으로 교체
+    console.log('form.bank:', form.bank);
+    if (!form.bank) {
+      alert('은행을 선택하세요.');
+      return false;
+    }
+
+    if (!form.account) {
+      alert('계좌번호를 입력하세요.');
+      return false;
+    }
+
+    if (!form.depositorName) {
+      alert('예금주를 입력하세요.');
+      return false;
+    }
+
+    return true;
+  };
 
   return (
     <>
@@ -39,7 +75,7 @@ export default function RefundAccount({ setVisible, orderOptionNo }) {
                         setBankSelectBoxVisible(!bankSelectBoxVisible);
                       }}
                     >
-                      {selectBank ? selectBank : '은행을 선택해주세요.'}
+                      {form.bank ? form.bank : '은행을 선택해주세요.'}
                     </a>
                     <div className="select_inner" style={{ display: bankSelectBoxVisible ? 'block' : 'none' }}>
                       <p className="prd_tag">환불 받을 은행</p>
@@ -51,7 +87,7 @@ export default function RefundAccount({ setVisible, orderOptionNo }) {
                               className="opt_list"
                               onClick={(e) => {
                                 e.preventDefault();
-                                setSelectBank(label);
+                                setForm({ ...form, bank: label });
                                 setBankSelectBoxVisible(false);
                               }}
                             >
@@ -96,6 +132,10 @@ export default function RefundAccount({ setVisible, orderOptionNo }) {
               <button
                 className="button button_positive button-full"
                 type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSubmitRefundAccount(form);
+                }}
                 //   onClick="common.makeAlert('complete', '환불계좌 등록이 완료되었습니다.')"
               >
                 저장
