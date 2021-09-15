@@ -67,7 +67,7 @@ export default function OrderAgree ({ location }) {
 
     setOrderAgree(guestDispatch, true);
     accessOrderSheetNo ? history.push(
-      `/order/step/1?orderSheetNo=${accessOrderSheetNo}`) : history.push('/');
+      `/order/sheet?orderSheetNo=${accessOrderSheetNo}`) : history.push('/');
 
   };
 
