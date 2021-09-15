@@ -8,7 +8,7 @@ import '../../assets/scss/partials/popup/invoice.scss';
 
 const InvoicePublish = ({ basketid, close }) => {
 
-  const [processDone, setProcessDone] = useState(true);
+  const [processDone, setProcessDone] = useState(false);
   const [formData, setFormData] = useState({
     regnum: '',
     company: '',
@@ -17,16 +17,7 @@ const InvoicePublish = ({ basketid, close }) => {
     kind: '',
     item: '',
   });
-  const [postedData, setPostedData] = useState({
-    'basketid': '17a560:f608a8d19a:-4d143.76.43.26',
-    'regnum': '111-11-11111',
-    'company': '소니코리아(주)',
-    'president': '오쿠라키쿠오',
-    'address': '서울 영등포구 국제금융로 10',
-    'kind': '도매',
-    'item': '가전제품 및 부품 도매업',
-
-  });
+  const [postedData, setPostedData] = useState(null);
 
   // fields. validation 시 focus 필요
   const regnum = useRef();
