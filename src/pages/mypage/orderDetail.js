@@ -29,6 +29,7 @@ export default function OrderDetail() {
     receiverDetailAddress: '',
     deliveryMemo: '',
   });
+  const [receiptInfos, setReceiptInfos] = useState(null);
 
   // 결제금액정보
   const [amountInfo, setAmountInfo] = useState({
@@ -67,7 +68,9 @@ export default function OrderDetail() {
         },
         payType,
         payInfo: { cardInfo, bankInfo },
+        receiptInfos,
       } = res.data;
+
       setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
       setOrderProducts(makeOrderProducts(res.data));
       setOrdererInfo({ ordererName, ordererContact1 });
@@ -95,6 +98,8 @@ export default function OrderDetail() {
         cardInfo,
         bankInfo,
       });
+
+      setReceiptInfos(receiptInfos);
 
       console.log('res.data:', res.data);
       console.log('orderProducts:', orderProducts);
@@ -161,6 +166,10 @@ export default function OrderDetail() {
     window.print();
     document.body.style.display = 'block';
     printDiv.style.display = 'none';
+  };
+
+  const openCredicardReceipt = (receiptInfoUrl) => {
+    window.open(receiptInfoUrl);
   };
 
   return (
@@ -297,7 +306,11 @@ export default function OrderDetail() {
                         <div className="purchase_detail_method">
                           {payInfo.cardInfo.cardName} / {getInstallmentPeriod(payInfo.cardInfo)}
                         </div>
-                        <button type="button" className="button button_negative button-s">
+                        <button
+                          type="button"
+                          className="button button_negative button-s"
+                          onClick={() => openCredicardReceipt(receiptInfos[0].url)}
+                        >
                           신용카드 영수증
                         </button>
                       </>
