@@ -26,5 +26,10 @@ export const postProfileOrderCancelByOrderOptionNo = ({ path: { orderOptionNo },
   request(`​/profile​/order-options​/${orderOptionNo}​/claims​/cancel`, 'post',
     null, requestBody);
 
-export const shippingsEncryptedShippingNoLaterInput = encryptedShippingNo =>
+export const getShippingsEncryptedShippingNoLaterInput = encryptedShippingNo =>
   request(`shippings/${encryptedShippingNo}/later-input`, 'get');
+
+export const putShippingsEncryptedShippingNoLaterInput = (
+  encryptedShippingNo, requestBody) =>
+  request(`shippings/${encryptedShippingNo}/later-input`, 'put', null,
+    requestBody);

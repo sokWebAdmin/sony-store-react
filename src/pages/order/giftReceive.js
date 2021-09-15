@@ -10,10 +10,18 @@ import FindAddress from '../../components/popup/FindAddress';
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/css/order.css';
+
+// utils
 import { getUrlParam } from '../../utils/location';
 
+// stylesheet
+import '../../assets/scss/interaction/field.dynamic.scss';
+
 // api
-import { shippingsEncryptedShippingNoLaterInput } from '../../api/order.js';
+import {
+  getShippingsEncryptedShippingNoLaterInput,
+  putShippingsEncryptedShippingNoLaterInput,
+} from '../../api/order.js';
 import { handleChange, setObjectState } from '../../utils/state';
 import { deliveryMemos } from '../../const/order';
 
@@ -46,7 +54,7 @@ const GiftReceive = ({ location }) => {
   const init = () => {
     encryptedShippingNo
       ? fetchLatestShipping().
-        then(laterInputCompletedCheck).
+        // then(laterInputCompletedCheck).
         then(blankFieldCorrection).
         then(setLatestShipping)
       : guard();
@@ -78,9 +86,60 @@ const GiftReceive = ({ location }) => {
     receiverDetailAddress.current.focus();
   };
 
+  const submit = async () => {
+    if (!fieldValidation()) {
+      return;
+    }
+
+    const request = { ...latestShipping };
+
+    delete request.deliveryNo;
+    delete request.partnerNo;
+    delete request.mallNo;
+    delete request.laterInputCompleted;
+
+    try {
+      const { status } = await putShippingsEncryptedShippingNoLaterInput(
+        encryptedShippingNo, request);
+      if (status === 204) {
+        end();
+      }
+    }
+    catch (err) {
+      console.error(err);
+    }
+  };
+
+  function end () {
+    alert('배송지 설정이 완료되었습니다.');
+    history.push('/');
+  }
+
+  function fieldValidation () {
+    const refs = {
+      receiverZipCd,
+      receiverDetailAddress,
+    };
+
+    const emptyRef = Object.entries(refs).
+      find(([k]) => !latestShipping[k])?.[1];
+    if (!emptyRef) {
+      return true;
+    }
+
+    attachError(emptyRef);
+    return false;
+  }
+
+  function attachError (ref) {
+    const el = ref.current;
+    el.parentNode.classList.add('error');
+    el.focus();
+  }
+
   async function fetchLatestShipping () {
     try {
-      const { data } = await shippingsEncryptedShippingNoLaterInput(
+      const { data } = await getShippingsEncryptedShippingNoLaterInput(
         encryptedShippingNo);
       return data;
     }
@@ -122,7 +181,7 @@ const GiftReceive = ({ location }) => {
   return (
     <>
       <SEOHelmet title={'소니스토어 선물하기'} />
-      <div className="orderPresent_container">
+      <div className="contents orderPresent_container">
         <div className="orderPresent_info">
           <i className="present"><img src="../../images/order/ic_present.svg"
                                       alt="선물상자 이미지" /></i>
@@ -278,7 +337,7 @@ const GiftReceive = ({ location }) => {
           </div>
           <div className="parent">
             <button className="button button_positive button-full"
-                    type="button">입력 완료
+                    type="button" onClick={submit}>입력 완료
             </button>
           </div>
         </div>
