@@ -17,7 +17,6 @@ import { postProfileClaimOrderCancelByOrderNo, postGuestClaimOrderCancelByOrderN
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
-import { ajaxPrefilter } from 'jquery';
 
 export default function OrderDetail() {
   const query = useQuery();
@@ -55,61 +54,115 @@ export default function OrderDetail() {
 
   useEffect(() => {
     getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } }).then((res) => {
-      const {
-        orderNo,
-        orderYmdt,
-        defaultOrderStatusType,
-        orderer: { ordererName, ordererContact1 },
-        shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
-        deliveryMemo,
-        lastOrderAmount: {
-          totalProductAmt,
-          immediateDiscountAmt,
-          additionalDiscountAmt,
-          cartCouponDiscountAmt,
-          productCouponDiscountAmt,
-          subPayAmt,
-          payAmt,
-        },
-        payType,
-        payInfo: { cardInfo, bankInfo },
-        receiptInfos,
-      } = res.data;
+      setStates(res);
+      // const {
+      //   orderNo,
+      //   orderYmdt,
+      //   defaultOrderStatusType,
+      //   orderer: { ordererName, ordererContact1 },
+      //   shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
+      //   deliveryMemo,
+      //   lastOrderAmount: {
+      //     totalProductAmt,
+      //     immediateDiscountAmt,
+      //     additionalDiscountAmt,
+      //     cartCouponDiscountAmt,
+      //     productCouponDiscountAmt,
+      //     subPayAmt,
+      //     payAmt,
+      //   },
+      //   payType,
+      //   payInfo: { cardInfo, bankInfo },
+      //   receiptInfos,
+      // } = res.data;
 
-      setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
-      setOrderProducts(makeOrderProducts(res.data));
-      setOrdererInfo({ ordererName, ordererContact1 });
-      setShippingAddress({
-        receiverName,
-        receiverAddress,
-        receiverDetailAddress,
-        receiverContact1,
-        deliveryMemo,
-      });
+      // setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
+      // setOrderProducts(makeOrderProducts(res.data));
+      // setOrdererInfo({ ordererName, ordererContact1 });
+      // setShippingAddress({
+      //   receiverName,
+      //   receiverAddress,
+      //   receiverDetailAddress,
+      //   receiverContact1,
+      //   deliveryMemo,
+      // });
 
-      const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
-      const couponDiscountAmt = cartCouponDiscountAmt + productCouponDiscountAmt;
-      setAmountInfo({
-        totalProductAmt,
-        promotionDiscountAmt,
-        couponDiscountAmt,
-        mileageAmt: subPayAmt,
-        totalDiscountAmount: promotionDiscountAmt + couponDiscountAmt + subPayAmt,
-        payAmt,
-      });
+      // const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
+      // const couponDiscountAmt = cartCouponDiscountAmt + productCouponDiscountAmt;
+      // setAmountInfo({
+      //   totalProductAmt,
+      //   promotionDiscountAmt,
+      //   couponDiscountAmt,
+      //   mileageAmt: subPayAmt,
+      //   totalDiscountAmount: promotionDiscountAmt + couponDiscountAmt + subPayAmt,
+      //   payAmt,
+      // });
 
-      setPayInfo({
-        payType,
-        cardInfo,
-        bankInfo,
-      });
+      // setPayInfo({
+      //   payType,
+      //   cardInfo,
+      //   bankInfo,
+      // });
 
-      setReceiptInfos(receiptInfos);
+      // setReceiptInfos(receiptInfos);
 
       console.log('res.data:', res.data);
       console.log('orderProducts:', orderProducts);
     });
   }, []);
+
+  const setStates = (res) => {
+    const {
+      orderNo,
+      orderYmdt,
+      defaultOrderStatusType,
+      orderer: { ordererName, ordererContact1 },
+      shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
+      deliveryMemo,
+      lastOrderAmount: {
+        totalProductAmt,
+        immediateDiscountAmt,
+        additionalDiscountAmt,
+        cartCouponDiscountAmt,
+        productCouponDiscountAmt,
+        subPayAmt,
+        payAmt,
+      },
+      payType,
+      payInfo: { cardInfo, bankInfo },
+      receiptInfos,
+    } = res.data;
+
+    setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
+    setOrderProducts(makeOrderProducts(res.data));
+    setOrdererInfo({ ordererName, ordererContact1 });
+    setShippingAddress({
+      receiverName,
+      receiverAddress,
+      receiverDetailAddress,
+      receiverContact1,
+      deliveryMemo,
+    });
+
+    const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
+    const couponDiscountAmt = cartCouponDiscountAmt + productCouponDiscountAmt;
+    setAmountInfo({
+      totalProductAmt,
+      promotionDiscountAmt,
+      couponDiscountAmt,
+      mileageAmt: subPayAmt,
+      totalDiscountAmount: promotionDiscountAmt + couponDiscountAmt + subPayAmt,
+      payAmt,
+    });
+
+    setPayInfo({
+      payType,
+      cardInfo,
+      bankInfo,
+    });
+
+    setReceiptInfos(receiptInfos);
+  };
 
   const makeOrderProducts = (orderDetailResponse) => {
     const { orderOptionsGroupByPartner } = orderDetailResponse;
