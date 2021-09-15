@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import paymentType from '../../const/paymentType';
 import InvoiceGuide from '../popup/InvoiceGuide';
+import InvoicePublish from '../popup/InvoicePublish';
 
 const PaymentForm = ({ payment, setPayment }) => {
   const changePaymentType = ({ pgType, payType }) => {
@@ -12,6 +13,7 @@ const PaymentForm = ({ payment, setPayment }) => {
   };
 
   const [viewInvoiceGuide, setViewInvoiceGuide] = useState(false);
+  const [viewInvoicePublish, setViewInvoicePublish] = useState(true);
 
   return (
     <>
@@ -78,8 +80,11 @@ const PaymentForm = ({ payment, setPayment }) => {
                     <button
                       className="button button_positive button-m popup_comm_btn"
                       data-popup-name="tax_invoice2"
+                      onClick={() => setViewInvoicePublish(true)}
                       type="button">전자 세금계산서 신청하기
                     </button>
+                    {viewInvoicePublish && <InvoicePublish
+                      close={() => setViewInvoicePublish(false)} />}
                   </div>
                 </div>
                 <strong className="info_tit3">[소비자
