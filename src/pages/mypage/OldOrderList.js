@@ -39,7 +39,7 @@ export default function OldOrderList() {
     startDate: new Date(addMonth(new Date(), -3)),
     endDate: new Date(),
   });
-  const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(true);
+  const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(false);
   const nextPage = useRef(2);
 
   // const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
