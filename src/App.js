@@ -209,6 +209,7 @@ const App = (props) => {
               <Route exact path="/cart-empty" component={cartEmpty} />
               <Route exact path="/order/sheet" component={orderSheet} />
               <Route exact path="/gift/sheet" component={orderSheet} />
+              <Route exact path="/gift/sheet" component={orderSheet} />
 
               {/* 이벤트  */}
               <Route exact path="/event/list" component={eventList} />

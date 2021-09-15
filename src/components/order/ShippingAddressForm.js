@@ -47,9 +47,11 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
   // object
 
   useEffect(
-    () => specifyDelivery ? handleShippingChangeParameter('requestShippingDate',
-      getStrYMDHMSS(specifyDeliveryDate)) : handleShippingChangeParameter(
-      'requestShippingDate', null)
+    () => specifyDelivery
+      ? handleShippingChangeParameter('requestShippingDate',
+        getStrYMDHMSS(specifyDeliveryDate)).substr(0, 10)
+      : handleShippingChangeParameter(
+        'requestShippingDate', null)
     , [specifyDeliveryDate, specifyDelivery]);
 
   // addressNo, countryCd, addressName, receiverName, receiverZipCd,

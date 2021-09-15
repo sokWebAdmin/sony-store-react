@@ -88,6 +88,8 @@ const OrderSheet = ({ location }) => {
   const [tempPassword, setTempPassword] = useState(null);
 
   const orderSheetNo = useMemo(() => getUrlParam('orderSheetNo'), [location]);
+  const isGiftOrder = useMemo(() => location.pathname.includes('/gift'),
+    [location]);
 
   const [payment, setPayment] = useState({
     pgType: paymentType.creditCard.pgType,
@@ -128,6 +130,8 @@ const OrderSheet = ({ location }) => {
 
   const init = useCallback(() => ({
     async start () {
+      console.log('is gift order :', isGiftOrder);
+
       if (!isLogin) {
         const notAgree = !this.guestAgreeCheck();
         if (notAgree) {

@@ -1,15 +1,18 @@
 @import "./import/variables";
 
+
+// .mypage .my .more_bth
 .mypage {
 
   /* mypage */
-.my{
-  .container .content { 
-    padding-top: 80px;
-  }
-  .cont{
-    .cont_head{
-      position:relative;
+  .my {
+    .container .content {
+      padding-top: 80px;
+    }
+
+    .cont {
+      .cont_head {
+        position: relative;
     }
     .cont_tit{
       margin-top:80px;
