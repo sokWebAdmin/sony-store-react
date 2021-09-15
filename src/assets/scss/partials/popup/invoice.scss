@@ -1,0 +1,23 @@
+.invoice_result {
+  margin: 20px 0;
+  padding: 20px 0;
+
+  dl {
+    display: flex;
+    margin-bottom: 10px;
+
+    @media screen and (max-width: 640px) {
+      flex-direction: column;
+      margin-bottom: 1.5em;
+    }
+
+    dt {
+      width: 8em;
+      color: #222;
+
+      @media screen and (max-width: 640px) {
+        margin-bottom: 1em;
+      }
+    }
+  }
+}
