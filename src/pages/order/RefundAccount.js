@@ -1,5 +1,5 @@
 import LayerPopup from '../../components/common/LayerPopup';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getProfileClaimApplyInfoByOrderOptionNo } from '../../api/claim';
 
 import '../../assets/scss/contents.scss';
@@ -7,13 +7,16 @@ import '../../assets/scss/mypage.scss';
 
 export default function RefundAccount({ setVisible, orderOptionNo }) {
   const close = () => setVisible(false);
+  const [bankSelectBoxVisible, setBankSelectBoxVisible] = useState(false);
+  const [bankSelectList, setBackSelectList] = useState([]);
 
   useEffect(async () => {
     const res = await getProfileClaimApplyInfoByOrderOptionNo({
       path: { orderOptionNo },
       params: { claimType: 'CANCEL' },
     });
-    console.log('res:', res);
+    setBackSelectList(res.data.availableBanks);
+    console.log('res:', res.data.availableBanks);
   }, []);
 
   return (
@@ -26,122 +29,27 @@ export default function RefundAccount({ setVisible, orderOptionNo }) {
               <div className="group">
                 <div className="inp_box">
                   <div className="select_ui_zone btm_line">
-                    <a href="#" className="selected_btn" data-default-text="은행을 선택해주세요.">
+                    <a
+                      href="#"
+                      className="selected_btn"
+                      data-default-text="은행을 선택해주세요."
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setBankSelectBoxVisible(!bankSelectBoxVisible);
+                      }}
+                    >
                       은행을 선택해주세요.
                     </a>
-                    <div className="select_inner" style={{ display: 'none' }}>
+                    <div className="select_inner" style={{ display: bankSelectBoxVisible ? 'block' : 'none' }}>
                       <p className="prd_tag">환불 받을 은행</p>
                       <ul className="select_opt">
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">한국은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">한국산업은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">중소기업은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">국민은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">한국외환은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">한국외환은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">한국수출입은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">농협</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">우리은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">조흥은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">제일은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">하나은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">하나은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">신한은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">한국씨티은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">대구은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">부산은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">광주은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">제주은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">전북은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">경남은행</div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="opt_list">
-                            <div className="item">새마을금고(MG)</div>
-                          </a>
-                        </li>
+                        {bankSelectList.map(({ bank, label }) => (
+                          <li key={bank}>
+                            <a href="#" className="opt_list">
+                              <div className="item">{label}</div>
+                            </a>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   </div>
@@ -173,10 +81,6 @@ export default function RefundAccount({ setVisible, orderOptionNo }) {
                 <div className="error_txt">
                   <span className="ico"></span>예금주명을 입력하세요.
                 </div>
-              </div>
-              <div className="check">
-                <input type="checkbox" className="inp_check" id="refund_mileage" name="refund_mileage" />
-                <label htmlFor="refund_mileage">마일리지 적립으로 환불</label>
               </div>
             </div>
             <div className="btn_article">
