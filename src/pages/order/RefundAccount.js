@@ -7,6 +7,7 @@ import '../../assets/scss/mypage.scss';
 
 export default function RefundAccount({ setVisible, orderOptionNo }) {
   const close = () => setVisible(false);
+  const [selectBank, setSelectBank] = useState('');
   const [bankSelectBoxVisible, setBankSelectBoxVisible] = useState(false);
   const [bankSelectList, setBackSelectList] = useState([]);
 
@@ -38,14 +39,22 @@ export default function RefundAccount({ setVisible, orderOptionNo }) {
                         setBankSelectBoxVisible(!bankSelectBoxVisible);
                       }}
                     >
-                      은행을 선택해주세요.
+                      {selectBank ? selectBank : '은행을 선택해주세요.'}
                     </a>
                     <div className="select_inner" style={{ display: bankSelectBoxVisible ? 'block' : 'none' }}>
                       <p className="prd_tag">환불 받을 은행</p>
                       <ul className="select_opt">
                         {bankSelectList.map(({ bank, label }) => (
                           <li key={bank}>
-                            <a href="#" className="opt_list">
+                            <a
+                              href="#"
+                              className="opt_list"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setSelectBank(label);
+                                setBankSelectBoxVisible(false);
+                              }}
+                            >
                               <div className="item">{label}</div>
                             </a>
                           </li>
