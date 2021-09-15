@@ -18,8 +18,6 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function OrderList() {
-  const [refundAccountVisible, setRefundAccountVisible] = useState(false);
-
   const [summary, setSummary] = useState({
     depositWaitCnt: 0,
     payDoneCnt: 0,
@@ -36,6 +34,7 @@ export default function OrderList() {
     exchangeProcessingCnt: 0,
   });
 
+  const [refundAccountVisible, setRefundAccountVisible] = useState(false);
   const [searchPeriod, setSearchPeriod] = useState({
     startDate: new Date(addMonth(new Date(), -3)),
     endDate: new Date(),
@@ -46,12 +45,6 @@ export default function OrderList() {
 
   useEffect(() => {
     getProfileOrdersSummaryStatus().then((res) => {
-      // FIXME: 모킹 데이터
-      // res.data.depositWaitCnt = 1;
-      // res.data.cancelProcessingCnt = 2;
-      // res.data.cancelDoneCnt = 3;
-      // res.data.deliveryIngCnt = 4;
-      // console.log('summary:', res.data);
       setSummary(res.data);
     });
   }, []);
@@ -401,7 +394,7 @@ export default function OrderList() {
           </div>
         </div>
       </div>
-      {/* {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} />} */}
+      {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} />}
     </>
   );
 }

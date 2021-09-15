@@ -1,4 +1,6 @@
 import LayerPopup from '../../components/common/LayerPopup';
+import '../../assets/scss/contents.scss';
+import '../../assets/scss/mypage.scss';
 
 export default function RefundAccount({ setVisible }) {
   const close = () => setVisible(false);
@@ -16,7 +18,7 @@ export default function RefundAccount({ setVisible }) {
                     <a href="#" className="selected_btn" data-default-text="은행을 선택해주세요.">
                       은행을 선택해주세요.
                     </a>
-                    <div className="select_inner" style="display: none;">
+                    <div className="select_inner" style={{ display: 'none' }}>
                       <p className="prd_tag">환불 받을 은행</p>
                       <ul className="select_opt">
                         <li>
