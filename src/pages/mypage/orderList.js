@@ -300,7 +300,7 @@ export default function OrderList() {
     <>
       <SEOHelmet title={'주문/배송내역'} />
       <div className="contents mypage">
-        <div className="container">
+        <div className="container my">
           <div className="content">
             <div className="common_head">
               <Link to="/my-page" className="common_head_back">
@@ -349,7 +349,7 @@ export default function OrderList() {
                   )}
                 </div>
                 {loadMoreBtnVisible && (
-                  <div className="btn_article">
+                  <div className="my btn_article" style={{ textAlign: 'center' }}>
                     <a href="#" className="more_btn" onClick={onClickLoadMore}>
                       더보기
                     </a>

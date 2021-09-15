@@ -148,7 +148,7 @@ export default function OrderDetail() {
     const orderStatus = {
       DEPOSIT_WAIT: '입금대기',
       PAY_DONE: '결제완료',
-      PRODUCT_PREPARE: '배송준비', // 샵바이에는 상품준비중상태가 있지만 소니에는 없음.
+      PRODUCT_PREPARE: '배송준비', // 소니에서는 상품준비중을 배송준비중으로 표기ㄴ
       DELIVERY_PREPARE: '배송준비',
       DELIVERY_ING: '배송중',
       DELIVERY_DONE: '배송완료',
@@ -159,6 +159,10 @@ export default function OrderDetail() {
 
   const showFindDelivery = (defaultOrderStatusType) => {
     return defaultOrderStatusType === 'DELIVERY_ING' || defaultOrderStatusType === 'DELIVERY_DONE';
+  };
+
+  const showOrderCancel = (orderStatusType) => {
+    return ['DEPOSIT_WAIT', 'PAY_DONE', 'PRODUCT_PREPARE', 'DELIVERY_PREPARE'].includes(orderStatusType);
   };
 
   const getInstallmentPeriod = (cardInfo) => {
@@ -188,7 +192,7 @@ export default function OrderDetail() {
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
       <div className="contents mypage">
-        <div className="container">
+        <div className="container my">
           <div className="content">
             <div className="common_head">
               <Link to="/my-page/order-list" className="common_head_back">
@@ -337,9 +341,12 @@ export default function OrderDetail() {
             {/* // 결제 정보 */}
             {/* buttons */}
             <div className="cont button_wrap">
-              <button type="button" className="button button_negative">
-                주문 취소
-              </button>
+              {showOrderCancel(orderInfo.defaultOrderStatusType) && (
+                <button type="button" className="button button_negative">
+                  주문 취소
+                </button>
+              )}
+
               <button type="button" className="button button_negative only-pc" onClick={() => onPrint()}>
                 주문 정보 프린트
               </button>
