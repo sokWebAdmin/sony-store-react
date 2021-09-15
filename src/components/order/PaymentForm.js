@@ -13,7 +13,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
   };
 
   const [viewInvoiceGuide, setViewInvoiceGuide] = useState(false);
-  const [viewInvoicePublish, setViewInvoicePublish] = useState(true);
+  const [viewInvoicePublish, setViewInvoicePublish] = useState(false);
 
   return (
     <>
