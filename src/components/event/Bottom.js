@@ -39,6 +39,7 @@ const EventBottom = () => {
   const [productNo, setProductNo] = useState('');
   const [label, setLabel] = useState('');
   const [tag, setTag] = useState('');
+  const [selectEvent, setSelectEvent] = useState(null);
 
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
@@ -71,25 +72,27 @@ const EventBottom = () => {
 
   const formatYmdt = (ymdt) => new Date(ymdt).toISOString().slice(0, 10);
 
-  const onClickEventDetail = (eventNo, tagName) => {
+  const onClickEventDetail = (eventNo, tagName, event) => {
     setProductNo(eventNo);
     setTag(tagName);
-    history.push(getLink(false, eventNo, tagName));
+    setSelectEvent(event);
+    history.push(getLink(false, eventNo, tagName, event));
   };
 
-  const openShareEventLayer = (eventNo, label, tagName) => {
+  const openShareEventLayer = (eventNo, label, tagName, event) => {
     setTag(tagName);
     setProductNo(eventNo);
     setLabel(label);
+    setSelectEvent(event);
     setShowShareLayer(true);
   }
 
-  const getLink = (origin = true, eventNo = productNo, tagName = tag) => {
-    const key = Object.keys(tags).find(key => {
-      console.log(tagName, tags[key]);
-      return tagName.includes(tags[key]);
-    });
+  const getLink = (origin = true, eventNo = productNo, tagName = tag, event = selectEvent) => {
+    const key = Object.keys(tags).find(key => tagName.includes(tags[key]));
 
+    if (event.url !== '') {
+      return `${origin ? document.location.origin : ''}/${event.url}`;
+    }
     if (key === 'all') {
       return `${origin ? document.location.origin : ''}/event/detail/${eventNo}`;
     } else if (key === 'only') {
@@ -200,13 +203,14 @@ const EventBottom = () => {
               </div>
               <div className="item_list">
                 <div className="item_row">
-                  {events && events.map(({eventNo, label, pcImageUrl, startYmdt, endYmdt, tag: tagName}) => {
+                  {events && events.map((event) => {
+                    const {eventNo, label, pcImageUrl, startYmdt, endYmdt, tag: tagName} = event;
                     return (
-                      <div className="event_item" key={eventNo} onClick={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        event.nativeEvent.stopImmediatePropagation();
-                        onClickEventDetail(eventNo, tagName);
+                      <div className="event_item" key={eventNo} onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        e.nativeEvent.stopImmediatePropagation();
+                        onClickEventDetail(eventNo, tagName, event);
                       }}>
                         <a href="javascript:" className="item">
                           <div className="img"><img src={pcImageUrl} alt={label} /></div>
@@ -219,7 +223,7 @@ const EventBottom = () => {
                           e.preventDefault();
                           e.stopPropagation();
                           e.nativeEvent.stopImmediatePropagation();
-                          openShareEventLayer(eventNo, label, tagName);
+                          openShareEventLayer(eventNo, label, tagName, event);
                         }}>공유하기</a>
                       </div>
                     )
