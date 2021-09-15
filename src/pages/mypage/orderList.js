@@ -349,7 +349,7 @@ export default function OrderList() {
                   )}
                 </div>
                 {loadMoreBtnVisible && (
-                  <div className="btn_article">
+                  <div className="my btn_article" style={{ textAlign: 'center' }}>
                     <a href="#" className="more_btn" onClick={onClickLoadMore}>
                       더보기
                     </a>
