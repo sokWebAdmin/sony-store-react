@@ -27,5 +27,5 @@ export const postProfileOrderCancelByOrderOptionNo = ({ path: { orderOptionNo },
     null, requestBody);
 
 export const postGuestOrdersOrderNo = (orderNo, requestBody) => {
-  return request(`guest/orders/${orderNo}`, null, requestBody);
+  return request(`guest/orders/${orderNo}`, 'post', null, requestBody);
 }
