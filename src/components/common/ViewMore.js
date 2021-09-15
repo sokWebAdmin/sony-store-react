@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { debounce } from 'lodash';
 
 export default function ViewMore({ totalCount, viewMore, pageSize, reset = false }) {
-  const [ pageNumber, setPageNumber ] = useState(1);
-  
+  const pageNumber = useRef(1);
   const hide = useMemo(() => (pageNumber * pageSize) > totalCount, [ pageNumber, pageSize, totalCount ])
 
   const debounceViewMore = debounce((pageNumber) => viewMore(pageNumber), 500);
@@ -11,11 +10,16 @@ export default function ViewMore({ totalCount, viewMore, pageSize, reset = false
   const handleCountClick = event => {
     event.preventDefault();
 
+    pageNumber.current += 1;
     debounceViewMore(pageNumber + 1);
-    setPageNumber(prev => prev += 1);
+    // setPageNumber(prev => prev += 1);
   };
 
-  useEffect(() => reset && setPageNumber(1), [reset])
+  useEffect(() => {
+    if (reset) {
+      pageNumber.current = 1;
+    }
+  }, [reset])
 
   return (
     <div className="btn_article comm_more" style={{ visibility: hide ? 'hidden' : 'visible' }}>

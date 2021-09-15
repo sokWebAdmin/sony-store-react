@@ -5,6 +5,10 @@ export const getCategoryList = (categoryNo, orderBy) => {
   return request("categories", "get", null, {});
 };
 
+export const getCategoryListByKeyword = keyword => {
+  return request('categories', 'get', { keyword }, null)
+}
+ 
 // banner
 export const loadBanner = (bannerCode) => {
   return request(`display/banners/${bannerCode}`, "get", null, {});

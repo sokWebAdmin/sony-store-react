@@ -73,7 +73,7 @@ import sitemap from './pages/footer/sitemap';
 //api
 
 //검색
-import SearchResult from './pages/footer/searchResult';
+import SearchResult from './pages/footer/SearchResult';
 import EspMain from './pages/esp/EspMain';
 import EspList from './pages/esp/EspList';
 import { fetchMallInfo, useMallDispatch, useMallState } from './context/mall.context';
@@ -239,6 +239,9 @@ const App = (props) => {
               <Route exact path="/member/lockedAccounts" component={LockedAccounts} />
               <Route exact path="/callback" component={OpenLogin} />
 
+              {/* 검색 결과  */}
+              <Route exact path="/search-result/:keyword" component={SearchResult} />
+
               {/* Footer  */}
               <Route exact path="/footer/policy" component={policy} />
               <Route exact path="/footer/terms" component={terms} />
@@ -247,9 +250,6 @@ const App = (props) => {
               {/* error */}
               <Route exact path="/404" component={Error404} />
               <Route exact path="/error-server" component={ErrorServer} />
-
-              {/* 검색 결과  */}
-              <Route exact path="/search-result/:keyword" component={SearchResult} />
 
               <Route component={Error404} />
               {/* 푸터 */}
