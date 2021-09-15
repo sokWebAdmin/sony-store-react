@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
@@ -6,6 +8,18 @@ import '../../assets/scss/contents.scss';
 import '../../assets/css/order.css';
 
 const GiftReceive = () => {
+  const init = () => {
+    startTestEnvironment();
+  };
+
+  useEffect(init, []);
+
+  function startTestEnvironment () {
+    const TEST_ENCRYPTED_SHIPPING_NO = 'eW5Pb3NJVndBcTFNZ3RZTHhxQ3dQdz09';
+
+    window.history.pushState(null, '', `?code=${TEST_ENCRYPTED_SHIPPING_NO}`);
+  }
+
   return (
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
