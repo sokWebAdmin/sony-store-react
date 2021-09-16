@@ -18,74 +18,10 @@ import "swiper/swiper.scss"
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/support.scss';
 
-import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
+import { storeImages } from '../../const/support';
+import LoadedNaverMap from '../../components/support/LoadedNaverMap';
+import StoreGuide from '../../components/support/StoreGuide';
 
-const MAP_CLIENT_ID = process.env.REACT_APP_MAP_CLIENT_ID || 'i1nv00h8zo';
-
-const COORDINATE = {
-  lat: 37.52369,
-  lng: 127.03901
-};
-
-function NaverMapAPI({isMapOpen}) {
-  const navermaps = window.naver.maps;
-  const storeMapStyle = {
-    width: '100%',
-    height: '90vh',
-    background: '#ddd',
-    display: isMapOpen ? 'block' : 'none',
-  };
-  return (
-    <NaverMap
-      mapDivId={'maps-getting-started-uncontrolled'}
-      style={storeMapStyle}
-      defaultCenter={ COORDINATE }
-      defaultZoom={13}
-      zoom={13}
-      scaleControl={false}
-      logoControl={false}
-      zoomControl={true}
-      mapTypeControl={true}
-      mapTypeControlOptions={{
-        style: window.naver.maps.MapTypeControlStyle.BUTTON,
-        position: window.naver.maps.Position.TOP_RIGHT,
-      }}
-    >
-      <Marker 
-        mapDivId={'maps-getting-started-uncontrolled'}
-        key={1}
-        position={new navermaps.LatLng(COORDINATE)}
-        icon={{
-          url: '../../images/support/naver_map_marker.svg',
-          size: new navermaps.Size(50, 67)
-        }}
-      />
-    </NaverMap>
-  );
-}
-
-const storeImages = [
-  {
-    src:'../../images/event/img_store1.jpg',
-    alt: '소니스토어 압구정점 내부 이미지 1'
-  },
-  {
-    src:'../../images/event/img_store2.jpg',
-    alt: '소니스토어 압구정점 내부 이미지 2'
-  },
-  {
-    src:'../../images/event/img_store3.jpg',
-    alt: '소니스토어 압구정점 내부 이미지 3'
-  },
-  {
-    src:'../../images/event/img_store4.jpg',
-    alt: '소니스토어 압구정점 내부 이미지 4'
-  },
-  {
-    src:'../../images/event/img_store5.jpg',
-    alt: '소니스토어 압구정점 내부 이미지 5'
-  },
-];
 
 export default function StoreInfo() {
   const [isMapOpen, setIsMapOpen] = useState(false);
@@ -137,41 +73,7 @@ export default function StoreInfo() {
                   </span>
                 </p>
               </div>
-              <div className="store_info_wrap_guidebox">
-                <div className="guidebox_slider swiper-container">
-                  <div className="swiper-wrapper">
-                    <div className="swiper-slide box">
-                      <span className="box_tit">매장 운영시간</span>
-                      <div className="box_time">
-                        <em className="everyday">매일</em>
-                        <span className="time">11:00 ~ 20:00</span>
-                      </div>
-                      <p className="box_desc">(설, 추석명절 휴무)</p>
-                    </div>
-                    <div className="swiper-slide box tel">
-                      <span className="box_tit">매장 전화번호</span>
-                      <div className="box_time">
-                        <span className="code">{ '02)' }</span>
-                        <span className="time">515-7946</span>
-                      </div>
-                    </div>
-                    <div className="swiper-slide box">
-                      <span className="box_tit">고객센터 운영시간</span>
-                      <ul className="box_day">
-                        <li className="weekday">
-                          <span className="weekday_day">월-금요일</span>
-                          <span className="weekday_time">11:00 ~ 20:00</span>
-                        </li>
-                        <li className="weekday">
-                          <span className="weekday_day">토요일</span>
-                          <span className="weekday_time">11:00 ~ 15:00</span>
-                        </li>
-                      </ul>
-                      <p className="box_desc">(일요일, 공휴일 휴무)</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <StoreGuide />
             </div>
             <div className="way_box">
               <div className="way_box_inner">
@@ -215,16 +117,7 @@ export default function StoreInfo() {
                   </ul>
                 </div>
               </div>
-              {/* 지도 영역 */}
-              {/* pc width: 100%;height:100%*/}
-              {/* <div className="storeMap" style={storeMapStyle}> */}
-                <RenderAfterNavermapsLoaded
-                  ncpClientId={ MAP_CLIENT_ID }
-                >
-                  <NaverMapAPI isMapOpen={isMapOpen}/>
-                </RenderAfterNavermapsLoaded>
-              {/* </div> */}
-              {/*// 지도 영역 */}
+              { isMapOpen && <LoadedNaverMap /> }
               <div className="way_box_transp mo">
                 <ul className="route">
                   <li className="route_subway">
