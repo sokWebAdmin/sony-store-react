@@ -11,7 +11,7 @@ import GlobalContext from '../../context/global.context';
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import { getProfileOrderByOrderNo } from '../../api/order';
+import { getProfileOrderByOrderNo, getGuestOrderByOrderNo } from '../../api/order';
 import { postProfileClaimOrderCancelByOrderNo, postGuestClaimOrderCancelByOrderNo } from '../../api/claim';
 
 //css
@@ -53,62 +53,13 @@ export default function OrderDetail() {
   });
 
   useEffect(() => {
-    getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } }).then((res) => {
-      setStates(res);
-      // const {
-      //   orderNo,
-      //   orderYmdt,
-      //   defaultOrderStatusType,
-      //   orderer: { ordererName, ordererContact1 },
-      //   shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
-      //   deliveryMemo,
-      //   lastOrderAmount: {
-      //     totalProductAmt,
-      //     immediateDiscountAmt,
-      //     additionalDiscountAmt,
-      //     cartCouponDiscountAmt,
-      //     productCouponDiscountAmt,
-      //     subPayAmt,
-      //     payAmt,
-      //   },
-      //   payType,
-      //   payInfo: { cardInfo, bankInfo },
-      //   receiptInfos,
-      // } = res.data;
+    const request = { path: { orderNo: query.get('orderNo') } };
+    const fetchOrderDetailMap = {
+      guest: () => getGuestOrderByOrderNo(request),
+      profile: () => getProfileOrderByOrderNo(request),
+    };
 
-      // setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
-      // setOrderProducts(makeOrderProducts(res.data));
-      // setOrdererInfo({ ordererName, ordererContact1 });
-      // setShippingAddress({
-      //   receiverName,
-      //   receiverAddress,
-      //   receiverDetailAddress,
-      //   receiverContact1,
-      //   deliveryMemo,
-      // });
-
-      // const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
-      // const couponDiscountAmt = cartCouponDiscountAmt + productCouponDiscountAmt;
-      // setAmountInfo({
-      //   totalProductAmt,
-      //   promotionDiscountAmt,
-      //   couponDiscountAmt,
-      //   mileageAmt: subPayAmt,
-      //   totalDiscountAmount: promotionDiscountAmt + couponDiscountAmt + subPayAmt,
-      //   payAmt,
-      // });
-
-      // setPayInfo({
-      //   payType,
-      //   cardInfo,
-      //   bankInfo,
-      // });
-
-      // setReceiptInfos(receiptInfos);
-
-      console.log('res.data:', res.data);
-      console.log('orderProducts:', orderProducts);
-    });
+    fetchOrderDetailMap[isLogin ? 'profile' : 'guest']().then((res) => setStates(res));
   }, []);
 
   const setStates = (res) => {
