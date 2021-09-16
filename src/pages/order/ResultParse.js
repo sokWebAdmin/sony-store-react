@@ -61,11 +61,11 @@ const ResultParse = ({ location }) => {
     const isCancel = message.includes('V801'); // 취소 코드. 다른 사유 있을경우 추가
 
     if (isCancel) {
-      history.push(`/order/complete${location.search + '&status=PAY_FAIL'}`);
+      history.push(`/order/fail${location.search + '&status=PAY_FAIL'}`);
       return;
     }
 
-    history.push(`/order/complete${location.search + '&status=UNDEFINED'}`);
+    history.push(`/order/fail${location.search + '&status=UNDEFINED'}`);
   }
 
   return (
