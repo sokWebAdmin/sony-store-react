@@ -8,7 +8,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
-export default function Cart () {
+const Cart = () => {
   const history = useHistory();
 
   return (
@@ -229,3 +229,5 @@ export default function Cart () {
     </>
   );
 }
+
+export default Cart;

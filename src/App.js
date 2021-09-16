@@ -39,8 +39,7 @@ import Withdraw from './pages/mypage/Withdraw';
 import WithdrawComplete from './pages/mypage/WithdrawComplete';
 
 //order
-import cart from './pages/order/cart';
-import cartEmpty from './pages/order/cartEmpty';
+import Cart from './pages/order/Cart';
 
 import ResultParse from './pages/order/ResultParse';
 import OrderAgree from './pages/order/OrderAgree';
@@ -213,8 +212,7 @@ const App = (props) => {
               <Route exact path="/order/complete" component={OrderComplete} />
               <Route exact path="/order/fail" component={OrderFail} />
 
-              <Route exact path="/cart" component={cart} />
-              <Route exact path="/cart-empty" component={cartEmpty} />
+              <Route exact path="/cart" component={Cart} />
 
               <Route exact path="/order/sheet" component={OrderSheet} />
               <Route exact path="/gift/sheet" component={OrderSheet} />
