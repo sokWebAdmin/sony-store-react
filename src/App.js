@@ -69,7 +69,7 @@ import OpenLogin from './components/member/OpenLogin';
 
 
 //footer
-import policy from './pages/footer/policy';
+import Policy from './pages/footer/policy';
 import Terms from './pages/footer/terms';
 import sitemap from './pages/footer/sitemap';
 
@@ -253,7 +253,7 @@ const App = (props) => {
               <Route exact path="/search-result/:keyword" component={SearchResult} />
 
               {/* Footer  */}
-              <Route exact path="/footer/policy" component={policy} />
+              <Route exact path="/footer/policy" component={Policy} />
               <Route exact path="/footer/terms" component={Terms} />
               <Route exact path="/footer/sitemap" component={sitemap} />
 
