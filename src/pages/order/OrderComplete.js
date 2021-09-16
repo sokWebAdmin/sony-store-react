@@ -11,6 +11,7 @@ import { getUrlParam } from '../../utils/location';
 const OrderComplete = ({ location }) => {
   const status = useMemo(() => getUrlParam('status'), [location]);
   const orderType = useMemo(() => getUrlParam('orderType'), [location]);
+  const orderNo = useMemo(() => getUrlParam('orderNo'), [location]);
 
   return (
     <>
@@ -35,8 +36,9 @@ const OrderComplete = ({ location }) => {
                 && orderType === 'GIFT'
                   ? <p className="order_confirm_box__dsc"
                        style={{ fontWeight: 700 }}>선물하기 주문이 완료 되었습니다.</p>
-                  : <p className="order_confirm_box__dsc"
-                       style={{ fontWeight: 700 }}>주문이 완료 되었습니다.</p>
+                  : status !== 'DEPOSIT_WAIT'
+                  && <p className="order_confirm_box__dsc"
+                        style={{ fontWeight: 700 }}>주문이 완료 되었습니다.</p>
               }
 
               {
@@ -49,7 +51,7 @@ const OrderComplete = ({ location }) => {
               <div className="order_confirm_box__oder_num_box">
                 <dl>
                   <dt>주문번호</dt>
-                  <dd>202110430 - X62558</dd>
+                  <dd>{orderNo}</dd>
                 </dl>
               </div>
               <p className="order_confirm_box__txt">주문하신 상품에 대한 배송 상태 등의 조회는
