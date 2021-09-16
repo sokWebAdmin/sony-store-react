@@ -1,28 +1,56 @@
 import React, { useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router';
 import { getUrlParam } from '../../utils/location';
+import { getProfileOrderByOrderNo } from '../../api/order';
 
 // 주문결과 미들웨어
 const ResultParse = ({ location }) => {
   const history = useHistory();
 
-  const payType = useMemo(() => getUrlParam('PayType'), [location]);
+  const orderNo = useMemo(() => getUrlParam('orderNo'), [location]);
   const result = useMemo(() => getUrlParam('result'), [location]);
   const message = useMemo(() => getUrlParam('message'), [location]);
 
   const handleStatus = () => {
-    result === 'SUCCESS' ? handleSuccessResult() : handleFailResult();
+    result === 'SUCCESS'
+      ? handleSuccessResult().catch(console.error)
+      : handleFailResult();
   };
 
   useEffect(handleStatus, [location]);
 
-  function handleSuccessResult () {
-    const isDepositWait = payType === 'VIRTUAL_ACCOUNT';
-    isDepositWait
-      ? history.push(
-      `/order/complete${location.search + '&status=DEPOSIT_WAIT'}`)  // 입금 대기
-      : history.push(`/order/complete${location.search} + '&status=PAY_DONE'`); // 결제
-    // 완료
+  async function handleSuccessResult () {
+    const orderType = await orderTypeReferee();
+
+    if (orderType === 'DEPOSIT_WAIT') {
+      history.push(`/order/complete${location.search + '&status=DEPOSIT_WAIT'}`);  // 입금 대기
+      return;
+    }
+
+    if (orderType === 'GIFT') {
+      history.push(
+        `/order/complete${location.search} + '&status=PAY_DONE&orderType=GIFT'`);
+      return;
+    }
+
+    history.push(
+      `/order/complete${location.search} + '&status=PAY_DONE&orderType=DEFAULT`);
+  }
+
+  async function orderTypeReferee () {
+    const { data } = await getProfileOrderByOrderNo({ path: { orderNo } });
+    const isDepositWait = data.defaultOrderStatusType === 'DEPOSIT_WAIT';
+    if (isDepositWait) {
+      return 'DEPOSIT_WAIT';
+    }
+
+    const isGift = data.shippingAddress?.receiverZipCd === '-' ||
+      !data?.shippingAddress?.receiverZipCd;
+    if (isGift) {
+      return 'GIFT';
+    }
+    console.log(data);
+
   }
 
   function handleFailResult () {

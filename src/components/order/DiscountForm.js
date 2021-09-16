@@ -51,8 +51,8 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
 
   async function fetchPoint () {
     if (profile?.customerid === undefined) {
-      await fetchProfile(profileDispatch); // 만일 특정 사유로 인해서 profile 없을 경우 중복 호출
-                                          // 감수하고 profile 갱신
+      await fetchProfile(profileDispatch); // 만일 특정 사유로 인해서 profile 없을 경우 중복
+                                           // 호출감수하고 profile 갱신
     }
 
     try {

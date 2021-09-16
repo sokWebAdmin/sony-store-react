@@ -13,13 +13,13 @@ export default function orderFail () {
 
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'주문 실패'} />
       <div className="contents order">
         <div className="container" id="container">
           <div className="content order_page">
             <div className="order_confirm_box">
               <i className="icon receipe" />
-              <h2 className="order_confirm_box__tit">주문 완료</h2>
+              <h2 className="order_confirm_box__tit">주문 실패</h2>
               {/*<h2 class="order_confirm_box__tit">선물하기 주문 완료</h2> 선물하기 일때*/}
               <p className="order_confirm_box__dsc">소니스토어를 이용해 주셔서 감사합니다!</p>
               <div className="order_confirm_box__oder_num_box">
