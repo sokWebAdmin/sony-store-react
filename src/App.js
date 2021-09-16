@@ -70,7 +70,7 @@ import OpenLogin from './components/member/OpenLogin';
 
 //footer
 import policy from './pages/footer/policy';
-import terms from './pages/footer/terms';
+import Terms from './pages/footer/terms';
 import sitemap from './pages/footer/sitemap';
 
 //api
@@ -254,7 +254,7 @@ const App = (props) => {
 
               {/* Footer  */}
               <Route exact path="/footer/policy" component={policy} />
-              <Route exact path="/footer/terms" component={terms} />
+              <Route exact path="/footer/terms" component={Terms} />
               <Route exact path="/footer/sitemap" component={sitemap} />
 
               {/* error */}

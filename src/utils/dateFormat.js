@@ -219,3 +219,12 @@ export function addDay4YMDHMSS(date, days) {
 export function formatDateWithDot (date) {
   return getStrDate(date).replaceAll('-', '. ');
 }
+
+export function toLocalDateStr (date) {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
