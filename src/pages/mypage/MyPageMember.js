@@ -551,10 +551,9 @@ export default function MyPageMember() {
                                         authResult={ result => result && setIsEditMode(true) }
                                       />
                 }
-                <ReCaptcha 
-                  style={{display: `${ isEditMode ? 'block' : 'none' }`, margin: '10px auto'}}
-                  setCaptcha={setCaptcha}
-                />
+                {
+                  isEditMode && <ReCaptcha setCaptcha={setCaptcha} />
+                }
               </div>
               <div className="btn_article">
                   {

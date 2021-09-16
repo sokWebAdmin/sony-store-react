@@ -19,3 +19,10 @@ export default function ReCaptcha({ style, setCaptcha }) {
     </div>
   )
 }
+
+ReCaptcha.defaultProps = {
+  style: {
+    display: 'block',
+    margin: '10px auto'
+  }
+}
