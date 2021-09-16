@@ -27,5 +27,10 @@ export const postGuestOrdersOrderNo = (orderNo, requestBody) => {
 export const getShippingsEncryptedShippingNoLaterInput = (encryptedShippingNo) =>
   request(`shippings/${encryptedShippingNo}/later-input`, 'get');
 
-export const putShippingsEncryptedShippingNoLaterInput = (encryptedShippingNo, requestBody) =>
-  request(`shippings/${encryptedShippingNo}/later-input`, 'put', null, requestBody);
+export const putShippingsEncryptedShippingNoLaterInput = (
+  encryptedShippingNo, requestBody) =>
+  request(`shippings/${encryptedShippingNo}/later-input`, 'put', null,
+    requestBody);
+
+export const getCart = () =>
+  request(`cart?divideInvalidProducts=true`, 'get');
