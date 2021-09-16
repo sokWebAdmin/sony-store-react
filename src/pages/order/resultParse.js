@@ -4,6 +4,10 @@ import { getUrlParam } from '../../utils/location';
 import { getProfileOrderByOrderNo } from '../../api/order';
 
 // 주문결과 미들웨어
+/**
+ * status : 'DEPOSIT_WAIT'|'PAY_DONE'|'PAY_FAIL'|'UNDEFINED'
+ * orderType : 'DEFAULT'|'GIFT'
+ */
 const ResultParse = ({ location }) => {
   const history = useHistory();
 
