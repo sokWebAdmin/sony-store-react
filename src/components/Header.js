@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 //images
 import logo from '../assets/images/common/logo.svg';
@@ -20,6 +20,12 @@ import { useHeaderDispatch, useHeaderState, openSideBar, closeSideBar } from '..
 import { Link, useHistory } from 'react-router-dom';
 import { removeAccessToken } from '../utils/token';
 import { resetProfile, useProfileState, useProileDispatch } from '../context/profile.context';
+import { getDisplayEvents } from '../api/display';
+import {
+  deleteGnbCategory,
+  setGnbCategory,
+  useCategoryDispatch,
+} from '../context/category.context';
 
 export default function Header() {
   const history = useHistory();
@@ -28,6 +34,7 @@ export default function Header() {
   const { isSiderbarOpen } = useHeaderState();
   const profileDispatch = useProileDispatch();
   const headerDispatch = useHeaderDispatch();
+  const categoryDispatch = useCategoryDispatch();
 
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
@@ -42,6 +49,29 @@ export default function Header() {
     setInfoOpen(false);
     closeSideBar(headerDispatch);
   };
+
+  const setMemberCategory = async () => {
+    const { data } = await getDisplayEvents();
+    const urls = data.filter((event) => event.url).map(({url}) => url);
+    let newEventCategory = [];
+    if (urls.includes('event/employee')) {
+      newEventCategory.push({
+        label: '임직원몰',
+        route: '/event/list?tab=employee',
+      })
+    }
+    if (urls.includes('event/refurbish')) {
+      newEventCategory.push({
+        label: '리퍼비시몰',
+        route: '/event/list?tab=refurbish',
+      })
+    }
+    setGnbCategory(categoryDispatch, { data: newEventCategory });
+  }
+
+  useEffect(() => {
+    setMemberCategory();
+  }, [isLogin]);
 
   return (
     <>
@@ -180,6 +210,8 @@ export default function Header() {
                         removeAccessToken();
                         onChangeGlobal({ isLogin: false });
                         resetProfile(profileDispatch);
+                        deleteGnbCategory(categoryDispatch);
+                        closeSubSlider();
                         history.push('/member/login');
                       }}
                     >

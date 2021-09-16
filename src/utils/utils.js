@@ -138,7 +138,6 @@ export const tabUiClick = () => {
             });
           }
         },
-        slideActiveClass: 'on',
       });
       tabSwiper.update();
     }

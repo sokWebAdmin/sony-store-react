@@ -6,15 +6,16 @@ import moment from 'moment';
 import LayerPopup from '../common/LayerPopup';
 import { useAlert } from '../../hooks';
 import Alert from '../common/Alert';
+import { tabUiClick } from '../../utils/utils';
 
-const tabs = [
+const initTabs = [
   {key: 'all', label: '전체'},
   {key: 'only', label: '소니스토어 단독'},
   {key: 'benefit-zone', label: '혜택존'},
   {key: 'pre-order', label: '예약판매'},
   {key: 'refined', label: '정품등록 이벤트'},
   {key: 'live-on', label: 'LIVE ON'},
-]
+];
 const tags = {
   all: '',
   only: '소니스토어단독',
@@ -22,6 +23,8 @@ const tags = {
   'pre-order': '예약판매',
   refined: '정품등록이벤트',
   'live-on': 'LIVEON',
+  employee: '임직원몰',
+  refurbish: '리퍼비시몰',
 }
 
 const EventBottom = () => {
@@ -40,11 +43,26 @@ const EventBottom = () => {
   const [label, setLabel] = useState('');
   const [tag, setTag] = useState('');
   const [selectEvent, setSelectEvent] = useState(null);
+  const [tabs, setTabs] = useState(initTabs)
 
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
     const { data } = await getDisplayEvents(keyword);
     sortEvents(data);
+  }
+
+  const fetchInitDisplayEvents = async () => {
+    const { data } = await getDisplayEvents();
+    const employee = data.find((event) => `/${event.url}` === '/event/employee');
+    let newTabs = [...tabs];
+    if (employee) {
+      newTabs = [...newTabs, {key: 'employee', label: '임직원몰'}]
+    }
+    const refurbish = data.find((event) => `/${event.url}` === '/event/refurbish');
+    if (refurbish) {
+      newTabs = [...newTabs, {key: 'refurbish', label: '리퍼비시몰'}]
+    }
+    setTabs(newTabs);
   }
 
   const sortEvents = (data = events) => {
@@ -119,6 +137,11 @@ const EventBottom = () => {
     events.length && sortEvents();
   }, [newest]);
 
+  useEffect(() => {
+    tabUiClick();
+    fetchInitDisplayEvents();
+  }, []);
+
   const shareKakaoButton = () => {
     if (window.Kakao) {
       const kakao = window.Kakao
@@ -172,7 +195,7 @@ const EventBottom = () => {
       <div className="event_zone">
         <div className="tab_ui scroll category_evnet" data-scroll-view="6" data-tab-scroll-view="5">
           <ul>
-            {tabs.map(({key, label}) => {
+            {tabs && tabs.map(({key, label}) => {
               return (
                 <li key={`tab_${key}`} className={`tabs ${tabState === key ? 'on' : ''}`}>
                   <Link to={`/event/list?tab=${key}`} onClick={() => setTabState(key)} className="btn">{label}</Link>
