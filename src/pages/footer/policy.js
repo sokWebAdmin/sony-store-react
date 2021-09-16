@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useMemo } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -30,6 +30,8 @@ export default function Policy() {
     fetchTermsHistory();
    }, []);
 
+   const historyButtonLabel = useMemo(() => historyVisible ? '개정 소니스토어 개인정보처리방침 보기' : '이전 소니스토어 개인정보처리방침 보기', [historyVisible])
+
   return (
     <>
       <SEOHelmet title={"소니스토어 개인정보처리방침"} />
@@ -45,7 +47,7 @@ export default function Policy() {
                 <p className="date">
                   <strong>{ historyVisible ? '' : `시행일자 : ${ toLocalDateStr(activeTerms?.enforcementDate) }` }</strong>
                   <a href="#none" className="btn_go_ar" onClick={handleHistory}>
-                    <span>{ historyVisible ? '개정 소니스토어 개인정보처리방침 보기' : '이전 소니스토어 개인정보처리방침 보기' }</span>
+                    <span>{ historyButtonLabel }</span>
                   </a>
                 </p>
                 <Articles articles={policies} />
@@ -60,7 +62,7 @@ export default function Policy() {
                     <strong className="caution_box--date">직전변경일 : { toLocalDateStr(prevTerms?.enforcementDate) } / <span>최종변경일 : { toLocalDateStr(activeTerms?.enforcementDate) }</span></strong>
                   }
                   <a href="#none" className="btn_go_ar" onClick={handleHistory}>
-                    <span>{ historyVisible ? '개정 소니스토어 개인정보처리방침 보기' : '이전 소니스토어 개인정보처리방침 보기' }</span>
+                    <span>{ historyButtonLabel }</span>
                   </a>
                 </div>
               </div>

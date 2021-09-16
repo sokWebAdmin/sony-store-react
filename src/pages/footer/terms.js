@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useMemo } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -28,6 +28,8 @@ export default function Terms() {
     fetchTermsHistory();
    }, []);
 
+  const historyButtonLabel = useMemo(() => historyVisible ? '개정 소니스토어 이용약관 보기' : '이전 소니스토어 이용약관 보기', [historyVisible])
+
   return (
     <>
       <SEOHelmet title={"소니스토어 이용약관"} />
@@ -47,7 +49,7 @@ export default function Terms() {
                     className="btn_go_ar" 
                     onClick={ handleHistory }
                   >
-                    <span>{ historyVisible ? '개정 소니스토어 이용약관 보기' : '이전 소니스토어 이용약관 보기' }</span>
+                    <span>{ historyButtonLabel }</span>
                   </a>
                 </p>
                 <Articles articles={ articles } />
@@ -59,17 +61,14 @@ export default function Terms() {
                     <p>※ 본 약관에 대한 저작권은 소니 코리아에 귀속하며 무단 복제, 배포, 전송 기타 저작권 침해행위를 금지합니다.</p>
                     {
                       historyVisible ? 
-                      <>
-                        <p>※ 본 약관은 시행일자 : { toLocalDateStr(prevTerms?.enforcementDate) }부터 적용됩니다.</p>
-                        <a href="#none" className="btn_go_ar" onClick={ handleHistory }><span>개정 소니스토어 이용약관 보기</span></a>
-                      </>
+                      <p>※ 본 약관은 시행일자 : { toLocalDateStr(prevTerms?.enforcementDate) }부터 적용됩니다.</p>
                       :
                       <>
                         <p>※ 본 약관은 시행일자 : { toLocalDateStr(activeTerms?.enforcementDate) }부터 적용됩니다.</p>
                         <strong className="caution_box--date">직전변경일 : { toLocalDateStr(prevTerms?.enforcementDate) }</strong>
-                        <a href="#none" className="btn_go_ar" onClick={ handleHistory }><span>이전 소니스토어 이용약관 보기</span></a>
                       </>
                     }
+                    <a href="#none" className="btn_go_ar" onClick={ handleHistory }><span>{ historyButtonLabel }</span></a>
                   </div>
                 }
               </div>
