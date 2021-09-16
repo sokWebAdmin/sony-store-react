@@ -4,6 +4,7 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import { useMallState } from '../../context/mall.context';
 import { toCurrencyString } from '../../utils/unit';
 import {
+  fetchProfile,
   fetchMyProfile,
   useProfileState,
   useProileDispatch,
@@ -49,6 +50,11 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
   }, [my]);
 
   async function fetchPoint () {
+    if (profile?.customerid === undefined) {
+      await fetchProfile(profileDispatch); // 만일 특정 사유로 인해서 profile 없을 경우 중복 호출
+                                          // 감수하고 profile 갱신
+    }
+
     try {
       await fetchMyProfile(profileDispatch,
         { type: '30', customerid: profile.customerid });
