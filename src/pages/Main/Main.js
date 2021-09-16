@@ -50,6 +50,13 @@ export default function Main() {
 
   const [eventSections, setEventSections] = useState([]);
 
+  const [hover, setHover] = useState({
+    slideBanner: false,
+    recommendedBanner: false,
+    eventBanner: false,
+    academyBanners: false,
+  });
+
   const getRecommendedBannerNames = (bannerInfoList) => {
     bannerInfoList.forEach((bannerInfo) => {
       const bannerNameList = bannerInfo.banners[0].name.split('/');
@@ -96,7 +103,6 @@ export default function Main() {
       //배너 코드 객체로 관리하기
       //응답이 순서를 보징하지 않음
       const { data } = await loadBanner('000,001,002,003,004,005');
-
       const moBanners = data.find(({ code }) => code === '001')?.accounts || [];
       setSlideMoBanners(moBanners);
       const eventBanners = data.find(({ code }) => code === '003')?.accounts || [];
@@ -111,6 +117,7 @@ export default function Main() {
       getSlideBannerNames(slidePcBanners);
       setSlidePcBanners(slidePcBanners);
       const recommendedBanners = data.find(({ code }) => code === '002')?.accounts || [];
+      debugger;
       getRecommendedBannerNames(recommendedBanners);
       setRecommendedBanners(recommendedBanners);
     } catch (e) {
@@ -118,9 +125,17 @@ export default function Main() {
     }
   }, []);
 
+  const onMouseOver = (key) => {
+    setHover({ ...hover, [key]: true });
+  };
+
+  const onMouseLeave = (key) => {
+    setHover({ ...hover, [key]: false });
+  };
+
   //2. 섹션 조회
   const getSections = useCallback(async () => {
-    // 5742: 추천상품 5833:이벤트
+    // 5731: 추천상품 5833:이벤트
     try {
       const params = {
         by: 'ADMIN_SETTING',
@@ -130,7 +145,7 @@ export default function Main() {
       };
       const recommendedRequest = {
         pathParams: {
-          sectionNo: 5742,
+          sectionNo: 5731,
         },
         params,
       };
@@ -246,10 +261,16 @@ export default function Main() {
                       key={index}
                       className="swiper-slide video-slide"
                       data-swiper-autoplay="10000"
+                      onMouseOver={() => onMouseOver('slideBanner')}
+                      onMouseLeave={() => onMouseLeave('slideBanner')}
                       style={{
                         backgroundImage:
                           bannerInfo.banners[0].videoUrl === '' && size.width > breakPoint
-                            ? `url(${bannerInfo.banners[0].imageUrl})`
+                            ? hover.slideBanner && bannerInfo?.banners[0]?.mouseOverImageUrl
+                              ? `url('${bannerInfo?.banners[0]?.mouseOverImageUrl}')`
+                              : `url(${bannerInfo.banners[0]?.imageUrl})`
+                            : hover.slideBanner && slideMoBanners[index]?.banners[0]?.mouseOverImageUrl
+                            ? `url(${slideMoBanners[index]?.banners[0]?.mouseOverImageUrl})`
                             : `url(${slideMoBanners[index]?.banners[0]?.imageUrl})`,
                       }}
                     >
@@ -268,12 +289,17 @@ export default function Main() {
                       <div className="kv__slide">
                         <div
                           className="kv__head"
-                          dangerouslySetInnerHTML={{ __html: bannerInfo.banners[0].nameList }}
-                        ></div>
+                          dangerouslySetInnerHTML={{ __html: bannerInfo?.banners[0]?.nameList }}
+                        />
                         <span className="kv__product">
-                          <span>{bannerInfo.banners[0].description}</span>
+                          <span>{bannerInfo?.banners[0]?.description}</span>
                         </span>
-                        <Link to={bannerInfo.banners[0].landingUrl} className="kv__link">
+                        <Link
+                          to={bannerInfo?.banners[0]?.landingUrl}
+                          target={bannerInfo?.banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                          className="kv__link"
+                          style={{ height: '80px' }}
+                        >
                           <span>자세히 보기</span>
                         </Link>
                       </div>
@@ -303,7 +329,14 @@ export default function Main() {
                       <SwiperSlide
                         key={index}
                         className="swiper-slide"
-                        style={{ backgroundImage: `url(${recommendedBanner?.banners[0]?.imageUrl})` }}
+                        onMouseOver={() => onMouseOver('recommendedBanner')}
+                        onMouseLeave={() => onMouseLeave('recommendedBanner')}
+                        style={{
+                          backgroundImage:
+                            hover.recommendedBanner && recommendedBanner?.banners[0]?.mouseOverImageUrl
+                              ? `url('${recommendedBanner?.banners[0]?.mouseOverImageUrl}')`
+                              : `url('${recommendedBanner?.banners[0]?.imageUrl}')`,
+                        }}
                       />
                     ))}
                   </Swiper>
@@ -360,6 +393,7 @@ export default function Main() {
                       <SwiperSlide className="recommend__item swiper-slide" key={index}>
                         <Link
                           to={`product-view/${recommendedSections[index]?.productNo}`}
+                          target={recommendedBanner?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
                           onClick={(e) => {
                             if (window.innerWidth > breakPoint) {
                               if (e.currentTarget.parentElement.classList.contains('swiper-slide-next')) {
@@ -494,9 +528,19 @@ export default function Main() {
                         <SwiperSlide
                           key={index}
                           className="swiper-slide"
-                          style={{ backgroundImage: `url("${eventBanner?.banners[0]?.imageUrl}")` }}
+                          onMouseOver={() => onMouseOver('eventBanner')}
+                          onMouseLeave={() => onMouseLeave('eventBanner')}
+                          style={{
+                            backgroundImage:
+                              hover.eventBanner && eventBanner?.banners[0]?.mouseOverImageUrl
+                                ? `url('${eventBanner?.banners[0]?.mouseOverImageUrl}')`
+                                : `url('${eventBanner?.banners[0]?.imageUrl}')`,
+                          }}
                         >
-                          <Link to={eventBanner?.banners[0].landingUrl}>
+                          <Link
+                            to={eventBanner?.banners[0].landingUrl}
+                            target={eventBanner?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                          >
                             <div className="event__sub__inner">
                               <p className="event__copy__head">
                                 {eventBanner?.banners[0]?.name?.split('/')?.map((bannerName, index) => (
@@ -545,10 +589,16 @@ export default function Main() {
             {academyPcBanners?.banners && (
               <div
                 className="main__banner"
+                onMouseOver={() => onMouseOver('academyBanner')}
+                onMouseLeave={() => onMouseLeave('academyBanner')}
                 style={{
                   backgroundImage:
                     size.width > breakPoint
-                      ? `url(${academyPcBanners.banners[0]?.imageUrl})`
+                      ? hover.academyBanner && academyPcBanners?.banners[0]?.mouseOverImageUrl
+                        ? `url('${academyPcBanners?.banners[0]?.mouseOverImageUrl}')`
+                        : `url(${academyPcBanners.banners[0]?.imageUrl})`
+                      : hover.academyBanner && academyMoBanners?.banners[0]?.mouseOverImageUrl
+                      ? `url(${academyMoBanners?.banners[0]?.mouseOverImageUrl})`
                       : `url(${academyMoBanners?.banners[0]?.imageUrl})`,
                 }}
               >
@@ -557,7 +607,11 @@ export default function Main() {
                     className="main__banner__title"
                     dangerouslySetInnerHTML={{ __html: academyPcBanners?.banners[0]?.nameList }}
                   />
-                  <Link className="main__banner__link" to={academyPcBanners.banners[0]?.landingUrl}>
+                  <Link
+                    className="main__banner__link"
+                    to={academyPcBanners.banners[0]?.landingUrl}
+                    target={academyPcBanners?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                  >
                     자세히 보기
                   </Link>
                 </div>
