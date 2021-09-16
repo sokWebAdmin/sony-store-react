@@ -12,6 +12,8 @@ import { wonComma } from "../../utils/utils";
 
 import GlobalContext from "../../context/global.context";
 import { Link } from "react-router-dom";
+import { useAlert } from "../../hooks";
+import Alert from "../common/Alert";
 
 // 선물하기 팝업 
 
@@ -238,7 +240,8 @@ function OptionResult({ totalCnt, totalPrice }) {
 }
 
 
-function ButtonGroup({ selectedOption, productNo }) {
+function ButtonGroup({ selectedOption, productNo, canBuy }) {
+  const { openAlert, closeModal, alertVisible, alertMessage  } = useAlert();
   const { isLogin } = useContext(GlobalContext);
   const [ showGiftNotification, setShowGiftNotification ] = useState(false);
 
@@ -251,6 +254,10 @@ function ButtonGroup({ selectedOption, productNo }) {
   };
 
   const order = async () => {
+    if (!canBuy) {
+      openAlert('옵션을 선택하세요.');
+      return;
+    }
     const response = await postOrderSheets({
       productCoupons: null,
       trackingKey: null,
@@ -324,9 +331,11 @@ function ButtonGroup({ selectedOption, productNo }) {
       <a href="#none" className="select_closed" title="선택 목록 닫기">닫기</a>
       {
         showGiftNotification 
-          && <GiftNotification 
-              setShowGiftNotification={setShowGiftNotification} 
-            />
+          && <GiftNotification setShowGiftNotification={setShowGiftNotification} />
+      }
+      {
+        alertVisible 
+          && <Alert onClose={closeModal}>{alertMessage}</Alert>
       }
     </>
   )
@@ -392,6 +401,7 @@ export default function TobContent({
           <ButtonGroup 
             selectedOption={selectedOption}
             productNo={productNo}
+            canBuy={totalCnt > 0}
           />
         </div>
       </div>
