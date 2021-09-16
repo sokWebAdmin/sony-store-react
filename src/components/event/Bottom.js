@@ -6,7 +6,6 @@ import moment from 'moment';
 import LayerPopup from '../common/LayerPopup';
 import { useAlert } from '../../hooks';
 import Alert from '../common/Alert';
-import SEOHelmet from '../SEOHelmet';
 
 const tabs = [
   {key: 'all', label: '전체'},
@@ -39,6 +38,8 @@ const EventBottom = () => {
   } = useAlert();
   const [productNo, setProductNo] = useState('');
   const [label, setLabel] = useState('');
+  const [tag, setTag] = useState('');
+  const [selectEvent, setSelectEvent] = useState(null);
 
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
@@ -71,15 +72,34 @@ const EventBottom = () => {
 
   const formatYmdt = (ymdt) => new Date(ymdt).toISOString().slice(0, 10);
 
-  const onClickEventDetail = async (eventNo) => {
-    history.push(`/event/detail/${eventNo}`)
+  const onClickEventDetail = (eventNo, tagName, event) => {
+    setProductNo(eventNo);
+    setTag(tagName);
+    setSelectEvent(event);
+    history.push(getLink(false, eventNo, tagName, event));
   };
 
-  const openShareEventLayer = (eventNo, label) => {
+  const openShareEventLayer = (eventNo, label, tagName, event) => {
+    setTag(tagName);
     setProductNo(eventNo);
     setLabel(label);
+    setSelectEvent(event);
     setShowShareLayer(true);
   }
+
+  const getLink = (origin = true, eventNo = productNo, tagName = tag, event = selectEvent) => {
+    const key = Object.keys(tags).find(key => tagName.includes(tags[key]));
+
+    if (event.url !== '') {
+      return `${origin ? document.location.origin : ''}/${event.url}`;
+    }
+    if (key === 'all') {
+      return `${origin ? document.location.origin : ''}/event/detail/${eventNo}`;
+    } else if (key === 'only') {
+      return `${origin ? document.location.origin : ''}/event/${key}/${eventNo}`;
+    }
+    return `${origin ? document.location.origin : ''}/event/${key}`;
+}
 
   const copyLink = (link) => {
     navigator.clipboard.writeText(link).then(() => {
@@ -89,10 +109,6 @@ const EventBottom = () => {
 
   const closeShareLayer = () => {
     setShowShareLayer(false);
-  }
-
-  const shareFacebook = () => {
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${document.location.origin}/event/detail/${productNo}`, '_blank')
   }
 
   useEffect(() => {
@@ -113,8 +129,8 @@ const EventBottom = () => {
         objectType: 'text',
         text: label,
         link: {
-          mobileWebUrl: `${document.location.origin}/event/detail/${productNo}`,
-          webUrl: `${document.location.origin}/event/detail/${productNo}`,
+          mobileWebUrl: getLink(),
+          webUrl: getLink(),
         },
       })
     }
@@ -128,7 +144,7 @@ const EventBottom = () => {
       }
       kakao.Story.share({
         text: label,
-        url: `${document.location.origin}/event/detail/${productNo}`,
+        url: getLink(),
       })
     }
   }
@@ -139,17 +155,17 @@ const EventBottom = () => {
       {showShareLayer && <LayerPopup className="pop_share" onClose={closeShareLayer}>
         <p className="pop_tit">공유하기</p>
         <div className="copy_box">
-          <span className="copy_txt">{document.location.origin}/event/detail/{productNo}</span>
-          <a href="javascript:void(0)" className="copy_url" onClick={() => copyLink(`${document.location.origin}/event/detail/${productNo}`)}>링크 복사</a>
+          <span className="copy_txt">{getLink()}</span>
+          <a href="javascript:void(0)" className="copy_url" onClick={() => copyLink(getLink())}>링크 복사</a>
         </div>
         <div className="share_list">
           <ul>
             <li className="lists"><a href="javascript:void(0)" className="share_btn kakaotalk" onClick={() => shareKakaoButton()}>카카오톡</a></li>
             <li className="lists"><a href="javascript:void(0)" className="share_btn kakaostory" onClick={() => shareKakaoStoryButton()}>카카오스토리</a></li>
-            <li className="lists"><a href={`https://www.facebook.com/sharer/sharer.php?u=${document.location.origin}/event/detail/${productNo}`} className="share_btn facebook" target="_blank">페이스북</a></li>
-            <li className="lists"><a href={`https://twitter.com/intent/tweet?url=${document.location.origin}/event/detail/${productNo}`} className="share_btn twitter" target="_blank">트위터</a></li>
-            <li className="lists"><a href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(`${document.location.origin}/event/detail/${productNo}`)}`} className="share_btn line" target="_blank">라인</a></li>
-            <li className="lists"><a href={`https://band.us/plugin/share?body=${label}&route=${document.location.origin}/event/detail/${productNo}`} className="share_btn band" target="_blank">밴드</a></li>
+            <li className="lists"><a href={`https://www.facebook.com/sharer/sharer.php?u=${getLink()}`} className="share_btn facebook" target="_blank">페이스북</a></li>
+            <li className="lists"><a href={`https://twitter.com/intent/tweet?url=${getLink()}`} className="share_btn twitter" target="_blank">트위터</a></li>
+            <li className="lists"><a href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(getLink())}`} className="share_btn line" target="_blank">라인</a></li>
+            <li className="lists"><a href={`https://band.us/plugin/share?body=${label}&route=${getLink()}`} className="share_btn band" target="_blank">밴드</a></li>
           </ul>
         </div>
       </LayerPopup>}
@@ -187,13 +203,14 @@ const EventBottom = () => {
               </div>
               <div className="item_list">
                 <div className="item_row">
-                  {events && events.map(({eventNo, label, pcImageUrl, startYmdt, endYmdt}) => {
+                  {events && events.map((event) => {
+                    const {eventNo, label, pcImageUrl, startYmdt, endYmdt, tag: tagName} = event;
                     return (
-                      <div className="event_item" key={eventNo} onClick={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        event.nativeEvent.stopImmediatePropagation();
-                        onClickEventDetail(eventNo);
+                      <div className="event_item" key={eventNo} onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        e.nativeEvent.stopImmediatePropagation();
+                        onClickEventDetail(eventNo, tagName, event);
                       }}>
                         <a href="javascript:" className="item">
                           <div className="img"><img src={pcImageUrl} alt={label} /></div>
@@ -206,7 +223,7 @@ const EventBottom = () => {
                           e.preventDefault();
                           e.stopPropagation();
                           e.nativeEvent.stopImmediatePropagation();
-                          openShareEventLayer(eventNo, label);
+                          openShareEventLayer(eventNo, label, tagName, event);
                         }}>공유하기</a>
                       </div>
                     )

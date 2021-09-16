@@ -36,7 +36,6 @@ import '../../assets/scss/order.scss';
 // functions
 import { getUrlParam } from '../../utils/location';
 import { truncate } from '../../utils/unit';
-import qs from 'qs';
 import { useGuestState } from '../../context/guest.context';
 
 const OrderSheet = ({ location }) => {

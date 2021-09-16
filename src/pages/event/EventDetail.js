@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getEventByEventNo } from '../../api/display';
 import { useMediaQuery } from '../../hooks';
-import { toCurrencyString } from '../../utils/unit';
+import SEOHelmet from '../../components/SEOHelmet';
+import EventProducts from '../../components/event/EventProducts';
 
 const EventDetail = () => {
   const { eventNo } = useParams();
@@ -20,6 +21,7 @@ const EventDetail = () => {
 
   return (
     <>
+      <SEOHelmet title={event?.label} />
       {event && <div className="contents events">
         <div className="container full">
           <div className="content employee">
@@ -32,70 +34,7 @@ const EventDetail = () => {
             </div>
             <div className="event_tablist type1">
               <div className="employee_prd">
-                <div className="event_prd_list">
-                  {event?.section.flatMap(({ products }) => products)?.map((product) => {
-                    return (
-                      <div className="product" key={product.productNo}>
-                        <span className="badge_txt">
-                          20,000 <span className="unit">원</span> OFF
-                        </span>
-                        <div className="product_pic">
-                          <a href="javascript:void(0)" className="product_link">
-                            <img
-                              src={product.imageUrls[0]}
-                              alt=""
-                            />
-                          </a>
-                          {!product.stockCnt && <div className="sold_out">
-                            <span>SOLD OUT</span>
-                          </div>}
-                        </div>
-                        <div className="product_name">
-                          <a href="javascript:void(0)" className="product_name_title">
-                            {product.productName}
-                          </a>
-                          <p className="product_name_desc">
-                            {product.promotionText}
-                          </p>
-                          <div className="product_name_price">
-                            {product.salePrice !== product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt ?
-                              <>
-                                <div className="original">
-                                  {toCurrencyString(product.salePrice)} <span className="unit">원</span>
-                                </div>
-                                <div className="sale">
-                                  {toCurrencyString(product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt)} <span className="unit">원</span>
-                                </div>
-                              </> :
-                              <>
-                                <div className="sale">
-                                  {toCurrencyString(product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt)} <span className="unit">원</span>
-                                </div>
-                              </>}
-                          </div>
-                          <div className="product_btn_wrap">
-                            <button
-                              type="button"
-                              className="button button_positive button-s"
-                            >
-                              바로 구매
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="btn_area">
-                  <button
-                    type="button"
-                    className="btn_more"
-                    title="제품 더보기"
-                  >
-                    더보기
-                    <span className="ico_plus" />
-                  </button>
-                </div>
+                <EventProducts event={event}/>
               </div>
             </div>
           </div>

@@ -44,6 +44,7 @@ import orderComplete from './pages/order/orderComplete';
 import cart from './pages/order/cart';
 import cartEmpty from './pages/order/cartEmpty';
 import orderSheet from './pages/order/orderSheet';
+import giftReceive from './pages/order/giftReceive';
 
 //event
 import liveon from './pages/event/liveon';
@@ -209,16 +210,15 @@ const App = (props) => {
               <Route exact path="/cart-empty" component={cartEmpty} />
               <Route exact path="/order/sheet" component={orderSheet} />
               <Route exact path="/gift/sheet" component={orderSheet} />
-              <Route exact path="/gift/sheet" component={orderSheet} />
+              <Route exact path="/gift/receive" component={giftReceive} />
 
               {/* 이벤트  */}
               <Route exact path="/event/list" component={eventList} />
-              <Route exact path="/event/detail/:eventNo"
-                     component={EventDetail} />
-              <Route exact path="/event/only" component={Only} />
+              <Route exact path="/event/only/:eventNo" component={EventDetail} />
+              <Route exact path="/event/detail/:eventNo" component={EventDetail} />
               <Route exact path="/event/expired" component={Expired} />
-              <Route exact path="/event/benefit-zone" component={BenefitZone} />
-              <Route exact path="/event/pre-order" component={PreOrder} />
+              <Route exact path="/event/benefit-zone" component={BenefitZone} />{/*현재 데이터 없음*/}
+              <Route exact path="/event/pre-order" component={PreOrder} />{/*현재 데이터 없음*/}
               {/*<Route exact path="/event/asc" component={asc} />*/}
               <Route exact path="/event/refined" component={refined} />
               <Route exact path="/event/live-on" component={liveon} />

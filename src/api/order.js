@@ -23,3 +23,9 @@ export const postProfileOrderCancelByOrderOptionNo = ({ path: { orderOptionNo },
 export const postGuestOrdersOrderNo = (orderNo, requestBody) => {
   return request(`guest/orders/${orderNo}`, 'post', null, requestBody);
 };
+
+export const getShippingsEncryptedShippingNoLaterInput = (encryptedShippingNo) =>
+  request(`shippings/${encryptedShippingNo}/later-input`, 'get');
+
+export const putShippingsEncryptedShippingNoLaterInput = (encryptedShippingNo, requestBody) =>
+  request(`shippings/${encryptedShippingNo}/later-input`, 'put', null, requestBody);
