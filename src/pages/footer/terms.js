@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -8,70 +8,26 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //css
 import "../../assets/scss/contents.scss"
-import { getTerms, getTermsByTermNo, getTermsHistory } from '../../api/manage';
-import { getStrDate, isSameOrAfter, toLocalDateStr } from '../../utils/dateFormat';
+import { toLocalDateStr } from '../../utils/dateFormat';
 import { articles } from '../../const/support';
-
-const initialTerm = {
-  used: false,
-  contents: '',
-  enforcementDate: '',
-}
+import { useTerms } from '../../hooks/support';
+import Articles from '../../components/support/Articles';
 
 export default function Terms() {
-  const [activeTerms, setActiveTerms] = useState({ ...initialTerm });
-  const [prevTerms, setPrevTerms] = useState({ ...initialTerm });
+  const { 
+    activeTerms,
+    prevTerms,
+    historyVisible,
+    fetchTerms,
+    fetchTermsHistory,
+    handleHistory
+   } = useTerms('USE');
 
-  const [ historyVisible, setHistoryVisible ] = useState(false);
-
-  const fetchTerms = async () => {
-    try {
-      const { data } = await getTerms('USE');
-      setActiveTerms(data.key);
-    } catch(e) {
-      console.error(e);
-    }
-  };
-
-  const fetchTermsByTermsNo = async (termsNo, setTerms) => {
-    try {
-      const { data } = await getTermsByTermNo({ termsNo });
-      setTerms(data);
-    } catch(e) {
-      console.error(e);
-    }
-  }
-
-  const setTermsNo = histories => {
-    const filtered = histories.filter(({ enforcementDate }) => isSameOrAfter('', getStrDate(enforcementDate)));
-    if (filtered.length > 0) {
-      fetchTermsByTermsNo(filtered[0].termsNo, setActiveTerms);
-    }
-    if (filtered.length > 1) {
-      fetchTermsByTermsNo(filtered[1].termsNo, setPrevTerms);
-    }
-  };
-
-  const fetchTermsHistory = async () => {
-    try {
-      const { data } = await getTermsHistory({ termsType: 'USE' });
-      data?.length > 0 && setTermsNo(data);
-    } catch(e) {
-      console.error(e);
-    }
-  };
-
-  const handleHistory = e => {
-    e.preventDefault();
-    setHistoryVisible(prev => !prev);
-  }
-  
-  useEffect(() => {
+   useEffect(() => {
     fetchTerms();
     fetchTermsHistory();
-  }, []);
+   }, []);
 
-  const middle = Math.ceil(articles?.length / 2);
   return (
     <>
       <SEOHelmet title={"소니스토어 이용약관"} />
@@ -94,32 +50,7 @@ export default function Terms() {
                     <span>{ historyVisible ? '개정 소니스토어 이용약관 보기' : '이전 소니스토어 이용약관 보기' }</span>
                   </a>
                 </p>
-                <div className="list_cont">
-                  <ul>
-                    {
-                      articles.slice(0, middle).map((title, index) => {
-                        const articleNo = index + 1;
-                        return (
-                          <li key={articleNo + title}>
-                            <a href={ `#article${ articleNo < 10 ? `0${articleNo}` : articleNo }` }>{ `제${articleNo}조 ${title}` }</a>
-                          </li>
-                        )
-                      })
-                    }
-                  </ul>
-                  <ul>
-                    {
-                      articles.slice(middle, articles.length).map((title, index) => {
-                        const articleNo = index + middle + 1;
-                        return (
-                          <li key={articleNo + title}>
-                            <a href={ `#article${ articleNo < 10 ? `0${articleNo}` : articleNo }` }>{ `제${articleNo}조 ${title}` }</a>
-                          </li>
-                        )
-                      })
-                    }
-                  </ul>
-                </div>
+                <Articles articles={ articles } />
               </div>
               <div className="foot_box">
                 <div dangerouslySetInnerHTML={{__html: historyVisible ? prevTerms?.contents : activeTerms?.contents}}></div>
