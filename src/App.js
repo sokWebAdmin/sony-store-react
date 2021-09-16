@@ -113,12 +113,12 @@ const App = (props) => {
       if (!profile) {
         await fetchProfile(profileDispatch);
         if (!my) {
-          const data = { type: '30', customerid: profile?.memberId };
+          const data = { type: '30', customerid: profile.memberId };
           await fetchMyProfile(profileDispatch, data);
         }
       }
       if (profile && !my) {
-        const data = { type: '30', customerid: profile?.memberId };
+        const data = { type: '30', customerid: profile.memberId };
         await fetchMyProfile(profileDispatch, data);
       }
     } else {
@@ -128,7 +128,7 @@ const App = (props) => {
 
   useEffect(() => {
     getMallInfo();
-  }, [isLogin, my, profile])
+  }, [isLogin])
 
   let location = useLocation();
 
