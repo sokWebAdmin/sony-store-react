@@ -85,7 +85,7 @@ import GlobalContext from './context/global.context';
 import {
   fetchMyProfile,
   fetchProfile,
-  resetProfile,
+  resetProfile, setProfile,
   useProfileState,
   useProileDispatch,
 } from './context/profile.context';
@@ -96,6 +96,7 @@ import PreOrder from './pages/event/PreOrder';
 import BenefitZone from './pages/event/BenefitZone';
 import Expired from './pages/event/Expired';
 import EventDetail from './pages/event/EventDetail';
+import { getProfile } from './api/member';
 
 const App = (props) => {
   const dispatch = useMallDispatch();
@@ -114,11 +115,10 @@ const App = (props) => {
   const getMallInfo = async () => {
     if (isLogin) {
       if (!profile) {
-        await fetchProfile(profileDispatch);
-        if (profile && !my) {
-          const data = { type: '30', customerid: profile.memberId };
-          await fetchMyProfile(profileDispatch, data);
-        }
+        const response = await getProfile();
+        const data = { type: '30', customerid: response.data.memberId };
+        await setProfile(profileDispatch, response.data);
+        await fetchMyProfile(profileDispatch, data);
       }
       if (profile && !my) {
         const data = { type: '30', customerid: profile.memberId };
