@@ -81,7 +81,7 @@ export default function Login() {
         const { accessToken, expireIn } = response.data;
         setAccessToken(accessToken, expireIn);
         onChangeGlobal({ isLogin: true });
-        await fetchProfile(profileDispatch);
+        // await fetchProfile(profileDispatch);
 
         if (saveEmail === true) {
           Cookies.set('sony_email', email);
