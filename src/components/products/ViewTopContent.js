@@ -247,7 +247,7 @@ function ButtonGroup({ selectedOption, productNo }) {
                   });
 
                   history.push({
-                    pathname: '/order/sheet', // 이건 바로 주문하기 의 경우. 선물하기는?
+                    pathname: '/order/sheet',
                     search: '?' + qs.stringify(response.data),
                   });
 
