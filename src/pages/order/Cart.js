@@ -15,6 +15,9 @@ import '../../assets/scss/order.scss';
 import GlobalContext from '../../context/global.context';
 import { getCart } from '../../api/order';
 
+// module
+import gc from '../../storage/guestCart.js';
+
 const Cart = () => {
   const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
@@ -23,7 +26,10 @@ const Cart = () => {
 
   const init = () => {
     if (isLogin) {
-      fetchCart();
+      fetchCart().catch(console.error);
+    }
+    else {
+      gc.fetch();
     }
   };
 
