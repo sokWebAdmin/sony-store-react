@@ -1,5 +1,6 @@
-
 import { React ,useState, useEffect, useCallback, useMemo } from 'react';
+import { useHistory } from 'react-router';
+import { getEventByProductNo } from '../../api/display';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -25,17 +26,17 @@ import GlobalContext from '../../context/global.context';
 
 //util
 import {useWindowSize} from '../../utils/utils';
-import { getInfoLinks, getMainSliderStyle, mapContents } from './utils';
-import MainImage from './productView/MainImage';
-import TobContent from './productView/TopContent';
-import RelatedProducts from './productView/RelatedProducts';
-import Event from './productView/Event';
-import BottomContent from './productView/BottomContent';
-import { useHistory } from 'react-router';
-import qs from 'qs';
-import { getEventByProductNo } from '../../api/display';
+import { getInfoLinks, mapContents } from '../../const/productView';
+import { getMainSliderStyle } from '../../utils/product';
 
-//image
+
+import MainImage from '../../components/products/MainImage';
+import TobContent from '../../components/products/ViewTopContent';
+import RelatedProducts from '../../components/products/RelatedProducts';
+import Event from '../../components/products/Event';
+import BottomContent from '../../components/products/ViewBottomContent';
+
+
 
 
 export default function ProductView({ match, ...props }) {

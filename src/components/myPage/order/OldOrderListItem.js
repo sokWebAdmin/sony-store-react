@@ -39,9 +39,7 @@ export default function OrderListItem({
     <div className="col_table_row">
       <div className="col_table_cell order">
         <span className="order_date">{createdate}</span>
-        <a href="#" className="order_number">
-          {orderid}
-        </a>
+        <a className="order_number">{orderid}</a>
       </div>
       <div className="col_table_cell prd_wrap">
         <div className="prd">

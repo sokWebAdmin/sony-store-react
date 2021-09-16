@@ -39,7 +39,9 @@ export default function OldOrderList() {
     startDate: new Date(addMonth(new Date(), -3)),
     endDate: new Date(),
   });
-  const nextPage = useRef(1);
+  const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(false);
+  const nextPage = useRef(2);
+
   // const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
   const [oldOrderProducts, setOldOrderProducts] = useState([]);
 
@@ -61,6 +63,7 @@ export default function OldOrderList() {
       requsetBody: { schStrtDt, schEndDt, pageIdx: pageNumber, rowsPerPage: pageSize, orderType: null },
     });
 
+    showLoadMoreBtn(res.data.body);
     setOldOrderProducts(res.data.body);
     setSearchPeriod({ startDate, endDate });
     nextPage.current = 2;
@@ -73,24 +76,33 @@ export default function OldOrderList() {
 
   const loadMore = async (pageIdx, rowsPerPage) => {
     const { startDate, endDate } = searchPeriod;
-    console.log('searchPeriod:', searchPeriod);
-    console.log('pageIdx:', pageIdx);
     const schStrtDt = changeDateFormat(startDate, 'YYYY-MM-DD').replaceAll('-', '');
     const schEndDt = changeDateFormat(endDate, 'YYYY-MM-DD').replaceAll('-', '');
 
     const res = await getOldOrders({
       requsetBody: { schStrtDt, schEndDt, pageIdx, rowsPerPage, orderType: null },
     });
+    showLoadMoreBtn(res.data.body);
     setOldOrderProducts([...oldOrderProducts, ...res.data.body]);
 
     nextPage.current += 1;
   };
 
+  // 다음 페이지가 없는 경우 loadmore 버튼 숨김
+  const showLoadMoreBtn = (newOldOrderProducts) => {
+    if (newOldOrderProducts.length === 0) {
+      setLoadMoreBtnVisible(false);
+      return;
+    }
+
+    setLoadMoreBtnVisible(true);
+  };
+
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'이전 주문/배송내역'} />
       <div className="contents mypage">
-        <div className="container">
+        <div className="container my">
           <div className="content">
             <div className="common_head">
               <Link to="/my-page/order-list" className="common_head_back">
@@ -127,8 +139,8 @@ export default function OldOrderList() {
                     </div>
                   )}
                 </div>
-                {oldOrderProducts.length > 0 && (
-                  <div className="btn_article">
+                {loadMoreBtnVisible && (
+                  <div className="my btn_article" style={{ textAlign: 'center' }}>
                     <a href="#" className="more_btn" onClick={onClickLoadMore}>
                       더보기
                     </a>

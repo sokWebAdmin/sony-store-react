@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { wonComma } from '../../../utils/utils';
 import { Link } from 'react-router-dom';
+
+import { wonComma } from '../../utils/utils';
 
 export default function RelatedProducts({ products }) {
 

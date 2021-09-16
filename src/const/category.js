@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 60859,
     url: '/products/camera',
-    bannerSectionCodes: '000',
+    bannerSectionCodes: '008',
     isAvailableMoveESP: true,
     isAvailableMoveProductCompare: true
   });
@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 60865,
     url: '/products/videocamera',
-    bannerSectionCodes: '000',
+    bannerSectionCodes: '009',
     isAvailableMoveESP: true,
     isAvailableMoveProductCompare: true
   });
@@ -81,7 +81,7 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 60871,
     url: '/products/audio',
-    bannerSectionCodes: '000',
+    bannerSectionCodes: '010',
     isAvailableMoveProductCompare: true
   });
   // 오디오 > 헤드폰/이어폰
@@ -144,7 +144,7 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 60883,
     url: '/products/accessory',
-    bannerSectionCodes: '000',
+    bannerSectionCodes: '011',
     isAvailableMoveAccessoryCompatibility: true
   });
   // 액세서리 > 카메라 액세서리
@@ -212,7 +212,7 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 60896,
     url: '/products/playstation',
-    bannerSectionCodes: '000',
+    bannerSectionCodes: '012',
   });
   // PlayStation > PlayStation
   categoriesExtraDataMap.push({

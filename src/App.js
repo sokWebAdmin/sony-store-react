@@ -43,9 +43,8 @@ import orderAgree from './pages/order/orderAgree';
 import orderComplete from './pages/order/orderComplete';
 import cart from './pages/order/cart';
 import cartEmpty from './pages/order/cartEmpty';
-import orderStep1 from './pages/order/orderStep1';
-import orderStep2 from './pages/order/orderStep2';
-import orderStep3 from './pages/order/orderStep3';
+import orderSheet from './pages/order/orderSheet';
+import giftReceive from './pages/order/giftReceive';
 
 //event
 import liveon from './pages/event/liveon';
@@ -75,7 +74,7 @@ import sitemap from './pages/footer/sitemap';
 //api
 
 //검색
-import SearchResult from './pages/footer/searchResult';
+import SearchResult from './pages/footer/SearchResult';
 import EspMain from './pages/esp/EspMain';
 import EspList from './pages/esp/EspList';
 import { fetchMallInfo, useMallDispatch, useMallState } from './context/mall.context';
@@ -173,9 +172,6 @@ const App = (props) => {
               {/* 상품목록 */}
               <Route exact path="/products/*" component={Category} />
 
-              {/* 세부분류 상품목록 */}
-              {/*<Route exact path="/products/:type/:detail_type" component={DetailList} />*/}
-
               {/* 추천상품 */}
               <Route exact path="/recommend" component={Recommend} />
 
@@ -200,27 +196,29 @@ const App = (props) => {
               <Route exact path="/my-page/old-order-list" component={OldOrderList} />
               <Route exact path="/my-page/rename" component={Rename} />
               <Route exact path="/my-page/withdraw" component={Withdraw} />
-              <Route exact path="/my-page/withdraw-complete" component={WithdrawComplete} />
+              <Route exact path="/my-page/withdraw-complete"
+                     component={WithdrawComplete} />
 
               {/* 상품 상세페이지 */}
-              <Route exact path="/product-view/:productNo" component={ProductView} />
+              <Route exact path="/product-view/:productNo"
+                     component={ProductView} />
 
               {/* 주문 */}
               <Route exact path="/order/agree" component={orderAgree} />
               <Route exact path="/order/complete" component={orderComplete} />
               <Route exact path="/cart" component={cart} />
               <Route exact path="/cart-empty" component={cartEmpty} />
-              <Route exact path="/order/step/1" component={orderStep1} />
-              <Route exact path="/order/step/2" component={orderStep2} />
-              <Route exact path="/order/step/3" component={orderStep3} />
+              <Route exact path="/order/sheet" component={orderSheet} />
+              <Route exact path="/gift/sheet" component={orderSheet} />
+              <Route exact path="/gift/receive" component={giftReceive} />
 
               {/* 이벤트  */}
               <Route exact path="/event/list" component={eventList} />
+              <Route exact path="/event/only/:eventNo" component={EventDetail} />
               <Route exact path="/event/detail/:eventNo" component={EventDetail} />
-              <Route exact path="/event/only" component={Only} />
               <Route exact path="/event/expired" component={Expired} />
-              <Route exact path="/event/benefit-zone" component={BenefitZone} />
-              <Route exact path="/event/pre-order" component={PreOrder} />
+              <Route exact path="/event/benefit-zone" component={BenefitZone} />{/*현재 데이터 없음*/}
+              <Route exact path="/event/pre-order" component={PreOrder} />{/*현재 데이터 없음*/}
               {/*<Route exact path="/event/asc" component={asc} />*/}
               <Route exact path="/event/refined" component={refined} />
               <Route exact path="/event/live-on" component={liveon} />
@@ -241,6 +239,9 @@ const App = (props) => {
               <Route exact path="/member/lockedAccounts" component={LockedAccounts} />
               <Route exact path="/callback" component={OpenLogin} />
 
+              {/* 검색 결과  */}
+              <Route exact path="/search-result/:keyword" component={SearchResult} />
+
               {/* Footer  */}
               <Route exact path="/footer/policy" component={policy} />
               <Route exact path="/footer/terms" component={terms} />
@@ -249,9 +250,6 @@ const App = (props) => {
               {/* error */}
               <Route exact path="/404" component={Error404} />
               <Route exact path="/error-server" component={ErrorServer} />
-
-              {/* 검색 결과  */}
-              <Route exact path="/search-result/:keyword" component={SearchResult} />
 
               <Route component={Error404} />
               {/* 푸터 */}

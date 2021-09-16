@@ -1,4 +1,4 @@
-import { React } from 'react';
+import React, { useState } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -7,16 +7,26 @@ import SEOHelmet from '../../components/SEOHelmet';
 import "../../assets/scss/category.scss"
 
 //utils
-import { useHistory } from "react-router-dom";
 import CategoryHeader from '../../components/products/CategoryHeader';
-import { useGetCategoryByKey } from '../../context/category.context';
+import ProductList from '../../components/products/ProductList';
+import { getCategoryByKey, useGetCategoryByKey } from '../../context/category.context';
 
 export default function Category({match}) {
-  const history = useHistory();
-
   const category = useGetCategoryByKey('url', match.url);
 
-  console.log(category);
+  const [currentCategory, setCurrentCategory] = useState(null);
+
+  if (category && !currentCategory) {
+    setCurrentCategory(category);
+  }
+
+  const changeCurrentCategoryByNo = categoryNo => {
+    const tempCategory = getCategoryByKey([category], 'categoryNo', categoryNo);
+
+    if (tempCategory) {
+      setCurrentCategory(tempCategory);
+    }
+  }
 
   return (
     <>
@@ -27,8 +37,8 @@ export default function Category({match}) {
           <div className="content">
             {category &&
               <>
-                <CategoryHeader category={category}></CategoryHeader>
-                <div className="product__list__wrapper"></div>
+                <CategoryHeader category={category} changeCurrentCategoryByNo={changeCurrentCategoryByNo}></CategoryHeader>
+                <ProductList category={currentCategory}></ProductList>
               </>
             }
           </div>

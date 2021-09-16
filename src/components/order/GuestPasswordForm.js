@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 
-export default function GuestPasswordForm ({ setTempPassword }) {
+const GuestPasswordForm = forwardRef(({ setTempPassword }, ref) => {
 
   const [pw, setPw] = useState('');
   const [confirmPw, setConfirmPw] = useState('');
@@ -25,6 +25,7 @@ export default function GuestPasswordForm ({ setTempPassword }) {
     const state = type === 'pw' ? pw : confirmPw;
     const msgSetter = type === 'pw' ? setPwErrorText : setConfirmPwErrorText;
 
+
     if (!state) {
       msgSetter('비밀번호를 입력해주세요.');
       return false;
@@ -46,6 +47,20 @@ export default function GuestPasswordForm ({ setTempPassword }) {
     return true;
   };
 
+  const pwInput = useRef();
+  const cpwInput = useRef();
+
+  useImperativeHandle(ref, () => ({
+    fieldValidation () {
+      const pw = validation('pw');
+      const cpw = validation('cpw');
+
+      pw || pwInput.current.focus();
+      cpw || cpwInput.current.focus();
+      return pw && cpw;
+    },
+  }));
+
   return (
     <>
       <dl className="pw_info">
@@ -60,7 +75,8 @@ export default function GuestPasswordForm ({ setTempPassword }) {
           <div className="acc_group parent">
             <div className="acc_inp type3 error">
               <input type="text" id="user_pwd" className="inp" value={pw}
-                     onChange={changePw} onBlur={() => blur('pw')} />
+                     onChange={changePw} onBlur={() => blur('pw')}
+                     ref={pwInput} />
               <span className="focus_bg"></span>
               {pwErrorText && <p className="error_txt"><span
                 className="ico" />{pwErrorText}</p>}
@@ -77,7 +93,7 @@ export default function GuestPasswordForm ({ setTempPassword }) {
             <div className="acc_inp type3 error">
               <input type="text" id="user_pwd2" className="inp"
                      value={confirmPw} onChange={changeConfirmPw}
-                     onBlur={() => blur('cpw')} />
+                     onBlur={() => blur('cpw')} ref={cpwInput} />
               <span className="focus_bg"></span>
               {confirmPwErrorText && <p className="error_txt"><span
                 className="ico" />{confirmPwErrorText}</p>}
@@ -87,4 +103,6 @@ export default function GuestPasswordForm ({ setTempPassword }) {
       </div>
     </>
   );
-}
+})
+
+export default GuestPasswordForm;

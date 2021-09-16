@@ -1,11 +1,19 @@
-import paymentType from '../../const/paymentType';
-import { setObjectState } from '../../utils/state';
+import { useState } from 'react';
 
-const PaymentForm = ({ payment, setPayment }) => {
+import paymentType from '../../const/paymentType';
+import InvoiceGuide from '../popup/InvoiceGuide';
+import InvoicePublish from '../popup/InvoicePublish';
+
+const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
   const changePaymentType = ({ pgType, payType }) => {
-    setObjectState('pgType', pgType)(setPayment);
-    setObjectState('payType', payType)(setPayment);
+    setPayment({
+      pgType,
+      payType,
+    });
   };
+
+  const [viewInvoiceGuide, setViewInvoiceGuide] = useState(false);
+  const [viewInvoicePublish, setViewInvoicePublish] = useState(false);
 
   return (
     <>
@@ -33,16 +41,8 @@ const PaymentForm = ({ payment, setPayment }) => {
               }
             </div>
             <div className="tabResult">
-              <div
+              {payment.payType === 'CREDIT_CARD' && <div
                 className="result_cont radio_tab1 on">
-                <div className="check">
-                  <input type="checkbox"
-                         className="inp_check"
-                         id="chk01" />
-                  <label htmlFor="chk01">지금 선택한 결제수단을
-                    다음에도
-                    사용</label>
-                </div>
                 <strong className="info_tit">신용카드 무이자 할부
                   유의사항</strong>
                 <ul className="list_dot">
@@ -54,16 +54,9 @@ const PaymentForm = ({ payment, setPayment }) => {
                     적용된 무이자 할부 혜택을 받으실 수 없습니다.
                   </li>
                 </ul>
-              </div>
-              <div className="result_cont radio_tab2">
-                <div className="check">
-                  <input type="checkbox"
-                         className="inp_check"
-                         id="chk02" />
-                  <label htmlFor="chk02">지금 선택한 결제수단을
-                    다음에도
-                    사용</label>
-                </div>
+              </div>}
+              {payment.payType === 'VIRTUAL_ACCOUNT' &&
+              <div className="result_cont radio_tab2 on">
                 <div className="bg_recipe_box">
                   <strong className="info_tit2">전자 세금
                     계산서
@@ -79,13 +72,20 @@ const PaymentForm = ({ payment, setPayment }) => {
                     <button
                       className="button button_negative button-m popup_comm_btn"
                       data-popup-name="tax_invoice1"
+                      onClick={() => setViewInvoiceGuide(true)}
                       type="button">전자 세금계산서 발행 안내
                     </button>
+                    {viewInvoiceGuide &&
+                    <InvoiceGuide close={() => setViewInvoiceGuide(false)} />}
                     <button
                       className="button button_positive button-m popup_comm_btn"
                       data-popup-name="tax_invoice2"
+                      onClick={() => setViewInvoicePublish(true)}
                       type="button">전자 세금계산서 신청하기
                     </button>
+                    {viewInvoicePublish && <InvoicePublish
+                      basketid={orderSheetNo}
+                      close={() => setViewInvoicePublish(false)} />}
                   </div>
                 </div>
                 <strong className="info_tit3">[소비자
@@ -100,7 +100,7 @@ const PaymentForm = ({ payment, setPayment }) => {
                     보험계약체결내역서를 반드시 확인하시기 바랍니다.
                   </li>
                 </ul>
-              </div>
+              </div>}
               <div className="result_cont radio_tab3">
                 <div className="check">
                   <input type="checkbox"

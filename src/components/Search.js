@@ -26,7 +26,8 @@ export default function Search({ setSearchOpen }) {
               <input type="text" id="search__input" className="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxLength="40" value={keyword} onChange={(e)=>{
                 setKeyword(e.target.value);
               }} />
-              <button className="btn search__btn__submit" onClick={()=>{
+              <button className="btn search__btn__submit" onClick={e=>{
+                e.preventDefault();
                 if(keyword){
                   history.push("/search-result/"+keyword)
                   setSearchOpen(false)

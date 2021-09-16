@@ -1,15 +1,18 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '../../hooks';
 import { toCurrencyString } from '../../utils/unit';
 import OrderProcess from '../../components/myPage/order/OrderProcess';
 import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
 
+import GlobalContext from '../../context/global.context';
+
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import { getProfileOrderByOrderNo } from '../../api/order';
+import { getProfileOrderByOrderNo, getGuestOrderByOrderNo } from '../../api/order';
+import { postProfileClaimOrderCancelByOrderNo, postGuestClaimOrderCancelByOrderNo } from '../../api/claim';
 
 //css
 import '../../assets/scss/contents.scss';
@@ -17,6 +20,7 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderDetail() {
   const query = useQuery();
+  const { isLogin } = useContext(GlobalContext);
   const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '', defaultOrderStatusType: '' });
   const [orderProducts, setOrderProducts] = useState([]); // 주문 상품
   const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' }); // 주문 정보
@@ -29,6 +33,7 @@ export default function OrderDetail() {
     receiverDetailAddress: '',
     deliveryMemo: '',
   });
+  const [receiptInfos, setReceiptInfos] = useState(null);
 
   // 결제금액정보
   const [amountInfo, setAmountInfo] = useState({
@@ -48,83 +53,67 @@ export default function OrderDetail() {
   });
 
   useEffect(() => {
-    getProfileOrderByOrderNo({ path: { orderNo: query.get('orderNo') } }).then((res) => {
-      const {
-        orderNo,
-        orderYmdt,
-        defaultOrderStatusType,
-        orderer: { ordererName, ordererContact1 },
-        shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
-        deliveryMemo,
-        lastOrderAmount: {
-          totalProductAmt,
-          immediateDiscountAmt,
-          additionalDiscountAmt,
-          cartCouponDiscountAmt,
-          productCouponDiscountAmt,
-          subPayAmt,
-          payAmt,
-        },
-        payType,
-        payInfo: { cardInfo, bankInfo },
-      } = res.data;
-      setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
-      setOrderProducts(makeOrderProducts(res.data));
-      setOrdererInfo({ ordererName, ordererContact1 });
-      setShippingAddress({
-        receiverName,
-        receiverAddress,
-        receiverDetailAddress,
-        receiverContact1,
-        deliveryMemo,
-      });
+    const request = { path: { orderNo: query.get('orderNo') } };
+    const fetchOrderDetailMap = {
+      guest: () => getGuestOrderByOrderNo(request),
+      profile: () => getProfileOrderByOrderNo(request),
+    };
 
-      const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
-      const couponDiscountAmt = cartCouponDiscountAmt + productCouponDiscountAmt;
-      setAmountInfo({
-        totalProductAmt,
-        promotionDiscountAmt,
-        couponDiscountAmt,
-        mileageAmt: subPayAmt,
-        totalDiscountAmount: promotionDiscountAmt + couponDiscountAmt + subPayAmt,
-        payAmt,
-      });
-
-      setPayInfo({
-        // payType,
-        // cardInfo,
-        // bankInfo,
-
-        // FIXME: 목데이터, 개발완료되면 지우고 위 payType, cardInfo, bankInfo 주석 풀면 됨
-        payType: 'CREDIT_CARD',
-        cardInfo: {
-          approveYmdt: '2021-09-11 22:29:43',
-          cardAmt: 202000,
-          cardApprovalNumber: '51587665',
-          cardCode: 'CCBC',
-          cardCompany: 'BC',
-          cardName: 'BC카드',
-          cardNo: '920020******9787',
-          installmentPeriod: 0,
-          noInterest: false,
-        },
-        bankInfo: {
-          account: 'T0309260000174',
-          bank: 'IBK',
-          bankAmt: 202000,
-          bankCode: '003',
-          bankName: '기업은행',
-          depositAmt: 0,
-          depositYmdt: null,
-          depositorName: '한국사이버결제',
-          paymentExpirationYmdt: '2021-09-18 23:59:59',
-        },
-      });
-
-      console.log('res.data:', res.data);
-      console.log('orderProducts:', orderProducts);
-    });
+    fetchOrderDetailMap[isLogin ? 'profile' : 'guest']().then((res) => setStates(res));
   }, []);
+
+  const setStates = (res) => {
+    const {
+      orderNo,
+      orderYmdt,
+      defaultOrderStatusType,
+      orderer: { ordererName, ordererContact1 },
+      shippingAddress: { receiverName, receiverAddress, receiverContact1, receiverDetailAddress },
+      deliveryMemo,
+      lastOrderAmount: {
+        totalProductAmt,
+        immediateDiscountAmt,
+        additionalDiscountAmt,
+        cartCouponDiscountAmt,
+        productCouponDiscountAmt,
+        subPayAmt,
+        payAmt,
+      },
+      payType,
+      payInfo: { cardInfo, bankInfo },
+      receiptInfos,
+    } = res.data;
+
+    setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
+    setOrderProducts(makeOrderProducts(res.data));
+    setOrdererInfo({ ordererName, ordererContact1 });
+    setShippingAddress({
+      receiverName,
+      receiverAddress,
+      receiverDetailAddress,
+      receiverContact1,
+      deliveryMemo,
+    });
+
+    const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
+    const couponDiscountAmt = cartCouponDiscountAmt + productCouponDiscountAmt;
+    setAmountInfo({
+      totalProductAmt,
+      promotionDiscountAmt,
+      couponDiscountAmt,
+      mileageAmt: subPayAmt,
+      totalDiscountAmount: promotionDiscountAmt + couponDiscountAmt + subPayAmt,
+      payAmt,
+    });
+
+    setPayInfo({
+      payType,
+      cardInfo,
+      bankInfo,
+    });
+
+    setReceiptInfos(receiptInfos);
+  };
 
   const makeOrderProducts = (orderDetailResponse) => {
     const { orderOptionsGroupByPartner } = orderDetailResponse;
@@ -148,7 +137,7 @@ export default function OrderDetail() {
     const orderStatus = {
       DEPOSIT_WAIT: '입금대기',
       PAY_DONE: '결제완료',
-      PRODUCT_PREPARE: '배송준비', // 샵바이에는 상품준비중상태가 있지만 소니에는 없음.
+      PRODUCT_PREPARE: '배송준비', // 소니에서는 상품준비중을 배송준비중으로 표기ㄴ
       DELIVERY_PREPARE: '배송준비',
       DELIVERY_ING: '배송중',
       DELIVERY_DONE: '배송완료',
@@ -159,6 +148,10 @@ export default function OrderDetail() {
 
   const showFindDelivery = (defaultOrderStatusType) => {
     return defaultOrderStatusType === 'DELIVERY_ING' || defaultOrderStatusType === 'DELIVERY_DONE';
+  };
+
+  const showOrderCancel = (orderStatusType) => {
+    return ['DEPOSIT_WAIT', 'PAY_DONE', 'PRODUCT_PREPARE', 'DELIVERY_PREPARE'].includes(orderStatusType);
   };
 
   const getInstallmentPeriod = (cardInfo) => {
@@ -184,11 +177,43 @@ export default function OrderDetail() {
     printDiv.style.display = 'none';
   };
 
+  const openCredicardReceipt = (receiptInfoUrl) => {
+    window.open(receiptInfoUrl);
+  };
+
+  const onOrderCancel = (orderNo) => {
+    const request = {
+      path: { orderNo },
+      requestBody: {
+        claimType: 'CANCEL',
+        claimReasonType: 'CHANGE_MIND',
+        claimReasonDetail: '',
+        bankAccountInfo: null,
+        saveBankAccountInfo: false,
+        responsibleObjectType: null,
+      },
+    };
+
+    const orderCancelMap = {
+      profile: () => postProfileClaimOrderCancelByOrderNo(request),
+      guest: () => postGuestClaimOrderCancelByOrderNo(request),
+    };
+
+    return orderCancelMap[isLogin ? 'profile' : 'guest']().then((res) => {
+      if (res.data.status === 404 || res.data.status === 400) {
+        alert(res.data.message);
+        return;
+      }
+
+      window.alert('주문취소 신청이 완료되었습니다.');
+    });
+  };
+
   return (
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
       <div className="contents mypage">
-        <div className="container">
+        <div className="container my">
           <div className="content">
             <div className="common_head">
               <Link to="/my-page/order-list" className="common_head_back">
@@ -311,13 +336,6 @@ export default function OrderDetail() {
                         <div className="purchase_detail_method">
                           가상 계좌 : {payInfo.bankInfo.bankName}({payInfo.bankInfo.account})
                         </div>
-                        <button
-                          type="button"
-                          className="button button_negative button-s popup_comm_btn"
-                          data-popup-name="cash_receipt"
-                        >
-                          현금영수증 신청
-                        </button>
                       </>
                     )}
                     {payInfo.payType === 'CREDIT_CARD' && (
@@ -325,7 +343,11 @@ export default function OrderDetail() {
                         <div className="purchase_detail_method">
                           {payInfo.cardInfo.cardName} / {getInstallmentPeriod(payInfo.cardInfo)}
                         </div>
-                        <button type="button" className="button button_negative button-s">
+                        <button
+                          type="button"
+                          className="button button_negative button-s"
+                          onClick={() => openCredicardReceipt(receiptInfos[0].url)}
+                        >
                           신용카드 영수증
                         </button>
                       </>
@@ -337,9 +359,16 @@ export default function OrderDetail() {
             {/* // 결제 정보 */}
             {/* buttons */}
             <div className="cont button_wrap">
-              <button type="button" className="button button_negative">
-                주문 취소
-              </button>
+              {showOrderCancel(orderInfo.defaultOrderStatusType) && (
+                <button
+                  type="button"
+                  className="button button_negative"
+                  onClick={() => onOrderCancel(query.get('orderNo'))}
+                >
+                  주문 취소
+                </button>
+              )}
+
               <button type="button" className="button button_negative only-pc" onClick={() => onPrint()}>
                 주문 정보 프린트
               </button>
