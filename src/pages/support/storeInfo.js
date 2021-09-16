@@ -20,7 +20,7 @@ import '../../assets/scss/support.scss';
 
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
 
-const MAP_CLIENT_ID = process.env.REACT_APP_MAP_CLIENT_ID || 'cvkvsq54we';
+const MAP_CLIENT_ID = process.env.REACT_APP_MAP_CLIENT_ID || 'i1nv00h8zo';
 
 const COORDINATE = {
   lat: 37.52369,

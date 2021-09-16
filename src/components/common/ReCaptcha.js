@@ -1,6 +1,6 @@
 import ReCAPTCHA from 'react-google-recaptcha';
 
-const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY || '6LdoXFUcAAAAALtgWfChyS17dSHKwICv81fHgsA7';
+const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY || '6LeNjQATAAAAAEi7lxcR-evpkCMR1FEjLKvwtYvr';
 
 export default function ReCaptcha({ style, setCaptcha }) {
 
