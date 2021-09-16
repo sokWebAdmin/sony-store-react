@@ -1,6 +1,6 @@
 import { getWithExpire, setWithExpire } from '../utils/storage';
 
-const name = 'SHOPBYPRO_CART_GUEST_INFO';
+const name = 'SONY_STORE_GUEST_CART';
 
 const gc = {
   data: [],
