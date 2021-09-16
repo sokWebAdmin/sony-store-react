@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router';
+import GlobalContext from '../../context/global.context';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
@@ -12,7 +13,8 @@ import ProductList from '../../components/cart/ProductList';
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
-import GlobalContext from '../../context/global.context';
+
+// api
 import { getCart } from '../../api/order';
 
 // module
