@@ -1,31 +1,15 @@
-import { React, useEffect } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
-
-//api
 
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
-//utils
-import { useHistory } from 'react-router-dom';
-
 export default function Cart () {
   const history = useHistory();
-
-
-  const init = {
-    start() {
-      console.log('init')
-      console.group('route history')
-      console.log(history)
-      console.groupEnd();
-    }
-  }
-
-  useEffect(init.start);
 
   return (
     <>
@@ -181,7 +165,7 @@ export default function Cart () {
                 <button type="submit"
                         className="button button_positive popup_comm_btn"
                         data-popup-name="login_chk_order" onClick={() => {
-                  history.push('//order/sheet');
+                  history.push('/order/sheet');
                 }}>구매하기
                 </button>
               </div>
