@@ -88,6 +88,18 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                       close={() => setViewInvoicePublish(false)} />}
                   </div>
                 </div>
+                <div className="cash_box">
+                  <strong className="cash_box_tit">현금영수증 발행</strong>
+                  <ul className="cash_box_list">
+                    <li>가상 계좌 발급 후 3일 이내에 입금하여 주시기 바랍니다.<br />
+                      미 입금 시 주문 취소되며 재주문을 통한 가상 계좌 재발급을 받으셔야 합니다.
+                    </li>
+                    <li>현금영수증 발행 관련 문의는 1588-0911 또는 <a
+                      href="mailto:sonystore3@sony.co.kr"
+                      className="link_mail">sonystore3@sony.co.kr</a>로 연락 바랍니다.
+                    </li>
+                  </ul>
+                </div>
                 <strong className="info_tit3">[소비자
                   피해보상보험
                   서비스 안내]</strong>
