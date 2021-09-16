@@ -117,7 +117,6 @@ export default function Main() {
       getSlideBannerNames(slidePcBanners);
       setSlidePcBanners(slidePcBanners);
       const recommendedBanners = data.find(({ code }) => code === '002')?.accounts || [];
-      debugger;
       getRecommendedBannerNames(recommendedBanners);
       setRecommendedBanners(recommendedBanners);
     } catch (e) {
