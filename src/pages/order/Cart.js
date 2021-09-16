@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import SEOHelmet from '../../components/SEOHelmet';
 import Header from '../../components/cart/Header';
 import QnA from '../../components/cart/QnA';
+import Empty from '../../components/cart/Empty';
 
 import ProductList from '../../components/cart/ProductList';
 
@@ -23,6 +24,9 @@ const Cart = () => {
           <div className="content order_page">
             <div className="order_box">
               <Header />
+
+              <Empty />
+
               <ProductList />
               <div className="button_wrap">
                 <a className="button button_negative">쇼핑 계속 하기</a>
