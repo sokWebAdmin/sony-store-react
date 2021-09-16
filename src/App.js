@@ -117,7 +117,7 @@ const App = (props) => {
       if (!profile) {
         const response = await getProfile();
         const data = { type: '30', customerid: response.data.memberId };
-        await setProfile(profileDispatch, response.data);
+        setProfile(profileDispatch, response.data);
         await fetchMyProfile(profileDispatch, data);
       }
       if (profile && !my) {
@@ -227,10 +227,10 @@ const App = (props) => {
               <Route exact path="/event/detail/:eventNo"
                      component={EventDetail} />
               <Route exact path="/event/expired" component={Expired} />
-              <Route exact path="/event/benefit-zone"
-                     component={BenefitZone} />{/*현재 데이터 없음*/}
-              <Route exact path="/event/pre-order"
-                     component={PreOrder} />{/*현재 데이터 없음*/}
+              {/*<Route exact path="/event/benefit-zone"*/}
+              {/*       component={BenefitZone} />/!*현재 데이터 없음*!/*/}
+              {/*<Route exact path="/event/pre-order"*/}
+              {/*       component={PreOrder} />/!*현재 데이터 없음*!/*/}
               {/*<Route exact path="/event/asc" component={asc} />*/}
               <Route exact path="/event/refined" component={refined} />
               <Route exact path="/event/live-on" component={liveon} />
