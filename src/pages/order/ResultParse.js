@@ -33,7 +33,7 @@ const ResultParse = ({ location }) => {
 
     if (orderType === 'GIFT') {
       history.push(
-        `/order/complete${location.search} + '&status=PAY_DONE&orderType=GIFT'`);
+        `/order/complete${location.search} + '&status=PAY_DONE&orderType=GIFT`);
       return;
     }
 
