@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 
 //utils
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 
 //img
@@ -85,10 +85,10 @@ export default function Footer() {
         </div>
         <div className="footer__legal">
           <div className="footer__legal__links">
-            <a  onClick={()=>{history.push('/footer/terms')}} className="footer__legal__link">이용약관</a>
-            <a  onClick={()=>{history.push('/footer/policy')}} className="footer__legal__link privacy">개인정보처리방침</a>
+            <Link to="/footer/terms" className="footer__legal__link">이용약관</Link>
+            <Link to="/footer/policy"  className="footer__legal__link privacy">개인정보처리방침</Link>
             <a  onClick={()=>{setPop(true)}} className="footer__legal__link" data-modal-target="modal__customer__insurance" style={{cursor:"pointer"}}>소비자 피해 보상보험</a>
-            <a  onClick={()=>{history.push('/footer/siteMap')}} className="footer__legal__link">사이트맵</a>
+            <Link to="/footer/sitemap" className="footer__legal__link">사이트맵</Link>
           </div>
           <div className="footer__legal__warning">
             <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
