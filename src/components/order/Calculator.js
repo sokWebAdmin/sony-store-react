@@ -50,7 +50,7 @@ const Calculator = ({ payment, paymentInfo }) => {
                     <em
                       className="view_price minus"><strong>-
                       {toCurrency(
-                        paymentInfo?.cartAmt -
+                        paymentInfo?.totalStandardAmt -
                         paymentInfo?.paymentAmt)}</strong>원</em>
                   </div>
               </div>
@@ -120,7 +120,7 @@ const Calculator = ({ payment, paymentInfo }) => {
         <button
           className="button button_positive button-full"
           onClick={() => submit()}
-          type="button">총 <em>N</em> 원
+          type="button">총 <em>{toCurrency(paymentInfo?.totalStandardAmt)}</em> 원
           (1개) <span>결제하기</span></button>
       </div>
     </div>
