@@ -115,7 +115,7 @@ const App = (props) => {
     if (isLogin) {
       if (!profile) {
         await fetchProfile(profileDispatch);
-        if (!my) {
+        if (profile && !my) {
           const data = { type: '30', customerid: profile.memberId };
           await fetchMyProfile(profileDispatch, data);
         }
