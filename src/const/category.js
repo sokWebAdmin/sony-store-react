@@ -258,24 +258,32 @@ const gnbCategories = [
     children: [
       {
         label: '소니스토어 단독',
-        route: '/event/list',
+        route: '/event/list?tab=only',
       },
       {
         label: '혜택존',
-        route: '/event/refurbish',
+        route: '/event/list?tab=benefit-zone',
       },
       {
         label: '예약판매',
-        route: '/event/list',
+        route: '/event/list?tab=pre-order',
       },
       {
         label: '정품 등록 이벤트',
-        route: '/event/refined',
+        route: '/event/list?tab=refined',
       },
       {
         label: 'LIVE ON',
-        route: '/event/live-on',
+        route: '/event/list?tab=live-on',
       },
+      // {
+      //   label: '임직원몰',
+      //   route: '/event/list?tab=employee',
+      // },
+      // {
+      //   label: '리퍼비시몰',
+      //   route: '/event/list?tab=refurbish',
+      // },
     ]
   },
   {
