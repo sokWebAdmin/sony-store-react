@@ -5,8 +5,10 @@ const EPD_KEY = '_expirationDate';
 export const setWithExpire = (
   name,
   data,
-  expire = 60 * 60 * 24 * 2, // default: 2Day
+  expire = 1000 * 60 * 60 * 24, // default: 1Day
 ) => {
+  console.log(expire);
+
   const unix = Date.now() + expire;
 
   set(name, data);
@@ -14,7 +16,7 @@ export const setWithExpire = (
 };
 
 export const getWithExpire = name => {
-  const unix = this.getItem(name + EPD_KEY);
+  const unix = get(name + EPD_KEY);
   const expire = Boolean(unix) && unix < Date.now();
 
   return expire ? null : get(name);
