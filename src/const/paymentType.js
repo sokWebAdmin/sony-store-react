@@ -10,7 +10,7 @@ const paymentType = {
     label: '가상 계좌',
   },
   nPay: {
-    pgType: 'NAVER_EASY_PAY',
+    pgType: 'INICIS',
     payType: 'NAVER_EASY_PAY',
     label: '네이버 페이',
   },
