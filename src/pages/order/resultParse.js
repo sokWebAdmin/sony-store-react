@@ -6,10 +6,9 @@ import { getUrlParam } from '../../utils/location';
 const ResultParse = ({ location }) => {
   const history = useHistory();
 
-  const orderSheetNo = useMemo(() => getUrlParam('orderSheetNo'), [location]);
-  const orderNo = useMemo(() => getUrlParam('orderNo'), [location]);
   const payType = useMemo(() => getUrlParam('PayType'), [location]);
   const result = useMemo(() => getUrlParam('result'), [location]);
+  const message = useMemo(() => getUrlParam('message'), [location]);
 
   const handleStatus = () => {
     result === 'SUCCESS' ? handleSuccessResult() : handleFailResult();
@@ -23,11 +22,18 @@ const ResultParse = ({ location }) => {
       ? history.push(
       `/order/complete${location.search + '&status=DEPOSIT_WAIT'}`)  // 입금 대기
       : history.push(`/order/complete${location.search} + '&status=PAY_DONE'`); // 결제
-                                                                               // 완료
+    // 완료
   }
 
   function handleFailResult () {
-    console.log(result);
+    const isCancel = message.includes('V801'); // 취소 코드. 다른 사유 있을경우 추가
+
+    if (isCancel) {
+      history.push(`/order/complete${location.search + '&status=PAY_FAIL'}`);
+      return;
+    }
+
+    history.push(`/order/complete${location.search + '&status=UNDEFINED'}`);
   }
 
   return (
