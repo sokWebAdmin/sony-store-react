@@ -137,20 +137,10 @@ export const tabUiClick = () => {
               $(tab).find('.swiper-wrapper').css("width", _totalW);
             });
           }
-        }
+        },
+        slideActiveClass: 'on',
       });
       tabSwiper.update();
     }
-    $(tab).find('.tabs .btn').on("click", function(){
-      let $thisTab = $(this).closest('li'),
-        _tabIndex = $thisTab.index(),
-        $tabInfo = $(tab).siblings('.tab_ui_info').find('.tab_ui_inner').eq(_tabIndex);
-
-      if($thisTab.hasClass("on") == false){
-        $thisTab.addClass("on").siblings().removeClass("on");
-        $tabInfo.addClass("view").siblings().removeClass("view");
-      }
-      return false;
-    });
   }
 }
