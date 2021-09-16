@@ -22,7 +22,7 @@ export default function OrderProcess({ defaultOrderStatusType }) {
       <ul className="order_list">
         {/* 현상태만 class: on 추가, .ico_txt 내부에 <strong> 추가 */}
         {orderStatuses.map((orderStatus, index) => (
-          <li className={`step_${index + 1} ${isSameCurrentOrderStatus(orderStatus) && 'on'}`}>
+          <li key={index} className={`step_${index + 1} ${isSameCurrentOrderStatus(orderStatus) && 'on'}`}>
             <div className="ship_box">
               {isSameCurrentOrderStatus(orderStatus) ? (
                 <span className="ico_txt">
