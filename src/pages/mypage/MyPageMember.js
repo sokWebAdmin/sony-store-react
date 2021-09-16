@@ -236,6 +236,7 @@ export default function MyPageMember() {
         fetchMyProfile(profileDispatch, { type: '30', customerid: request.customerid });
         openAlert('회원 정보 수정이 완료되었습니다.');
         setIsEditMode(false);
+        setCaptcha(false);
       } else {
         openAlert(ret.data.errorMessage);
         console.log('에러 발생한 항목 : ', ret.data.description);
@@ -264,7 +265,7 @@ export default function MyPageMember() {
 
     return (
     <>
-      <SEOHelmet title={"구매상담 이용약관 동의"} />
+      <SEOHelmet title={"회원정보"} />
       {
         alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>
       }
