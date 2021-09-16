@@ -207,7 +207,7 @@ const App = (props) => {
                      component={ProductView} />
 
               {/* 주문 */}
-              <Route exact path="/order/agree" component={orderAgree} />
+              <Route exact path="/order/agree" component={OrderAgree} />
 
               <Route exact path="/order/parse" component={ResultParse} />
               <Route exact path="/order/complete" component={OrderComplete} />
