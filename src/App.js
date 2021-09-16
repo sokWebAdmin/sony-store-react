@@ -39,12 +39,15 @@ import Withdraw from './pages/mypage/Withdraw';
 import WithdrawComplete from './pages/mypage/WithdrawComplete';
 
 //order
-import orderAgree from './pages/order/orderAgree';
-import orderComplete from './pages/order/orderComplete';
 import cart from './pages/order/cart';
 import cartEmpty from './pages/order/cartEmpty';
-import orderSheet from './pages/order/orderSheet';
-import giftReceive from './pages/order/giftReceive';
+
+import ResultParse from './pages/order/ResultParse';
+import OrderAgree from './pages/order/OrderAgree';
+import OrderComplete from './pages/order/OrderComplete';
+import OrderFail from './pages/order/OrderFail';
+import OrderSheet from './pages/order/OrderSheet';
+import GiftReceive from './pages/order/GiftReceive';
 
 //event
 import liveon from './pages/event/liveon';
@@ -113,12 +116,12 @@ const App = (props) => {
       if (!profile) {
         await fetchProfile(profileDispatch);
         if (!my) {
-          const data = { type: '30', customerid: profile?.memberId };
+          const data = { type: '30', customerid: profile.memberId };
           await fetchMyProfile(profileDispatch, data);
         }
       }
       if (profile && !my) {
-        const data = { type: '30', customerid: profile?.memberId };
+        const data = { type: '30', customerid: profile.memberId };
         await fetchMyProfile(profileDispatch, data);
       }
     } else {
@@ -128,7 +131,7 @@ const App = (props) => {
 
   useEffect(() => {
     getMallInfo();
-  }, [isLogin, my, profile])
+  }, [isLogin])
 
   let location = useLocation();
 
@@ -204,21 +207,30 @@ const App = (props) => {
                      component={ProductView} />
 
               {/* 주문 */}
-              <Route exact path="/order/agree" component={orderAgree} />
-              <Route exact path="/order/complete" component={orderComplete} />
+              <Route exact path="/order/agree" component={OrderAgree} />
+
+              <Route exact path="/order/parse" component={ResultParse} />
+              <Route exact path="/order/complete" component={OrderComplete} />
+              <Route exact path="/order/fail" component={OrderFail} />
+
               <Route exact path="/cart" component={cart} />
               <Route exact path="/cart-empty" component={cartEmpty} />
-              <Route exact path="/order/sheet" component={orderSheet} />
-              <Route exact path="/gift/sheet" component={orderSheet} />
-              <Route exact path="/gift/receive" component={giftReceive} />
+
+              <Route exact path="/order/sheet" component={OrderSheet} />
+              <Route exact path="/gift/sheet" component={OrderSheet} />
+              <Route exact path="/gift/receive" component={GiftReceive} />
 
               {/* 이벤트  */}
               <Route exact path="/event/list" component={eventList} />
-              <Route exact path="/event/only/:eventNo" component={EventDetail} />
-              <Route exact path="/event/detail/:eventNo" component={EventDetail} />
+              <Route exact path="/event/only/:eventNo"
+                     component={EventDetail} />
+              <Route exact path="/event/detail/:eventNo"
+                     component={EventDetail} />
               <Route exact path="/event/expired" component={Expired} />
-              <Route exact path="/event/benefit-zone" component={BenefitZone} />{/*현재 데이터 없음*/}
-              <Route exact path="/event/pre-order" component={PreOrder} />{/*현재 데이터 없음*/}
+              <Route exact path="/event/benefit-zone"
+                     component={BenefitZone} />{/*현재 데이터 없음*/}
+              <Route exact path="/event/pre-order"
+                     component={PreOrder} />{/*현재 데이터 없음*/}
               {/*<Route exact path="/event/asc" component={asc} />*/}
               <Route exact path="/event/refined" component={refined} />
               <Route exact path="/event/live-on" component={liveon} />
