@@ -23,3 +23,16 @@ export const getBoardCategories = data => {
 
 export const getAddresses = query =>
   request('addresses/search', 'get', query)
+
+// 약관
+export const getTerms = query => {
+  return request('terms', 'get', query, null)
+};
+
+export const getTermsHistory = query => {
+  return request('terms/history', 'get', query, null)
+};
+
+export const getTermsByTermNo = pathParams => {
+  return request(`terms/${pathParams.termsNo}`, 'get', null, null)
+}
