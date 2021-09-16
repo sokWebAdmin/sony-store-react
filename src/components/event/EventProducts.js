@@ -1,5 +1,6 @@
 import React from 'react';
 import { toCurrencyString } from '../../utils/unit';
+import { Link } from 'react-router-dom';
 
 const EventProducts = ({event}) => {
   return (
@@ -13,12 +14,12 @@ const EventProducts = ({event}) => {
                 <span className="unit">원</span> OFF
                         </span>}
               <div className="product_pic">
-                <a href="javascript:void(0)" className="product_link">
+                <Link to={`/product-view/${product.productNo}`}>
                   <img
                     src={product.imageUrls[0]}
-                    alt=""
+                    alt={product.productName}
                   />
-                </a>
+                </Link>
                 {!product.stockCnt && <div className="sold_out">
                   <span>SOLD OUT</span>
                 </div>}
