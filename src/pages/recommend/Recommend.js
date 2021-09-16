@@ -33,7 +33,7 @@ export default function Recommend({ match }) {
   const history = useHistory();
 
   const size = useWindowSize();
-
+  const [slideBanners, setSlideBanners] = useState([]);
   const [isFinished, setFinished] = useState(false);
 
   const getBanners = useCallback(async () => {
@@ -41,11 +41,15 @@ export default function Recommend({ match }) {
       //배너 코드 객체로 관리하기
       //응답이 순서를 보징하지 않음
       const { data } = await loadBanner('000');
-      // const moBanners = data.find(({ code }) => code === '001')?.accounts || [];
+      setSlideBanners(data[0]?.accounts);
     } catch (e) {
       console.error(e);
     }
   }, []);
+
+  useEffect(() => {
+    getBanners();
+  }, [getBanners]);
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay]);
 
@@ -59,26 +63,38 @@ export default function Recommend({ match }) {
                 {/* kv */}
                 <div className="reco_kv">
                   <div className={`reco_kv_inner ${isFinished == true && 'end'}`}>
-                    <Scene triggerElement=".trigger-1" duration={size.height * 0.4}>
+                    {/*{slideBanners.map((slideBanner, index) => (*/}
+                    {/*  <Scene triggerElement={`".trigger-${index + 1}"`} duration={size.height * 0.4} key={index}>*/}
+                    {/*    {(progress) => (*/}
+                    {/*      <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>*/}
+                    {/*        <div*/}
+                    {/*          id={`reco_kv_img-${index + 1}`}*/}
+                    {/*          className={`reco_kv_img reco_kv_img-${index + 1} ${progress === 1 ? 'end' : ''}`}*/}
+                    {/*        >*/}
+                    {/*          <img src={slideBanner?.banners[0]?.imageUrl} alt={slideBanner?.banners[0]?.name} />*/}
+                    {/*        </div>*/}
+                    {/*      </Tween>*/}
+                    {/*    )}*/}
+                    {/*  </Scene>*/}
+                    ))}
+                    <Scene triggerElement=".trigger-1" duration={size.height * 0.5}>
                       {(progress) => (
                         <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
                           <div id="reco_kv_img-1" className={`reco_kv_img reco_kv_img-1 ${progress == 1 ? 'end' : ''}`}>
-                            <img src="/images/recommend/kv1.jpg" alt="분위기 잡는 사진 1" />
+                            <img src={slideBanners[0]?.banners[0]?.imageUrl} alt={slideBanners[0]?.banners[0]?.name} />
                           </div>
                         </Tween>
                       )}
                     </Scene>
-
                     <Scene triggerElement=".trigger-2" duration={size.height * 0.4}>
                       {(progress) => (
                         <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
                           <div id="reco_kv_img-2" className={`reco_kv_img reco_kv_img-2 ${progress > 0 ? 'end' : ''}`}>
-                            <img src="/images/recommend/kv2.jpg" alt="분위기 잡는 사진 2" />
+                            <img src={slideBanners[1]?.banners[0]?.imageUrl} alt={slideBanners[1]?.banners[0]?.name} />
                           </div>
                         </Tween>
                       )}
                     </Scene>
-
                     <Scene triggerElement=".trigger-3" duration={size.height * 0.5}>
                       {(progress) => (
                         <Tween
@@ -88,12 +104,11 @@ export default function Recommend({ match }) {
                           paused
                         >
                           <div id="reco_kv_img-3" className={`reco_kv_img reco_kv_img-3 ${progress > 0 ? 'end' : ''}`}>
-                            <img src="/images/recommend/kv3.jpg" alt="분위기 잡는 사진 3" />
+                            <img src={slideBanners[2]?.banners[0]?.imageUrl} alt={slideBanners[2]?.banners[0]?.name} />
                           </div>
                         </Tween>
                       )}
                     </Scene>
-
                     <Scene triggerElement=".trigger-4" duration={size.height * 0.5}>
                       {(progress) => (
                         <Tween duration={1}>
@@ -111,7 +126,6 @@ export default function Recommend({ match }) {
                         </Tween>
                       )}
                     </Scene>
-
                     <Scene triggerElement=".trigger-end">
                       {(progress) => {
                         setFinished(true);
