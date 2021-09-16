@@ -1,4 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -9,9 +11,18 @@ import '../../assets/scss/order.scss';
 import { getUrlParam } from '../../utils/location';
 
 const OrderComplete = ({ location }) => {
+  const history = useHistory();
+
   const status = useMemo(() => getUrlParam('status'), [location]);
   const orderType = useMemo(() => getUrlParam('orderType'), [location]);
   const orderNo = useMemo(() => getUrlParam('orderNo'), [location]);
+
+  useEffect(() => {
+    if (!orderNo) {
+      alert('잘못된 접근입니다.');
+      history.push('/');
+    }
+  }, [location]);
 
   return (
     <>
@@ -58,15 +69,19 @@ const OrderComplete = ({ location }) => {
                 마이페이지에서 확인하실 수 있습니다.</p>
               {/*비회원 주문완료 일때 <p class="order_confirm_box__txt">비회원 구매 후 배송 조회는 위의 주문번호와 결제 시 입력하신 비밀번호(12자리)로 확인 가능합니다.</p>*/}
               <div className="btn_box">
-                <button className="button button_negative" type="button">계속
+                <Link to="/" className="button button_negative" type="button">계속
                   쇼핑하기
-                </button>
-                <button className="button button_negative" type="button">설문조사
+                </Link>
+                <a
+                  href="https://www.sony.co.kr/handler/EXCSATemplate-SurveyForm"
+                  target="_blank" className="button button_negative"
+                  type="button">설문조사
                   참여하기
-                </button>
-                <button className="button button_positive" type="button">주문/배송
+                </a>
+                <Link to={`/my-page/order-detail?orderNo=${orderNo}`}
+                      className="button button_positive" type="button">주문/배송
                   조회
-                </button>
+                </Link>
               </div>
             </div>
           </div>
