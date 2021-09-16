@@ -85,7 +85,7 @@ export default function Terms() {
             <div className="terms">
               <div className="list_box">
                 <p className="date">
-                  <strong>시행일자 : { toLocalDateStr(activeTerms?.enforcementDate) }</strong>
+                  <strong>시행일자 : { historyVisible ? toLocalDateStr(prevTerms?.enforcementDate) : toLocalDateStr(activeTerms?.enforcementDate) }</strong>
                   <a 
                     href="#none" 
                     className="btn_go_ar" 
