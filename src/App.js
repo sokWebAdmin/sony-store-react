@@ -39,7 +39,7 @@ import Withdraw from './pages/mypage/Withdraw';
 import WithdrawComplete from './pages/mypage/WithdrawComplete';
 
 //order
-import resultParse from './pages/order/resultParse';
+import ResultParse from './pages/order/resultParse';
 import orderAgree from './pages/order/orderAgree';
 import orderComplete from './pages/order/orderComplete';
 import orderFail from './pages/order/orderFail';
@@ -208,7 +208,7 @@ const App = (props) => {
               {/* 주문 */}
               <Route exact path="/order/agree" component={orderAgree} />
 
-              <Route exact path="/order/parse" component={resultParse} />
+              <Route exact path="/order/parse" component={ResultParse} />
               <Route exact path="/order/complete" component={orderComplete} />
               <Route exact path="/order/fail" component={orderFail} />
 

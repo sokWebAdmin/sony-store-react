@@ -10,7 +10,7 @@ const orderPayment = {
       clientId: 'MzuMctQTZBXWmdTlujFy3Q==',
       accessToken: getAccessToken(),
       platform: isMobile ? 'MOBILE_WEB' : 'PC',
-      confirmUrl: `${window.location.origin}/order/result-parse`,
+      confirmUrl: `${window.location.origin}/order/parse`,
     };
   },
   setConfiguration () {
