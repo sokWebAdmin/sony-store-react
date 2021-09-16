@@ -10,12 +10,11 @@ const orderPayment = {
       clientId: 'MzuMctQTZBXWmdTlujFy3Q==',
       accessToken: getAccessToken(),
       platform: isMobile ? 'MOBILE_WEB' : 'PC',
-      confirmUrl: `${window.location.origin}/order/complete`,
+      confirmUrl: `${window.location.origin}/order/result-parse`,
     };
   },
   setConfiguration () {
     this.NCPPay.setConfiguration(this.config);
-    console.log('set config : ', this.config);
   },
   post (requestBody) {
     console.log(requestBody);
