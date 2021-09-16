@@ -11,6 +11,30 @@ import SelectBox from "../common/SelectBox";
 import { wonComma } from "../../utils/utils";
 
 import GlobalContext from "../../context/global.context";
+import { Link } from "react-router-dom";
+
+// 선물하기 팝업 
+
+function GiftNotification({ setShowGiftNotification }) {
+  
+  return (
+    <div className="popup_gift layer" style={{ display: 'block' }}>
+      <div className="layer_wrap">
+        <div className="layer_container">
+          <p className="layer_title ico gift">소니스토어 선물하기</p>
+          <p className="text">선물하기는 소니스토어 회원만<br /> 이용하실 수 있습니다.</p>
+          <div className="btn_article size2">
+            <a href="#none" onClick={ e => {
+              e.preventDefault();
+              setShowGiftNotification(false);
+            }} className="btn close white">쇼핑 계속하기</a>
+            <Link to="/member/login" className="btn cart">로그인</Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 // 배송
 function Delivery({
@@ -213,8 +237,54 @@ function OptionResult({ totalCnt, totalPrice }) {
   )
 }
 
+
 function ButtonGroup({ selectedOption, productNo }) {
-  const { isLogin } = useContext(GlobalContext)
+  const { isLogin } = useContext(GlobalContext);
+  const [ showGiftNotification, setShowGiftNotification ] = useState(false);
+
+  const gift = () => {
+    if (isLogin) {
+
+    } else {
+      setShowGiftNotification(true);
+    }
+  };
+
+  const order = async () => {
+    const response = await postOrderSheets({
+      productCoupons: null,
+      trackingKey: null,
+      cartNos: null,
+        channelType: null,
+        products: selectedOption.map(p => ({
+          channelType: null,
+          orderCnt: p.buyCnt,
+          optionInputs: null,
+          optionNo: p.optionNo,
+          productNo: productNo
+        }))
+      });
+
+      history.push({
+        pathname: '/order/sheet',
+        search: '?' + qs.stringify(response.data),
+      });
+  }
+
+  const handleClick = (e, type) => {
+    e.preventDefault();
+    switch(type) {
+      case 'gift':
+        gift();
+        break;
+      case 'order':
+        order();
+        break;
+      default:
+        break;
+    }
+  }
+
   const history = useHistory();
   return (
     <>
@@ -223,37 +293,20 @@ function ButtonGroup({ selectedOption, productNo }) {
           <ul>
             <li className="like"><a href="#none" className="btn_icon">찜하기</a></li>
             <li className="cart"><a href="#none" onClick={()=>{history.push('/cart')}} className="btn_icon" data-popup="popup_cart">장바구니</a></li>
-            <li className="gift"><a href="#none" className="btn_icon" data-popup="popup_gift">선물</a></li>
+            <li className="gift">
+              <a 
+                href="/order/gift" 
+                className="btn_icon" 
+                onClick={ e => handleClick(e, 'gift') }
+              >선물</a>
+            </li>
             <li className="final">
-              <a href="/order/sheet" onClick={async (event) => {
-
-                // if (isLogin) {
-
-                // } else {
-
-                event.preventDefault();
-                const response = await postOrderSheets({
-                  productCoupons: null,
-                  trackingKey: null,
-                  cartNos: null,
-                    channelType: null,
-                    products: selectedOption.map(p => ({
-                      channelType: null,
-                      orderCnt: p.buyCnt,
-                      optionInputs: null,
-                      optionNo: p.optionNo,
-                      productNo: productNo
-                    }))
-                  });
-
-                  history.push({
-                    pathname: '/order/sheet',
-                    search: '?' + qs.stringify(response.data),
-                  });
-
-                // }
-                
-              }} className="btn_style direct" style={{backgroundColor: '#000'}}>바로 구매하기</a>
+              <a 
+                href="/order/sheet" 
+                onClick={ e => handleClick(e, 'order')} 
+                className="btn_style direct" 
+                style={{backgroundColor: '#000'}}
+              >바로 구매하기</a>
               <a href="#none" className="btn_style disabled" style={{display: 'none', backgroundColor: '#ddd'}}>품절</a>
               <a href="#none" className="btn_style reservation" style={{display: 'none', backgroundColor: '#5865F5'}}>예약구매</a>
               {/*
@@ -269,6 +322,12 @@ function ButtonGroup({ selectedOption, productNo }) {
         </div>
       </div>
       <a href="#none" className="select_closed" title="선택 목록 닫기">닫기</a>
+      {
+        showGiftNotification 
+          && <GiftNotification 
+              setShowGiftNotification={setShowGiftNotification} 
+            />
+      }
     </>
   )
 }
