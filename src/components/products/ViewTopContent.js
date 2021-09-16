@@ -239,44 +239,53 @@ function OptionResult({ totalCnt, totalPrice }) {
   )
 }
 
+const getOrderSheetNo = async (productNo, selectedOption) => {
+  try {
+    const { data } = await postOrderSheets({
+      productCoupons: null,
+      trackingKey: null,
+      cartNos: null,
+      channelType: null,
+      products: selectedOption.map(p => ({
+        channelType: null,
+        orderCnt: p.buyCnt,
+        optionInputs: null,
+        optionNo: p.optionNo,
+        productNo: productNo
+      }))
+    });
+    return data;
+  } catch(e) {
+    console.error(e);
+  }
+};
 
 function ButtonGroup({ selectedOption, productNo, canBuy }) {
   const { openAlert, closeModal, alertVisible, alertMessage  } = useAlert();
   const { isLogin } = useContext(GlobalContext);
   const [ showGiftNotification, setShowGiftNotification ] = useState(false);
 
+  const order = async (pathname = '/order/sheet') => {
+    if (!canBuy) {
+      openAlert('옵션을 선택하세요.');
+      return;
+    };
+
+    const result = await getOrderSheetNo(productNo, selectedOption);
+
+    history.push({
+      pathname,
+      search: '?' + qs.stringify(result),
+    });
+  }
+
   const gift = () => {
     if (isLogin) {
-
+      order('/gift/sheet');
     } else {
       setShowGiftNotification(true);
     }
   };
-
-  const order = async () => {
-    if (!canBuy) {
-      openAlert('옵션을 선택하세요.');
-      return;
-    }
-    const response = await postOrderSheets({
-      productCoupons: null,
-      trackingKey: null,
-      cartNos: null,
-        channelType: null,
-        products: selectedOption.map(p => ({
-          channelType: null,
-          orderCnt: p.buyCnt,
-          optionInputs: null,
-          optionNo: p.optionNo,
-          productNo: productNo
-        }))
-      });
-
-      history.push({
-        pathname: '/order/sheet',
-        search: '?' + qs.stringify(response.data),
-      });
-  }
 
   const handleClick = (e, type) => {
     e.preventDefault();
@@ -302,7 +311,7 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
             <li className="cart"><a href="#none" onClick={()=>{history.push('/cart')}} className="btn_icon" data-popup="popup_cart">장바구니</a></li>
             <li className="gift">
               <a 
-                href="/order/gift" 
+                href="/gift/sheet" 
                 className="btn_icon" 
                 onClick={ e => handleClick(e, 'gift') }
               >선물</a>
