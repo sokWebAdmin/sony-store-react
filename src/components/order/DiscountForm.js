@@ -3,6 +3,11 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 // global context
 import { useMallState } from '../../context/mall.context';
 import { toCurrencyString } from '../../utils/unit';
+import {
+  fetchMyProfile,
+  useProfileState,
+  useProileDispatch,
+} from '../../context/profile.context';
 
 // components
 import UseCoupon from '../popup/UseCoupon';
@@ -30,7 +35,30 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
   /**
    * Point
    */
+  const [fetchedLatestMileage, setFetchedLatestMileage] = useState(false);
   const [inputSubPayAmt, setInputSubPayAmt] = useState('');
+  const { my, profile } = useProfileState();
+  const profileDispatch = useProileDispatch();
+
+  useEffect(() => {
+    fetchPoint();
+  }, []);
+
+  const availablemileage = useMemo(() => {
+    return my?.availablemileage;
+  }, [my]);
+
+  async function fetchPoint () {
+    try {
+      await fetchMyProfile(profileDispatch,
+        { type: '30', customerid: profile.customerid });
+      setFetchedLatestMileage(true);
+    }
+    catch (err) {
+      console.error(err);
+      setFetchedLatestMileage(false);
+    }
+  }
 
   const debounced = useDebounce(inputSubPayAmt, 1000);
   useEffect(() => {
@@ -43,11 +71,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
 
   const pointInput = useRef();
 
-  const pointUnit = accumulationConfig?.accumulationUnit || 'M'; // falsy
-
-  const accumulationAmt = useMemo(
-    () => paymentInfo?.accumulationAmt ? toCurrencyString(
-      paymentInfo.accumulationAmt) : 0, [paymentInfo]);
+  const pointUnit = 'M';
 
   const accumulationUseMinPriceWarn = useMemo(() =>
     (accumulationConfig?.accumulationUseMinPrice && inputSubPayAmt > 0 &&
@@ -108,6 +132,8 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
             </div>
           </div>
         </div>
+
+        {fetchedLatestMileage && availablemileage !== undefined &&
         <div className="acc_form">
           <div className="acc_cell vat">
             <label htmlFor="mileage">멤버십 마일리지</label>
@@ -141,7 +167,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                   type="button">모두 사용
                 </button>
                 <span
-                  className="my_point">(<em>{accumulationAmt} {pointUnit}</em> 보유)</span>
+                  className="my_point">(<em>{availablemileage} {pointUnit}</em> 보유)</span>
               </div>
             </div>
             {accumulationConfig?.accumulationUseMinPrice > 0 &&
@@ -155,6 +181,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
               } 사용 가능합니다.</p>}
           </div>
         </div>
+        }
       </>
     );
   }
