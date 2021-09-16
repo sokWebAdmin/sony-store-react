@@ -6,6 +6,7 @@ import moment from 'moment';
 import LayerPopup from '../common/LayerPopup';
 import { useAlert } from '../../hooks';
 import Alert from '../common/Alert';
+import { tabUiClick } from '../../utils/utils';
 
 const tabs = [
   {key: 'all', label: '전체'},
@@ -119,6 +120,10 @@ const EventBottom = () => {
     events.length && sortEvents();
   }, [newest]);
 
+  useEffect(() => {
+    tabUiClick();
+  }, [])
+
   const shareKakaoButton = () => {
     if (window.Kakao) {
       const kakao = window.Kakao
@@ -170,7 +175,7 @@ const EventBottom = () => {
         </div>
       </LayerPopup>}
       <div className="event_zone">
-        <div className="tab_ui scroll category_evnet">
+        <div className="tab_ui scroll category_evnet" data-scroll-view="6" data-tab-scroll-view="5">
           <ul>
             {tabs.map(({key, label}) => {
               return (
