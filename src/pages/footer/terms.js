@@ -101,7 +101,7 @@ export default function Terms() {
                         const articleNo = index + 1;
                         return (
                           <li key={articleNo + title}>
-                            <a href={ `#article${ index < 10 ? `0${articleNo}` : articleNo }` }>{ `제${articleNo}조 ${title}` }</a>
+                            <a href={ `#article${ articleNo < 10 ? `0${articleNo}` : articleNo }` }>{ `제${articleNo}조 ${title}` }</a>
                           </li>
                         )
                       })
@@ -113,7 +113,7 @@ export default function Terms() {
                         const articleNo = index + middle + 1;
                         return (
                           <li key={articleNo + title}>
-                            <a href={ `#article${ index < 10 ? `0${articleNo}` : articleNo }` }>{ `제${articleNo}조 ${title}` }</a>
+                            <a href={ `#article${ articleNo < 10 ? `0${articleNo}` : articleNo }` }>{ `제${articleNo}조 ${title}` }</a>
                           </li>
                         )
                       })
