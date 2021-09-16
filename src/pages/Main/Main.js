@@ -125,9 +125,8 @@ export default function Main() {
     }
   }, []);
 
-  const onMouseOver = (key, recommendedBanner) => {
-    console.log(recommendedBanner, recommendedBanner?.banners[0]?.mouseOverImageUrl);
-    setHover((prev) => ({ ...prev, [key]: true }));
+  const onMouseOver = (key) => {
+    setHover({ ...hover, [key]: true });
   };
 
   const onMouseLeave = (key) => {
@@ -160,7 +159,6 @@ export default function Main() {
       setRecommendedSections(data[0].products);
       const eventResponse = await getDisplaySectionsSectionNo(eventRequest);
       setEventSections(eventResponse.data[0]);
-      debugger;
     } catch (e) {
       console.error(e);
     }
@@ -263,10 +261,16 @@ export default function Main() {
                       key={index}
                       className="swiper-slide video-slide"
                       data-swiper-autoplay="10000"
+                      onMouseOver={() => onMouseOver('slideBanner')}
+                      onMouseLeave={() => onMouseLeave('slideBanner')}
                       style={{
                         backgroundImage:
                           bannerInfo.banners[0].videoUrl === '' && size.width > breakPoint
-                            ? `url(${bannerInfo.banners[0].imageUrl})`
+                            ? hover.slideBanner && bannerInfo?.banners[0]?.mouseOverImageUrl
+                              ? `url('${bannerInfo?.banners[0]?.mouseOverImageUrl}')`
+                              : `url(${bannerInfo.banners[0]?.imageUrl})`
+                            : hover.slideBanner && slideMoBanners[index]?.banners[0]?.mouseOverImageUrl
+                            ? `url(${slideMoBanners[index]?.banners[0]?.mouseOverImageUrl})`
                             : `url(${slideMoBanners[index]?.banners[0]?.imageUrl})`,
                       }}
                     >
@@ -325,13 +329,13 @@ export default function Main() {
                       <SwiperSlide
                         key={index}
                         className="swiper-slide"
-                        onMouseOver={() => onMouseOver('recommendedBanner', recommendedBanner)}
+                        onMouseOver={() => onMouseOver('recommendedBanner')}
                         onMouseLeave={() => onMouseLeave('recommendedBanner')}
                         style={{
                           backgroundImage:
                             hover.recommendedBanner && recommendedBanner?.banners[0]?.mouseOverImageUrl
-                              ? `url(${recommendedBanner?.banners[0]?.mouseOverImageUrl})`
-                              : `url(${recommendedBanner?.banners[0]?.imageUrl})`,
+                              ? `url('${recommendedBanner?.banners[0]?.mouseOverImageUrl}')`
+                              : `url('${recommendedBanner?.banners[0]?.imageUrl}')`,
                         }}
                       />
                     ))}
@@ -524,7 +528,14 @@ export default function Main() {
                         <SwiperSlide
                           key={index}
                           className="swiper-slide"
-                          style={{ backgroundImage: `url("${eventBanner?.banners[0]?.imageUrl}")` }}
+                          onMouseOver={() => onMouseOver('eventBanner')}
+                          onMouseLeave={() => onMouseLeave('eventBanner')}
+                          style={{
+                            backgroundImage:
+                              hover.eventBanner && eventBanner?.banners[0]?.mouseOverImageUrl
+                                ? `url('${eventBanner?.banners[0]?.mouseOverImageUrl}')`
+                                : `url('${eventBanner?.banners[0]?.imageUrl}')`,
+                          }}
                         >
                           <Link
                             to={eventBanner?.banners[0].landingUrl}
@@ -578,10 +589,16 @@ export default function Main() {
             {academyPcBanners?.banners && (
               <div
                 className="main__banner"
+                onMouseOver={() => onMouseOver('academyBanner')}
+                onMouseLeave={() => onMouseLeave('academyBanner')}
                 style={{
                   backgroundImage:
                     size.width > breakPoint
-                      ? `url(${academyPcBanners.banners[0]?.imageUrl})`
+                      ? hover.academyBanner && academyPcBanners?.banners[0]?.mouseOverImageUrl
+                        ? `url('${academyPcBanners?.banners[0]?.mouseOverImageUrl}')`
+                        : `url(${academyPcBanners.banners[0]?.imageUrl})`
+                      : hover.academyBanner && academyMoBanners?.banners[0]?.mouseOverImageUrl
+                      ? `url(${academyMoBanners?.banners[0]?.mouseOverImageUrl})`
                       : `url(${academyMoBanners?.banners[0]?.imageUrl})`,
                 }}
               >
