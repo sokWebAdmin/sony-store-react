@@ -77,6 +77,10 @@ export async function fetchMyProfile(dispatch, query) {
   }
 }
 
+export async function setProfile(dispatch, data) {
+  dispatch({ type: 'GET_PROFILE', data })
+}
+
 export function resetProfile(dispatch) {
   dispatch({type: 'RESET_PROFILE'});
 }
