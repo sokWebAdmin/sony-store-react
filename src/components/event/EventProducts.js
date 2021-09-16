@@ -1,24 +1,46 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { toCurrencyString } from '../../utils/unit';
+import { Link, useHistory } from 'react-router-dom';
 
-const EventProducts = ({event}) => {
+const EventProducts = ({event, filterLabel, grade}) => {
+  const history = useHistory();
+  const [section, setSection] = useState(event?.section.flatMap(({ products }) => products));
+
+  useEffect(() => {
+    if (!filterLabel || filterLabel === '전체') {
+      setSection(event?.section.flatMap(({ products }) => products));
+      return;
+    }
+    const newSection = event.section.find(({label}) => label === filterLabel).products;
+    newSection && setSection(newSection);
+  }, [filterLabel]);
+
+  useEffect(() => {
+    if (!grade) return;
+
+    const newSection = !filterLabel || filterLabel === '전체' ? event?.section.flatMap(({ products }) => products) : event.section.find(({label}) => label === filterLabel).products;
+    const newGradeSection = newSection.filter(({stickerLabels}) => stickerLabels.length > 0 && stickerLabels[0] === grade)
+    newGradeSection && setSection(newGradeSection);
+  }, [grade, section]);
+
   return (
     <>
       <div className="event_prd_list">
-        {event?.section.flatMap(({ products }) => products)?.map((product) => {
+        {section.length > 0 ? section.map((product) => {
           return (
             <div className="product" key={product.productNo}>
               {product.immediateDiscountAmt + product.additionDiscountAmt > 0 && <span className="badge_txt">
                           {toCurrencyString(product.immediateDiscountAmt + product.additionDiscountAmt)}
                 <span className="unit">원</span> OFF
                         </span>}
+              {product.stickerLabels.length > 0 && <span className={`badge_state state_${product.stickerLabels[0].substring(0, 1).toLowerCase()}`}>{product.stickerLabels[0].substring(0, 1)}<span className="txt">급</span></span>}
               <div className="product_pic">
-                <a href="javascript:void(0)" className="product_link">
+                <Link to={`/product-view/${product.productNo}`}>
                   <img
                     src={product.imageUrls[0]}
-                    alt=""
+                    alt={product.productName}
                   />
-                </a>
+                </Link>
                 {!product.stockCnt && <div className="sold_out">
                   <span>SOLD OUT</span>
                 </div>}
@@ -47,7 +69,8 @@ const EventProducts = ({event}) => {
                     </>}
                 </div>
                 <div className="product_btn_wrap">
-                  <button type="button" className="button button_secondary button-s"><i className="ico gift" />선물
+                  <button type="button" className="button button_secondary button-s view"><i
+                    className="ico search" onClick={() => history.push(`/product-view/${product.productNo}`)} />제품 보기
                   </button>
                   <button
                     type="button"
@@ -59,7 +82,9 @@ const EventProducts = ({event}) => {
               </div>
             </div>
           );
-        })}
+        }) : <div className="no_data">
+          <span className="ico_no_data">등록된 상품이 없습니다.</span>
+        </div>}
       </div>
     </>
   );

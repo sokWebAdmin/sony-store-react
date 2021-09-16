@@ -170,12 +170,12 @@ const EventBottom = () => {
         </div>
       </LayerPopup>}
       <div className="event_zone">
-        <div className="tab_ui scroll category_evnet">
+        <div className="tab_ui scroll category_evnet" data-scroll-view="6" data-tab-scroll-view="5">
           <ul>
             {tabs.map(({key, label}) => {
               return (
                 <li key={`tab_${key}`} className={`tabs ${tabState === key ? 'on' : ''}`}>
-                  <Link to={`?tab=${key}`} onClick={() => setTabState(key)} className="btn">{label}</Link>
+                  <Link to={`/event/list?tab=${key}`} onClick={() => setTabState(key)} className="btn">{label}</Link>
                 </li>
               )
             })}
