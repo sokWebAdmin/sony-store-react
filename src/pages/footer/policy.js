@@ -30,7 +30,6 @@ export default function Policy() {
     fetchTermsHistory();
    }, []);
 
-  const middle = Math.ceil(policies?.length / 2);
   return (
     <>
       <SEOHelmet title={"소니스토어 개인정보처리방침"} />
