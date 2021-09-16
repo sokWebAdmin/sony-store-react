@@ -22,7 +22,7 @@ const Cart = () => {
   const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
 
-  const [cartEmpty, setCartEmpty] = useState(false);
+  const [products, setProducts] = useState([]);
 
   const init = () => {
     if (isLogin) {
@@ -30,6 +30,7 @@ const Cart = () => {
     }
     else {
       gc.fetch();
+      setProducts(gc.items);
     }
   };
 
@@ -37,11 +38,11 @@ const Cart = () => {
 
   async function fetchCart () {
     try {
-      const { data } = await getCart();
-      if (data.deliveryGroups.length < 1) {
-        setCartEmpty(true);
+      const { data: { deliveryGroups } } = await getCart();
+      if (deliveryGroups.length < 1) {
         return;
       }
+      setProducts(deliveryGroups)
     }
     catch (err) {
       console.error(err);
@@ -56,7 +57,7 @@ const Cart = () => {
           <div className="content order_page">
             <div className="order_box">
               <Header />
-              {cartEmpty
+              {products.length < 1
                 ? <Empty />
                 :
                 <>

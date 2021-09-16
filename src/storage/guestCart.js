@@ -23,7 +23,6 @@ if (process.env.NODE_ENV === 'development') {
   window['gc'] = gc;
 
   // test code...
-  gc.fetch();
   gc.set({ item: '😅' });
 }
 
