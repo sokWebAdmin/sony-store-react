@@ -1,4 +1,4 @@
-import { React } from 'react';
+import React from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -9,7 +9,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
-export default function orderFail () {
+export default function OrderFail () {
 
   return (
     <>
