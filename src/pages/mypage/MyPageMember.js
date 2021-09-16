@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 //SEO
@@ -23,6 +23,7 @@ import { modifyMy } from '../../api/sony/member';
 import ReCAPTCHA from 'react-google-recaptcha';
 import AuthPassword from './myPageMember/AuthPassword';
 import { addHyphenToPhoneNo } from '../../utils/utils';
+import ReCaptcha from '../../components/common/ReCaptcha';
 
 function getStrDate(date, format = 'YYYY-MM-DD') {
   if (!date) return;
@@ -124,9 +125,6 @@ export default function MyPageMember() {
 
   // 캡챠
   const [ captcha, setCaptcha ] = useState(false);
-  const handleReCAPTCHAChange = value => value && setCaptcha(true);
-  const handleReCAPTCHAExpired = exp => exp && setCaptcha(false);
-  const handleReCAPTCHAErrored = err => err && setCaptcha(false);
 
   // 비밀번호 확인
   const [ passwordVisible, setPasswordVisible ] = useState(false);
@@ -553,14 +551,10 @@ export default function MyPageMember() {
                                         authResult={ result => result && setIsEditMode(true) }
                                       />
                 }
-                <div className="macro_chk_box" style={{display: `${ isEditMode ? 'block' : 'none' }`, margin: '10px auto'}}>
-                  <ReCAPTCHA 
-                    sitekey={ SITE_KEY }
-                    onChange={handleReCAPTCHAChange}
-                    onExpired={handleReCAPTCHAExpired}
-                    onErrored={handleReCAPTCHAErrored}
-                  />
-                </div>
+                <ReCaptcha 
+                  style={{display: `${ isEditMode ? 'block' : 'none' }`, margin: '10px auto'}}
+                  setCaptcha={setCaptcha}
+                />
               </div>
               <div className="btn_article">
                   {
