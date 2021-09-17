@@ -113,6 +113,7 @@ const App = (props) => {
   }, [dispatch, state?.mall]);
 
   const getMallInfo = async () => {
+    if (window.location.pathname === '/callback') return;
     if (isLogin) {
       if (!profile) {
         const response = await getProfile();
