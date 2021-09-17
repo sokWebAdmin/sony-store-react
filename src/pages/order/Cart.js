@@ -7,8 +7,11 @@ import SEOHelmet from '../../components/SEOHelmet';
 import Header from '../../components/cart/Header';
 import QnA from '../../components/cart/QnA';
 import Empty from '../../components/cart/Empty';
+import CartTable from '../../components/cart/CartTable';
 
-import ProductList from '../../components/cart/ProductList';
+import Controller from '../../components/cart/tableParticals/Controller';
+import ProductList from '../../components/cart/tableParticals/ProductList';
+import TotalAmount from '../../components/cart/tableParticals/TotalAmount';
 
 //css
 import '../../assets/scss/contents.scss';
@@ -19,7 +22,6 @@ import { getCart, postGuestCart } from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
-
 const Cart = () => {
   const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
@@ -105,19 +107,14 @@ const Cart = () => {
                 ? <Empty />
                 :
                 <>
-                  <ProductList
-                    products={products}
-                    setProducts={setProducts}
-                  />
-                  <div className="button_wrap">
-                    <a className="button button_negative">쇼핑 계속 하기</a>
-                    <button type="submit"
-                            className="button button_positive popup_comm_btn"
-                            data-popup-name="login_chk_order" onClick={() => {
-                      history.push('/order/sheet');
-                    }}>구매하기
-                    </button>
-                  </div>
+                  <Controller />
+                  <CartTable>
+                    <ProductList
+                      products={products}
+                      setProducts={setProducts}
+                    />
+                    <TotalAmount />
+                  </CartTable>
                   <QnA />
                 </>
               }
