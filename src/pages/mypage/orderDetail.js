@@ -133,6 +133,9 @@ export default function OrderDetail() {
       }));
   };
 
+  // 기획이랑 기존 샵바이 주문 프로세스랑 기획이 너무 상이함.
+  // 소니 기획: 주문별 주문상태출력, 샵바아: 옵션별 주문상태
+  // 주문상세조회 API에서 defaultOrderStatusType를 대표로 출력하는데, 이값은 서버에서 orderOptions의 첫번째 아이템의 상태를 의미함
   const getOrderStatus = (defaultOrderStatusType) => {
     const orderStatus = {
       DEPOSIT_WAIT: '입금대기',
@@ -146,6 +149,7 @@ export default function OrderDetail() {
       CANCEL_DONE: '취소완료',
       EXCHANGE_REQUEST: '교환신청',
       EXCHANGE_PROCESSING: '교환진행중',
+      EXCHANGE_WAIT: '교환대기',
       EXCHANGE_DONE: '교환완료',
       RETURN_REQUEST: '반품신청',
       RETURN_PROCESSING: '반품진행중',
