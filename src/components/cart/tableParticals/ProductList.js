@@ -8,8 +8,8 @@ const ProductList = ({ products, setProducts }) => {
         <Header />
         <div className="col_table_body">
           {products.map(
-            ({ product, orderCnt, optionText, standardAmt, buyAmt }) =>
-              <div className="col_table_row">
+            ({ product, orderCnt, optionText, standardAmt, buyAmt }, i) =>
+              <div className="col_table_row" key={product.productNo + '_' + i}>
                 <div className="col_table_cell prd_wrap tal">
                   <div className="prd">
                     <div className="check check_only">

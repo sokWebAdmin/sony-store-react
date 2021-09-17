@@ -1,6 +1,7 @@
 import { toCurrencyString } from '../../../utils/unit';
 
 const TotalAmount = ({ productCount, amount }) => {
+
   return (
     <div className="col_table_foot">
       <div className="prd_summary">

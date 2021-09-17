@@ -28,6 +28,8 @@ const Cart = () => {
 
   const [products, setProducts] = useState([]);
   const [amount, setAmount] = useState(null);
+  const [checkedIndexes, setCheckedIndexes] = useState([]);
+
   const productCount = useMemo(() => products.length, [products]);
 
   const init = () => {
@@ -110,16 +112,23 @@ const Cart = () => {
                 ? <Empty />
                 :
                 <>
-                  <Controller />
+                  <Controller
+                    products={products}
+                  />
                   <CartTable>
                     <ProductList
                       products={products}
                       setProducts={setProducts}
+                      checkedIndexes={checkedIndexes}
+                      setCheckedIndexes={setCheckedIndexes}
                     />
+                    {amount &&
                     <TotalAmount
                       productCount={productCount}
                       amount={amount}
+                      setCheckedIndexes={setCheckedIndexes}
                     />
+                    }
                   </CartTable>
                   <QnA />
                 </>
