@@ -5,6 +5,7 @@ import { getProfileOrders, getProfileOrdersSummaryStatus } from '../../api/order
 
 import OrderStatusSummary from '../../components/myPage/order/OrderStatusSummary';
 import DateBox from '../../components/myPage/DateBox';
+import OrderListTable from '../../components/myPage/order/OrderListTable';
 import OrderListItem from '../../components/myPage/order/OrderListItem';
 
 //SEO
@@ -33,7 +34,6 @@ export default function OrderList() {
     exchangeProcessingCnt: 0,
   });
 
-  const [refundAccountVisible, setRefundAccountVisible] = useState(false);
   const [searchPeriod, setSearchPeriod] = useState({
     startDate: new Date(addMonth(new Date(), -3)),
     endDate: new Date(),
@@ -136,15 +136,7 @@ export default function OrderList() {
               </div>
               {/* 주문 정보 */}
               <div className="col_table_wrap order_list">
-                <div className="col_table">
-                  <div className="col_table_head">
-                    <div className="col_table_row">
-                      <div className="col_table_cell">주문날짜/번호</div>
-                      <div className="col_table_cell">제품</div>
-                      <div className="col_table_cell">수량</div>
-                      <div className="col_table_cell">처리상태</div>
-                    </div>
-                  </div>
+                <OrderListTable>
                   {orderProducts.length > 0 && (
                     <div className="col_table_body">
                       {orderProducts.map((orderProduct, index) => (
@@ -167,7 +159,7 @@ export default function OrderList() {
                       ))}
                     </div>
                   )}
-                </div>
+                </OrderListTable>
                 {loadMoreBtnVisible && (
                   <div className="my btn_article" style={{ textAlign: 'center' }}>
                     <a href="#" className="more_btn" onClick={onClickLoadMore}>
