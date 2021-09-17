@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import _ from "lodash";
 import qs from 'qs';
 
-import { postOrderSheets } from "../../api/order";
+import { postCart, postOrderSheets } from "../../api/order";
 
 import CountBox from "../common/CountBox";
 import SelectBox from "../common/SelectBox";
@@ -11,32 +11,10 @@ import SelectBox from "../common/SelectBox";
 import { wonComma } from "../../utils/utils";
 
 import GlobalContext from "../../context/global.context";
-import { Link } from "react-router-dom";
 import { useAlert } from "../../hooks";
 import Alert from "../common/Alert";
-
-// 선물하기 팝업 
-
-function GiftNotification({ setShowGiftNotification }) {
-  
-  return (
-    <div className="popup_gift layer" style={{ display: 'block' }}>
-      <div className="layer_wrap">
-        <div className="layer_container">
-          <p className="layer_title ico gift">소니스토어 선물하기</p>
-          <p className="text">선물하기는 소니스토어 회원만<br /> 이용하실 수 있습니다.</p>
-          <div className="btn_article size2">
-            <a href="#none" onClick={ e => {
-              e.preventDefault();
-              setShowGiftNotification(false);
-            }} className="btn close white">쇼핑 계속하기</a>
-            <Link to="/member/login" className="btn cart">로그인</Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+import Notification from "./Notification";
+import gc from "../../storage/guestCart";
 
 // 배송
 function Delivery({
@@ -161,7 +139,6 @@ function Option({
       </div>
       
         
-
       <div className="selected_opt"> {/* 선택한 제품 */}
         {selectedOption.length > 0 && selectedOption.map((item, itemIndex) => (
           <div className="opt_info" key={itemIndex}>
@@ -260,10 +237,21 @@ const getOrderSheetNo = async (productNo, selectedOption) => {
   }
 };
 
+const getCartRequest = (productNo, options) => options.map(
+    ({ buyCnt, ...rest }) => ({
+        productNo,
+        orderCnt: buyCnt,
+        channelType: null,
+        optionInputs: null,
+        ...rest
+    })
+  );
+
 function ButtonGroup({ selectedOption, productNo, canBuy }) {
   const { openAlert, closeModal, alertVisible, alertMessage  } = useAlert();
   const { isLogin } = useContext(GlobalContext);
-  const [ showGiftNotification, setShowGiftNotification ] = useState(false);
+  const [ giftVisible, setGiftVisible ] = useState(false);
+  const [ cartVisible, setCartVisible ] = useState(false);
 
   const order = async (pathname = '/order/sheet') => {
     if (!canBuy) {
@@ -283,9 +271,29 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
     if (isLogin) {
       order('/gift/sheet');
     } else {
-      setShowGiftNotification(true);
+      setGiftVisible(true);
     }
   };
+
+  const cart = async () => {
+    if (!canBuy) {
+      openAlert('옵션을 선택하세요.');
+      return;
+    };
+
+    const products = getCartRequest(productNo, selectedOption);
+
+    try {
+      if (isLogin) {
+        await postCart(products);
+      } else {
+        gc.set(products);
+      }
+      setCartVisible(true);
+    } catch(e) {
+      console.error(e);
+    }
+  }
 
   const handleClick = (e, type) => {
     e.preventDefault();
@@ -295,6 +303,9 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
         break;
       case 'order':
         order();
+        break;
+      case 'cart':
+        cart();
         break;
       default:
         break;
@@ -308,7 +319,14 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
         <div className="result_btn_box">
           <ul>
             <li className="like"><a href="#none" className="btn_icon">찜하기</a></li>
-            <li className="cart"><a href="#none" onClick={()=>{history.push('/cart')}} className="btn_icon" data-popup="popup_cart">장바구니</a></li>
+            <li className="cart">
+              <a 
+                href="/cart" 
+                className="btn_icon"
+                onClick={ e => handleClick(e, 'cart') } 
+                data-popup="popup_cart"
+              >장바구니</a>
+            </li>
             <li className="gift">
               <a 
                 href="/gift/sheet" 
@@ -339,8 +357,12 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
       </div>
       <a href="#none" className="select_closed" title="선택 목록 닫기">닫기</a>
       {
-        showGiftNotification 
-          && <GiftNotification setShowGiftNotification={setShowGiftNotification} />
+        giftVisible 
+          && <Notification setNotificationVisible={setGiftVisible} type='gift' />
+      }
+      {
+        cartVisible
+          && <Notification setNotificationVisible={setCartVisible} type='cart' />
       }
       {
         alertVisible 

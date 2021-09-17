@@ -9,13 +9,14 @@ import SEOHelmet from '../../components/SEOHelmet';
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/event.scss';
 import { useMediaQuery } from '../../hooks';
-import { getDisplayEvents, getEventByEventNo } from '../../api/display';
+import { getEventByEventNo } from '../../api/display';
 import { tabUiClick } from '../../utils/utils';
 import { getUrlParam } from '../../utils/location';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import EventProducts from '../../components/event/EventProducts';
 
 export default function Employee() {
+  const { eventNo } = useParams();
   const onlyMo = useMediaQuery('(max-width: 640px)');
   const [event, setEvent] = useState(null);
   const [tabState, setTabState] = useState(getUrlParam('tab') || '전체');
@@ -23,8 +24,6 @@ export default function Employee() {
   const [grade, setGrade] = useState('A급');
 
   const fetchDetailEvent = async () => {
-    const { data } = await getDisplayEvents();
-    const eventNo = data.find((event) => `/${event.url}` === window.location.pathname).eventNo;
     const response = await getEventByEventNo(eventNo, { soldout: true });
     setEvent(response.data);
   };
@@ -158,12 +157,12 @@ export default function Employee() {
               <div className="tab_ui scroll" data-scroll-view="6" data-tab-scroll-view="5">
                 <ul>
                   <li className={`tabs ${tabState === '전체' ? 'on' : ''}`}>
-                    <Link to={`/event/employee?tab=전체`} onClick={() => setTabState('전체')} className="btn">전체</Link>
+                    <Link to={`?tab=전체`} onClick={() => setTabState('전체')} className="btn">전체</Link>
                   </li>
                   {event.section.map(({label}) => {
                     return (
                       <li key={`tab_${label}`} className={`tabs ${tabState === label ? 'on' : ''}`}>
-                        <Link to={`/event/employee?tab=${label}`} onClick={() => setTabState(label)} className="btn">{label}</Link>
+                        <Link to={`?tab=${label}`} onClick={() => setTabState(label)} className="btn">{label}</Link>
                       </li>
                     )
                   })}

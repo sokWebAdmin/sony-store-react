@@ -11,14 +11,13 @@ import '../../assets/scss/event.scss';
 import '../../assets/scss/liveon.scss';
 import { getDisplayEvents, getEventByEventNo } from '../../api/display';
 import EventProducts from '../../components/event/EventProducts';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default function Liveon() {
+  const { eventNo } = useParams();
   const [event, setEvent] = useState(null);
 
   const fetchDetailEvent = async () => {
-    const { data } = await getDisplayEvents();
-    const eventNo = data.find((event) => `/${event.url}` === window.location.pathname).eventNo;
     const response = await getEventByEventNo(eventNo, { soldout: true });
     setEvent(response.data);
   };

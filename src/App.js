@@ -230,10 +230,10 @@ const App = (props) => {
               {/*<Route exact path="/event/pre-order"*/}
               {/*       component={PreOrder} />/!*현재 데이터 없음*!/*/}
               {/*<Route exact path="/event/asc" component={asc} />*/}
-              <Route exact path="/event/refined" component={refined} />
-              <Route exact path="/event/live-on" component={liveon} />
-              <Route exact path="/event/refurbish" component={refurbish} />
-              <Route exact path="/event/employee" component={employee} />
+              <Route exact path="/event/refined/:eventNo" component={refined} />
+              <Route exact path="/event/live-on/:eventNo" component={liveon} />
+              <Route exact path="/event/refurbish/:eventNo" component={refurbish} />
+              <Route exact path="/event/employee/:eventNo" component={employee} />
 
               {/* 멤버쉽 */}
               <Route exact path="/membership/benefit" component={Benefit} />
