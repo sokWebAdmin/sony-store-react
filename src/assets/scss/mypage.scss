@@ -3046,3 +3046,95 @@
 }
 }
 
+.info_withdraw {
+  margin-top: 40px
+}
+
+.info_withdraw .info_title {
+  font-size: 16px;
+  color: #444
+}
+
+.info_withdraw .list_dot li {
+  color: #666
+}
+
+.info_withdraw .list_dot li:first-child {
+  margin-top: 10px
+}
+
+@media screen and (max-width: 640px) {
+  .info_withdraw .info_title {
+    font-size: 14px
+  }
+
+  .info_withdraw .list_dot li {
+    font-size: 12px
+  }
+}
+
+.withdraw_pop {
+  text-align: center
+}
+
+.withdraw_pop .point_box {
+  margin-bottom: 40px;
+  padding: 14px 32px;
+  background-color: #fbfbfb
+}
+
+.withdraw_pop .point_box dl {
+  display: table;
+  width: 100%
+}
+
+.withdraw_pop .point_box dt {
+  display: table-cell;
+  font-size: 14px;
+  color: #222;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 500
+}
+
+.withdraw_pop .point_box dd {
+  display: table-cell;
+  position: relative;
+  text-align: right;
+  font-size: 26px;
+  color: #5865f5;
+  font-weight: bold;
+  vertical-align: middle
+}
+
+.withdraw_pop .point_box dd:after {
+  display: inline-block;
+  margin: 8px 0 0 4px;
+  width: 24px;
+  height: 24px;
+  content: "";
+  background: url(../images/mypage/ic_pop_mileage.svg) no-repeat 0 50%;
+  vertical-align: top
+}
+
+.withdraw_pop .button_negative {
+  min-width: 90px
+}
+
+.withdraw_pop .button_positive {
+  min-width: 140px
+}
+
+@media screen and (max-width: 640px) {
+
+  .withdraw_pop .point_box dt,
+  .withdraw_pop .point_box dd {
+    display: block;
+    text-align: center
+  }
+
+  .withdraw_pop .button_negative,
+  .withdraw_pop .button_positive {
+    min-width: 48%
+  }
+}
