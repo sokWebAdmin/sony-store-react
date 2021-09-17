@@ -56,6 +56,7 @@ const Callback = () => {
 
     if (openIdTokenResult.status === 200) {
       setAccessToken(openIdTokenResult.data.accessToken, openIdTokenResult.data.expireIn);
+      onChangeGlobal({ isLogin: true });
       const response = await getProfile();
       console.log(response);
       setProfile(profileDispatch, response.data);
