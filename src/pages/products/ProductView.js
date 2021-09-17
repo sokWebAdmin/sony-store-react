@@ -98,7 +98,7 @@ export default function ProductView({ match, ...props }) {
     setProductEvents(ret.data);
   }, [])
 
-  useEffect(() => productNo > 0 && fetchProductData(productNo), [fetchProductData, productNo]);
+  useEffect(() => fetchProductData(productNo), [fetchProductData, productNo]);
   useEffect(() => {
     if (!productData?.categories) return;
     fetchRelatedProducts(productData?.categories);

@@ -38,6 +38,8 @@ const request = async (url, method, query = {}, requestBody = null) => {
     if (guestToken) Object.assign(headers, { guestToken });
   }
 
+  const goErrorCodes = ['EVEC0001', 'AE001', 'PRDT0001'];
+
   return await axios({
     method,
     headers,
@@ -51,7 +53,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
       window.location.replace('/');
     }
     if (method === 'get') {
-      if (response.status === 404) {
+      if (response.status === 404 || goErrorCodes.includes(response.data.code)) {
         window.location.replace('/404');
       } else if (response.status === 500) {
         window.location.replace('/error-server');
