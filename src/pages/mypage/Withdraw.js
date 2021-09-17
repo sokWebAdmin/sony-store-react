@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -21,16 +21,22 @@ import Alert from '../../components/common/Alert';
 import { getProfileOrdersSummaryStatus } from '../../api/order';
 import LayerPopup from '../../components/common/LayerPopup';
 import { loginApi } from '../../api/auth';
+import { toCurrencyString } from '../../utils/unit';
 
 export default function Withdraw() {
   const history = useHistory();
-  const { profile } = useProfileState();
+  const { profile, my } = useProfileState();
 
   const {openAlert, closeModal, alertVisible, alertMessage} = useAlert();
   const {openAlert: openConfirm, closeModal: closeConfirm, alertVisible: confirmVisible} = useAlert();
   const [isPwVisible, setPwVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [withdrawReason, setWithdrawReason] = useState(null);
+  // const [mileage, setMileage] = useState(0);
+
+  const availablemileage = useMemo(() => {
+    return my?.availablemileage ?? 0;
+  }, [my]);
 
   const validateWithdraw = async () => {
     if (!withdrawReason) {
@@ -90,22 +96,19 @@ export default function Withdraw() {
     <>
       <SEOHelmet title={'회원 탈퇴'} />
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
-      {confirmVisible && <LayerPopup size="m" className="login_chk_order">
-        <p className="pop_tit" style={{ color: '#ff4e00' }}>다시 한번 확인해주세요.</p>
-        <p className="pop_txt">회원 탈퇴 시 보유하신 멤버십 마일리지(소니스토어)와<br/>
-          정품 등록정보(소니코리아 고객지원 사이트)는 자동 삭제됩니다.<br/>
-          탈퇴하신 이후에는 마일리지 복구는 불가능합니다.<br/>
-          SIPS회원일 경우 SIPS회원에서도 탈퇴됩니다. </p>
-        <p className="badge__text__new" style={{ margin: '30px', textAlign: 'center', fontWeight: 'bold' }}>정말로 탈퇴하시겠습니까?</p>
-        <div className='btn_box'>
-          <button className="button button_positive button-m" type="button" onClick={() => onClickWithdraw()}>회원탈퇴
-          </button>
-          <button className="button button_primary button-m" type="button"
-                  onClick={() => history.push('/membership/benefit')}
-                  style={{ backgorundColor: '#ff4e00' }}
-          >마일리지 확인
-          </button>
-          <button className="button button_negative button-m" type="button" onClick={closeConfirm}>취소</button>
+      {confirmVisible && <LayerPopup size="ms" className="withdraw_pop">
+        <p className="pop_tit">정말 탈퇴하시겠습니까?</p>
+        <div className="point_box">
+          <dl>
+            <dt>사용가능한 마일리지</dt>
+            <dd>{toCurrencyString(availablemileage)}</dd>
+          </dl>
+        </div>
+        <p className="pop_txt">회원 탈퇴 시 보유하신 멤버십 마일리지(소니스토어)와 정품등록 정보(소니코리아 고객지원 사이트)는 자동 삭제됩니다.</p>
+        <p className="pop_txt">탈퇴하신 이후에는 마일리지 복구가 불가능하며, SIPS회원일 경우 SIPS회원에서도 탈퇴됩니다.</p>
+        <div className="btn_article">
+          <button className="button button_negative button-m closed" type="button" onClick={closeConfirm}>취소</button>
+          <button className="button button_positive button-m" type="button" onClick={() => onClickWithdraw()}>회원탈퇴</button>
         </div>
       </LayerPopup>}
       <div className="contents mypage">
