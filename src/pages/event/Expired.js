@@ -1,5 +1,7 @@
 import React from 'react';
 
+import "../../assets/scss/event.scss"
+
 const Expired = () => {
   return (
     <>
