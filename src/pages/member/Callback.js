@@ -38,27 +38,20 @@ const Callback = () => {
       return;
     }
 
-    try {
-      const openIdTokenResult = await getOauthOpenId({
-        code,
-        redirectUri,
-        provider: redirectedProvider,
-        state: redirectedToken,
-        platformType: isMobile ? 'MOBILE_WEB' : 'PC',
-      });
+    const openIdTokenResult = await getOauthOpenId({
+      code,
+      redirectUri,
+      provider: redirectedProvider,
+      state: redirectedToken,
+      platformType: isMobile ? 'MOBILE_WEB' : 'PC',
+    });
+    console.log(openIdTokenResult);
 
-      if (openIdTokenResult.status === 200) {
-        setAccessToken(openIdTokenResult.accessToken, openIdTokenResult.expireIn);
-        await fetchProfile(profileDispatch);
-        shopOauthCallback?.(profile);
-      } else {
-        removeAccessToken();
-        onChangeGlobal({isLogin: false})
-        resetProfile(profileDispatch);
-        shopOauthCallback?.();
-      }
-    } catch (error) {
-      console.error(error);
+    if (openIdTokenResult.status === 200) {
+      setAccessToken(openIdTokenResult.accessToken, openIdTokenResult.expireIn);
+      await fetchProfile(profileDispatch);
+      shopOauthCallback?.(profile);
+    } else {
       removeAccessToken();
       onChangeGlobal({isLogin: false})
       resetProfile(profileDispatch);
