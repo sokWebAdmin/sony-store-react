@@ -6,7 +6,6 @@ import { getProfileOrders, getProfileOrdersSummaryStatus } from '../../api/order
 import OrderStatusSummary from '../../components/myPage/order/OrderStatusSummary';
 import DateBox from '../../components/myPage/DateBox';
 import OrderListItem from '../../components/myPage/order/OrderListItem';
-import RefundAccount from '../order/RefundAccount';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -129,7 +128,7 @@ export default function OrderList() {
               </Link>
               <h1 className="common_head_name">주문/배송내역</h1>
             </div>
-            <OrderStatusSummary summary={summary} />
+            <OrderStatusSummary summary={summary} search={search} />
             <div className="cont recent_order">
               <div className="tit_head mileage_inquiry">
                 <h3 className="cont_tit">최근주문</h3>
@@ -148,7 +147,7 @@ export default function OrderList() {
                   </div>
                   {orderProducts.length > 0 && (
                     <div className="col_table_body">
-                      {orderProducts.map((orderProduct) => (
+                      {orderProducts.map((orderProduct, index) => (
                         <OrderListItem
                           orderNo={orderProduct.orderNo}
                           orderOptionNo={orderProduct.orderOptionNo}
@@ -163,7 +162,7 @@ export default function OrderList() {
                           claimStatusType={orderProduct.claimStatusType}
                           orderStatusTypeLabel={orderProduct.orderStatusTypeLabel}
                           delivery={orderProduct.delivery}
-                          key={orderProduct.orderNo}
+                          key={index}
                         />
                       ))}
                     </div>

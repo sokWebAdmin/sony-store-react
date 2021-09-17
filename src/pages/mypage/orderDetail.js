@@ -32,6 +32,7 @@ export default function OrderDetail() {
     receiverAddress: '',
     receiverDetailAddress: '',
     deliveryMemo: '',
+    requestShippingDate: null,
   });
   const [receiptInfos, setReceiptInfos] = useState(null);
 
@@ -82,6 +83,7 @@ export default function OrderDetail() {
       payType,
       payInfo: { cardInfo, bankInfo },
       receiptInfos,
+      orderOptionsGroupByPartner,
     } = res.data;
 
     setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
@@ -93,6 +95,9 @@ export default function OrderDetail() {
       receiverDetailAddress,
       receiverContact1,
       deliveryMemo,
+      requestShippingDate: orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].requestShippingDate,
+      usesShippingInfoLaterInput:
+        orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].usesShippingInfoLaterInput,
     });
 
     const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
@@ -133,6 +138,9 @@ export default function OrderDetail() {
       }));
   };
 
+  // 기획이랑 기존 샵바이 주문 프로세스랑 기획이 너무 상이함.
+  // 소니 기획: 주문별 주문상태출력, 샵바아: 옵션별 주문상태
+  // 주문상세조회 API에서 defaultOrderStatusType를 대표로 출력하는데, 이값은 서버에서 orderOptions의 첫번째 아이템의 상태를 의미함
   const getOrderStatus = (defaultOrderStatusType) => {
     const orderStatus = {
       DEPOSIT_WAIT: '입금대기',
@@ -141,6 +149,16 @@ export default function OrderDetail() {
       DELIVERY_PREPARE: '배송준비',
       DELIVERY_ING: '배송중',
       DELIVERY_DONE: '배송완료',
+      CANCEL_REQUEST: '취소신청',
+      CANCEL_PROCESSING: '취소진행중',
+      CANCEL_DONE: '취소완료',
+      EXCHANGE_REQUEST: '교환신청',
+      EXCHANGE_PROCESSING: '교환진행중',
+      EXCHANGE_WAIT: '교환대기',
+      EXCHANGE_DONE: '교환완료',
+      RETURN_REQUEST: '반품신청',
+      RETURN_PROCESSING: '반품진행중',
+      RETURN_DONE: '반품완료',
     };
 
     return orderStatus[defaultOrderStatusType];
@@ -209,9 +227,15 @@ export default function OrderDetail() {
     });
   };
 
+  // 클레임 중인 상품인지 확인 => 기획누락같은데, 클레임 상태일 땐 주문상태 UI disable 처리
+  const isClaimStart = (defaultOrderStatusType) => {
+    const claimStatuses = ['CANCEL', 'EXCHANGE', 'RETURN'];
+    return claimStatuses.some((claimStatus) => defaultOrderStatusType.includes(claimStatus));
+  };
+
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'주문 상세 조회'} />
       <div className="contents mypage">
         <div className="container my">
           <div className="content">
@@ -221,7 +245,9 @@ export default function OrderDetail() {
               </Link>
               <h1 className="common_head_name">주문 상세 조회</h1>
             </div>
-            <OrderProcess defaultOrderStatusType={orderInfo.defaultOrderStatusType} />
+            {!isClaimStart(orderInfo.defaultOrderStatusType) && (
+              <OrderProcess defaultOrderStatusType={orderInfo.defaultOrderStatusType} />
+            )}
             <div className="o_summary">
               <dl className="o_summary_status">
                 <dt className="o_summary_term">처리상태</dt>
@@ -275,7 +301,7 @@ export default function OrderDetail() {
             {/*// 제품 정보 */}
             {/* 주문 정보 */}
             <div className="cont order_info">
-              <h3 className="cont_tit">주문 정보</h3>
+              <h3 className="cont_tit">{shippingAddress.usesShippingInfoLaterInput && '선물하기 '} 주문 정보</h3>
               <div className="order_info_inner">
                 <dl className="order">
                   <dt className="order_term">주문자 정보</dt>
@@ -294,7 +320,9 @@ export default function OrderDetail() {
                   <dt className="order_term">배송 요청사항</dt>
                   <dd className="order_desc">{shippingAddress.deliveryMemo ? shippingAddress.deliveryMemo : '없음'}</dd>
                   <dt className="order_term">배송일 선택</dt>
-                  <dd className="order_desc">정상 배송 </dd>
+                  <dd className="order_desc">
+                    {shippingAddress.requestShippingDate ? shippingAddress.requestShippingDate : '정상 배송'}
+                  </dd>
                 </dl>
               </div>
             </div>

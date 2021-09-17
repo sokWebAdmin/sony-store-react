@@ -18,7 +18,7 @@ export const postOrderSheetCalculate = ({ pathVariable, requestBody }) =>
   request(`order-sheets/${pathVariable.orderSheetNo}/calculate`, 'post', null, requestBody);
 
 export const postProfileOrderCancelByOrderOptionNo = ({ path: { orderOptionNo }, requestBody }) =>
-  request(`​/profile​/order-options​/${orderOptionNo}​/claims​/cancel`, 'post', null, requestBody);
+  request(`profile/order-options/${orderOptionNo}/claim/cancel`, 'post', null, requestBody);
 
 export const postGuestOrdersOrderNo = (orderNo, requestBody) => {
   return request(`guest/orders/${orderNo}`, 'post', null, requestBody);
@@ -27,12 +27,9 @@ export const postGuestOrdersOrderNo = (orderNo, requestBody) => {
 export const getShippingsEncryptedShippingNoLaterInput = (encryptedShippingNo) =>
   request(`shippings/${encryptedShippingNo}/later-input`, 'get');
 
-export const putShippingsEncryptedShippingNoLaterInput = (
-  encryptedShippingNo, requestBody) =>
-  request(`shippings/${encryptedShippingNo}/later-input`, 'put', null,
-    requestBody);
+export const putShippingsEncryptedShippingNoLaterInput = (encryptedShippingNo, requestBody) =>
+  request(`shippings/${encryptedShippingNo}/later-input`, 'put', null, requestBody);
 
-export const getCart = () =>
-  request(`cart?divideInvalidProducts=true`, 'get');
+export const getCart = () => request(`cart?divideInvalidProducts=true`, 'get');
 
-export const postCart = requestBody => request('cart', 'post', null, requestBody);
+export const postCart = (requestBody) => request('cart', 'post', null, requestBody);
