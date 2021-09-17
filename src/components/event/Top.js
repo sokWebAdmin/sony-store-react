@@ -78,11 +78,11 @@ const EventTop = () => {
         >
           {banners.length && !underPc && banners.map(bannerMap)}
           {bannersMo.length && underPc && bannersMo.map(bannerMap)}
+          <div className="arrow_btn">
+            <a href="javascript:void(0)" className="arrow swiper-button-prev"><span className="ico_btn">이전</span></a>
+            <a href="javascript:void(0)" className="arrow swiper-button-next"><span className="ico_btn">다음</span></a>
+          </div>
         </Swiper>
-        <div className="arrow_btn">
-          <a href="javascript:void(0)" className="arrow swiper-button-prev"><span className="ico_btn">이전</span></a>
-          <a href="javascript:void(0)" className="arrow swiper-button-next"><span className="ico_btn">다음</span></a>
-        </div>
         <div className="swiper-pagination event-banner-pagination" />
       </div>
     </>

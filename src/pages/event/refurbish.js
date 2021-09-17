@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -14,8 +14,19 @@ import { getEventByEventNo } from '../../api/display';
 import { tabUiClick } from '../../utils/utils';
 import { getUrlParam } from '../../utils/location';
 import EventProducts from '../../components/event/EventProducts';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation } from 'swiper/core';
+
+const _scrollView = {
+  pc : 5,
+  tb : 3,
+  mo : 2
+};
 
 export default function Refurbish() {
+  SwiperCore.use([Navigation]);
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
   const { eventNo } = useParams();
   const onlyMo = useMediaQuery('(max-width: 640px)');
   const [event, setEvent] = useState(null);
@@ -80,19 +91,46 @@ export default function Refurbish() {
               </div>
             </div>
             <div className="event_tablist">
-              <div className="tab_ui scroll" data-scroll-view={5}>
-                <ul>
-                  <li className={`tabs ${tabState === '전체' ? 'on' : ''}`}>
+              <div className="tab_ui scroll category_evnet swiper-container">
+                <Swiper
+                  className="swiper-wrapper"
+                  navigation={{
+                    prevEl: prevRef.current,
+                    nextEl: nextRef.current,
+                  }}
+                  slidesPerView={_scrollView.pc}
+                  breakpoints={{
+                    320: {
+                      slidesPerView: _scrollView.mo,
+                    },
+                    641: {
+                      slidesPerView: _scrollView.tb,
+                    },
+                    1281: {
+                      slidesPerView: _scrollView.pc,
+                    },
+                  }}
+                  on={{
+                    init: swiper => {
+                      swiper.params.navigation.prevEl = prevRef.current
+                      swiper.params.navigation.nextEl = nextRef.current
+                      swiper.navigation.update()
+                    },
+                  }}
+                >
+                  <SwiperSlide className={`tabs swiper-slide ${tabState === '전체' ? 'on' : ''}`}>
                     <Link to={`?tab=전체`} onClick={() => setTabState('전체')} className="btn">전체</Link>
-                  </li>
+                  </SwiperSlide>
                   {event.section.map(({label}) => {
                     return (
-                      <li key={`tab_${label}`} className={`tabs ${tabState === label ? 'on' : ''}`}>
+                      <SwiperSlide key={`tab_${label}`} className={`tabs swiper-slide ${tabState === label ? 'on' : ''}`}>
                         <Link to={`?tab=${label}`} onClick={() => setTabState(label)} className="btn">{label}</Link>
-                      </li>
+                      </SwiperSlide>
                     )
                   })}
-                </ul>
+                  <div className="swiper-button-prev" ref={prevRef}></div>
+                  <div className="swiper-button-next" ref={nextRef}></div>
+                </Swiper>
               </div>
               <div className="tab_ui_info">
                 <div className="tab_ui_inner view">
