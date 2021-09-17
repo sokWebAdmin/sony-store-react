@@ -46,7 +46,7 @@ const Callback = () => {
       platformType: isMobile ? 'MOBILE_WEB' : 'PC',
     });
 
-    if (openIdTokenResult.status === 200) {
+    if (openIdTokenResult.accessToken) {
       setAccessToken(openIdTokenResult.accessToken, openIdTokenResult.expireIn);
       await fetchProfile(profileDispatch);
       shopOauthCallback?.(profile);
