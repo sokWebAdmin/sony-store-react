@@ -54,8 +54,8 @@ const Callback = () => {
     });
     console.log(openIdTokenResult);
 
-    if (openIdTokenResult?.accessToken) {
-      setAccessToken(openIdTokenResult.accessToken, openIdTokenResult.expireIn);
+    if (openIdTokenResult.status === 200) {
+      setAccessToken(openIdTokenResult.data.accessToken, openIdTokenResult.data.expireIn);
       const response = await getProfile();
       console.log(response);
       shopOauthCallback?.(response.data);
@@ -66,7 +66,7 @@ const Callback = () => {
       resetProfile(profileDispatch);
       shopOauthCallback?.();
     }
-    // window.close();
+    window.close();
   }
 
   useEffect(() => {
