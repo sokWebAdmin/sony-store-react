@@ -88,6 +88,7 @@ const Cart = () => {
     const result = deliveryGroups.flatMap(delivery =>
       delivery.orderProducts.flatMap(productGroup =>
         productGroup.orderProductOptions.flatMap(product => {
+            // debug pores
             return {
               valid: true,
               productNo: productGroup.productNo,
