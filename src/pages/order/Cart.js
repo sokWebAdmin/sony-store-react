@@ -96,7 +96,6 @@ const Cart = () => {
         catch(() => window.location.reload());
     }
     else {
-      gcUpdate();
       updateGuestCart().
         then(() => setWait(false)).
         catch(() => window.location.reload());
