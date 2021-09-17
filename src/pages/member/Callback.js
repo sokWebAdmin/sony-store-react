@@ -3,9 +3,16 @@ import { isMobile } from "react-device-detect";
 import { getUrlParam } from '../../utils/location';
 import { getItem, KEY, removeAccessToken, setAccessToken } from '../../utils/token';
 import Alert from '../../components/common/Alert';
-import { fetchProfile, resetProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
+import {
+  fetchProfile,
+  resetProfile,
+  setProfile,
+  useProfileState,
+  useProileDispatch,
+} from '../../context/profile.context';
 import GlobalContext from '../../context/global.context';
 import { getOauthOpenId } from '../../api/auth';
+import { getProfile } from '../../api/member';
 
 const Callback = () => {
   const {onChangeGlobal} = useContext(GlobalContext);
@@ -49,8 +56,9 @@ const Callback = () => {
 
     if (openIdTokenResult?.accessToken) {
       setAccessToken(openIdTokenResult.accessToken, openIdTokenResult.expireIn);
-      await fetchProfile(profileDispatch);
-      shopOauthCallback?.(profile);
+      const response = await getProfile();
+      shopOauthCallback?.(response.data);
+      setProfile(profileDispatch, response.data);
     } else {
       removeAccessToken();
       onChangeGlobal({isLogin: false})
