@@ -3,6 +3,7 @@ import GlobalContext from '../../context/global.context';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
+import Dimmed from '../../components/common/Dimmed';
 import Header from '../../components/cart/Header';
 import QnA from '../../components/cart/QnA';
 import Empty from '../../components/cart/Empty';
@@ -21,11 +22,11 @@ import { getCart, putCart, postGuestCart } from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
-import { usePrevious } from '../../hooks';
 
 const Cart = () => {
   const { isLogin } = useContext(GlobalContext);
 
+  const [wait, setWait] = useState(false);
   const [products, setProducts] = useState([]);
   const putProducts = useMemo(() => products.map(product => ({
     cartNo: product.cartNo,
@@ -34,7 +35,7 @@ const Cart = () => {
   })), [products]);
   useEffect(() => {
     const isUpdate = products.some(({ update }) => update);
-    isUpdate && putGet();
+    isUpdate && updateCart();
   }, [products]);
 
   const productCount = useMemo(() => products.length, [products]);
@@ -67,9 +68,9 @@ const Cart = () => {
     return null;
   }
 
-  async function fetchGuestCart (products) {
+  async function fetchGuestCart (gcItems) {
     try {
-      const { data } = await postGuestCart(products); // post & get cart data
+      const { data } = await postGuestCart(gcItems); // post & get cart data
       return data;
     }
     catch (err) {
@@ -78,18 +79,52 @@ const Cart = () => {
     return null;
   }
 
-  async function putGet () {
+  function updateCart () {
+    setWait(true);
     if (isLogin) {
-      try {
-        await putCart(putProducts);
-        const data = await fetchCart();
-        mapData(data);
-      }
-      catch (err) {
-        console.error(err);
-      }
-      return null;
+      updateMemberCart().
+        then(() => setWait(false)).
+        catch(() => window.location.reload());
     }
+    else {
+      gcUpdate();
+      updateGuestCart().
+        then(() => setWait(false)).
+        catch(() => window.location.reload());
+    }
+  }
+
+  async function updateMemberCart () {
+    try {
+      await putCart(putProducts);
+      const data = await fetchCart();
+      mapData(data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+    return null;
+  }
+
+  async function updateGuestCart () {
+    gcUpdate();
+
+    try {
+      const data = await fetchGuestCart(gc.items);
+      mapData(data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+    return null;
+  }
+
+  function gcUpdate () {
+    if (!products.length) {
+      throw new Error('products state is empty array');
+    }
+    const data = getGuestCartRequest(products);
+    gc.cover(data);
   }
 
   function getGuestCartRequest (gcItems) {
@@ -126,15 +161,16 @@ const Cart = () => {
           },
         )));
 
+    console.log('price : ', price);
+
     setProducts(result);
-    if (price) {
-      setAmount(price);
-    }
+    setAmount(price);
   }
 
   return (
     <>
       <SEOHelmet title={'장바구니'} />
+      {wait && <Dimmed />}
       <div className="contents order">
         <div className="container" id="container">
           <div className="content order_page">
@@ -151,7 +187,6 @@ const Cart = () => {
                   />
                   <CartTable>
                     <ProductList
-                      cartUpdate={putGet}
                       products={products}
                       setProducts={setProducts}
                       checkedIndexes={checkedIndexes}

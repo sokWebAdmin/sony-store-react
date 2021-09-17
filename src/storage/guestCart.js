@@ -9,10 +9,13 @@ const gc = {
     gc.data = data ? data : [];
   },
   set (data) {
-    console.log(data);
     gc.fetch();
 
     Array.isArray ? gc.data = gc.data.concat(data) : gc.data.push(data);
+    setWithExpire(name, gc.data);
+  },
+  cover (data) {
+    gc.data = data;
     setWithExpire(name, gc.data);
   },
   get items () {

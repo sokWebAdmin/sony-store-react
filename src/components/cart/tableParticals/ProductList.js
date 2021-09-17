@@ -1,7 +1,7 @@
 import React from 'react';
 import { toCurrencyString } from '../../../utils/unit';
 
-const ProductList = ({ cartUpdate, products, setProducts, checkedIndexes, setCheckedIndexes }) => {
+const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes }) => {
   const onCheck = (event, index) => {
     const { checked } = event.currentTarget;
 
