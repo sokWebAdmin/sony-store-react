@@ -34,14 +34,16 @@ export default function Recommend({ match }) {
 
   const size = useWindowSize();
   const [slideBanners, setSlideBanners] = useState([]);
+  const [productBanners, setProductBanners] = useState([]);
   const [isFinished, setFinished] = useState(false);
 
   const getBanners = useCallback(async () => {
     try {
       //배너 코드 객체로 관리하기
       //응답이 순서를 보징하지 않음
-      const { data } = await loadBanner('000');
+      const { data } = await loadBanner('000, 015');
       setSlideBanners(data[0]?.accounts);
+      setProductBanners(data[1]?.accounts);
     } catch (e) {
       console.error(e);
     }
@@ -97,12 +99,7 @@ export default function Recommend({ match }) {
                     </Scene>
                     <Scene triggerElement=".trigger-3" duration={size.height * 0.5}>
                       {(progress) => (
-                        <Tween
-                          duration={1}
-                          totalProgress={progress}
-                          // to={{y: "300%"}}
-                          paused
-                        >
+                        <Tween duration={1} totalProgress={progress} paused>
                           <div id="reco_kv_img-3" className={`reco_kv_img reco_kv_img-3 ${progress > 0 ? 'end' : ''}`}>
                             <img src={slideBanners[2]?.banners[0]?.imageUrl} alt={slideBanners[2]?.banners[0]?.name} />
                           </div>
@@ -144,55 +141,57 @@ export default function Recommend({ match }) {
                 {/* flex */}
                 <div className="reco_items">
                   <div className="reco_item">
-                    <div className="reco_item_inner">
-                      <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
-                        {(progress) => (
-                          <Tween duration={1} totalProgress={progress} paused>
-                            <a
-                              onClick={() => {
-                                history.push('/product-view/1');
-                              }}
-                              className={`reco_prod ${progress == 1 && 'end'}`}
-                            >
-                              <img src="/images/recommend/img1.jpg" alt="PS-LX310BT" className="reco_prod_img" />
-                            </a>
-                          </Tween>
-                        )}
-                      </Scene>
-
-                      <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
-                        {(progress) => (
-                          <Tween duration={1} totalProgress={progress} paused>
-                            <h2 className={`reco_title ${progress == 1 && 'end'}`}>PS-LX310BT</h2>
-                          </Tween>
-                        )}
-                      </Scene>
-
-                      <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
-                        {(progress) => (
-                          <Tween duration={1} totalProgress={progress} paused>
-                            <p className={`reco_desc ${progress == 1 && 'end'}`}>간편하게 즐기는 바이닐 사운드</p>
-                          </Tween>
-                        )}
-                      </Scene>
-
-                      <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
-                        {(progress) => (
-                          <Tween duration={1} totalProgress={progress} paused>
-                            <div className={`reco_hashes ${progress == 1 && 'end'}`}>
+                    {productBanners?.map((bannerInfo, index) => (
+                      <div className="reco_item_inner">
+                        <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                          {(progress) => (
+                            <Tween duration={1} totalProgress={progress} paused>
                               <a
                                 onClick={() => {
                                   history.push('/product-view/1');
                                 }}
-                                className="reco_hash"
+                                className={`reco_prod ${progress == 1 && 'end'}`}
                               >
-                                #이벤트
+                                <img src="/images/recommend/img1.jpg" alt="PS-LX310BT" className="reco_prod_img" />
                               </a>
-                            </div>
-                          </Tween>
-                        )}
-                      </Scene>
-                    </div>
+                            </Tween>
+                          )}
+                        </Scene>
+
+                        <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                          {(progress) => (
+                            <Tween duration={1} totalProgress={progress} paused>
+                              <h2 className={`reco_title ${progress == 1 && 'end'}`}>PS-LX310BT</h2>
+                            </Tween>
+                          )}
+                        </Scene>
+
+                        <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                          {(progress) => (
+                            <Tween duration={1} totalProgress={progress} paused>
+                              <p className={`reco_desc ${progress == 1 && 'end'}`}>간편하게 즐기는 바이닐 사운드</p>
+                            </Tween>
+                          )}
+                        </Scene>
+
+                        <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                          {(progress) => (
+                            <Tween duration={1} totalProgress={progress} paused>
+                              <div className={`reco_hashes ${progress == 1 && 'end'}`}>
+                                <a
+                                  onClick={() => {
+                                    history.push('/product-view/1');
+                                  }}
+                                  className="reco_hash"
+                                >
+                                  #이벤트
+                                </a>
+                              </div>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </div>
+                    ))}
                   </div>
 
                   <div className="reco_item">
