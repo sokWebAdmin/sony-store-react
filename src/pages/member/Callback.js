@@ -38,14 +38,13 @@ const Callback = () => {
       return;
     }
 
-    const { data: openIdTokenResult } = await getOauthOpenId({
+    const { openIdTokenResult } = await getOauthOpenId({
       code,
       redirectUri,
       provider: redirectedProvider,
       state: redirectedToken,
       platformType: isMobile ? 'MOBILE_WEB' : 'PC',
     });
-    console.log(openIdTokenResult);
 
     if (openIdTokenResult.status === 200) {
       setAccessToken(openIdTokenResult.accessToken, openIdTokenResult.expireIn);
@@ -57,11 +56,10 @@ const Callback = () => {
       resetProfile(profileDispatch);
       shopOauthCallback?.();
     }
-    // window.close();
+    window.close();
   }
 
   useEffect(() => {
-    console.log('test');
     processAuthCallback();
   }, [])
 
