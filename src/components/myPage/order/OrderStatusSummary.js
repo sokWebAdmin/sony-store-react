@@ -58,13 +58,13 @@ export default function OrderStatusSummary({
             <li className={`step_2 ${hasOrder(payDoneCnt)}`}>
               <div className="ship_box">
                 <span className="ico_txt">결제완료</span>
-                <a className="val_txt" onClick={(e) => onClickOrderStatus(e, 'PAY_DONE')}>
+                <a href="#" className="val_txt" onClick={(e) => onClickOrderStatus(e, 'PAY_DONE')}>
                   <span className="val">{payDoneCnt}</span>
                   <span>건</span>
                 </a>
               </div>
             </li>
-            <li className={`step_3 ${hasOrder(deliveryPrepareCnt)}`}>
+            <li className={`step_3 ${hasOrder(productPrepareCnt + deliveryPrepareCnt)}`}>
               <div className="ship_box">
                 <span className="ico_txt">배송준비</span>
                 <a
@@ -100,7 +100,7 @@ export default function OrderStatusSummary({
         <div className="my_claim">
           <p className={`txt cancel ${hasOrder(totalCancelCnt)}`}>
             주문 취소{' '}
-            <a title="주문 취소 건">
+            <a title="주문 취소 건" onClick={(e) => onClickOrderStatus(e, 'CANCEL_PROCESSING,CANCEL_DONE')}>
               <strong className="val_txt">
                 <span className="val">{totalCancelCnt}</span> 건
               </strong>
