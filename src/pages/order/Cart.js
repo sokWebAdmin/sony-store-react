@@ -47,9 +47,7 @@ const Cart = () => {
   async function fetchCart () {
     try {
       const { data } = await getCart();
-      if (data?.deliveryGroups.length <= 1) {
-        return data;
-      }
+      return data;
     }
     catch (err) {
       console.error(err);
@@ -112,6 +110,8 @@ const Cart = () => {
                 <>
                   <Controller
                     products={products}
+                    checkedIndexes={checkedIndexes}
+                    setCheckedIndexes={setCheckedIndexes}
                   />
                   <CartTable>
                     <ProductList
@@ -124,7 +124,6 @@ const Cart = () => {
                     <TotalAmount
                       productCount={productCount}
                       amount={amount}
-                      setCheckedIndexes={setCheckedIndexes}
                     />
                     }
                   </CartTable>

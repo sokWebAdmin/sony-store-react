@@ -1,12 +1,21 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 
-const Controller = ({ products }) => {
+const Controller = ({ products, checkedIndexes, setCheckedIndexes }) => {
 
   const [allChecked, setAllChecked] = useState(false);
+
   const allProductIndexes = useMemo(() => products.map((_, i) => i),
     [products]);
 
-  console.log(allProductIndexes);
+  useEffect(() => {
+    setAllChecked(checkedIndexes.length === allProductIndexes.length);
+  }, [checkedIndexes]);
+
+  const onCheck = event => {
+    const { checked } = event.currentTarget;
+
+    checked ? setCheckedIndexes(allProductIndexes) : setCheckedIndexes([]);
+  };
 
   return (
 
@@ -15,7 +24,7 @@ const Controller = ({ products }) => {
         <div className="check">
           <input type="checkbox" className="inp_check check_all"
                  checked={allChecked}
-                 onChange={() => setAllChecked(!allChecked)}
+                 onChange={onCheck}
                  id="check_cart_items" name="check_cart_item" />
           <label htmlFor="check_cart_items">전체</label>
         </div>

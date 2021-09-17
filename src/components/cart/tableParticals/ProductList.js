@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { toCurrencyString } from '../../../utils/unit';
 
-const ProductList = ({ products, setProducts }) => {
+const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes }) => {
+
+  useEffect(() => console.log(checkedIndexes), [checkedIndexes]);
+
+  const onCheck = (event, index) => {
+
+    const { checked } = event.currentTarget;
+
+    if (checked) {
+      const newCheckedIndexes = [...checkedIndexes, index];
+
+      setCheckedIndexes(newCheckedIndexes);
+    }
+    else {
+      const newCheckedIndexes = checkedIndexes.filter(v => v !== index);
+
+      setCheckedIndexes(newCheckedIndexes);
+    }
+  };
+
   return (
     <>
       <div className="col_table">
@@ -14,7 +33,9 @@ const ProductList = ({ products, setProducts }) => {
                   <div className="prd">
                     <div className="check check_only">
                       <input type="checkbox" className="inp_check"
-                             name="check_cart_item" />
+                             name="check_cart_item"
+                             checked={checkedIndexes.some(v => v === i)}
+                             onChange={event => onCheck(event, i)} />
                     </div>
                     <div className="prd_thumb">
                       <img className="prd_thumb_pic"
