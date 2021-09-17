@@ -18,7 +18,7 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
 // api
-import { getCart, putCart, postGuestCart } from '../../api/order';
+import { getCart, putCart, postGuestCart, deleteCart } from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
@@ -28,7 +28,7 @@ const Cart = () => {
 
   const [wait, setWait] = useState(false);
   const [products, setProducts] = useState([]);
-  const putProducts = useMemo(() => products.map(product => ({
+  const putProducts = useMemo(() => products.map(product => ({ // put 요청 미리 맵핑해놓음.
     cartNo: product.cartNo,
     orderCnt: product.orderCnt,
     optionInputs: product.optionInputs,
@@ -128,13 +128,21 @@ const Cart = () => {
     return null;
   }
 
-  function deleteItem (optionNo) { // productNo 보다 유니크함
+  function deleteItem (no) { // productNo 보다 유니크함
     if (isLogin) {
-      console.log('isLogin!');
+      const cartNo = no;
+      deleteMemberCart([cartNo]);
     }
     else {
+      const optionNo = no; // TODO: 옵션 No 가 유니크한 값인지 확인 필요..
       deleteGuestCart([optionNo]);
     }
+  }
+
+  function deleteMemberCart (cartNos) {
+    deleteCart({
+      cartNo: cartNos.join(','),
+    }).then(() => init());
   }
 
   function deleteGuestCart (optionNos) {

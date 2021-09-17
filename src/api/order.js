@@ -43,3 +43,5 @@ export const putCart = requestBody => request('cart', 'put', null,
 
 export const postGuestCart = requestBody => request('guest/cart', 'post', null,
   requestBody);
+
+export const deleteCart = query => request('cart', 'delete', query);
