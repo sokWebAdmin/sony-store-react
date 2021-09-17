@@ -36,3 +36,20 @@ export const mapContents = ({ contentHeader, content, contentFooter }) => ([
         content: contentFooter,
      }
   ]);
+
+export const notificationInfo = {
+  cart: {
+    title: '장바구니 담기 완료',
+    label1: '해당 상품이 장바구니에 담겼습니다.',
+    label2: '장바구니로 이동하시겠습니까?',
+    to: '/cart',
+    toLabel: '장바구니 이동',
+  },
+  gift: {
+    title: '소니스토어 선물하기',
+    label1: '선물하기는 소니스토어 회원만',
+    label2: '이용하실 수 있습니다.',
+    to: '/member/login',
+    toLabel: '로그인',
+  }
+}
