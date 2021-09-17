@@ -63,6 +63,7 @@ const EventBottom = () => {
   }
 
   const fetchInitDisplayEvents = async () => {
+    if (tabs.length === 8) return;
     const { data } = await getDisplayEvents();
     const employee = data.find((event) => `/${event.url}` === '/event/employee');
     let newTabs = [...tabs];
