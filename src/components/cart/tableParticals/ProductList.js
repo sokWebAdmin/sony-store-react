@@ -5,15 +5,7 @@ const ProductList = ({ products, setProducts }) => {
   return (
     <>
       <div className="col_table">
-        <div className="col_table_head">
-          <div className="col_table_row">
-            <div className="col_table_cell">제품</div>
-            <div className="col_table_cell">가격</div>
-            <div className="col_table_cell">수량</div>
-            <div className="col_table_cell">합계</div>
-            <div className="col_table_cell ir">삭제</div>
-          </div>
-        </div>
+        <Header />
         <div className="col_table_body">
           {products.map(
             ({ product, orderCnt, optionText, standardAmt, buyAmt }) =>
@@ -63,5 +55,17 @@ const ProductList = ({ products, setProducts }) => {
     </>
   );
 };
+
+const Header = () => (
+  <div className="col_table_head">
+    <div className="col_table_row">
+      <div className="col_table_cell">제품</div>
+      <div className="col_table_cell">가격</div>
+      <div className="col_table_cell">수량</div>
+      <div className="col_table_cell">합계</div>
+      <div className="col_table_cell ir">삭제</div>
+    </div>
+  </div>
+);
 
 export default ProductList;
