@@ -4,7 +4,8 @@ import { useQuery } from '../../hooks';
 import { toCurrencyString } from '../../utils/unit';
 import OrderProcess from '../../components/myPage/orderDetail/OrderProcess';
 import OrderSummary from '../../components/myPage/orderDetail/OrderSummary';
-import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
+import OrderProductList from '../../components/myPage/orderDetail/OrderProductList';
+import OrderDetailProductItem from '../../components/myPage/orderDetail/OrderDetailProductItem';
 
 import GlobalContext from '../../context/global.context';
 
@@ -220,30 +221,23 @@ export default function OrderDetail() {
               <OrderProcess defaultOrderStatusType={orderInfo.defaultOrderStatusType} />
             )}
             <OrderSummary orderInfo={orderInfo} />
-            {/* <div className="o_summary">
-              <dl className="o_summary_status">
-                <dt className="o_summary_term">처리상태</dt>
-                <dd className="o_summary_desc">
-                  <strong>{getOrderStatus(orderInfo.defaultOrderStatusType)}</strong>
-                  {showFindDelivery(orderInfo.defaultOrderStatusType) && (
-                    <button type="button" className="button button_positive button-s">
-                      배송조회
-                    </button>
-                  )}
-                </dd>
-              </dl>
-              <dl className="o_summary_date">
-                <dt className="o_summary_term">주문날짜</dt>
-                <dd className="o_summary_desc">{orderInfo.orderYmdt}</dd>
-              </dl>
-              <dl className="o_summary_number">
-                <dt className="o_summary_term">주문번호</dt>
-                <dd className="o_summary_desc">{orderInfo.orderNo}</dd>
-              </dl>
-            </div> */}
             {/* 제품 정보 */}
             <div className="order_detail_cont">
-              <div className="col_table_wrap order_list">
+              <OrderProductList>
+                {orderProducts.length > 0 &&
+                  orderProducts.map((orderProduct) => (
+                    <OrderDetailProductItem
+                      key={orderProduct.orderNo}
+                      productName={orderProduct.productName}
+                      imageUrl={orderProduct.imageUrl}
+                      optionTitle={orderProduct.optionTitle}
+                      buyPrice={orderProduct.buyPrice}
+                      buyAmt={orderProduct.buyAmt}
+                      orderCnt={orderProduct.orderCnt}
+                    />
+                  ))}
+              </OrderProductList>
+              {/* <div className="col_table_wrap order_list">
                 <div className="col_table">
                   <div className="col_table_head">
                     <div className="col_table_row">
@@ -268,10 +262,9 @@ export default function OrderDetail() {
                       ))}
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
-            {/*// 제품 정보 */}
-            {/* 주문 정보 */}
+
             <div className="cont order_info">
               <h3 className="cont_tit">{shippingAddress.usesShippingInfoLaterInput && '선물하기 '} 주문 정보</h3>
               <div className="order_info_inner">
