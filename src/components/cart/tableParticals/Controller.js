@@ -31,12 +31,8 @@ const Controller = ({ products, checkedIndexes, setCheckedIndexes }) => {
       </div>
       <div className="cart_func_buttons">
         <button type="button"
-                className="button button_negative button-s button_del_checked_items">선택
-          삭제
-        </button>
-        <button type="button"
                 className="button button_positive button-s button_print_esimate popup_comm_btn"
-                data-popup-name="estimate">견적서 출력
+                data-popup-name="estimate">견적서 출력하기
         </button>
       </div>
     </div>
