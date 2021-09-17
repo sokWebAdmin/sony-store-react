@@ -38,15 +38,16 @@ const Callback = () => {
       return;
     }
 
-    const { openIdTokenResult } = await getOauthOpenId({
+    const openIdTokenResult = await getOauthOpenId({
       code,
       redirectUri,
       provider: redirectedProvider,
       state: redirectedToken,
       platformType: isMobile ? 'MOBILE_WEB' : 'PC',
     });
+    console.log(openIdTokenResult);
 
-    if (openIdTokenResult.accessToken) {
+    if (openIdTokenResult?.accessToken) {
       setAccessToken(openIdTokenResult.accessToken, openIdTokenResult.expireIn);
       await fetchProfile(profileDispatch);
       shopOauthCallback?.(profile);
