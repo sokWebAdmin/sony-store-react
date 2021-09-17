@@ -1,5 +1,5 @@
 import React from 'react';
-import { toCurrencyString } from '../../utils/unit';
+import { toCurrencyString } from '../../../utils/unit';
 
 export default function OrderDetailProductItem({ productName, imageUrl, optionTitle, buyPrice, buyAmt, orderCnt }) {
   return (

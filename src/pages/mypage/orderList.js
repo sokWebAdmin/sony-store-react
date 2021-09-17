@@ -5,7 +5,10 @@ import { getProfileOrders, getProfileOrdersSummaryStatus } from '../../api/order
 
 import OrderStatusSummary from '../../components/myPage/order/OrderStatusSummary';
 import DateBox from '../../components/myPage/DateBox';
+import OrderListTable from '../../components/myPage/order/OrderListTable';
 import OrderListItem from '../../components/myPage/order/OrderListItem';
+import OrderNotice from '../../components/myPage/order/OrderNotice';
+import OrderListLinkBox from '../../components/myPage/order/OrderListLinkBox';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -33,7 +36,6 @@ export default function OrderList() {
     exchangeProcessingCnt: 0,
   });
 
-  const [refundAccountVisible, setRefundAccountVisible] = useState(false);
   const [searchPeriod, setSearchPeriod] = useState({
     startDate: new Date(addMonth(new Date(), -3)),
     endDate: new Date(),
@@ -136,15 +138,7 @@ export default function OrderList() {
               </div>
               {/* 주문 정보 */}
               <div className="col_table_wrap order_list">
-                <div className="col_table">
-                  <div className="col_table_head">
-                    <div className="col_table_row">
-                      <div className="col_table_cell">주문날짜/번호</div>
-                      <div className="col_table_cell">제품</div>
-                      <div className="col_table_cell">수량</div>
-                      <div className="col_table_cell">처리상태</div>
-                    </div>
-                  </div>
+                <OrderListTable>
                   {orderProducts.length > 0 && (
                     <div className="col_table_body">
                       {orderProducts.map((orderProduct, index) => (
@@ -167,7 +161,7 @@ export default function OrderList() {
                       ))}
                     </div>
                   )}
-                </div>
+                </OrderListTable>
                 {loadMoreBtnVisible && (
                   <div className="my btn_article" style={{ textAlign: 'center' }}>
                     <a href="#" className="more_btn" onClick={onClickLoadMore}>
@@ -181,38 +175,8 @@ export default function OrderList() {
               </div>
               {/*// 주문 정보 */}
             </div>
-            <div className="order_notice">
-              <h3 className="order_notice_title">주문/배송 시 주의사항</h3>
-              <ul className="list_dot">
-                <li>주문 취소 접수 후에는 사용하신 쿠폰은 사라지며, 재 주문 시에 다시 복원되지 않습니다.</li>
-                <li>
-                  처리 상태가 <strong>배송중, 배송 완료 상태</strong>인 경우는 온라인 상으로 주문 취소 접수가 되지
-                  않으며, 소니코리아 고객지원센터(
-                  <strong>1588-0911</strong>)를 통해서 주문 취소 요청을 하실 수 있습니다.
-                </li>
-                <li>주문 마감 기간의 경우는 주문 취소 접수가 되지 않을 수 있습니다.</li>
-                <li>
-                  <strong>
-                    신용카드 영수증, 현금영수증 신청을 클릭하시면 출력하실 수 있습니다. (PC버전에서만 가능합니다.)
-                  </strong>
-                </li>
-              </ul>
-            </div>
-            <div className="ico_box_link">
-              <a href="https://www.sony.co.kr/electronics/support" className="box_link_inner ico_type3" target="_blank">
-                <div className="txt_box">
-                  <p className="tit">고객지원 센터</p>
-                  <p className="txt">제품 서비스 및 보증기간을 확인하세요!</p>
-                </div>
-              </a>
-              {/* TODO: svg 파일 누락됨 문의중 https://nhnent.dooray.com/project/posts/3089165614751281840 */}
-              <Link to="/my-page/old-order-list" class="box_link_inner ico_type4">
-                <div class="txt_box">
-                  <p class="tit">2021년 9월 이전 주문 내역</p>
-                  <p class="txt">이전 소니스토어에서 구매하신 내역을 확인하세요!</p>
-                </div>
-              </Link>
-            </div>
+            <OrderNotice />
+            <OrderListLinkBox />
           </div>
         </div>
       </div>

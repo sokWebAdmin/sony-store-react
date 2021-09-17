@@ -1,6 +1,7 @@
 import LayerPopup from '../../components/common/LayerPopup';
 import { useEffect, useState } from 'react';
-import { getProfileClaimApplyInfoByOrderOptionNo, putProfileClaimRefundAccountByClaimNo } from '../../api/claim';
+import { useMallState } from '../../context/mall.context';
+import { putProfileClaimRefundAccountByClaimNo } from '../../api/claim';
 
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
@@ -14,14 +15,10 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   });
   const [bankSelectBoxVisible, setBankSelectBoxVisible] = useState(false);
   const [bankSelectList, setBackSelectList] = useState([]);
+  const { bankType } = useMallState();
 
   useEffect(async () => {
-    const res = await getProfileClaimApplyInfoByOrderOptionNo({
-      path: { orderOptionNo },
-      params: { claimType: 'CANCEL' },
-    });
-    setBackSelectList(res.data.availableBanks);
-    console.log('res:', res.data.availableBanks);
+    setBackSelectList(bankType);
   }, []);
 
   const onSubmitRefundAccount = (form) => {
@@ -84,23 +81,25 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
                         setBankSelectBoxVisible(!bankSelectBoxVisible);
                       }}
                     >
-                      {form.bank ? form.bank : '은행을 선택해주세요.'}
+                      {form.bank
+                        ? bankSelectList.find((bank) => bank.value === form.bank).name
+                        : '은행을 선택해주세요.'}
                     </a>
                     <div className="select_inner" style={{ display: bankSelectBoxVisible ? 'block' : 'none' }}>
                       <p className="prd_tag">환불 받을 은행</p>
                       <ul className="select_opt">
-                        {bankSelectList.map(({ bank, label }) => (
-                          <li key={bank}>
+                        {bankSelectList.map(({ value, name }) => (
+                          <li key={value}>
                             <a
                               href="#"
                               className="opt_list"
                               onClick={(e) => {
                                 e.preventDefault();
-                                setForm({ ...form, bank: label });
+                                setForm({ ...form, bank: value });
                                 setBankSelectBoxVisible(false);
                               }}
                             >
-                              <div className="item">{label}</div>
+                              <div className="item">{name}</div>
                             </a>
                           </li>
                         ))}
@@ -157,7 +156,6 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
                   e.preventDefault();
                   onSubmitRefundAccount(form);
                 }}
-                //   onClick="common.makeAlert('complete', '환불계좌 등록이 완료되었습니다.')"
               >
                 저장
               </button>
