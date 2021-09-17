@@ -96,6 +96,8 @@ export default function OrderDetail() {
       receiverContact1,
       deliveryMemo,
       requestShippingDate: orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].requestShippingDate,
+      usesShippingInfoLaterInput:
+        orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].usesShippingInfoLaterInput,
     });
 
     const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
@@ -299,7 +301,7 @@ export default function OrderDetail() {
             {/*// 제품 정보 */}
             {/* 주문 정보 */}
             <div className="cont order_info">
-              <h3 className="cont_tit">주문 정보</h3>
+              <h3 className="cont_tit">{shippingAddress.usesShippingInfoLaterInput && '선물하기 '} 주문 정보</h3>
               <div className="order_info_inner">
                 <dl className="order">
                   <dt className="order_term">주문자 정보</dt>
