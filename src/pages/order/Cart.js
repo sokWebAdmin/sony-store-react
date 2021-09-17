@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect, useMemo } from 'react';
-import { useHistory } from 'react-router';
 import GlobalContext from '../../context/global.context';
 
 // components
@@ -23,7 +22,6 @@ import { getCart, postGuestCart } from '../../api/order';
 // module
 import gc from '../../storage/guestCart.js';
 const Cart = () => {
-  const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
 
   const [products, setProducts] = useState([]);
@@ -49,7 +47,7 @@ const Cart = () => {
   async function fetchCart () {
     try {
       const { data } = await getCart();
-      if (data?.deliveryGroups.length < 1) {
+      if (data?.deliveryGroups.length <= 1) {
         return data;
       }
     }
