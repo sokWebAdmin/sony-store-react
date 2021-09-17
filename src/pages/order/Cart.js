@@ -15,7 +15,7 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
 // api
-import { getCart } from '../../api/order';
+import { getCart, postGuestCart } from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
@@ -28,11 +28,13 @@ const Cart = () => {
 
   const init = () => {
     if (isLogin) {
-      fetchCart().catch(console.error);
+      fetchCart().then(mapProducts).catch(console.error);
+
     }
     else {
       gc.fetch();
-      setProducts(gc.items);
+      const body = getGuestCartRequest(gc.items);
+      fetchGuestCart(body).then(mapProducts);
     }
   };
 
@@ -40,15 +42,53 @@ const Cart = () => {
 
   async function fetchCart () {
     try {
-      const { data: { deliveryGroups } } = await getCart();
-      if (deliveryGroups.length < 1) {
-        return;
+      const { data } = await getCart();
+      if (data?.deliveryGroups.length < 1) {
+        return data;
       }
-      setProducts(deliveryGroups)
     }
     catch (err) {
       console.error(err);
     }
+    return null;
+  }
+
+  async function fetchGuestCart (products) {
+    try {
+      const { data } = await postGuestCart(products); // post & get cart data
+      return data;
+    }
+    catch (err) {
+      console.error(err);
+    }
+    return null;
+  }
+
+  function getGuestCartRequest (gcItems) {
+    return gcItems.map(
+      ({ cartNo, productNo, optionNo, orderCnt, optionInputs, channelType }) => ({
+        cartNo, productNo, optionNo, orderCnt, optionInputs, channelType,
+      }));
+  }
+
+  function mapProducts (responseData) {
+    const { deliveryGroups } = responseData;
+
+    if (!deliveryGroups?.length) {
+      return;
+    }
+
+    const result = deliveryGroups.flatMap(delivery =>
+      delivery.orderProducts.flatMap(product =>
+        product.orderProductOptions.map(option => ({
+          valid: true,
+          delivery,
+          product,
+          option,
+        })),
+      ));
+
+    setProducts(result);
   }
 
   return (
@@ -63,7 +103,10 @@ const Cart = () => {
                 ? <Empty />
                 :
                 <>
-                  <ProductList />
+                  <ProductList
+                    products={products}
+                    setProducts={setProducts}
+                  />
                   <div className="button_wrap">
                     <a className="button button_negative">쇼핑 계속 하기</a>
                     <button type="submit"

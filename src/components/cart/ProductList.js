@@ -1,26 +1,10 @@
 import React from 'react';
 
-const ProductList = () => {
+const ProductList = ({ products, setProducts }) => {
   return (
     <>
       <div className="cart_func">
-        <div className="cart_func_check">
-          <div className="check">
-            <input type="checkbox" className="inp_check check_all"
-                   id="check_cart_items" name="check_cart_item" />
-            <label htmlFor="check_cart_items">전체</label>
-          </div>
-        </div>
-        <div className="cart_func_buttons">
-          <button type="button"
-                  className="button button_negative button-s button_del_checked_items">선택
-            삭제
-          </button>
-          <button type="button"
-                  className="button button_positive button-s button_print_esimate popup_comm_btn"
-                  data-popup-name="estimate">견적서 출력
-          </button>
-        </div>
+        <Controller />
       </div>
       <div className="col_table_wrap order_list">
         <div className="col_table">
@@ -34,89 +18,50 @@ const ProductList = () => {
             </div>
           </div>
           <div className="col_table_body">
-            <div className="col_table_row">
-              <div className="col_table_cell prd_wrap tal">
-                <div className="prd">
-                  <div className="check check_only">
-                    <input type="checkbox" className="inp_check"
-                           name="check_cart_item" />
-                  </div>
-                  <div className="prd_thumb">
-                    <img className="prd_thumb_pic"
-                         src="../../images/_tmp/item640x640_03.png"
-                         alt="상품명입력" />
-                  </div>
-                  <div className="prd_info">
-                    <div className="prd_info_name">PLAYSTATION 5 DIGITAL
-                      (CFI-1018B01)
+            {products.map(product =>
+              <div className="col_table_row">
+                <div className="col_table_cell prd_wrap tal">
+                  <div className="prd">
+                    <div className="check check_only">
+                      <input type="checkbox" className="inp_check"
+                             name="check_cart_item" />
                     </div>
-                    <p className="prd_info_option">4K HDR(HLG), Fast
-                      Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트
-                      화이트)</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col_table_cell prd_price">
-                4,299,000 <span className="won">원</span>
-              </div>
-              <div className="col_table_cell prd_count">
-                <div className="count_ui_box">
-                  <button className="minus">감소</button>
-                  <input type="text" readOnly="readonly"
-                         defaultValue={1} className="count" />
-                  <button className="plus">증가</button>
-                </div>
-              </div>
-              <div className="col_table_cell prd_total">
-                4,299,000 <span className="won">원</span>
-              </div>
-              <div className="col_table_cell">
-                <button type="button" className="btn_del_prd"><img
-                  src="../../images/common/ic_close.svg" alt="제품 삭제" />
-                </button>
-              </div>
-            </div>
-            <div className="col_table_row">
-              <div className="col_table_cell prd_wrap tal">
-                <div className="prd">
-                  <div className="check check_only">
-                    <input type="checkbox" className="inp_check"
-                           name="check_cart_item" />
-                  </div>
-                  <div className="prd_thumb">
-                    <img className="prd_thumb_pic"
-                         src="../../images/_tmp/item640x640_02.png"
-                         alt="상품명입력" />
-                  </div>
-                  <div className="prd_info">
-                    <div className="prd_info_name">AK-74 Hi-Res Aux
-                      3.5mm 케이블 (16.5m)
+                    <div className="prd_thumb">
+                      <img className="prd_thumb_pic"
+                           src="../../images/_tmp/item640x640_03.png"
+                           alt="상품명입력" />
                     </div>
-                    <p className="prd_info_option">AK-47 전용 고해상도 Aux
-                      케이블</p>
+                    <div className="prd_info">
+                      <div className="prd_info_name">PLAYSTATION 5 DIGITAL
+                        (CFI-1018B01)
+                      </div>
+                      <p className="prd_info_option">4K HDR(HLG), Fast
+                        Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트
+                        화이트)</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="col_table_cell prd_price">
-                9,000 <span className="won">원</span>
-              </div>
-              <div className="col_table_cell prd_count">
-                <div className="count_ui_box">
-                  <button className="minus">감소</button>
-                  <input type="text" readOnly="readonly"
-                         defaultValue={1} className="count" />
-                  <button className="plus">증가</button>
+                <div className="col_table_cell prd_price">
+                  4,299,000 <span className="won">원</span>
                 </div>
-              </div>
-              <div className="col_table_cell prd_total">
-                18,000 <span className="won">원</span>
-              </div>
-              <div className="col_table_cell">
-                <button type="button" className="btn_del_prd"><img
-                  src="../../images/common/ic_close.svg" alt="제품 삭제" />
-                </button>
-              </div>
-            </div>
+                <div className="col_table_cell prd_count">
+                  <div className="count_ui_box">
+                    <button className="minus">감소</button>
+                    <input type="text" readOnly="readonly"
+                           defaultValue={1} className="count" />
+                    <button className="plus">증가</button>
+                  </div>
+                </div>
+                <div className="col_table_cell prd_total">
+                  4,299,000 <span className="won">원</span>
+                </div>
+                <div className="col_table_cell">
+                  <button type="button" className="btn_del_prd"><img
+                    src="../../images/common/ic_close.svg" alt="제품 삭제" />
+                  </button>
+                </div>
+              </div>,
+            )}
           </div>
         </div>
         <div className="col_table_foot">
@@ -134,4 +79,30 @@ const ProductList = () => {
   );
 };
 
+function Controller () {
+  return (
+    <>
+      <div className="cart_func_check">
+        <div className="check">
+          <input type="checkbox" className="inp_check check_all"
+                 id="check_cart_items" name="check_cart_item" />
+          <label htmlFor="check_cart_items">전체</label>
+        </div>
+      </div>
+      <div className="cart_func_buttons">
+        <button type="button"
+                className="button button_negative button-s button_del_checked_items">선택
+          삭제
+        </button>
+        <button type="button"
+                className="button button_positive button-s button_print_esimate popup_comm_btn"
+                data-popup-name="estimate">견적서 출력
+        </button>
+      </div>
+    </>
+  );
+}
+
 export default ProductList;
+
+
