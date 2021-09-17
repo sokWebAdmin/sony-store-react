@@ -34,3 +34,5 @@ export const putShippingsEncryptedShippingNoLaterInput = (
 
 export const getCart = () =>
   request(`cart?divideInvalidProducts=true`, 'get');
+
+export const postCart = requestBody => request('cart', 'post', null, requestBody);
