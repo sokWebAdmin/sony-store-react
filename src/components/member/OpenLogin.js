@@ -44,8 +44,7 @@ const OpenLogin = ({ title, message, customCallback }) => {
   const openIdLogin = async (type) => {
     const provider = `ncp_${type}`;
     const data = await fetchOauthLogin(provider);
-    popup = window.open(data.loginUrl, '간편 로그인', 'width=420px,height=550px,scrollbars=yes');
-    popup.focus();
+    window.open(data.loginUrl, '간편 로그인', 'width=420px,height=550px,scrollbars=yes');
     openLoginPopup(data, provider);
   };
 

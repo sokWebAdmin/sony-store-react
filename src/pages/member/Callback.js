@@ -38,7 +38,7 @@ const Callback = () => {
       return;
     }
 
-    const openIdTokenResult = await getOauthOpenId({
+    const { data: openIdTokenResult } = await getOauthOpenId({
       code,
       redirectUri,
       provider: redirectedProvider,
@@ -61,6 +61,7 @@ const Callback = () => {
   }
 
   useEffect(() => {
+    console.log('test');
     processAuthCallback();
   }, [])
 
