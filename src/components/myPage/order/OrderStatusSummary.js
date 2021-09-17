@@ -100,7 +100,7 @@ export default function OrderStatusSummary({
         <div className="my_claim">
           <p className={`txt cancel ${hasOrder(totalCancelCnt)}`}>
             주문 취소{' '}
-            <a title="주문 취소 건" onClick={(e) => onClickOrderStatus(e, 'CANCEL_PROCESSING,CANCEL_DONE')}>
+            <a href="#" title="주문 취소 건" onClick={(e) => onClickOrderStatus(e, 'CANCEL_PROCESSING,CANCEL_DONE')}>
               <strong className="val_txt">
                 <span className="val">{totalCancelCnt}</span> 건
               </strong>
@@ -108,7 +108,7 @@ export default function OrderStatusSummary({
           </p>
           <p className={`txt return ${hasOrder(totalExchangeAndReturnCnt)}`}>
             교환 반품{' '}
-            <a title="교환 반품 건">
+            <a href="#" title="교환 반품 건">
               <strong className="val_txt">
                 <span className="val">{totalExchangeAndReturnCnt}</span> 건
               </strong>
