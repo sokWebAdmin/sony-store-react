@@ -109,7 +109,7 @@ const EventBottom = () => {
     const key = Object.keys(tags).find(key => tagName.includes(tags[key]));
 
     if (event.url !== '') {
-      return `${origin ? document.location.origin : ''}/${event.url}`;
+      return `${origin ? document.location.origin : ''}/${event.url}/${eventNo}`;
     }
     if (key === 'all') {
       return `${origin ? document.location.origin : ''}/event/detail/${eventNo}`;
