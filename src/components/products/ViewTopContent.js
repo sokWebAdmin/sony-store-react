@@ -281,7 +281,7 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
       return;
     };
 
-    const products = getCartRequest(selectedOption);
+    const products = getCartRequest(productNo, selectedOption);
 
     try {
       if (isLogin) {
