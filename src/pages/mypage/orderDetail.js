@@ -32,6 +32,7 @@ export default function OrderDetail() {
     receiverAddress: '',
     receiverDetailAddress: '',
     deliveryMemo: '',
+    requestShippingDate: null,
   });
   const [receiptInfos, setReceiptInfos] = useState(null);
 
@@ -82,6 +83,7 @@ export default function OrderDetail() {
       payType,
       payInfo: { cardInfo, bankInfo },
       receiptInfos,
+      orderOptionsGroupByPartner,
     } = res.data;
 
     setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
@@ -93,6 +95,7 @@ export default function OrderDetail() {
       receiverDetailAddress,
       receiverContact1,
       deliveryMemo,
+      requestShippingDate: orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].requestShippingDate,
     });
 
     const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
@@ -315,7 +318,9 @@ export default function OrderDetail() {
                   <dt className="order_term">배송 요청사항</dt>
                   <dd className="order_desc">{shippingAddress.deliveryMemo ? shippingAddress.deliveryMemo : '없음'}</dd>
                   <dt className="order_term">배송일 선택</dt>
-                  <dd className="order_desc">정상 배송 </dd>
+                  <dd className="order_desc">
+                    {shippingAddress.requestShippingDate ? shippingAddress.requestShippingDate : '정상 배송'}
+                  </dd>
                 </dl>
               </div>
             </div>
