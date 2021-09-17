@@ -11,7 +11,6 @@ import '../../assets/scss/event.scss';
 import { useMediaQuery } from '../../hooks';
 import { Link, useParams } from 'react-router-dom';
 import { getEventByEventNo } from '../../api/display';
-import { tabUiClick } from '../../utils/utils';
 import { getUrlParam } from '../../utils/location';
 import EventProducts from '../../components/event/EventProducts';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -46,7 +45,6 @@ export default function Refurbish() {
 
   useEffect(() => {
     fetchDetailEvent();
-    tabUiClick();
   }, []);
 
 
