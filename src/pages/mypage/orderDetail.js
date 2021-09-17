@@ -160,10 +160,6 @@ export default function OrderDetail() {
     printDiv.style.display = 'none';
   };
 
-  const openCredicardReceipt = (receiptInfoUrl) => {
-    window.open(receiptInfoUrl);
-  };
-
   const onOrderCancel = (orderNo) => {
     const request = {
       path: { orderNo },
@@ -232,9 +228,7 @@ export default function OrderDetail() {
               </OrderProductList>
             </div>
             <OrderInfo ordererInfo={ordererInfo} shippingAddress={shippingAddress} />
-            <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} />
-            {/* // 결제 정보 */}
-            {/* buttons */}
+            <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
               {showOrderCancel(orderInfo.defaultOrderStatusType) && (
                 <button
