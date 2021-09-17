@@ -246,6 +246,10 @@ const gnbCategories = [
       {
         label: '추천 제품',
         route: '/recommend',
+      }, 
+      {
+        label: '선물 제안',
+        route: '/temp-gift' // @TODO 개발 후 변경해야 함   
       }
     ]
   },
