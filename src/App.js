@@ -96,6 +96,7 @@ import BenefitZone from './pages/event/BenefitZone';
 import Expired from './pages/event/Expired';
 import EventDetail from './pages/event/EventDetail';
 import { getProfile } from './api/member';
+import Callback from './pages/member/Callback';
 
 const App = (props) => {
   const dispatch = useMallDispatch();
@@ -247,7 +248,7 @@ const App = (props) => {
               <Route exact path="/member/inactiveAccounts" component={InactiveAccounts} />
               <Route exact path="/member/activeAccounts" component={ActiveAccounts} />
               <Route exact path="/member/lockedAccounts" component={LockedAccounts} />
-              <Route exact path="/callback" component={OpenLogin} />
+              <Route exact path="/callback" component={Callback} />
 
               {/* 검색 결과  */}
               <Route exact path="/search-result/:keyword" component={SearchResult} />
