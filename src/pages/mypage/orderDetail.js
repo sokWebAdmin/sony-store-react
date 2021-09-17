@@ -247,7 +247,6 @@ export default function OrderDetail() {
                 목록
               </Link>
             </div>
-            {/* // buttons */}
           </div>
         </div>
       </div>
