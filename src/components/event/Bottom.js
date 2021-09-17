@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { getDisplayEvents } from '../../api/display';
 import { Link, useHistory } from 'react-router-dom';
 import { getUrlParam } from '../../utils/location';
@@ -6,7 +6,8 @@ import moment from 'moment';
 import LayerPopup from '../common/LayerPopup';
 import { useAlert } from '../../hooks';
 import Alert from '../common/Alert';
-import { tabUiClick } from '../../utils/utils';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation } from 'swiper/core';
 
 const initTabs = [
   {key: 'all', label: '전체'},
@@ -25,10 +26,18 @@ const tags = {
   'live-on': 'LIVEON',
   employee: '임직원몰',
   refurbish: '리퍼비시몰',
-}
+};
+const _scrollView = {
+  pc : 5,
+  tb : 3,
+  mo : 2
+};
 
 const EventBottom = () => {
+  SwiperCore.use([Navigation]);
   const history = useHistory();
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
   const [events, setEvents] = useState([]);
   const [tabState, setTabState] = useState(getUrlParam('tab') || 'all');
   const [newest, setNewest] = useState(true);
@@ -43,7 +52,9 @@ const EventBottom = () => {
   const [label, setLabel] = useState('');
   const [tag, setTag] = useState('');
   const [selectEvent, setSelectEvent] = useState(null);
-  const [tabs, setTabs] = useState(initTabs)
+  const [tabs, setTabs] = useState(initTabs);
+  const initShowLabel = initTabs.find(({key}) => getUrlParam('tab') || 'all').label;
+  const [showLabel, setShowLabel] = useState(initShowLabel);
 
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
@@ -138,7 +149,6 @@ const EventBottom = () => {
   }, [newest]);
 
   useEffect(() => {
-    tabUiClick();
     fetchInitDisplayEvents();
   }, []);
 
@@ -193,22 +203,52 @@ const EventBottom = () => {
         </div>
       </LayerPopup>}
       <div className="event_zone">
-        <div className="tab_ui scroll category_evnet" data-scroll-view="6" data-tab-scroll-view="5">
-          <ul>
+        <div className="tab_ui scroll category_evnet swiper-container" data-scroll-view={tabs.length} data-tab-scroll-view="5">
+          <Swiper
+            className="swiper-wrapper"
+            navigation={{
+              prevEl: prevRef.current,
+              nextEl: nextRef.current,
+            }}
+            slidesPerView={_scrollView.pc}
+            breakpoints={{
+              320: {
+                slidesPerView: _scrollView.mo,
+              },
+              641: {
+                slidesPerView: _scrollView.tb,
+              },
+              1281: {
+                slidesPerView: _scrollView.pc,
+              },
+            }}
+            on={{
+              init: swiper => {
+                swiper.params.navigation.prevEl = prevRef.current
+                swiper.params.navigation.nextEl = nextRef.current
+                swiper.navigation.update()
+              },
+            }}
+          >
             {tabs && tabs.map(({key, label}) => {
               return (
-                <li key={`tab_${key}`} className={`tabs ${tabState === key ? 'on' : ''}`}>
-                  <Link to={`/event/list?tab=${key}`} onClick={() => setTabState(key)} className="btn">{label}</Link>
-                </li>
+                <SwiperSlide key={`tab_${key}`} className={`tabs swiper-slide ${tabState === key ? 'on' : ''}`}>
+                  <Link to={`/event/list?tab=${key}`} onClick={() => {
+                    setTabState(key);
+                    setShowLabel(label);
+                  }} className="btn">{label}</Link>
+                </SwiperSlide>
               )
             })}
-          </ul>
+            <div className="swiper-button-prev" ref={prevRef}></div>
+            <div className="swiper-button-next" ref={nextRef}></div>
+          </Swiper>
         </div>
         <div className="tab_ui_info">
           <div className="tab_ui_inner view">
             <div className="event_list">
               <div className="category_head">
-                <p className="tit">전체</p>
+                <p className="tit">{showLabel}</p>
                 <div className="itemsort" aria-label="기획전 전체 정렬">
                   <div className="itemsort__drawer">
                     <ul className="itemsort__items">
