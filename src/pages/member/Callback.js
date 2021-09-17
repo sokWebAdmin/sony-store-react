@@ -57,7 +57,7 @@ const Callback = () => {
       resetProfile(profileDispatch);
       shopOauthCallback?.();
     }
-    window.close();
+    // window.close();
   }
 
   useEffect(() => {
