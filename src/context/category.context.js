@@ -10,7 +10,6 @@ const initialState = {
 
 export const getCategoryByKey = (categories, key, value) => {
   let arrTarget = [...categories];
-
   while (arrTarget.length > 0) {
     const target = arrTarget.shift();
 
@@ -125,7 +124,7 @@ export const setGnbCategory = (dispatch, data) => {
 
 export const deleteGnbCategory = (dispatch) => {
   dispatch({type: 'DELETE_GNB_CATEGORY'})
-}
+};
 
 export const useGetCategoryByKey = (key, value) => {
   const { state } = useContext(CategoryContext);

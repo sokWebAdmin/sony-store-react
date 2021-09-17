@@ -9,6 +9,8 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } f
 import categoryRight from '../../assets/images/category/btn_category_right.svg';
 
 export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
+
+  console.log(category);
   const history = useHistory();
   
   let backgroundImage = '';

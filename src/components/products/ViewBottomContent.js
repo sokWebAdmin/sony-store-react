@@ -4,7 +4,6 @@ import Tabs from "../common/Tabs";
 export default function BottomContent({ contents }) {
 
   const [tabState, setTabState] = useState('intro');
-
   return (
     <div className="product_cont">
       <div className="detail_tab tab_ui size3">

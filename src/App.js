@@ -71,7 +71,7 @@ import OpenLogin from './components/member/OpenLogin';
 //footer
 import Policy from './pages/footer/policy';
 import Terms from './pages/footer/terms';
-import sitemap from './pages/footer/sitemap';
+import SiteMap from './pages/footer/SiteMap';
 
 //api
 
@@ -256,7 +256,7 @@ const App = (props) => {
               {/* Footer  */}
               <Route exact path="/footer/policy" component={Policy} />
               <Route exact path="/footer/terms" component={Terms} />
-              <Route exact path="/footer/sitemap" component={sitemap} />
+              <Route exact path="/footer/sitemap" component={SiteMap} />
 
               {/* error */}
               <Route exact path="/404" component={Error404} />
