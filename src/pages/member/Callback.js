@@ -58,8 +58,8 @@ const Callback = () => {
       setAccessToken(openIdTokenResult.data.accessToken, openIdTokenResult.data.expireIn);
       const response = await getProfile();
       console.log(response);
-      shopOauthCallback?.(response.data);
       setProfile(profileDispatch, response.data);
+      shopOauthCallback?.(response.data);
     } else {
       removeAccessToken();
       onChangeGlobal({isLogin: false})

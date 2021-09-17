@@ -261,8 +261,10 @@ export default function JoinStep() {
     if (isLogin) {
       const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
       const redirectedToken = getItem(KEY.OPENID_TOKEN);
+      console.log(redirectedToken, redirectedProvider);
       if (redirectedProvider && redirectedToken) {
         setEmail(profile.memberId);
+        console.log(profile.memberId);
         return;
       }
       history.push('/');
