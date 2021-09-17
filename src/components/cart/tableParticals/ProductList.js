@@ -27,7 +27,7 @@ const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes 
         <Header />
         <div className="col_table_body">
           {products.map(
-            ({ product, orderCnt, optionText, standardAmt, buyAmt }, i) =>
+            (product, i) =>
               <div className="col_table_row" key={product.productNo + '_' + i}>
                 <div className="col_table_cell prd_wrap tal">
                   <div className="prd">
@@ -45,24 +45,26 @@ const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes 
                     <div className="prd_info">
                       <div className="prd_info_name">{product.productName}
                       </div>
-                      <p className="prd_info_option">{optionText}</p>
+                      <p className="prd_info_option">{}</p>
                     </div>
                   </div>
                 </div>
                 <div className="col_table_cell prd_price">
-                  {toCurrencyString(standardAmt)} <span
-                  className="won">원</span>
+                  {toCurrencyString(product.orderProductOptions[0].standardAmt)}
+                  <span
+                    className="won">원</span>
                 </div>
                 <div className="col_table_cell prd_count">
                   <div className="count_ui_box">
                     <button className="minus">감소</button>
                     <input type="text" readOnly="readonly"
-                           value={orderCnt} className="count" />
+                           value={product.orderCnt} className="count" />
                     <button className="plus">증가</button>
                   </div>
                 </div>
                 <div className="col_table_cell prd_total">
-                  {toCurrencyString(buyAmt)} <span className="won">원</span>
+                  {toCurrencyString(product.buyAmt)} <span
+                  className="won">원</span>
                 </div>
                 <div className="col_table_cell">
                   <button type="button" className="btn_del_prd"><img

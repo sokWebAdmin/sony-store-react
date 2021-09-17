@@ -25,6 +25,10 @@ const Cart = () => {
   const { isLogin } = useContext(GlobalContext);
 
   const [products, setProducts] = useState([]);
+  const postProducts = useMemo(() => products.map(product => ({
+    productNo: product.productNo,
+  })), [products]);
+
   const [amount, setAmount] = useState(null);
   const [checkedIndexes, setCheckedIndexes] = useState([]);
 
@@ -80,17 +84,17 @@ const Cart = () => {
       return;
     }
 
-    const result = deliveryGroups.flatMap(delivery =>
-      delivery.orderProducts.flatMap(product =>
-        product.orderProductOptions.map(option => ({
+    const result = deliveryGroups.flatMap(delivery => delivery.orderProducts).
+      map((products) => ({
+        ...products,
+        orderProductOptions: products.orderProductOptions.map(option => ({
           valid: true,
-          product,
           orderCnt: option.orderCnt,
           standardAmt: option.price.standardAmt,
           buyAmt: option.price.buyAmt,
           optionText: `${option.optionTitle} : ${option.optionValue}`,
         })),
-      ));
+      }));
 
     setProducts(result);
     setAmount(price);
