@@ -1,10 +1,39 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { toCurrencyString } from '../../utils/unit';
 import { Link, useHistory } from 'react-router-dom';
+import { postCart } from '../../api/order';
+import gc from '../../storage/guestCart';
+import GlobalContext from '../../context/global.context';
+import { getProductOptions } from '../../api/product';
 
 const EventProducts = ({event, filterLabel, grade}) => {
+  const { isLogin } = useContext(GlobalContext);
   const history = useHistory();
   const [section, setSection] = useState(event?.section.flatMap(({ products }) => products));
+
+  const goCart = async (productNo) => {
+    const {data} = await getProductOptions(productNo);
+    const products = [data.flatOptions[0]].map((option) => {
+      return {
+        productNo,
+        orderCnt: 1,
+        channelType: null,
+        optionInputs: null,
+        ...option
+      }
+    })
+
+    try {
+      if (isLogin) {
+        await postCart(products);
+      } else {
+        gc.set(products);
+      }
+      history.push('/cart');
+    } catch(e) {
+      console.error(e);
+    }
+  }
 
   useEffect(() => {
     if (!filterLabel || filterLabel === '전체') {
@@ -75,6 +104,7 @@ const EventProducts = ({event, filterLabel, grade}) => {
                   <button
                     type="button"
                     className="button button_positive button-s"
+                    onClick={() => goCart(product.productNo)}
                   >
                     바로 구매
                   </button>
