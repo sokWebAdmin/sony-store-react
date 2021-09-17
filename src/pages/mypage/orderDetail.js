@@ -141,6 +141,15 @@ export default function OrderDetail() {
       DELIVERY_PREPARE: '배송준비',
       DELIVERY_ING: '배송중',
       DELIVERY_DONE: '배송완료',
+      CANCEL_REQUEST: '취소신청',
+      CANCEL_PROCESSING: '취소진행중',
+      CANCEL_DONE: '취소완료',
+      EXCHANGE_REQUEST: '교환신청',
+      EXCHANGE_PROCESSING: '교환진행중',
+      EXCHANGE_DONE: '교환완료',
+      RETURN_REQUEST: '반품신청',
+      RETURN_PROCESSING: '반품진행중',
+      RETURN_DONE: '반품완료',
     };
 
     return orderStatus[defaultOrderStatusType];
@@ -209,9 +218,15 @@ export default function OrderDetail() {
     });
   };
 
+  // 클레임 중인 상품인지 확인 => 기획누락같은데, 클레임 상태일 땐 주문상태 UI disable 처리
+  const isClaimStart = (defaultOrderStatusType) => {
+    const claimStatuses = ['CANCEL', 'EXCHANGE', 'RETURN'];
+    return claimStatuses.some((claimStatus) => defaultOrderStatusType.includes(claimStatus));
+  };
+
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'주문 상세 조회'} />
       <div className="contents mypage">
         <div className="container my">
           <div className="content">
@@ -221,7 +236,9 @@ export default function OrderDetail() {
               </Link>
               <h1 className="common_head_name">주문 상세 조회</h1>
             </div>
-            <OrderProcess defaultOrderStatusType={orderInfo.defaultOrderStatusType} />
+            {!isClaimStart(orderInfo.defaultOrderStatusType) && (
+              <OrderProcess defaultOrderStatusType={orderInfo.defaultOrderStatusType} />
+            )}
             <div className="o_summary">
               <dl className="o_summary_status">
                 <dt className="o_summary_term">처리상태</dt>
