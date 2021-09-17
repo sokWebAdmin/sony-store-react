@@ -269,11 +269,16 @@ export default function Main() {
                         <div
                           className="kv__head"
                           dangerouslySetInnerHTML={{ __html: bannerInfo.banners[0].nameList }}
-                        ></div>
+                        />
                         <span className="kv__product">
                           <span>{bannerInfo.banners[0].description}</span>
                         </span>
-                        <Link to={bannerInfo.banners[0].landingUrl} className="kv__link">
+                        <Link
+                          to={bannerInfo?.banners[0]?.landingUrl}
+                          target={bannerInfo?.banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                          className="kv__link"
+                          style={{ height: '80px' }}
+                        >
                           <span>자세히 보기</span>
                         </Link>
                       </div>
@@ -360,6 +365,7 @@ export default function Main() {
                       <SwiperSlide className="recommend__item swiper-slide" key={index}>
                         <Link
                           to={`product-view/${recommendedSections[index]?.productNo}`}
+                          target={recommendedBanner?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
                           onClick={(e) => {
                             if (window.innerWidth > breakPoint) {
                               if (e.currentTarget.parentElement.classList.contains('swiper-slide-next')) {
@@ -496,7 +502,10 @@ export default function Main() {
                           className="swiper-slide"
                           style={{ backgroundImage: `url("${eventBanner?.banners[0]?.imageUrl}")` }}
                         >
-                          <Link to={eventBanner?.banners[0].landingUrl}>
+                          <Link
+                            to={eventBanner?.banners[0].landingUrl}
+                            target={eventBanner?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                          >
                             <div className="event__sub__inner">
                               <p className="event__copy__head">
                                 {eventBanner?.banners[0]?.name?.split('/')?.map((bannerName, index) => (
@@ -557,7 +566,11 @@ export default function Main() {
                     className="main__banner__title"
                     dangerouslySetInnerHTML={{ __html: academyPcBanners?.banners[0]?.nameList }}
                   />
-                  <Link className="main__banner__link" to={academyPcBanners.banners[0]?.landingUrl}>
+                  <Link
+                    className="main__banner__link"
+                    to={academyPcBanners.banners[0]?.landingUrl}
+                    target={academyPcBanners?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                  >
                     자세히 보기
                   </Link>
                 </div>
