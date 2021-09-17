@@ -12,6 +12,7 @@ import blog from "../assets/images/common/ic_blog.svg";
 
 import sidebar1 from "../assets/images/common/ic_sidebar1.svg";
 import InsurePop from "./InsurePop";
+import Floating from "./common/Floating";
 
 export default function Footer() {
   const history = useHistory();
@@ -21,6 +22,7 @@ export default function Footer() {
   return (
     <>
         <footer className="footer">
+          <Floating />
       <nav className="sidebar">
         <div className="sidebar__inner">
           <a  onClick={()=>{history.push('/mypage/myPageMain.html')}} className="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
