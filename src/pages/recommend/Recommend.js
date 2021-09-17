@@ -46,10 +46,9 @@ export default function Recommend({ match }) {
     try {
       //배너 코드 객체로 관리하기
       //응답이 순서를 보징하지 않음
-      const { data } = await loadBanner('000,002,016,017');
-      //TODo 코드 바꾸기
-      const slideBanners = data.find(({ code }) => code === '000')?.accounts || [];
-      const recommendBanners = data.find(({ code }) => code === '002')?.accounts || [];
+      const { data } = await loadBanner('013,015,016,017');
+      const slideBanners = data.find(({ code }) => code === '013')?.accounts || [];
+      const recommendBanners = data.find(({ code }) => code === '015')?.accounts || [];
       const middleBanners = data.find(({ code }) => code === '016')?.accounts || [];
       const eventBanners = data.find(({ code }) => code === '017')?.accounts || [];
 
@@ -74,6 +73,15 @@ export default function Recommend({ match }) {
     return `${changeDateFormat(date, 'YYYY.MM.DD')}(${day}) ${time}`;
   };
 
+  const splitStr = (str) => {
+    if (!str) return;
+    const strList = str.split('/');
+    return strList?.reduce((acc, string, index) => {
+      acc += index + 1 !== strList.length ? `${string}<br />` : string;
+      return acc;
+    }, '');
+  };
+
   useEffect(() => {
     getBanners();
   }, [getBanners]);
@@ -90,20 +98,6 @@ export default function Recommend({ match }) {
                 {/* kv */}
                 <div className="reco_kv">
                   <div className={`reco_kv_inner ${isFinished == true && 'end'}`}>
-                    {/*{slideBanners.map((slideBanner, index) => (*/}
-                    {/*  <Scene triggerElement={`".trigger-${index + 1}"`} duration={size.height * 0.4} key={index}>*/}
-                    {/*    {(progress) => (*/}
-                    {/*      <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>*/}
-                    {/*        <div*/}
-                    {/*          id={`reco_kv_img-${index + 1}`}*/}
-                    {/*          className={`reco_kv_img reco_kv_img-${index + 1} ${progress === 1 ? 'end' : ''}`}*/}
-                    {/*        >*/}
-                    {/*          <img src={slideBanner?.banners[0]?.imageUrl} alt={slideBanner?.banners[0]?.name} />*/}
-                    {/*        </div>*/}
-                    {/*      </Tween>*/}
-                    {/*    )}*/}
-                    {/*  </Scene>*/}
-                    ))}
                     <Scene triggerElement=".trigger-1" duration={size.height * 0.5}>
                       {(progress) => (
                         <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
@@ -140,26 +134,12 @@ export default function Recommend({ match }) {
                           <div className={`reco_kv_copy ${progress > 0 ? 'end' : ''}`}>
                             <h1
                               className="reco_kv_title"
-                              dangerouslySetInnerHTML={{
-                                __html: slideBanners[2]?.banners[0]?.name
-                                  ?.split('/')
-                                  .map((bannerName, index) =>
-                                    index + 1 === slideBanners[2]?.banners[0]?.name?.split('/').length
-                                      ? bannerName
-                                      : `${bannerName}<br />`,
-                                  ),
-                              }}
+                              dangerouslySetInnerHTML={{ __html: splitStr(slideBanners[2]?.banners[0]?.name) }}
                             />
                             <p
                               className="reco_kv_desc"
                               dangerouslySetInnerHTML={{
-                                __html: slideBanners[2]?.banners[0]?.description
-                                  ?.split('/')
-                                  .map((bannerDescription, index) =>
-                                    index + 1 === slideBanners[2]?.banners[0]?.description?.split('/').length
-                                      ? bannerDescription
-                                      : `${bannerDescription}<br />`,
-                                  ),
+                                __html: splitStr(slideBanners[2]?.banners[0]?.description),
                               }}
                             />
                           </div>
@@ -232,13 +212,19 @@ export default function Recommend({ match }) {
 
                   <div
                     className="reco_banner"
-                    style={{ backgroundImage: `url(${middleBanners[0]?.banners[0]?.imageUrl})` }}
+                    style={{
+                      backgroundImage: `url(${middleBanners[0]?.banners[0]?.imageUrl})`,
+                      backgroundSize: '100%',
+                    }}
                   >
                     <Scene triggerElement=".trigger-banner_img" duration={size.height * 0.5} triggerHook={0.75}>
                       {(progress) => (
                         <Tween duration={1}>
                           <div className={`reco_banner_img ${progress > 0 ? 'end' : ''}`}>
-                            <img src="/images/recommend/banner_item.png" alt="WF-1000XM4/S,Sony Earphones,Silver" />
+                            <img
+                              src={middleBanners[0]?.banners[1]?.imageUrl}
+                              alt={middleBanners[0]?.banners[1]?.name}
+                            />
                           </div>
                         </Tween>
                       )}
@@ -310,32 +296,14 @@ export default function Recommend({ match }) {
                             </span>
                             <p
                               className="tit"
-                              dangerouslySetInnerHTML={{
-                                __html: bannerInfo?.banners[0]?.name
-                                  ?.split('/')
-                                  ?.map((bannerName, index) =>
-                                    index + 1 === bannerInfo?.banners[0]?.name?.split('/').length
-                                      ? bannerName
-                                      : `${bannerName}<br />`,
-                                  ),
-                              }}
+                              dangerouslySetInnerHTML={{ __html: splitStr(bannerInfo?.banners[0]?.name) }}
                             />
-                            <div>{`${getDate(bannerInfo?.banners[0]?.displayStartYmdt)} ~ ${getDate(
-                              bannerInfo?.banners[0]?.displayEndYmdt,
-                            )}`}</div>
+                            {bannerInfo?.banners[0]?.displayPeriodType === 'PERIOD' && (
+                              <div>{`${getDate(bannerInfo?.banners[0]?.displayStartYmdt)} ~ ${getDate(
+                                bannerInfo?.banners[0]?.displayEndYmdt,
+                              )}`}</div>
+                            )}
                           </div>
-                          {/*  <div*/}
-                          {/*    dangerouslySetInnerHTML={{*/}
-                          {/*      __html: bannerInfo?.banners[0]?.description*/}
-                          {/*        ?.split('/')*/}
-                          {/*        ?.map((bannerDescription, index) =>*/}
-                          {/*          index + 1 === bannerInfo?.banners[0]?.name?.split('/').length*/}
-                          {/*            ? bannerDescription*/}
-                          {/*            : `${bannerDescription}<br />`,*/}
-                          {/*        ),*/}
-                          {/*    }}*/}
-                          {/*  />*/}
-                          {/*</div>*/}
                         </div>
                       </SwiperSlide>
                     ))}
