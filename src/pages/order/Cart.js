@@ -17,23 +17,30 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
 // api
-import { getCart, postGuestCart } from '../../api/order';
+import { getCart, putCart, postGuestCart } from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
+import { usePrevious } from '../../hooks';
 
 const Cart = () => {
   const { isLogin } = useContext(GlobalContext);
 
   const [products, setProducts] = useState([]);
-  const postProducts = useMemo(() => products.map(product => ({
-    productNo: product.productNo,
+  const putProducts = useMemo(() => products.map(product => ({
+    cartNo: product.cartNo,
+    orderCnt: product.orderCnt,
+    optionInputs: product.optionInputs,
   })), [products]);
+  useEffect(() => {
+    const isUpdate = products.some(({ update }) => update);
+    isUpdate && putGet();
+  }, [products]);
+
+  const productCount = useMemo(() => products.length, [products]);
 
   const [amount, setAmount] = useState(null);
   const [checkedIndexes, setCheckedIndexes] = useState([]);
-
-  const productCount = useMemo(() => products.length, [products]);
 
   const init = () => {
     if (isLogin) {
@@ -71,6 +78,20 @@ const Cart = () => {
     return null;
   }
 
+  async function putGet () {
+    if (isLogin) {
+      try {
+        await putCart(putProducts);
+        const data = await fetchCart();
+        mapData(data);
+      }
+      catch (err) {
+        console.error(err);
+      }
+      return null;
+    }
+  }
+
   function getGuestCartRequest (gcItems) {
     return gcItems.map(
       ({ cartNo, productNo, optionNo, orderCnt, optionInputs, channelType }) => ({
@@ -90,20 +111,25 @@ const Cart = () => {
         productGroup.orderProductOptions.flatMap(product => {
             // debug pores
             return {
-              valid: true,
               productNo: productGroup.productNo,
               productName: productGroup.productName,
+              cartNo: product.cartNo,
               imageUrl: product.imageUrl,
               orderCnt: product.orderCnt,
               standardAmt: product.price.standardAmt,
               buyAmt: product.price.buyAmt,
-              optionText: `${product.optionName} : ${product.optionValue}`,
+              optionNo: product.optionNo,
+              optionText: product.optionTitle,
+              optionInputs: product.optionInputs,
+              update: false,
             };
           },
         )));
 
     setProducts(result);
-    setAmount(price);
+    if (price) {
+      setAmount(price);
+    }
   }
 
   return (
@@ -125,6 +151,7 @@ const Cart = () => {
                   />
                   <CartTable>
                     <ProductList
+                      cartUpdate={putGet}
                       products={products}
                       setProducts={setProducts}
                       checkedIndexes={checkedIndexes}

@@ -1,12 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { toCurrencyString } from '../../../utils/unit';
 
-const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes }) => {
-
-  useEffect(() => console.log(checkedIndexes), [checkedIndexes]);
-
+const ProductList = ({ cartUpdate, products, setProducts, checkedIndexes, setCheckedIndexes }) => {
   const onCheck = (event, index) => {
-
     const { checked } = event.currentTarget;
 
     if (checked) {
@@ -19,6 +15,14 @@ const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes 
 
       setCheckedIndexes(newCheckedIndexes);
     }
+  };
+
+  const changeQuantity = (productIndex, value) => {
+    const newProducts = [...products];
+
+    newProducts[productIndex].orderCnt += value;
+    newProducts[productIndex].update = true;
+    setProducts(newProducts);
   };
 
   return (
@@ -56,10 +60,15 @@ const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes 
                 </div>
                 <div className="col_table_cell prd_count">
                   <div className="count_ui_box">
-                    <button className="minus">감소</button>
+                    <button className="minus"
+                            onClick={() => changeQuantity(i, -1)}
+                            disabled={product.orderCnt <= 1}>감소
+                    </button>
                     <input type="text" readOnly="readonly"
                            value={product.orderCnt} className="count" />
-                    <button className="plus">증가</button>
+                    <button className="plus"
+                            onClick={() => changeQuantity(i, 1)}>증가
+                    </button>
                   </div>
                 </div>
                 <div className="col_table_cell prd_total">

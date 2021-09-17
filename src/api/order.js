@@ -38,5 +38,8 @@ export const getCart = () =>
 export const postCart = requestBody => request('cart', 'post', null,
   requestBody);
 
+export const putCart = requestBody => request('cart', 'put', null,
+  requestBody);
+
 export const postGuestCart = requestBody => request('guest/cart', 'post', null,
   requestBody);
