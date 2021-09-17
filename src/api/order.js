@@ -32,4 +32,13 @@ export const putShippingsEncryptedShippingNoLaterInput = (encryptedShippingNo, r
 
 export const getCart = () => request(`cart?divideInvalidProducts=true`, 'get');
 
-export const postCart = (requestBody) => request('cart', 'post', null, requestBody);
+export const postCart = requestBody => request('cart', 'post', null,
+  requestBody);
+
+export const putCart = requestBody => request('cart', 'put', null,
+  requestBody);
+
+export const postGuestCart = requestBody => request('guest/cart', 'post', null,
+  requestBody);
+
+export const deleteCart = query => request('cart', 'delete', query);
