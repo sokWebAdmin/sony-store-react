@@ -28,8 +28,7 @@ export default function OrderDetail() {
   const [orderProducts, setOrderProducts] = useState([]); // 주문 상품
   const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' }); // 주문 정보
   const [shippingAddress, setShippingAddress] = useState({
-    // 주문 정보 주소
-    // TODO: 배송일 선택 필드 확인 https://nhnent.dooray.com/project/posts/3089925914259872916
+    // 주문 정보
     receiverName: '',
     receiverContact1: '',
     receiverAddress: '',
