@@ -56,7 +56,10 @@ const Cart = () => {
     else {
       gc.fetch();
       const body = getGuestCartRequest(gc.items);
-      fetchGuestCart(body).then(mapData).finally(() => setWait(false));
+      fetchGuestCart(body).
+        then(mapData).
+        catch(console.error).
+        finally(() => setWait(false));
       ;
     }
   };
@@ -135,11 +138,9 @@ const Cart = () => {
   }
 
   function deleteGuestCart (optionNos) {
-    console.log(gc.items);
     const newItems = gc.items.filter(
       ({ optionNo }) => !optionNos.includes(optionNo));
     gc.cover(newItems);
-    console.log(gc.items);
     init();
   }
 
