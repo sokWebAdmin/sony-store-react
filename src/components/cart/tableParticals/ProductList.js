@@ -45,12 +45,12 @@ const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes 
                     <div className="prd_info">
                       <div className="prd_info_name">{product.productName}
                       </div>
-                      <p className="prd_info_option">{}</p>
+                      <p className="prd_info_option">{product.optionText}</p>
                     </div>
                   </div>
                 </div>
                 <div className="col_table_cell prd_price">
-                  {toCurrencyString(product.orderProductOptions[0].standardAmt)}
+                  {toCurrencyString(product.standardAmt)}
                   <span
                     className="won">원</span>
                 </div>

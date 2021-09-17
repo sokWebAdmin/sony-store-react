@@ -21,6 +21,7 @@ import { getCart, postGuestCart } from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
+
 const Cart = () => {
   const { isLogin } = useContext(GlobalContext);
 
@@ -84,17 +85,21 @@ const Cart = () => {
       return;
     }
 
-    const result = deliveryGroups.flatMap(delivery => delivery.orderProducts).
-      map((products) => ({
-        ...products,
-        orderProductOptions: products.orderProductOptions.map(option => ({
-          valid: true,
-          orderCnt: option.orderCnt,
-          standardAmt: option.price.standardAmt,
-          buyAmt: option.price.buyAmt,
-          optionText: `${option.optionTitle} : ${option.optionValue}`,
-        })),
-      }));
+    const result = deliveryGroups.flatMap(delivery =>
+      delivery.orderProducts.flatMap(productGroup =>
+        productGroup.orderProductOptions.flatMap(product => {
+            return {
+              valid: true,
+              productNo: productGroup.productNo,
+              productName: productGroup.productName,
+              imageUrl: product.imageUrl,
+              orderCnt: product.orderCnt,
+              standardAmt: product.price.standardAmt,
+              buyAmt: product.price.buyAmt,
+              optionText: `${product.optionName} : ${product.optionValue}`,
+            };
+          },
+        )));
 
     setProducts(result);
     setAmount(price);
