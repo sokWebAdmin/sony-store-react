@@ -57,6 +57,7 @@ const Callback = () => {
     if (openIdTokenResult?.accessToken) {
       setAccessToken(openIdTokenResult.accessToken, openIdTokenResult.expireIn);
       const response = await getProfile();
+      console.log(response);
       shopOauthCallback?.(response.data);
       setProfile(profileDispatch, response.data);
     } else {
@@ -65,7 +66,7 @@ const Callback = () => {
       resetProfile(profileDispatch);
       shopOauthCallback?.();
     }
-    window.close();
+    // window.close();
   }
 
   useEffect(() => {
