@@ -11,14 +11,14 @@ import '../../assets/scss/event.scss';
 import { getDisplayEvents, getEventByEventNo } from '../../api/display';
 import EventProducts from '../../components/event/EventProducts';
 import { useMediaQuery } from '../../hooks';
+import { useParams } from 'react-router-dom';
 
 export default function Refined() {
   const onlyMo = useMediaQuery('(max-width: 640px)');
+  const { eventNo } = useParams();
   const [event, setEvent] = useState(null);
 
   const fetchDetailEvent = async () => {
-    const { data } = await getDisplayEvents();
-    const eventNo = data.find((event) => `/${event.url}` === window.location.pathname).eventNo;
     const response = await getEventByEventNo(eventNo, { soldout: true });
     setEvent(response.data);
   };
