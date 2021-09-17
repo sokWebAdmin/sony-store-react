@@ -8,10 +8,11 @@ const gc = {
     const data = getWithExpire(name);
     gc.data = data ? data : [];
   },
-  set (item) {
+  set (data) {
+    console.log(data);
     gc.fetch();
 
-    gc.data.push(item);
+    Array.isArray ? gc.data = gc.data.concat(data) : gc.data.push(data);
     setWithExpire(name, gc.data);
   },
   get items () {
@@ -20,10 +21,8 @@ const gc = {
 };
 
 if (process.env.NODE_ENV === 'development') {
-  window['gc'] = gc;
-
   // test code...
-  gc.set({ item: '😅' });
+  window['gc'] = gc;
 }
 
 export default gc;
