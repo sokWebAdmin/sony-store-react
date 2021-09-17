@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from '../../context/global.context';
 
@@ -27,16 +27,18 @@ const Cart = () => {
   const { isLogin } = useContext(GlobalContext);
 
   const [products, setProducts] = useState([]);
+  const [amount, setAmount] = useState(null);
+  const productCount = useMemo(() => products.length, [products]);
 
   const init = () => {
     if (isLogin) {
-      fetchCart().then(mapProducts).catch(console.error);
+      fetchCart().then(mapData).catch(console.error);
 
     }
     else {
       gc.fetch();
       const body = getGuestCartRequest(gc.items);
-      fetchGuestCart(body).then(mapProducts);
+      fetchGuestCart(body).then(mapData);
     }
   };
 
@@ -73,8 +75,8 @@ const Cart = () => {
       }));
   }
 
-  function mapProducts (responseData) {
-    const { deliveryGroups } = responseData;
+  function mapData (responseData) {
+    const { deliveryGroups, price } = responseData;
 
     if (!deliveryGroups?.length) {
       return;
@@ -93,6 +95,7 @@ const Cart = () => {
       ));
 
     setProducts(result);
+    setAmount(price);
   }
 
   return (
@@ -113,7 +116,10 @@ const Cart = () => {
                       products={products}
                       setProducts={setProducts}
                     />
-                    <TotalAmount />
+                    <TotalAmount
+                      productCount={productCount}
+                      amount={amount}
+                    />
                   </CartTable>
                   <QnA />
                 </>
