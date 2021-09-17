@@ -1,7 +1,7 @@
 import React from 'react';
 import { toCurrencyString } from '../../../utils/unit';
 
-const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes }) => {
+const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes, deleteItem }) => {
   const onCheck = (event, index) => {
     const { checked } = event.currentTarget;
 
@@ -76,7 +76,8 @@ const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes 
                   className="won">원</span>
                 </div>
                 <div className="col_table_cell">
-                  <button type="button" className="btn_del_prd"><img
+                  <button type="button" className="btn_del_prd"
+                          onClick={() => deleteItem(product.optionNo)}><img
                     src="../../images/common/ic_close.svg" alt="제품 삭제" />
                   </button>
                 </div>

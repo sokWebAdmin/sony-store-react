@@ -44,14 +44,20 @@ const Cart = () => {
   const [checkedIndexes, setCheckedIndexes] = useState([]);
 
   const init = () => {
+    setWait(true);
+
     if (isLogin) {
-      fetchCart().then(mapData).catch(console.error);
+      fetchCart().
+        then(mapData).
+        catch(console.error).
+        finally(() => setWait(false));
 
     }
     else {
       gc.fetch();
       const body = getGuestCartRequest(gc.items);
-      fetchGuestCart(body).then(mapData);
+      fetchGuestCart(body).then(mapData).finally(() => setWait(false));
+      ;
     }
   };
 
@@ -119,6 +125,24 @@ const Cart = () => {
     return null;
   }
 
+  function deleteItem (optionNo) { // productNo 보다 유니크함
+    if (isLogin) {
+      console.log('isLogin!');
+    }
+    else {
+      deleteGuestCart([optionNo]);
+    }
+  }
+
+  function deleteGuestCart (optionNos) {
+    console.log(gc.items);
+    const newItems = gc.items.filter(
+      ({ optionNo }) => !optionNos.includes(optionNo));
+    gc.cover(newItems);
+    console.log(gc.items);
+    init();
+  }
+
   function gcUpdate () {
     if (!products.length) {
       throw new Error('products state is empty array');
@@ -138,6 +162,7 @@ const Cart = () => {
     const { deliveryGroups, price } = responseData;
 
     if (!deliveryGroups?.length) {
+      reset();
       return;
     }
 
@@ -161,10 +186,13 @@ const Cart = () => {
           },
         )));
 
-    console.log('price : ', price);
-
     setProducts(result);
     setAmount(price);
+  }
+
+  function reset () {
+    setProducts([]);
+    setAmount(null);
   }
 
   return (
@@ -189,6 +217,7 @@ const Cart = () => {
                     <ProductList
                       products={products}
                       setProducts={setProducts}
+                      deleteItem={deleteItem}
                       checkedIndexes={checkedIndexes}
                       setCheckedIndexes={setCheckedIndexes}
                     />
