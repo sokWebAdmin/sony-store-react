@@ -82,9 +82,11 @@ const Cart = () => {
       delivery.orderProducts.flatMap(product =>
         product.orderProductOptions.map(option => ({
           valid: true,
-          delivery,
           product,
-          option,
+          orderCnt: option.orderCnt,
+          standardAmt: option.price.standardAmt,
+          buyAmt: option.price.buyAmt,
+          optionText: `${option.optionTitle} : ${option.optionValue}`,
         })),
       ));
 

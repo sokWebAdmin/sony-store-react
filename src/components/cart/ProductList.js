@@ -1,4 +1,5 @@
 import React from 'react';
+import { toCurrencyString } from '../../utils/unit';
 
 const ProductList = ({ products, setProducts }) => {
   return (
@@ -18,48 +19,47 @@ const ProductList = ({ products, setProducts }) => {
             </div>
           </div>
           <div className="col_table_body">
-            {products.map(product =>
-              <div className="col_table_row">
-                <div className="col_table_cell prd_wrap tal">
-                  <div className="prd">
-                    <div className="check check_only">
-                      <input type="checkbox" className="inp_check"
-                             name="check_cart_item" />
-                    </div>
-                    <div className="prd_thumb">
-                      <img className="prd_thumb_pic"
-                           src="../../images/_tmp/item640x640_03.png"
-                           alt="상품명입력" />
-                    </div>
-                    <div className="prd_info">
-                      <div className="prd_info_name">PLAYSTATION 5 DIGITAL
-                        (CFI-1018B01)
+            {products.map(
+              ({ product, orderCnt, optionText, standardAmt, buyAmt }) =>
+                <div className="col_table_row">
+                  <div className="col_table_cell prd_wrap tal">
+                    <div className="prd">
+                      <div className="check check_only">
+                        <input type="checkbox" className="inp_check"
+                               name="check_cart_item" />
                       </div>
-                      <p className="prd_info_option">4K HDR(HLG), Fast
-                        Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED EDITION(사일런트
-                        화이트)</p>
+                      <div className="prd_thumb">
+                        <img className="prd_thumb_pic"
+                             src={product.imageUrl}
+                             alt={product.productName} />
+                      </div>
+                      <div className="prd_info">
+                        <div className="prd_info_name">{product.productName}
+                        </div>
+                        <p className="prd_info_option">{optionText}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="col_table_cell prd_price">
-                  4,299,000 <span className="won">원</span>
-                </div>
-                <div className="col_table_cell prd_count">
-                  <div className="count_ui_box">
-                    <button className="minus">감소</button>
-                    <input type="text" readOnly="readonly"
-                           defaultValue={1} className="count" />
-                    <button className="plus">증가</button>
+                  <div className="col_table_cell prd_price">
+                    {toCurrencyString(standardAmt)} <span
+                    className="won">원</span>
                   </div>
-                </div>
-                <div className="col_table_cell prd_total">
-                  4,299,000 <span className="won">원</span>
-                </div>
-                <div className="col_table_cell">
-                  <button type="button" className="btn_del_prd"><img
-                    src="../../images/common/ic_close.svg" alt="제품 삭제" />
-                  </button>
-                </div>
+                  <div className="col_table_cell prd_count">
+                    <div className="count_ui_box">
+                      <button className="minus">감소</button>
+                      <input type="text" readOnly="readonly"
+                             value={orderCnt} className="count" />
+                      <button className="plus">증가</button>
+                    </div>
+                  </div>
+                  <div className="col_table_cell prd_total">
+                    {toCurrencyString(buyAmt)} <span className="won">원</span>
+                  </div>
+                  <div className="col_table_cell">
+                    <button type="button" className="btn_del_prd"><img
+                      src="../../images/common/ic_close.svg" alt="제품 삭제" />
+                    </button>
+                  </div>
               </div>,
             )}
           </div>
