@@ -98,8 +98,8 @@ const EventProducts = ({event, filterLabel, grade}) => {
                     </>}
                 </div>
                 <div className="product_btn_wrap">
-                  <button type="button" className="button button_secondary button-s view"><i
-                    className="ico search" onClick={() => history.push(`/product-view/${product.productNo}`)} />제품 보기
+                  <button type="button" className="button button_secondary button-s view" onClick={() => history.push(`/product-view/${product.productNo}`)}><i
+                    className="ico search" />제품 보기
                   </button>
                   <button
                     type="button"
