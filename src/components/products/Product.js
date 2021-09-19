@@ -1,5 +1,5 @@
 
-import React  from 'react';
+import React, {useState, useEffect} from 'react';
 
 //util
 import { wonComma } from '../../utils/utils';
@@ -8,7 +8,7 @@ import { useCategoryState } from '../../context/category.context';
 
 // TODO color 로직 확인
 
-export default function Product({product}) {
+export default function Product({product, category}) {
   const {tagColorMap} = useCategoryState();
 
   let saleStatus = 'READY';
@@ -34,6 +34,43 @@ export default function Product({product}) {
     saleStatus = '';
   }
 
+  const [groupProducts, setGroupProducts] = useState([]);
+  const [colorIndex, setColorIndex] = useState(0);
+
+  useEffect(() => {
+    setColorIndex(0);
+  }, [category]);
+
+  useEffect(() => {
+    _initGroupProducts();
+  }, [product]);
+
+  const _initGroupProducts = () => {
+    const newGroupProducts = product.groupManagementMappingProducts?.map(gp => {
+      // TODO gp 안에 옵션 정보 포함되어 있어야 함
+      return {
+        imageUrl: gp.mainImageUrl,
+        colorLabel: '오렌지',
+        colorCode: '#fc5227',
+      };
+    }) || [];
+
+    if (newGroupProducts.length === 0) {
+      const optionValue = product.optionValues?.[0]?.optionValue || '';
+
+      const colorLabel = optionValue.split('_')[0] || '검정';
+      const colorCode = optionValue.split('_')[1] || '#000000';
+
+      newGroupProducts.push({
+        imageUrl: product.imageUrls[0],
+        colorLabel,
+        colorCode,
+      });
+    }
+
+    setGroupProducts(() => newGroupProducts);
+  }
+
   return (
     <div className="product">
       { product?.stickerLabels?.length > 0 && tagColorMap[product.stickerLabels[0]] &&
@@ -43,35 +80,39 @@ export default function Product({product}) {
       <div className="product__pic">
         <Link to={`/product-view/${product.productNo}`} className="product__pic__link" >
           {
-            product.listImageUrls && product.listImageUrls.map((image, imageIndex) => {
+            groupProducts.map((gp, index) => {
               return (
                 <img
-                  src={image}
+                  src={gp.imageUrl}
                   alt={product.productName}
-                  className={`product__pic__img ${imageIndex === 0 && "product__pic__img--visible"}`}
-                  key={`product-list-image-${imageIndex}`} />
+                  className={`product__pic__img ${colorIndex === index && "product__pic__img--visible"}`}
+                  key={`product-list-image-${index}`} />
               )
             })
           }
         </Link>
       </div>
 
-      {/*{product.colors &&*/}
-      {/*<div className="colorchip">*/}
-      {/*  <span className="sr-only">전체 색상</span>*/}
-      {/*  {*/}
-      {/*    product.colors.map((color, colorIndex) =>{*/}
-      {/*      return (*/}
-      {/*        <span className={`colorchip__item ${colorIndex == 0 && "colorchip__item--active"}`}>*/}
-      {/*                              <span className="colorchip__item__label" style={{backgroundColor:`#${color.code}`}}>*/}
-      {/*                                  <span className="sr-only">{color.label}</span>*/}
-      {/*                              </span>*/}
-      {/*                          </span>*/}
-      {/*      )*/}
-      {/*    })*/}
-      {/*  }*/}
-      {/*</div>*/}
-      {/*}*/}
+      {groupProducts.length > 0 &&
+      <div className="colorchip">
+        <span className="sr-only">전체 색상</span>
+        {
+          groupProducts.map((gp, index) => {
+            return (
+              <span className={`colorchip__item ${colorIndex === index && "colorchip__item--active"}`}
+                    key={`product-colorchip-${index}`}
+                    onMouseEnter={() => {
+                setColorIndex(index);
+              }}>
+                <span className="colorchip__item__label" style={{backgroundColor: gp.colorCode}}>
+                  <span className="sr-only">{gp.colorLabel}</span>
+                </span>
+              </span>
+            )
+          })
+        }
+      </div>
+      }
 
       <Link to={`/product-view/${product.productNo}`} className="product__title">
         <strong className="product__title__name">{product.productName}</strong>
