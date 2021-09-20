@@ -88,7 +88,13 @@ export default function Login() {
         } else {
           Cookies.remove('sony_email');
         }
-        history.push('/');
+
+        if (!!history.location.state?.next) {
+          history.push(history.location.state.next);
+        }
+        else {
+          history.push('/');
+        }
       }
     }
   };

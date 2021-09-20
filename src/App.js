@@ -168,103 +168,103 @@ const App = (props) => {
           </div>
           {/* 헤더 */}
           <Header />
-            <Switch>
-              {/* 메인 */}
-              <Route exact path="/" component={Main} />
-              <Route exact path="/main" component={Main} />
+          <Switch>
+            {/* 메인 */}
+            <Route exact path="/" component={Main} />
+            <Route exact path="/main" component={Main} />
 
-              {/* 상품목록 */}
-              <Route exact path="/products/*" component={Category} />
+            {/* 상품목록 */}
+            <Route exact path="/products/*" component={Category} />
 
-              {/* 추천상품 */}
-              <Route exact path="/recommend" component={Recommend} />
+            {/* 추천상품 */}
+            <Route exact path="/recommend" component={Recommend} />
 
-              {/* esp */}
-              <Route exact path="/esp" component={EspMain} />
-              <Route exact path="/esp/list" component={EspList} />
+            {/* esp */}
+            <Route exact path="/esp" component={EspMain} />
+            <Route exact path="/esp/list" component={EspList} />
 
-              {/* 고객지원  */}
-              <Route exact path="/agreement" component={Agreement} />
-              <Route exact path="/faq" component={Faq} />
-              <Route exact path="/notice" component={Notice} />
-              <Route exact path="/notice/:articleNo" from="detail" component={NoticeDetail} />
-              <Route exact path="/purchase-consulting" component={purchaseConsulting} />
-              <Route exact path="/store-info" component={StoreInfo} />
-              <Route exact path="/video-course" component={videoCourse} />
+            {/* 고객지원  */}
+            <Route exact path="/agreement" component={Agreement} />
+            <Route exact path="/faq" component={Faq} />
+            <Route exact path="/notice" component={Notice} />
+            <Route exact path="/notice/:articleNo" from="detail" component={NoticeDetail} />
+            <Route exact path="/purchase-consulting" component={purchaseConsulting} />
+            <Route exact path="/store-info" component={StoreInfo} />
+            <Route exact path="/video-course" component={videoCourse} />
 
-              {/* 마이페이지  */}
-              <Route exact path="/my-page" component={myPageMain} />
-              <Route exact path="/my-page/member" component={MyPageMember} />
-              <Route exact path="/my-page/order-detail" component={orderDetail} />
-              <Route exact path="/my-page/order-list" component={orderList} />
-              <Route exact path="/my-page/old-order-list" component={OldOrderList} />
-              <Route exact path="/my-page/rename" component={Rename} />
-              <Route exact path="/my-page/withdraw" component={Withdraw} />
-              <Route exact path="/my-page/withdraw-complete"
-                     component={WithdrawComplete} />
+            {/* 마이페이지  */}
+            <Route exact path="/my-page" component={myPageMain} />
+            <Route exact path="/my-page/member" component={MyPageMember} />
+            <Route exact path="/my-page/order-detail" component={orderDetail} />
+            <Route exact path="/my-page/order-list" component={orderList} />
+            <Route exact path="/my-page/old-order-list" component={OldOrderList} />
+            <Route exact path="/my-page/rename" component={Rename} />
+            <Route exact path="/my-page/withdraw" component={Withdraw} />
+            <Route exact path="/my-page/withdraw-complete"
+                   component={WithdrawComplete} />
 
-              {/* 상품 상세페이지 */}
-              <Route exact path="/product-view/:productNo"
-                     component={ProductView} />
+            {/* 상품 상세페이지 */}
+            <Route exact path="/product-view/:productNo"
+                   component={ProductView} />
 
-              {/* 주문 */}
-              <Route exact path="/order/agree" component={OrderAgree} />
+            {/* 주문 */}
+            <Route exact path="/order/agree" component={OrderAgree} />
 
-              <Route exact path="/order/parse" component={ResultParse} />
-              <Route exact path="/order/complete" component={OrderComplete} />
-              <Route exact path="/order/fail" component={OrderFail} />
+            <Route exact path="/order/parse" component={ResultParse} />
+            <Route exact path="/order/complete" component={OrderComplete} />
+            <Route exact path="/order/fail" component={OrderFail} />
 
-              <Route exact path="/cart" component={Cart} />
+            <Route exact path="/cart" component={Cart} />
 
-              <Route exact path="/order/sheet" component={OrderSheet} />
-              <Route exact path="/gift/sheet" component={OrderSheet} />
-              <Route exact path="/gift/receive" component={GiftReceive} />
+            <Route exact path="/order/sheet" component={OrderSheet} />
+            <Route exact path="/gift/sheet" component={OrderSheet} />
+            <Route exact path="/gift/receive" component={GiftReceive} />
 
-              {/* 이벤트  */}
-              <Route exact path="/event/list" component={eventList} />
-              <Route exact path="/event/only/:eventNo"
-                     component={EventDetail} />
-              <Route exact path="/event/detail/:eventNo"
-                     component={EventDetail} />
-              <Route exact path="/event/expired" component={Expired} />
-              {/*<Route exact path="/event/benefit-zone"*/}
-              {/*       component={BenefitZone} />/!*현재 데이터 없음*!/*/}
-              {/*<Route exact path="/event/pre-order"*/}
-              {/*       component={PreOrder} />/!*현재 데이터 없음*!/*/}
-              {/*<Route exact path="/event/asc" component={asc} />*/}
-              <Route exact path="/event/refined/:eventNo" component={refined} />
-              <Route exact path="/event/live-on/:eventNo" component={liveon} />
-              <Route exact path="/event/refurbish/:eventNo" component={refurbish} />
-              <Route exact path="/event/employee/:eventNo" component={employee} />
+            {/* 이벤트  */}
+            <Route exact path="/event/list" component={eventList} />
+            <Route exact path="/event/only/:eventNo"
+                   component={EventDetail} />
+            <Route exact path="/event/detail/:eventNo"
+                   component={EventDetail} />
+            <Route exact path="/event/expired" component={Expired} />
+            {/*<Route exact path="/event/benefit-zone"*/}
+            {/*       component={BenefitZone} />/!*현재 데이터 없음*!/*/}
+            {/*<Route exact path="/event/pre-order"*/}
+            {/*       component={PreOrder} />/!*현재 데이터 없음*!/*/}
+            {/*<Route exact path="/event/asc" component={asc} />*/}
+            <Route exact path="/event/refined/:eventNo" component={refined} />
+            <Route exact path="/event/live-on/:eventNo" component={liveon} />
+            <Route exact path="/event/refurbish/:eventNo" component={refurbish} />
+            <Route exact path="/event/employee/:eventNo" component={employee} />
 
-              {/* 멤버쉽 */}
-              <Route exact path="/membership/benefit" component={Benefit} />
+            {/* 멤버쉽 */}
+            <Route exact path="/membership/benefit" component={Benefit} />
 
-              {/* member  */}
-              <Route exact path="/member/join" component={join} />
-              <Route exact path="/member/join-agree" component={JoinAgree} />
-              <Route exact path="/member/joinStep" component={joinStep} />
-              <Route exact path="/member/login" component={login} />
-              <Route exact path="/member/search" component={Search} />
-              <Route exact path="/member/inactiveAccounts" component={InactiveAccounts} />
-              <Route exact path="/member/activeAccounts" component={ActiveAccounts} />
-              <Route exact path="/member/lockedAccounts" component={LockedAccounts} />
-              <Route exact path="/callback" component={Callback} />
+            {/* member  */}
+            <Route exact path="/member/join" component={join} />
+            <Route exact path="/member/join-agree" component={JoinAgree} />
+            <Route exact path="/member/joinStep" component={joinStep} />
+            <Route exact path="/member/login" component={login} />
+            <Route exact path="/member/search" component={Search} />
+            <Route exact path="/member/inactiveAccounts" component={InactiveAccounts} />
+            <Route exact path="/member/activeAccounts" component={ActiveAccounts} />
+            <Route exact path="/member/lockedAccounts" component={LockedAccounts} />
+            <Route exact path="/callback" component={Callback} />
 
-              {/* 검색 결과  */}
-              <Route exact path="/search-result/:keyword" component={SearchResult} />
+            {/* 검색 결과  */}
+            <Route exact path="/search-result/:keyword" component={SearchResult} />
 
-              {/* Footer  */}
-              <Route exact path="/footer/policy" component={Policy} />
-              <Route exact path="/footer/terms" component={Terms} />
-              <Route exact path="/footer/sitemap" component={SiteMap} />
+            {/* Footer  */}
+            <Route exact path="/footer/policy" component={Policy} />
+            <Route exact path="/footer/terms" component={Terms} />
+            <Route exact path="/footer/sitemap" component={SiteMap} />
 
-              {/* error */}
-              <Route exact path="/404" component={Error404} />
-              <Route exact path="/error-server" component={ErrorServer} />
+            {/* error */}
+            <Route exact path="/404" component={Error404} />
+            <Route exact path="/error-server" component={ErrorServer} />
 
-              <Route component={Error404} />
-              {/* 푸터 */}
+            <Route component={Error404} />
+            {/* 푸터 */}
             </Switch>
           <Footer />
         </div>

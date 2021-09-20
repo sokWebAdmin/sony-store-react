@@ -9,7 +9,7 @@ const tagColorMap = {
 };
 
 const categoriesExtraDataMap = [];
-let espCategoryNo = 60918;
+let espCategoryNo = 81643;
 
 // TODO real 인 경우에 대한 하드코딩 데이터 필요
 // TODO bannerSectionCodes 데이터 확인해야함 (최상위 부모 (카메라 같은) 카테고리만 bannerSectionCodes 를 가짐)
@@ -225,7 +225,7 @@ if (process.env.NODE_ENV === 'development') {
     url: '/products/playstation/title',
   });
 
-  espCategoryNo = 60918;
+  espCategoryNo = 81643;
 } else {
   categoriesExtraDataMap.push({
     categoryNo: 60859,
@@ -233,7 +233,7 @@ if (process.env.NODE_ENV === 'development') {
     bannerSectionCodes: '000',
   });
 
-  espCategoryNo = 60918;
+  espCategoryNo = 81643;
 }
 
 // GNB 카테고리
