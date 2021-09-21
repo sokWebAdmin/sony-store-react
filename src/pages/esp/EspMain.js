@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //lib
-import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } from 'swiper/core';
 
 
@@ -74,7 +73,8 @@ export default function EspMain() {
                     categoryNos: focusCategory.categoryNo,
                     'order.by': 'RECENT_PRODUCT',
                     pageNumber: pageNumber,
-                    pageSize: 15
+                    pageSize: 15,
+                    hasOptionValues: true,
                 });
 
                 if (status !== 200) {
@@ -83,6 +83,17 @@ export default function EspMain() {
 
                 result.list = data.items;
                 result.totalCount = data.totalCount;
+
+                // TODO 임시로 옵션값으로 desc 적용함
+                result.list.map(p => {
+                    if (p?.optionValues?.length > 0) {
+                        p.desc = p.optionValues[0].optionValue.replace(/__/g, ',');
+                    }
+                    else {
+                        p.desc = '';
+                    }
+                    return p;
+                });
             }
         }
         catch (e) {
@@ -97,8 +108,8 @@ export default function EspMain() {
 
     return (
         <>
-        <SEOHelmet title={`연장서비스플랜 ESP`} />
-        <div className="category">
+            <SEOHelmet title={`연장서비스플랜 ESP`} />
+            <div className="category">
                 <div className="container">
                     <div className="contents">
                         <div className="category__header">

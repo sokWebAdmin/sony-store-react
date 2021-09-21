@@ -9,10 +9,16 @@ import "../../assets/scss/category.scss"
 //utils
 import CategoryHeader from '../../components/products/CategoryHeader';
 import ProductList from '../../components/products/ProductList';
-import { getCategoryByKey, useGetCategoryByKey } from '../../context/category.context';
+import { getCategoryByKey, useCategoryState, useGetCategoryByKey } from '../../context/category.context';
 
-export default function Category({match}) {
+export default function Category({match, history}) {
   const category = useGetCategoryByKey('url', match.url);
+
+  const { categories } = useCategoryState();
+
+  if (categories.length > 0 && !category) {
+    history.replace('/404');
+  }
 
   const [currentCategory, setCurrentCategory] = useState(null);
 
