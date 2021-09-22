@@ -101,6 +101,7 @@ export default function SelectBox({ defaultInfo, selectOption, selectOptions, cu
           display: isOpened ? 'block' : 'none',
           selectedLabel: selectedValue.label,
           tag: defaultInfo.tag,
+          className: defaultInfo.className,
           onToggleHandler,
           onClickHandler,
         })

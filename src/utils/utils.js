@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import $ from 'jquery';
-import { Swiper } from 'swiper';
 
 export function useWindowSize() {
   // Initialize state with undefined width/height so server and client renders match
