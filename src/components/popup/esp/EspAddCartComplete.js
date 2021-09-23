@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import '../../../assets/scss/contents.scss';
 import '../../../assets/scss/product.scss';
 import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
 
 export default function EspAddCartComplete ({onClose}) {
   const [container] = useState(() => {
@@ -33,8 +34,11 @@ export default function EspAddCartComplete ({onClose}) {
         <p className="layer_title ico cart">장바구니 담기 완료</p>
         <p className="text">해당 상품이 장바구니에 담겼습니다.<br/> 장바구니로 이동하시겠습니까?</p>
         <div className="btn_article size2">
-          <a href="#" className="btn close white" onClick={close}>쇼핑 계속하기</a>
-          <a href="#" className="btn cart">장바구니 이동</a>
+          <a href="#" className="btn close white" onClick={e => {
+            close();
+            e.preventDefault();
+          }}>쇼핑 계속하기</a>
+          <Link to="/cart" className="btn cart">장바구니 이동</Link>
         </div>
       </div>
     </div>,

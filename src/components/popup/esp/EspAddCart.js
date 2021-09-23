@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 
 // components
@@ -9,25 +9,49 @@ import LayerPopup from '../../common/LayerPopup';
 import '../../../assets/scss/contents.scss';
 import { postCart } from '../../../api/order';
 import EspAddCartComplete from './EspAddCartComplete';
+import { getProductOptions } from '../../../api/product';
 
 export default function EspAddCart ({product, onClose}) {
-
   const [showCompletePopup, setShowCompletePopup] = useState(false);
 
   const _addCart = async () => {
-    // TODO 카트 api 연동해야함
-    alert('cart api 연동해야함');
-    const success = await _postCart();
+    let success = false;
+
+    const options = await _getProductOptions(product.mallProductNo);
+
+    if (options.length > 0) {
+      success = await _postCart(product.mallProductNo, options[0].optionNo);
+    }
+
     if (success) {
       setShowCompletePopup(true);
     }
   }
 
-  const _postCart = async () => {
-    return true;
+  const _getProductOptions = async productNo => {
+    let flatOptions = [];
 
     try {
-      const {status} = await postCart({});
+      const {status, data} = await getProductOptions(productNo);
+
+      if (status === 200 && data?.flatOptions?.length > 0) {
+        flatOptions = data.flatOptions;
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
+
+    return flatOptions;
+  }
+
+  const _postCart = async (productNo, optionNo) => {
+    try {
+      const {status} = await postCart([{
+        productNo,
+        optionNo,
+        orderCnt: 1
+      }]);
 
       if (status === 200) {
         return true;
