@@ -164,7 +164,7 @@ const EventBottom = () => {
     if (window.Kakao) {
       const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
-        kakao.init(process.env.REACT_APP_KAKAO_SHARE_KEY);
+        kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
       }
       kakao.Link.sendDefault({
         objectType: 'text',
@@ -181,7 +181,7 @@ const EventBottom = () => {
     if (window.Kakao) {
       const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
-        kakao.init(process.env.REACT_APP_KAKAO_SHARE_KEY);
+        kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
       }
       kakao.Story.share({
         text: label,
