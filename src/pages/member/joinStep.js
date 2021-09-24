@@ -259,15 +259,15 @@ export default function JoinStep() {
 
   useEffect(() => {
     if (isLogin) {
-      const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
-      const redirectedToken = getItem(KEY.OPENID_TOKEN);
-      console.log(redirectedToken, redirectedProvider);
-      if (redirectedProvider && redirectedToken) {
-        setEmail(profile.email);
-        console.log(profile.email);
-        return;
-      }
       history.push('/');
+      return;
+    }
+    const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
+    const redirectedToken = getItem(KEY.OPENID_TOKEN);
+    console.log(redirectedToken, redirectedProvider);
+    if (redirectedProvider && redirectedToken) {
+      setEmail(profile.email);
+      console.log(profile.email);
     }
   }, []);
 

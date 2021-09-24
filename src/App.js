@@ -115,7 +115,7 @@ const App = (props) => {
   }, [dispatch, state?.mall]);
 
   const getMallInfo = async () => {
-    if (window.location.pathname === '/callback') return;
+    if (window.location.pathname === '/callback' || window.location.pathname === '/member/joinStep') return;
     if (isLogin) {
       if (!profile) {
         const response = await getProfile();
