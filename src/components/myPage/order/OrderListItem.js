@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { postProfileOrderCancelByOrderOptionNo } from '../../../api/order';
 import { Link } from 'react-router-dom';
+import { useAlert } from '../../../hooks';
 import RefundAccount from '../../../pages/order/RefundAccount';
+import Alert from '../../../components/common/Alert';
+import Confirm from '../../../components/common/Confirm';
 
 //api
 
@@ -24,6 +27,14 @@ export default function OrderListItem({
   delivery,
 }) {
   const [refundAccountVisible, setRefundAccountVisible] = useState(false);
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
+  const [confirmVisible, setConfirmVisible] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState('');
+  const openConfirm = (message) => {
+    setConfirmVisible(true);
+    setConfirmMessage(message);
+  };
+
   const orderStatusMap = {
     DEPOSIT_WAIT: '입금대기',
     PAY_DONE: '결제완료',
@@ -70,41 +81,45 @@ export default function OrderListItem({
   };
 
   const onClickOrderCancel = (payType) => {
-    //TODO: 컨펌, 얼럿 UI 있는지 확인. 로직 검증을 위해 임시로 윈도우컨펌얼럿으로
+    openConfirm('주문 취소 신청 후에는 변경하실 수 없습니다.\n취소 접수를 하시겠습니까?');
+  };
 
-    if (!window.confirm('주문 취소 신청 후에는 변경하실 수 없습니다.\n취소 접수를 하시겠습니까?')) {
-      return;
+  const onCloseConfirm = (status) => {
+    setConfirmVisible(false);
+    if (status === 'ok') {
+      const virtualAccountSuccess =
+        '주문 취소 요청이 정상적으로 완료되었습니다.\n주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 쇼요됩니다.\n환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.';
+      const creditCardSuccess =
+        '주문 취소 요청이 정상적으로 완료되었습니다.\n주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 쇼요됩니다.';
+      const successMessage = payType === 'VIRTUAL_ACCOUNT' ? virtualAccountSuccess : creditCardSuccess;
+
+      return postProfileOrderCancelByOrderOptionNo({
+        path: { orderOptionNo },
+        requestBody: {
+          claimType: 'CANCEL',
+          claimReasonType: 'CHANGE_MIND', // TODO: etc로 변경? 확인해야함
+          claimReasonDetail: '',
+          bankAccountInfo: null,
+          saveBankAccountInfo: false,
+          responsibleObjectType: null,
+          productCnt: orderCnt,
+        },
+      }).then((res) => {
+        if (res.data.status === 400 || res.data.status === 404) {
+          openAlert('취소 실패하였습니다. 다시 시도해주세요.');
+          return;
+        }
+        openAlert(successMessage, () => window.location.reload());
+      });
+    } else if (status === 'cancel') {
+      console.log('취소');
     }
-
-    const virtualAccountSuccess =
-      '주문 취소 요청이 정상적으로 완료되었습니다.\n주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 쇼요됩니다.\n환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.';
-    const creditCardSuccess =
-      '주문 취소 요청이 정상적으로 완료되었습니다.\n주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 쇼요됩니다.';
-    const successMessage = payType === 'VIRTUAL_ACCOUNT' ? virtualAccountSuccess : creditCardSuccess;
-
-    return postProfileOrderCancelByOrderOptionNo({
-      path: { orderOptionNo },
-      requestBody: {
-        claimType: 'CANCEL',
-        claimReasonType: 'CHANGE_MIND', // TODO: etc로 변경? 확인해야함
-        claimReasonDetail: '',
-        bankAccountInfo: null,
-        saveBankAccountInfo: false,
-        responsibleObjectType: null,
-        productCnt: orderCnt,
-      },
-    }).then((res) => {
-      if (res.data.status === 400 || res.data.status === 404) {
-        alert('취소 실패하였습니다. 다시 시도해주세요.'); // TODO: 실패 메세지 기획 없음
-        return;
-      }
-      alert(successMessage);
-      window.location.reload();
-    });
   };
 
   return (
     <div className="col_table_row">
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+      {confirmVisible && <Confirm onClose={onCloseConfirm}>{confirmMessage}</Confirm>}
       <div className="col_table_cell order">
         <span className="order_date">{orderYmdt}</span>
         <Link to={`/my-page/order-detail?orderNo=${orderNo}`} className="order_number">
