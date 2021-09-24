@@ -12,20 +12,34 @@ import CartTable from '../../components/cart/CartTable';
 import Controller from '../../components/cart/tableParticals/Controller';
 import ProductList from '../../components/cart/tableParticals/ProductList';
 import TotalAmount from '../../components/cart/tableParticals/TotalAmount';
+import Solicitation from '../../components/popup/Solicitation';
 
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
 // api
-import { getCart, putCart, postGuestCart, deleteCart } from '../../api/order';
+import {
+  getCart,
+  putCart,
+  postGuestCart,
+  deleteCart,
+  postOrderSheets,
+} from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 const Cart = () => {
   const { isLogin } = useContext(GlobalContext);
+  const history = useHistory();
 
+  // popup
+  const [showSolicitation, setShowSolicitation] = useState(false);
+
+  // state
   const [wait, setWait] = useState(false);
   const [products, setProducts] = useState([]);
   const putProducts = useMemo(() => products.map(product => ({ // put 요청 미리 맵핑해놓음.
@@ -42,6 +56,10 @@ const Cart = () => {
 
   const [amount, setAmount] = useState(null);
   const [checkedIndexes, setCheckedIndexes] = useState([]);
+  const checkedProducts = useMemo(() =>
+      products.filter(
+        (_, index) => checkedIndexes.includes(index))
+    , [products, checkedIndexes]);
 
   const init = () => {
     setWait(true);
@@ -63,6 +81,56 @@ const Cart = () => {
       ;
     }
   };
+
+  const goOrder = async () => {
+    try {
+      const orderSheetNo = await getOrderSheetNo(checkedProducts); // string
+      if (!isLogin) {
+        deleteGuestCart(checkedIndexes);
+      }
+      history.push(`/order/sheet?orderSheetNo=${orderSheetNo}`);
+    }
+    catch (err) {
+      console.error(err)
+    }
+  };
+
+  async function getOrderSheetNo (products) {
+    const request = {
+      cartNos: isLogin ? products.map(({ cartNo }) => cartNo) : null,
+      products: products.map(
+        ({ orderCnt, optionInputs, optionNo, productNo }) => ({
+          orderCnt,
+          optionInputs,
+          optionNo,
+          productNo,
+        })),
+    };
+
+    try {
+      const { data: { orderSheetNo } } = await postOrderSheets(request);
+      return orderSheetNo;
+    }
+    catch (e) {
+      console.error(e);
+    }
+  };
+
+  const submit = () => {
+    if (!checkedIndexes.length) {
+      alert('구매하실 상품을 선택하여 주세요.');
+      return;
+    }
+
+    if (!isLogin) {
+      openSolicitationPopup();
+      return;
+    }
+
+    goOrder();
+  };
+
+  const openSolicitationPopup = () => setShowSolicitation(true);
 
   useEffect(init, []);
 
@@ -133,8 +201,8 @@ const Cart = () => {
       deleteMemberCart([cartNo]);
     }
     else {
-      const optionNo = no; // TODO: 옵션 No 가 유니크한 값인지 확인 필요..
-      deleteGuestCart([optionNo]);
+      const index = no;
+      deleteGuestCart([index]);
     }
   }
 
@@ -144,9 +212,9 @@ const Cart = () => {
     }).then(() => init());
   }
 
-  function deleteGuestCart (optionNos) {
+  function deleteGuestCart (indexes) {
     const newItems = gc.items.filter(
-      ({ optionNo }) => !optionNos.includes(optionNo));
+      (_, i) => !indexes.includes(i));
     gc.cover(newItems);
     init();
   }
@@ -235,6 +303,22 @@ const Cart = () => {
                       amount={amount}
                     />
                     }
+                    <div className="button_wrap">
+                      <Link to="/" className="button button_negative">쇼핑 계속
+                        하기</Link>
+                      <button type="button"
+                              className="button button_positive popup_comm_btn"
+                              onClick={submit}>구매하기
+                      </button>
+                      {
+                        showSolicitation
+                        &&
+                        <Solicitation
+                          goOrder={goOrder}
+                          close={() => setShowSolicitation(false)}
+                        />
+                      }
+                    </div>
                   </CartTable>
                   <QnA />
                 </>
