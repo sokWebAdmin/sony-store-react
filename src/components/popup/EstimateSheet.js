@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
-import '../../assets/css/demo.css';
 import '../../assets/scss/demo.scss';
 import { getToday } from '../../utils/dateFormat';
 import { toCurrencyString } from '../../utils/unit';
@@ -10,6 +10,12 @@ const EstimateSheet = ({ close, products }) => {
   const totalAmt = useMemo(() =>
     products.reduce((acc, cur) => acc + cur.buyAmt, 0), [products]);
   // TODO. 클라이언트 계산 문제가 된다면 shop api 로 계산하여 제공
+
+  const printArea = useRef();
+  const onPrint = useReactToPrint({
+    pageStyle: '.print-wrapper{margin: 0 20px;} .pop_cont_scroll{height: auto !important }',
+    content: () => printArea.current,
+  });
 
   return (
     <>
@@ -25,18 +31,22 @@ const EstimateSheet = ({ close, products }) => {
           </span>
           </div>
           <div className="pop_cont scrollH">
-            <p className="pop_tit">견 적 서</p>
-            <div className="pop_cont_scroll" style={{ height: '303px' }}>
-              <div className="simplified_info">
-                <div className="simplified_estimate">
-                  <p className="date">{today}</p>
-                  <p className="tit"><strong>소니코리아 고객님 귀하,</strong><br /> 아래와 같이
-                    견적합니다.</p>
-                  <div className="estimate_price">
-                    <span className="txt">견적금액 :</span>
-                    <span className="price_txt"><strong
-                      className="price">{toCurrencyString(totalAmt)}</strong> 원</span>
-                    <span className="s_txt">(부가세 포함)</span>
+            <div ref={printArea}>
+              <div className="print-wrapper">
+                <p className="pop_tit">견 적 서</p>
+                <div className="pop_cont_scroll" style={{ height: '303px' }}>
+                  <div className="simplified_info">
+                    <div className="simplified_estimate">
+                      <p className="date">{today}</p>
+                      <p className="tit"><strong>소니코리아 고객님
+                        귀하,</strong><br /> 아래와 같이
+                        견적합니다.</p>
+                      <div className="estimate_price">
+                        <span className="txt">견적금액 :</span>
+                        <span className="price_txt"><strong
+                          className="price">{toCurrencyString(
+                          totalAmt)}</strong> 원</span>
+                        <span className="s_txt">(부가세 포함)</span>
                   </div>
                 </div>
                 <div className="estimate_corp">
@@ -73,7 +83,8 @@ const EstimateSheet = ({ close, products }) => {
                     <div className="col_table_foot">
                       <div className="prd_summary">
                         <p className="prd_total_price">최종 합계 금액 <strong
-                          className="prd_summary_price">4,299,000 <span
+                          className="prd_summary_price">{toCurrencyString(
+                          totalAmt)}<span
                           className="won">원</span></strong></p>
                       </div>
                     </div>
@@ -84,6 +95,8 @@ const EstimateSheet = ({ close, products }) => {
                   </div>
                 </div>
               </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -91,7 +104,8 @@ const EstimateSheet = ({ close, products }) => {
           <button className="button button_negative button-m closed"
                   type="button" onClick={close}>취소
           </button>
-          <button className="button button_positive button-m print"
+          <button onClick={() => onPrint()}
+                  className="button button_positive button-m print"
                   type="button">프린트
           </button>
         </div>
