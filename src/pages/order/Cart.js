@@ -22,6 +22,7 @@ import { getCart, putCart, postGuestCart, deleteCart } from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const { isLogin } = useContext(GlobalContext);
@@ -62,6 +63,24 @@ const Cart = () => {
         finally(() => setWait(false));
       ;
     }
+  };
+
+  const submit = () => {
+    if (!checkedIndexes.length) {
+      alert('구매하실 상품을 선택하여 주세요.');
+      return;
+    }
+
+    if (!isLogin) {
+      openSolicitationPopup();
+      return;
+    }
+
+    alert('submit');
+  };
+
+  const openSolicitationPopup = () => {
+    alert('is guest member');
   };
 
   useEffect(init, []);
@@ -235,6 +254,14 @@ const Cart = () => {
                       amount={amount}
                     />
                     }
+                    <div className="button_wrap">
+                      <Link to="/" className="button button_negative">쇼핑 계속
+                        하기</Link>
+                      <button type="button"
+                              className="button button_positive popup_comm_btn"
+                              onClick={submit}>구매하기
+                      </button>
+                    </div>
                   </CartTable>
                   <QnA />
                 </>
