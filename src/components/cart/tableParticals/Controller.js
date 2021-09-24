@@ -1,8 +1,10 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import EstimateSheet from '../../popup/EstimateSheet';
 
 const Controller = ({ products, checkedIndexes, setCheckedIndexes }) => {
 
   const [allChecked, setAllChecked] = useState(false);
+  const [viewES, setViewES] = useState(true); // TODO. 개발용
 
   const allProductIndexes = useMemo(() => products.map((_, i) => i),
     [products]);
@@ -32,9 +34,11 @@ const Controller = ({ products, checkedIndexes, setCheckedIndexes }) => {
       <div className="cart_func_buttons">
         <button type="button"
                 className="button button_positive button-s button_print_esimate popup_comm_btn"
+                onClick={() => setViewES(true)}
                 data-popup-name="estimate">견적서 출력하기
         </button>
       </div>
+      {viewES && <EstimateSheet close={() => setViewES(false)} />}
     </div>
   );
 };
