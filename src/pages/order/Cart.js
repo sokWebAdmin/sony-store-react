@@ -57,7 +57,7 @@ const Cart = () => {
   const checkedProducts = useMemo(() =>
       products.filter(
         (_, index) => checkedIndexes.includes(index))
-    , [checkedIndexes]);
+    , [products, checkedIndexes]);
 
   const init = () => {
     setWait(true);
