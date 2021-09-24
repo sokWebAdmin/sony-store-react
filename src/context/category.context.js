@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { tagColorMap, categoriesExtraDataMap, espCategoryNo, gnbCategories } from '../const/category';
-import { getEventByEventNo } from '../api/display';
 
 const initialState = {
   tagColorMap,
@@ -24,11 +23,6 @@ export const getCategoryByKey = (categories, key, value) => {
   }
 
   return null;
-};
-
-const isCurationMenu = async () => {
-  const response = await getEventByEventNo(461);
-  return response.status !== 400;
 };
 
 const getConvertCategories = (categories, parentCategory) => {
@@ -63,9 +57,6 @@ const initCategoryState = (multiLevelCategories) => {
   const espCategory = getCategoryByKey(multiLevelCategories, 'categoryNo', espCategoryNo) || {};
 
   const newGnbCategories = [...gnbCategories];
-  // if ((await isCurationMenu()) === true) {
-  // newGnbCategories[0].children = [...newGnbCategories[0].children, { label: '선물 제안', route: '/curation' }];
-  // }
   newGnbCategories[1].children = categories.map((c) => {
     return {
       label: c.label,

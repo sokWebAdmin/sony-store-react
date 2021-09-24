@@ -247,6 +247,10 @@ const gnbCategories = [
         label: '추천 제품',
         route: '/recommend',
       },
+      {
+        label: '선물제안',
+        route: '/curation',
+      },
     ],
   },
   {
