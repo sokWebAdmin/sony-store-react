@@ -6,7 +6,6 @@ const Solicitation = ({ goOrder, close }) => {
   return (
     <LayerPopup
       size={'m'}
-      popContClassName={'shipping_addr'}
       onClose={close}
     >
       <p className="pop_tit">로그인 후 주문해주세요.</p>

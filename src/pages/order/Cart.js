@@ -19,7 +19,13 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
 // api
-import { getCart, putCart, postGuestCart, deleteCart } from '../../api/order';
+import {
+  getCart,
+  putCart,
+  postGuestCart,
+  deleteCart,
+  postOrderSheets,
+} from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
@@ -48,6 +54,10 @@ const Cart = () => {
 
   const [amount, setAmount] = useState(null);
   const [checkedIndexes, setCheckedIndexes] = useState([]);
+  const checkedProducts = useMemo(() =>
+      products.filter(
+        (_, index) => checkedIndexes.includes(index))
+    , [checkedIndexes]);
 
   const init = () => {
     setWait(true);
@@ -70,8 +80,35 @@ const Cart = () => {
     }
   };
 
-  const goOrder = () => {
+  const goOrder = async () => {
+    console.log(checkedProducts);
     alert('주문창으로~');
+    const result = await getOrderSheetNo(checkedProducts);
+    console.log(result);
+  };
+
+  async function getOrderSheetNo (products) {
+    const request = {
+      cartNos: isLogin ? products.map(({ cartNo }) => cartNo) : null,
+      products: products.map(
+        ({ orderCnt, optionInputs, optionNo, productNo }) => ({
+          orderCnt,
+          optionInputs,
+          optionNo,
+          productNo,
+        })),
+    };
+
+    console.log(request);
+    return;
+
+    try {
+      const { data } = await postOrderSheets(request);
+      return data;
+    }
+    catch (e) {
+      console.error(e);
+    }
   };
 
   const submit = () => {
