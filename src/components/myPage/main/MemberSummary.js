@@ -65,7 +65,7 @@ const MemberSummary = ({ tabChange }) => {
                       <span className="ico_txt"><span
                         className="txt_arrow">마일리지</span></span>
               <span className="val_txt"><span
-                className="val">153,248</span>M</span>
+                className="val">N</span>M</span>
             </a>
           </li>
           <li className="user_item coupon">
@@ -73,7 +73,7 @@ const MemberSummary = ({ tabChange }) => {
                onClick={() => tabChange('coupon')}>
                       <span className="ico_txt"><span
                         className="txt_arrow">쿠폰</span></span>
-              <span className="val_txt"><span className="val">0</span> 장</span>
+              <span className="val_txt"><span className="val">N</span> 장</span>
             </a>
           </li>
           <li cLinklassName="user_item like">
@@ -82,7 +82,7 @@ const MemberSummary = ({ tabChange }) => {
                       <span className="ico_txt"><span
                         className="txt_arrow">찜</span></span>
               <span className="val_txt"><span
-                className="val">0</span></span>
+                className="val">N</span></span>
             </a>
           </li>
         </ul>
