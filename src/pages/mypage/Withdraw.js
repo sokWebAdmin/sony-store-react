@@ -78,7 +78,7 @@ export default function Withdraw() {
 
   const onClickWithdraw = async () => {
     const response = await deleteProfile(withdrawReason.label);
-    if (response.status !== 200) {
+    if (response.status !== 204) {
       openAlert('잠시 후 다시 시도해 주세요.');
       return;
     }

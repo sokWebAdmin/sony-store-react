@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 import "../../assets/scss/event.scss"
-import { getDisplayEvents } from '../../api/display';
+import { getDisplayCloseEvents } from '../../api/display';
 import { getStrDate } from '../../utils/dateFormat';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
 import SelectBox from '../../components/common/SelectBox';
+import ViewMore from '../../components/common/ViewMore';
 
 const tags = {
   all: '',
@@ -20,35 +20,11 @@ const tags = {
 
 const Expired = () => {
   const [events, setEvents] = useState([]);
-  const [newest, setNewest] = useState(true);
   const [keyword, setKeyword] = useState('');
 
-  const fetchInitDisplayEvents = async (keyword = '') => {
-    const { data } = await getDisplayEvents(keyword);
-    sortEvents(data);
-  }
-
-  const sortEvents = (data = events) => {
-    const sortByLatestCreationDate = (a, b) => {
-      const dateL = moment(a.startYmdt)
-        .toDate()
-        .getTime();
-      const dateR = moment(b.startYmdt)
-        .toDate()
-        .getTime();
-      return dateL < dateR ? 1 : -1;
-    };
-    const sortByOldestCreationDate = (a, b) => {
-      const dateL = moment(a.startYmdt)
-        .toDate()
-        .getTime();
-      const dateR = moment(b.startYmdt)
-        .toDate()
-        .getTime();
-      return dateL > dateR ? 1 : -1;
-    };
-    const sortData = newest ? [...data].sort(sortByLatestCreationDate) : [...data].sort(sortByOldestCreationDate);
-    setEvents(sortData);
+  const fetchInitDisplayEvents = async (pageNumber = 1, keyword = '') => {
+    const { data } = await getDisplayCloseEvents(keyword);
+    setEvents(data);
   }
 
   const getLink = (origin = true, eventNo, tagName, event) => {
@@ -103,24 +79,6 @@ const Expired = () => {
               </div>
             </form>
             <div className="end_event_inner">
-              <div className="itemsort" aria-label="종료된 기획전 정렬">
-                <button className="itemsort__button">
-                  <span className="itemsort__button__label sr-only">정렬기준:</span>
-                  <span className="itemsort__button__selected">최신순</span>
-                </button>
-                <div className="itemsort__drawer">
-                  <ul className="itemsort__items">
-                    <li className={`itemsort__item ${newest ? 'itemsort__item--active' : ''}`}>
-                      <a href="javascript:void(0)"
-                         className="itemsort__item__link" onClick={() => setNewest(true)}>최신순</a>
-                    </li>
-                    <li className={`itemsort__item ${!newest ? 'itemsort__item--active' : ''}`}>
-                      <a href="javascript:void(0)" className="itemsort__item__link" onClick={() => setNewest(false)}>오래된
-                        순</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
               <div className="col_table_wrap end_event_list">
                 <div className="col_table">
                   <div className="col_table_head">
@@ -132,7 +90,6 @@ const Expired = () => {
                           <div className="table_cell">이벤트 기간</div>
                         </div>
                       </div>
-                      <div className="col_table_cell">당첨자 발표</div>
                     </div>
                   </div>
                   <div className="col_table_body">
@@ -153,14 +110,17 @@ const Expired = () => {
                               </div>
                             </div>
                           </div>
-                          {/*<div className="col_table_cell event_result">*/}
-                          {/*  <a href="#" className="button button_secondary button-s" type="button">당첨자 발표 확인</a>*/}
-                          {/*</div>*/}
                         </div>
                       )
                     })}
                   </div>
                 </div>
+                {/*TODO: API 추가개발 후 주석해제*/}
+                {/*<ViewMore*/}
+                {/*  totalCount={events.totalCount}*/}
+                {/*  viewMore={fetchInitDisplayEvents}*/}
+                {/*  pageSize={10}*/}
+                {/*/>*/}
                 <div className="btn_article comm_more">
                   <a href="#" className="more_btn" title="더보기">더보기</a>
                 </div>
