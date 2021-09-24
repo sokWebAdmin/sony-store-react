@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import '../../assets/css/demo.css';
 import '../../assets/scss/demo.scss';
 import { getToday } from '../../utils/dateFormat';
@@ -5,6 +7,9 @@ import { toCurrencyString } from '../../utils/unit';
 
 const EstimateSheet = ({ close, products }) => {
   const today = getToday().replace(/\-/g, '.');
+  const totalAmt = useMemo(() =>
+    products.reduce((acc, cur) => acc + cur.buyAmt, 0), [products]);
+  // TODO. 클라이언트 계산 문제가 된다면 shop api 로 계산하여 제공
 
   return (
     <>
@@ -30,7 +35,7 @@ const EstimateSheet = ({ close, products }) => {
                   <div className="estimate_price">
                     <span className="txt">견적금액 :</span>
                     <span className="price_txt"><strong
-                      className="price">4,299,000</strong> 원</span>
+                      className="price">{toCurrencyString(totalAmt)}</strong> 원</span>
                     <span className="s_txt">(부가세 포함)</span>
                   </div>
                 </div>
