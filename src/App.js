@@ -14,6 +14,7 @@ import ProductView from './pages/products/ProductView';
 
 //recommend
 import Recommend from './pages/recommend/Recommend';
+import Curation from './pages/recommend/Curation';
 
 //error
 import Error404 from './pages/error/error404';
@@ -61,7 +62,7 @@ import join from './pages/member/join';
 import JoinAgree from './pages/member/JoinAgree';
 import joinStep from './pages/member/joinStep';
 import login from './pages/member/login';
-import Search from "./pages/member/Search"
+import Search from './pages/member/Search';
 import InactiveAccounts from './pages/member/inactiveAccounts';
 import ActiveAccounts from './pages/member/activeAccounts';
 import LockedAccounts from './pages/member/lockedAccounts';
@@ -84,7 +85,8 @@ import GlobalContext from './context/global.context';
 import {
   fetchMyProfile,
   fetchProfile,
-  resetProfile, setProfile,
+  resetProfile,
+  setProfile,
   useProfileState,
   useProileDispatch,
 } from './context/profile.context';
@@ -101,9 +103,9 @@ import Callback from './pages/member/Callback';
 const App = (props) => {
   const dispatch = useMallDispatch();
   const state = useMallState();
-  const {isLogin} = useContext(GlobalContext);
+  const { isLogin } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
-  const {my, profile} = useProfileState();
+  const { my, profile } = useProfileState();
 
   const categoryDispatch = useCategoryDispatch();
 
@@ -128,11 +130,11 @@ const App = (props) => {
     } else {
       resetProfile(profileDispatch);
     }
-  }
+  };
 
   useEffect(() => {
     getMallInfo();
-  }, [isLogin])
+  }, [isLogin]);
 
   let location = useLocation();
 
@@ -178,6 +180,7 @@ const App = (props) => {
 
             {/* 추천상품 */}
             <Route exact path="/recommend" component={Recommend} />
+            <Route exact path="/curation" component={Curation} />
 
             {/* esp */}
             <Route exact path="/esp" component={EspMain} />
