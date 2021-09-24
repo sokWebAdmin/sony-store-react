@@ -50,9 +50,6 @@ export default function Liveon() {
                 <div className="event_prd">
                   <h2 className="event_prd_title">LIVE ON 제품</h2>
                   <EventProducts event={event} />
-                  <div className="button_wrap">
-                    <Link to="/event/list" className="button button_positive">목록</Link>
-                  </div>
                 </div>
               </div>
             </div>
