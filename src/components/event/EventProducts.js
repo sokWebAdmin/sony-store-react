@@ -116,6 +116,9 @@ const EventProducts = ({event, filterLabel, grade}) => {
           <span className="ico_no_data">등록된 상품이 없습니다.</span>
         </div>}
       </div>
+      <div className="button_wrap">
+        <Link to="/event/list" className="button button_positive">목록</Link>
+      </div>
     </>
   );
 };
