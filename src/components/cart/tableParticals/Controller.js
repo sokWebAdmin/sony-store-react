@@ -1,10 +1,10 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import EstimateSheet from '../../popup/EstimateSheet';
 
-const Controller = ({ products, checkedIndexes, setCheckedIndexes }) => {
+const Controller = ({ products, checkedIndexes, checkedProducts, setCheckedIndexes }) => {
 
   const [allChecked, setAllChecked] = useState(false);
-  const [viewES, setViewES] = useState(true); // TODO. 개발용
+  const [viewES, setViewES] = useState(false);
 
   const allProductIndexes = useMemo(() => products.map((_, i) => i),
     [products]);
@@ -18,6 +18,11 @@ const Controller = ({ products, checkedIndexes, setCheckedIndexes }) => {
 
     checked ? setCheckedIndexes(allProductIndexes) : setCheckedIndexes([]);
   };
+
+  const onClickShowES = () =>
+    checkedProducts.length
+      ? setViewES(true)
+      : alert('상품을 선택해주세요.');
 
   return (
 
@@ -34,11 +39,12 @@ const Controller = ({ products, checkedIndexes, setCheckedIndexes }) => {
       <div className="cart_func_buttons">
         <button type="button"
                 className="button button_positive button-s button_print_esimate popup_comm_btn"
-                onClick={() => setViewES(true)}
+                onClick={onClickShowES}
                 data-popup-name="estimate">견적서 출력하기
         </button>
       </div>
-      {viewES && <EstimateSheet close={() => setViewES(false)} />}
+      {viewES && <EstimateSheet products={checkedProducts}
+                                close={() => setViewES(false)} />}
     </div>
   );
 };

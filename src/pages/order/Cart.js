@@ -288,6 +288,7 @@ const Cart = () => {
                     products={products}
                     checkedIndexes={checkedIndexes}
                     setCheckedIndexes={setCheckedIndexes}
+                    checkedProducts={checkedProducts}
                   />
                   <CartTable>
                     <ProductList

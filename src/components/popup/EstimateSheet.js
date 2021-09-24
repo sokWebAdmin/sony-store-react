@@ -1,7 +1,11 @@
 import '../../assets/css/demo.css';
 import '../../assets/scss/demo.scss';
+import { getToday } from '../../utils/dateFormat';
+import { toCurrencyString } from '../../utils/unit';
 
-const EstimateSheet = ({ close }) => {
+const EstimateSheet = ({ close, products }) => {
+  const today = getToday().replace(/\-/g, '.');
+
   return (
     <>
       <div className="layer_mask"
@@ -20,7 +24,7 @@ const EstimateSheet = ({ close }) => {
             <div className="pop_cont_scroll" style={{ height: '303px' }}>
               <div className="simplified_info">
                 <div className="simplified_estimate">
-                  <p className="date">2021.06.29</p>
+                  <p className="date">{today}</p>
                   <p className="tit"><strong>소니코리아 고객님 귀하,</strong><br /> 아래와 같이
                     견적합니다.</p>
                   <div className="estimate_price">
@@ -58,53 +62,7 @@ const EstimateSheet = ({ close }) => {
                         </div>
                       </div>
                       <div className="col_table_body">
-                        <div className="col_table_row">
-                          <div className="col_table_cell">
-                            <div className="prd">
-                              <div className="prd_info">
-                                <div className="prd_info_name">PLAYSTATION 5
-                                  DIGITAL<br />(CFI-1018B01)
-                                </div>
-                                <p className="prd_info_option line2">4K
-                                  HDR(HLG),
-                                  Fast Hybrid AF가 탑재된 전문가급 1인치 핸디캠/ LIMITED
-                                  EDITION(사일런트 화이트)</p>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col_table_cell prd_price">
-                            4,299,000 <span className="won">원</span><br />
-                            <span className="count">1개</span>
-                          </div>
-                          <div className="col_table_cell prd_price">
-                            4,299,000 <span className="won">원</span><br />
-                            <span className="s_txt">(부가세 포함)</span>
-                          </div>
-                          <div className="col_table_cell ">
-                            &nbsp;
-                          </div>
-                        </div>
-                        <div className="col_table_row">
-                          <div className="col_table_cell">
-                            <div className="prd">
-                              <div className="prd_info">
-                                <div className="prd_info_name">ILCE-7RM4</div>
-                                <p className="prd_info_option">블랙</p>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col_table_cell prd_price">
-                            4,299,000 <span className="won">원</span><br />
-                            <span className="count">1개</span>
-                          </div>
-                          <div className="col_table_cell prd_price">
-                            4,299,000 <span className="won">원</span><br />
-                            <span className="s_txt">(부가세 포함)</span>
-                          </div>
-                          <div className="col_table_cell ">
-                            &nbsp;
-                          </div>
-                        </div>
+                        <Products products={products} />
                       </div>
                     </div>
                     <div className="col_table_foot">
@@ -133,6 +91,40 @@ const EstimateSheet = ({ close }) => {
           </button>
         </div>
       </div>
+    </>
+  );
+};
+
+const Products = ({ products }) => {
+  return (
+    <>
+      {
+        products.map(product => (
+          <div className="col_table_row">
+            <div className="col_table_cell">
+              <div className="prd">
+                <div className="prd_info">
+                  <div className="prd_info_name">{product.productName}</div>
+                  <p className="prd_info_option line2">{product.optionText}</p>
+                </div>
+              </div>
+            </div>
+            <div className="col_table_cell prd_price">
+              {toCurrencyString(product.standardAmt)} <span
+              className="won">원</span><br />
+              <span className="count">{product.orderCnt}개</span>
+            </div>
+            <div className="col_table_cell prd_price">
+              {toCurrencyString(product.buyAmt)} <span
+              className="won">원</span><br />
+              <span className="s_txt">(부가세 포함)</span>
+            </div>
+            <div className="col_table_cell ">
+              &nbsp;
+            </div>
+          </div>
+        ))
+      }
     </>
   );
 };
