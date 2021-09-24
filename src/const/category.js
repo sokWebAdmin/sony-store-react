@@ -3,9 +3,9 @@ const tagColorMap = {
   BEST: '#5865F5',
   HOT: '#E70000',
   EVENT: '#222222',
-  'A급': '#C55AFF',
-  'B급': '#39BFC9',
-  'C급': '#E70000',
+  A급: '#C55AFF',
+  B급: '#39BFC9',
+  C급: '#E70000',
 };
 
 const categoriesExtraDataMap = [];
@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'development') {
     url: '/products/camera',
     bannerSectionCodes: '008',
     isAvailableMoveESP: true,
-    isAvailableMoveProductCompare: true
+    isAvailableMoveProductCompare: true,
   });
   // 카메라 > 렌즈교환식카메라
   categoriesExtraDataMap.push({
@@ -49,7 +49,7 @@ if (process.env.NODE_ENV === 'development') {
     url: '/products/videocamera',
     bannerSectionCodes: '009',
     isAvailableMoveESP: true,
-    isAvailableMoveProductCompare: true
+    isAvailableMoveProductCompare: true,
   });
   // 비디오 카메라 > 시네마라인카메라
   categoriesExtraDataMap.push({
@@ -82,7 +82,7 @@ if (process.env.NODE_ENV === 'development') {
     categoryNo: 60871,
     url: '/products/audio',
     bannerSectionCodes: '010',
-    isAvailableMoveProductCompare: true
+    isAvailableMoveProductCompare: true,
   });
   // 오디오 > 헤드폰/이어폰
   categoriesExtraDataMap.push({
@@ -145,7 +145,7 @@ if (process.env.NODE_ENV === 'development') {
     categoryNo: 60883,
     url: '/products/accessory',
     bannerSectionCodes: '011',
-    isAvailableMoveAccessoryCompatibility: true
+    isAvailableMoveAccessoryCompatibility: true,
   });
   // 액세서리 > 카메라 액세서리
   categoriesExtraDataMap.push({
@@ -246,12 +246,8 @@ const gnbCategories = [
       {
         label: '추천 제품',
         route: '/recommend',
-      }, 
-      {
-        label: '선물 제안',
-        route: '/temp-gift' // @TODO 개발 후 변경해야 함   
-      }
-    ]
+      },
+    ],
   },
   {
     label: '제품',
@@ -288,7 +284,7 @@ const gnbCategories = [
       //   label: '리퍼비시몰',
       //   route: '/event/list?tab=refurbish',
       // },
-    ]
+    ],
   },
   {
     label: '멤버십',
@@ -297,7 +293,7 @@ const gnbCategories = [
         label: '등급&혜택 안내',
         route: '/membership/benefit',
       },
-    ]
+    ],
   },
   {
     label: '고객 서비스',
@@ -326,7 +322,7 @@ const gnbCategories = [
         label: '동영상 강좌',
         route: '/video-course',
       },
-    ]
+    ],
   },
 ];
 

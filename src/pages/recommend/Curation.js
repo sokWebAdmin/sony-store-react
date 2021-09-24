@@ -31,7 +31,7 @@ import { Link } from 'react-router-dom';
 import { loadBanner } from '../../api/display';
 import { changeDateFormat, getDay, getStrHM } from '../../utils/dateFormat';
 
-export default function Recommend({ match }) {
+export default function Curation({ match }) {
   const history = useHistory();
 
   const size = useWindowSize();
@@ -164,9 +164,14 @@ export default function Recommend({ match }) {
                 {/* flex */}
                 <div className="reco_items">
                   {recommendTopBanners?.map((bannerInfo, index) => (
-                    <div className="reco_item" key={index}>
+                    <div className="reco_item">
                       <div className="reco_item_inner">
-                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                        <Scene
+                          triggerElement="reco_item_inner"
+                          duration={size.height * 0.5}
+                          triggerHook={0.75}
+                          key={index}
+                        >
                           {(progress) => (
                             <Tween duration={1} totalProgress={progress} paused>
                               <Link
@@ -184,7 +189,7 @@ export default function Recommend({ match }) {
                           )}
                         </Scene>
 
-                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                        <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
                           {(progress) => (
                             <Tween duration={1} totalProgress={progress} paused>
                               <h2 className={`reco_title ${progress === 1 && 'end'}`}>{bannerInfo.banners[0].name}</h2>
@@ -192,7 +197,7 @@ export default function Recommend({ match }) {
                           )}
                         </Scene>
 
-                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                        <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
                           {(progress) => (
                             <Tween duration={1} totalProgress={progress} paused>
                               <p className={`reco_desc ${progress === 1 && 'end'}`}>
@@ -212,7 +217,7 @@ export default function Recommend({ match }) {
                       backgroundSize: '100%',
                     }}
                   >
-                    <Scene duration={size.height * 0.5} triggerHook={0.75}>
+                    <Scene triggerElement=".trigger-banner_img" duration={size.height * 0.5} triggerHook={0.75}>
                       {(progress) => (
                         <Tween duration={1}>
                           <div className={`reco_banner_img ${progress > 0 ? 'end' : ''}`}>
@@ -227,9 +232,9 @@ export default function Recommend({ match }) {
                   </div>
 
                   {recommendBottomBanners.map((bannerInfo, index) => (
-                    <div className="reco_item" key={index}>
+                    <div className="reco_item">
                       <div className="reco_item_inner">
-                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                        <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
                           {(progress) => (
                             <Tween duration={1} totalProgress={progress} paused>
                               <Link
@@ -247,7 +252,7 @@ export default function Recommend({ match }) {
                           )}
                         </Scene>
 
-                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                        <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
                           {(progress) => (
                             <Tween duration={1} totalProgress={progress} paused>
                               <h2 className={`reco_title ${progress === 1 && 'end'}`}>{bannerInfo.banners[0].name}</h2>
@@ -255,7 +260,7 @@ export default function Recommend({ match }) {
                           )}
                         </Scene>
 
-                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                        <Scene triggerElement="reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
                           {(progress) => (
                             <Tween duration={1} totalProgress={progress} paused>
                               <p className={`reco_desc ${progress === 1 && 'end'}`}>
@@ -281,7 +286,7 @@ export default function Recommend({ match }) {
                     {eventBanners.map((bannerInfo, index) => (
                       <SwiperSlide className="swiper-slide" key={index}>
                         <div
-                          className="exhibitions_box"
+                          class="exhibitions_box"
                           style={{ background: `url('${bannerInfo.banners[0].imageUrl}') no-repeat center top` }}
                         >
                           <img className="bg_img" src="/images/product/banner_thumb_01.png" alt="" />
