@@ -83,10 +83,16 @@ const Cart = () => {
   };
 
   const goOrder = async () => {
-    const orderSheetNo = await getOrderSheetNo(checkedProducts); // string
-
-    // 비회원 주문 카트 비우기
-    history.push(`/order/sheet?orderSheetNo=${orderSheetNo}`);
+    try {
+      const orderSheetNo = await getOrderSheetNo(checkedProducts); // string
+      if (!isLogin) {
+        deleteGuestCart(checkedIndexes);
+      }
+      history.push(`/order/sheet?orderSheetNo=${orderSheetNo}`);
+    }
+    catch (err) {
+      console.error(err)
+    }
   };
 
   async function getOrderSheetNo (products) {
