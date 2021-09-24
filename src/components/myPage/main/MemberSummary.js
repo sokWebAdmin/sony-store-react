@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
   useProfileState,
   fetchMyProfile,
@@ -6,6 +6,13 @@ import {
 } from '../../../context/profile.context';
 
 import { Link } from 'react-router-dom';
+
+const memberGradeClassName = {
+  membership: 'family',
+  vip: 'vip',
+  vvip: 'vvip',
+
+};
 
 const MemberSummary = () => {
   const { my, profile } = useProfileState();
@@ -21,6 +28,14 @@ const MemberSummary = () => {
     fetchMyProfile(profileDispatch, { type: '30', customerid }).
       catch(console.error);
   }
+
+  const gradeClassName = useMemo(() => {
+    const grade = profile?.memberGradeName?.toLowerCase();
+    const key = Object.keys(memberGradeClassName).find(k => k === grade);
+
+    return key ? 'val ' + memberGradeClassName[key] : 'val';
+
+  }, [profile]);
 
   return (
     <div className="my_user">
@@ -39,7 +54,8 @@ const MemberSummary = () => {
                         className="txt_arrow">회원등급</span></span>
               <span className="val_txt">
                             <span
-                              className="val vvip">VVIP</span>{/* class: 별 등급 색상 지정 vvip / vip / family */}
+                              className={gradeClassName}>{profile?.memberGradeName ||
+                            ''}</span>{/* class: 별 등급 색상 지정 vvip / vip / family */}
                         </span>
             </a>
           </li>
