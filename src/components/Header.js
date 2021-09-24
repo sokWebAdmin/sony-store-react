@@ -11,6 +11,7 @@ import close from '../assets/images/common/ic_close.svg';
 //component
 import Gnb from './Gnb';
 import Search from './Search';
+import CartCount from './cart/CartCount';
 
 //context
 import GlobalContext from '../context/global.context';
@@ -164,7 +165,7 @@ export default function Header() {
                         </li>
                         <li className="member__menu__cart">
                           <Link to="/cart" onClick={closeSubSlider}>
-                            장바구니<span className="badge">99</span>
+                            장바구니<span className="badge"><CartCount /></span>
                           </Link>
                         </li>
                       </ul>
@@ -197,7 +198,9 @@ export default function Header() {
                         </li>
                         <li className="member__menu__cart">
                           <Link to="/cart" onClick={closeSubSlider}>
-                            장바구니<span className="badge">99</span>
+                            장바구니<span className="badge">
+                            <CartCount />
+                          </span>
                           </Link>
                         </li>
                       </ul>
