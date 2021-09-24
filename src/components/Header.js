@@ -165,7 +165,8 @@ export default function Header() {
                         </li>
                         <li className="member__menu__cart">
                           <Link to="/cart" onClick={closeSubSlider}>
-                            장바구니<span className="badge"><CartCount /></span>
+                            장바구니<span className="badge"><CartCount
+                            isOpened={isSiderbarOpen} /></span>
                           </Link>
                         </li>
                       </ul>
@@ -199,7 +200,7 @@ export default function Header() {
                         <li className="member__menu__cart">
                           <Link to="/cart" onClick={closeSubSlider}>
                             장바구니<span className="badge">
-                            <CartCount />
+                            <CartCount isOpened={isSiderbarOpen} />
                           </span>
                           </Link>
                         </li>

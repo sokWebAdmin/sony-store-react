@@ -3,7 +3,7 @@ import gc from '../../storage/guestCart.js';
 import GlobalContext from '../../context/global.context';
 import { getCartCount } from '../../api/order';
 
-const CartCount = () => {
+const CartCount = ({ isOpened }) => {
   const { isLogin } = useContext(GlobalContext);
   const items = gc.items;
 
@@ -18,7 +18,7 @@ const CartCount = () => {
   };
 
   const [count, setCount] = useState(0);
-  useEffect(init, [items, isLogin]);
+  useEffect(() => !isOpened && init, [items, isLogin, isOpened]);
 
   function fetchCount () {
     return getCartCount().then(({ data: { count } }) => setCount(count));
