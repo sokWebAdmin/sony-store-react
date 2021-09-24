@@ -1,7 +1,7 @@
 const CouponList = () => {
   return (
     <div className="cont history_coupon">
-      <h3 className="cont_tit">쿠폰</h3>
+      <h3 className="cont_tit" id="coupon-tit">쿠폰</h3>
       <div className="history_inner">
         <div className="history_list">
           <div

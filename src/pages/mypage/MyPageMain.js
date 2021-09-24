@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -18,6 +18,7 @@ import CouponList from '../../components/myPage/main/CouponList';
 import WishList from '../../components/myPage/main/WishList';
 
 export default function MyPageMain () {
+  const [viewContent, setViewContent] = useState('mileage');
 
   return (
     <>
@@ -26,15 +27,15 @@ export default function MyPageMain () {
         <div className="my_wrap">
           <div className="my_head">
             <h2 className="title">마이페이지</h2>
-            <MemberSummary />
+            <MemberSummary tabChange={setViewContent} />
           </div>
           <BToBBanners />
 
           <div className="cont_inner">
             <OrderSummary />
-            <MileageInfo />
-            <CouponList />
-            <WishList />
+            {viewContent === 'mileage' && <MileageInfo />}
+            {viewContent === 'coupon' && <CouponList />}
+            {viewContent === 'wish' && <WishList />}
           </div>
         </div>
       </div>

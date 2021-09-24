@@ -14,7 +14,7 @@ const memberGradeClassName = {
 
 };
 
-const MemberSummary = () => {
+const MemberSummary = ({ tabChange }) => {
   const { my, profile } = useProfileState();
   const profileDispatch = useProileDispatch();
 
@@ -49,7 +49,7 @@ const MemberSummary = () => {
       <div className="user_info">
         <ul>
           <li className="user_item grade">
-            <a className="user_tabs">
+            <Link to="/membership/benefit" className="user_tabs">
                       <span className="ico_txt"><span
                         className="txt_arrow">회원등급</span></span>
               <span className="val_txt">
@@ -57,10 +57,11 @@ const MemberSummary = () => {
                               className={gradeClassName}>{profile?.memberGradeName ||
                             ''}</span>{/* class: 별 등급 색상 지정 vvip / vip / family */}
                         </span>
-            </a>
+            </Link>
           </li>
           <li className="user_item mileage">
-            <a className="user_tabs">
+            <a href="#mileage-tit" className="user_tabs"
+               onClick={() => tabChange('mileage')}>
                       <span className="ico_txt"><span
                         className="txt_arrow">마일리지</span></span>
               <span className="val_txt"><span
@@ -68,14 +69,16 @@ const MemberSummary = () => {
             </a>
           </li>
           <li className="user_item coupon">
-            <a className="user_tabs">
+            <a href="#coupon-tit" className="user_tabs"
+               onClick={() => tabChange('coupon')}>
                       <span className="ico_txt"><span
                         className="txt_arrow">쿠폰</span></span>
               <span className="val_txt"><span className="val">0</span> 장</span>
             </a>
           </li>
-          <li className="user_item like">
-            <a className="user_tabs">
+          <li cLinklassName="user_item like">
+            <a href="#wish-tit" className="user_tabs"
+               onClick={() => tabChange('wish')}>
                       <span className="ico_txt"><span
                         className="txt_arrow">찜</span></span>
               <span className="val_txt"><span
