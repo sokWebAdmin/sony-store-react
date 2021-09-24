@@ -1,6 +1,7 @@
-import { React, useEffect, useState, useContext } from 'react';
+import { React, useEffect, useState, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '../../hooks';
+import { useReactToPrint } from 'react-to-print';
 import OrderProcess from '../../components/myPage/orderDetail/OrderProcess';
 import OrderSummary from '../../components/myPage/orderDetail/OrderSummary';
 import OrderProductList from '../../components/myPage/orderDetail/OrderProductList';
@@ -23,6 +24,7 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderDetail() {
   const query = useQuery();
+  const printArea = useRef();
   const { isLogin } = useContext(GlobalContext);
   const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '', defaultOrderStatusType: '' });
   const [orderProducts, setOrderProducts] = useState([]); // 주문 상품
@@ -140,24 +142,20 @@ export default function OrderDetail() {
       }));
   };
 
-  const showOrderCancel = (orderStatusType) => {
+  const showOrderCancel = (orderStatusType, claimStatusType) => {
+    // 주문아이템에 orderStatusType과 claimStatusType 둘 다 있음.
+    // claimStatusType이 존재하면 클레임 중이니 주문 취소 버튼 hidden 처리
+    if (claimStatusType) {
+      return false;
+    }
+
     return ['DEPOSIT_WAIT', 'PAY_DONE', 'PRODUCT_PREPARE', 'DELIVERY_PREPARE'].includes(orderStatusType);
   };
 
-  // TODO: 마크업처럼 스타일리 안되는데 추후 확인
-  const onPrint = () => {
-    const html = document.querySelector('html');
-    const printContents = document.querySelector('.content').innerHTML;
-    const printDiv = document.createElement('div');
-    printDiv.className = 'print-div';
-
-    html.appendChild(printDiv);
-    printDiv.innerHTML = printContents;
-    document.body.style.display = 'none';
-    window.print();
-    document.body.style.display = 'block';
-    printDiv.style.display = 'none';
-  };
+  const onPrint = useReactToPrint({
+    pageStyle: '.my{margin: 0 20px;}',
+    content: () => printArea.current,
+  });
 
   const onOrderCancel = (orderNo) => {
     const request = {
@@ -196,7 +194,7 @@ export default function OrderDetail() {
   return (
     <>
       <SEOHelmet title={'주문 상세 조회'} />
-      <div className="contents mypage">
+      <div ref={printArea} className="contents mypage">
         <div className="container my">
           <div className="content">
             <div className="common_head">
@@ -213,9 +211,9 @@ export default function OrderDetail() {
             <div className="order_detail_cont">
               <OrderProductList>
                 {orderProducts.length > 0 &&
-                  orderProducts.map((orderProduct) => (
+                  orderProducts.map((orderProduct, index) => (
                     <OrderDetailProductItem
-                      key={orderProduct.orderNo}
+                      key={index}
                       productName={orderProduct.productName}
                       imageUrl={orderProduct.imageUrl}
                       optionTitle={orderProduct.optionTitle}
@@ -229,7 +227,7 @@ export default function OrderDetail() {
             <OrderInfo ordererInfo={ordererInfo} shippingAddress={shippingAddress} />
             <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
-              {showOrderCancel(orderInfo.defaultOrderStatusType) && (
+              {showOrderCancel(orderInfo.defaultOrderStatusType, ordererInfo.claimStatusType) && (
                 <button
                   type="button"
                   className="button button_negative"

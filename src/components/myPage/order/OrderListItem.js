@@ -31,6 +31,7 @@ export default function OrderListItem({
     DELIVERY_PREPARE: '배송준비',
     DELIVERY_ING: '배송중',
     DELIVERY_DONE: '배송완료',
+    BUY_CONFIRM: '구매확정',
     CANCEL_REQUEST: '주문취소',
     CANCEL_DONE: '취소완료',
   };
