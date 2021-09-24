@@ -30,7 +30,7 @@ import StoreInfo from './pages/support/storeInfo';
 import videoCourse from './pages/support/videoCourse';
 
 //마이페이지
-import myPageMain from './pages/mypage/myPageMain';
+import myPageMain from './pages/mypage/MyPageMain';
 import MyPageMember from './pages/mypage/MyPageMember';
 import orderDetail from './pages/mypage/orderDetail';
 import orderList from './pages/mypage/orderList';
