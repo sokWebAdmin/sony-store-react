@@ -1,10 +1,32 @@
+import { useEffect } from 'react';
+import {
+  useProfileState,
+  fetchMyProfile,
+  useProileDispatch,
+} from '../../../context/profile.context';
+
 import { Link } from 'react-router-dom';
 
 const MemberSummary = () => {
+  const { my, profile } = useProfileState();
+  const profileDispatch = useProileDispatch();
+
+  useEffect(() => {
+    if (!my && profile?.memberId) {
+      fetchMy(profile.memberId);
+    }
+  }, [my, profile]);
+
+  function fetchMy (customerid) {
+    fetchMyProfile(profileDispatch, { type: '30', customerid }).
+      catch(console.error);
+  }
+
   return (
     <div className="my_user">
       <div className="user_profile">
-        <p className="user_name"><span className="name">김소니</span>님
+        <p className="user_name"><span className="name">{profile?.memberName ||
+        ''}</span>님
           안녕하세요 :)</p>
         <Link to="/my-page/member" className="user_modify under_line">회원정보
           수정</Link>
