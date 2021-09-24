@@ -8,6 +8,9 @@ import OrderProductList from '../../components/myPage/orderDetail/OrderProductLi
 import OrderDetailProductItem from '../../components/myPage/orderDetail/OrderDetailProductItem';
 import OrderInfo from '../../components/myPage/orderDetail/OrderInfo';
 import PurchaseInfo from '../../components/myPage/orderDetail/PurchaseInfo';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
+import Confirm from '../../components/common/Confirm';
 
 import GlobalContext from '../../context/global.context';
 
@@ -56,6 +59,9 @@ export default function OrderDetail() {
     cardInfo: null, // 가상계좌일 때 NUll
     bankInfo: null, // 신용카드일 때 Null
   });
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
+  const [confirmVisible, setConfirmVisible] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState('');
 
   useEffect(() => {
     const request = { path: { orderNo: query.get('orderNo') } };
@@ -157,32 +163,46 @@ export default function OrderDetail() {
     content: () => printArea.current,
   });
 
-  const onOrderCancel = (orderNo) => {
-    const request = {
-      path: { orderNo },
-      requestBody: {
-        claimType: 'CANCEL',
-        claimReasonType: 'CHANGE_MIND',
-        claimReasonDetail: '',
-        bankAccountInfo: null,
-        saveBankAccountInfo: false,
-        responsibleObjectType: null,
-      },
-    };
+  const openConfirm = (message) => {
+    setConfirmVisible(true);
+    setConfirmMessage(message);
+  };
 
-    const orderCancelMap = {
-      profile: () => postProfileClaimOrderCancelByOrderNo(request),
-      guest: () => postGuestClaimOrderCancelByOrderNo(request),
-    };
+  const onCloseConfirm = (status) => {
+    setConfirmVisible(false);
+    if (status === 'ok') {
+      const request = {
+        path: { orderNo: query.get('orderNo') },
+        requestBody: {
+          claimType: 'CANCEL',
+          claimReasonType: 'CHANGE_MIND',
+          claimReasonDetail: '',
+          bankAccountInfo: null,
+          saveBankAccountInfo: false,
+          responsibleObjectType: null,
+        },
+      };
 
-    return orderCancelMap[isLogin ? 'profile' : 'guest']().then((res) => {
-      if (res.data.status === 404 || res.data.status === 400) {
-        alert(res.data.message);
-        return;
-      }
+      const orderCancelMap = {
+        profile: () => postProfileClaimOrderCancelByOrderNo(request),
+        guest: () => postGuestClaimOrderCancelByOrderNo(request),
+      };
 
-      window.alert('주문취소 신청이 완료되었습니다.');
-    });
+      return orderCancelMap[isLogin ? 'profile' : 'guest']().then((res) => {
+        if (res.data.status === 404 || res.data.status === 400) {
+          openAlert(res.data.message);
+          return;
+        }
+
+        openAlert('주문취소 신청이 완료되었습니다.', () => window.location.reload());
+      });
+    } else if (status === 'cancel') {
+      console.log('취소');
+    }
+  };
+
+  const onOrderCancel = () => {
+    openConfirm('현재의 주문에 대해서 환불계좌를 확정하시겠습니까?');
   };
 
   // 클레임 중인 상품인지 확인 => 기획누락같은데, 클레임 상태일 땐 주문상태 UI disable 처리
@@ -194,6 +214,8 @@ export default function OrderDetail() {
   return (
     <>
       <SEOHelmet title={'주문 상세 조회'} />
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+      {confirmVisible && <Confirm onClose={onCloseConfirm}>{confirmMessage}</Confirm>}
       <div ref={printArea} className="contents mypage">
         <div className="container my">
           <div className="content">
@@ -228,11 +250,7 @@ export default function OrderDetail() {
             <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
               {showOrderCancel(orderInfo.defaultOrderStatusType, ordererInfo.claimStatusType) && (
-                <button
-                  type="button"
-                  className="button button_negative"
-                  onClick={() => onOrderCancel(query.get('orderNo'))}
-                >
+                <button type="button" className="button button_negative" onClick={onOrderCancel}>
                   주문 취소
                 </button>
               )}

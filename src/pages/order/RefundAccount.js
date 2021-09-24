@@ -44,8 +44,6 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
     }
   };
 
-  const onCloseAlert = () => {};
-
   useEffect(async () => {
     setBackSelectList(bankType);
   }, []);
