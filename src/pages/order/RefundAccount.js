@@ -1,13 +1,17 @@
-import LayerPopup from '../../components/common/LayerPopup';
 import { useEffect, useState } from 'react';
 import { useMallState } from '../../context/mall.context';
 import { putProfileClaimRefundAccountByClaimNo } from '../../api/claim';
+import LayerPopup from '../../components/common/LayerPopup';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
+import Confirm from '../../components/common/Confirm';
 
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   const close = () => setVisible(false);
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [form, setForm] = useState({
     bank: '',
     account: '',
@@ -42,20 +46,20 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   };
 
   const validate = (form) => {
-    //TODO: ui 얼럿으로 교체
-    console.log('form.bank:', form.bank);
     if (!form.bank) {
-      alert('은행을 선택하세요.');
+      openAlert('은행을 선택하세요.');
       return false;
     }
 
     if (!form.account) {
-      alert('계좌번호를 입력하세요.');
+      openAlert('계좌번호를 입력하세요.');
+      // alert('계좌번호를 입력하세요.');
       return false;
     }
 
     if (!form.depositorName) {
-      alert('예금주를 입력하세요.');
+      openAlert('예금주를 입력하세요.');
+      // alert('예금주를 입력하세요.');
       return false;
     }
 
@@ -65,6 +69,7 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   return (
     <>
       <LayerPopup className="refund_account" onClose={close}>
+        {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
         <p className="pop_tit">환불계좌 입력</p>
         <div className="pop_cont_scroll">
           <div className="form_zone">
