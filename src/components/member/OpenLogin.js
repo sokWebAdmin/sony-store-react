@@ -80,7 +80,6 @@ const OpenLogin = ({ title, message, customCallback }) => {
     }
 
     if (profileResult.memberStatus === 'WAITING') {
-      setAccessToken(profileResult.accessToken, profileResult.expireIn);
       onChangeGlobal({ isLogin: true });
       setProfile(profileDispatch, profileResult);
       history.push('/member/join-agree');
