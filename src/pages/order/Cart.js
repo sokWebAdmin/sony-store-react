@@ -30,9 +30,11 @@ import {
 // module
 import gc from '../../storage/guestCart.js';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 const Cart = () => {
   const { isLogin } = useContext(GlobalContext);
+  const history = useHistory();
 
   // popup
   const [showSolicitation, setShowSolicitation] = useState(false);
@@ -81,10 +83,9 @@ const Cart = () => {
   };
 
   const goOrder = async () => {
-    console.log(checkedProducts);
-    alert('주문창으로~');
-    const result = await getOrderSheetNo(checkedProducts);
-    console.log(result);
+    const orderSheetNo = await getOrderSheetNo(checkedProducts); // string
+
+    history.push(`/order/sheet?orderSheetNo=${orderSheetNo}`);
   };
 
   async function getOrderSheetNo (products) {
@@ -99,12 +100,9 @@ const Cart = () => {
         })),
     };
 
-    console.log(request);
-    return;
-
     try {
-      const { data } = await postOrderSheets(request);
-      return data;
+      const { data: { orderSheetNo } } = await postOrderSheets(request);
+      return orderSheetNo;
     }
     catch (e) {
       console.error(e);
