@@ -19,7 +19,14 @@ import { getUrlParam } from '../../utils/location';
 import GlobalContext from '../../context/global.context';
 import Alert from '../../components/common/Alert';
 import { getItem, KEY, setAccessToken } from '../../utils/token';
-import { fetchProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
+import {
+  fetchMyProfile,
+  fetchProfile,
+  setProfile,
+  useProfileState,
+  useProileDispatch,
+} from '../../context/profile.context';
+import { getProfile } from '../../api/member';
 
 export default function JoinStep() {
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
@@ -257,17 +264,26 @@ export default function JoinStep() {
     }
   }, [expireAt, time, authSent]);
 
+  const fetchMemberInfo = async () => {
+    const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
+    const redirectedToken = getItem(KEY.OPENID_TOKEN);
+    console.log(redirectedToken, redirectedProvider);
+    if (redirectedProvider && redirectedToken) {
+      const response = await getProfile();
+      const data = { type: '30', customerid: response.data.memberId };
+      setProfile(profileDispatch, response.data);
+      await fetchMyProfile(profileDispatch, data);
+
+      setEmail(response.data.memberId);
+      console.log(response.data.memberId);
+      return;
+    }
+    history.push('/');
+  }
+
   useEffect(() => {
     if (isLogin) {
-      const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
-      const redirectedToken = getItem(KEY.OPENID_TOKEN);
-      console.log(redirectedToken, redirectedProvider);
-      if (redirectedProvider && redirectedToken) {
-        setEmail(profile.memberId);
-        console.log(profile.memberId);
-        return;
-      }
-      history.push('/');
+      fetchMemberInfo();
     }
   }, []);
 

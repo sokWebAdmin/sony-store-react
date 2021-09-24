@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { useMallState } from '../../context/mall.context';
-import { KEY, removeAccessToken, setItem } from '../../utils/token';
+import { KEY, removeAccessToken, setAccessToken, setItem } from '../../utils/token';
 import { generateRandomString } from '../../utils/utils';
 import { getOauthLoginUrl } from '../../api/member';
 import Alert from '../common/Alert';
 import { useHistory } from 'react-router-dom';
 import GlobalContext from '../../context/global.context';
-import { resetProfile, useProileDispatch } from '../../context/profile.context';
+import { resetProfile, setProfile, useProileDispatch } from '../../context/profile.context';
 
 const label = {
   naver: '네이버',
@@ -70,6 +70,7 @@ const OpenLogin = ({ title, message, customCallback }) => {
   const _openIdAuthCallback = (profileResult = null) => {
     window.shopOauthCallback = null;
 
+    console.log(profileResult);
     if (!profileResult) {
       removeAccessToken();
       onChangeGlobal({ isLogin: false });
@@ -77,8 +78,11 @@ const OpenLogin = ({ title, message, customCallback }) => {
       openAlert('간편 인증에 실패하였습니다.');
       return;
     }
-    
+
     if (profileResult.memberStatus === 'WAITING') {
+      setAccessToken(profileResult.accessToken, profileResult.expireIn);
+      onChangeGlobal({ isLogin: true });
+      setProfile(profileDispatch, profileResult);
       history.push('/member/join-agree');
     } else {
       openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
