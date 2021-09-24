@@ -2,7 +2,7 @@ const WishList = () => {
   return (
     <div className="cont history_like">
       <div className="cont_head">
-        <h3 className="cont_tit">찜</h3>
+        <h3 className="cont_tit" id="wish-tit">찜</h3>
         {/* s : 찜 목록이 없을 경우 display:none */}
         <div className="like_select_btn">
           <button className="button button_secondary button-s"
