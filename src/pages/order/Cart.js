@@ -1,38 +1,66 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useHistory } from 'react-router';
+import React, { useState, useContext, useEffect, useMemo } from 'react';
 import GlobalContext from '../../context/global.context';
 
 // components
 import SEOHelmet from '../../components/SEOHelmet';
+import Dimmed from '../../components/common/Dimmed';
 import Header from '../../components/cart/Header';
 import QnA from '../../components/cart/QnA';
 import Empty from '../../components/cart/Empty';
+import CartTable from '../../components/cart/CartTable';
 
-import ProductList from '../../components/cart/ProductList';
+import Controller from '../../components/cart/tableParticals/Controller';
+import ProductList from '../../components/cart/tableParticals/ProductList';
+import TotalAmount from '../../components/cart/tableParticals/TotalAmount';
 
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
 // api
-import { getCart } from '../../api/order';
+import { getCart, putCart, postGuestCart, deleteCart } from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
 
 const Cart = () => {
-  const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
 
+  const [wait, setWait] = useState(false);
   const [products, setProducts] = useState([]);
+  const putProducts = useMemo(() => products.map(product => ({ // put 요청 미리 맵핑해놓음.
+    cartNo: product.cartNo,
+    orderCnt: product.orderCnt,
+    optionInputs: product.optionInputs,
+  })), [products]);
+  useEffect(() => {
+    const isUpdate = products.some(({ update }) => update);
+    isUpdate && updateCart();
+  }, [products]);
+
+  const productCount = useMemo(() => products.length, [products]);
+
+  const [amount, setAmount] = useState(null);
+  const [checkedIndexes, setCheckedIndexes] = useState([]);
 
   const init = () => {
+    setWait(true);
+
     if (isLogin) {
-      fetchCart().catch(console.error);
+      fetchCart().
+        then(mapData).
+        catch(console.error).
+        finally(() => setWait(false));
+
     }
     else {
       gc.fetch();
-      setProducts(gc.items);
+      const body = getGuestCartRequest(gc.items);
+      fetchGuestCart(body).
+        then(mapData).
+        catch(console.error).
+        finally(() => setWait(false));
+      ;
     }
   };
 
@@ -40,20 +68,145 @@ const Cart = () => {
 
   async function fetchCart () {
     try {
-      const { data: { deliveryGroups } } = await getCart();
-      if (deliveryGroups.length < 1) {
-        return;
-      }
-      setProducts(deliveryGroups)
+      const { data } = await getCart();
+      return data;
     }
     catch (err) {
       console.error(err);
     }
+    return null;
+  }
+
+  async function fetchGuestCart (gcItems) {
+    try {
+      const { data } = await postGuestCart(gcItems); // post & get cart data
+      return data;
+    }
+    catch (err) {
+      console.error(err);
+    }
+    return null;
+  }
+
+  function updateCart () {
+    setWait(true);
+    if (isLogin) {
+      updateMemberCart().
+        then(() => setWait(false)).
+        catch(() => window.location.reload());
+    }
+    else {
+      updateGuestCart().
+        then(() => setWait(false)).
+        catch(() => window.location.reload());
+    }
+  }
+
+  async function updateMemberCart () {
+    try {
+      await putCart(putProducts);
+      const data = await fetchCart();
+      mapData(data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+    return null;
+  }
+
+  async function updateGuestCart () {
+    gcUpdate();
+
+    try {
+      const data = await fetchGuestCart(gc.items);
+      mapData(data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+    return null;
+  }
+
+  function deleteItem (no) { // productNo 보다 유니크함
+    if (isLogin) {
+      const cartNo = no;
+      deleteMemberCart([cartNo]);
+    }
+    else {
+      const optionNo = no; // TODO: 옵션 No 가 유니크한 값인지 확인 필요..
+      deleteGuestCart([optionNo]);
+    }
+  }
+
+  function deleteMemberCart (cartNos) {
+    deleteCart({
+      cartNo: cartNos.join(','),
+    }).then(() => init());
+  }
+
+  function deleteGuestCart (optionNos) {
+    const newItems = gc.items.filter(
+      ({ optionNo }) => !optionNos.includes(optionNo));
+    gc.cover(newItems);
+    init();
+  }
+
+  function gcUpdate () {
+    if (!products.length) {
+      throw new Error('products state is empty array');
+    }
+    const data = getGuestCartRequest(products);
+    gc.cover(data);
+  }
+
+  function getGuestCartRequest (gcItems) {
+    return gcItems.map(
+      ({ cartNo, productNo, optionNo, orderCnt, optionInputs, channelType }) => ({
+        cartNo, productNo, optionNo, orderCnt, optionInputs, channelType,
+      }));
+  }
+
+  function mapData (responseData) {
+    const { deliveryGroups, price } = responseData;
+
+    if (!deliveryGroups?.length) {
+      reset();
+      return;
+    }
+
+    const result = deliveryGroups.flatMap(delivery =>
+      delivery.orderProducts.flatMap(productGroup =>
+        productGroup.orderProductOptions.flatMap(product => {
+            // debug pores
+            return {
+              productNo: productGroup.productNo,
+              productName: productGroup.productName,
+              cartNo: product.cartNo,
+              imageUrl: product.imageUrl,
+              orderCnt: product.orderCnt,
+              standardAmt: product.price.standardAmt,
+              buyAmt: product.price.buyAmt,
+              optionNo: product.optionNo,
+              optionText: product.optionTitle,
+              optionInputs: product.optionInputs,
+              update: false,
+            };
+          },
+        )));
+
+    setProducts(result);
+    setAmount(price);
+  }
+
+  function reset () {
+    setProducts([]);
+    setAmount(null);
   }
 
   return (
     <>
       <SEOHelmet title={'장바구니'} />
+      {wait && <Dimmed />}
       <div className="contents order">
         <div className="container" id="container">
           <div className="content order_page">
@@ -63,16 +216,26 @@ const Cart = () => {
                 ? <Empty />
                 :
                 <>
-                  <ProductList />
-                  <div className="button_wrap">
-                    <a className="button button_negative">쇼핑 계속 하기</a>
-                    <button type="submit"
-                            className="button button_positive popup_comm_btn"
-                            data-popup-name="login_chk_order" onClick={() => {
-                      history.push('/order/sheet');
-                    }}>구매하기
-                    </button>
-                  </div>
+                  <Controller
+                    products={products}
+                    checkedIndexes={checkedIndexes}
+                    setCheckedIndexes={setCheckedIndexes}
+                  />
+                  <CartTable>
+                    <ProductList
+                      products={products}
+                      setProducts={setProducts}
+                      deleteItem={deleteItem}
+                      checkedIndexes={checkedIndexes}
+                      setCheckedIndexes={setCheckedIndexes}
+                    />
+                    {amount &&
+                    <TotalAmount
+                      productCount={productCount}
+                      amount={amount}
+                    />
+                    }
+                  </CartTable>
                   <QnA />
                 </>
               }

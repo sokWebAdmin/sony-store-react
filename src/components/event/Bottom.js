@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { getDisplayEvents } from '../../api/display';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { getUrlParam } from '../../utils/location';
 import moment from 'moment';
 import LayerPopup from '../common/LayerPopup';
@@ -10,12 +10,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
 
 const initTabs = [
-  {key: 'all', label: '전체'},
-  {key: 'only', label: '소니스토어 단독'},
-  {key: 'benefit-zone', label: '혜택존'},
-  {key: 'pre-order', label: '예약판매'},
-  {key: 'refined', label: '정품등록 이벤트'},
-  {key: 'live-on', label: 'LIVE ON'},
+  { key: 'all', label: '전체' },
+  { key: 'only', label: '소니스토어 단독' },
+  { key: 'benefit-zone', label: '혜택존' },
+  { key: 'pre-order', label: '예약판매' },
+  { key: 'refined', label: '정품등록 이벤트' },
+  { key: 'live-on', label: 'LIVE ON' },
 ];
 const tags = {
   all: '',
@@ -28,14 +28,15 @@ const tags = {
   refurbish: '리퍼비시몰',
 };
 const _scrollView = {
-  pc : 5,
-  tb : 3,
-  mo : 2
+  pc: 5,
+  tb: 3,
+  mo: 2,
 };
 
 const EventBottom = () => {
   SwiperCore.use([Navigation]);
   const history = useHistory();
+  const location = useLocation();
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const [events, setEvents] = useState([]);
@@ -53,14 +54,14 @@ const EventBottom = () => {
   const [tag, setTag] = useState('');
   const [selectEvent, setSelectEvent] = useState(null);
   const [tabs, setTabs] = useState(initTabs);
-  const initShowLabel = initTabs.find(({key}) => getUrlParam('tab') || 'all').label;
+  const initShowLabel = initTabs.find(({ key }) => (getUrlParam('tab') || 'all') === key).label;
   const [showLabel, setShowLabel] = useState(initShowLabel);
 
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
     const { data } = await getDisplayEvents(keyword);
     sortEvents(data);
-  }
+  };
 
   const fetchInitDisplayEvents = async () => {
     if (tabs.length === 8) return;
@@ -68,14 +69,14 @@ const EventBottom = () => {
     const employee = data.find((event) => `/${event.url}` === '/event/employee');
     let newTabs = [...tabs];
     if (employee) {
-      newTabs = [...newTabs, {key: 'employee', label: '임직원몰'}]
+      newTabs = [...newTabs, { key: 'employee', label: '임직원몰' }];
     }
     const refurbish = data.find((event) => `/${event.url}` === '/event/refurbish');
     if (refurbish) {
-      newTabs = [...newTabs, {key: 'refurbish', label: '리퍼비시몰'}]
+      newTabs = [...newTabs, { key: 'refurbish', label: '리퍼비시몰' }];
     }
     setTabs(newTabs);
-  }
+  };
 
   const sortEvents = (data = events) => {
     const sortByLatestCreationDate = (a, b) => {
@@ -98,7 +99,7 @@ const EventBottom = () => {
     };
     const sortData = newest ? [...data].sort(sortByLatestCreationDate) : [...data].sort(sortByOldestCreationDate);
     setEvents(sortData);
-  }
+  };
 
   const formatYmdt = (ymdt) => new Date(ymdt).toISOString().slice(0, 10);
 
@@ -115,7 +116,7 @@ const EventBottom = () => {
     setLabel(label);
     setSelectEvent(event);
     setShowShareLayer(true);
-  }
+  };
 
   const getLink = (origin = true, eventNo = productNo, tagName = tag, event = selectEvent) => {
     const key = Object.keys(tags).find(key => tagName.includes(tags[key]));
@@ -129,17 +130,17 @@ const EventBottom = () => {
       return `${origin ? document.location.origin : ''}/event/${key}/${eventNo}`;
     }
     return `${origin ? document.location.origin : ''}/event/${key}`;
-}
+  };
 
   const copyLink = (link) => {
     navigator.clipboard.writeText(link).then(() => {
       openAlert('링크가 복사되었습니다.');
     });
-  }
+  };
 
   const closeShareLayer = () => {
     setShowShareLayer(false);
-  }
+  };
 
   useEffect(() => {
     fetchDisplayEvents();
@@ -150,14 +151,20 @@ const EventBottom = () => {
   }, [newest]);
 
   useEffect(() => {
+    setTabState(getUrlParam('tab') || 'all');
+    const showLabel = tabs.find(({ key }) => (getUrlParam('tab') || 'all') === key).label;
+    setShowLabel(showLabel);
+  }, [location]);
+
+  useEffect(() => {
     fetchInitDisplayEvents();
   }, []);
 
   const shareKakaoButton = () => {
     if (window.Kakao) {
-      const kakao = window.Kakao
+      const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
-        kakao.init(process.env.REACT_APP_KAKAO_SHARE_KEY)
+        kakao.init(process.env.REACT_APP_KAKAO_SHARE_KEY);
       }
       kakao.Link.sendDefault({
         objectType: 'text',
@@ -166,22 +173,22 @@ const EventBottom = () => {
           mobileWebUrl: getLink(),
           webUrl: getLink(),
         },
-      })
+      });
     }
-  }
+  };
 
   const shareKakaoStoryButton = () => {
     if (window.Kakao) {
-      const kakao = window.Kakao
+      const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
-        kakao.init(process.env.REACT_APP_KAKAO_SHARE_KEY)
+        kakao.init(process.env.REACT_APP_KAKAO_SHARE_KEY);
       }
       kakao.Story.share({
         text: label,
         url: getLink(),
-      })
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -194,17 +201,25 @@ const EventBottom = () => {
         </div>
         <div className="share_list">
           <ul>
-            <li className="lists"><a href="javascript:void(0)" className="share_btn kakaotalk" onClick={() => shareKakaoButton()}>카카오톡</a></li>
-            <li className="lists"><a href="javascript:void(0)" className="share_btn kakaostory" onClick={() => shareKakaoStoryButton()}>카카오스토리</a></li>
-            <li className="lists"><a href={`https://www.facebook.com/sharer/sharer.php?u=${getLink()}`} className="share_btn facebook" target="_blank">페이스북</a></li>
-            <li className="lists"><a href={`https://twitter.com/intent/tweet?url=${getLink()}`} className="share_btn twitter" target="_blank">트위터</a></li>
-            <li className="lists"><a href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(getLink())}`} className="share_btn line" target="_blank">라인</a></li>
-            <li className="lists"><a href={`https://band.us/plugin/share?body=${label}&route=${getLink()}`} className="share_btn band" target="_blank">밴드</a></li>
+            <li className="lists"><a href="javascript:void(0)" className="share_btn kakaotalk"
+                                     onClick={() => shareKakaoButton()}>카카오톡</a></li>
+            <li className="lists"><a href="javascript:void(0)" className="share_btn kakaostory"
+                                     onClick={() => shareKakaoStoryButton()}>카카오스토리</a></li>
+            <li className="lists"><a href={`https://www.facebook.com/sharer/sharer.php?u=${getLink()}`}
+                                     className="share_btn facebook" target="_blank">페이스북</a></li>
+            <li className="lists"><a href={`https://twitter.com/intent/tweet?url=${getLink()}`}
+                                     className="share_btn twitter" target="_blank">트위터</a></li>
+            <li className="lists"><a
+              href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(getLink())}`}
+              className="share_btn line" target="_blank">라인</a></li>
+            <li className="lists"><a href={`https://band.us/plugin/share?body=${label}&route=${getLink()}`}
+                                     className="share_btn band" target="_blank">밴드</a></li>
           </ul>
         </div>
       </LayerPopup>}
       <div className="event_zone">
-        <div className="tab_ui scroll category_evnet swiper-container" data-scroll-view={tabs.length} data-tab-scroll-view="5">
+        <div className="tab_ui scroll category_evnet swiper-container" data-scroll-view={tabs.length}
+             data-tab-scroll-view="5">
           <Swiper
             className="swiper-wrapper"
             navigation={{
@@ -225,13 +240,13 @@ const EventBottom = () => {
             }}
             on={{
               init: swiper => {
-                swiper.params.navigation.prevEl = prevRef.current
-                swiper.params.navigation.nextEl = nextRef.current
-                swiper.navigation.update()
+                swiper.params.navigation.prevEl = prevRef.current;
+                swiper.params.navigation.nextEl = nextRef.current;
+                swiper.navigation.update();
               },
             }}
           >
-            {tabs && tabs.map(({key, label}) => {
+            {tabs && tabs.map(({ key, label }) => {
               return (
                 <SwiperSlide key={`tab_${key}`} className={`tabs swiper-slide ${tabState === key ? 'on' : ''}`}>
                   <Link to={`/event/list?tab=${key}`} onClick={() => {
@@ -239,7 +254,7 @@ const EventBottom = () => {
                     setShowLabel(label);
                   }} className="btn">{label}</Link>
                 </SwiperSlide>
-              )
+              );
             })}
             <div className="swiper-button-prev" ref={prevRef}></div>
             <div className="swiper-button-next" ref={nextRef}></div>
@@ -258,7 +273,8 @@ const EventBottom = () => {
                            className="itemsort__item__link" onClick={() => setNewest(true)}>최신순</a>
                       </li>
                       <li className={`itemsort__item ${!newest ? 'itemsort__item--active' : ''}`}>
-                        <a href="javascript:void(0)" className="itemsort__item__link" onClick={() => setNewest(false)}>오래된 순</a>
+                        <a href="javascript:void(0)" className="itemsort__item__link" onClick={() => setNewest(false)}>오래된
+                          순</a>
                       </li>
                     </ul>
                   </div>
@@ -268,7 +284,7 @@ const EventBottom = () => {
               <div className="item_list">
                 <div className="item_row">
                   {events && events.map((event) => {
-                    const {eventNo, label, pcImageUrl, startYmdt, endYmdt, tag: tagName} = event;
+                    const { eventNo, label, pcImageUrl, startYmdt, endYmdt, tag: tagName } = event;
                     return (
                       <div className="event_item" key={eventNo} onClick={(e) => {
                         e.preventDefault();
@@ -290,7 +306,7 @@ const EventBottom = () => {
                           openShareEventLayer(eventNo, label, tagName, event);
                         }}>공유하기</a>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>

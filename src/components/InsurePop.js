@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export default function InsurePop({ setPop }) {
   return (
     <>
-      {/* 소비자피해보상 보험 팝업 */}
       <div
         className="layer modal__customer__insurance"
         style={{ display: 'block' }}
@@ -16,7 +14,7 @@ export default function InsurePop({ setPop }) {
             </div>
             <div className="layer_content">
               <div className="consumer_logo">
-                <img src="/images/img_consumerlogo.png" />
+                <img src="/images/img_consumerlogo.png" alt="로고" />
               </div>
               <p>
                 고객님은 안전거래를 위해 현금 결제 시 저희 쇼핑몰이 가입한
@@ -28,25 +26,22 @@ export default function InsurePop({ setPop }) {
                   href="https://mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810"
                   target="_blank"
                   title="새창열림"
+                  rel="noreferrer"
                 >
                   서비스 가입 사실 확인하기
                 </a>
               </div>
             </div>
             <button
-              
               className="layer_close close"
               title="팝업창 닫기"
-              onClick={() => {
-                setPop(false);
-              }}
+              onClick={() => setPop(false)}
             >
               <span>팝업창 닫기</span>
             </button>
           </div>
         </div>
       </div>
-      {/*// 소비자피해보상 보험 팝업 */}
     </>
   );
 }

@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 
-export default function DropdownSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedLabel, tag }) {
+export default function DropdownSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedLabel, tag, className }) {
   const isOpened = useMemo(() => display === 'block', [display]);
   return (
-    <div className={ `select_ui_zone btm_line ${ isOpened ? 'open' : '' }` }>
+    <div className={ `select_ui_zone btm_line ${ isOpened ? 'open' : '' } ${className || ''}` }>
       <a
         href="#select"
         className="selected_btn"

@@ -9,7 +9,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/event.scss';
 import '../../assets/scss/liveon.scss';
-import { getDisplayEvents, getEventByEventNo } from '../../api/display';
+import { getEventByEventNo } from '../../api/display';
 import EventProducts from '../../components/event/EventProducts';
 import { Link, useParams } from 'react-router-dom';
 

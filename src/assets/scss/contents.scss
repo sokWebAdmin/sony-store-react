@@ -69,85 +69,6 @@
     }
   }
 
-  //checkbox
-  .check {
-    position: relative;
-    display: inline-block;
-    vertical-align: top;
-
-    &:not(.check_only) {
-      .inp_check {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        border: 0;
-        vertical-align: top;
-
-        &+label {
-          display: inline-block;
-          position: relative;
-          padding-left: 24px;
-          min-height: 16px;
-          cursor: pointer;
-          color: #222;
-          font-size: 14px;
-          line-height: 14px;
-        }
-
-        &+label:before {
-          display: block;
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 16px;
-          height: 16px;
-          text-align: center;
-          background-color: #fff;
-          box-sizing: border-box;
-          border: 1px solid #222;
-        }
-
-        &:checked+label::before {
-          background: url(../images/common/ico_arr_check.png) 50% 50%;
-          width: 16px;
-          height: 16px;
-          background-size: cover;
-          border: 0;
-        }
-      }
-    }
-
-    &.check_only .inp_check {
-      appearance: none;
-      width: 24px;
-      height: 24px;
-      padding: 4px;
-      cursor: pointer;
-
-      &::before {
-        content: "";
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-
-      &:checked::before {
-        background: no-repeat url("../images/common/ico_arr_check.png") 50%;
-        background-size: 16px;
-      }
-
-      &:not(:checked)::before {
-        border: 1px solid #222;
-        box-sizing: border-box;
-      }
-    }
-  }
-
   //radio
   .radio_box {
     position: relative;
@@ -4430,6 +4351,85 @@
         transform: translate(-50%, -50%);
         content: "";
       }
+    }
+  }
+}
+
+//checkbox
+.check {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+
+  &:not(.check_only) {
+    .inp_check {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+      vertical-align: top;
+
+      &+label {
+        display: inline-block;
+        position: relative;
+        padding-left: 24px;
+        min-height: 16px;
+        cursor: pointer;
+        color: #222;
+        font-size: 14px;
+        line-height: 14px;
+      }
+
+      &+label:before {
+        display: block;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        background-color: #fff;
+        box-sizing: border-box;
+        border: 1px solid #222;
+      }
+
+      &:checked+label::before {
+        background: url(../images/common/ico_arr_check.png) 50% 50%;
+        width: 16px;
+        height: 16px;
+        background-size: cover;
+        border: 0;
+      }
+    }
+  }
+
+  &.check_only .inp_check {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    &:checked::before {
+      background: no-repeat url("../images/common/ico_arr_check.png") 50%;
+      background-size: 16px;
+    }
+
+    &:not(:checked)::before {
+      border: 1px solid #222;
+      box-sizing: border-box;
     }
   }
 }

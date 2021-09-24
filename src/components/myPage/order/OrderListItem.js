@@ -31,14 +31,27 @@ export default function OrderListItem({
     DELIVERY_PREPARE: '배송준비',
     DELIVERY_ING: '배송중',
     DELIVERY_DONE: '배송완료',
+    BUY_CONFIRM: '구매확정',
+    CANCEL_REQUEST: '주문취소',
+    CANCEL_DONE: '취소완료',
   };
 
   const claimStatusMap = {
     CANCEL_REQUEST: '주문취소',
     CANCEL_DONE: '취소완료',
+    EXCHANGE_REQUEST: '교환',
+    EXCHANGE_DONE: '교환완료',
+    RETURN_REQUEST: '반품',
+    RETURN_DONE: '반품완료',
   };
 
-  const showOrderCancel = (orderStatusType) => {
+  const showOrderCancel = (orderStatusType, claimStatusType) => {
+    // 주문아이템에 orderStatusType과 claimStatusType 둘 다 있음.
+    // claimStatusType이 존재하면 클레임 중이니 주문 취소 버튼 hidden 처리
+    if (claimStatusType) {
+      return false;
+    }
+
     return ['DEPOSIT_WAIT', 'PAY_DONE', 'PRODUCT_PREPARE', 'DELIVERY_PREPARE'].includes(orderStatusType);
   };
 
@@ -74,20 +87,20 @@ export default function OrderListItem({
       requestBody: {
         claimType: 'CANCEL',
         claimReasonType: 'CHANGE_MIND', // TODO: etc로 변경? 확인해야함
-        claimReasonDetail: null,
+        claimReasonDetail: '',
         bankAccountInfo: null,
         saveBankAccountInfo: false,
         responsibleObjectType: null,
         productCnt: orderCnt,
       },
-    })
-      .then(() => {
-        alert(successMessage);
-      })
-      .catch(() => {
-        // FIXME: 않이 외 에러 catch가 않되?
+    }).then((res) => {
+      if (res.data.status === 400 || res.data.status === 404) {
         alert('취소 실패하였습니다. 다시 시도해주세요.'); // TODO: 실패 메세지 기획 없음
-      });
+        return;
+      }
+      alert(successMessage);
+      window.location.reload();
+    });
   };
 
   return (
@@ -113,8 +126,8 @@ export default function OrderListItem({
         {orderCnt} <span className="unit">개</span>
       </div>
       <div className="col_table_cell order">
-        <span className="order_status">{orderStatusMap[orderStatusType] ?? claimStatusMap[claimStatusType]}</span>
-        {showOrderCancel(orderStatusType) && (
+        <span className="order_status">{claimStatusMap[claimStatusType] ?? orderStatusMap[orderStatusType]}</span>
+        {showOrderCancel(orderStatusType, claimStatusType) && (
           <button type="button" className="button button_negative button-s" onClick={onClickOrderCancel}>
             주문취소
           </button>

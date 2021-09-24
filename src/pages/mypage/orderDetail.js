@@ -1,9 +1,13 @@
-import { React, useEffect, useState, useContext } from 'react';
+import { React, useEffect, useState, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '../../hooks';
-import { toCurrencyString } from '../../utils/unit';
-import OrderProcess from '../../components/myPage/order/OrderProcess';
-import OrderDetailProductItem from '../../components/order/OrderDetailProductItem';
+import { useReactToPrint } from 'react-to-print';
+import OrderProcess from '../../components/myPage/orderDetail/OrderProcess';
+import OrderSummary from '../../components/myPage/orderDetail/OrderSummary';
+import OrderProductList from '../../components/myPage/orderDetail/OrderProductList';
+import OrderDetailProductItem from '../../components/myPage/orderDetail/OrderDetailProductItem';
+import OrderInfo from '../../components/myPage/orderDetail/OrderInfo';
+import PurchaseInfo from '../../components/myPage/orderDetail/PurchaseInfo';
 
 import GlobalContext from '../../context/global.context';
 
@@ -20,18 +24,19 @@ import '../../assets/scss/mypage.scss';
 
 export default function OrderDetail() {
   const query = useQuery();
+  const printArea = useRef();
   const { isLogin } = useContext(GlobalContext);
   const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '', defaultOrderStatusType: '' });
   const [orderProducts, setOrderProducts] = useState([]); // 주문 상품
   const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' }); // 주문 정보
   const [shippingAddress, setShippingAddress] = useState({
-    // 주문 정보 주소
-    // TODO: 배송일 선택 필드 확인 https://nhnent.dooray.com/project/posts/3089925914259872916
+    // 주문 정보
     receiverName: '',
     receiverContact1: '',
     receiverAddress: '',
     receiverDetailAddress: '',
     deliveryMemo: '',
+    requestShippingDate: null,
   });
   const [receiptInfos, setReceiptInfos] = useState(null);
 
@@ -82,6 +87,7 @@ export default function OrderDetail() {
       payType,
       payInfo: { cardInfo, bankInfo },
       receiptInfos,
+      orderOptionsGroupByPartner,
     } = res.data;
 
     setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
@@ -93,6 +99,9 @@ export default function OrderDetail() {
       receiverDetailAddress,
       receiverContact1,
       deliveryMemo,
+      requestShippingDate: orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].requestShippingDate,
+      usesShippingInfoLaterInput:
+        orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].usesShippingInfoLaterInput,
     });
 
     const promotionDiscountAmt = immediateDiscountAmt + additionalDiscountAmt;
@@ -133,53 +142,20 @@ export default function OrderDetail() {
       }));
   };
 
-  const getOrderStatus = (defaultOrderStatusType) => {
-    const orderStatus = {
-      DEPOSIT_WAIT: '입금대기',
-      PAY_DONE: '결제완료',
-      PRODUCT_PREPARE: '배송준비', // 소니에서는 상품준비중을 배송준비중으로 표기ㄴ
-      DELIVERY_PREPARE: '배송준비',
-      DELIVERY_ING: '배송중',
-      DELIVERY_DONE: '배송완료',
-    };
+  const showOrderCancel = (orderStatusType, claimStatusType) => {
+    // 주문아이템에 orderStatusType과 claimStatusType 둘 다 있음.
+    // claimStatusType이 존재하면 클레임 중이니 주문 취소 버튼 hidden 처리
+    if (claimStatusType) {
+      return false;
+    }
 
-    return orderStatus[defaultOrderStatusType];
-  };
-
-  const showFindDelivery = (defaultOrderStatusType) => {
-    return defaultOrderStatusType === 'DELIVERY_ING' || defaultOrderStatusType === 'DELIVERY_DONE';
-  };
-
-  const showOrderCancel = (orderStatusType) => {
     return ['DEPOSIT_WAIT', 'PAY_DONE', 'PRODUCT_PREPARE', 'DELIVERY_PREPARE'].includes(orderStatusType);
   };
 
-  const getInstallmentPeriod = (cardInfo) => {
-    const { installmentPeriod, noInterest } = cardInfo;
-    if (installmentPeriod === 0) {
-      return '일시불';
-    }
-    return `${installmentPeriod}개월 할부${noInterest ? '(무)' : ''}`;
-  };
-
-  // TODO: 마크업처럼 스타일리 안되는데 추후 확인
-  const onPrint = () => {
-    const html = document.querySelector('html');
-    const printContents = document.querySelector('.content').innerHTML;
-    const printDiv = document.createElement('div');
-    printDiv.className = 'print-div';
-
-    html.appendChild(printDiv);
-    printDiv.innerHTML = printContents;
-    document.body.style.display = 'none';
-    window.print();
-    document.body.style.display = 'block';
-    printDiv.style.display = 'none';
-  };
-
-  const openCredicardReceipt = (receiptInfoUrl) => {
-    window.open(receiptInfoUrl);
-  };
+  const onPrint = useReactToPrint({
+    pageStyle: '.my{margin: 0 20px;}',
+    content: () => printArea.current,
+  });
 
   const onOrderCancel = (orderNo) => {
     const request = {
@@ -209,10 +185,16 @@ export default function OrderDetail() {
     });
   };
 
+  // 클레임 중인 상품인지 확인 => 기획누락같은데, 클레임 상태일 땐 주문상태 UI disable 처리
+  const isClaimStart = (defaultOrderStatusType) => {
+    const claimStatuses = ['CANCEL', 'EXCHANGE', 'RETURN'];
+    return claimStatuses.some((claimStatus) => defaultOrderStatusType.includes(claimStatus));
+  };
+
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
-      <div className="contents mypage">
+      <SEOHelmet title={'주문 상세 조회'} />
+      <div ref={printArea} className="contents mypage">
         <div className="container my">
           <div className="content">
             <div className="common_head">
@@ -221,145 +203,31 @@ export default function OrderDetail() {
               </Link>
               <h1 className="common_head_name">주문 상세 조회</h1>
             </div>
-            <OrderProcess defaultOrderStatusType={orderInfo.defaultOrderStatusType} />
-            <div className="o_summary">
-              <dl className="o_summary_status">
-                <dt className="o_summary_term">처리상태</dt>
-                <dd className="o_summary_desc">
-                  <strong>{getOrderStatus(orderInfo.defaultOrderStatusType)}</strong>
-                  {showFindDelivery(orderInfo.defaultOrderStatusType) && (
-                    <button type="button" className="button button_positive button-s">
-                      배송조회
-                    </button>
-                  )}
-                </dd>
-              </dl>
-              <dl className="o_summary_date">
-                <dt className="o_summary_term">주문날짜</dt>
-                <dd className="o_summary_desc">{orderInfo.orderYmdt}</dd>
-              </dl>
-              <dl className="o_summary_number">
-                <dt className="o_summary_term">주문번호</dt>
-                <dd className="o_summary_desc">{orderInfo.orderNo}</dd>
-              </dl>
-            </div>
+            {!isClaimStart(orderInfo.defaultOrderStatusType) && (
+              <OrderProcess defaultOrderStatusType={orderInfo.defaultOrderStatusType} />
+            )}
+            <OrderSummary orderInfo={orderInfo} />
             {/* 제품 정보 */}
             <div className="order_detail_cont">
-              <div className="col_table_wrap order_list">
-                <div className="col_table">
-                  <div className="col_table_head">
-                    <div className="col_table_row">
-                      <div className="col_table_cell">제품</div>
-                      <div className="col_table_cell">가격</div>
-                      <div className="col_table_cell">수량</div>
-                      <div className="col_table_cell">합계</div>
-                    </div>
-                  </div>
-                  <div className="col_table_body">
-                    {orderProducts.length > 0 &&
-                      orderProducts.map((orderProduct) => (
-                        <OrderDetailProductItem
-                          key={orderProduct.orderNo}
-                          productName={orderProduct.productName}
-                          imageUrl={orderProduct.imageUrl}
-                          optionTitle={orderProduct.optionTitle}
-                          buyPrice={orderProduct.buyPrice}
-                          buyAmt={orderProduct.buyAmt}
-                          orderCnt={orderProduct.orderCnt}
-                        />
-                      ))}
-                  </div>
-                </div>
-              </div>
+              <OrderProductList>
+                {orderProducts.length > 0 &&
+                  orderProducts.map((orderProduct, index) => (
+                    <OrderDetailProductItem
+                      key={index}
+                      productName={orderProduct.productName}
+                      imageUrl={orderProduct.imageUrl}
+                      optionTitle={orderProduct.optionTitle}
+                      buyPrice={orderProduct.buyPrice}
+                      buyAmt={orderProduct.buyAmt}
+                      orderCnt={orderProduct.orderCnt}
+                    />
+                  ))}
+              </OrderProductList>
             </div>
-            {/*// 제품 정보 */}
-            {/* 주문 정보 */}
-            <div className="cont order_info">
-              <h3 className="cont_tit">주문 정보</h3>
-              <div className="order_info_inner">
-                <dl className="order">
-                  <dt className="order_term">주문자 정보</dt>
-                  <dd className="order_desc">
-                    {ordererInfo.ordererName}({ordererInfo.ordererContact1})
-                  </dd>
-                  <dt className="order_term">수령인</dt>
-                  <dd className="order_desc">
-                    {shippingAddress.receiverName}({shippingAddress.ordererContact1})
-                  </dd>
-                  <dt className="order_term">배송지</dt>
-                  <dd className="order_desc">
-                    {shippingAddress.receiverAddress}
-                    {shippingAddress.receiverDetailAddress}
-                  </dd>
-                  <dt className="order_term">배송 요청사항</dt>
-                  <dd className="order_desc">{shippingAddress.deliveryMemo ? shippingAddress.deliveryMemo : '없음'}</dd>
-                  <dt className="order_term">배송일 선택</dt>
-                  <dd className="order_desc">정상 배송 </dd>
-                </dl>
-              </div>
-            </div>
-            {/* // 주문 정보 */}
-            {/* 결제 정보 */}
-            <div className="cont purchase_info">
-              <h3 className="cont_tit">결제 정보</h3>
-              <div className="purchase_info_inner">
-                <dl className="purchase">
-                  <dt className="purchase_term purchase_price">총 주문금액</dt>
-                  <dd className="purchase_desc purchase_price">
-                    {toCurrencyString(amountInfo.totalProductAmt)}
-                    <span className="won">원</span>
-                  </dd>
-                  <dt className="purchase_term purchase_discount">할인 금액</dt>
-                  <dd className="purchase_desc purchase_discount">
-                    - {toCurrencyString(amountInfo.totalDiscountAmount)} <span className="won">원</span>
-                  </dd>
-                  <dt className="purchase_term purchase_discount_sub">프로모션 할인</dt>
-                  <dd className="purchase_desc purchase_discount_sub">
-                    - {toCurrencyString(amountInfo.promotionDiscountAmt)} <span className="won">원</span>
-                  </dd>
-                  <dt className="purchase_term purchase_discount_sub">쿠폰 사용</dt>
-                  <dd className="purchase_desc purchase_discount_sub">
-                    - {toCurrencyString(amountInfo.couponDiscountAmt)} <span className="won">원</span>
-                  </dd>
-                  <dt className="purchase_term purchase_discount_sub">마일리지 사용</dt>
-                  <dd className="purchase_desc purchase_discount_sub">
-                    - {toCurrencyString(amountInfo.mileageAmt)} <span className="won">원</span>
-                  </dd>
-                  <dt className="purchase_term purchase_detail">결제 내역</dt>
-                  <dd className="purchase_desc purchase_detail">
-                    <div className="purchase_detail_price">
-                      {toCurrencyString(amountInfo.payAmt)} <span className="won">원</span>
-                    </div>
-                    {/* 결제정보 현금 */}
-                    {payInfo.payType === 'VIRTUAL_ACCOUNT' && (
-                      <>
-                        <div className="purchase_detail_method">
-                          가상 계좌 : {payInfo.bankInfo.bankName}({payInfo.bankInfo.account})
-                        </div>
-                      </>
-                    )}
-                    {payInfo.payType === 'CREDIT_CARD' && (
-                      <>
-                        <div className="purchase_detail_method">
-                          {payInfo.cardInfo.cardName} / {getInstallmentPeriod(payInfo.cardInfo)}
-                        </div>
-                        <button
-                          type="button"
-                          className="button button_negative button-s"
-                          onClick={() => openCredicardReceipt(receiptInfos[0].url)}
-                        >
-                          신용카드 영수증
-                        </button>
-                      </>
-                    )}
-                  </dd>
-                </dl>
-              </div>
-            </div>
-            {/* // 결제 정보 */}
-            {/* buttons */}
+            <OrderInfo ordererInfo={ordererInfo} shippingAddress={shippingAddress} />
+            <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
-              {showOrderCancel(orderInfo.defaultOrderStatusType) && (
+              {showOrderCancel(orderInfo.defaultOrderStatusType, ordererInfo.claimStatusType) && (
                 <button
                   type="button"
                   className="button button_negative"
@@ -376,7 +244,6 @@ export default function OrderDetail() {
                 목록
               </Link>
             </div>
-            {/* // buttons */}
           </div>
         </div>
       </div>

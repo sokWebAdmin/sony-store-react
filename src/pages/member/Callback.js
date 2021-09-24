@@ -54,19 +54,20 @@ const Callback = () => {
     });
     console.log(openIdTokenResult);
 
-    if (openIdTokenResult?.accessToken) {
-      setAccessToken(openIdTokenResult.accessToken, openIdTokenResult.expireIn);
+    if (openIdTokenResult.status === 200) {
+      setAccessToken(openIdTokenResult.data.accessToken, openIdTokenResult.data.expireIn);
+      onChangeGlobal({ isLogin: true });
       const response = await getProfile();
       console.log(response);
-      shopOauthCallback?.(response.data);
       setProfile(profileDispatch, response.data);
+      shopOauthCallback?.(response.data);
     } else {
       removeAccessToken();
       onChangeGlobal({isLogin: false})
       resetProfile(profileDispatch);
       shopOauthCallback?.();
     }
-    // window.close();
+    window.close();
   }
 
   useEffect(() => {

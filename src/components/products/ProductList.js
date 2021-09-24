@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 //util
 import Product from './Product';
 import Banner from './Banner';
-import { getProductSearch } from '../../api/product';
+import { getProductSearch, postProductsGroupManagementCode } from '../../api/product';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const orderList = [
@@ -59,16 +59,54 @@ export default function ProductList({category}) {
       const { status, data } = await getProductSearch({
         categoryNos: category.categoryNo,
         pageNumber: page.number,
-        pageSize: 5,
-        ...orderList[currentOrder.index].query
+        pageSize: 12,
+        hasOptionValues: true,
+        ...orderList[currentOrder.index].query,
       });
 
       if (status !== 200) {
         throw 'get produts is not 200';
       }
 
-      result.list = data.items;
+      result.list = await _getGroupManagementMappingProducts(data.items);
       result.totalCount = data.totalCount;
+    }
+    catch (e) {
+      console.error(e);
+    }
+
+    return result;
+  }
+
+  const _getGroupManagementMappingProducts = async list => {
+    const result = [...list];
+
+    try {
+      let arrExistGroup = result.filter(p => !!p.groupManagementCode).map(p => p.groupManagementCode);
+
+      if (arrExistGroup.length > 0) {
+        arrExistGroup = arrExistGroup.reduce((unique, item) => {
+          if (!Array.isArray(unique)) {
+            unique = [unique];
+          }
+          return unique.includes(item) ? unique : [...unique, item];
+        });
+
+        const { status, data } = await postProductsGroupManagementCode({
+          groupManagementCodes: arrExistGroup,
+          saleStatus: 'ALL_CONDITIONS',
+        });
+
+        if (status !== 200) {
+          throw 'get group produts is not 200';
+        }
+
+        data.map(g => {
+          result.filter(p => p.groupManagementCode === g.groupManagementCode).map(p => {
+            p.groupManagementMappingProducts = g.groupManagementMappingProducts;
+          });
+        });
+      }
     }
     catch (e) {
       console.error(e);
@@ -118,7 +156,7 @@ export default function ProductList({category}) {
             {
               index === 6 && !category.parent && <Banner category={category} />
             }
-            <Product product={product} />
+            <Product product={product} category={category}/>
           </React.Fragment>
         })
         }

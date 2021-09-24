@@ -4,8 +4,8 @@ import { useLocation } from 'react-router-dom';
 export const useToggle = (initial) => {
   const [toggleValue, setToggleValue] = useState(initial);
 
-  const toggle = useCallback(() => {
-    setToggleValue((prevState) => !prevState);
+  const toggle = useCallback(newValue => {
+    setToggleValue((prevState) => newValue !== undefined ? newValue : !prevState);
   }, []);
 
   return [toggleValue, toggle];
@@ -91,4 +91,29 @@ export function usePrevious (value) {
     ref.current = value;
   });
   return ref.current;
+}
+
+export const useScroll = () => {
+  const [scrollY, setScrollY] = useState(0);
+  const handleScroll = () => setScrollY(window.pageYOffset);
+  const handleTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  useEffect(() => {
+    const watch = () => window.addEventListener('scroll', handleScroll);
+    requestAnimationFrame(watch);
+    watch();
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  });
+
+  return {
+    scrollY,
+    handleTop
+  }
 }

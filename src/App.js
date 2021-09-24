@@ -68,6 +68,7 @@ import ActiveAccounts from './pages/member/activeAccounts';
 import LockedAccounts from './pages/member/lockedAccounts';
 import OpenLogin from './components/member/OpenLogin';
 
+
 //footer
 import Policy from './pages/footer/policy';
 import Terms from './pages/footer/terms';
@@ -114,6 +115,7 @@ const App = (props) => {
   }, [dispatch, state?.mall]);
 
   const getMallInfo = async () => {
+    if (window.location.pathname === '/callback') return;
     if (isLogin) {
       if (!profile) {
         const response = await getProfile();
@@ -164,9 +166,7 @@ const App = (props) => {
       {isStatus ? (
         <div className="wrapper" style={{ backgroundColor: 'white' }}>
           <div id="skipnav" className="skipnav">
-            <a href="#container">
-              <span>본문 바로가기</span>
-            </a>
+            <a href="#container"><span>본문 바로가기</span></a>
           </div>
           {/* 헤더 */}
           <Header />
@@ -203,10 +203,12 @@ const App = (props) => {
             <Route exact path="/my-page/old-order-list" component={OldOrderList} />
             <Route exact path="/my-page/rename" component={Rename} />
             <Route exact path="/my-page/withdraw" component={Withdraw} />
-            <Route exact path="/my-page/withdraw-complete" component={WithdrawComplete} />
+            <Route exact path="/my-page/withdraw-complete"
+                   component={WithdrawComplete} />
 
             {/* 상품 상세페이지 */}
-            <Route exact path="/product-view/:productNo" component={ProductView} />
+            <Route exact path="/product-view/:productNo"
+                   component={ProductView} />
 
             {/* 주문 */}
             <Route exact path="/order/agree" component={OrderAgree} />
@@ -223,8 +225,10 @@ const App = (props) => {
 
             {/* 이벤트  */}
             <Route exact path="/event/list" component={eventList} />
-            <Route exact path="/event/only/:eventNo" component={EventDetail} />
-            <Route exact path="/event/detail/:eventNo" component={EventDetail} />
+            <Route exact path="/event/only/:eventNo"
+                   component={EventDetail} />
+            <Route exact path="/event/detail/:eventNo"
+                   component={EventDetail} />
             <Route exact path="/event/expired" component={Expired} />
             {/*<Route exact path="/event/benefit-zone"*/}
             {/*       component={BenefitZone} />/!*현재 데이터 없음*!/*/}
@@ -264,7 +268,7 @@ const App = (props) => {
 
             <Route component={Error404} />
             {/* 푸터 */}
-          </Switch>
+            </Switch>
           <Footer />
         </div>
       ) : (

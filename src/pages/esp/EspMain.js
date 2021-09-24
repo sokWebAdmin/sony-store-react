@@ -1,10 +1,9 @@
-import { React ,useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //lib
-import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } from 'swiper/core';
 
 
@@ -19,78 +18,31 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import "swiper/swiper.scss"
-import { getCategoryList } from '../../api/display';
-import { getProductListByCategoryNo, getProductSearch } from '../../api/product';
+import { getProductSearch } from '../../api/product';
 import EspProduct from '../../components/EspProduct';
-
-// TODO ESP 는 카테고리라고 이해했고, 카테고리 가져온 후 화면 구성하고, 해당 카테고리에 포함된 상품 리스트 호출하는 식으로 개발했습니다.
-// TODO 제가 이해한 부분이 맞는지는 확인해봐야 합니다.
+import { useCategoryState } from '../../context/category.context';
 
 export default function EspMain() {
 
-    // 1. 카테고리 데이터 가져오기 - 이 데이터는 store 로 처리하는게 좋을듯?
-    // 2. ESP 카테고리 가져온 후 tab 구성 - ESP 카테고리에 대한 구분은 그냥 하드코딩?
-    // 3. 현재 선택된 탭에 대한 상품 리스트 가져오기
-
-    const espCategoryNo = 60918;
-
-
-    // 왜 있는지 모르겠지만 다른데도 다 있길래 추가했습니다.
-    SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
-
-
+    const { espCategory } = useCategoryState();
 
     // child category 카테고리
-    const [childCategories, setChildCategories] = useState([]);
-    const [focusCategoryNo, setFocusCategoryNo] = useState(0);
+    const [focusCategory, setFocusCategory] = useState(null);
 
     // 상품 리스트
     const [product, setProduct] = useState({ list: [], page: 1, totalCount: 0 });
 
-    // 초기화 - 카테고리 정보 가져오는 용도
-    useEffect(async () => {
-        // esp child 카테고리 데이터 가져오기
-        setChildCategories(await _getEspChildCategories());
-    },[espCategoryNo]);
-
-    // 초기화 - esp child 카테고리 set
+    // 탭 포커스 이동
     useEffect(() => {
-        if (childCategories.length > 0) {
-            setFocusCategoryNo(childCategories[0].categoryNo);
+        if (espCategory?.children?.length > 0) {
+            setFocusCategory(espCategory.children[0]);
         }
-    },[childCategories]);
+    },[espCategory]);
 
     // 탭 포커스 이동
     useEffect(async () => {
         _initProduct();
-    },[focusCategoryNo]);
-
-
-    const _getEspChildCategories = async () => {
-        let children = [];
-
-        try {
-            // TODO esp 카테고리는 어떻게 가져올 건지? - 논의 필요
-            const { status, data } = await getCategoryList();
-
-            if (status !== 200) {
-                throw 'get categories status is not 200';
-            }
-
-            // TODO esp 카테고리 가져오기 - ESP 카테고리에 대한 구분은 논의 필요
-            const espCategory = data.multiLevelCategories.filter(category => category.categoryNo === espCategoryNo)[0];
-            if (!espCategory || !espCategory.children) {
-                throw 'esp (or children) cateogry is not exist';
-            }
-
-            children = espCategory.children;
-        }
-        catch (e) {
-            console.error(e);
-        }
-
-        return children;
-    }
+    },[focusCategory]);
 
     const _initProduct = async () => {
         const data = await _getEspProducts(1);
@@ -116,12 +68,13 @@ export default function EspMain() {
         const result = { list: [], page: pageNumber, totalCount: 0 };
 
         try {
-            if (focusCategoryNo !== 0) {
+            if (focusCategory) {
                 const { status, data } = await getProductSearch({
-                    categoryNos: focusCategoryNo,
+                    categoryNos: focusCategory.categoryNo,
                     'order.by': 'RECENT_PRODUCT',
                     pageNumber: pageNumber,
-                    pageSize: 15
+                    pageSize: 15,
+                    hasOptionValues: true,
                 });
 
                 if (status !== 200) {
@@ -130,6 +83,17 @@ export default function EspMain() {
 
                 result.list = data.items;
                 result.totalCount = data.totalCount;
+
+                // TODO 임시로 옵션값으로 desc 적용함
+                result.list.map(p => {
+                    if (p?.optionValues?.length > 0) {
+                        p.desc = p.optionValues[0].optionValue.replace(/__/g, ',');
+                    }
+                    else {
+                        p.desc = '';
+                    }
+                    return p;
+                });
             }
         }
         catch (e) {
@@ -139,10 +103,13 @@ export default function EspMain() {
         return result;
     }
 
+    // 왜 있는지 모르겠지만 다른데도 다 있길래 추가했습니다.
+    SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
+
     return (
         <>
-        <SEOHelmet title={`연장서비스플랜 ESP`} />
-        <div className="category">
+            <SEOHelmet title={`연장서비스플랜 ESP`} />
+            <div className="category">
                 <div className="container">
                     <div className="contents">
                         <div className="category__header">
@@ -220,11 +187,11 @@ export default function EspMain() {
                                 <div className="tab_ui size3">
                                     <ul>
                                         {
-                                            childCategories.map(category => {
+                                            espCategory?.children?.map(category => {
                                                 return (
-                                                  <li className={category.categoryNo === focusCategoryNo ? 'tabs on' : 'tabs'} key={category.categoryNo}>
+                                                  <li className={category.categoryNo === focusCategory?.categoryNo ? 'tabs on' : 'tabs'} key={category.categoryNo}>
                                                       <a href="#" className="btn" onClick={e => {
-                                                          setFocusCategoryNo(category.categoryNo);
+                                                          setFocusCategory(category);
                                                           e.preventDefault();
                                                       }}>
                                                           {category.label}
@@ -240,9 +207,9 @@ export default function EspMain() {
                                         <div className="fixBox">
                                             <ul className="fixBox__list">
                                                 {
-                                                    product.list.map(item => {
+                                                    product.list.map(p => {
                                                         return (
-                                                          <EspProduct product={item} key={item.productNo}></EspProduct>
+                                                          <EspProduct product={p} key={`esp-product-${p.productNo}`}></EspProduct>
                                                         )
                                                     })
                                                 }
@@ -250,7 +217,7 @@ export default function EspMain() {
                                             <div className="btn_area">
                                                 {
                                                     product.list.length >= product.totalCount - 15 ? '' :
-                                                      <button type="button" className="btn_more" title="기획전 더보기" onClick={() => {
+                                                      <button type="button" className="btn_more" title="ESP 상품 더보기" onClick={() => {
                                                           _addProduct();
                                                       }}>
                                                           더보기<span className="ico_plus"></span>

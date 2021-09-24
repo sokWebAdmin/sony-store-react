@@ -42,3 +42,7 @@ export const themeProducts = (categoryNo)=> {
 export const getProductSearch = query => {
   return request(`products/search`, "get", query, {});
 };
+
+export const postProductsGroupManagementCode = requestBody => {
+  return request('products/group-management-code', "post", null, requestBody);
+};

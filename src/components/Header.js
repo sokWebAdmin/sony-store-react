@@ -30,7 +30,7 @@ import {
 export default function Header() {
   const history = useHistory();
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
-  const { profile } = useProfileState();
+  const { profile, my } = useProfileState();
   const { isSiderbarOpen } = useHeaderState();
   const profileDispatch = useProileDispatch();
   const headerDispatch = useHeaderDispatch();
@@ -175,12 +175,12 @@ export default function Header() {
             )}
 
             {/* 회원/로그인 */}
-            {isLogin && profile && (
+            {isLogin && (
               <>
                 <div className={`member ${isInfoOpen && 'member--visible'}`}>
                   <div className="member__inner">
                     <p className="member__msg">
-                      {profile.memberName}님<br />
+                      {my?.firstname ?? ''}님<br />
                       안녕하세요!
                     </p>
                     <div className="member__menu">
