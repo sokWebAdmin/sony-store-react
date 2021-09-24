@@ -12,6 +12,7 @@ import CartTable from '../../components/cart/CartTable';
 import Controller from '../../components/cart/tableParticals/Controller';
 import ProductList from '../../components/cart/tableParticals/ProductList';
 import TotalAmount from '../../components/cart/tableParticals/TotalAmount';
+import Solicitation from '../../components/popup/Solicitation';
 
 //css
 import '../../assets/scss/contents.scss';
@@ -27,6 +28,10 @@ import { Link } from 'react-router-dom';
 const Cart = () => {
   const { isLogin } = useContext(GlobalContext);
 
+  // popup
+  const [showSolicitation, setShowSolicitation] = useState(false);
+
+  // state
   const [wait, setWait] = useState(false);
   const [products, setProducts] = useState([]);
   const putProducts = useMemo(() => products.map(product => ({ // put 요청 미리 맵핑해놓음.
@@ -65,6 +70,10 @@ const Cart = () => {
     }
   };
 
+  const goOrder = () => {
+    alert('주문창으로~');
+  };
+
   const submit = () => {
     if (!checkedIndexes.length) {
       alert('구매하실 상품을 선택하여 주세요.');
@@ -76,12 +85,10 @@ const Cart = () => {
       return;
     }
 
-    alert('submit');
+    goOrder();
   };
 
-  const openSolicitationPopup = () => {
-    alert('is guest member');
-  };
+  const openSolicitationPopup = () => setShowSolicitation(true);
 
   useEffect(init, []);
 
@@ -261,6 +268,14 @@ const Cart = () => {
                               className="button button_positive popup_comm_btn"
                               onClick={submit}>구매하기
                       </button>
+                      {
+                        showSolicitation
+                        &&
+                        <Solicitation
+                          goOrder={goOrder}
+                          close={() => setShowSolicitation(false)}
+                        />
+                      }
                     </div>
                   </CartTable>
                   <QnA />
