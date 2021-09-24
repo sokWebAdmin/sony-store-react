@@ -25,7 +25,7 @@ const Expired = () => {
 
   const fetchInitDisplayEvents = async (pageNumber = 1, keyword = '') => {
     const query = keyword ? { keyword, pageNumber } : { pageNumber };
-    const { data } = await getDisplayCloseEvents(query);
+    const { data } = await getDisplayCloseEvents({ ...query, hasTotalCount: true });
     setEvents(data);
   };
 
