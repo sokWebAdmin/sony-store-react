@@ -6,6 +6,7 @@ import { getStrDate } from '../../utils/dateFormat';
 import { Link } from 'react-router-dom';
 import SelectBox from '../../components/common/SelectBox';
 import ViewMore from '../../components/common/ViewMore';
+import SEOHelmet from '../../components/SEOHelmet';
 
 const tags = {
   all: '',
@@ -48,6 +49,7 @@ const Expired = () => {
 
   return (
     <>
+      <SEOHelmet title={'종료된 기획전'} />
       <div className="container full">
         <div className="content">
           <div className="common_head first_tit">
