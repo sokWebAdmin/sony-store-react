@@ -6,8 +6,6 @@ import { wonComma } from '../../utils/utils';
 import { Link } from 'react-router-dom';
 import { useCategoryState } from '../../context/category.context';
 
-// TODO color 로직 확인
-
 export default function Product({product, category}) {
   const {tagColorMap} = useCategoryState();
 
@@ -48,18 +46,22 @@ export default function Product({product, category}) {
   const _initGroupProducts = () => {
     const newGroupProducts = product.groupManagementMappingProducts?.map(gp => {
       // TODO gp 안에 옵션 정보 포함되어 있어야 함
+
+      const optionValue = gp?.options?.[0]?.value || '';
+      const colorLabel = optionValue.split('_')[0] || '';
+      const colorCode = optionValue.split('_')[1] || '';
+
       return {
         imageUrl: gp.mainImageUrl,
-        colorLabel: '오렌지',
-        colorCode: '#fc5227',
+        colorLabel,
+        colorCode,
       };
-    }) || [];
+    }).filter(gp => !!gp.colorLabel && !!gp.colorCode) || [];
 
     if (newGroupProducts.length === 0) {
       const optionValue = product.optionValues?.[0]?.optionValue || '';
-
-      const colorLabel = optionValue.split('_')[0] || '검정';
-      const colorCode = optionValue.split('_')[1] || '#000000';
+      const colorLabel = optionValue.split('_')[0] || '';
+      const colorCode = optionValue.split('_')[1] || '';
 
       newGroupProducts.push({
         imageUrl: product.imageUrls[0],
@@ -93,11 +95,11 @@ export default function Product({product, category}) {
         </Link>
       </div>
 
-      {groupProducts.length > 0 &&
+      {groupProducts.filter(gp => !!gp.colorLabel && !!gp.colorCode).length > 0 &&
       <div className="colorchip">
         <span className="sr-only">전체 색상</span>
         {
-          groupProducts.map((gp, index) => {
+          groupProducts.filter(gp => !!gp.colorLabel && !!gp.colorCode).map((gp, index) => {
             return (
               <span className={`colorchip__item ${colorIndex === index && "colorchip__item--active"}`}
                     key={`product-colorchip-${index}`}
