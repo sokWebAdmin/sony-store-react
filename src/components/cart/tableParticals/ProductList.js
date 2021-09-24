@@ -78,7 +78,7 @@ const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes,
                 <div className="col_table_cell">
                   <button type="button" className="btn_del_prd"
                           onClick={() => deleteItem(
-                            product.cartNo || product.optionNo)}><img
+                            product.cartNo || i)}><img
                     src="../../images/common/ic_close.svg" alt="제품 삭제" />
                   </button>
                 </div>

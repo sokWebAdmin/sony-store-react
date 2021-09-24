@@ -85,6 +85,7 @@ const Cart = () => {
   const goOrder = async () => {
     const orderSheetNo = await getOrderSheetNo(checkedProducts); // string
 
+    // 비회원 주문 카트 비우기
     history.push(`/order/sheet?orderSheetNo=${orderSheetNo}`);
   };
 
@@ -194,8 +195,8 @@ const Cart = () => {
       deleteMemberCart([cartNo]);
     }
     else {
-      const optionNo = no; // TODO: 옵션 No 가 유니크한 값인지 확인 필요..
-      deleteGuestCart([optionNo]);
+      const index = no;
+      deleteGuestCart([index]);
     }
   }
 
@@ -205,9 +206,9 @@ const Cart = () => {
     }).then(() => init());
   }
 
-  function deleteGuestCart (optionNos) {
+  function deleteGuestCart (indexes) {
     const newItems = gc.items.filter(
-      ({ optionNo }) => !optionNos.includes(optionNo));
+      (_, i) => !indexes.includes(i));
     gc.cover(newItems);
     init();
   }
