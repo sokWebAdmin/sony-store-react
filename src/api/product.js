@@ -49,3 +49,7 @@ export const getProductSearch = query => {
 export const postProductsGroupManagementCode = requestBody => {
   return request('products/group-management-code', "post", null, requestBody);
 };
+
+export const postProfileLikeProducts = requestBody => {
+  return request('profile/like-products', 'post', null, requestBody);
+}

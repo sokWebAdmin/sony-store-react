@@ -18,6 +18,7 @@ import gc from "../../storage/guestCart";
 import { colorsGroupByOptionNo, getColorChipInfo } from "../../utils/product";
 import LayerPopup from "../common/LayerPopup";
 import Share from "../popup/Share";
+import { postProfileLikeProducts } from "../../api/product";
 
 // 배송
 function Delivery({
@@ -272,11 +273,13 @@ const getCartRequest = (productNo, options) => options.map(
     })
   );
 
-function ButtonGroup({ selectedOption, productNo, canBuy }) {
+function ButtonGroup({ selectedOption, productNo, canBuy, wish, setWish }) {
+
   const { openAlert, closeModal, alertVisible, alertMessage  } = useAlert();
   const { isLogin } = useContext(GlobalContext);
   const [ giftVisible, setGiftVisible ] = useState(false);
   const [ cartVisible, setCartVisible ] = useState(false);
+  const [ wishVisible, setWishVisible ] = useState(false);
 
   const order = async (pathname = '/order/sheet') => {
     if (!canBuy) {
@@ -318,6 +321,16 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
     } catch(e) {
       console.error(e);
     }
+  };
+
+  const wishHandler = async () => {
+    if (isLogin) {
+      const requestBody = { productNos: [productNo] };
+      const { data } = await postProfileLikeProducts(requestBody);
+      setWish(data[0].result);
+    } else {
+      setWishVisible(true)
+    }
   }
 
   const handleClick = (e, type) => {
@@ -332,6 +345,9 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
       case 'cart':
         cart();
         break;
+      case 'wish':
+        wishHandler();
+        break;
       default:
         break;
     }
@@ -343,7 +359,9 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
       <div className="result_btn_inner">
         <div className="result_btn_box">
           <ul>
-            <li className="like"><a href="#none" className="btn_icon">찜하기</a></li>
+            <li className="like">
+              <a href="#none" className={`btn_icon ${wish && 'on'}`} onClick={ e => handleClick(e, 'wish') }>찜하기</a>
+            </li>
             <li className="cart">
               <a 
                 href="/cart" 
@@ -390,6 +408,10 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
           && <Notification setNotificationVisible={setCartVisible} type='cart' />
       }
       {
+        wishVisible
+          && <Notification setNotificationVisible={setWishVisible} type='wish' />
+      }
+      {
         alertVisible 
           && <Alert onClose={closeModal}>{alertMessage}</Alert>
       }
@@ -429,7 +451,9 @@ export default function TobContent({
   hasColor,
   productNo,
   setSelectedOptionNo,
-  productGroup
+  productGroup,
+  wish,
+  setWish
 }) {
   const { productName, productNameEn } = baseInfo;
   const [selectedOption, setSelectedOption] = useState([]);
@@ -484,6 +508,8 @@ export default function TobContent({
             selectedOption={selectedOption}
             productNo={productNo}
             canBuy={totalCnt > 0}
+            wish={wish}
+            setWish={setWish}
           />
         </div>
       </div>
