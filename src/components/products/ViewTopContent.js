@@ -15,6 +15,7 @@ import { useAlert } from "../../hooks";
 import Alert from "../common/Alert";
 import Notification from "./Notification";
 import gc from "../../storage/guestCart";
+import { colorsGroupByOptionNo, getColorChipInfo } from "../../utils/product";
 
 // 배송
 function Delivery({
@@ -88,7 +89,9 @@ function ColorChip({ colors, setSelectedOptionNo }) {
         <p className="tit">색상</p>
         <ul className="circle_color_box">
           {
-            colors.map(([optionNo, [label, code]]) => {
+            colors.map(([optionNo, vals]) => {
+              if (!vals) return null;
+              const [label, code] = vals;
               return (
                 <li key={`${label}${code}`} className={`${color === code && 'on'}`}>
                   <a href={`#${label}`} className="color_btn" onClick={ e => clickHandler(e, code, optionNo) }>
@@ -107,25 +110,6 @@ function ColorChip({ colors, setSelectedOptionNo }) {
   )
 }
 
-const groupByOptionNo = options => {
-  return _.chain(options)
-   .flatMap(({optionNo, value}) => ({ optionNo, value: value.includes('_#') && value.split('_') }))
-   .groupBy('optionNo')
-   .value()
-}
-const getOptionLabel = (hasColor, productName, values) => {
-  if (hasColor && values) {
-    
-    const [ label, code ] = values;
-    return {
-      label: `${productName} (${label})`,
-      background: code.includes('|') ? _.head(code.split('|')) : code
-    }
-  }
-  return {
-    label: productName
-  }
-};
 // 선택된 옵션 리스트
 function Option({
   productName,
@@ -138,9 +122,9 @@ function Option({
   totalCnt,
   totalPrice,
 }) {
-  const colorByOptionNo = groupByOptionNo(options, productName);
+  const colorByOptionNo = colorsGroupByOptionNo(options, productName);
   const getSelectOptions = o => {
-    const labelInfo = getOptionLabel(
+    const colorChipInfo = getColorChipInfo(
                         hasColor, 
                         productName, 
                         _.head(colorByOptionNo[o.optionNo])?.value
@@ -148,8 +132,8 @@ function Option({
     return {
       ...o,
       disabled: o.forcedSoldOut,
-      label: labelInfo?.label,
-      background: labelInfo?.background
+      label: colorChipInfo?.label,
+      background: colorChipInfo?.background
     }
   }
 

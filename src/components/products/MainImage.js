@@ -1,7 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function MainImage({ imageUrls }) {
-  console.log(imageUrls)
   return (
     <div className="view_slider swiper-container">
       <Swiper
@@ -33,11 +32,6 @@ export default function MainImage({ imageUrls }) {
             </SwiperSlide>
           ))
         }
-      {/*
-        여러 색상일 경우.
-        productView_colorType_fc5227_thumb_01 이미지 명 : colorType_ 와 _thumb 사이 값으로 교체. = fc5227
-        .circle_color_box > .c_bg의 data-slide-img-type 값과 동일하게 적용.
-      */}
       </Swiper>
       {
         imageUrls.length > 1 && (

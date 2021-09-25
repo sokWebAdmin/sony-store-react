@@ -27,7 +27,7 @@ import GlobalContext from '../../context/global.context';
 //util
 import {useWindowSize} from '../../utils/utils';
 import { getInfoLinks, mapContents } from '../../const/productView';
-import { getMainSliderStyle } from '../../utils/product';
+import { getColorChipValues, getMainSliderStyle } from '../../utils/product';
 
 
 import MainImage from '../../components/products/MainImage';
@@ -39,8 +39,8 @@ import BottomContent from '../../components/products/ViewBottomContent';
 
 
 
-export default function ProductView({ match, ...props }) {
-  const { productNo } = match.params;
+export default function ProductView({ match }) {
+  const productNo = Number(match.params?.productNo) || 0;
 
   //ui
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -97,7 +97,7 @@ export default function ProductView({ match, ...props }) {
 
     if (!hasColor) return;
     const nos = flatOptions.flatMap(({ optionNo }) => optionNo);
-    const values = flatOptions.map(({ value }) => value.split('_'));
+    const values = flatOptions.map(({ value }) => getColorChipValues(value));
     
     setProductColors(
       _.chain()
@@ -113,15 +113,23 @@ export default function ProductView({ match, ...props }) {
       saleStatus: 'ALL_CONDITIONS',
       isSoldOut: true,
     });
-    setProductGroup(_.chain(data)
+    setProductGroup(
+      _.chain(data)
        .flatMap(({ groupManagementMappingProducts })=> groupManagementMappingProducts)
-       .map((o) => ({
-         imgUrl: o.mainImageUrl,
-         optionNo: _.head(o.options).optionNo
+       .map(p => ({
+         imgUrl: p.mainImageUrl,
+         optionNo: _.head(p.options).optionNo
        }))
        .groupBy('optionNo')
-       .value())
-    fetchProductGroupOptions(data.flatMap(({ groupManagementMappingProducts }) => groupManagementMappingProducts).flatMap(({ productNo }) => productNo).join());
+       .value()
+    )
+    fetchProductGroupOptions(
+      _.chain(data)
+       .flatMap(({ groupManagementMappingProducts }) => groupManagementMappingProducts)
+       .flatMap(({ productNo }) => productNo)
+       .join()
+       .value()
+    )
   }, [])
 
   const fetchRelatedProducts = useCallback(async (categories) => {
@@ -134,8 +142,9 @@ export default function ProductView({ match, ...props }) {
                       .flatMap(({ categoryNo }) => categoryNo)
                       .join()
     });
-    setRelatedProducts(ret.data.items);
-  }, []);
+    console.log('productNo', productNo)
+    setRelatedProducts(_.reject(ret.data.items, ({ productNo: no }) => no === productNo));
+  }, [productNo]);
 
   const fetchEvent = useCallback(async productNo => {
     if (!productNo) return;
@@ -151,12 +160,6 @@ export default function ProductView({ match, ...props }) {
     fetchRelatedProducts(productData?.categories);
     fetchEvent(productNo);
   }, [fetchRelatedProducts, fetchEvent, productNo, productData?.categories]);
-  useEffect(() => {
-    if (selectedOptionNo > 0) {
-      console.log(_.head(productGroup[selectedOptionNo]).imgUrl, 'asdf;lakdfja;sdfj')
-      console.log(selectedOptionNo, productGroup, 'productGroup');
-    }
-  }, [selectedOptionNo])
 
   const reset = () => {
     setProductData();
@@ -170,6 +173,8 @@ export default function ProductView({ match, ...props }) {
     setProductEvents([]);
     setSelectedOptionNo(0);
   };
+
+  const imageUrls = useMemo(() => selectedOptionNo > 0 ? [_.head(productGroup[selectedOptionNo])?.imgUrl] : productData?.baseInfo?.imageUrls, [selectedOptionNo, productData?.baseInfo?.imageUrls])
 
   //
   const showProductDetail = useMemo(() => (headerHeight > 0 || size.height < 1280) && productData, [headerHeight, size.height, productData] )
@@ -188,13 +193,7 @@ export default function ProductView({ match, ...props }) {
                   선택된 옵션의 imageUrl 을 넘겨주기
                 */}
                 <MainImage 
-                  imageUrls={ 
-                    selectedOptionNo > 0 
-                      ? 
-                      [_.head(productGroup[selectedOptionNo]).imgUrl]
-                      :
-                      productData.baseInfo?.imageUrls 
-                  }
+                  imageUrls={ imageUrls }
                   selectedOptionNo={selectedOptionNo}
                 />
               </div>
