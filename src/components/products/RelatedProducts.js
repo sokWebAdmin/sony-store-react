@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { wonComma } from '../../utils/utils';
 
-export default function RelatedProducts({ products }) {
+export default function RelatedProducts({ products, reset }) {
 
   return (
     <div className="product_cont first recommend">
@@ -41,7 +41,10 @@ export default function RelatedProducts({ products }) {
                 <SwiperSlide key={ productNo } className="swiper-slide">
                   <div className="product_tabArea">
                     <div className="product_img">
-                      <Link to={`/product-view/${productNo}`}>
+                      <Link 
+                        to={`/product-view/${productNo}`}
+                        onClick={ reset }
+                      >
                         <div className="img-box">
                           <div className="inner">
                             <img src={ imageUrls[0] } alt={ productName } />
@@ -51,7 +54,10 @@ export default function RelatedProducts({ products }) {
                     </div>
                     <div className="product-name">
                       <div className="product-option">
-                      <Link to={`/product-view/${productNo}`}>
+                      <Link 
+                        to={`/product-view/${productNo}`}
+                        onClick={ reset }
+                      >
                           <strong>{ productNameEn }</strong>
                           <p>{ productName }</p>
                       </Link>

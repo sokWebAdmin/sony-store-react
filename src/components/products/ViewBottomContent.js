@@ -1,7 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tabs from "../common/Tabs";
 
 export default function BottomContent({ contents }) {
+  useEffect(() => {
+    const windowWidth = window.innerWidth;
+    const mobileWidth = 640;
+    const regImg = document.querySelectorAll(".detail_info .regImg");
+
+    if (windowWidth <= mobileWidth) {
+      regImg.forEach(elem => {
+        let imgsrc = elem.getAttribute("src");
+
+        imgsrc = imgsrc.replace(/pc_/g, "mo_");
+        elem.setAttribute("src", imgsrc)
+      })
+    } 
+  }, [contents])
 
   const [tabState, setTabState] = useState('intro');
   return (
