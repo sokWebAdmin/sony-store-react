@@ -26,6 +26,9 @@ export const getProductOptions = (productNo)=> {
   return request("products/"+productNo+"/options", "get", null, {});
 };
 
+export const getProductsOptions = query => {
+  return request('products/options', 'get', query, {})
+}
 
 export const bestProductList = ()=> {
   return request("products/main-best-products", "get", null, {});

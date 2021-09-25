@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router";
-import _ from "lodash";
+import _, { flatMap, flatten } from "lodash";
 import qs from 'qs';
 
 import { postCart, postOrderSheets } from "../../api/order";
@@ -64,68 +64,105 @@ function Benefits({ price }) {
 }
 
 // 컬러칩
-function ColorChip() {
+function ColorChip({ colors, setSelectedOptionNo }) {
+
+  const [ color, setColor ] = useState('');
+  useEffect(() => setColor(
+    _.chain(colors)
+     .take(1)
+     .flatMap(([_, v]) => v)
+     .tail()
+     .head()
+     .value()
+  ), [colors]);
+
+  const clickHandler = (e, code, no) => {
+    e.preventDefault();
+    setColor(code);
+    setSelectedOptionNo(no);
+  };
+
   return (
     <div className="cont line">
       <div className="color_select">
         <p className="tit">색상</p>
         <ul className="circle_color_box">
-          <li className="on">
-            <a href="#none" className="color_btn">
-              <span className="circle_color">
-                <span className="c_bg" data-slide-img-type="fc5227" style={{background: '#fc5227'}} />
-              </span>
-              <span className="color_name">오렌지</span>
-            </a>
-          </li>
-          <li>
-            <a href="#none" className="color_btn">
-              <span className="circle_color">
-                <span className="c_bg" data-slide-img-type="f7f5f5" style={{background: '#f7f5f5'}} />
-              </span>
-              <span className="color_name">화이트</span>
-            </a>
-          </li>
-          <li>
-            <a href="#none" className="color_btn">
-              <span className="circle_color">
-                <span className="c_bg" data-slide-img-type="1b8faa" style={{background: '#1b8faa'}} />
-              </span>
-              <span className="color_name">블루</span>
-            </a>
-          </li>
-          <li>
-            <a href="#none" className="color_btn">
-              <span className="circle_color">
-                <span className="c_bg" data-slide-img-type={222222} style={{background: '#222'}} />
-              </span>
-              <span className="color_name">블랙</span>
-            </a>
-          </li>
+          {
+            colors.map(([optionNo, [label, code]]) => {
+              return (
+                <li key={`${label}${code}`} className={`${color === code && 'on'}`}>
+                  <a href={`#${label}`} className="color_btn" onClick={ e => clickHandler(e, code, optionNo) }>
+                    <span className="circle_color">
+                      <span className="c_bg" data-slide-img-type={code} style={{background: code}} />
+                    </span>
+                    <span className="color_name">{label}</span>
+                  </a>
+                </li>
+              )
+            })
+          }
         </ul>
       </div>
     </div>
   )
 }
 
+const groupByOptionNo = options => {
+  return _.chain(options)
+   .flatMap(({optionNo, value}) => ({ optionNo, value: value.includes('_#') && value.split('_') }))
+   .groupBy('optionNo')
+   .value()
+}
+const getOptionLabel = (hasColor, productName, values) => {
+  if (hasColor && values) {
+    
+    const [ label, code ] = values;
+    return {
+      label: `${productName} (${label})`,
+      background: code.includes('|') ? _.head(code.split('|')) : code
+    }
+  }
+  return {
+    label: productName
+  }
+};
 // 선택된 옵션 리스트
-function Option({ 
-  options, 
+function Option({
+  productName,
+  options,
+  hasColor, 
   selectedOption, 
   setSelectedOption, 
   setTotalCnt, 
   setTotalPrice,
   totalCnt,
-  totalPrice
+  totalPrice,
 }) {
+  const colorByOptionNo = groupByOptionNo(options, productName);
+  const getSelectOptions = o => {
+    const labelInfo = getOptionLabel(
+                        hasColor, 
+                        productName, 
+                        _.head(colorByOptionNo[o.optionNo])?.value
+                      );
+    return {
+      ...o,
+      disabled: o.forcedSoldOut,
+      label: labelInfo?.label,
+      background: labelInfo?.background
+    }
+  }
+
   return (
     <div className="prd_select_inner">
             
       <div className="prd_select_box">
         <p className="tit">제품선택</p>
 
-        <SelectBox
-          selectOptions={options?.map(o => ({...o, disabled: o.forcedSoldOut})) ?? []}
+        {
+          options &&
+          <SelectBox
+          selectOptions={options.map(getSelectOptions)}
           selectOption={option => {
             setSelectedOption(prev => prev.concat({
               ...option,
@@ -135,6 +172,8 @@ function Option({
             setTotalPrice(totalPrice + option.buyPrice);
           }}
         />
+
+        }
                 
       </div>
       
@@ -377,9 +416,12 @@ export default function TobContent({
   deliveryFee,
   price,
   options,
+  hasColor,
   productNo,
+  productColors,
+  setSelectedOptionNo
 }) {
-
+  const { productName, productNameEn } = baseInfo;
   const [selectedOption, setSelectedOption] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCnt, setTotalCnt] = useState(0);
@@ -389,10 +431,8 @@ export default function TobContent({
       <div className="product_view_about">{/* class :  soldout-품절, restock-재입고 텍스트 색상 변경을 위함 */}
         <div className="cont">
           <span className="flag new">NEW</span>{/* class : new / event / best / hot */}
-          <p className="product_tit">{baseInfo.productName}</p>
-          {baseInfo.productNameEn &&
-              <p className="product_txt">{baseInfo.productNameEn}</p>
-          }
+          <p className="product_tit">{productName}</p>
+          { productNameEn && <p className="product_txt">{productNameEn}</p> }
           {/* <p className="product_desc">이 제품은 예약 주문 상품으로 구매 후 1주일 뒤에 발송됩니다</p> */}
           <ul className="social_list">
             <li className="share">
@@ -410,12 +450,17 @@ export default function TobContent({
           price={price}
         />
 
-        <ColorChip />
+        {
+          hasColor && <ColorChip colors={productColors} setSelectedOptionNo={setSelectedOptionNo} />
+        }
 
         {/* prd_select_wrap */}
         <div className="cont prd_select_wrap">
-          <Option 
+          <Option
+            productName={productName}
             options={options}
+            hasColor={hasColor}
+            colors={productColors}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
             setTotalCnt={setTotalCnt}

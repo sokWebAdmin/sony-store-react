@@ -1,6 +1,6 @@
 import { React ,useState, useEffect, useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router';
 import { getEventByProductNo } from '../../api/display';
+import _ from 'lodash';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -15,7 +15,7 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 import "swiper/swiper.scss"
 
 //api
-import { getProductDetail, getProductOptions, getProductSearch } from "../../api/product";
+import { getProductDetail, getProductOptions, getProductSearch, getProductsOptions, postProductsGroupManagementCode } from "../../api/product";
 
 //css
 import "../../assets/scss/contents.scss"
@@ -41,11 +41,11 @@ import BottomContent from '../../components/products/ViewBottomContent';
 
 export default function ProductView({ match, ...props }) {
   const { productNo } = match.params;
-  const history = useHistory();
 
   //ui
   const [headerHeight, setHeaderHeight] = useState(0);
   const size = useWindowSize();
+  const [selectedOptionNo, setSelectedOptionNo] = useState(0);
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 
@@ -55,18 +55,24 @@ export default function ProductView({ match, ...props }) {
   },[]);
 
   //data
-  
   const [productData, setProductData] = useState();
-  const [productOptions, setProductOptions] = useState();
+  const [productOptions, setProductOptions] = useState({
+    flatOptions: [],
+    hasColor: false,
+  });
+  const [productGroup, setProductGroup] = useState([]);
+  const [productColors, setProductColors] = useState([])
   const [contents, setContents] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [productEvents, setProductEvents] = useState([]);
 
   // product init data
-
-  const mapProductData = useCallback(([productData, optionData]) => {
+  const mapProductData = useCallback(([productData, { flatOptions, ...rest }]) => {
     setProductData(productData);
-    setProductOptions(optionData);
+    setProductOptions({
+      ...rest,
+      flatOptions: flatOptions.length > 0 ? [_.head(flatOptions)] : []
+    });
     setContents(mapContents(productData.baseInfo));
   }, []);
 
@@ -77,6 +83,46 @@ export default function ProductView({ match, ...props }) {
     ]);
     mapProductData(ret.map(({ data }) => data));
   }, []);
+
+  const fetchProductGroupOptions = async (productNos) => {
+    const { data } = await getProductsOptions({ productNos });
+    
+    const flatOptions = data.optionInfos.flatMap(({ options }) => options).map(({ children, ...rest }) => ({ ...rest}));
+    const hasColor = flatOptions?.length > 0;
+    
+    setProductOptions({
+      flatOptions,
+      hasColor,
+    });
+
+    if (!hasColor) return;
+    const nos = flatOptions.flatMap(({ optionNo }) => optionNo);
+    const values = flatOptions.map(({ value }) => value.split('_'));
+    
+    setProductColors(
+      _.chain()
+       .range(nos.length)
+       .map(i => ([nos[i], values[i]]))
+       .value()
+    )
+  }
+  // @TODO 101988965 컬러 테스트 상품 번호
+  const fetchProductGroupData = useCallback( async (groupCode) => {
+    const { data } = await postProductsGroupManagementCode({
+      groupManagementCodes: [ groupCode ],
+      saleStatus: 'ALL_CONDITIONS',
+      isSoldOut: true,
+    });
+    setProductGroup(_.chain(data)
+       .flatMap(({ groupManagementMappingProducts })=> groupManagementMappingProducts)
+       .map((o) => ({
+         imgUrl: o.mainImageUrl,
+         optionNo: _.head(o.options).optionNo
+       }))
+       .groupBy('optionNo')
+       .value())
+    fetchProductGroupOptions(data.flatMap(({ groupManagementMappingProducts }) => groupManagementMappingProducts).flatMap(({ productNo }) => productNo).join());
+  }, [])
 
   const fetchRelatedProducts = useCallback(async (categories) => {
     if (!categories) return;
@@ -99,11 +145,31 @@ export default function ProductView({ match, ...props }) {
   }, [])
 
   useEffect(() => fetchProductData(productNo), [fetchProductData, productNo]);
+  useEffect(() => productData?.groupManagementCode && fetchProductGroupData(productData.groupManagementCode), [fetchProductGroupData, productData?.groupManagementCode, productNo])
   useEffect(() => {
     if (!productData?.categories) return;
     fetchRelatedProducts(productData?.categories);
     fetchEvent(productNo);
-  }, [fetchRelatedProducts, fetchEvent, productNo, productData?.categories])
+  }, [fetchRelatedProducts, fetchEvent, productNo, productData?.categories]);
+  useEffect(() => {
+    if (selectedOptionNo > 0) {
+      console.log(_.head(productGroup[selectedOptionNo]).imgUrl, 'asdf;lakdfja;sdfj')
+      console.log(selectedOptionNo, productGroup, 'productGroup');
+    }
+  }, [selectedOptionNo])
+
+  const reset = () => {
+    setProductData();
+    setProductOptions({
+      flatOptions: [],
+      hasColor: false,
+    });
+    setProductColors([]);
+    setContents([]);
+    setRelatedProducts([]);
+    setProductEvents([]);
+    setSelectedOptionNo(0);
+  };
 
   //
   const showProductDetail = useMemo(() => (headerHeight > 0 || size.height < 1280) && productData, [headerHeight, size.height, productData] )
@@ -117,17 +183,34 @@ export default function ProductView({ match, ...props }) {
           <div className="product_view_wrap" style={{backgroundColor:"#fff"}}>
             <div className="product_view_main">
               <div className="prd_main_slider" style={getMainSliderStyle(size)}>
-                <MainImage imageUrls={ productData.baseInfo.imageUrls } />
+                {/* 
+                  @todo optionNo 옵션번호가 아니라
+                  선택된 옵션의 imageUrl 을 넘겨주기
+                */}
+                <MainImage 
+                  imageUrls={ 
+                    selectedOptionNo > 0 
+                      ? 
+                      [_.head(productGroup[selectedOptionNo]).imgUrl]
+                      :
+                      productData.baseInfo?.imageUrls 
+                  }
+                  selectedOptionNo={selectedOptionNo}
+                />
               </div>
-              <TobContent 
+              <TobContent
+                setSelectedOptionNo={setSelectedOptionNo}
                 baseInfo={productData.baseInfo}
                 deliveryFee={productData.deliveryFee}
                 price={productData.price}
-                options={productOptions?.flatOptions}
+                options={productOptions.flatOptions}
+                hasColor={productOptions.hasColor}
                 productNo={productNo}
+                productColors={productColors}
               />
             </div>
-            <RelatedProducts 
+            <RelatedProducts
+              reset={reset}
               products={relatedProducts}
             />
             {
