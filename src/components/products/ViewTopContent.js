@@ -16,6 +16,8 @@ import Alert from "../common/Alert";
 import Notification from "./Notification";
 import gc from "../../storage/guestCart";
 import { colorsGroupByOptionNo, getColorChipInfo } from "../../utils/product";
+import LayerPopup from "../common/LayerPopup";
+import Share from "../popup/Share";
 
 // 배송
 function Delivery({
@@ -175,11 +177,6 @@ function Option({
               <div className="item">
                 <span className="opt_name">{item.label}</span>
               </div>
-              {/* 
-              <div className="item">
-                <span className="opt_name">WF-SP800N / 화이트</span>
-              </div> 
-              */}
             </div>
             <div className="opt_count">
               <CountBox 
@@ -400,6 +397,30 @@ function ButtonGroup({ selectedOption, productNo, canBuy }) {
   )
 }
 
+function SocialList({ productName }) {
+  const [ shareVisible, setShareVisible ] = useState(false);
+
+  const link = window.location.href;
+
+  const clickHandler = e => {
+    e.preventDefault();
+    setShareVisible(true);
+  }
+
+  return (
+    <>
+      <ul className="social_list">
+        <li className="share">
+          <a href="#none" className="ico_btn" data-popup="popup_share" onClick={ clickHandler }>공유하기</a>
+        </li>
+      </ul>
+      {
+        shareVisible && <Share link={link} label={productName} setShareVisible={setShareVisible} />
+      }
+    </>
+  )
+}
+
 export default function TobContent({
   baseInfo,
   deliveryFee,
@@ -423,11 +444,7 @@ export default function TobContent({
           <p className="product_tit">{productName}</p>
           { productNameEn && <p className="product_txt">{productNameEn}</p> }
           {/* <p className="product_desc">이 제품은 예약 주문 상품으로 구매 후 1주일 뒤에 발송됩니다</p> */}
-          <ul className="social_list">
-            <li className="share">
-              <a href="#none" className="ico_btn" data-popup="popup_share">공유하기</a>
-            </li>
-          </ul>
+          <SocialList productName={productName} />
         </div>
         
         <Delivery 

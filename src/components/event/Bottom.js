@@ -189,7 +189,6 @@ const EventBottom = () => {
       });
     }
   };
-
   return (
     <>
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
