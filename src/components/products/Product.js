@@ -6,7 +6,7 @@ import { wonComma } from '../../utils/utils';
 import { Link } from 'react-router-dom';
 import { useCategoryState } from '../../context/category.context';
 
-export default function Product({product, category}) {
+export default function Product({product, category, reset}) {
   const {tagColorMap} = useCategoryState();
 
   let saleStatus = 'READY';
@@ -80,7 +80,7 @@ export default function Product({product, category}) {
       }
 
       <div className="product__pic">
-        <Link to={`/product-view/${product.productNo}`} className="product__pic__link" >
+        <Link onClick={ reset } to={`/product-view/${product.productNo}`} className="product__pic__link" >
           {
             groupProducts.map((gp, index) => {
               return (
@@ -116,7 +116,7 @@ export default function Product({product, category}) {
       </div>
       }
 
-      <Link to={`/product-view/${product.productNo}`} className="product__title">
+      <Link onClick={reset} to={`/product-view/${product.productNo}`} className="product__title">
         <strong className="product__title__name">{product.productName}</strong>
         {saleStatus === 'RESERVE' && <span className="badge__label badge__label__reserve">예약판매</span>}
         {saleStatus === 'READY' && <span className={`badge__label badge__label__outofstock`}>일시품절</span>}
@@ -135,6 +135,10 @@ export default function Product({product, category}) {
       </div>
     </div>
   );
+}
+
+Product.defaultProps = {
+  reset: () => null
 }
 
 
