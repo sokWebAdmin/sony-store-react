@@ -64,7 +64,7 @@ export default function ProductView({ match }) {
    * @todo
    * group 에 img(얘만 그룹 데이터에서 얻을 수 있음), colorLabel, colorCode, optionNo 갖고있기
    */
-  const [productGroup, setProductGroup] = useState({});
+  const [productGroup, setProductGroup] = useState([]);
   const [productColors, setProductColors] = useState([]);
 
   
@@ -93,9 +93,14 @@ export default function ProductView({ match }) {
   const fetchProductGroupOptions = async (productNos) => {
     const { data } = await getProductsOptions({ productNos });
     
-    const flatOptions = data.optionInfos.flatMap(({ options }) => options).map(({ children, ...rest }) => ({ ...rest}));
+    const flatOptions = _.chain(data.optionInfos)
+                         .flatMap(({ options }) => _.take(options, 1))
+                         .map(({ children, ...rest }) => ({ ...rest }))
+                         .map(o => ({ ...o, colors: getColorChipValues(o.value) }))
+                         .value();
+
     const hasColor = flatOptions?.length > 0;
-    
+    console.log(hasColor, 'hasColor')    
     setProductOptions({
       flatOptions,
       hasColor,
@@ -118,12 +123,11 @@ export default function ProductView({ match }) {
       isSoldOut: true,
     });
     
-    const gp = _.chain(data).flatMap(({ groupManagementMappingProducts }) => groupManagementMappingProducts)
+    const gp = data.flatMap(({ groupManagementMappingProducts }) => groupManagementMappingProducts)
     
     setProductGroup(
       _.chain(gp)
        .map(mapProductGroupInfo)
-       .groupBy('optionNo')
        .value()
     );
 
@@ -170,6 +174,7 @@ export default function ProductView({ match }) {
       flatOptions: [],
       hasColor: false,
     });
+    setProductGroup([])
     setProductColors([]);
     setContents([]);
     setRelatedProducts([]);
@@ -177,7 +182,16 @@ export default function ProductView({ match }) {
     setSelectedOptionNo(0);
   };
 
-  const imageUrls = useMemo(() => selectedOptionNo > 0 ? [_.head(productGroup[selectedOptionNo])?.img] : productData?.baseInfo?.imageUrls, [selectedOptionNo, productData?.baseInfo?.imageUrls])
+  const imageUrls = useMemo(() => selectedOptionNo > 0 
+                                  ? 
+                                    _.chain(productGroup) 
+                                     .filter(({ optionNo }) => optionNo === selectedOptionNo)
+                                     .map(({ img }) => img)
+                                     .value()
+                                  : 
+                                    productData?.baseInfo?.imageUrls, 
+                                  [selectedOptionNo, productData?.baseInfo?.imageUrls]
+                            )
 
   //
   const showProductDetail = useMemo(() => (headerHeight > 0 || size.height < 1280) && productData, [headerHeight, size.height, productData] )

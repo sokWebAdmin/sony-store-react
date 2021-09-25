@@ -128,7 +128,7 @@ function Option({
   totalPrice,
 }) {
   const colorByOptionNo = colorsGroupByOptionNo(options, productName);
-  const getSelectOptions = o => {
+  const getSelectOptions = useCallback(o => {
     const colorChipInfo = getColorChipInfo(
                         hasColor, 
                         productName, 
@@ -140,7 +140,7 @@ function Option({
       label: colorChipInfo?.label,
       background: colorChipInfo?.background
     }
-  }
+  }, [colorByOptionNo, hasColor, productName])
 
   return (
     <div className="prd_select_inner">
@@ -167,7 +167,7 @@ function Option({
       </div>
       
         
-      <div className="selected_opt"> {/* 선택한 제품 */}
+      <div className="selected_opt">
         {selectedOption.length > 0 && selectedOption.map((item, itemIndex) => (
           <div className="opt_info" key={itemIndex}>
             <p className="opt_tag">제품</p>
