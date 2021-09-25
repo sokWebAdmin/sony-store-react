@@ -61,9 +61,11 @@ export default function ProductView({ match }) {
   const [contents, setContents] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [productEvents, setProductEvents] = useState([]);
+  const [wish, setWish] = useState(false);
 
   // product init data
   const mapProductData = useCallback(([productData, { flatOptions, ...rest }]) => {
+    setWish(productData.liked);
     setProductData(productData);
     setProductOptions({
       ...rest,
@@ -208,6 +210,8 @@ export default function ProductView({ match }) {
                 hasColor={productOptions.hasColor}
                 productNo={productNo}
                 productGroup={productGroup}
+                wish={wish}
+                setWish={setWish}
               />
             </div>
             <RelatedProducts
