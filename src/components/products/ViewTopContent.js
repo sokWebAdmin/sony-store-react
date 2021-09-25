@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router";
-import _, { flatMap, flatten, take } from "lodash";
+import _ from "lodash";
 import qs from 'qs';
 
 import { postCart, postOrderSheets } from "../../api/order";
@@ -407,7 +407,6 @@ export default function TobContent({
   options,
   hasColor,
   productNo,
-  productColors,
   setSelectedOptionNo,
   productGroup
 }) {
@@ -441,7 +440,7 @@ export default function TobContent({
         />
 
         {
-          hasColor && <ColorChip colors={productColors} setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />
+          hasColor && <ColorChip setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />
         }
 
         {/* prd_select_wrap */}
@@ -450,7 +449,6 @@ export default function TobContent({
             productName={productName}
             options={options}
             hasColor={hasColor}
-            colors={productColors}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
             setTotalCnt={setTotalCnt}

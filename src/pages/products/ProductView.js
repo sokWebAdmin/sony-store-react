@@ -21,9 +21,6 @@ import { getProductDetail, getProductOptions, getProductSearch, getProductsOptio
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/product.scss"
 
-//context
-import GlobalContext from '../../context/global.context';
-
 //util
 import {useWindowSize} from '../../utils/utils';
 import { getInfoLinks, mapContents } from '../../const/productView';
@@ -60,14 +57,7 @@ export default function ProductView({ match }) {
     flatOptions: [],
     hasColor: false,
   });
-  /**
-   * @todo
-   * group 에 img(얘만 그룹 데이터에서 얻을 수 있음), colorLabel, colorCode, optionNo 갖고있기
-   */
   const [productGroup, setProductGroup] = useState([]);
-  const [productColors, setProductColors] = useState([]);
-
-  
   const [contents, setContents] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [productEvents, setProductEvents] = useState([]);
@@ -100,7 +90,7 @@ export default function ProductView({ match }) {
                          .value();
 
     const hasColor = flatOptions?.length > 0;
-    console.log(hasColor, 'hasColor')    
+      
     setProductOptions({
       flatOptions,
       hasColor,
@@ -174,8 +164,7 @@ export default function ProductView({ match }) {
       flatOptions: [],
       hasColor: false,
     });
-    setProductGroup([])
-    setProductColors([]);
+    setProductGroup([]);
     setContents([]);
     setRelatedProducts([]);
     setProductEvents([]);
@@ -218,7 +207,6 @@ export default function ProductView({ match }) {
                 options={productOptions.flatOptions}
                 hasColor={productOptions.hasColor}
                 productNo={productNo}
-                productColors={productColors}
                 productGroup={productGroup}
               />
             </div>
