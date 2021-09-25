@@ -142,7 +142,7 @@ export default function ProductView({ match }) {
                       .flatMap(({ categoryNo }) => categoryNo)
                       .join()
     });
-    console.log('productNo', productNo)
+    
     setRelatedProducts(_.reject(ret.data.items, ({ productNo: no }) => no === productNo));
   }, [productNo]);
 
@@ -188,10 +188,6 @@ export default function ProductView({ match }) {
           <div className="product_view_wrap" style={{backgroundColor:"#fff"}}>
             <div className="product_view_main">
               <div className="prd_main_slider" style={getMainSliderStyle(size)}>
-                {/* 
-                  @todo optionNo 옵션번호가 아니라
-                  선택된 옵션의 imageUrl 을 넘겨주기
-                */}
                 <MainImage 
                   imageUrls={ imageUrls }
                   selectedOptionNo={selectedOptionNo}
