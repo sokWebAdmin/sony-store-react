@@ -1,5 +1,6 @@
 import { getShareList } from "../../const/share";
 import { useAlert } from "../../hooks";
+import { shareKakaoButton, shareKakaoStoryButton } from "../../utils/share";
 import Alert from "../common/Alert";
 import LayerPopup from "../common/LayerPopup";
 
@@ -21,44 +22,14 @@ export default function Share({ link, label, setShareVisible }) {
     });
   };
 
-  const shareKakaoButton = link => {
-    if (window.Kakao) {
-      const kakao = window.Kakao;
-      if (!kakao.isInitialized()) {
-        kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
-      }
-      kakao.Link.sendDefault({
-        objectType: 'text',
-        text: label,
-        link: {
-          mobileWebUrl: link,
-          webUrl: link,
-        },
-      });
-    }
-  };
-
-  const shareKakaoStoryButton = link => {
-    if (window.Kakao) {
-      const kakao = window.Kakao;
-      if (!kakao.isInitialized()) {
-        kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
-      }
-      kakao.Story.share({
-        text: label,
-        url: link,
-      });
-    }
-  };
-
   const clickHandler = (e, name, link) => {
     e.preventDefault();
     switch(name) {
       case 'kakaotalk':
-        shareKakaoButton(link);
+        shareKakaoButton(link, label);
         break;
       case 'kakaostory':
-        shareKakaoStoryButton(link);
+        shareKakaoStoryButton(link, label);
         break;
       default:
         window.open(link, '_blank');
