@@ -42,7 +42,7 @@ const validator = {
  *          }; || reset 이 필요한 경우 {}
  */
 
-export default function SelectBox({ defaultInfo, selectOption, selectOptions, customOption }) {
+export default function SelectBox({ defaultInfo, selectOption, selectOptions, customOption, deleteOptionNo, setDeleteOptionNo }) {
   const initialSelectedState = useMemo(() => ({
     label: defaultInfo.placeholder,
     options: [],
@@ -58,7 +58,6 @@ export default function SelectBox({ defaultInfo, selectOption, selectOptions, cu
 
   const onClickHandler = useCallback((event, option) => {
     event.preventDefault();
-    
     if (validator.isDuplicated(selectedValue.options, option.optionNo)) {
       alert('이미 선택된 옵션입니다.');
     } else {
@@ -93,6 +92,17 @@ export default function SelectBox({ defaultInfo, selectOption, selectOptions, cu
 
   }, [customOption, initialSelectedState, selectedValue.options]);
 
+  useEffect(() => {
+    if (!deleteOptionNo) return;
+    setSelectedValue(prev => {
+      prev.options = prev.options.filter(o => o.optionNo !== deleteOptionNo);
+      return prev;
+    });
+
+    setDeleteOptionNo(0);
+
+  }, [deleteOptionNo])
+
   return (
     <>
       {
@@ -117,4 +127,6 @@ SelectBox.defaultProps = {
     tag: '제품',
   },
   customOptionNo: null,
+  deleteOptionNo: 0,
+  setDeleteOptionNo: () => null,
 }

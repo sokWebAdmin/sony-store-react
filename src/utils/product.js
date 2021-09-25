@@ -48,7 +48,8 @@ export const colorsGroupByOptionNo = options => {
    .value()
 }
 
-export const getColorChipInfo = (hasColor, productName, values) => {
+export const getColorChipInfo = (hasColor, productName, values, option) => {
+   
    if (hasColor && values) {
       const [ label, code ] = values;
       return {
@@ -56,8 +57,44 @@ export const getColorChipInfo = (hasColor, productName, values) => {
          background: code
       }
    } else {
+      const { label, value } = option;
+      const keys = label.split('|');
+      const values = value.split('|');
       return {
-         label: productName
+         label: _.chain()
+                 .range(keys.length)
+                 .map(i => `${keys[i]}: ${values[i]}`)
+                 .join(' | ')
+                 .value()
       }
    }
+}
+
+export const getSaleStatus = (status, reservationDate) => {
+   const { saleStatusType, soldout } = status;
+
+   if (soldout) {
+      return 'SOLDOUT';
+   };
+
+   if (reservationDate?.reservationStartYmdt) {
+      const { reservationStartYmdt, reservationEndYmdt } = reservationDate;
+      const reservStart = (new Date(reservationStartYmdt)).getTime();
+      const reservEnd = (new Date(reservationEndYmdt)).getTime();
+      const now = (new Date()).getTime();
+
+      if (reservStart > now) {
+         return 'READY_RESERVE';
+      }
+
+      if (reservEnd >= now) {
+         return 'RESERVE';
+      }
+   }
+
+   if (['ONSALE', 'FINISHED', 'STOP', 'PROHIBITION'].includes(saleStatusType)) {
+      return '';
+   }
+
+   return 'READY';
 }

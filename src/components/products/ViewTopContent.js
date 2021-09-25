@@ -15,22 +15,27 @@ import { useAlert } from "../../hooks";
 import Alert from "../common/Alert";
 import Notification from "./Notification";
 import gc from "../../storage/guestCart";
-import { colorsGroupByOptionNo, getColorChipInfo } from "../../utils/product";
-import LayerPopup from "../common/LayerPopup";
+import { colorsGroupByOptionNo, getColorChipInfo, getSaleStatus } from "../../utils/product";
 import Share from "../popup/Share";
 import { postProfileLikeProducts } from "../../api/product";
+import { useCategoryState } from "../../context/category.context";
 
 // 배송
 function Delivery({
   deliveryFee,
-  price
+  price,
+  saleStatus
 }) {
+  
   return (
     <div className="cont">
       <p className="delivery_txt">
-        {deliveryFee.deliveryConditionType === "FREE" ? "무료배송" : ""}
+        {deliveryFee.defaultDeliveryConditionLabel}
         </p>
-      <p className="product_price"><strong className="price">{wonComma(price.salePrice)}</strong> 원</p>
+      <p className="product_price"><strong className="price">{wonComma(price.salePrice)}</strong> 원
+        {saleStatus === 'READY' && <span className={`badge__label badge__label__outofstock`}>일시품절<span className="icon_question">!</span></span>}
+        {saleStatus === 'SOLDOUT' && <span className={`badge__label badge__label__soldout`}>품절<span className="icon_question">!</span></span>}
+      </p>
     </div>
   )
 }
@@ -68,7 +73,7 @@ function Benefits({ price }) {
 }
 
 // 컬러칩
-function ColorChip({ setSelectedOptionNo, productGroup }) {
+function ColorChip({ setSelectedOptionNo, productGroup, isSoldOut }) {
   const pg = _.chain(productGroup)
               .values()
               .flatten()
@@ -102,7 +107,11 @@ function ColorChip({ setSelectedOptionNo, productGroup }) {
               const [label, code] = colors;
               return (
                 <li key={`${label}${code}${idx}`} className={`${color === code && 'on'}`}>
-                  <a href={`#${label}`} className="color_btn" onClick={ e => clickHandler(e, code, optionNo) }>
+                  <a 
+                    href={`#${label}`} 
+                    className="color_btn" 
+                    onClick={ e => clickHandler(e, code, optionNo) }
+                  >
                     <span className="circle_color">
                       <span className="c_bg" data-slide-img-type={code} style={{background: code}} />
                     </span>
@@ -129,21 +138,28 @@ function Option({
   setTotalPrice,
   totalCnt,
   totalPrice,
+  saleStatus,
 }) {
+  const reserved = saleStatus === 'RESERVE';
+
   const colorByOptionNo = colorsGroupByOptionNo(options, productName);
   const getSelectOptions = useCallback(o => {
     const colorChipInfo = getColorChipInfo(
                         hasColor, 
                         productName, 
-                        _.head(colorByOptionNo[o.optionNo])?.value
+                        _.head(colorByOptionNo[o.optionNo])?.value,
+                        o
                       );
+    const disabled = o.forcedSoldOut || reserved ? o.reservationStockCnt === 0 : o.stockCnt === 0;
     return {
       ...o,
-      disabled: o.forcedSoldOut,
+      disabled,
       label: colorChipInfo?.label,
       background: colorChipInfo?.background
     }
-  }, [colorByOptionNo, hasColor, productName])
+  }, [colorByOptionNo, hasColor, productName]);
+
+  const [deleteOptionNo, setDeleteOptionNo] = useState(0);
 
   return (
     <div className="prd_select_inner">
@@ -154,17 +170,19 @@ function Option({
         {
           options &&
           <SelectBox
-          selectOptions={options.map(getSelectOptions)}
-          selectOption={option => {
-            setSelectedOption(prev => prev.concat({
-              ...option,
-              buyCnt: 1,
-            }));
-            setTotalCnt(totalCnt + 1);
-            setTotalPrice(totalPrice + option.buyPrice);
-          }}
+            selectOptions={options.map(getSelectOptions)}
+            selectOption={
+              option => {
+                setSelectedOption(prev => prev.concat({
+                  ...option,
+                  buyCnt: 1,
+                }));
+                setTotalCnt(totalCnt + 1);
+                setTotalPrice(totalPrice + option.buyPrice);
+            }}
+            deleteOptionNo={deleteOptionNo}
+            setDeleteOptionNo={setDeleteOptionNo}
         />
-
         }
                 
       </div>
@@ -182,7 +200,7 @@ function Option({
             <div className="opt_count">
               <CountBox 
                 initialCount={item?.buyCnt}
-                maxCount={item.stockCnt}
+                maxCount={reserved ? item.reservationStockCnt : item.stockCnt}
                 changedCount={currentCount => {
                   if (!currentCount) return;
                   const { buyCnt: prevBuyCnt, buyPrice } = selectedOption[itemIndex];
@@ -215,12 +233,14 @@ function Option({
               onClick={ event => {
     
                 event.preventDefault();
-                const tempOptionList = selectedOption.filter(({ optionNo }) => optionNo !== item.optionNo)
+                const tempOptionList = selectedOption.filter(({ optionNo }) => optionNo !== item.optionNo);
               
                 setTotalCnt(totalCnt - item.buyCnt);
                 setTotalPrice(totalPrice - (item.buyCnt * item.buyPrice));
 
-                setSelectedOption(tempOptionList)
+                setSelectedOption(() => tempOptionList);
+
+                setDeleteOptionNo(item.optionNo)
       
               }}>구매 목록에서 삭제</a>
           </div>
@@ -273,8 +293,8 @@ const getCartRequest = (productNo, options) => options.map(
     })
   );
 
-function ButtonGroup({ selectedOption, productNo, canBuy, wish, setWish }) {
-
+function ButtonGroup({ selectedOption, productNo, canBuy, wish, setWish, saleStatus }) {
+  
   const { openAlert, closeModal, alertVisible, alertMessage  } = useAlert();
   const { isLogin } = useContext(GlobalContext);
   const [ giftVisible, setGiftVisible ] = useState(false);
@@ -378,22 +398,16 @@ function ButtonGroup({ selectedOption, productNo, canBuy, wish, setWish }) {
               >선물</a>
             </li>
             <li className="final">
-              <a 
+              { saleStatus === '' && <a 
                 href="/order/sheet" 
                 onClick={ e => handleClick(e, 'order')} 
                 className="btn_style direct" 
                 style={{backgroundColor: '#000'}}
-              >바로 구매하기</a>
-              <a href="#none" className="btn_style disabled" style={{display: 'none', backgroundColor: '#ddd'}}>품절</a>
-              <a href="#none" className="btn_style reservation" style={{display: 'none', backgroundColor: '#5865F5'}}>예약구매</a>
-              {/*
-            * 버튼 참고
-            btn_style : 기본 버튼 스타일
-            class 추가
-            direct : 바로 구매하기
-            disabled : 일시 품절, 품절 (선택불가)
-            reservation : 예약구매, 재입고 알림 신청
-          */}
+              >바로 구매하기</a>}
+              {saleStatus === 'RESERVE' && <a href="#none" className="btn_style reservation" style={{display: 'block', backgroundColor: '#5865F5'}}>예약판매</a>}
+              {saleStatus === 'READY_RESERVE' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#ff4e4e'}}>출시예정</a>}
+              {saleStatus === 'READY' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#888'}}>임시품절</a>}
+              {saleStatus === 'SOLDOUT' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#ddd'}}>품절</a>}
             </li>
           </ul>
         </div>
@@ -444,9 +458,7 @@ function SocialList({ productName }) {
 }
 
 export default function TobContent({
-  baseInfo,
-  deliveryFee,
-  price,
+  productData,
   options,
   hasColor,
   productNo,
@@ -455,25 +467,38 @@ export default function TobContent({
   wish,
   setWish
 }) {
-  const { productName, productNameEn } = baseInfo;
+  const { tagColorMap } = useCategoryState();
+  const { baseInfo, price, deliveryFee, status, reservationData } = productData;
+  const { productName, productNameEn, promotionText, stickerLabels } = baseInfo;
   const [selectedOption, setSelectedOption] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCnt, setTotalCnt] = useState(0);
 
+  const saleStatus = getSaleStatus(status, reservationData);
+  
+  
+  const isSoldOut = status.soldout || ['READY_RESERVE', 'SOLDOUT', 'READY'].includes(saleStatus);
   return (
     <form>
-      <div className="product_view_about">{/* class :  soldout-품절, restock-재입고 텍스트 색상 변경을 위함 */}
+      <div className={`product_view_about ${status.soldout && 'soldout'}`}>
         <div className="cont">
-          <span className="flag new">NEW</span>{/* class : new / event / best / hot */}
+          {
+            stickerLabels?.map((label, idx) => (
+              <span key={`${label}${idx}`} className={`flag ${tagColorMap[label]}`} style={{ color: tagColorMap[label] }}>{label}</span>
+            ))
+          }
+          {/* <span className="flag new">NEW</span>class : new / event / best / hot */}
           <p className="product_tit">{productName}</p>
           { productNameEn && <p className="product_txt">{productNameEn}</p> }
-          {/* <p className="product_desc">이 제품은 예약 주문 상품으로 구매 후 1주일 뒤에 발송됩니다</p> */}
+          {/* @TODO promotionText 날짜가 api 에서 제공되지 않음 */}
+          { promotionText && <p className="product_desc">{promotionText}</p> }
           <SocialList productName={productName} />
         </div>
         
         <Delivery 
           deliveryFee={deliveryFee}
           price={price}
+          saleStatus={saleStatus}
         />
         
         <Benefits 
@@ -481,7 +506,7 @@ export default function TobContent({
         />
 
         {
-          hasColor && <ColorChip setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />
+          hasColor && <ColorChip isSoldOut={isSoldOut} setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />
         }
 
         {/* prd_select_wrap */}
@@ -497,6 +522,7 @@ export default function TobContent({
             totalCnt={totalCnt}
             totalPrice={totalPrice}
             productGroup={productGroup}
+            saleStatus={saleStatus}
           />
           
           <OptionResult 
@@ -510,6 +536,7 @@ export default function TobContent({
             canBuy={totalCnt > 0}
             wish={wish}
             setWish={setWish}
+            saleStatus={saleStatus}
           />
         </div>
       </div>

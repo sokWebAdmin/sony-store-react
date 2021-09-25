@@ -33,9 +33,6 @@ import RelatedProducts from '../../components/products/RelatedProducts';
 import Event from '../../components/products/Event';
 import BottomContent from '../../components/products/ViewBottomContent';
 
-
-
-
 export default function ProductView({ match }) {
   const productNo = Number(match.params?.productNo) || 0;
 
@@ -69,7 +66,7 @@ export default function ProductView({ match }) {
     setProductData(productData);
     setProductOptions({
       ...rest,
-      flatOptions: flatOptions.length > 0 ? [_.head(flatOptions)] : []
+      flatOptions: flatOptions.length > 0 ? flatOptions : []
     });
     setContents(mapContents(productData.baseInfo));
   }, []);
@@ -203,9 +200,7 @@ export default function ProductView({ match }) {
               </div>
               <TobContent
                 setSelectedOptionNo={setSelectedOptionNo}
-                baseInfo={productData.baseInfo}
-                deliveryFee={productData.deliveryFee}
-                price={productData.price}
+                productData={productData}
                 options={productOptions.flatOptions}
                 hasColor={productOptions.hasColor}
                 productNo={productNo}
