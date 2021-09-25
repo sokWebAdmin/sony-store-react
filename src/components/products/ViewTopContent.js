@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router";
-import _, { flatMap, flatten } from "lodash";
+import _, { flatMap, flatten, take } from "lodash";
 import qs from 'qs';
 
 import { postCart, postOrderSheets } from "../../api/order";
@@ -65,17 +65,22 @@ function Benefits({ price }) {
 }
 
 // 컬러칩
-function ColorChip({ colors, setSelectedOptionNo }) {
+function ColorChip({ setSelectedOptionNo, productGroup }) {
+  const pg = _.chain(productGroup)
+              .values()
+              .flatten()
+              .value();
 
   const [ color, setColor ] = useState('');
+
   useEffect(() => setColor(
-    _.chain(colors)
+    _.chain(pg)
      .take(1)
-     .flatMap(([_, v]) => v)
-     .tail()
+     .map(({ colors }) => colors)
      .head()
+     .last()
      .value()
-  ), [colors]);
+  ), [productGroup]);
 
   const clickHandler = (e, code, no) => {
     e.preventDefault();
@@ -89,11 +94,11 @@ function ColorChip({ colors, setSelectedOptionNo }) {
         <p className="tit">색상</p>
         <ul className="circle_color_box">
           {
-            colors.map(([optionNo, vals]) => {
-              if (!vals) return null;
-              const [label, code] = vals;
+            pg.map(({ optionNo, colors }, idx) => {
+              if (!colors) return null;
+              const [label, code] = colors;
               return (
-                <li key={`${label}${code}`} className={`${color === code && 'on'}`}>
+                <li key={`${label}${code}${idx}`} className={`${color === code && 'on'}`}>
                   <a href={`#${label}`} className="color_btn" onClick={ e => clickHandler(e, code, optionNo) }>
                     <span className="circle_color">
                       <span className="c_bg" data-slide-img-type={code} style={{background: code}} />
@@ -403,7 +408,8 @@ export default function TobContent({
   hasColor,
   productNo,
   productColors,
-  setSelectedOptionNo
+  setSelectedOptionNo,
+  productGroup
 }) {
   const { productName, productNameEn } = baseInfo;
   const [selectedOption, setSelectedOption] = useState([]);
@@ -435,7 +441,7 @@ export default function TobContent({
         />
 
         {
-          hasColor && <ColorChip colors={productColors} setSelectedOptionNo={setSelectedOptionNo} />
+          hasColor && <ColorChip colors={productColors} setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />
         }
 
         {/* prd_select_wrap */}
@@ -451,6 +457,7 @@ export default function TobContent({
             setTotalPrice={setTotalPrice}
             totalCnt={totalCnt}
             totalPrice={totalPrice}
+            productGroup={productGroup}
           />
           
           <OptionResult 

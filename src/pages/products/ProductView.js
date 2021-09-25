@@ -45,7 +45,6 @@ export default function ProductView({ match }) {
   //ui
   const [headerHeight, setHeaderHeight] = useState(0);
   const size = useWindowSize();
-  const [selectedOptionNo, setSelectedOptionNo] = useState(0);
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 
@@ -53,15 +52,22 @@ export default function ProductView({ match }) {
     const header = document.getElementsByClassName("header").clientHeight;
     setHeaderHeight(header);
   },[]);
-
+  
   //data
+  const [selectedOptionNo, setSelectedOptionNo] = useState(0);
   const [productData, setProductData] = useState();
   const [productOptions, setProductOptions] = useState({
     flatOptions: [],
     hasColor: false,
   });
-  const [productGroup, setProductGroup] = useState([]);
-  const [productColors, setProductColors] = useState([])
+  /**
+   * @todo
+   * group 에 img(얘만 그룹 데이터에서 얻을 수 있음), colorLabel, colorCode, optionNo 갖고있기
+   */
+  const [productGroup, setProductGroup] = useState({});
+  const [productColors, setProductColors] = useState([]);
+
+  
   const [contents, setContents] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [productEvents, setProductEvents] = useState([]);
@@ -94,43 +100,40 @@ export default function ProductView({ match }) {
       flatOptions,
       hasColor,
     });
-
-    if (!hasColor) return;
-    const nos = flatOptions.flatMap(({ optionNo }) => optionNo);
-    const values = flatOptions.map(({ value }) => getColorChipValues(value));
-    
-    setProductColors(
-      _.chain()
-       .range(nos.length)
-       .map(i => ([nos[i], values[i]]))
-       .value()
-    )
   }
   // @TODO 101988965 컬러 테스트 상품 번호
+  const mapProductGroupInfo = (({ mainImageUrl, options }) => {
+    const { optionNo, value } = _.head(options);
+    return {
+      img: mainImageUrl,
+      optionNo,
+      colors: getColorChipValues(value),
+    }
+  });
+
   const fetchProductGroupData = useCallback( async (groupCode) => {
     const { data } = await postProductsGroupManagementCode({
       groupManagementCodes: [ groupCode ],
       saleStatus: 'ALL_CONDITIONS',
       isSoldOut: true,
     });
+    
+    const gp = _.chain(data).flatMap(({ groupManagementMappingProducts }) => groupManagementMappingProducts)
+    
     setProductGroup(
-      _.chain(data)
-       .flatMap(({ groupManagementMappingProducts })=> groupManagementMappingProducts)
-       .map(p => ({
-         imgUrl: p.mainImageUrl,
-         optionNo: _.head(p.options).optionNo
-       }))
+      _.chain(gp)
+       .map(mapProductGroupInfo)
        .groupBy('optionNo')
        .value()
-    )
+    );
+
     fetchProductGroupOptions(
-      _.chain(data)
-       .flatMap(({ groupManagementMappingProducts }) => groupManagementMappingProducts)
+      _.chain(gp)
        .flatMap(({ productNo }) => productNo)
        .join()
        .value()
     )
-  }, [])
+  }, []);
 
   const fetchRelatedProducts = useCallback(async (categories) => {
     if (!categories) return;
@@ -174,7 +177,7 @@ export default function ProductView({ match }) {
     setSelectedOptionNo(0);
   };
 
-  const imageUrls = useMemo(() => selectedOptionNo > 0 ? [_.head(productGroup[selectedOptionNo])?.imgUrl] : productData?.baseInfo?.imageUrls, [selectedOptionNo, productData?.baseInfo?.imageUrls])
+  const imageUrls = useMemo(() => selectedOptionNo > 0 ? [_.head(productGroup[selectedOptionNo])?.img] : productData?.baseInfo?.imageUrls, [selectedOptionNo, productData?.baseInfo?.imageUrls])
 
   //
   const showProductDetail = useMemo(() => (headerHeight > 0 || size.height < 1280) && productData, [headerHeight, size.height, productData] )
@@ -202,6 +205,7 @@ export default function ProductView({ match }) {
                 hasColor={productOptions.hasColor}
                 productNo={productNo}
                 productColors={productColors}
+                productGroup={productGroup}
               />
             </div>
             <RelatedProducts

@@ -22,7 +22,24 @@ export const getMainSliderStyle = ({ width, height }, headerHeight) => {
       : { display: 'block' };
 }
 
-export const getColorChipValues = value => value.includes('_#') && value.split('_');
+export const getColorChipValues = value => {
+   if (!value.includes('_#')) return []
+
+   value = value.includes('|') 
+            ? _.head(value.split('|')) 
+            : value;
+   
+   const colors = value.split('_');
+
+   const [label, code] = colors;
+
+   const isBlack = label.includes('블랙') || label.includes('검정');
+   if (isBlack && !code.includes('#000000')) {
+      colors[1] = '#000000';
+   };
+
+   return colors;
+};
 
 export const colorsGroupByOptionNo = options => {
   return _.chain(options)
@@ -36,7 +53,7 @@ export const getColorChipInfo = (hasColor, productName, values) => {
       const [ label, code ] = values;
       return {
          label: `${productName} (${label})`,
-         background: code.includes('|') ? _.head(code.split('|')) : code
+         background: code
       }
    } else {
       return {
