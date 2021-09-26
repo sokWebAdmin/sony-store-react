@@ -1,7 +1,10 @@
 import React from "react"
 import { Link } from "react-router-dom";
+import { PAGE_SIZE } from "../../const/search";
 import { formatDateWithDot } from "../../utils/dateFormat";
-export default function EventResult({ eventList, eventCount }) {
+import ViewMore from "../common/ViewMore";
+import Newest from "./Newest";
+export default function EventResult({ fetchEvent, eventList, eventCount, newest, setNewest }) {
   return (
     <>
       <div className="section_top">
@@ -11,12 +14,10 @@ export default function EventResult({ eventList, eventCount }) {
             <span className="itemsort__button__label sr-only">정렬기준:</span>
             <span className="itemsort__button__selected">최신순</span>
           </button>
-          <div className="itemsort__drawer">
-            <ul className="itemsort__items">
-              <li className="itemsort__item itemsort__item--active"><a href="#none" className="itemsort__item__link">최신순</a></li>
-              <li className="itemsort__item"><a href="#none" className="itemsort__item__link">오래된순</a></li>
-            </ul>
-          </div>
+          <Newest 
+            newest={newest}
+            setNewest={setNewest}
+          />
         </div>
       </div>
       <ul className="product_List grid">
@@ -41,12 +42,11 @@ export default function EventResult({ eventList, eventCount }) {
           ))
         }
       </ul>
-      {/* 더보기 버튼영역 */}
-      <div className="btn_area">
-        <button type="button" className="btn_more" title="기획전 더보기">더보기<span className="ico_plus" /></button>
-      </div>
-      {/*// 더보기 버튼영역 */}
-      {/*// 기획전 리스트 영역 */}
-          </>
+      <ViewMore 
+        totalCount={eventCount}
+        viewMore={fetchEvent}
+        pageSize={PAGE_SIZE.EVENT}
+      />
+    </>
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { orderList } from "../../const/search";
+import { orderList, PAGE_SIZE } from "../../const/search";
 import Product from "../products/Product";
 
 import _ from 'lodash';
@@ -75,7 +75,7 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
       <ViewMore
         totalCount={productCount}
         viewMore={pageNumber => searchProduct(keyword, orderBy, pageNumber)}
-        pageSize={9}
+        pageSize={PAGE_SIZE.PRODUCT}
       />
     </>
   )

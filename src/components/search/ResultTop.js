@@ -2,33 +2,37 @@ import { React, useRef, useState } from "react";
 import { useHistory } from "react-router";
 
 export default function ResultTop({ handleSearch, allCount, initalKeyword }) {
-  // const history = useHistory();
+  const history = useHistory();
   const [keyword, setKeyword] = useState(initalKeyword);
   const searchKeyword = useRef(initalKeyword);
+
+  const clickHandler = (event, k = keyword) => {
+    event?.preventDefault();
+    
+    history.replace(`/search-result/${k}`)
+    handleSearch(k);
+    searchKeyword.current = k;
+  }
 
   const handleKeywordChange = ({ target }) => setKeyword(target.value);
   
   return (
     <div className="searchResult">
       <div className="searchResult__form">
-        <form>
+        <form onSubmit={clickHandler}>
           <label htmlFor="search-input">검색결과</label>
           <input 
             type="text" 
             id="search-input" 
             className="input-txt"  
-            onChange={handleKeywordChange} 
+            onChange={handleKeywordChange}
             value={ keyword }
           />
           <button 
             type="button" 
             className="btn_search" 
             title="검색" 
-            onClick={e => {
-              e.preventDefault();
-              handleSearch(keyword);
-              searchKeyword.current = keyword;
-            }}>검색</button>
+            onClick={clickHandler}>검색</button>
         </form>
       </div>
       <div className="result-message">
