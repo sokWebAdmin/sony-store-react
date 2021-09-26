@@ -52,4 +52,8 @@ export const postProductsGroupManagementCode = requestBody => {
 
 export const postProfileLikeProducts = requestBody => {
   return request('profile/like-products', 'post', null, requestBody);
+};
+
+export const getProductsFavoriteKeywords = (size='10') => {
+  return request('products/favoriteKeywords', 'get', { size }, null);
 }
