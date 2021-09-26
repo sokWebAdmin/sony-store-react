@@ -4,8 +4,9 @@ import Product from "../products/Product";
 
 import _ from 'lodash';
 import { postProductsGroupManagementCode } from "../../api/product";
+import ViewMore from "../common/ViewMore";
 
-export default function ProductResult({ productList, orderBy, setOrderBy, productCount }) {
+export default function ProductResult({ productList, orderBy, setOrderBy, productCount, searchProduct, keyword }) {
 
   const [mobileOrderOpen, setMobileOrderOpen] = useState(false);
   const [products, setProducts] = useState(productList);
@@ -23,21 +24,19 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
                          }))
                          .groupBy('groupManagementCode')
                          .value();
+ 
+    setProducts(
+      _.map(productList, p => ({ ...p, groupManagementMappingProducts: _.head(groupByCode[p.groupManagementCode])?.groupManagementMappingProducts }))
+    )
+  }; 
 
-    setProducts(productList.map((p) => ({...p, groupManagementMappingProducts: _.head(groupByCode[p.groupManagementCode])?.groupManagementMappingProducts})))
+  const codes = _.chain(productList)
+                .flatMap(({ groupManagementCode }) => groupManagementCode)
+                .compact()
+                .uniq()
+                .value();
 
-  }
-
-  useEffect(() => {
-    fetchGroupManagementMappingProducts(
-      _.chain(productList)
-       .flatMap(({ groupManagementCode }) => groupManagementCode)
-       .compact()
-       .uniq()
-       .value(),
-      productList
-    );
-  }, [productList]);
+  useEffect(() => fetchGroupManagementMappingProducts(codes, productList), [productList]);
 
   return (
     <>
@@ -48,7 +47,7 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
               setMobileOrderOpen(!mobileOrderOpen)
           }}>
             <span className="itemsort__button__label sr-only">정렬기준:</span>
-            <span className="itemsort__button__selected">{orderBy === "RECENT_PRODUCT" ? "최신순" : (orderBy === "TOP_PRICE" ? "높은 가격순" : "낮은 가격순")}</span>
+            <span className="itemsort__button__selected">{orderBy === "RECENT_PRODUCT" ? "최신순" : (orderBy === "LOW_PRICE" ? "낮은 가격순" : "높은 가격순")}</span>
           </button>
           <div className="itemsort__drawer">
             <ul className="itemsort__items">
@@ -70,17 +69,14 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
           </div>
         </div>      
       </div>
-      {/* item-list */}
       <div className="product__list product__list--lite">
-        {/* item */}
         {products && products.map((item, itemIndex) => <Product key={itemIndex} product={item} />)}
       </div>
-      {/* 더보기 버튼영역 */}
-      <div className="btn_area">
-        <button type="button" className="btn_more" title="제품 더보기">더보기<span className="ico_plus" /></button>
-      </div>
-      {/*// 더보기 버튼영역 */}
-      </>
-    // </div>
+      <ViewMore
+        totalCount={productCount}
+        viewMore={pageNumber => searchProduct(keyword, orderBy, pageNumber)}
+        pageSize={9}
+      />
+    </>
   )
 } 

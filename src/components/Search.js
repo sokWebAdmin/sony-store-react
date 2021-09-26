@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect} from "react";
 
 //images
 import search from "../assets/images/common/ic_search.svg";
@@ -6,15 +6,47 @@ import close from "../assets/images/common/ic_close.svg";
 
 //utils
 import { useHistory } from "react-router-dom";
+import { getProductsFavoriteKeywords } from "../api/product";
+import Alert from "./common/Alert";
+import { useAlert } from "../hooks";
 
 export default function Search({ setSearchOpen }) {
   
   const history = useHistory();
 
   const [keyword, setKeyword] = useState('');
+  const [favoriteKeywords, setFavoriteKeywords] = useState([]);
+  const {
+    openAlert,
+    closeModal,
+    alertVisible,
+    alertMessage,
+  } = useAlert();
+
+  const fetchFavoriteKeywords = async () => {
+    try {
+      const { data } = await getProductsFavoriteKeywords();
+      setFavoriteKeywords(data);
+    } catch(e) {
+      console.error(e)
+    }
+  };
+
+  useEffect(() => fetchFavoriteKeywords(), []);
+
+  const searchHandler = (e, keyword) => {
+    e?.preventDefault();
+    if (keyword) {
+      history.push(`/search-result/${keyword}`)
+      setSearchOpen(false);
+    } else {
+      openAlert('검색어를 입력해주세요.')
+    }
+  };
 
   return (
     <>
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
         {/* 검색 */}
       <div className="search" style={{display:"block"}}>
         <h2 className="sr-only">통합검색</h2>
@@ -26,32 +58,18 @@ export default function Search({ setSearchOpen }) {
               <input type="text" id="search__input" className="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxLength="40" value={keyword} onChange={(e)=>{
                 setKeyword(e.target.value);
               }} />
-              <button className="btn search__btn__submit" onClick={e=>{
-                e.preventDefault();
-                if(keyword){
-                  history.push("/search-result/"+keyword)
-                  setSearchOpen(false)
-                } else{
-                  alert("검색어를 입력해주세요.")
-                }
-                
-              }}><img src={search} alt="검색" /></button>
+              <button className="btn search__btn__submit" onClick={ e => searchHandler(e, keyword) }><img src={search} alt="검색" /></button>
             </fieldset>
              {/* </form>  */}
           </div>
           <div className="search__keyword">
             <h3 className="search__title">인기 검색어</h3>
             <div className="search__keyword__list">
-              <a  className="search__keyword__item"># SEL40F25G</a>
-              <a  className="search__keyword__item"># SRS-RA5000/MKR2</a>
-              <a  className="search__keyword__item"># 카메라의 초격차</a>
-              <a  className="search__keyword__item"># 알파 야카데미 8월 강좌</a>
-              <a  className="search__keyword__item"># 노이즈캔슬링</a>
-              <a  className="search__keyword__item"># 벗지않는 헤드폰</a>
-              <a  className="search__keyword__item"># WF-1000XM3SME</a>
-              <a  className="search__keyword__item"># 무선 스피커</a>
-              <a  className="search__keyword__item"># 하이 레졸루션 오디오</a>
-              <a  className="search__keyword__item"># 프리미엄 SD카드</a>
+              {
+                favoriteKeywords.map((k, idx) => (
+                  <button key={`${k}${idx}`} className="search__keyword__item" onClick={e => searchHandler(e, k)}>{`# ${k}`}</button>
+                ))
+              }
             </div>
           </div>
           <div className="search__recomm">

@@ -8,6 +8,6 @@ export const TAB_MAP = {
 
 export const orderList = [
   { orderBy: 'RECENT_PRODUCT', label: '최신순', query: {'order.by': 'RECENT_PRODUCT'}},
-  { orderBy: 'TOP_PRICE', label: '높은 가격순', query: {'order.by': 'DISCOUNTED_PRICE'}},
-  { orderBy: 'DISCOUNTED_PRICE', label: '낮은 가격순', query: {'order.by': 'DISCOUNTED_PRICE', 'order.direction': 'ASC'}},
+  { orderBy: 'DISCOUNTED_PRICE', label: '높은 가격순', query: {'order.by': 'DISCOUNTED_PRICE'}},
+  { orderBy: 'LOW_PRICE', label: '낮은 가격순', query: {'order.by': 'DISCOUNTED_PRICE', 'order.direction': 'ASC'}},
 ];

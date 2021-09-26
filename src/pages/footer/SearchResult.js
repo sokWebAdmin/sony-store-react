@@ -1,10 +1,11 @@
 import { React, useEffect, useMemo, useState, useCallback } from 'react';
+import _ from 'lodash';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import { productSearch } from "../../api/product";
+import { getProductSearch } from "../../api/product";
 
 //css
 import "../../assets/scss/contents.scss"
@@ -29,6 +30,7 @@ import Tab from '../../components/search/Tab';
 import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../context/board.context';
 import { getBoards } from '../../api/manage';
 import { getCategoryListByKeyword, getDisplayEvents } from '../../api/display';
+import { orderList } from '../../const/search';
 
 
 export default function SearchResult({match}) {
@@ -53,11 +55,27 @@ export default function SearchResult({match}) {
   const [categoryCount, setCategoryCount] = useState(0);
   const [noticeCount, setNoticeCount] = useState(0);
 
-  const searchProduct = useCallback( 
-    async(keyword, orderBy) => {
+  const getProductQuery = (keyword, orderBy, pageNumber=1, pageSize=9) => {
+
+    const orderByQuery = _.chain(orderList)
+                          .filter(({ orderBy: ob }) => ob === orderBy)
+                          .map(({ query }) => query)
+                          .head()
+                          .value();
+
+    return {
+      ...orderByQuery,
+      keywords: keyword,
+      pageNumber,
+      pageSize
+    }
+  }
+  const searchProduct = useCallback(
+    async(keyword, orderBy, pageNumber = 1) => {
       try {
-        const { data } = await productSearch(keyword, orderBy);
-        setProductList(data.items)
+        const { data } = await getProductSearch(getProductQuery(keyword, orderBy, pageNumber))
+        
+        setProductList(prev => pageNumber > 1 ? prev.concat(data.items) : data.items)
         setProductCount(data.totalCount || 0);
       } catch(e) {
         console.error(e);
@@ -112,13 +130,14 @@ export default function SearchResult({match}) {
     }, []
   )
 
-  const handleSearch = keyword => {
-    setKeyword(keyword);
+  const handleSearch = newKeyword => {
+    if (keyword === newKeyword) return;
 
-    searchProduct(keyword);
-    searchNotice(keyword, config.notice.boardNo);
-    searchEvent(keyword);
-    searchCategory(keyword);
+    setKeyword(newKeyword);
+    searchProduct(newKeyword);
+    searchNotice(newKeyword, config.notice.boardNo);
+    searchEvent(newKeyword);
+    searchCategory(newKeyword);
   }
 
   const isAll = useMemo(() => tabState === 'ALL', [tabState]);
@@ -169,6 +188,8 @@ export default function SearchResult({match}) {
                   productCount={productCount} 
                   orderBy={orderBy} 
                   setOrderBy={setOrderBy} 
+                  searchProduct={searchProduct}
+                  keyword={keyword}
                 />
             }
             {
