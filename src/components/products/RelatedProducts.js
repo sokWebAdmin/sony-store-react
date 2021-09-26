@@ -36,7 +36,7 @@ export default function RelatedProducts({ products, reset }) {
           <>
             {
               products.map((product) => (
-                <SwiperSlide key={ product.productNo } className="swiper-slide">
+                <SwiperSlide key={ product.productNo }>
                   <Product 
                     product={product}
                     categories={categories}

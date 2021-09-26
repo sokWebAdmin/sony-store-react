@@ -32,6 +32,7 @@ import { getBoards } from '../../api/manage';
 import { getCategoryListByKeyword, getDisplayEvents } from '../../api/display';
 import { orderList, PAGE_SIZE } from '../../const/search';
 import moment from 'moment';
+import SearchResultNone from './SearchResultNone';
 
 export default function SearchResult({match}) {
   const initalKeyword = match.params.keyword;
@@ -235,52 +236,60 @@ export default function SearchResult({match}) {
               setTabState={setTabState}
               count={count}
             />
-            <div className="product">
             {
-              (isAll || tabState === 'PRODUCT') 
-                && 
-                <ProductResult 
-                  productList={productList} 
-                  productCount={productCount} 
-                  orderBy={orderBy} 
-                  setOrderBy={setOrderBy} 
-                  searchProduct={searchProduct}
-                  keyword={keyword}
-                />
-            }
-            {
-              (isAll || tabState === 'EVENT') 
-                && 
-                <EventResult
-                  fetchEvent={fetchEvent}
-                  eventList={eventList}
-                  eventCount={eventCount}
-                  setNewest={setNewest}
-                  newest={newest}
-                />
-            }
-            </div>
-            {
-              (isAll || tabState === 'CATEGORY') 
-                && 
-                <CategoryResult
-                  fetchCategory={fetchCategory}
-                  keyword={keyword}
-                  categoryList={categoryList}
-                  categoryCount={categoryCount}
-                />
-            }
-            {
-              (isAll || tabState === 'NOTICE') 
-                && 
-                <NoticeResult 
-                  noticeList={noticeList}
-                  noticeCount={noticeCount}
-                  keyword={keyword}
-                  noticeNewest={noticeNewest}
-                  setNoticeNewest={setNoticeNewest}
-                  searchNotice={searchNotice}
-                />
+              // @TODO 키워드 엉망으로 검색해도 api response 에 응답 값이 존재함. 이 부분 api 확인요청하기
+              count.ALL === 0 ?
+                <SearchResultNone />
+                :
+              <>
+                <div className="product">
+                  {
+                    (isAll || tabState === 'PRODUCT') 
+                      && 
+                      <ProductResult 
+                        productList={productList} 
+                        productCount={productCount} 
+                        orderBy={orderBy} 
+                        setOrderBy={setOrderBy} 
+                        searchProduct={searchProduct}
+                        keyword={keyword}
+                      />
+                  }
+                  {
+                    (isAll || tabState === 'EVENT') 
+                      && 
+                      <EventResult
+                        fetchEvent={fetchEvent}
+                        eventList={eventList}
+                        eventCount={eventCount}
+                        setNewest={setNewest}
+                        newest={newest}
+                      />
+                  }
+                  </div>
+                  {
+                    (isAll || tabState === 'CATEGORY') 
+                      && 
+                      <CategoryResult
+                        fetchCategory={fetchCategory}
+                        keyword={keyword}
+                        categoryList={categoryList}
+                        categoryCount={categoryCount}
+                      />
+                  }
+                  {
+                    (isAll || tabState === 'NOTICE') 
+                      && 
+                      <NoticeResult 
+                        noticeList={noticeList}
+                        noticeCount={noticeCount}
+                        keyword={keyword}
+                        noticeNewest={noticeNewest}
+                        setNoticeNewest={setNoticeNewest}
+                        searchNotice={searchNotice}
+                      />
+                  }
+              </>
             }
           </div>
         </div>
