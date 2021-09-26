@@ -56,8 +56,8 @@ export default function Tab({ tabState, setTabState, count }) {
           </div>
         </div>
       :
-        <div class="swipe_tab swiper-container">
-          <ul class="swiper-wrapper">
+        <div className="swipe_tab swiper-container">
+          <ul className="swiper-wrapper">
             {
               tabs.map(tab => {
                 
@@ -78,10 +78,10 @@ export default function Tab({ tabState, setTabState, count }) {
               })
             }
           </ul>
-          <div class="swiper-button-prev">
+          <div className="swiper-button-prev">
             <a href="#none" title="메뉴 더보기">메뉴 더보기</a>
           </div>
-          <div class="swiper-button-next">
+          <div className="swiper-button-next">
             <a href="#none" title="메뉴 더보기">메뉴 더보기</a>
           </div>
         </div>

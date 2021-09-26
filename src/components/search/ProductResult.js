@@ -1,10 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { orderList } from "../../const/search";
 import Product from "../products/Product";
+
+import _ from 'lodash';
+import { postProductsGroupManagementCode } from "../../api/product";
 
 export default function ProductResult({ productList, orderBy, setOrderBy, productCount }) {
 
   const [mobileOrderOpen, setMobileOrderOpen] = useState(false);
+  const [products, setProducts] = useState(productList);
+  
+  const fetchGroupManagementMappingProducts = async (groupManagementCodes, productList) => {
+    const { data } = await postProductsGroupManagementCode({
+      groupManagementCodes,
+      saleStatus: 'ALL_CONDITIONS',
+    });
+
+    const groupByCode = _.chain(data)
+                         .map(({groupManagementMappingProducts, groupManagementCode}) => ({
+                           groupManagementCode,
+                           groupManagementMappingProducts
+                         }))
+                         .groupBy('groupManagementCode')
+                         .value();
+
+    setProducts(productList.map((p) => ({...p, groupManagementMappingProducts: _.head(groupByCode[p.groupManagementCode])?.groupManagementMappingProducts})))
+
+  }
+
+  useEffect(() => {
+    fetchGroupManagementMappingProducts(
+      _.chain(productList)
+       .flatMap(({ groupManagementCode }) => groupManagementCode)
+       .compact()
+       .uniq()
+       .value(),
+      productList
+    );
+  }, [productList]);
 
   return (
     <>
@@ -20,14 +53,13 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
           <div className="itemsort__drawer">
             <ul className="itemsort__items">
               {
-                orderList.map(order => (
-                  <li className={`itemsort__item ${orderBy === order.orderBy ? "itemsort__item--active" : ""}`}>
+                orderList.map((order, idx) => (
+                  <li key={`${order.label}${idx}`} className={`itemsort__item ${orderBy === order.orderBy ? "itemsort__item--active" : ""}`}>
                     <a 
                       href={`#${order.orderBy}`} 
                       className="itemsort__item__link" 
                       onClick={ e => {
                         e.preventDefault();
-                        console.log('test', order.orderBy);
                         setOrderBy(order.orderBy);
                       }}
                     >{ order.label }</a>
@@ -41,9 +73,7 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
       {/* item-list */}
       <div className="product__list product__list--lite">
         {/* item */}
-        {productList && productList.map((item, itemIndex) => {
-          return(<Product key={itemIndex} product={item} />)
-        })}
+        {products && products.map((item, itemIndex) => <Product key={itemIndex} product={item} />)}
       </div>
       {/* 더보기 버튼영역 */}
       <div className="btn_area">

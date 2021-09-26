@@ -2,8 +2,7 @@ import { React, useRef, useState } from "react";
 import { useHistory } from "react-router";
 
 export default function ResultTop({ handleSearch, allCount, initalKeyword }) {
-  const history = useHistory();
-  console.log(history);
+  // const history = useHistory();
   const [keyword, setKeyword] = useState(initalKeyword);
   const searchKeyword = useRef(initalKeyword);
 
