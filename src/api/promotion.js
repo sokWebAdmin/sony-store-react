@@ -1,3 +1,3 @@
 import request from './request';
 
-export const getCoupons = ({ query }) => request('promotion/coupons', 'get', query, {});
+export const getCoupons = ({ query }) => request('coupons', 'get', query, {});
