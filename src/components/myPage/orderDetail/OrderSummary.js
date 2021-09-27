@@ -1,4 +1,6 @@
 export default function OrderSummary({ orderInfo }) {
+  const orderStatus = orderInfo.defaultClaimStatusType ?? orderInfo.defaultOrderStatusType;
+
   // 기획이랑 기존 샵바이 주문 프로세스랑 기획이 너무 상이함.
   // 소니 기획: 주문별 주문상태출력, 샵바아: 옵션별 주문상태
   // 주문상세조회 API에서 defaultOrderStatusType를 대표로 출력하는데, 이값은 서버에서 orderOptions의 첫번째 아이템의 상태를 의미함
@@ -13,6 +15,7 @@ export default function OrderSummary({ orderInfo }) {
       BUY_CONFIRM: '구매확정',
       CANCEL_REQUEST: '취소신청',
       CANCEL_PROCESSING: '취소진행중',
+      CANCEL_NO_REFUND: '취소완료',
       CANCEL_DONE: '취소완료',
       EXCHANGE_REQUEST: '교환신청',
       EXCHANGE_PROCESSING: '교환진행중',
@@ -35,7 +38,7 @@ export default function OrderSummary({ orderInfo }) {
       <dl className="o_summary_status">
         <dt className="o_summary_term">처리상태</dt>
         <dd className="o_summary_desc">
-          <strong>{getOrderStatus(orderInfo.defaultOrderStatusType)}</strong>
+          <strong>{getOrderStatus(orderStatus)}</strong>
           {showFindDelivery(orderInfo.defaultOrderStatusType) && (
             <button type="button" className="button button_positive button-s">
               배송조회
