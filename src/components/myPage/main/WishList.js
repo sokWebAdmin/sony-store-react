@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { toCurrencyString } from '../../../utils/unit.js';
 
-const WishList = ({ wishList, more }) => {
+const WishList = ({ wishList, wishCount, more }) => {
   const [checkedProductNos, setCheckedProductNos] = useState([]);
 
   const allChecked = useMemo(
@@ -57,9 +57,12 @@ const WishList = ({ wishList, more }) => {
                 <Products list={wishList} check={check}
                           checkedProductNos={checkedProductNos} />
               </div>
-              <div className="btn_article line">
-                <a href="#" className="more_btn" onClick={more}>더보기</a>
-              </div>
+              {
+                wishList.length <= wishCount &&
+                <div className="btn_article line">
+                  <a href="#" className="more_btn" onClick={more}>더보기</a>
+                </div>
+              }
             </div>
             :
             <div className="no_data on">

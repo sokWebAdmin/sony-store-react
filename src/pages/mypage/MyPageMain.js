@@ -52,6 +52,13 @@ export default function MyPageMain () {
     }).catch(console.error);
   }, []);
 
+  useEffect(() => {
+    fetchWish().then(({ items, totalCount }) => {
+      setWishList([...wishList, ...items]);
+      setWishCount(totalCount);
+    }).catch(console.error);
+  }, [pageIndex]);
+
   const more = e => {
     e.preventDefault();
     setPageIndex(pageIndex + 1);
@@ -61,14 +68,12 @@ export default function MyPageMain () {
     return fetchMyProfile(profileDispatch, { type: '30', customerid });
   }
 
-  async function fetchWish (request) {
-    if (!request) {
-      request = {
-        pageNumber: 1,
-        pageSize: HOW_MANY_WISH,
-        hasTotalCount: true,
-      };
-    }
+  async function fetchWish () {
+    const request = {
+      pageNumber: pageIndex,
+      pageSize: HOW_MANY_WISH,
+      hasTotalCount: true,
+    };
 
     const { data } = await getWish(request);
     return data;
@@ -101,7 +106,8 @@ export default function MyPageMain () {
                            profile={profile} />}
               {viewContent === 'coupon' && <CouponList />}
               {viewContent === 'wish' &&
-              <WishList wishList={wishList} more={more} />}
+              <WishList wishList={wishList} wishCount={wishCount}
+                        more={more} />}
             </>
             }
           </div>
