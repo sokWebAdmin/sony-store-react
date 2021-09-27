@@ -1,12 +1,8 @@
-import { useEffect, useMemo } from 'react';
-import {
-  useProfileState,
-  fetchMyProfile,
-  useProileDispatch,
-} from '../../../context/profile.context';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { toCurrencyString } from '../../../utils/unit';
+import { getCouponsSummary } from '../../../api/promotion';
 
 const memberGradeClassName = {
   membership: 'family',
@@ -16,6 +12,8 @@ const memberGradeClassName = {
 };
 
 const MemberSummary = ({ tabChange, profile, availablemileage }) => {
+  const [couponCount, setCouponCount] = useState(0);
+
   const gradeClassName = useMemo(() => {
     const grade = profile?.memberGradeName?.toLowerCase();
     const key = Object.keys(memberGradeClassName).find(k => k === grade);
@@ -23,6 +21,15 @@ const MemberSummary = ({ tabChange, profile, availablemileage }) => {
     return key ? 'val ' + memberGradeClassName[key] : 'val';
 
   }, [profile]);
+
+  useEffect(() => {
+    fetchCouponCount().catch(console.error);
+  }, []);
+
+  async function fetchCouponCount () {
+    const { data: { usableCouponCnt } } = await getCouponsSummary();
+    setCouponCount(usableCouponCnt);
+  }
 
   return (
     <div className="my_user">
@@ -61,7 +68,8 @@ const MemberSummary = ({ tabChange, profile, availablemileage }) => {
                onClick={() => tabChange('coupon')}>
                       <span className="ico_txt"><span
                         className="txt_arrow">쿠폰</span></span>
-              <span className="val_txt"><span className="val">N</span> 장</span>
+              <span className="val_txt"><span
+                className="val">{couponCount}</span> 장</span>
             </a>
           </li>
           <li cLinklassName="user_item like">
