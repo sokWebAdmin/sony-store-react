@@ -75,7 +75,7 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
 
   return (
     <>
-      <LayerPopup className="refund_account" onClose={close}>
+      <LayerPopup className="password_change refund_account" onClose={close}>
         {alertVisible && <Alert onClose={() => closeModal()}>{alertMessage}</Alert>}
         {confirmVisible && <Confirm onClose={onCloseConfirm}>{confirmMessage}</Confirm>}
         <p className="pop_tit">환불계좌 입력</p>
