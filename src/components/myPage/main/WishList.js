@@ -1,4 +1,14 @@
+import { useEffect } from 'react';
+
 const WishList = () => {
+  useEffect(() => {
+    fetchWish().catch(console.error);
+  }, []);
+
+  async function fetchWish () {
+
+  }
+
   return (
     <div className="cont history_like">
       <div className="cont_head">

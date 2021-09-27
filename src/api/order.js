@@ -43,3 +43,7 @@ export const postGuestCart = requestBody => request('guest/cart', 'post', null,
 export const deleteCart = query => request('cart', 'delete', query);
 
 export const getCartCount = () => request('cart/count', 'get');
+
+export const getWish = () => request('wish', 'get');
+
+export const getWishCount = () => request('wish/count', 'get');
