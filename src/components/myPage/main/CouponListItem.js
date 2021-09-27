@@ -1,17 +1,23 @@
-const CouponListItem = () => {
+import { toCurrencyString } from '../../../utils/unit';
+
+const CouponListItem = ({ couponIssueNo, couponName, discountRate, minSalePrice, issueYmdt, useEndYmdt }) => {
+  const getYmd = (ymdt) => {
+    return ymdt.split(' ')[0];
+  };
+
   return (
     <div className="coupon_box">
       <div className="coupon">
         <span className="coupon_no">
-          No. <span className="num">3757897055</span>
+          No. <span className="num">{couponIssueNo}</span>
         </span>
         <p className="tit">
-          정품등록감사
-          <br /> 소니 액세서리 <span className="percentage">10%</span> 할인
+          {couponName} <span className="percentage">{discountRate}%</span> 할인
         </p>
-        <p className="cut_txt">3만원 이상 구매 시 </p>
+        <p className="cut_txt">{toCurrencyString(minSalePrice)}원 이상 구매 시 </p>
         <p className="expiration_txt">
-          <strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12
+          <strong>유효 기간 </strong>
+          {getYmd(issueYmdt)} ~ {getYmd(useEndYmdt)}
         </p>
       </div>
     </div>

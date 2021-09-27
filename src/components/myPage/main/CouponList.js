@@ -4,6 +4,38 @@ import { getCoupons } from '../../../api/promotion';
 import CouponListItem from './CouponListItem';
 
 const CouponList = () => {
+  const mockResponse = {
+    items: [
+      {
+        couponIssueNo: 4459466,
+        couponName: '인서트 쿠폰',
+        couponNo: 5000,
+        couponType: 'PRODUCT',
+        discountAmt: 0.0,
+        discountRate: 30.0,
+        fixedAmt: false,
+        issueYmdt: '2021-09-13 15:15:40',
+        limitPayType: null,
+        maxDiscountAmt: 10000.0,
+        maxSalePrice: 0.0,
+        minSalePrice: 10000.0,
+        otherCouponUsable: true,
+        skipsAccumulation: false,
+        usablePlatforms: ['PC', 'MOBILE_WEB', 'MOBILE_APP'],
+        useEndYmdt: '2021-12-12 23:59:59',
+        useYmdt: null,
+        used: false,
+        couponTargetType: 'ALL_PRODUCT',
+        couponTargets: [],
+        couponExcludeTargets: [],
+        memberGradeNames: null,
+        minDeliveryAmt: null,
+        fiexdAmt: false,
+      },
+    ],
+    totalCount: 1,
+  };
+
   const [coupons, setCoupons] = useState([]);
   useEffect(() => {
     fetchCoupons({ pageNumber: 1, pageSize: 10 });
@@ -14,7 +46,8 @@ const CouponList = () => {
       query: { pageNumber, pageSize, usable: true },
     });
     console.log('res.data.items:', res.data.items);
-    setCoupons(res.data.items);
+    // setCoupons(res.data.items);
+    setCoupons(mockResponse.items);
   };
 
   const hasCoupons = (coupons) => {
@@ -42,7 +75,16 @@ const CouponList = () => {
           <div className={`coupon_inner ${hasCoupons(coupons) ? 'on' : ''}`}>
             {/* class : on 내역이 있을 경우 on */}
             <div className="coupon_list">
-              <CouponListItem />
+              {coupons.map((coupon) => (
+                <CouponListItem
+                  couponIssueNo={coupon.couponIssueNo}
+                  couponName={coupon.couponName}
+                  discountRate={coupon.discountRate}
+                  minSalePrice={coupon.minSalePrice}
+                  issueYmdt={coupon.issueYmdt}
+                  useEndYmdt={coupon.useEndYmdt}
+                />
+              ))}
             </div>
             <div className="btn_article line">
               <a className="more_btn">더보기</a>
