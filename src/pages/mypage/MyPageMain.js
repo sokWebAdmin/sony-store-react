@@ -7,7 +7,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //css
 import '../../assets/scss/contents.scss';
-import '../../assets/scss/mypage.scss';
+import '../../assets/css/mypage.css';
 
 //utils
 import MemberSummary from '../../components/myPage/main/MemberSummary';
@@ -23,7 +23,7 @@ export default function MyPageMain () {
   return (
     <>
       <SEOHelmet title={'마이페이지'} />
-      <div className="contents mypage">
+      <div className="contents mypage my">
         <div className="my_wrap">
           <div className="my_head">
             <h2 className="title">마이페이지</h2>
