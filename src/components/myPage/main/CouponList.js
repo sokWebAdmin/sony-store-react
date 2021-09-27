@@ -13,7 +13,12 @@ const CouponList = () => {
     const res = await getCoupons({
       query: { pageNumber, pageSize, usable: true },
     });
-    setCoupons(res.data.items);
+    console.log('res.data.items:', res.data.items);
+    // setCoupons(res.data.items);
+  };
+
+  const hasCoupons = (coupons) => {
+    return coupons.length > 0;
   };
 
   // const loadMore = async (pageNumber, pageSize) => {
@@ -34,7 +39,7 @@ const CouponList = () => {
       </h3>
       <div className="history_inner">
         <div className="history_list">
-          <div className="coupon_inner on">
+          <div className={`coupon_inner ${hasCoupons(coupons) ? 'on' : ''}`}>
             {/* class : on 내역이 있을 경우 on */}
             <div className="coupon_list">
               <div className="coupon_box">
@@ -132,7 +137,7 @@ const CouponList = () => {
               <a className="more_btn">더보기</a>
             </div>
           </div>
-          <div className="no_data on">
+          <div className={`no_data ${hasCoupons(coupons) ? '' : 'on'}`}>
             {/* class : on 내역이 없을 경우 on */}
             <span>내역이 없습니다.</span>
           </div>
