@@ -73,9 +73,14 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
     return true;
   };
 
+  const onChangeAccount = (e) => {
+    e.preventDefault();
+    setForm({ ...form, account: e.target.value.replace(/\D/, '') });
+  };
+
   return (
     <>
-      <LayerPopup className="refund_account" onClose={close}>
+      <LayerPopup className="password_change refund_account" onClose={close}>
         {alertVisible && <Alert onClose={() => closeModal()}>{alertMessage}</Alert>}
         {confirmVisible && <Confirm onClose={onCloseConfirm}>{confirmMessage}</Confirm>}
         <p className="pop_tit">환불계좌 입력</p>
@@ -129,10 +134,12 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
                   <label className="inp_desc" htmlFor="refund_account">
                     <input
                       type="text"
+                      pattern="[0-9]*"
                       id="refund_account"
                       className="inp center"
                       placeholder="&nbsp;"
-                      onChange={(e) => setForm({ ...form, account: e.target.value })}
+                      value={form.account}
+                      onChange={onChangeAccount}
                     />
                     <span className="label">계좌번호</span>
                     <span className="focus_bg"></span>

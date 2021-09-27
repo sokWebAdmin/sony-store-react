@@ -174,7 +174,7 @@ export default function OrderList() {
                 )}
 
                 {/* 내역 없는 경우 .col_table_body, .btn_article 노출 안되어야 합니다. */}
-                {orderProducts.length === 0 && <div class="no-data">내역이 없습니다</div>}
+                {orderProducts.length === 0 && <div className="no-data">내역이 없습니다</div>}
               </div>
               {/*// 주문 정보 */}
             </div>
