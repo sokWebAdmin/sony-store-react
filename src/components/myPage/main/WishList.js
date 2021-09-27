@@ -25,157 +25,7 @@ const WishList = () => {
               <label htmlFor="allChk">전체</label>
             </div>
             <div className="like_prd_inner">
-              <ul className="like_prd_list">
-                <li className="like_list">
-                  <div className="item">
-                    <div className="check check_only">
-                      <input type="checkbox" className="inp_check"
-                             name="likeChk" />
-                    </div>
-                    <div className="img"><img
-                      src="../../images/_tmp/item640x640_01.png"
-                      alt="" /></div>
-                    <div className="prd_info">
-                      <p className="tit">PLAYSTATION 5 DIGITAL
-                        (CFI-1018B01)</p>
-                      <p className="txt">4K HDR(HLGAF가 탑재)</p>
-                      <p className="prd_price"><span
-                        className="price">899,000</span>원</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="like_list">
-                  <div className="item">
-                    <div className="check check_only">
-                      <input type="checkbox" className="inp_check"
-                             name="likeChk" />
-                    </div>
-                    <div className="img"><img
-                      src="../../images/_tmp/item640x640_01.png"
-                      alt="" /></div>
-                    <div className="prd_info">
-                      <p className="tit">PLAYSTATION 5 DIGITAL
-                        (CFI-1018B01)</p>
-                      <p className="txt">4K HDR(HLG), Fast Hybrid AF</p>
-                      <p className="prd_price"><span
-                        className="price">899,000</span>원</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="like_list">
-                  <div className="item">
-                    <div className="check check_only">
-                      <input type="checkbox" className="inp_check"
-                             name="likeChk" />
-                    </div>
-                    <div className="img"><img
-                      src="../../images/_tmp/item640x640_01.png"
-                      alt="" /></div>
-                    <div className="prd_info">
-                      <p className="tit">PLAYSTATION 5 DIGITAL
-                        (CFI-1018B01)</p>
-                      <p className="txt">4K HDR(HLG), Fast Hybrid AF가
-                        탑재된 전문가급 1인치 핸디캠</p>
-                      <p className="prd_price"><span
-                        className="price">899,000</span>원</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="like_list">
-                  <div className="item">
-                    <div className="check check_only">
-                      <input type="checkbox" className="inp_check"
-                             name="likeChk" />
-                    </div>
-                    <div className="img"><img
-                      src="../../images/_tmp/item640x640_01.png"
-                      alt="" /></div>
-                    <div className="prd_info">
-                      <p className="tit">PLAYSTATION 5 DIGITAL
-                        (CFI-1018B01)</p>
-                      <p className="txt">4K HDR(HLG), Fast Hybrid AF가
-                        탑재된 전문가급 1인치 핸디캠</p>
-                      <p className="prd_price"><span
-                        className="price">899,000</span>원</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="like_list">
-                  <div className="item">
-                    <div className="check check_only">
-                      <input type="checkbox" className="inp_check"
-                             name="likeChk" />
-                    </div>
-                    <div className="img"><img
-                      src="../../images/_tmp/item640x640_01.png"
-                      alt="" /></div>
-                    <div className="prd_info">
-                      <p className="tit">PLAYSTATION 5 DIGITAL
-                        (CFI-1018B01)</p>
-                      <p className="txt">4K HDR(HLG), Fast Hybrid </p>
-                      <p className="prd_price"><span
-                        className="price">899,000</span>원</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="like_list">
-                  <div className="item">
-                    <div className="check check_only">
-                      <input type="checkbox" className="inp_check"
-                             name="likeChk" />
-                    </div>
-                    <div className="img"><img
-                      src="../../images/_tmp/item640x640_01.png"
-                      alt="" /></div>
-                    <div className="prd_info">
-                      <p className="tit">PLAYSTATION 5 DIGITAL
-                        (CFI-1018B01)</p>
-                      <p className="txt">4K HDR(HLG), Fast Hybrid AF가
-                        탑재된 전문가급 1인치 핸디캠</p>
-                      <p className="prd_price"><span
-                        className="price">899,000</span>원</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="like_list">
-                  <div className="item">
-                    <div className="check check_only">
-                      <input type="checkbox" className="inp_check"
-                             name="likeChk" />
-                    </div>
-                    <div className="img"><img
-                      src="../../images/_tmp/item640x640_01.png"
-                      alt="" /></div>
-                    <div className="prd_info">
-                      <p className="tit">PLAYSTATION 5 DIGITAL
-                        (CFI-1018B01)</p>
-                      <p className="txt">4K HDR(HLG), Fast Hybrid AF가
-                        탑재된 전문가급 1인치 핸디캠</p>
-                      <p className="prd_price"><span
-                        className="price">899,000</span>원</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="like_list">
-                  <div className="item">
-                    <div className="check check_only">
-                      <input type="checkbox" className="inp_check"
-                             name="likeChk" />
-                    </div>
-                    <div className="img"><img
-                      src="../../images/_tmp/item640x640_01.png"
-                      alt="" /></div>
-                    <div className="prd_info">
-                      <p className="tit">PLAYSTATION 5 DIGITAL
-                        (CFI-1018B01)</p>
-                      <p className="txt">4K HDR(HLG), Fast Hybrid AF가
-                        탑재된 전문가급 1인치 핸디캠</p>
-                      <p className="prd_price"><span
-                        className="price">899,000</span>원</p>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+              <Products />
             </div>
             <div className="btn_article line">
               <a className="more_btn">더보기</a>
@@ -187,6 +37,162 @@ const WishList = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Products = () => {
+  return (
+    <ul className="like_prd_list">
+      <li className="like_list">
+        <div className="item">
+          <div className="check check_only">
+            <input type="checkbox" className="inp_check"
+                   name="likeChk" />
+          </div>
+          <div className="img"><img
+            src="../../images/_tmp/item640x640_01.png"
+            alt="" /></div>
+          <div className="prd_info">
+            <p className="tit">PLAYSTATION 5 DIGITAL
+              (CFI-1018B01)</p>
+            <p className="txt">4K HDR(HLGAF가 탑재)</p>
+            <p className="prd_price"><span
+              className="price">899,000</span>원</p>
+          </div>
+        </div>
+      </li>
+      <li className="like_list">
+        <div className="item">
+          <div className="check check_only">
+            <input type="checkbox" className="inp_check"
+                   name="likeChk" />
+          </div>
+          <div className="img"><img
+            src="../../images/_tmp/item640x640_01.png"
+            alt="" /></div>
+          <div className="prd_info">
+            <p className="tit">PLAYSTATION 5 DIGITAL
+              (CFI-1018B01)</p>
+            <p className="txt">4K HDR(HLG), Fast Hybrid AF</p>
+            <p className="prd_price"><span
+              className="price">899,000</span>원</p>
+          </div>
+        </div>
+      </li>
+      <li className="like_list">
+        <div className="item">
+          <div className="check check_only">
+            <input type="checkbox" className="inp_check"
+                   name="likeChk" />
+          </div>
+          <div className="img"><img
+            src="../../images/_tmp/item640x640_01.png"
+            alt="" /></div>
+          <div className="prd_info">
+            <p className="tit">PLAYSTATION 5 DIGITAL
+              (CFI-1018B01)</p>
+            <p className="txt">4K HDR(HLG), Fast Hybrid AF가
+              탑재된 전문가급 1인치 핸디캠</p>
+            <p className="prd_price"><span
+              className="price">899,000</span>원</p>
+          </div>
+        </div>
+      </li>
+      <li className="like_list">
+        <div className="item">
+          <div className="check check_only">
+            <input type="checkbox" className="inp_check"
+                   name="likeChk" />
+          </div>
+          <div className="img"><img
+            src="../../images/_tmp/item640x640_01.png"
+            alt="" /></div>
+          <div className="prd_info">
+            <p className="tit">PLAYSTATION 5 DIGITAL
+              (CFI-1018B01)</p>
+            <p className="txt">4K HDR(HLG), Fast Hybrid AF가
+              탑재된 전문가급 1인치 핸디캠</p>
+            <p className="prd_price"><span
+              className="price">899,000</span>원</p>
+          </div>
+        </div>
+      </li>
+      <li className="like_list">
+        <div className="item">
+          <div className="check check_only">
+            <input type="checkbox" className="inp_check"
+                   name="likeChk" />
+          </div>
+          <div className="img"><img
+            src="../../images/_tmp/item640x640_01.png"
+            alt="" /></div>
+          <div className="prd_info">
+            <p className="tit">PLAYSTATION 5 DIGITAL
+              (CFI-1018B01)</p>
+            <p className="txt">4K HDR(HLG), Fast Hybrid </p>
+            <p className="prd_price"><span
+              className="price">899,000</span>원</p>
+          </div>
+        </div>
+      </li>
+      <li className="like_list">
+        <div className="item">
+          <div className="check check_only">
+            <input type="checkbox" className="inp_check"
+                   name="likeChk" />
+          </div>
+          <div className="img"><img
+            src="../../images/_tmp/item640x640_01.png"
+            alt="" /></div>
+          <div className="prd_info">
+            <p className="tit">PLAYSTATION 5 DIGITAL
+              (CFI-1018B01)</p>
+            <p className="txt">4K HDR(HLG), Fast Hybrid AF가
+              탑재된 전문가급 1인치 핸디캠</p>
+            <p className="prd_price"><span
+              className="price">899,000</span>원</p>
+          </div>
+        </div>
+      </li>
+      <li className="like_list">
+        <div className="item">
+          <div className="check check_only">
+            <input type="checkbox" className="inp_check"
+                   name="likeChk" />
+          </div>
+          <div className="img"><img
+            src="../../images/_tmp/item640x640_01.png"
+            alt="" /></div>
+          <div className="prd_info">
+            <p className="tit">PLAYSTATION 5 DIGITAL
+              (CFI-1018B01)</p>
+            <p className="txt">4K HDR(HLG), Fast Hybrid AF가
+              탑재된 전문가급 1인치 핸디캠</p>
+            <p className="prd_price"><span
+              className="price">899,000</span>원</p>
+          </div>
+        </div>
+      </li>
+      <li className="like_list">
+        <div className="item">
+          <div className="check check_only">
+            <input type="checkbox" className="inp_check"
+                   name="likeChk" />
+          </div>
+          <div className="img"><img
+            src="../../images/_tmp/item640x640_01.png"
+            alt="" /></div>
+          <div className="prd_info">
+            <p className="tit">PLAYSTATION 5 DIGITAL
+              (CFI-1018B01)</p>
+            <p className="txt">4K HDR(HLG), Fast Hybrid AF가
+              탑재된 전문가급 1인치 핸디캠</p>
+            <p className="prd_price"><span
+              className="price">899,000</span>원</p>
+          </div>
+        </div>
+      </li>
+    </ul>
   );
 };
 
