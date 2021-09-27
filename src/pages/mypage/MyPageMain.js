@@ -17,6 +17,7 @@ import MileageInfo from '../../components/myPage/main/MlieageList';
 import CouponList from '../../components/myPage/main/CouponList';
 import WishList from '../../components/myPage/main/WishList';
 import {
+  fetchProfile,
   fetchMyProfile,
   useProfileState,
   useProileDispatch,
@@ -28,15 +29,18 @@ export default function MyPageMain () {
   const { my, profile } = useProfileState();
   const profileDispatch = useProileDispatch();
 
-  useEffect(() => {
-    if (!my && profile?.memberId) {
-      fetchMy(profile.memberId);
+  useEffect(async () => {
+    if (!profile?.memberId) {
+      await fetchProfile(profileDispatch);
     }
-  }, [my, profile]);
+
+    if (!my && profile?.memberId) {
+      await fetchMy(profile.memberId);
+    }
+  }, []);
 
   function fetchMy (customerid) {
-    fetchMyProfile(profileDispatch, { type: '30', customerid }).
-      catch(console.error);
+    return fetchMyProfile(profileDispatch, { type: '30', customerid });
   }
 
   const availablemileage = useMemo(() => {
@@ -56,12 +60,16 @@ export default function MyPageMain () {
           <BToBBanners />
 
           <div className="cont_inner">
-            <OrderSummary />
-            {viewContent === 'mileage' &&
-            <MileageInfo availablemileage={availablemileage}
-                         profile={profile} />}
-            {viewContent === 'coupon' && <CouponList />}
-            {viewContent === 'wish' && <WishList />}
+            {profile &&
+            <>
+              <OrderSummary />
+              {viewContent === 'mileage' &&
+              <MileageInfo availablemileage={availablemileage}
+                           profile={profile} />}
+              {viewContent === 'coupon' && <CouponList />}
+              {viewContent === 'wish' && <WishList />}
+            </>
+            }
           </div>
         </div>
       </div>

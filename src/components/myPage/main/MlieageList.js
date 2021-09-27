@@ -1,8 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 import { toCurrencyString } from '../../../utils/unit';
 import DateBox from '../DateBox';
 import { getMileageHistories } from '../../../api/sony/mileage';
+import { getToday } from '../../../utils/dateFormat';
 
 const MileageInfo = ({ availablemileage, profile }) => {
   const todo = 'N'; // 소멸 예정 마일리지. 대응하는 응답 없음
@@ -10,34 +11,49 @@ const MileageInfo = ({ availablemileage, profile }) => {
   const [pageIdx, setPageIdx] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [list, setList] = useState([]);
+  const [dateTime, setDateTime] = useState({
+    start: '',
+    end: '',
+  });
+
+  const changeDateTime = (startDateTime, endDateTime) => setDateTime({
+    start: getToday(startDateTime).replace(/\-/g, ''),
+    end: getToday(endDateTime).replace(/\-/g, ''),
+  });
 
   const hasMore = useMemo(() => totalCount > (list * pageIdx),
     [totalCount, list, pageIdx]);
 
-  const search = ({ startDate, endDate }) => {
-    const startDateTime = startDate;
-    const endDateTime = endDate;
+  const search = async ({ startDate, endDate }) => {
+    console.log(startDate);
+    changeDateTime(startDate, endDate);
     setPageIdx(1);
-    fetchMH(startDateTime, endDateTime).then(console.log).catch(console.error);
-  };
-
-  const fetchMH = async (startDateTime, endDateTime) => {
-    const request = {
-      customerid: profile.memberId,
-      pageIdx,
-      rowsPerPage: 10,
-      startDateTime,
-      endDateTime,
-    };
-    const { data } = await getMileageHistories(request);
-    setList(data.body);
+    const data = await fetchMH(dateTime.start, dateTime.end, pageIdx);
+    const newList = [...list];
+    newList.push(data.body);
+    setList(newList);
     setTotalCount(data.paginationInfo.totalCount);
-    return data;
   };
 
   const more = e => {
     e.preventDefault();
     setPageIdx(pageIdx + 1);
+  };
+
+  useEffect(async () => {
+    fetchMH(dateTime.start, dateTime.end, pageIdx);
+  }, [pageIdx]);
+
+  async function fetchMH (startDateTime, endDateTime, pageIdx) {
+    const request = {
+      customerid: profile.memberId,
+      rowsPerPage: 10,
+      pageIdx,
+      startDateTime,
+      endDateTime,
+    };
+    const { data } = await getMileageHistories(request);
+    return data;
   };
 
   return (
