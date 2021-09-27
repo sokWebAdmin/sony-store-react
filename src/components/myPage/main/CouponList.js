@@ -1,42 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { getCoupons } from '../../../api/promotion';
 import CouponListItem from './CouponListItem';
 
 const CouponList = () => {
-  const mockResponse = {
-    items: [
-      {
-        couponIssueNo: 4459466,
-        couponName: '인서트 쿠폰',
-        couponNo: 5000,
-        couponType: 'PRODUCT',
-        discountAmt: 0.0,
-        discountRate: 30.0,
-        fixedAmt: false,
-        issueYmdt: '2021-09-13 15:15:40',
-        limitPayType: null,
-        maxDiscountAmt: 10000.0,
-        maxSalePrice: 0.0,
-        minSalePrice: 10000.0,
-        otherCouponUsable: true,
-        skipsAccumulation: false,
-        usablePlatforms: ['PC', 'MOBILE_WEB', 'MOBILE_APP'],
-        useEndYmdt: '2021-12-12 23:59:59',
-        useYmdt: null,
-        used: false,
-        couponTargetType: 'ALL_PRODUCT',
-        couponTargets: [],
-        couponExcludeTargets: [],
-        memberGradeNames: null,
-        minDeliveryAmt: null,
-        fiexdAmt: false,
-      },
-    ],
-    totalCount: 1,
-  };
-
+  const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(true);
   const [coupons, setCoupons] = useState([]);
+  const nextPage = useRef(2);
+
   useEffect(() => {
     fetchCoupons({ pageNumber: 1, pageSize: 10 });
   }, []);
@@ -45,25 +16,39 @@ const CouponList = () => {
     const res = await getCoupons({
       query: { pageNumber, pageSize, usable: true },
     });
-    console.log('res.data.items:', res.data.items);
-    // setCoupons(res.data.items);
-    setCoupons(mockResponse.items);
+    setCoupons(res.data.items);
+
+    nextPage.current = 2;
+  };
+
+  const onClickLoadMore = (e) => {
+    e.preventDefault();
+    loadMore(nextPage.current, 10);
+  };
+
+  const loadMore = async (pageNumber, pageSize) => {
+    const res = await getCoupons({
+      params: { pageNumber, pageSize, usable: true },
+    });
+
+    showLoadMoreBtn(res.data.items);
+    setCoupons([...coupons, ...res.data.items]);
+    nextPage.current += 1;
+  };
+
+  // 다음 페이지가 없는 경우 loadmore 버튼 숨김
+  const showLoadMoreBtn = (newCoupons) => {
+    if (newCoupons.length === 0) {
+      setLoadMoreBtnVisible(false);
+      return;
+    }
+
+    setLoadMoreBtnVisible(true);
   };
 
   const hasCoupons = (coupons) => {
     return coupons.length > 0;
   };
-
-  // const loadMore = async (pageNumber, pageSize) => {
-  //   const res = await getCoupons({
-  //     params: { startYmd, endYmd, pageNumber, pageSize },
-  //   });
-  //   const newOrderProducts = makeOrderProductsList(res.data);
-
-  //   showLoadMoreBtn(newOrderProducts);
-  //   setOrderProducts([...orderProducts, ...newOrderProducts]);
-  //   nextPage.current += 1;
-  // };
 
   return (
     <div className="cont history_coupon">
@@ -86,9 +71,13 @@ const CouponList = () => {
                 />
               ))}
             </div>
-            <div className="btn_article line">
-              <a className="more_btn">더보기</a>
-            </div>
+            {loadMoreBtnVisible && (
+              <div className="btn_article line">
+                <a href="#" className="more_btn" onClick={onClickLoadMore}>
+                  더보기
+                </a>
+              </div>
+            )}
           </div>
           <div className={`no_data ${hasCoupons(coupons) ? '' : 'on'}`}>
             {/* class : on 내역이 없을 경우 on */}
