@@ -1,9 +1,12 @@
 import { useState, useMemo } from 'react';
+import { toCurrencyString } from '../../../utils/unit';
 
 const HOW_MANY = 10;
 
 const WishList = ({ wishList }) => {
   const [pageIndex, setPageIndex] = useState(1);
+  const [checkedProductNos, setCheckedProductNos] = useState([]);
+
   const renderList = useMemo(() => {
     // const start = HOW_MANY * (pageIndex - 1);
     const end = HOW_MANY * pageIndex;
@@ -12,6 +15,27 @@ const WishList = ({ wishList }) => {
   const more = e => {
     e.preventDefault();
     setPageIndex(pageIndex + 1);
+  };
+
+  const allChecked = useMemo(
+    () => renderList.length === checkedProductNos.length,
+    [renderList, checkedProductNos]);
+
+  const check = productNo => {
+    const newList = checkedProductNos.includes(productNo)
+      ? checkedProductNos.filter(no => no !== productNo)
+      : [...checkedProductNos, productNo];
+    setCheckedProductNos(newList);
+  };
+
+  const allCheck = all => {
+    if (all) {
+      const allProductNos = wishList.map(({ productNo }) => productNo);
+      setCheckedProductNos(allProductNos);
+    }
+    else {
+      setCheckedProductNos([]);
+    }
   };
 
   return (
@@ -38,11 +62,13 @@ const WishList = ({ wishList }) => {
             <div className="like_inner on">
               <div className="all_checked check">
                 <input type="checkbox" className="inp_check check_all"
-                       id="allChk" name="likeChk" />
+                       id="allChk" name="likeChk" checked={allChecked}
+                       onChange={() => allCheck(!allChecked)} />
                 <label htmlFor="allChk">전체</label>
               </div>
               <div className="like_prd_inner">
-                <Products list={renderList} />
+                <Products list={renderList} check={check}
+                          checkedProductNos={checkedProductNos} />
               </div>
               <div className="btn_article line">
                 <a href="#" className="more_btn" onClick={more}>더보기</a>
@@ -59,7 +85,7 @@ const WishList = ({ wishList }) => {
   );
 };
 
-const Products = ({ list }) => {
+const Products = ({ list, check, checkedProductNos }) => {
   return (
     <ul className="like_prd_list">
       {
@@ -68,17 +94,18 @@ const Products = ({ list }) => {
             <div className="item">
               <div className="check check_only">
                 <input type="checkbox" className="inp_check"
-                       name="likeChk" />
+                       checked={checkedProductNos.includes(item.productNo)}
+                       name="likeChk" onChange={() => check(item.productNo)} />
               </div>
               <div className="img"><img
-                src="../../images/_tmp/item640x640_01.png"
-                alt="" /></div>
+                src={item.listImageUrls}
+                alt={item.productName} /></div>
               <div className="prd_info">
-                <p className="tit">PLAYSTATION 5 DIGITAL
-                  (CFI-1018B01)</p>
-                <p className="txt">4K HDR(HLGAF가 탑재)</p>
+                <p className="tit">{item.productName}</p>
+                <p className="txt">{item.productNameEn}</p>
                 <p className="prd_price"><span
-                  className="price">899,000</span>원</p>
+                  className="price">{toCurrencyString(item.salePrice)}</span>원
+                </p>
               </div>
             </div>
           </li>
