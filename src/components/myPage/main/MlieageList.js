@@ -1,6 +1,26 @@
 import { toCurrencyString } from '../../../utils/unit';
+import DateBox from '../DateBox';
+import { getMileageHistories } from '../../../api/sony/mileage';
 
-const MileageInfo = ({ availablemileage }) => {
+const MileageInfo = ({ availablemileage, profile }) => {
+  const todo = 'N'; // 소멸 예정 마일리지. 대응하는 응답 없음
+
+  const search = () => {
+    fetchMH().then(console.log).catch(console.error);
+  };
+
+  const fetchMH = async () => {
+    const request = {
+      customerid: profile.memberId,
+      pageIdx: 1,
+      rowsPerPage: 10,
+      startDateTime: 20210730,
+      endDateTime: 20211030,
+    };
+    const { data } = await getMileageHistories(request);
+    return data;
+  };
+
   return (
     <div className="cont history_mileage">
       <h3 className="cont_tit" id="mileage-tit">마일리지</h3>
@@ -11,37 +31,12 @@ const MileageInfo = ({ availablemileage }) => {
               availablemileage)}</span>
             <span className="extinction">
                         (<strong className="val_txt"><span
-              className="val">300</span>M</strong>당월 소멸 예정)
+              className="val">{todo}</span>M</strong>당월 소멸 예정)
                         </span>
           </p>
         </div>
         <div className="mileage_inquiry">
-          <div className="date_box">
-            <ul className="date3_tab">
-              <li className="tabs on">
-                <a className="date3_btn">3개월</a>
-              </li>
-              <li className="tabs">
-                <a className="date3_btn">6개월</a>
-              </li>
-              <li className="tabs">
-                <a className="date3_btn">1년</a>
-              </li>
-            </ul>
-            <div className="date_rang">
-              <div className="calendar_box">
-                <input type="text" id="datepicker1"
-                       className="inp datepicker" autoComplete="off" />
-              </div>
-              <div className="calendar_box">
-                <input type="text" id="datepicker2"
-                       className="inp datepicker" autoComplete="off" />
-              </div>
-              <button className="button button_positive button-s"
-                      type="button">조회
-              </button>
-            </div>
-          </div>
+          <DateBox search={search} />
           <div className="history_list">
             <div
               className="col_table_wrap mileage_table on">{/* 데이터가 있는 경우 class : on */}
@@ -55,178 +50,7 @@ const MileageInfo = ({ availablemileage }) => {
                     <div className="col_table_cell">유효기간</div>
                   </div>
                 </div>
-                <div className="col_table_body">
-                  <div className="col_table_row">
-                    <div className="col_table_cell order_date">
-                      <p className="txt">21.05.12</p>
-                    </div>
-                    <div className="col_table_cell order_details">
-                      <p className="txt">주문 취소</p>
-                    </div>
-                    <div className="col_table_cell order_number">
-                      <a className="txt">20210512-663W24</a>
-                    </div>
-                    <div className="col_table_cell order_mileage down">
-                      <p className="txt">- 400</p>
-                    </div>
-                    <div className="col_table_cell order_expiration">
-                      <p className="txt">22.12.31</p>
-                    </div>
-                  </div>
-                  <div className="col_table_row">
-                    <div className="col_table_cell order_date">
-                      <p className="txt">21.05.12</p>
-                    </div>
-                    <div className="col_table_cell order_details">
-                      <p className="txt">마일리지로 제품 구입</p>
-                    </div>
-                    <div className="col_table_cell order_number">
-                      <a className="txt">20210512-663W24</a>
-                    </div>
-                    <div className="col_table_cell order_mileage down">
-                      <p className="txt">- 800</p>
-                    </div>
-                    <div className="col_table_cell order_expiration">
-                      <p className="txt">22.12.31</p>
-                    </div>
-                  </div>
-                  <div className="col_table_row">
-                    <div className="col_table_cell order_date">
-                      <p className="txt">21.05.12</p>
-                    </div>
-                    <div className="col_table_cell order_details">
-                      <p className="txt">주문 취소</p>
-                    </div>
-                    <div className="col_table_cell order_number">
-                      <a className="txt">20210512-663W24</a>
-                    </div>
-                    <div className="col_table_cell order_mileage up">
-                      <p className="txt">+ 800</p>
-                    </div>
-                    <div className="col_table_cell order_expiration">
-                      <p className="txt">22.12.31</p>
-                    </div>
-                  </div>
-                  <div className="col_table_row">
-                    <div className="col_table_cell order_date">
-                      <p className="txt">21.05.12</p>
-                    </div>
-                    <div className="col_table_cell order_details">
-                      <p className="txt">주문 취소</p>
-                    </div>
-                    <div className="col_table_cell order_number">
-                      <a className="txt">20210512-663W24</a>
-                    </div>
-                    <div className="col_table_cell order_mileage up">
-                      <p className="txt">+ 2500</p>
-                    </div>
-                    <div className="col_table_cell order_expiration">
-                      <p className="txt">22.12.31</p>
-                    </div>
-                  </div>
-                  <div className="col_table_row">
-                    <div className="col_table_cell order_date">
-                      <p className="txt">21.05.12</p>
-                    </div>
-                    <div className="col_table_cell order_details">
-                      <p className="txt">주문 취소</p>
-                    </div>
-                    <div className="col_table_cell order_number">
-                      <a className="txt">20210512-663W24</a>
-                    </div>
-                    <div className="col_table_cell order_mileage down">
-                      <p className="txt">- 3000</p>
-                    </div>
-                    <div className="col_table_cell order_expiration">
-                      <p className="txt">22.12.31</p>
-                    </div>
-                  </div>
-                  <div className="col_table_row">
-                    <div className="col_table_cell order_date">
-                      <p className="txt">21.05.12</p>
-                    </div>
-                    <div className="col_table_cell order_details">
-                      <p className="txt">주문 취소</p>
-                    </div>
-                    <div className="col_table_cell order_number">
-                      <a className="txt">20210512-663W24</a>
-                    </div>
-                    <div className="col_table_cell order_mileage up">
-                      <p className="txt">- 800</p>
-                    </div>
-                    <div className="col_table_cell order_expiration">
-                      <p className="txt">22.12.31</p>
-                    </div>
-                  </div>
-                  <div className="col_table_row">
-                    <div className="col_table_cell order_date">
-                      <p className="txt">21.05.12</p>
-                    </div>
-                    <div className="col_table_cell order_details">
-                      <p className="txt">주문 취소</p>
-                    </div>
-                    <div className="col_table_cell order_number">
-                      <a className="txt">20210512-663W24</a>
-                    </div>
-                    <div className="col_table_cell order_mileage up">
-                      <p className="txt">- 800</p>
-                    </div>
-                    <div className="col_table_cell order_expiration">
-                      <p className="txt">22.12.31</p>
-                    </div>
-                  </div>
-                  <div className="col_table_row">
-                    <div className="col_table_cell order_date">
-                      <p className="txt">21.05.12</p>
-                    </div>
-                    <div className="col_table_cell order_details">
-                      <p className="txt">주문 취소</p>
-                    </div>
-                    <div className="col_table_cell order_number">
-                      <a className="txt">20210512-663W24</a>
-                    </div>
-                    <div className="col_table_cell order_mileage down">
-                      <p className="txt">- 400</p>
-                    </div>
-                    <div className="col_table_cell order_expiration">
-                      <p className="txt">22.12.31</p>
-                    </div>
-                  </div>
-                  <div className="col_table_row">
-                    <div className="col_table_cell order_date">
-                      <p className="txt">21.05.12</p>
-                    </div>
-                    <div className="col_table_cell order_details">
-                      <p className="txt">주문 취소</p>
-                    </div>
-                    <div className="col_table_cell order_number">
-                      <a className="txt">20210512-663W24</a>
-                    </div>
-                    <div className="col_table_cell order_mileage down">
-                      <p className="txt">- 400</p>
-                    </div>
-                    <div className="col_table_cell order_expiration">
-                      <p className="txt">22.12.31</p>
-                    </div>
-                  </div>
-                  <div className="col_table_row">
-                    <div className="col_table_cell order_date">
-                      <p className="txt">21.05.12</p>
-                    </div>
-                    <div className="col_table_cell order_details">
-                      <p className="txt">주문 취소</p>
-                    </div>
-                    <div className="col_table_cell order_number">
-                      <a className="txt">20210512-663W24</a>
-                    </div>
-                    <div className="col_table_cell order_mileage down">
-                      <p className="txt">- 400</p>
-                    </div>
-                    <div className="col_table_cell order_expiration">
-                      <p className="txt">22.12.31</p>
-                    </div>
-                  </div>
-                </div>
+                <MileageList />
               </div>
               <div className="btn_article">
                 <a className="more_btn">더보기</a>
@@ -255,6 +79,183 @@ const MileageInfo = ({ availablemileage }) => {
             <li>최근 1년 간의 멤버십 마일리지 내역만 조회 가능합니다. (날짜 직접 검색을 통해서 확인 가능)
             </li>
           </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const MileageList = () => {
+  return (
+    <div className="col_table_body">
+      <div className="col_table_row">
+        <div className="col_table_cell order_date">
+          <p className="txt">21.05.12</p>
+        </div>
+        <div className="col_table_cell order_details">
+          <p className="txt">주문 취소</p>
+        </div>
+        <div className="col_table_cell order_number">
+          <a className="txt">20210512-663W24</a>
+        </div>
+        <div className="col_table_cell order_mileage down">
+          <p className="txt">- 400</p>
+        </div>
+        <div className="col_table_cell order_expiration">
+          <p className="txt">22.12.31</p>
+        </div>
+      </div>
+      <div className="col_table_row">
+        <div className="col_table_cell order_date">
+          <p className="txt">21.05.12</p>
+        </div>
+        <div className="col_table_cell order_details">
+          <p className="txt">마일리지로 제품 구입</p>
+        </div>
+        <div className="col_table_cell order_number">
+          <a className="txt">20210512-663W24</a>
+        </div>
+        <div className="col_table_cell order_mileage down">
+          <p className="txt">- 800</p>
+        </div>
+        <div className="col_table_cell order_expiration">
+          <p className="txt">22.12.31</p>
+        </div>
+      </div>
+      <div className="col_table_row">
+        <div className="col_table_cell order_date">
+          <p className="txt">21.05.12</p>
+        </div>
+        <div className="col_table_cell order_details">
+          <p className="txt">주문 취소</p>
+        </div>
+        <div className="col_table_cell order_number">
+          <a className="txt">20210512-663W24</a>
+        </div>
+        <div className="col_table_cell order_mileage up">
+          <p className="txt">+ 800</p>
+        </div>
+        <div className="col_table_cell order_expiration">
+          <p className="txt">22.12.31</p>
+        </div>
+      </div>
+      <div className="col_table_row">
+        <div className="col_table_cell order_date">
+          <p className="txt">21.05.12</p>
+        </div>
+        <div className="col_table_cell order_details">
+          <p className="txt">주문 취소</p>
+        </div>
+        <div className="col_table_cell order_number">
+          <a className="txt">20210512-663W24</a>
+        </div>
+        <div className="col_table_cell order_mileage up">
+          <p className="txt">+ 2500</p>
+        </div>
+        <div className="col_table_cell order_expiration">
+          <p className="txt">22.12.31</p>
+        </div>
+      </div>
+      <div className="col_table_row">
+        <div className="col_table_cell order_date">
+          <p className="txt">21.05.12</p>
+        </div>
+        <div className="col_table_cell order_details">
+          <p className="txt">주문 취소</p>
+        </div>
+        <div className="col_table_cell order_number">
+          <a className="txt">20210512-663W24</a>
+        </div>
+        <div className="col_table_cell order_mileage down">
+          <p className="txt">- 3000</p>
+        </div>
+        <div className="col_table_cell order_expiration">
+          <p className="txt">22.12.31</p>
+        </div>
+      </div>
+      <div className="col_table_row">
+        <div className="col_table_cell order_date">
+          <p className="txt">21.05.12</p>
+        </div>
+        <div className="col_table_cell order_details">
+          <p className="txt">주문 취소</p>
+        </div>
+        <div className="col_table_cell order_number">
+          <a className="txt">20210512-663W24</a>
+        </div>
+        <div className="col_table_cell order_mileage up">
+          <p className="txt">- 800</p>
+        </div>
+        <div className="col_table_cell order_expiration">
+          <p className="txt">22.12.31</p>
+        </div>
+      </div>
+      <div className="col_table_row">
+        <div className="col_table_cell order_date">
+          <p className="txt">21.05.12</p>
+        </div>
+        <div className="col_table_cell order_details">
+          <p className="txt">주문 취소</p>
+        </div>
+        <div className="col_table_cell order_number">
+          <a className="txt">20210512-663W24</a>
+        </div>
+        <div className="col_table_cell order_mileage up">
+          <p className="txt">- 800</p>
+        </div>
+        <div className="col_table_cell order_expiration">
+          <p className="txt">22.12.31</p>
+        </div>
+      </div>
+      <div className="col_table_row">
+        <div className="col_table_cell order_date">
+          <p className="txt">21.05.12</p>
+        </div>
+        <div className="col_table_cell order_details">
+          <p className="txt">주문 취소</p>
+        </div>
+        <div className="col_table_cell order_number">
+          <a className="txt">20210512-663W24</a>
+        </div>
+        <div className="col_table_cell order_mileage down">
+          <p className="txt">- 400</p>
+        </div>
+        <div className="col_table_cell order_expiration">
+          <p className="txt">22.12.31</p>
+        </div>
+      </div>
+      <div className="col_table_row">
+        <div className="col_table_cell order_date">
+          <p className="txt">21.05.12</p>
+        </div>
+        <div className="col_table_cell order_details">
+          <p className="txt">주문 취소</p>
+        </div>
+        <div className="col_table_cell order_number">
+          <a className="txt">20210512-663W24</a>
+        </div>
+        <div className="col_table_cell order_mileage down">
+          <p className="txt">- 400</p>
+        </div>
+        <div className="col_table_cell order_expiration">
+          <p className="txt">22.12.31</p>
+        </div>
+      </div>
+      <div className="col_table_row">
+        <div className="col_table_cell order_date">
+          <p className="txt">21.05.12</p>
+        </div>
+        <div className="col_table_cell order_details">
+          <p className="txt">주문 취소</p>
+        </div>
+        <div className="col_table_cell order_number">
+          <a className="txt">20210512-663W24</a>
+        </div>
+        <div className="col_table_cell order_mileage down">
+          <p className="txt">- 400</p>
+        </div>
+        <div className="col_table_cell order_expiration">
+          <p className="txt">22.12.31</p>
         </div>
       </div>
     </div>

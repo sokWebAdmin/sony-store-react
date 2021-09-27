@@ -58,7 +58,8 @@ export default function MyPageMain () {
           <div className="cont_inner">
             <OrderSummary />
             {viewContent === 'mileage' &&
-            <MileageInfo availablemileage={availablemileage} />}
+            <MileageInfo availablemileage={availablemileage}
+                         profile={profile} />}
             {viewContent === 'coupon' && <CouponList />}
             {viewContent === 'wish' && <WishList />}
           </div>
