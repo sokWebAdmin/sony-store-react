@@ -12,9 +12,8 @@ const memberGradeClassName = {
 
 };
 
-const MemberSummary = ({ tabChange, profile, availablemileage }) => {
+const MemberSummary = ({ tabChange, profile, availablemileage, wishCount }) => {
   const [couponCount, setCouponCount] = useState(0);
-  const [wishCount, setWishCount] = useState(0);
 
   const gradeClassName = useMemo(() => {
     const grade = profile?.memberGradeName?.toLowerCase();
@@ -27,18 +26,12 @@ const MemberSummary = ({ tabChange, profile, availablemileage }) => {
   useEffect(() => {
     Promise.all([
       fetchCouponCount(),
-      fetchWishCount(),
     ]).catch(console.error);
   }, []);
 
   async function fetchCouponCount () {
     const { data: { usableCouponCnt } } = await getCouponsSummary();
     setCouponCount(usableCouponCnt);
-  }
-
-  async function fetchWishCount () {
-    const { data: { count } } = await getWishCount();
-    setWishCount(count);
   }
 
   return (

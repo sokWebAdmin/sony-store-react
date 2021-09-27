@@ -1,30 +1,18 @@
-import { useEffect, useState, useMemo } from 'react';
-import { getWish } from '../../../api/order';
+import { useState, useMemo } from 'react';
 
 const HOW_MANY = 10;
 
-const WishList = () => {
-  const [list, setList] = useState([]);
+const WishList = ({ wishList }) => {
   const [pageIndex, setPageIndex] = useState(1);
   const renderList = useMemo(() => {
     const start = HOW_MANY * (pageIndex - 1);
     const end = HOW_MANY * pageIndex;
-    return list.slice(start, end);
+    return wishList.slice(start, end);
   }, [pageIndex]);
-
-  useEffect(() => {
-    fetchWish().then(setList).catch(console.error);
-  }, []);
-
   const more = e => {
     e.preventDefault();
     setPageIndex(pageIndex + 1);
   };
-
-  async function fetchWish () {
-    const { data } = await getWish();
-    return data;
-  }
 
   return (
     <div className="cont history_like">
