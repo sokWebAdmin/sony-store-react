@@ -29,7 +29,12 @@ export default function OrderDetail() {
   const query = useQuery();
   const printArea = useRef();
   const { isLogin } = useContext(GlobalContext);
-  const [orderInfo, setOrderInfo] = useState({ orderNo: '', orderYmdt: '', defaultOrderStatusType: '' });
+  const [orderInfo, setOrderInfo] = useState({
+    orderNo: '',
+    orderYmdt: '',
+    defaultOrderStatusType: '', // order의 가장 첫번째 옵션주문의 주문상태(api 동일)
+    defaultClaimStatusType: '', // order의 가장 첫번째 옵션주문의 클레임상태(api에 없는 데이터, front에서 가공)
+  });
   const [orderProducts, setOrderProducts] = useState([]); // 주문 상품
   const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' }); // 주문 정보
   const [shippingAddress, setShippingAddress] = useState({
@@ -96,7 +101,13 @@ export default function OrderDetail() {
       orderOptionsGroupByPartner,
     } = res.data;
 
-    setOrderInfo({ orderNo, orderYmdt: orderYmdt.split(' ')[0], defaultOrderStatusType });
+    setOrderInfo({
+      orderNo,
+      orderYmdt: orderYmdt.split(' ')[0],
+      defaultOrderStatusType,
+      defaultClaimStatusType:
+        orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0].claimStatusType,
+    });
     setOrderProducts(makeOrderProducts(res.data));
     setOrdererInfo({ ordererName, ordererContact1 });
     setShippingAddress({
