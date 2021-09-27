@@ -258,9 +258,11 @@ export default function OrderDetail() {
               <button type="button" className="button button_negative only-pc" onClick={() => onPrint()}>
                 주문 정보 프린트
               </button>
-              <Link to="/my-page/order-list" className="button button_positive">
-                목록
-              </Link>
+              {isLogin && (
+                <Link to="/my-page/order-list" className="button button_positive">
+                  목록
+                </Link>
+              )}
             </div>
           </div>
         </div>
