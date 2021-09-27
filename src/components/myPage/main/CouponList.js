@@ -1,4 +1,21 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { getCoupons } from '../../../api/promotion';
+
 const CouponList = () => {
+  const [coupons, setCoupons] = useState([]);
+  useEffect(() => {
+    fetchCoupons();
+  }, []);
+
+  const fetchCoupons = async () => {
+    const res = await getCoupons({
+      query: { pageNumber: 1, pageSize: 10, usable: true },
+    });
+    console.log('coupon res:', res);
+  };
+
   return (
     <div className="cont history_coupon">
       <h3 className="cont_tit" id="coupon-tit">
@@ -121,12 +138,13 @@ const CouponList = () => {
           </ul>
         </div>
         <div className="ico_box_link">
-          <a className="box_link_inner ico_type1">
+          {/* TODO: 멤버십 > 쿠폰안내 탭으로 이동 가능해야함 */}
+          <Link to="membership/benefit" className="box_link_inner ico_type1">
             <div className="txt_box">
               <p className="tit">소니스토어의 쿠폰 보기</p>
               <p className="txt">첫 구매 등 소니스토어의 다양한 쿠폰 혜택을 받으세요!</p>
             </div>
-          </a>
+          </Link>
           <a
             href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start"
             target="_blank"
