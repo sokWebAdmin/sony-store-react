@@ -10,8 +10,11 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/support.scss';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
+import { useHistory } from 'react-router-dom';
 
 export default function Agreement() {
+  const history = useHistory();
+
   const { openAlert, closeModal, alertMessage, alertVisible } = useAlert();
 
   const [agreementList, setAgreementList] = useState([false, false, false]);
