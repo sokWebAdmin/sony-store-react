@@ -1,3 +1,5 @@
+import { getEventByEventNo } from '../api/display';
+
 const tagColorMap = {
   NEW: '#FF4E00',
   BEST: '#5865F5',
@@ -247,10 +249,6 @@ const gnbCategories = [
         label: '추천 제품',
         route: '/recommend',
       },
-      {
-        label: '선물제안',
-        route: '/curation',
-      },
     ],
   },
   {
@@ -329,5 +327,12 @@ const gnbCategories = [
     ],
   },
 ];
+
+(async () => {
+  const res = await getEventByEventNo('461');
+  if (res.status !== 400) {
+    gnbCategories[0].children.push({ label: '선물제안', route: '/curation' });
+  }
+})();
 
 export { tagColorMap, categoriesExtraDataMap, espCategoryNo, gnbCategories };

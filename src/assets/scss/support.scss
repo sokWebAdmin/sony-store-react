@@ -1179,6 +1179,11 @@
           width: 384px;
         }
       }
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
       .inp:focus,
       .requests_cont:focus {
         outline: 0
