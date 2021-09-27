@@ -13,9 +13,9 @@ import { postPurchaseConsulting } from '../../api/sony/support';
 export default function PurchaseConsulting() {
   const [type, setType] = useState('1');
   const [company, setCompany] = useState('s');
-  const [name, setName] = useState('김은비');
-  const [email, setEmail] = useState('aaa@aaa.com');
-  const [mobile, setMobile] = useState('010000000');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
   const [productName, setProductName] = useState('TEST-0001');
   const [requestQty, setRequestQty] = useState('20대');
   const [purpose, setPurpose] = useState('테스트용도목적');
@@ -23,7 +23,75 @@ export default function PurchaseConsulting() {
   const [dueDateInfo, setDueDateInfo] = useState('9월 20일까지');
   const [note, setNote] = useState('기타 문의 드립니다. 확인 바랍니다.');
 
-  const onClickPositiveBtn = useCallback(async () => {
+  //validation
+  const [validation, setValidation] = useState({
+    name: true,
+    email: true,
+    mobile: true,
+    productName: true,
+    requestQty: true,
+    purpose: true,
+    endUser: true,
+    dueDateInfo: true,
+    note: true,
+  });
+  // const [isName, setIsName] = useState(true);
+  // const [isEmail, setIsEmail] = useState(true);
+  // const [isEmail, setIsEmail] = useState(true);
+  // const [isEmail, setIsEmail] = useState(true);
+  // const [isPassword, setIsPassword] = useState(true);
+  // const [isConfirm, setIsConfirm] = useState(true);
+  // const [isName, setIsName] = useState(true);
+  // const [isBirthday, setIsBirthday] = useState(true);
+  // const [isPhone, setIsPhone] = useState(true);
+  // const [isAuthCode, setIsAuthCode] = useState(true);
+
+  const validationForm = () => {
+    if (name === '') {
+      // setValidation((prev) => ({
+      //   ...prev,
+      //   name: false,
+      // }));
+      setValidation({ ...validation, name: false });
+      return false;
+    }
+    if (email === '') {
+      setValidation({ ...validation, email: false });
+      return false;
+    }
+    if (mobile === '') {
+      setValidation({ ...validation, mobile: false });
+      return false;
+    }
+    if (productName === '') {
+      setValidation({ ...validation, productName: false });
+      return false;
+    }
+    if (requestQty === '') {
+      setValidation({ ...validation, requestQty: false });
+      return false;
+    }
+    if (purpose === '') {
+      setValidation({ ...validation, purpose: false });
+      return false;
+    }
+    if (endUser === '') {
+      setValidation({ ...validation, endUser: false });
+      return false;
+    }
+    if (dueDateInfo === '') {
+      setValidation({ ...validation, dueDateInfo: false });
+      return false;
+    }
+    if (note === '') {
+      setValidation({ ...validation, note: false });
+      return false;
+    }
+    return true;
+  };
+
+  const onClickPositiveBtn = async () => {
+    if (validationForm() === false) return;
     const data = {
       type,
       name,
@@ -36,12 +104,11 @@ export default function PurchaseConsulting() {
       duedateinfo: dueDateInfo,
       note,
     };
-    if (type === '1') {
+    if (type === '2') {
       data.company = company;
     }
     const response = await postPurchaseConsulting(data);
-    debugger;
-  }, []);
+  };
 
   return (
     <>
@@ -100,16 +167,17 @@ export default function PurchaseConsulting() {
                                 autoComplete="off"
                                 value={name}
                                 onChange={(e) => {
-                                  debugger;
                                   setName(e.target.value);
                                 }}
                               />
                               <span className="focus_bg" />
                             </div>
-                            <p className="error_txt">
-                              <span className="ico" />
-                              이름을 입력해 주세요.
-                            </p>
+                            {!validation.name && (
+                              <p className="error_txt">
+                                <span className="ico" />
+                                이름을 입력해 주세요.
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -137,10 +205,12 @@ export default function PurchaseConsulting() {
                               />
                               <span className="focus_bg" />
                             </div>
-                            <p className="error_txt">
-                              <span className="ico" />
-                              이메일 아이디를 입력해 주세요.
-                            </p>
+                            {!validation.email && (
+                              <p className="error_txt">
+                                <span className="ico" />
+                                이메일 아이디를 입력해 주세요.
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -168,10 +238,12 @@ export default function PurchaseConsulting() {
                               />
                               <span className="focus_bg" />
                             </div>
-                            <p className="error_txt">
-                              <span className="ico" />
-                              휴대폰 번호를 입력해 주세요.
-                            </p>
+                            {!validation.mobile && (
+                              <p className="error_txt">
+                                <span className="ico" />
+                                휴대폰 번호를 입력해 주세요.
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -205,9 +277,11 @@ export default function PurchaseConsulting() {
                               />
                               <span className="focus_bg" />
                             </div>
-                            <p className="error_txt">
-                              <span className="ico" />이 정보는 필수 입력사항 입니다.
-                            </p>
+                            {!validation.productName && (
+                              <p className="error_txt">
+                                <span className="ico" />이 정보는 필수 입력사항 입니다.
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -235,9 +309,11 @@ export default function PurchaseConsulting() {
                               />
                               <span className="focus_bg" />
                             </div>
-                            <p className="error_txt">
-                              <span className="ico" />이 정보는 필수 입력사항입니다.
-                            </p>
+                            {!validation.requestQty && (
+                              <p className="error_txt">
+                                <span className="ico" />이 정보는 필수 입력사항입니다.
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -265,9 +341,11 @@ export default function PurchaseConsulting() {
                               />
                               <span className="focus_bg" />
                             </div>
-                            <p className="error_txt">
-                              <span className="ico" />이 정보는 필수 입력사항입니다.
-                            </p>
+                            {!validation.purpose && (
+                              <p className="error_txt">
+                                <span className="ico" />이 정보는 필수 입력사항입니다.
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -295,9 +373,11 @@ export default function PurchaseConsulting() {
                               />
                               <span className="focus_bg" />
                             </div>
-                            <p className="error_txt">
-                              <span className="ico" />이 정보는 필수 입력사항입니다.
-                            </p>
+                            {!validation.endUser && (
+                              <p className="error_txt">
+                                <span className="ico" />이 정보는 필수 입력사항입니다.
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -325,9 +405,11 @@ export default function PurchaseConsulting() {
                               />
                               <span className="focus_bg" />
                             </div>
-                            <p className="error_txt">
-                              <span className="ico" />이 정보는 필수 입력사항입니다.
-                            </p>
+                            {!validation.dueDateInfo && (
+                              <p className="error_txt">
+                                <span className="ico" />이 정보는 필수 입력사항입니다.
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -550,9 +632,11 @@ export default function PurchaseConsulting() {
                               />
                               <span className="focus_bg" />
                             </div>
+                            (
                             <p className="error_txt">
                               <span className="ico" />이 정보는 필수 입력사항입니다.
                             </p>
+                            )
                           </div>
                         </div>
                       </div>
@@ -579,6 +663,7 @@ export default function PurchaseConsulting() {
                             <p className="error_txt">
                               <span className="ico" />이 정보는 필수 입력사항입니다.
                             </p>
+                            }
                           </div>
                         </div>
                       </div>
