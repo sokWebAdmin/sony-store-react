@@ -1,7 +1,9 @@
 import _ from "lodash";
 import React from "react";
+import { categoriesExtraDataMap } from "../../const/category";
 import { PAGE_SIZE } from "../../const/search";
 import ViewMore from "../common/ViewMore";
+import { useHistory } from "react-router";
 
 const getCategoryNo = category => {
   return _.chain(category)
@@ -36,6 +38,14 @@ const convertCategory = (category, keyword) => {
 }
 
 export default function CategoryResult({ fetchCategory, categoryList, categoryCount, keyword }) {
+  const history = useHistory();
+
+  const getNextUrl = no => _.chain(categoriesExtraDataMap).filter(({ categoryNo }) => categoryNo === no).map(({ url }) => url).head().value();
+  const clickHandler = (e, categoryNo) => {
+    e.preventDefault();
+    history.push(categoryNo === 81643 ? '/esp' : getNextUrl(categoryNo));
+}
+
   return (
     <>
       <div className="section_top">
@@ -48,8 +58,7 @@ export default function CategoryResult({ fetchCategory, categoryList, categoryCo
               .map(category => convertCategory(category, keyword))
               .map(({ categoryNo, label }) => (
                 <li key={ categoryNo }>
-                  {/* @TODO 카테고리 클릭했을 때 어디로 보내야하지.. */}
-                  <a href="#none" dangerouslySetInnerHTML={{__html: label}} />
+                  <a href="#none" onClick={ e => clickHandler(e, categoryNo) } dangerouslySetInnerHTML={{__html: label}} />
                 </li>
             ))
           }

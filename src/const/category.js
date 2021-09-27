@@ -15,6 +15,7 @@ let espCategoryNo = 81643;
 
 // TODO real 인 경우에 대한 하드코딩 데이터 필요
 // TODO bannerSectionCodes 데이터 확인해야함 (최상위 부모 (카메라 같은) 카테고리만 bannerSectionCodes 를 가짐)
+// NOTE 검색(카테고리)에서 categoriesExtraDataMap 의 url 을 사용하고 있음
 if (process.env.NODE_ENV === 'development') {
   // 카메라
   categoriesExtraDataMap.push({
@@ -91,6 +92,11 @@ if (process.env.NODE_ENV === 'development') {
     categoryNo: 60872,
     url: '/products/audio/headphone',
   });
+  // 오디오 > 헤드폰/이어폰 > 헤드폰
+  categoriesExtraDataMap.push({
+    categoryNo: 81641,
+    url: '/products/audio/headphone'
+  })
   // 오디오 > 헤드폰/이어폰 > 무선 이어폰
   categoriesExtraDataMap.push({
     categoryNo: 60876,
