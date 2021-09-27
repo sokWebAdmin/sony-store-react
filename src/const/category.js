@@ -314,7 +314,7 @@ const gnbCategories = [
       },
       {
         label: '구매 상담',
-        route: '/purchase-consulting',
+        route: '/agreement',
       },
       {
         label: '직영점 안내',
