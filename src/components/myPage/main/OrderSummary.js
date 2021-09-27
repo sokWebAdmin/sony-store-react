@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { getProfileOrdersSummaryStatus } from '../../../api/order';
 
 const OrderSummary = () => {
@@ -40,7 +40,9 @@ const OrderSummary = () => {
       <div className="tit_head">
         <h3 className="cont_tit">주문/배송 내역</h3>
         <div className="btn_article right">
-          <a className="button button_secondary button-s">자세히 보기</a>
+          <Link to="my-page/order-list" className="button button_secondary button-s">
+            자세히 보기
+          </Link>
         </div>
       </div>
       <div className="history_inner">
