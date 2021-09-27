@@ -1,25 +1,12 @@
 import { useState, useMemo } from 'react';
-import { toCurrencyString } from '../../../utils/unit';
+import { toCurrencyString } from '../../../utils/unit.js';
 
-const HOW_MANY = 10;
-
-const WishList = ({ wishList }) => {
-  const [pageIndex, setPageIndex] = useState(1);
+const WishList = ({ wishList, more }) => {
   const [checkedProductNos, setCheckedProductNos] = useState([]);
 
-  const renderList = useMemo(() => {
-    // const start = HOW_MANY * (pageIndex - 1);
-    const end = HOW_MANY * pageIndex;
-    return wishList.slice(0, end);
-  }, [pageIndex]);
-  const more = e => {
-    e.preventDefault();
-    setPageIndex(pageIndex + 1);
-  };
-
   const allChecked = useMemo(
-    () => renderList.length === checkedProductNos.length,
-    [renderList, checkedProductNos]);
+    () => wishList.length === checkedProductNos.length,
+    [wishList, checkedProductNos]);
 
   const check = productNo => {
     const newList = checkedProductNos.includes(productNo)
@@ -57,7 +44,7 @@ const WishList = ({ wishList }) => {
       </div>
       <div className="history_inner">
         <div className="history_list">
-          {renderList?.length > 0
+          {wishList?.length > 0
             ?
             <div className="like_inner on">
               <div className="all_checked check">
@@ -67,7 +54,7 @@ const WishList = ({ wishList }) => {
                 <label htmlFor="allChk">전체</label>
               </div>
               <div className="like_prd_inner">
-                <Products list={renderList} check={check}
+                <Products list={wishList} check={check}
                           checkedProductNos={checkedProductNos} />
               </div>
               <div className="btn_article line">

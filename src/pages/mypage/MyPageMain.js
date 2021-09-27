@@ -23,6 +23,9 @@ import {
   useProileDispatch,
 } from '../../context/profile.context';
 import { getWish } from '../../api/order';
+import { isMobile } from 'react-device-detect';
+
+const HOW_MANY_WISH = isMobile ? 9 : 10;
 
 export default function MyPageMain () {
   const [viewContent, setViewContent] = useState('mileage');
@@ -31,7 +34,8 @@ export default function MyPageMain () {
   const profileDispatch = useProileDispatch();
 
   const [wishList, setWishList] = useState([]);
-  const wishCount = useMemo(() => wishList.length, [wishList]);
+  const [wishCount, setWishCount] = useState(0);
+  const [pageIndex, setPageIndex] = useState(1);
 
   useEffect(async () => {
     if (!profile?.memberId) {
@@ -42,16 +46,32 @@ export default function MyPageMain () {
       await fetchMy(profile.memberId);
     }
 
-    fetchWish().then(setWishList).catch(console.error);
+    fetchWish().then(({ items, totalCount }) => {
+      setWishList(items);
+      setWishCount(totalCount);
+    }).catch(console.error);
   }, []);
+
+  const more = e => {
+    e.preventDefault();
+    setPageIndex(pageIndex + 1);
+  };
 
   function fetchMy (customerid) {
     return fetchMyProfile(profileDispatch, { type: '30', customerid });
   }
 
-  async function fetchWish () {
-    const { data: { items } } = await getWish();
-    return items;
+  async function fetchWish (request) {
+    if (!request) {
+      request = {
+        pageNumber: 1,
+        pageSize: HOW_MANY_WISH,
+        hasTotalCount: true,
+      };
+    }
+
+    const { data } = await getWish(request);
+    return data;
   }
 
   const availablemileage = useMemo(() => {
@@ -80,7 +100,8 @@ export default function MyPageMain () {
               <MileageInfo availablemileage={availablemileage}
                            profile={profile} />}
               {viewContent === 'coupon' && <CouponList />}
-              {viewContent === 'wish' && <WishList wishList={wishList} />}
+              {viewContent === 'wish' &&
+              <WishList wishList={wishList} more={more} />}
             </>
             }
           </div>

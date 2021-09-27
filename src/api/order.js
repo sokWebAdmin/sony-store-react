@@ -44,4 +44,4 @@ export const deleteCart = query => request('cart', 'delete', query);
 
 export const getCartCount = () => request('cart/count', 'get');
 
-export const getWish = () => request('profile/like-products', 'get');
+export const getWish = query => request('profile/like-products', 'get', query);
