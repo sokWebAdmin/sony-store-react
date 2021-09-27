@@ -339,9 +339,12 @@ export default function JoinStep() {
                   <div className="inp_box">
                     <label className="inp_desc" htmlFor="username">
                       <input type="text" id="username" className="inp" placeholder=" " autoComplete="off"
-                             value={name} onChange={(e) => {
-                        setName(e.target.value);
-                      }} />
+                             value={name}
+                             onChange={(e) => {
+                               const value = e.target.value.toString();
+                               const name = value.replace(/[^a-zA-Zㄱ-힣]/g, '');
+                               setName(name);
+                             }} />
                       <span className="label">이름<span>(띄어쓰기 없이 입력하세요.)</span></span>
                       <span className="focus_bg" />
                     </label>
@@ -353,7 +356,9 @@ export default function JoinStep() {
                     <label className="inp_desc" htmlFor="userbirth">
                       <input type="text" id="userbirth" className="inp" placeholder=" " value={birthday}
                              onChange={(e) => {
-                               setBirthday(e.target.value);
+                               const value = e.target.value.toString();
+                               const birthday = value.replace(/[^0-9]/g, '');
+                               setBirthday(birthday);
                              }} />
                       <span className="label">생년월일<span>(예 : 20210307)</span></span>
                       <span className="focus_bg" />
@@ -385,9 +390,12 @@ export default function JoinStep() {
                 <div className="inp_box">
                   <label className="inp_desc" htmlFor="phonenumber">
                     <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off"
-                           value={phone} onChange={(e) => {
-                      setPhone(e.target.value);
-                    }} readOnly={authSent ? true : false} />
+                           value={phone}
+                           onChange={(e) => {
+                             const value = e.target.value.toString();
+                             const phoneNo = value.replace(/[^0-9]/g, '');
+                             setPhone(phoneNo);
+                           }} readOnly={authSent ? true : false} />
                     <span className="label">휴대폰 번호<span>(-없이 입력하세요.)</span></span>
                     <span className="focus_bg" />
                   </label>

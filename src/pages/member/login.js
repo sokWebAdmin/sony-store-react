@@ -40,6 +40,8 @@ export default function Login() {
   //validation
   const [isEmail, setIsEmail] = useState(false);
   const [isPw, setIsPw] = useState(false);
+  const [emptyOrderNo, setEmptyOrderNo] = useState(false);
+  const [emptyOrderPw, setEmptyOrderPw] = useState(false);
 
   //cookie
   const [saveEmail, setSaveEmail] = useState(Cookies.get('sony_email') ?? false);
@@ -102,17 +104,17 @@ export default function Login() {
   const nonMemberLogin = async () => {
     let validation = true;
     if (emptyCheck(orderNo)) {
-      setIsEmail(true);
+      setEmptyOrderNo(true);
       validation = false;
     } else {
-      setIsEmail(false);
+      setEmptyOrderNo(false);
     }
 
     if (emptyCheck(orderPw)) {
-      setIsPw(true);
+      setEmptyOrderPw(true);
       validation = false;
     } else {
-      setIsPw(false);
+      setEmptyOrderPw(false);
     }
 
     if (validation) {
@@ -284,7 +286,7 @@ export default function Login() {
 
             {/* 비회원 로그인 */}
             <div id="tab2" className={`login__tabcont ${tabState == 'nonmember' ? 'current' : ''}`}>
-              <div className="group">
+              <div className={`group ${emptyOrderNo ? 'error' : ''}`}>
                 <div className="inp_box">
                   <label className="inp_desc" htmlFor="loginumber">
                     <input
@@ -304,7 +306,7 @@ export default function Login() {
                   주문번호를 입력해 주세요.
                 </div>
               </div>
-              <div className="group">
+              <div className={`group ${emptyOrderPw ? 'error' : ''}`}>
                 <div className="inp_box password_box">
                   <label className="inp_desc" htmlFor="loginumber">
                     <input

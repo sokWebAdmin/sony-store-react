@@ -9,7 +9,7 @@ import { getMemberInfo } from '../../api/sony/member';
 
 //css
 import '../../assets/scss/contents.scss';
-import { timeFormat } from '../../utils/utils';
+import { emptyCheck, timeFormat } from '../../utils/utils';
 import Alert from '../../components/common/Alert';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -20,6 +20,9 @@ export default function Search() {
   const initSearchValue = { mobileNo: '', memberName: '', email: '' };
   const [searchValue, setSearchValue] = useState(initSearchValue);
   const [result, setResult] = useState(null);
+
+  const [emptyMobile, setEmptyMobile] = useState(false);
+  const [emptySearchValue, setEmptySearchValue] = useState(false);
 
   const [time, setTime] = useState(179);
   const [expireAt, setExpireAt] = useState('');
@@ -52,8 +55,28 @@ export default function Search() {
     });
   };
 
+  const validationSearch = (mobile, searchValue) => {
+    let validation = true;
+    if (emptyCheck(searchValue)) {
+      setEmptySearchValue(true);
+      validation = false;
+    } else {
+      setEmptySearchValue(false);
+    }
+
+    if (emptyCheck(mobile)) {
+      setEmptyMobile(true);
+      validation = false;
+    } else {
+      setEmptyMobile(false);
+    }
+
+    return validation;
+  }
+
   const searchMember = async () => {
     if (tabState === 'id') {
+      if (!validationSearch(searchValue.mobileNo, searchValue.memberName)) return;
       const { data: response } = await getMemberInfo({
         type: '10',
         firstname: searchValue.memberName,
@@ -65,6 +88,7 @@ export default function Search() {
         openAlert(response.errorMessage);
       }
     } else {
+      if (!validationSearch(searchValue.mobileNo, searchValue.email)) return;
       const { data: response } = await getMemberInfo({
         type: '20',
         customerid: searchValue.email,
@@ -108,6 +132,8 @@ export default function Search() {
     setAuthCode('');
     setAuthCheck(false);
     setResult(null);
+    setEmptyMobile(false);
+    setEmptySearchValue(false);
   }, [tabState]);
 
   useEffect(() => {
@@ -148,7 +174,7 @@ export default function Search() {
 
               <div className="tabResult">
                 {!result ? <div className="result_cont tab2 on">
-                    <div className="group">
+                    <div className={`group ${emptySearchValue ? 'error' : ''}`}>
                       <div className="inp_box">
                         <label className="inp_desc" htmlFor="loginName">
                           <input type="text" id="loginName" className="inp" placeholder="&nbsp;" autoComplete="off"
@@ -163,7 +189,7 @@ export default function Search() {
                       </div>
                       <div className="error_txt"><span className="ico" />이름을 입력해 주세요. (띄어쓰기 없이 입력하세요.)</div>
                     </div>
-                    <div className="group  btn_type">
+                    <div className={`group btn_type ${emptyMobile ? 'error' : ''}`}>
                       <div className="inp_box">
                         <label className="inp_desc" htmlFor="phonenumber">
                           <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off"
