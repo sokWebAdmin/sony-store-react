@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { getCoupons } from '../../../api/promotion';
+import CouponListItem from './CouponListItem';
 
 const CouponList = () => {
   const [coupons, setCoupons] = useState([]);
@@ -14,7 +14,7 @@ const CouponList = () => {
       query: { pageNumber, pageSize, usable: true },
     });
     console.log('res.data.items:', res.data.items);
-    // setCoupons(res.data.items);
+    setCoupons(res.data.items);
   };
 
   const hasCoupons = (coupons) => {
@@ -42,96 +42,7 @@ const CouponList = () => {
           <div className={`coupon_inner ${hasCoupons(coupons) ? 'on' : ''}`}>
             {/* class : on 내역이 있을 경우 on */}
             <div className="coupon_list">
-              <div className="coupon_box">
-                <div className="coupon">
-                  <span className="coupon_no">
-                    No. <span className="num">3757897055</span>
-                  </span>
-                  <p className="tit">
-                    정품등록감사
-                    <br /> 소니 액세서리 <span className="percentage">10%</span> 할인
-                  </p>
-                  <p className="cut_txt">3만원 이상 구매 시 </p>
-                  <p className="expiration_txt">
-                    <strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12
-                  </p>
-                </div>
-              </div>
-              <div className="coupon_box">
-                <div className="coupon">
-                  <span className="coupon_no">
-                    No. <span className="num">3757897055</span>
-                  </span>
-                  <p className="tit">
-                    정품등록감사
-                    <br /> 소니 액세서리 <span className="percentage">10%</span> 할인
-                  </p>
-                  <p className="cut_txt">3만원 이상 구매 시 </p>
-                  <p className="expiration_txt">
-                    <strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12
-                  </p>
-                </div>
-              </div>
-              <div className="coupon_box">
-                <div className="coupon">
-                  <span className="coupon_no">
-                    No. <span className="num">3757897055</span>
-                  </span>
-                  <p className="tit">
-                    정품등록감사
-                    <br /> 소니 액세서리 <span className="percentage">10%</span> 할인
-                  </p>
-                  <p className="cut_txt">3만원 이상 구매 시 </p>
-                  <p className="expiration_txt">
-                    <strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12
-                  </p>
-                </div>
-              </div>
-              <div className="coupon_box">
-                <div className="coupon">
-                  <span className="coupon_no">
-                    No. <span className="num">3757897055</span>
-                  </span>
-                  <p className="tit">
-                    정품등록감사
-                    <br /> 소니 액세서리 <span className="percentage">10%</span> 할인
-                  </p>
-                  <p className="cut_txt">3만원 이상 구매 시 </p>
-                  <p className="expiration_txt">
-                    <strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12
-                  </p>
-                </div>
-              </div>
-              <div className="coupon_box">
-                <div className="coupon">
-                  <span className="coupon_no">
-                    No. <span className="num">3757897055</span>
-                  </span>
-                  <p className="tit">
-                    정품등록감사
-                    <br /> 소니 액세서리 <span className="percentage">10%</span> 할인
-                  </p>
-                  <p className="cut_txt">3만원 이상 구매 시 </p>
-                  <p className="expiration_txt">
-                    <strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12
-                  </p>
-                </div>
-              </div>
-              <div className="coupon_box">
-                <div className="coupon">
-                  <span className="coupon_no">
-                    No. <span className="num">3757897055</span>
-                  </span>
-                  <p className="tit">
-                    정품등록감사
-                    <br /> 소니 액세서리 <span className="percentage">10%</span> 할인
-                  </p>
-                  <p className="cut_txt">3만원 이상 구매 시 </p>
-                  <p className="expiration_txt">
-                    <strong>유효 기간 </strong>2021.05.21 ~ 2021.06.12
-                  </p>
-                </div>
-              </div>
+              <CouponListItem />
             </div>
             <div className="btn_article line">
               <a className="more_btn">더보기</a>
