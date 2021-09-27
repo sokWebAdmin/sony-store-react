@@ -53,7 +53,7 @@ export const getColorChipInfo = (hasColor, productName, values, option) => {
    if (hasColor && values) {
       const [ label, code ] = values;
       return {
-         label: `${productName} (${label})`,
+         label: `${productName}${ productName.includes(`(${label})`) ? '' : `( ${label})` }`,
          background: code
       }
    } else {

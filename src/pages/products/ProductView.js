@@ -62,13 +62,29 @@ export default function ProductView({ match }) {
 
   // product init data
   const mapProductData = useCallback(([productData, { flatOptions, ...rest }]) => {
+    const hasColor = productData.groupManagementCode || (!productData.groupManagementCode && flatOptions.filter(({ value }) => value.includes('_#')).length > 0)
     setWish(productData.liked);
     setProductData(productData);
     setProductOptions({
       ...rest,
-      flatOptions: flatOptions.length > 0 ? flatOptions : []
+      flatOptions: flatOptions.length > 0 ? flatOptions.map(o => {
+        return {
+          ...o,
+          colors: o.value.includes('_#') ? getColorChipValues(o.value) : null
+        }
+      }) : [],
+      hasColor,
     });
     setContents(mapContents(productData.baseInfo));
+
+    hasColor && setProductGroup(
+      _.chain(flatOptions)
+       .map(({ images, optionNo, value }) => ({
+         img: _.head(images),
+         optionNo,
+         colors: getColorChipValues(value)
+       }))
+    )
   }, []);
 
   const fetchProductData = useCallback(async (productNo) => {
