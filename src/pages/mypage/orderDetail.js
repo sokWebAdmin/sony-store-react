@@ -194,7 +194,7 @@ export default function OrderDetail() {
           return;
         }
 
-        openAlert('주문취소 신청이 완료되었습니다.', () => window.location.reload());
+        openAlert('주문취소 신청이 완료되었습니다.', () => () => window.location.reload());
       });
     } else if (status === 'cancel') {
       console.log('취소');

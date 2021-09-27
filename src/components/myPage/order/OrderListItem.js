@@ -109,7 +109,7 @@ export default function OrderListItem({
           openAlert('취소 실패하였습니다. 다시 시도해주세요.');
           return;
         }
-        openAlert(successMessage, () => window.location.reload());
+        openAlert(successMessage, () => () => window.location.reload());
       });
     } else if (status === 'cancel') {
       console.log('취소');

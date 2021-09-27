@@ -34,25 +34,25 @@ export default function DateBox({ search }) {
   };
 
   return (
-    <div class="date_box">
-      <ul class="date3_tab">
-        <li class={`tabs ${selectMenu === 'threeM' && 'on'}`}>
-          <a href="#" class="date3_btn" onClick={(e) => onClickTab(e, 'threeM')}>
+    <div className="date_box">
+      <ul className="date3_tab">
+        <li className={`tabs ${selectMenu === 'threeM' && 'on'}`}>
+          <a href="#" className="date3_btn" onClick={(e) => onClickTab(e, 'threeM')}>
             3개월
           </a>
         </li>
-        <li class={`tabs ${selectMenu === 'sixM' && 'on'}`}>
-          <a href="#" class="date3_btn" onClick={(e) => onClickTab(e, 'sixM')}>
+        <li className={`tabs ${selectMenu === 'sixM' && 'on'}`}>
+          <a href="#" className="date3_btn" onClick={(e) => onClickTab(e, 'sixM')}>
             6개월
           </a>
         </li>
-        <li class={`tabs ${selectMenu === 'oneY' && 'on'}`}>
-          <a href="#" class="date3_btn" onClick={(e) => onClickTab(e, 'oneY')}>
+        <li className={`tabs ${selectMenu === 'oneY' && 'on'}`}>
+          <a href="#" className="date3_btn" onClick={(e) => onClickTab(e, 'oneY')}>
             1년
           </a>
         </li>
       </ul>
-      <div class="date_rang">
+      <div className="date_rang">
         <DatePicker
           dateValue={period.startDate}
           height={'32px'}
@@ -70,7 +70,7 @@ export default function DateBox({ search }) {
             selectableRanges: [[null, new Date()]],
           }}
         />
-        <button class="button button_positive button-s" type="button" onClick={onClickSearch}>
+        <button className="button button_positive button-s" type="button" onClick={onClickSearch}>
           조회
         </button>
       </div>
