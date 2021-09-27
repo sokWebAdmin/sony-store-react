@@ -260,7 +260,7 @@ export default function OrderDetail() {
             <OrderInfo ordererInfo={ordererInfo} shippingAddress={shippingAddress} />
             <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
-              {showOrderCancel(orderInfo.defaultOrderStatusType, ordererInfo.claimStatusType) && (
+              {showOrderCancel(orderInfo.defaultOrderStatusType, orderInfo.defaultClaimStatusType) && (
                 <button type="button" className="button button_negative" onClick={onOrderCancel}>
                   주문 취소
                 </button>
