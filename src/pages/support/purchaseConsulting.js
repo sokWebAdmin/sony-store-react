@@ -11,9 +11,14 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/support.scss';
 import { postPurchaseConsulting } from '../../api/sony/support';
 import PurchaseConsultingNotice from '../../components/popup/PurchaseConsultingNotice';
+import ReCaptcha from '../../components/common/ReCaptcha';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
 
 export default function PurchaseConsulting() {
   const history = useHistory();
+  const { openAlert, closeModal, alertMessage, alertVisible } = useAlert();
+
   const [type, setType] = useState('1');
   const [company, setCompany] = useState('');
   const [name, setName] = useState('');
@@ -42,8 +47,12 @@ export default function PurchaseConsulting() {
 
   const [noticeVisible, setNoticeVisible] = useState(false);
 
+  // 캡챠
+  const [captcha, setCaptcha] = useState(false);
+
   const validationForm = () => {
     let validation = true;
+
     if (name === '') {
       setValidation((prev) => ({ ...prev, name: false }));
       validation = false;
@@ -105,6 +114,12 @@ export default function PurchaseConsulting() {
     } else {
       setValidation((prev) => ({ ...prev, dueDateInfo: true }));
     }
+
+    if (!captcha) {
+      openAlert(`'로봇이 아닙니다.' 인증이 필요합니다.`);
+      validation = false;
+    }
+    debugger;
     return validation;
   };
 
@@ -125,8 +140,8 @@ export default function PurchaseConsulting() {
     if (type === '2') {
       data.company = company;
     }
-    const response = await postPurchaseConsulting(data);
     debugger;
+    const response = await postPurchaseConsulting(data);
   };
 
   const onClickCancel = () => {
@@ -138,6 +153,7 @@ export default function PurchaseConsulting() {
   return (
     <>
       <SEOHelmet title={'구매상담 이용약관 동의'} />
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       <div className="contents support">
         <div className="container">
           <div className="content" style={{ padding: `120px 0 160px` }}>
@@ -567,9 +583,7 @@ export default function PurchaseConsulting() {
                   </div>
                   {/* 자동입력방지 영역 */}
                   <div className="captcha_area">
-                    {/* 여기안에 적용해주시면 됩니다. 적용후 이미지 삭제*/}
-                    <img src="../../images/_tmp/racaptcha.png" alt="" />
-                    {/* 임시이미지 */}
+                    <ReCaptcha setCaptcha={setCaptcha} />
                   </div>
                   {/*//자동입력방지 영역  */}
                   <ul className="list_dot">
@@ -604,65 +618,3 @@ export default function PurchaseConsulting() {
     </>
   );
 }
-
-// function Notice() {
-//   return (
-//     <div className="layer agree_layer modal_pop">
-//       <div className="layer_wrap">
-//         <div className="layer_container">
-//           <div className="layer_title">
-//             <h1>기업 구매 시 유의사항</h1>
-//           </div>
-//           <div className="layer_content">
-//             <div className="scroll_inner">
-//               <div className="foot_cont">
-//                 <ul>
-//                   <li>
-//                     <h5 className="Fh5_tit first">사용용도</h5>
-//                     <p>
-//                       소니코리아 본사와 대량구매 진행 시 사용 용도에 대한 명확한 확인 및 증빙자료의 제출이 필요할 수
-//                       있으며 용도 외 사용은 엄격히 제한됩니다.
-//                     </p>
-//                   </li>
-//                   <li>
-//                     <h5 className="Fh5_tit first">할인율 및 최소 수량</h5>
-//                     <p>주문 수량에 따른 할인율은 담당자에게 문의 바랍니다.</p>
-//                   </li>
-//                   <li>
-//                     <h5 className="Fh5_tit first">결제</h5>
-//                     <p>
-//                       지불은 현금 또는 카드 결제가 가능합니다. 후불 결제는 불가하며 선 결제 확인 후 출고가 진행됩니다.
-//                       세금계산서는 현금결제 후 고객 요청 발행 가능합니다.
-//                     </p>
-//                   </li>
-//                   <li>
-//                     <h5 className="Fh5_tit first">배송 및 소요시간</h5>
-//                     <p>
-//                       협의된 지정 배송일에 지정 배송지로 택배 발송됩니다. 배송까지의 소요시간은 주문 수량과 물류 센터
-//                       상황에 따라 달라질 수 있습니다.
-//                       <br />
-//                       대량 주문의 경우 최소 1주일 전 주문을 권해 드리며 견적 요청 시 희망 납품일을 알려주시면 가능
-//                       여부를 답변 드리겠습니다.
-//                     </p>
-//                   </li>
-//                   <li>
-//                     <h5 className="Fh5_tit first">교환</h5>
-//                     <p>
-//                       제품의 하자나 배송 중 파손 제품에 대해 배송 받은 박스 송장과 제품 사진 자료 확인 후 교환 처리가
-//                       가능합니다.
-//                       <br />
-//                       고객 변심 등의 기타 이유로는 반품 및 교환이 불가합니다.
-//                     </p>
-//                   </li>
-//                 </ul>
-//               </div>
-//             </div>
-//             <button className="layer_close close" title="팝업창 닫기">
-//               <span>팝업창 닫기</span>
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
