@@ -4,7 +4,6 @@ import { categoriesExtraDataMap } from "../../const/category";
 import { PAGE_SIZE } from "../../const/search";
 import ViewMore from "../common/ViewMore";
 import { useHistory } from "react-router";
-import { Link } from 'react-router-dom';
 
 const getCategoryNo = category => {
   return _.chain(category)
@@ -44,11 +43,7 @@ export default function CategoryResult({ fetchCategory, categoryList, categoryCo
   const getNextUrl = no => _.chain(categoriesExtraDataMap).filter(({ categoryNo }) => categoryNo === no).map(({ url }) => url).head().value();
   const clickHandler = (e, categoryNo) => {
     e.preventDefault();
-    if (categoryNo === 81643) {
-      history.push('/esp');
-    } else {
-      history.push(getNextUrl(categoryNo));
-    }
+    history.push(categoryNo === 81643 ? '/esp' : getNextUrl(categoryNo));
 }
 
   return (
@@ -63,7 +58,7 @@ export default function CategoryResult({ fetchCategory, categoryList, categoryCo
               .map(category => convertCategory(category, keyword))
               .map(({ categoryNo, label }) => (
                 <li key={ categoryNo }>
-                  <Link to={ categoryNo === 81643 ? '/esp' : getNextUrl(categoryNo) } onClick={e => clickHandler(e, categoryNo)} dangerouslySetInnerHTML={{__html: label}} />
+                  <a href="#none" onClick={ e => clickHandler(e, categoryNo) } dangerouslySetInnerHTML={{__html: label}} />
                 </li>
             ))
           }

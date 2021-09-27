@@ -92,6 +92,11 @@ if (process.env.NODE_ENV === 'development') {
     categoryNo: 60872,
     url: '/products/audio/headphone',
   });
+  // 오디오 > 헤드폰/이어폰 > 헤드폰
+  categoriesExtraDataMap.push({
+    categoryNo: 81641,
+    url: '/products/audio/headphone'
+  })
   // 오디오 > 헤드폰/이어폰 > 무선 이어폰
   categoriesExtraDataMap.push({
     categoryNo: 60876,
