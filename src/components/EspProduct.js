@@ -7,10 +7,6 @@ import { wonComma } from '../utils/utils';
 import GlobalContext from '../context/global.context';
 import Confirm from './common/Confirm';
 
-// TODO 바로 구매하기 동작 테스트 필요
-// TODO 컨펌 팝업 개발 요망
-// TODO desc 데이터 확인 요망
-
 export default function EspProduct({product}) {
   const description = useRef();
   const history = useHistory();
@@ -73,7 +69,7 @@ export default function EspProduct({product}) {
         <div className="toggleBox">
           <strong className="toggleBox__tit">대상 제품</strong>
           <div className="toggleBox__cont toggleon" ref={ description } >
-            {product.desc}
+            {product.promotionText}
           </div>
           {
             showMoreButton &&

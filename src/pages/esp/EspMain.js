@@ -47,6 +47,10 @@ export default function EspMain() {
     const _initProduct = async () => {
         const data = await _getEspProducts(1);
 
+        if (data.list.length === 0) {
+            data.totalCount = 0;
+        }
+
         setProduct(data);
     }
 
@@ -83,17 +87,6 @@ export default function EspMain() {
 
                 result.list = data.items;
                 result.totalCount = data.totalCount;
-
-                // TODO 임시로 옵션값으로 desc 적용함
-                result.list.map(p => {
-                    if (p?.optionValues?.length > 0) {
-                        p.desc = p.optionValues[0].optionValue.replace(/__/g, ',');
-                    }
-                    else {
-                        p.desc = '';
-                    }
-                    return p;
-                });
             }
         }
         catch (e) {
