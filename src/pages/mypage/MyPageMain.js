@@ -37,6 +37,13 @@ export default function MyPageMain () {
   const [wishCount, setWishCount] = useState(0);
   const [pageIndex, setPageIndex] = useState(1);
 
+  const rerenderWish = () => {
+    fetchWish().then(({ items, totalCount }) => {
+      setWishList(items);
+      setWishCount(totalCount);
+    }).catch(console.error);
+  };
+
   useEffect(async () => {
     if (!profile?.memberId) {
       await fetchProfile(profileDispatch);
@@ -46,10 +53,7 @@ export default function MyPageMain () {
       await fetchMy(profile.memberId);
     }
 
-    fetchWish().then(({ items, totalCount }) => {
-      setWishList(items);
-      setWishCount(totalCount);
-    }).catch(console.error);
+    rerenderWish();
   }, []);
 
   useEffect(() => {
@@ -106,7 +110,8 @@ export default function MyPageMain () {
                            profile={profile} />}
               {viewContent === 'coupon' && <CouponList />}
               {viewContent === 'wish' &&
-              <WishList wishList={wishList} wishCount={wishCount}
+              <WishList rerender={rerenderWish} wishList={wishList}
+                        wishCount={wishCount}
                         more={more} />}
             </>
             }

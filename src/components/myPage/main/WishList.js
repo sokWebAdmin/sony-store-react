@@ -1,7 +1,8 @@
 import { useState, useMemo } from 'react';
 import { toCurrencyString } from '../../../utils/unit.js';
+import { postProfileLikeProducts } from '../../../api/product';
 
-const WishList = ({ wishList, wishCount, more }) => {
+const WishList = ({ wishList, wishCount, more, rerender }) => {
   const [checkedProductNos, setCheckedProductNos] = useState([]);
 
   const allChecked = useMemo(
@@ -25,13 +26,22 @@ const WishList = ({ wishList, wishCount, more }) => {
     }
   };
 
+  const deleteChecked = () => {
+    const request = {
+      productNos: checkedProductNos,
+    };
+
+    postProfileLikeProducts(request).then(rerender).catch(console.error);
+  };
+
   return (
     <div className="cont history_like">
       <div className="cont_head">
         <h3 className="cont_tit" id="wish-tit">찜</h3>
         {/* s : 찜 목록이 없을 경우 display:none */}
         <div className="like_select_btn">
-          <button className="button button_secondary button-s"
+          <button onClick={deleteChecked}
+                  className="button button_secondary button-s"
                   type="button">선택 삭제
           </button>
           <button
