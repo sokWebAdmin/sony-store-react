@@ -1,6 +1,8 @@
 import { useState, useMemo } from 'react';
 import { toCurrencyString } from '../../../utils/unit.js';
 import { postProfileLikeProducts } from '../../../api/product';
+import Confirm from '../../common/Confirm';
+import Alert from '../../common/Alert';
 
 const WishList = ({ wishList, wishCount, more, rerender }) => {
   const [checkedProductNos, setCheckedProductNos] = useState([]);
@@ -26,21 +28,67 @@ const WishList = ({ wishList, wishCount, more, rerender }) => {
     }
   };
 
-  const deleteChecked = () => {
+  const deleteChecked = confirm => {
+    if (!checkedProductNos.length) {
+      setCheckAlert(true);
+      return;
+    }
+
+    if (!confirm) {
+      wishList.length === checkedProductNos.length
+        ? setAllDeleteConfirm(true)
+        : setDeleteConfirm(true);
+      return;
+    }
+
     const request = {
       productNos: checkedProductNos,
     };
 
-    postProfileLikeProducts(request).then(rerender).catch(console.error);
+    postProfileLikeProducts(request).
+      then(() => setCheckedProductNos([])).
+      then(rerender).
+      catch(console.error);
+  };
+
+  const [allDeleteConfirm, setAllDeleteConfirm] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [checkAlert, setCheckAlert] = useState(false);
+
+  const handleAllDeleteConfirm = status => {
+    if (status === 'ok') {
+      deleteChecked(true);
+      setAllDeleteConfirm(false);
+    }
+    else {
+      setAllDeleteConfirm(false);
+    }
+  };
+
+  const handleDeleteConfirm = status => {
+    if (status === 'ok') {
+      deleteChecked(true);
+      setDeleteConfirm(false);
+    }
+    else {
+      setDeleteConfirm(false);
+    }
   };
 
   return (
     <div className="cont history_like">
+      {allDeleteConfirm &&
+      <Confirm onClose={handleAllDeleteConfirm}>찜한 제품 전체를 삭제하시겠습니까?</Confirm>}
+      {deleteConfirm &&
+      <Confirm onClose={handleDeleteConfirm}>선택한 제품을 삭제하시겠습니까?</Confirm>}
+      {checkAlert &&
+      <Alert onClose={() => setCheckAlert(false)}>제품을 선택해주세요.</Alert>}
+
       <div className="cont_head">
         <h3 className="cont_tit" id="wish-tit">찜</h3>
         {/* s : 찜 목록이 없을 경우 display:none */}
         <div className="like_select_btn">
-          <button onClick={deleteChecked}
+          <button onClick={() => deleteChecked(false)}
                   className="button button_secondary button-s"
                   type="button">선택 삭제
           </button>
