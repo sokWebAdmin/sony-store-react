@@ -1,4 +1,5 @@
-import { React, useCallback, useEffect, useState } from 'react';
+import { React, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -9,23 +10,26 @@ import SEOHelmet from '../../components/SEOHelmet';
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/support.scss';
 import { postPurchaseConsulting } from '../../api/sony/support';
+import PurchaseConsultingNotice from '../../components/popup/PurchaseConsultingNotice';
 
 export default function PurchaseConsulting() {
+  const history = useHistory();
   const [type, setType] = useState('1');
-  const [company, setCompany] = useState('s');
+  const [company, setCompany] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
-  const [productName, setProductName] = useState('TEST-0001');
-  const [requestQty, setRequestQty] = useState('20대');
-  const [purpose, setPurpose] = useState('테스트용도목적');
-  const [endUser, setEndUser] = useState('테스트 사용자');
-  const [dueDateInfo, setDueDateInfo] = useState('9월 20일까지');
-  const [note, setNote] = useState('기타 문의 드립니다. 확인 바랍니다.');
+  const [productName, setProductName] = useState('');
+  const [requestQty, setRequestQty] = useState('');
+  const [purpose, setPurpose] = useState('');
+  const [endUser, setEndUser] = useState('');
+  const [dueDateInfo, setDueDateInfo] = useState('');
+  const [note, setNote] = useState('');
 
   //validation
   const [validation, setValidation] = useState({
     name: true,
+    company: true,
     email: true,
     mobile: true,
     productName: true,
@@ -35,59 +39,73 @@ export default function PurchaseConsulting() {
     dueDateInfo: true,
     note: true,
   });
-  // const [isName, setIsName] = useState(true);
-  // const [isEmail, setIsEmail] = useState(true);
-  // const [isEmail, setIsEmail] = useState(true);
-  // const [isEmail, setIsEmail] = useState(true);
-  // const [isPassword, setIsPassword] = useState(true);
-  // const [isConfirm, setIsConfirm] = useState(true);
-  // const [isName, setIsName] = useState(true);
-  // const [isBirthday, setIsBirthday] = useState(true);
-  // const [isPhone, setIsPhone] = useState(true);
-  // const [isAuthCode, setIsAuthCode] = useState(true);
+
+  const [noticeVisible, setNoticeVisible] = useState(false);
 
   const validationForm = () => {
+    let validation = true;
     if (name === '') {
-      // setValidation((prev) => ({
-      //   ...prev,
-      //   name: false,
-      // }));
-      setValidation({ ...validation, name: false });
-      return false;
+      setValidation((prev) => ({ ...prev, name: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, name: true }));
+    }
+    if (type === '2' && company === '') {
+      setValidation((prev) => ({ ...prev, company: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, company: true }));
+    }
+    if (type === '2' && company === '') {
+      setValidation((prev) => ({ ...prev, company: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, company: true }));
     }
     if (email === '') {
-      setValidation({ ...validation, email: false });
-      return false;
+      setValidation((prev) => ({ ...prev, email: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, email: true }));
     }
     if (mobile === '') {
-      setValidation({ ...validation, mobile: false });
-      return false;
+      setValidation((prev) => ({ ...prev, mobile: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, mobile: true }));
     }
     if (productName === '') {
-      setValidation({ ...validation, productName: false });
-      return false;
+      setValidation((prev) => ({ ...prev, productName: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, productName: true }));
     }
     if (requestQty === '') {
-      setValidation({ ...validation, requestQty: false });
-      return false;
+      setValidation((prev) => ({ ...prev, requestQty: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, requestQty: true }));
     }
     if (purpose === '') {
-      setValidation({ ...validation, purpose: false });
-      return false;
+      setValidation((prev) => ({ ...prev, purpose: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, purpose: true }));
     }
     if (endUser === '') {
-      setValidation({ ...validation, endUser: false });
-      return false;
+      setValidation((prev) => ({ ...prev, endUser: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, endUser: true }));
     }
+
     if (dueDateInfo === '') {
-      setValidation({ ...validation, dueDateInfo: false });
-      return false;
+      setValidation((prev) => ({ ...prev, dueDateInfo: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, dueDateInfo: true }));
     }
-    if (note === '') {
-      setValidation({ ...validation, note: false });
-      return false;
-    }
-    return true;
+    return validation;
   };
 
   const onClickPositiveBtn = async () => {
@@ -108,7 +126,14 @@ export default function PurchaseConsulting() {
       data.company = company;
     }
     const response = await postPurchaseConsulting(data);
+    debugger;
   };
+
+  const onClickCancel = () => {
+    history.goBack();
+  };
+
+  const onChangeType = (e) => setType(e.target.value);
 
   return (
     <>
@@ -126,21 +151,37 @@ export default function PurchaseConsulting() {
               <div className="purchase_wrap_radio">
                 <div className="purchase_wrap_radio_bg">
                   <div className="radio_box">
-                    <input type="radio" className="inp_radio" id="tab1" name="tabradio" defaultChecked="checked" />
+                    <input
+                      type="radio"
+                      className="inp_radio"
+                      id="tab1"
+                      value="1"
+                      name="tabradio"
+                      onChange={onChangeType}
+                      defaultChecked="checked"
+                    />
                     <label htmlFor="tab1" className="contentType">
                       일반구매 상담
                     </label>
                   </div>
                   <div className="radio_box">
-                    <input type="radio" className="inp_radio" id="tab2" name="tabradio" />
+                    <input
+                      type="radio"
+                      className="inp_radio"
+                      id="tab2"
+                      value="2"
+                      name="tabradio"
+                      onChange={onChangeType}
+                    />
                     <label htmlFor="tab2" className="contentType">
                       기업구매 상담
                     </label>
                   </div>
                 </div>
-                <a className="button button_secondary button-s" href="javascript:openModal('modal_pop');">
+                <button className="button button_secondary button-s" onClick={() => setNoticeVisible(true)}>
                   기업구매 시 유의사항
-                </a>
+                </button>
+                {noticeVisible && <PurchaseConsultingNotice setVisible={setNoticeVisible} />}
               </div>
               <div className="tabResult">
                 <div className="result_cont tab1 on">
@@ -148,39 +189,115 @@ export default function PurchaseConsulting() {
                     <h2 className="inp_wrap_tit">개인정보 입력</h2>
                     <div className="inp_wrap_cont">
                       <p className="inp_wrap_amp">표시는 필수입력 정보</p>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="user_name">
-                            이름
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent error">
-                            {/* error 클래스로 에러문구 제어*/}
-                            <div className="acc_inp type1">
-                              <input
-                                type="text"
-                                className="inp"
-                                id="user_name"
-                                placeholder="띄어쓰기 없이 입력하세요."
-                                autoComplete="off"
-                                value={name}
-                                onChange={(e) => {
-                                  setName(e.target.value);
-                                }}
-                              />
-                              <span className="focus_bg" />
+                      {type === '1' && (
+                        <div className="inp_wrap_form">
+                          <div className="acc_cell vat">
+                            <label htmlFor="user_name">
+                              이름
+                              <i className="necessary" />
+                            </label>
+                          </div>
+                          <div className="acc_cell">
+                            <div className="acc_group parent error">
+                              {/* error 클래스로 에러문구 제어*/}
+                              <div className="acc_inp type1">
+                                <input
+                                  type="text"
+                                  className="inp"
+                                  id="user_name"
+                                  placeholder="띄어쓰기 없이 입력하세요."
+                                  autoComplete="off"
+                                  maxLength={50}
+                                  value={name}
+                                  onChange={(e) => {
+                                    setName(e.target.value);
+                                  }}
+                                />
+                                <span className="focus_bg" />
+                              </div>
+                              {!validation.name && (
+                                <p className="error_txt">
+                                  <span className="ico" />
+                                  이름을 입력해 주세요.
+                                </p>
+                              )}
                             </div>
-                            {!validation.name && (
-                              <p className="error_txt">
-                                <span className="ico" />
-                                이름을 입력해 주세요.
-                              </p>
-                            )}
                           </div>
                         </div>
-                      </div>
+                      )}
+                      {type === '2' && (
+                        <div className="inp_wrap_form">
+                          <div className="acc_cell vat">
+                            <label htmlFor="enterprise_name">
+                              기업명(단체명)
+                              <i className="necessary" />
+                            </label>
+                          </div>
+                          <div className="acc_cell">
+                            <div className="acc_group parent error">
+                              {/* error 클래스로 에러문구 제어*/}
+                              <div className="acc_inp type1">
+                                <input
+                                  type="text"
+                                  className="inp"
+                                  id="enterprise_name"
+                                  placeholder="기업명(단체명)을 입력하세요."
+                                  autoComplete="off"
+                                  maxLength={50}
+                                  value={company}
+                                  onChange={(e) => {
+                                    setCompany(e.target.value);
+                                  }}
+                                />
+                                <span className="focus_bg" />
+                              </div>
+                              {!validation.company && (
+                                <p className="error_txt">
+                                  <span className="ico" />
+                                  기업명(단체명)을 입력해 주세요.
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {type === '2' && (
+                        <div className="inp_wrap_form">
+                          <div className="acc_cell vat">
+                            <label htmlFor="manager_name">
+                              담당자명
+                              <i className="necessary" />
+                            </label>
+                          </div>
+                          <div className="acc_cell">
+                            <div className="acc_group parent error">
+                              {/* error 클래스로 에러문구 제어*/}
+                              <div className="acc_inp type1">
+                                <input
+                                  type="text"
+                                  className="inp"
+                                  id="manager_name"
+                                  placeholder="띄어쓰기 없이 입력하세요."
+                                  autoComplete="off"
+                                  maxLength={50}
+                                  value={name}
+                                  onChange={(e) => {
+                                    setName(e.target.value);
+                                  }}
+                                />
+                                <span className="focus_bg" />
+                              </div>
+                              {!validation.name && (
+                                <p className="error_txt">
+                                  <span className="ico" />
+                                  담당자명을 입력해 주세요.
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
                       <div className="inp_wrap_form">
                         <div className="acc_cell vat">
                           <label htmlFor="user_email">
@@ -198,6 +315,7 @@ export default function PurchaseConsulting() {
                                 id="user_email"
                                 placeholder="예) sony@sony.co.kr"
                                 autoComplete="off"
+                                maxLength={20}
                                 value={email}
                                 onChange={(e) => {
                                   setEmail(e.target.value);
@@ -226,9 +344,10 @@ export default function PurchaseConsulting() {
                             {/* error 클래스로 에러문구 제어*/}
                             <div className="acc_inp type1">
                               <input
-                                type="text"
+                                type="number"
                                 className="inp"
                                 id="user_number"
+                                maxLength={20}
                                 placeholder="- 없이 입력하세요."
                                 autoComplete="off"
                                 value={mobile}
@@ -270,6 +389,7 @@ export default function PurchaseConsulting() {
                                 id="prd_name"
                                 placeholder="예) 디지털카메라"
                                 autoComplete="off"
+                                maxLength={50}
                                 value={productName}
                                 onChange={(e) => {
                                   setProductName(e.target.value);
@@ -301,6 +421,7 @@ export default function PurchaseConsulting() {
                                 className="inp"
                                 id="prd_num"
                                 placeholder="예) 220대"
+                                maxLength={50}
                                 autoComplete="off"
                                 value={requestQty}
                                 onChange={(e) => {
@@ -331,6 +452,7 @@ export default function PurchaseConsulting() {
                               <input
                                 type="text"
                                 className="inp"
+                                maxLength={100}
                                 id="prd_purpose"
                                 placeholder="예) 직접 사용/납품"
                                 autoComplete="off"
@@ -367,6 +489,7 @@ export default function PurchaseConsulting() {
                                 placeholder="예) 자사 임직원/납품 시 납품처"
                                 autoComplete="off"
                                 value={endUser}
+                                maxLength={100}
                                 onChange={(e) => {
                                   setEndUser(e.target.value);
                                 }}
@@ -397,6 +520,7 @@ export default function PurchaseConsulting() {
                                 className="inp"
                                 id="fixed_date"
                                 placeholder="예) 년,월,일 까지/없음"
+                                maxLength={100}
                                 autoComplete="off"
                                 value={dueDateInfo}
                                 onChange={(e) => {
@@ -415,10 +539,7 @@ export default function PurchaseConsulting() {
                       </div>
                       <div className="inp_wrap_form">
                         <div className="acc_cell vat">
-                          <label htmlFor="requests">
-                            추가 문의 및 요청 사항
-                            <i className="necessary" />
-                          </label>
+                          <label htmlFor="requests">추가 문의 및 요청 사항</label>
                         </div>
                         <div className="acc_cell">
                           <div className="acc_group parent">
@@ -428,8 +549,7 @@ export default function PurchaseConsulting() {
                                 className="requests_cont"
                                 cols={50}
                                 rows={5}
-                                maxLength={1000}
-                                defaultValue={''}
+                                maxLength={4000}
                                 value={note}
                                 onChange={(e) => {
                                   setNote(e.target.value);
@@ -437,9 +557,9 @@ export default function PurchaseConsulting() {
                               />
                               <span className="focus_bg" />
                             </div>
-                            <div className="byte_count">
-                              <strong className="current">298</strong> / 5,000자
-                            </div>
+                            {/*<div className="byte_count">*/}
+                            {/*  <strong className="current">298</strong> / 4,000자*/}
+                            {/*</div>*/}
                           </div>
                         </div>
                       </div>
@@ -467,310 +587,9 @@ export default function PurchaseConsulting() {
                     </li>
                   </ul>
                 </div>
-                <div className="result_cont tab2">
-                  <div className="inp_wrap">
-                    <h2 className="inp_wrap_tit">개인정보 입력</h2>
-                    <div className="inp_wrap_cont">
-                      <p className="inp_wrap_amp">표시는 필수입력 정보</p>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="enterprise_name">
-                            기업명(단체명)
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent error">
-                            {/* error 클래스로 에러문구 제어*/}
-                            <div className="acc_inp type1">
-                              <input
-                                type="text"
-                                className="inp"
-                                id="enterprise_name"
-                                placeholder="기업명(단체명)을 입력하세요."
-                                autoComplete="off"
-                              />
-                              <span className="focus_bg" />
-                            </div>
-                            <p className="error_txt">
-                              <span className="ico" />
-                              기업명(단체명)을 입력해 주세요.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="manager_name">
-                            담당자명
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent error">
-                            {/* error 클래스로 에러문구 제어*/}
-                            <div className="acc_inp type1">
-                              <input
-                                type="text"
-                                className="inp"
-                                id="manager_name"
-                                placeholder="띄어쓰기 없이 입력하세요."
-                                autoComplete="off"
-                              />
-                              <span className="focus_bg" />
-                            </div>
-                            <p className="error_txt">
-                              <span className="ico" />
-                              담당자명을 입력해 주세요.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="user_email2">
-                            이메일
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent error">
-                            {/* error 클래스로 에러문구 제어*/}
-                            <div className="acc_inp type1">
-                              <input
-                                type="text"
-                                className="inp"
-                                id="user_email2"
-                                placeholder="예) sony@sony.co.kr"
-                                autoComplete="off"
-                              />
-                              <span className="focus_bg" />
-                            </div>
-                            <p className="error_txt">
-                              <span className="ico" />
-                              이메일 아이디를 입력해 주세요.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="user_number2">
-                            휴대폰 번호
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent error">
-                            {/* error 클래스로 에러문구 제어*/}
-                            <div className="acc_inp type1">
-                              <input
-                                type="text"
-                                className="inp"
-                                id="user_number2"
-                                placeholder="-없이 입력하세요."
-                                autoComplete="off"
-                              />
-                              <span className="focus_bg" />
-                            </div>
-                            <p className="error_txt">
-                              <span className="ico" />
-                              휴대폰 번호를 입력해 주세요.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="inp_wrap">
-                    <h2 className="inp_wrap_tit">상담정보 입력</h2>
-                    <div className="inp_wrap_cont">
-                      <p className="inp_wrap_amp">표시는 필수입력 정보</p>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="prd_name2">
-                            구입 희망 상품
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent error">
-                            {/* error 클래스로 에러문구 제어*/}
-                            <div className="acc_inp">
-                              <input
-                                type="text"
-                                className="inp"
-                                id="prd_name2"
-                                placeholder="예) 디지털카메라"
-                                autoComplete="off"
-                              />
-                              <span className="focus_bg" />
-                            </div>
-                            <p className="error_txt">
-                              <span className="ico" />이 정보는 필수 입력사항 입니다.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="prd_num2">
-                            구입 예정 수량
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent error">
-                            {/* error 클래스로 에러문구 제어*/}
-                            <div className="acc_inp">
-                              <input
-                                type="text"
-                                className="inp"
-                                id="prd_num2"
-                                placeholder="예) 220대"
-                                autoComplete="off"
-                              />
-                              <span className="focus_bg" />
-                            </div>
-                            (
-                            <p className="error_txt">
-                              <span className="ico" />이 정보는 필수 입력사항입니다.
-                            </p>
-                            )
-                          </div>
-                        </div>
-                      </div>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="prd_purpose2">
-                            구매 목적
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent error">
-                            {/* error 클래스로 에러문구 제어*/}
-                            <div className="acc_inp">
-                              <input
-                                type="text"
-                                className="inp"
-                                id="prd_purpose2"
-                                placeholder="예) 직접 사용/납품"
-                                autoComplete="off"
-                              />
-                              <span className="focus_bg" />
-                            </div>
-                            <p className="error_txt">
-                              <span className="ico" />이 정보는 필수 입력사항입니다.
-                            </p>
-                            }
-                          </div>
-                        </div>
-                      </div>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="end_user2">
-                            최종 사용자
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent error">
-                            {/* error 클래스로 에러문구 제어*/}
-                            <div className="acc_inp">
-                              <input
-                                type="text"
-                                className="inp"
-                                id="end_user2"
-                                placeholder="예) 자사 임직원/납품 시 납품처"
-                                autoComplete="off"
-                              />
-                              <span className="focus_bg" />
-                            </div>
-                            <p className="error_txt">
-                              <span className="ico" />이 정보는 필수 입력사항입니다.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="fixed_date2">
-                            정해진 납기일
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent error">
-                            {/* error 클래스로 에러문구 제어*/}
-                            <div className="acc_inp">
-                              <input
-                                type="text"
-                                className="inp"
-                                id="fixed_date2"
-                                placeholder="예) 년,월,일 까지/없음"
-                                autoComplete="off"
-                              />
-                              <span className="focus_bg" />
-                            </div>
-                            <p className="error_txt">
-                              <span className="ico" />이 정보는 필수 입력사항입니다.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="inp_wrap_form">
-                        <div className="acc_cell vat">
-                          <label htmlFor="requests2">
-                            추가 문의 및 요청 사항
-                            <i className="necessary" />
-                          </label>
-                        </div>
-                        <div className="acc_cell">
-                          <div className="acc_group parent">
-                            <div className="acc_inp">
-                              <textarea
-                                id="requests2"
-                                className="requests_cont"
-                                cols={50}
-                                rows={5}
-                                maxLength={1000}
-                                defaultValue={''}
-                              />
-                              <span className="focus_bg" />
-                            </div>
-                            <div className="byte_count">
-                              <strong className="current">298</strong> / 5,000자
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* 자동입력방지 영역 */}
-                  <div className="captcha_area">
-                    {/* 여기안에 적용해주시면 됩니다. 적용후 이미지 삭제*/}
-                    <img src="../../images/_tmp/racaptcha.png" alt="" />
-                    {/* 임시이미지 */}
-                  </div>
-                  {/*//자동입력방지 영역  */}
-                  <ul className="list_dot">
-                    <li>
-                      일반 소비자의 제품 구매 및 A/S 관련 문의는 소니코리아 고객지원센터로 문의해 주시기 바랍니다.
-                      (고객지원센터 : 1588-0911)
-                    </li>
-                    <li>
-                      B2B 기업체 특판 구매는 1)모델 2) 수량 3)납기일 4) 납품처 5) 제품 용도 의 정보가 필요합니다. 위의
-                      정보를 포함한 메일을 송부 부탁 드립니다.
-                    </li>
-                    <li>
-                      방송용 장비, 프로젝터, 반도체, 기타 부품 소재 관련 문의는 대표전화로 문의해 주시기 바랍니다.
-                      (대표전화 : 02-6001-4000)
-                    </li>
-                  </ul>
-                </div>
+
                 <div className="btn_box">
-                  <button className="button button_negative" type="button">
+                  <button className="button button_negative" type="button" onClick={onClickCancel}>
                     취소
                   </button>
                   <button className="button button_positive" type="button" onClick={onClickPositiveBtn}>
@@ -785,3 +604,65 @@ export default function PurchaseConsulting() {
     </>
   );
 }
+
+// function Notice() {
+//   return (
+//     <div className="layer agree_layer modal_pop">
+//       <div className="layer_wrap">
+//         <div className="layer_container">
+//           <div className="layer_title">
+//             <h1>기업 구매 시 유의사항</h1>
+//           </div>
+//           <div className="layer_content">
+//             <div className="scroll_inner">
+//               <div className="foot_cont">
+//                 <ul>
+//                   <li>
+//                     <h5 className="Fh5_tit first">사용용도</h5>
+//                     <p>
+//                       소니코리아 본사와 대량구매 진행 시 사용 용도에 대한 명확한 확인 및 증빙자료의 제출이 필요할 수
+//                       있으며 용도 외 사용은 엄격히 제한됩니다.
+//                     </p>
+//                   </li>
+//                   <li>
+//                     <h5 className="Fh5_tit first">할인율 및 최소 수량</h5>
+//                     <p>주문 수량에 따른 할인율은 담당자에게 문의 바랍니다.</p>
+//                   </li>
+//                   <li>
+//                     <h5 className="Fh5_tit first">결제</h5>
+//                     <p>
+//                       지불은 현금 또는 카드 결제가 가능합니다. 후불 결제는 불가하며 선 결제 확인 후 출고가 진행됩니다.
+//                       세금계산서는 현금결제 후 고객 요청 발행 가능합니다.
+//                     </p>
+//                   </li>
+//                   <li>
+//                     <h5 className="Fh5_tit first">배송 및 소요시간</h5>
+//                     <p>
+//                       협의된 지정 배송일에 지정 배송지로 택배 발송됩니다. 배송까지의 소요시간은 주문 수량과 물류 센터
+//                       상황에 따라 달라질 수 있습니다.
+//                       <br />
+//                       대량 주문의 경우 최소 1주일 전 주문을 권해 드리며 견적 요청 시 희망 납품일을 알려주시면 가능
+//                       여부를 답변 드리겠습니다.
+//                     </p>
+//                   </li>
+//                   <li>
+//                     <h5 className="Fh5_tit first">교환</h5>
+//                     <p>
+//                       제품의 하자나 배송 중 파손 제품에 대해 배송 받은 박스 송장과 제품 사진 자료 확인 후 교환 처리가
+//                       가능합니다.
+//                       <br />
+//                       고객 변심 등의 기타 이유로는 반품 및 교환이 불가합니다.
+//                     </p>
+//                   </li>
+//                 </ul>
+//               </div>
+//             </div>
+//             <button className="layer_close close" title="팝업창 닫기">
+//               <span>팝업창 닫기</span>
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
