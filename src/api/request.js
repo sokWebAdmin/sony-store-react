@@ -27,9 +27,8 @@ const request = async (url, method, query = {}, requestBody = null) => {
   const guestToken = getGuestToken();
 
   const credentialLevel =
-    Object.entries(credentialLevelUrl).find((
-      [_, value],
-    ) => value.some(url => requestUrl.startsWith(url)))?.[0] ?? null;
+    Object.entries(credentialLevelUrl).find(([_, value]) => value.some((url) => requestUrl.startsWith(url)))?.[0] ??
+    null;
 
   if (credentialLevel === 'guest') {
     if (guestToken) Object.assign(headers, { guestToken });
@@ -38,14 +37,14 @@ const request = async (url, method, query = {}, requestBody = null) => {
     if (guestToken) Object.assign(headers, { guestToken });
   }
 
-  const goErrorCodes = ['EVEC0001', 'AE001', 'PRDT0001'];
+  const goErrorCodes = ['AE001', 'PRDT0001'];
 
   return await axios({
     method,
     headers,
     url: requestUrl,
     data: requestBody,
-    validateStatus: status => status,
+    validateStatus: (status) => status,
   }).then((response) => {
     if (response.status === 401 && !url.includes('authentications')) {
       alert('토큰이 만료되었습니다.');
