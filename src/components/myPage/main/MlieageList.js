@@ -142,21 +142,21 @@ const MileageList = ({ list }) => {
     <div className="col_table_body">
       {
         mileages.map(item => (
-          <div className="col_table_row">
+          <div className="col_table_row" key={item.regiDate}>
             <div className="col_table_cell order_date">
-              <p className="txt">{item?.regiDate ?? ''}</p>
+              <p className="txt">{item.regiDate}</p>
             </div>
             <div className="col_table_cell order_details">
-              <p className="txt">{item?.extraData ?? ''}</p>
+              <p className="txt">{item.extraData}</p>
             </div>
             <div className="col_table_cell order_number">
-              <a className="txt">{item?.mappingKey ?? ''}</a>
+              <a className="txt">{item.mappingKey}</a>
             </div>
             <div className={item.amountClassList}>
               <p className="txt">{item?.amount ?? 'N'}</p>
             </div>
             <div className="col_table_cell order_expiration">
-              <p className="txt">{item?.expiredDate ?? ''}</p>
+              <p className="txt">{item.expiredDate}</p>
             </div>
           </div>
         ))

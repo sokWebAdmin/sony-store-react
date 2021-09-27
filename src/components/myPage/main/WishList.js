@@ -5,9 +5,9 @@ const HOW_MANY = 10;
 const WishList = ({ wishList }) => {
   const [pageIndex, setPageIndex] = useState(1);
   const renderList = useMemo(() => {
-    const start = HOW_MANY * (pageIndex - 1);
+    // const start = HOW_MANY * (pageIndex - 1);
     const end = HOW_MANY * pageIndex;
-    return wishList.slice(start, end);
+    return wishList.slice(0, end);
   }, [pageIndex]);
   const more = e => {
     e.preventDefault();
@@ -33,180 +33,57 @@ const WishList = ({ wishList }) => {
       </div>
       <div className="history_inner">
         <div className="history_list">
-          <div className="like_inner on">{/* class : on 내역이 있을 경우 on */}
-            <div className="all_checked check">
-              <input type="checkbox" className="inp_check check_all"
-                     id="allChk" name="likeChk" />
-              <label htmlFor="allChk">전체</label>
+          {renderList?.length > 0
+            ?
+            <div className="like_inner on">
+              <div className="all_checked check">
+                <input type="checkbox" className="inp_check check_all"
+                       id="allChk" name="likeChk" />
+                <label htmlFor="allChk">전체</label>
+              </div>
+              <div className="like_prd_inner">
+                <Products list={renderList} />
+              </div>
+              <div className="btn_article line">
+                <a href="#" className="more_btn" onClick={more}>더보기</a>
+              </div>
             </div>
-            <div className="like_prd_inner">
-              <Products list={renderList} />
+            :
+            <div className="no_data on">
+              <span>내역이 없습니다.</span>
             </div>
-            <div className="btn_article line">
-              <a href="#" className="more_btn" onClick={more}>더보기</a>
-            </div>
-          </div>
-          <div className="no_data on">{/* class : on 내역이 없을 경우 on */}
-            <span>내역이 없습니다.</span>
-          </div>
+          }
         </div>
       </div>
     </div>
   );
 };
 
-const Products = () => {
+const Products = ({ list }) => {
   return (
     <ul className="like_prd_list">
-      <li className="like_list">
-        <div className="item">
-          <div className="check check_only">
-            <input type="checkbox" className="inp_check"
-                   name="likeChk" />
-          </div>
-          <div className="img"><img
-            src="../../images/_tmp/item640x640_01.png"
-            alt="" /></div>
-          <div className="prd_info">
-            <p className="tit">PLAYSTATION 5 DIGITAL
-              (CFI-1018B01)</p>
-            <p className="txt">4K HDR(HLGAF가 탑재)</p>
-            <p className="prd_price"><span
-              className="price">899,000</span>원</p>
-          </div>
-        </div>
-      </li>
-      <li className="like_list">
-        <div className="item">
-          <div className="check check_only">
-            <input type="checkbox" className="inp_check"
-                   name="likeChk" />
-          </div>
-          <div className="img"><img
-            src="../../images/_tmp/item640x640_01.png"
-            alt="" /></div>
-          <div className="prd_info">
-            <p className="tit">PLAYSTATION 5 DIGITAL
-              (CFI-1018B01)</p>
-            <p className="txt">4K HDR(HLG), Fast Hybrid AF</p>
-            <p className="prd_price"><span
-              className="price">899,000</span>원</p>
-          </div>
-        </div>
-      </li>
-      <li className="like_list">
-        <div className="item">
-          <div className="check check_only">
-            <input type="checkbox" className="inp_check"
-                   name="likeChk" />
-          </div>
-          <div className="img"><img
-            src="../../images/_tmp/item640x640_01.png"
-            alt="" /></div>
-          <div className="prd_info">
-            <p className="tit">PLAYSTATION 5 DIGITAL
-              (CFI-1018B01)</p>
-            <p className="txt">4K HDR(HLG), Fast Hybrid AF가
-              탑재된 전문가급 1인치 핸디캠</p>
-            <p className="prd_price"><span
-              className="price">899,000</span>원</p>
-          </div>
-        </div>
-      </li>
-      <li className="like_list">
-        <div className="item">
-          <div className="check check_only">
-            <input type="checkbox" className="inp_check"
-                   name="likeChk" />
-          </div>
-          <div className="img"><img
-            src="../../images/_tmp/item640x640_01.png"
-            alt="" /></div>
-          <div className="prd_info">
-            <p className="tit">PLAYSTATION 5 DIGITAL
-              (CFI-1018B01)</p>
-            <p className="txt">4K HDR(HLG), Fast Hybrid AF가
-              탑재된 전문가급 1인치 핸디캠</p>
-            <p className="prd_price"><span
-              className="price">899,000</span>원</p>
-          </div>
-        </div>
-      </li>
-      <li className="like_list">
-        <div className="item">
-          <div className="check check_only">
-            <input type="checkbox" className="inp_check"
-                   name="likeChk" />
-          </div>
-          <div className="img"><img
-            src="../../images/_tmp/item640x640_01.png"
-            alt="" /></div>
-          <div className="prd_info">
-            <p className="tit">PLAYSTATION 5 DIGITAL
-              (CFI-1018B01)</p>
-            <p className="txt">4K HDR(HLG), Fast Hybrid </p>
-            <p className="prd_price"><span
-              className="price">899,000</span>원</p>
-          </div>
-        </div>
-      </li>
-      <li className="like_list">
-        <div className="item">
-          <div className="check check_only">
-            <input type="checkbox" className="inp_check"
-                   name="likeChk" />
-          </div>
-          <div className="img"><img
-            src="../../images/_tmp/item640x640_01.png"
-            alt="" /></div>
-          <div className="prd_info">
-            <p className="tit">PLAYSTATION 5 DIGITAL
-              (CFI-1018B01)</p>
-            <p className="txt">4K HDR(HLG), Fast Hybrid AF가
-              탑재된 전문가급 1인치 핸디캠</p>
-            <p className="prd_price"><span
-              className="price">899,000</span>원</p>
-          </div>
-        </div>
-      </li>
-      <li className="like_list">
-        <div className="item">
-          <div className="check check_only">
-            <input type="checkbox" className="inp_check"
-                   name="likeChk" />
-          </div>
-          <div className="img"><img
-            src="../../images/_tmp/item640x640_01.png"
-            alt="" /></div>
-          <div className="prd_info">
-            <p className="tit">PLAYSTATION 5 DIGITAL
-              (CFI-1018B01)</p>
-            <p className="txt">4K HDR(HLG), Fast Hybrid AF가
-              탑재된 전문가급 1인치 핸디캠</p>
-            <p className="prd_price"><span
-              className="price">899,000</span>원</p>
-          </div>
-        </div>
-      </li>
-      <li className="like_list">
-        <div className="item">
-          <div className="check check_only">
-            <input type="checkbox" className="inp_check"
-                   name="likeChk" />
-          </div>
-          <div className="img"><img
-            src="../../images/_tmp/item640x640_01.png"
-            alt="" /></div>
-          <div className="prd_info">
-            <p className="tit">PLAYSTATION 5 DIGITAL
-              (CFI-1018B01)</p>
-            <p className="txt">4K HDR(HLG), Fast Hybrid AF가
-              탑재된 전문가급 1인치 핸디캠</p>
-            <p className="prd_price"><span
-              className="price">899,000</span>원</p>
-          </div>
-        </div>
-      </li>
+      {
+        list.map(item => (
+          <li className="like_list" key={item.productNo}>
+            <div className="item">
+              <div className="check check_only">
+                <input type="checkbox" className="inp_check"
+                       name="likeChk" />
+              </div>
+              <div className="img"><img
+                src="../../images/_tmp/item640x640_01.png"
+                alt="" /></div>
+              <div className="prd_info">
+                <p className="tit">PLAYSTATION 5 DIGITAL
+                  (CFI-1018B01)</p>
+                <p className="txt">4K HDR(HLGAF가 탑재)</p>
+                <p className="prd_price"><span
+                  className="price">899,000</span>원</p>
+              </div>
+            </div>
+          </li>
+        ))
+      }
     </ul>
   );
 };
