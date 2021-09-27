@@ -30,9 +30,9 @@ const OrderSummary = () => {
     return statusCount > 0 ? 'on' : '';
   };
 
-  const onClickOrderStatus = (e, orderRequestType) => {
+  const onClickOrderStatus = (e, orderRequestTypes) => {
     e.preventDefault();
-    history.push('my-page/order-list');
+    history.push(`my-page/order-list?orderRequestTypes=${orderRequestTypes}`);
   };
 
   return (
@@ -101,7 +101,7 @@ const OrderSummary = () => {
         <div className="my_claim">
           <p className={`txt cancel ${hasOrder(summary.cancelProcessingCnt + summary.cancelDoneCnt)}`}>
             주문 취소{' '}
-            <a href="#" title="주문 취소 건" onClick={(e) => onClickOrderStatus(e, 'DELIVERY_DONE')}>
+            <a href="#" title="주문 취소 건" onClick={(e) => onClickOrderStatus(e, 'CANCEL_PROCESSING,CANCEL_DONE')}>
               <strong className="val_txt">
                 <span className="val">{summary.cancelProcessingCnt + summary.cancelDoneCnt}</span> 건
               </strong>
@@ -116,7 +116,7 @@ const OrderSummary = () => {
             )}`}
           >
             교환 반품{' '}
-            <a href="#" title="교환 반품 건" onClick={(e) => onClickOrderStatus(e, 'CANCEL_PROCESSING,CANCEL_DONE')}>
+            <a title="교환 반품 건">
               <strong className="val_txt">
                 <span className="val">
                   {summary.exchangeDoneCnt +

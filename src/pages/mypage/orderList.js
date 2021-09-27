@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { addMonth, changeDateFormat } from '../../utils/dateFormat';
 import { Link } from 'react-router-dom';
 import { getProfileOrders, getProfileOrdersSummaryStatus } from '../../api/order';
+import { useQuery } from '../../hooks';
 
 import OrderStatusSummary from '../../components/myPage/order/OrderStatusSummary';
 import DateBox from '../../components/myPage/DateBox';
@@ -20,6 +21,7 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function OrderList() {
+  const query = useQuery();
   const [summary, setSummary] = useState({
     depositWaitCnt: 0,
     payDoneCnt: 0,
@@ -51,12 +53,13 @@ export default function OrderList() {
   }, []);
 
   useEffect(() => {
+    const orderRequestTypesQuery = query.get('orderRequestTypes');
     search({
       startDate: new Date(addMonth(new Date(), -3)),
       endDate: new Date(),
       pageNumber: 1,
       pageSize: 10,
-      orderRequestTypes: '',
+      orderRequestTypes: orderRequestTypesQuery ? orderRequestTypesQuery : '',
     });
   }, []);
 
