@@ -51,5 +51,12 @@ export const notificationInfo = {
     label2: '이용하실 수 있습니다.',
     to: '/member/login',
     toLabel: '로그인',
+  },
+  wish: {
+     title: '찜하기',
+     label1: '찜하기는 소니스토어 회원만',
+     label2: '이용하실 수 있습니다.',
+     to: '/member/login',
+     toLabel: '로그인'
   }
 }

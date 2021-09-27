@@ -8,6 +8,7 @@ import { useAlert } from '../../hooks';
 import Alert from '../common/Alert';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
+import { shareKakaoButton, shareKakaoStoryButton } from '../../utils/share';
 
 const initTabs = [
   { key: 'all', label: '전체' },
@@ -160,36 +161,6 @@ const EventBottom = () => {
     fetchInitDisplayEvents();
   }, []);
 
-  const shareKakaoButton = () => {
-    if (window.Kakao) {
-      const kakao = window.Kakao;
-      if (!kakao.isInitialized()) {
-        kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
-      }
-      kakao.Link.sendDefault({
-        objectType: 'text',
-        text: label,
-        link: {
-          mobileWebUrl: getLink(),
-          webUrl: getLink(),
-        },
-      });
-    }
-  };
-
-  const shareKakaoStoryButton = () => {
-    if (window.Kakao) {
-      const kakao = window.Kakao;
-      if (!kakao.isInitialized()) {
-        kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
-      }
-      kakao.Story.share({
-        text: label,
-        url: getLink(),
-      });
-    }
-  };
-
   return (
     <>
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
@@ -202,9 +173,9 @@ const EventBottom = () => {
         <div className="share_list">
           <ul>
             <li className="lists"><a href="javascript:void(0)" className="share_btn kakaotalk"
-                                     onClick={() => shareKakaoButton()}>카카오톡</a></li>
+                                     onClick={() => shareKakaoButton(getLink(), label)}>카카오톡</a></li>
             <li className="lists"><a href="javascript:void(0)" className="share_btn kakaostory"
-                                     onClick={() => shareKakaoStoryButton()}>카카오스토리</a></li>
+                                     onClick={() => shareKakaoStoryButton(getLink(), label)}>카카오스토리</a></li>
             <li className="lists"><a href={`https://www.facebook.com/sharer/sharer.php?u=${getLink()}`}
                                      className="share_btn facebook" target="_blank">페이스북</a></li>
             <li className="lists"><a href={`https://twitter.com/intent/tweet?url=${getLink()}`}

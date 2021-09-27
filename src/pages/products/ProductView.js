@@ -1,6 +1,6 @@
 import { React ,useState, useEffect, useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router';
 import { getEventByProductNo } from '../../api/display';
+import _ from 'lodash';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -15,19 +15,16 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 import "swiper/swiper.scss"
 
 //api
-import { getProductDetail, getProductOptions, getProductSearch } from "../../api/product";
+import { getProductDetail, getProductOptions, getProductSearch, getProductsOptions, postProductsGroupManagementCode } from "../../api/product";
 
 //css
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/product.scss"
 
-//context
-import GlobalContext from '../../context/global.context';
-
 //util
 import {useWindowSize} from '../../utils/utils';
 import { getInfoLinks, mapContents } from '../../const/productView';
-import { getMainSliderStyle } from '../../utils/product';
+import { getColorChipValues, getMainSliderStyle } from '../../utils/product';
 
 
 import MainImage from '../../components/products/MainImage';
@@ -36,12 +33,8 @@ import RelatedProducts from '../../components/products/RelatedProducts';
 import Event from '../../components/products/Event';
 import BottomContent from '../../components/products/ViewBottomContent';
 
-
-
-
-export default function ProductView({ match, ...props }) {
-  const { productNo } = match.params;
-  const history = useHistory();
+export default function ProductView({ match }) {
+  const productNo = Number(match.params?.productNo) || 0;
 
   //ui
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -53,20 +46,28 @@ export default function ProductView({ match, ...props }) {
     const header = document.getElementsByClassName("header").clientHeight;
     setHeaderHeight(header);
   },[]);
-
-  //data
   
+  //data
+  const [selectedOptionNo, setSelectedOptionNo] = useState(0);
   const [productData, setProductData] = useState();
-  const [productOptions, setProductOptions] = useState();
+  const [productOptions, setProductOptions] = useState({
+    flatOptions: [],
+    hasColor: false,
+  });
+  const [productGroup, setProductGroup] = useState([]);
   const [contents, setContents] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [productEvents, setProductEvents] = useState([]);
+  const [wish, setWish] = useState(false);
 
   // product init data
-
-  const mapProductData = useCallback(([productData, optionData]) => {
+  const mapProductData = useCallback(([productData, { flatOptions, ...rest }]) => {
+    setWish(productData.liked);
     setProductData(productData);
-    setProductOptions(optionData);
+    setProductOptions({
+      ...rest,
+      flatOptions: flatOptions.length > 0 ? flatOptions : []
+    });
     setContents(mapContents(productData.baseInfo));
   }, []);
 
@@ -76,6 +77,55 @@ export default function ProductView({ match, ...props }) {
       getProductOptions(productNo),
     ]);
     mapProductData(ret.map(({ data }) => data));
+  }, []);
+
+  const fetchProductGroupOptions = async (productNos) => {
+    const { data } = await getProductsOptions({ productNos });
+    
+    const flatOptions = _.chain(data.optionInfos)
+                         .flatMap(({ options }) => _.take(options, 1))
+                         .map(({ children, ...rest }) => ({ ...rest }))
+                         .map(o => ({ ...o, colors: getColorChipValues(o.value) }))
+                         .value();
+
+    const hasColor = flatOptions?.length > 0;
+      
+    setProductOptions({
+      flatOptions,
+      hasColor,
+    });
+  }
+  // @TODO 101988965 컬러 테스트 상품 번호
+  const mapProductGroupInfo = (({ mainImageUrl, options }) => {
+    const { optionNo, value } = _.head(options);
+    return {
+      img: mainImageUrl,
+      optionNo,
+      colors: getColorChipValues(value),
+    }
+  });
+
+  const fetchProductGroupData = useCallback( async (groupCode) => {
+    const { data } = await postProductsGroupManagementCode({
+      groupManagementCodes: [ groupCode ],
+      saleStatus: 'ALL_CONDITIONS',
+      isSoldOut: true,
+    });
+    
+    const gp = data.flatMap(({ groupManagementMappingProducts }) => groupManagementMappingProducts)
+    
+    setProductGroup(
+      _.chain(gp)
+       .map(mapProductGroupInfo)
+       .value()
+    );
+
+    fetchProductGroupOptions(
+      _.chain(gp)
+       .flatMap(({ productNo }) => productNo)
+       .join()
+       .value()
+    )
   }, []);
 
   const fetchRelatedProducts = useCallback(async (categories) => {
@@ -88,8 +138,9 @@ export default function ProductView({ match, ...props }) {
                       .flatMap(({ categoryNo }) => categoryNo)
                       .join()
     });
-    setRelatedProducts(ret.data.items);
-  }, []);
+    
+    setRelatedProducts(_.reject(ret.data.items, ({ productNo: no }) => no === productNo));
+  }, [productNo]);
 
   const fetchEvent = useCallback(async productNo => {
     if (!productNo) return;
@@ -99,11 +150,36 @@ export default function ProductView({ match, ...props }) {
   }, [])
 
   useEffect(() => fetchProductData(productNo), [fetchProductData, productNo]);
+  useEffect(() => productData?.groupManagementCode && fetchProductGroupData(productData.groupManagementCode), [fetchProductGroupData, productData?.groupManagementCode, productNo])
   useEffect(() => {
     if (!productData?.categories) return;
     fetchRelatedProducts(productData?.categories);
     fetchEvent(productNo);
-  }, [fetchRelatedProducts, fetchEvent, productNo, productData?.categories])
+  }, [fetchRelatedProducts, fetchEvent, productNo, productData?.categories]);
+
+  const reset = () => {
+    setProductData();
+    setProductOptions({
+      flatOptions: [],
+      hasColor: false,
+    });
+    setProductGroup([]);
+    setContents([]);
+    setRelatedProducts([]);
+    setProductEvents([]);
+    setSelectedOptionNo(0);
+  };
+
+  const imageUrls = useMemo(() => selectedOptionNo > 0 
+                                  ? 
+                                    _.chain(productGroup) 
+                                     .filter(({ optionNo }) => optionNo === selectedOptionNo)
+                                     .map(({ img }) => img)
+                                     .value()
+                                  : 
+                                    productData?.baseInfo?.imageUrls, 
+                                  [selectedOptionNo, productData?.baseInfo?.imageUrls]
+                            )
 
   //
   const showProductDetail = useMemo(() => (headerHeight > 0 || size.height < 1280) && productData, [headerHeight, size.height, productData] )
@@ -117,17 +193,24 @@ export default function ProductView({ match, ...props }) {
           <div className="product_view_wrap" style={{backgroundColor:"#fff"}}>
             <div className="product_view_main">
               <div className="prd_main_slider" style={getMainSliderStyle(size)}>
-                <MainImage imageUrls={ productData.baseInfo.imageUrls } />
+                <MainImage 
+                  imageUrls={ imageUrls }
+                  selectedOptionNo={selectedOptionNo}
+                />
               </div>
-              <TobContent 
-                baseInfo={productData.baseInfo}
-                deliveryFee={productData.deliveryFee}
-                price={productData.price}
-                options={productOptions?.flatOptions}
+              <TobContent
+                setSelectedOptionNo={setSelectedOptionNo}
+                productData={productData}
+                options={productOptions.flatOptions}
+                hasColor={productOptions.hasColor}
                 productNo={productNo}
+                productGroup={productGroup}
+                wish={wish}
+                setWish={setWish}
               />
             </div>
-            <RelatedProducts 
+            <RelatedProducts
+              reset={reset}
               products={relatedProducts}
             />
             {

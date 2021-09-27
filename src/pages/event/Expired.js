@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import "../../assets/scss/event.scss"
+import '../../assets/scss/event.scss';
 import { getDisplayCloseEvents } from '../../api/display';
 import { getStrDate } from '../../utils/dateFormat';
 import { Link } from 'react-router-dom';
 import SelectBox from '../../components/common/SelectBox';
 import ViewMore from '../../components/common/ViewMore';
+import SEOHelmet from '../../components/SEOHelmet';
 
 const tags = {
   all: '',
@@ -23,9 +24,10 @@ const Expired = () => {
   const [keyword, setKeyword] = useState('');
 
   const fetchInitDisplayEvents = async (pageNumber = 1, keyword = '') => {
-    const { data } = await getDisplayCloseEvents(keyword);
+    const query = keyword ? { keyword, pageNumber } : { pageNumber };
+    const { data } = await getDisplayCloseEvents({ ...query, hasTotalCount: true });
     setEvents(data);
-  }
+  };
 
   const getLink = (origin = true, eventNo, tagName, event) => {
     const key = Object.keys(tags).find(key => tagName.includes(tags[key]));
@@ -47,6 +49,7 @@ const Expired = () => {
 
   return (
     <>
+      <SEOHelmet title={'종료된 기획전'} />
       <div className="container full">
         <div className="content">
           <div className="common_head first_tit">
@@ -60,20 +63,27 @@ const Expired = () => {
                   defaultInfo={{
                     type: 'dropdown',
                     placeholder: '태그',
-                    className: 'search_category'
+                    className: 'search_category',
                   }}
                   selectOptions={[
                     {
                       optionNo: '01',
-                      label: '태그'
+                      label: '태그',
                     },
                   ]}
                   selectOption={() => console.log('')}
                 />
-                <div className="group search_box" onClick={() => fetchInitDisplayEvents(keyword)}>
+                <div className="group search_box" onClick={() => fetchInitDisplayEvents(1, keyword)}>
                   <div className="inp_box">
                     <input type="text" id="dd" className="search_inp" placeholder="검색어를 입력하세요." autoComplete="off"
-                           maxLength="50" onChange={(e) => setKeyword(e.target.value)} value={keyword} />
+                           maxLength="50" onChange={(e) => setKeyword(e.target.value)} value={keyword}
+                           onKeyPress={(event) => {
+                             event.preventDefault();
+                             if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+                               fetchInitDisplayEvents(1, keyword);
+                             }
+                           }}
+                    />
                   </div>
                 </div>
               </div>
@@ -93,8 +103,8 @@ const Expired = () => {
                     </div>
                   </div>
                   <div className="col_table_body">
-                    {events && events.map((event, index) => {
-                      const {eventNo, label, startYmdt, endYmdt, tag} = event;
+                    {events?.items && events.items.map((event, index) => {
+                      const { eventNo, label, startYmdt, endYmdt, tag } = event;
                       return (
                         <div className="col_table_row" key={eventNo}>
                           <div className="col_table_cell event_num">
@@ -106,24 +116,21 @@ const Expired = () => {
                                 <Link to={getLink(false, eventNo, tag, event)} className="txt">{label}</Link>
                               </div>
                               <div className="table_cell event_duration">
-                                <p className="txt">{getStrDate(startYmdt, 'YY.MM.DD')} ~ {getStrDate(endYmdt, 'YY.MM.DD')}</p>
+                                <p
+                                  className="txt">{getStrDate(startYmdt, 'YY.MM.DD')} ~ {getStrDate(endYmdt, 'YY.MM.DD')}</p>
                               </div>
                             </div>
                           </div>
                         </div>
-                      )
+                      );
                     })}
                   </div>
                 </div>
-                {/*TODO: API 추가개발 후 주석해제*/}
-                {/*<ViewMore*/}
-                {/*  totalCount={events.totalCount}*/}
-                {/*  viewMore={fetchInitDisplayEvents}*/}
-                {/*  pageSize={10}*/}
-                {/*/>*/}
-                <div className="btn_article comm_more">
-                  <a href="#" className="more_btn" title="더보기">더보기</a>
-                </div>
+                <ViewMore
+                  totalCount={events.totalCount}
+                  viewMore={fetchInitDisplayEvents}
+                  pageSize={10}
+                />
               </div>
             </div>
           </div>

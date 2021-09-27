@@ -26,6 +26,9 @@ export const getProductOptions = (productNo)=> {
   return request("products/"+productNo+"/options", "get", null, {});
 };
 
+export const getProductsOptions = query => {
+  return request('products/options', 'get', query, {})
+}
 
 export const bestProductList = ()=> {
   return request("products/main-best-products", "get", null, {});
@@ -46,3 +49,11 @@ export const getProductSearch = query => {
 export const postProductsGroupManagementCode = requestBody => {
   return request('products/group-management-code', "post", null, requestBody);
 };
+
+export const postProfileLikeProducts = requestBody => {
+  return request('profile/like-products', 'post', null, requestBody);
+};
+
+export const getProductsFavoriteKeywords = (size='10') => {
+  return request('products/favoriteKeywords', 'get', { size }, null);
+}

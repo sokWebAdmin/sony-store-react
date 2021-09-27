@@ -1,5 +1,7 @@
 import _ from "lodash";
 import React from "react";
+import { PAGE_SIZE } from "../../const/search";
+import ViewMore from "../common/ViewMore";
 
 const getCategoryNo = category => {
   return _.chain(category)
@@ -33,7 +35,7 @@ const convertCategory = (category, keyword) => {
   }
 }
 
-export default function CategoryResult({ categoryList, categoryCount, keyword }) {
+export default function CategoryResult({ fetchCategory, categoryList, categoryCount, keyword }) {
   return (
     <>
       <div className="section_top">
@@ -46,17 +48,18 @@ export default function CategoryResult({ categoryList, categoryCount, keyword })
               .map(category => convertCategory(category, keyword))
               .map(({ categoryNo, label }) => (
                 <li key={ categoryNo }>
+                  {/* @TODO 카테고리 클릭했을 때 어디로 보내야하지.. */}
                   <a href="#none" dangerouslySetInnerHTML={{__html: label}} />
                 </li>
             ))
           }
         </ul>
       </div>
-      {/* 더보기 버튼영역 */}
-      <div className="btn_area">
-        <button type="button" className="btn_more" title="카테고리 더보기">더보기<span className="ico_plus" /></button>
-      </div>
-      {/*// 더보기 버튼영역 */}
+      <ViewMore 
+        totalCount={categoryCount}
+        viewMore={fetchCategory}
+        pageSize={PAGE_SIZE.CATEGORY}
+      />
     </>
   )
 }

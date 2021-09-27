@@ -27,7 +27,7 @@ export default function BoxSelector({ selectOptions, onToggleHandler, onClickHan
                     >
                       <div className="item">
                         {
-                          !option?.useColor ? '' : (
+                          option?.background && (
                               <span className="circle_color">
                                 <span className="c_bg" style={{ background:option?.background }}></span>
                               </span>

@@ -1,13 +1,17 @@
-import LayerPopup from '../../components/common/LayerPopup';
 import { useEffect, useState } from 'react';
 import { useMallState } from '../../context/mall.context';
 import { putProfileClaimRefundAccountByClaimNo } from '../../api/claim';
+import LayerPopup from '../../components/common/LayerPopup';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
+import Confirm from '../../components/common/Confirm';
 
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   const close = () => setVisible(false);
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [form, setForm] = useState({
     bank: '',
     account: '',
@@ -16,6 +20,29 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   const [bankSelectBoxVisible, setBankSelectBoxVisible] = useState(false);
   const [bankSelectList, setBackSelectList] = useState([]);
   const { bankType } = useMallState();
+  const [confirmVisible, setConfirmVisible] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState('');
+
+  const openConfirm = (message) => {
+    setConfirmVisible(true);
+    setConfirmMessage(message);
+  };
+
+  const onCloseConfirm = (status) => {
+    setConfirmVisible(false);
+    if (status === 'ok') {
+      return putProfileClaimRefundAccountByClaimNo({ path: { claimNo }, requestBody: { ...form } }).then((res) => {
+        if (res.data.status === 400) {
+          openAlert(res.data.message);
+          return;
+        }
+
+        openAlert('환불계좌 등록이 완료되었습니다.', () => window.location.reload());
+      });
+    } else if (status === 'cancel') {
+      console.log('취소');
+    }
+  };
 
   useEffect(async () => {
     setBackSelectList(bankType);
@@ -26,36 +53,22 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
       return;
     }
 
-    //TODO: ui 컨펌으로 변경
-    if (!window.confirm('현재의 주문에 대해서 환불계좌를 확정하시겠습니까?')) {
-      return;
-    }
-
-    return putProfileClaimRefundAccountByClaimNo({ path: { claimNo }, requestBody: { ...form } }).then((res) => {
-      if (res.data.status === 400) {
-        alert(res.data.message);
-        return;
-      }
-
-      alert('환불계좌 등록이 완료되었습니다.');
-    });
+    openConfirm('현재의 주문에 대해서 환불계좌를 확정하시겠습니까?');
   };
 
   const validate = (form) => {
-    //TODO: ui 얼럿으로 교체
-    console.log('form.bank:', form.bank);
     if (!form.bank) {
-      alert('은행을 선택하세요.');
+      openAlert('은행을 선택하세요.');
       return false;
     }
 
     if (!form.account) {
-      alert('계좌번호를 입력하세요.');
+      openAlert('계좌번호를 입력하세요.');
       return false;
     }
 
     if (!form.depositorName) {
-      alert('예금주를 입력하세요.');
+      openAlert('예금주를 입력하세요.');
       return false;
     }
 
@@ -65,6 +78,8 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   return (
     <>
       <LayerPopup className="refund_account" onClose={close}>
+        {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+        {confirmVisible && <Confirm onClose={onCloseConfirm}>{confirmMessage}</Confirm>}
         <p className="pop_tit">환불계좌 입력</p>
         <div className="pop_cont_scroll">
           <div className="form_zone">

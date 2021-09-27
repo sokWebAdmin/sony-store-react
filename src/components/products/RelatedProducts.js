@@ -2,8 +2,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom';
 
 import { wonComma } from '../../utils/utils';
+import Product from './Product';
+import { useCategoryState } from '../../context/category.context';
 
-export default function RelatedProducts({ products }) {
+export default function RelatedProducts({ products, reset }) {
+
+  const { categories } = useCategoryState();
 
   return (
     <div className="product_cont first recommend">
@@ -31,36 +35,13 @@ export default function RelatedProducts({ products }) {
         >
           <>
             {
-              products.map(({
-                productNo,
-                imageUrls,
-                productName,
-                productNameEn,
-                salePrice
-              }) => (
-                <SwiperSlide key={ productNo } className="swiper-slide">
-                  <div className="product_tabArea">
-                    <div className="product_img">
-                      <Link to={`/product-view/${productNo}`}>
-                        <div className="img-box">
-                          <div className="inner">
-                            <img src={ imageUrls[0] } alt={ productName } />
-                          </div>
-                        </div>
-                      </Link>
-                    </div>
-                    <div className="product-name">
-                      <div className="product-option">
-                      <Link to={`/product-view/${productNo}`}>
-                          <strong>{ productNameEn }</strong>
-                          <p>{ productName }</p>
-                      </Link>
-                        <div className="price">
-                          <strong>{ wonComma(salePrice) }</strong>원
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              products.map((product) => (
+                <SwiperSlide key={ product.productNo }>
+                  <Product 
+                    product={product}
+                    categories={categories}
+                    reset={reset}
+                  />
                 </SwiperSlide>
               ))
             }

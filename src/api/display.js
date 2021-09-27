@@ -20,9 +20,8 @@ export const getDisplayEvents = (keyword = '') => {
   return request("display/events", "get", query, {});
 };
 
-export const getDisplayCloseEvents = (keyword = '') => {
-  const query = keyword.length > 0 ? {keyword} : null;
-  return request("display/events/close", "get", query, {});
+export const getDisplayCloseEvents = (query) => {
+  return request("display/events/close", "get", query, null);
 };
 /*
 * params: {order, soldout, saleStatus}

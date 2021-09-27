@@ -1,10 +1,42 @@
-import { useState } from "react";
-import { orderList } from "../../const/search";
+import { useEffect, useState } from "react";
+import { orderList, PAGE_SIZE } from "../../const/search";
 import Product from "../products/Product";
 
-export default function ProductResult({ productList, orderBy, setOrderBy, productCount }) {
+import _ from 'lodash';
+import { postProductsGroupManagementCode } from "../../api/product";
+import ViewMore from "../common/ViewMore";
+
+export default function ProductResult({ productList, orderBy, setOrderBy, productCount, searchProduct, keyword }) {
 
   const [mobileOrderOpen, setMobileOrderOpen] = useState(false);
+  const [products, setProducts] = useState(productList);
+  
+  const fetchGroupManagementMappingProducts = async (groupManagementCodes, productList) => {
+    const { data } = await postProductsGroupManagementCode({
+      groupManagementCodes,
+      saleStatus: 'ALL_CONDITIONS',
+    });
+
+    const groupByCode = _.chain(data)
+                         .map(({groupManagementMappingProducts, groupManagementCode}) => ({
+                           groupManagementCode,
+                           groupManagementMappingProducts
+                         }))
+                         .groupBy('groupManagementCode')
+                         .value();
+ 
+    setProducts(
+      _.map(productList, p => ({ ...p, groupManagementMappingProducts: _.head(groupByCode[p.groupManagementCode])?.groupManagementMappingProducts }))
+    )
+  }; 
+
+  const codes = _.chain(productList)
+                .flatMap(({ groupManagementCode }) => groupManagementCode)
+                .compact()
+                .uniq()
+                .value();
+
+  useEffect(() => fetchGroupManagementMappingProducts(codes, productList), [productList]);
 
   return (
     <>
@@ -15,19 +47,18 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
               setMobileOrderOpen(!mobileOrderOpen)
           }}>
             <span className="itemsort__button__label sr-only">정렬기준:</span>
-            <span className="itemsort__button__selected">{orderBy === "RECENT_PRODUCT" ? "최신순" : (orderBy === "TOP_PRICE" ? "높은 가격순" : "낮은 가격순")}</span>
+            <span className="itemsort__button__selected">{orderBy === "RECENT_PRODUCT" ? "최신순" : (orderBy === "LOW_PRICE" ? "낮은 가격순" : "높은 가격순")}</span>
           </button>
           <div className="itemsort__drawer">
             <ul className="itemsort__items">
               {
-                orderList.map(order => (
-                  <li className={`itemsort__item ${orderBy === order.orderBy ? "itemsort__item--active" : ""}`}>
+                orderList.map((order, idx) => (
+                  <li key={`${order.label}${idx}`} className={`itemsort__item ${orderBy === order.orderBy ? "itemsort__item--active" : ""}`}>
                     <a 
                       href={`#${order.orderBy}`} 
                       className="itemsort__item__link" 
                       onClick={ e => {
                         e.preventDefault();
-                        console.log('test', order.orderBy);
                         setOrderBy(order.orderBy);
                       }}
                     >{ order.label }</a>
@@ -38,19 +69,14 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
           </div>
         </div>      
       </div>
-      {/* item-list */}
       <div className="product__list product__list--lite">
-        {/* item */}
-        {productList && productList.map((item, itemIndex) => {
-          return(<Product key={itemIndex} product={item} />)
-        })}
+        {products && products.map((item, itemIndex) => <Product key={itemIndex} product={item} />)}
       </div>
-      {/* 더보기 버튼영역 */}
-      <div className="btn_area">
-        <button type="button" className="btn_more" title="제품 더보기">더보기<span className="ico_plus" /></button>
-      </div>
-      {/*// 더보기 버튼영역 */}
-      </>
-    // </div>
+      <ViewMore
+        totalCount={productCount}
+        viewMore={pageNumber => searchProduct(keyword, orderBy, pageNumber)}
+        pageSize={PAGE_SIZE.PRODUCT}
+      />
+    </>
   )
 } 
