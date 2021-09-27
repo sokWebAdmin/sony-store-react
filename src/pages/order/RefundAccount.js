@@ -37,10 +37,8 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
           return;
         }
 
-        openAlert('환불계좌 등록이 완료되었습니다.', () => window.location.reload());
+        openAlert('환불계좌 등록이 완료되었습니다.', () => () => window.location.reload());
       });
-    } else if (status === 'cancel') {
-      console.log('취소');
     }
   };
 
@@ -78,7 +76,7 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   return (
     <>
       <LayerPopup className="refund_account" onClose={close}>
-        {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+        {alertVisible && <Alert onClose={() => closeModal()}>{alertMessage}</Alert>}
         {confirmVisible && <Confirm onClose={onCloseConfirm}>{confirmMessage}</Confirm>}
         <p className="pop_tit">환불계좌 입력</p>
         <div className="pop_cont_scroll">
