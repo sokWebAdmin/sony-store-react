@@ -119,7 +119,6 @@ export default function PurchaseConsulting() {
       openAlert(`'로봇이 아닙니다.' 인증이 필요합니다.`);
       validation = false;
     }
-    debugger;
     return validation;
   };
 
@@ -140,8 +139,7 @@ export default function PurchaseConsulting() {
     if (type === '2') {
       data.company = company;
     }
-    debugger;
-    const response = await postPurchaseConsulting(data);
+    await postPurchaseConsulting(data);
   };
 
   const onClickCancel = () => {
