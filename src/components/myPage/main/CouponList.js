@@ -6,15 +6,26 @@ import { getCoupons } from '../../../api/promotion';
 const CouponList = () => {
   const [coupons, setCoupons] = useState([]);
   useEffect(() => {
-    fetchCoupons();
+    fetchCoupons({ pageNumber: 1, pageSize: 10 });
   }, []);
 
-  const fetchCoupons = async () => {
+  const fetchCoupons = async ({ pageNumber, pageSize }) => {
     const res = await getCoupons({
-      query: { pageNumber: 1, pageSize: 10, usable: true },
+      query: { pageNumber, pageSize, usable: true },
     });
-    console.log('coupon res:', res);
+    setCoupons(res.data.items);
   };
+
+  // const loadMore = async (pageNumber, pageSize) => {
+  //   const res = await getCoupons({
+  //     params: { startYmd, endYmd, pageNumber, pageSize },
+  //   });
+  //   const newOrderProducts = makeOrderProductsList(res.data);
+
+  //   showLoadMoreBtn(newOrderProducts);
+  //   setOrderProducts([...orderProducts, ...newOrderProducts]);
+  //   nextPage.current += 1;
+  // };
 
   return (
     <div className="cont history_coupon">
