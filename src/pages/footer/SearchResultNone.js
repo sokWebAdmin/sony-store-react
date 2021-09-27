@@ -4,7 +4,6 @@ import { getProductSearch } from "../../api/product";
 import { head } from 'lodash';
 import { Link } from "react-router-dom";
 import { wonComma } from "../../utils/utils";
-import '../../assets/css/contents.css';
 
 export default function SearchResultNone() {
 

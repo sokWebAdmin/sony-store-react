@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { add } from 'lodash';
 
 const heightStyle = (height, headerHeight) => {
    const marginTop = headerHeight > 0 ? (headerHeight / 2) *- 1 : 0;
@@ -97,4 +97,10 @@ export const getSaleStatus = (status, reservationDate) => {
    }
 
    return 'READY';
+};
+
+export const getPricePerProduct = ({ salePrice, immediateDiscountAmt, additionDiscountAmt }) => {
+   const discount = salePrice - immediateDiscountAmt - additionDiscountAmt;
+
+   return salePrice !== discount ? { origin: salePrice, discount } : { discount }
 }
