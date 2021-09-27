@@ -79,9 +79,10 @@ export default function TobContent({
           </div>
         </div>
         
-        <Benefits
+        {/* 마일리지 부분 주석처리 */}
+        {/* <Benefits
           price={price}
-        />
+        /> */}
 
         {
           hasColor && <ColorChip isSoldOut={isSoldOut} setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />
