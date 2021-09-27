@@ -56,17 +56,15 @@ export default function EspProduct({product}) {
   return (
     <>
       <li>
-        <div className="tit_box" style={{ backgroundImage: `url(${product.imageUrls[0]})` }}>
-          <span className="ico" style={{visibility: 'hidden'}}></span>
-          <strong className="tit" style={{visibility: 'hidden'}}>마크업 조정</strong>
-          <p className="dsc" style={{visibility: 'hidden'}}>마크업 조정</p>
+        <div className="tit_box">
+          <img src={product.imageUrls[0]} />
         </div>
         <div className="cont_box">
           <em className="info_tit">{product.productName}</em>
           <p className="info_dsc">{product.productNameEn}</p>
           <div className="buy_box">
             <p className="info_price"><strong>{wonComma(product.salePrice)}</strong>원</p>
-            <button className="button button_positive button-s" type="button" onClick={() => {
+            <button className="button button_negative button-s" type="button" onClick={() => {
               buy();
             }}>바로 구매하기
             </button>
