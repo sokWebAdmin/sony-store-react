@@ -62,6 +62,7 @@ const CouponList = () => {
             <div className="coupon_list">
               {coupons.map((coupon) => (
                 <CouponListItem
+                  key={coupon.couponIssueNo}
                   couponIssueNo={coupon.couponIssueNo}
                   couponName={coupon.couponName}
                   discountRate={coupon.discountRate}
