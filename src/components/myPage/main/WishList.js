@@ -1,12 +1,29 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+import { getWish } from '../../../api/order';
+
+const HOW_MANY = 10;
 
 const WishList = () => {
+  const [list, setList] = useState([]);
+  const [pageIndex, setPageIndex] = useState(1);
+  const renderList = useMemo(() => {
+    const start = HOW_MANY * (pageIndex - 1);
+    const end = HOW_MANY * pageIndex;
+    return list.slice(start, end);
+  }, [pageIndex]);
+
   useEffect(() => {
-    fetchWish().catch(console.error);
+    fetchWish().then(setList).catch(console.error);
   }, []);
 
-  async function fetchWish () {
+  const more = e => {
+    e.preventDefault();
+    setPageIndex(pageIndex + 1);
+  };
 
+  async function fetchWish () {
+    const { data } = await getWish();
+    return data;
   }
 
   return (
@@ -35,10 +52,10 @@ const WishList = () => {
               <label htmlFor="allChk">전체</label>
             </div>
             <div className="like_prd_inner">
-              <Products />
+              <Products list={renderList} />
             </div>
             <div className="btn_article line">
-              <a className="more_btn">더보기</a>
+              <a href="#" className="more_btn" onClick={more}>더보기</a>
             </div>
           </div>
           <div className="no_data on">{/* class : on 내역이 없을 경우 on */}
