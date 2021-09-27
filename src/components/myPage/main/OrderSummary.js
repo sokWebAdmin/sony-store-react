@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { getProfileOrdersSummaryStatus } from '../../../api/order';
 
 const OrderSummary = () => {
+  const history = useHistory();
   const [summary, setSummary] = useState({
     depositWaitCnt: 0,
     payDoneCnt: 0,
@@ -20,13 +22,17 @@ const OrderSummary = () => {
 
   useEffect(() => {
     getProfileOrdersSummaryStatus().then((res) => {
-      console.log('res.data:', res.data);
       setSummary(res.data);
     });
   }, []);
 
   const hasOrder = (statusCount) => {
     return statusCount > 0 ? 'on' : '';
+  };
+
+  const onClickOrderStatus = (e, orderRequestType) => {
+    e.preventDefault();
+    history.push('my-page/order-list');
   };
 
   return (
@@ -44,7 +50,7 @@ const OrderSummary = () => {
               {/* 1건 이상 부터 class: on 추가 */}
               <div className="ship_box">
                 <span className="ico_txt">입금대기</span>
-                <a className="val_txt">
+                <a href="#" className="val_txt" onClick={(e) => onClickOrderStatus(e, 'DEPOSIT_WAIT')}>
                   <span className="val">{summary.depositWaitCnt}</span>
                   <span>건</span>
                 </a>
@@ -53,7 +59,7 @@ const OrderSummary = () => {
             <li className={`step_2 ${hasOrder(summary.payDoneCnt)}`}>
               <div className="ship_box">
                 <span className="ico_txt">결제완료</span>
-                <a className="val_txt">
+                <a href="#" className="val_txt" onClick={(e) => onClickOrderStatus(e, 'PAY_DONE')}>
                   <span className="val">{summary.payDoneCnt}</span>
                   <span>건</span>
                 </a>
@@ -62,7 +68,11 @@ const OrderSummary = () => {
             <li className={`step_3 ${hasOrder(summary.deliveryPrepareCnt + summary.productPrepareCnt)}`}>
               <div className="ship_box">
                 <span className="ico_txt">배송준비</span>
-                <a className="val_txt">
+                <a
+                  href="#"
+                  className="val_txt"
+                  onClick={(e) => onClickOrderStatus(e, 'PRODUCT_PREPARE,DELIVERY_PREPARE')}
+                >
                   <span className="val">{summary.deliveryPrepareCnt + summary.productPrepareCnt}</span>
                   <span>건</span>
                 </a>
@@ -71,7 +81,7 @@ const OrderSummary = () => {
             <li className={`step_4 ${hasOrder(summary.deliveryIngCnt)}`}>
               <div className="ship_box">
                 <span className="ico_txt">배송중</span>
-                <a className="val_txt">
+                <a href="#" className="val_txt" onClick={(e) => onClickOrderStatus(e, 'DELIVERY_ING')}>
                   <span className="val">{summary.deliveryIngCnt}</span>
                   <span>건</span>
                 </a>
@@ -80,7 +90,7 @@ const OrderSummary = () => {
             <li className={`step_5 ${hasOrder(summary.deliveryDoneCnt)}`}>
               <div className="ship_box">
                 <span className="ico_txt">배송완료</span>
-                <a className="val_txt">
+                <a href="#" className="val_txt" onClick={(e) => onClickOrderStatus(e, 'DELIVERY_DONE')}>
                   <span className="val">{summary.deliveryDoneCnt}</span>
                   <span>건</span>
                 </a>
@@ -91,7 +101,7 @@ const OrderSummary = () => {
         <div className="my_claim">
           <p className={`txt cancel ${hasOrder(summary.cancelProcessingCnt + summary.cancelDoneCnt)}`}>
             주문 취소{' '}
-            <a title="주문 취소 건">
+            <a href="#" title="주문 취소 건" onClick={(e) => onClickOrderStatus(e, 'DELIVERY_DONE')}>
               <strong className="val_txt">
                 <span className="val">{summary.cancelProcessingCnt + summary.cancelDoneCnt}</span> 건
               </strong>
@@ -106,7 +116,7 @@ const OrderSummary = () => {
             )}`}
           >
             교환 반품{' '}
-            <a title="교환 반품 건">
+            <a href="#" title="교환 반품 건" onClick={(e) => onClickOrderStatus(e, 'CANCEL_PROCESSING,CANCEL_DONE')}>
               <strong className="val_txt">
                 <span className="val">
                   {summary.exchangeDoneCnt +
