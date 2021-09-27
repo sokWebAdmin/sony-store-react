@@ -95,6 +95,7 @@ export default function ProductList({category}) {
         const { status, data } = await postProductsGroupManagementCode({
           groupManagementCodes: arrExistGroup,
           saleStatus: 'ALL_CONDITIONS',
+          isSoldOut: true,
         });
 
         if (status !== 200) {

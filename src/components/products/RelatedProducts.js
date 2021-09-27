@@ -1,7 +1,4 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Link } from 'react-router-dom';
-
-import { wonComma } from '../../utils/utils';
 import Product from './Product';
 import { useCategoryState } from '../../context/category.context';
 
@@ -41,6 +38,7 @@ export default function RelatedProducts({ products, reset }) {
                     product={product}
                     categories={categories}
                     reset={reset}
+                    micro={true}
                   />
                 </SwiperSlide>
               ))

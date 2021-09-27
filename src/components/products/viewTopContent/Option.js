@@ -5,6 +5,13 @@ import SelectBox from "../../common/SelectBox";
 import CountBox from "../../common/CountBox";
 import { wonComma } from "../../../utils/utils";
 
+const getDisabledLabel = (reserved, o) => {
+  if (o.forcedSoldOut) return '임시품절';
+  if (reserved && o.reservationStockCnt === 0) return '품절';
+  if (o.stockCnt === 0) return '품절';
+  return '';
+};
+
 // 선택된 옵션 리스트
 export default function Option({
   productName,
@@ -28,10 +35,13 @@ export default function Option({
                         _.head(colorByOptionNo[o.optionNo])?.value,
                         o
                       );
-    const disabled = o.forcedSoldOut || reserved ? o.reservationStockCnt === 0 : o.stockCnt === 0;
+
+    const disabledLabel = getDisabledLabel(reserved, o);
+    
     return {
       ...o,
-      disabled,
+      disabled: !!disabledLabel,
+      disabledLabel,
       label: colorChipInfo?.label,
       background: colorChipInfo?.background
     }
@@ -72,6 +82,13 @@ export default function Option({
             <p className="opt_tag">제품</p>
             <div className="opt_item">
               <div className="item">
+                {
+                  item?.background && (
+                      <span className="circle_color">
+                        <span className="c_bg" style={{ background: item?.background }}></span>
+                      </span>
+                    )
+                }
                 <span className="opt_name">{item.label}</span>
               </div>
             </div>

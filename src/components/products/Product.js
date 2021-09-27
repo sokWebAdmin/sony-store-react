@@ -2,12 +2,16 @@
 import React, {useState, useEffect} from 'react';
 
 //util
-import { wonComma } from '../../utils/utils';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useCategoryState } from '../../context/category.context';
+import { getPricePerProduct } from '../../utils/product';
+import { toCurrencyString } from '../../utils/unit';
 
-export default function Product({product, category, reset}) {
+export default function Product({product, category, reset, micro}) {
+  const history = useHistory();
   const {tagColorMap} = useCategoryState();
+
+  const priceInfo = getPricePerProduct(product);
 
   let saleStatus = 'READY';
 
@@ -88,7 +92,12 @@ export default function Product({product, category, reset}) {
                   src={gp.imageUrl}
                   alt={product.productName}
                   className={`product__pic__img ${colorIndex === index && "product__pic__img--visible"}`}
-                  key={`product-list-image-${index}`} />
+                  key={`product-list-image-${index}`} 
+                  onClick={ e => {
+                    e.preventDefault();
+                    history.replace(`/product-view/${product.productNo}`)
+                  }}
+                  />
               )
             })
           }
@@ -106,7 +115,9 @@ export default function Product({product, category, reset}) {
                     onMouseEnter={() => {
                 setColorIndex(index);
               }}>
-                <span className="colorchip__item__label" style={{backgroundColor: gp.colorCode}}>
+                <span className="colorchip__item__label" style={{backgroundColor: `${
+                  gp.colorLabel === '블랙' ? '#000000' : gp.colorCode
+                }`}}>
                   <span className="sr-only">{gp.colorLabel}</span>
                 </span>
               </span>
@@ -129,16 +140,32 @@ export default function Product({product, category, reset}) {
       }
 
       <div className="product__price">
-        <span className="product__price__num">{wonComma(product.salePrice)}</span>
-        {/* 원 단위 콤마 필수  */}
-        <span className="product__price__unit">원</span>
+        {
+          priceInfo?.origin ?
+          <>
+            <span className="sale">
+              <span className="product__price__num">{toCurrencyString(priceInfo.discount)}</span>
+              <span className="product__price__unit">원</span>
+            </span>
+            <span className="original">
+              <span className={`product__price__num ${micro && 'micro'}`}>{toCurrencyString(priceInfo.origin)}</span>
+              <span className={`product__price__unit ${micro && 'micro'}`}>원</span>
+            </span>
+          </>
+          :
+          <span className="sale">
+            <span className="product__price__num">{toCurrencyString(priceInfo.discount)}</span>
+            <span className="product__price__unit">원</span>
+          </span>
+        }
       </div>
     </div>
   );
 }
 
 Product.defaultProps = {
-  reset: () => null
+  reset: () => null,
+  micro: false,
 }
 
 

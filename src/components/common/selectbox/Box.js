@@ -33,7 +33,7 @@ export default function BoxSelector({ selectOptions, onToggleHandler, onClickHan
                               </span>
                             )
                         }
-                        <span className="opt_name">{ label }</span>
+                        <span className="opt_name">{ label }{ option?.disabledLabel && ` (${option.disabledLabel})` }</span>
                       </div>
                     </a>
                   </li>

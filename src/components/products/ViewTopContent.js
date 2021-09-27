@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { wonComma } from "../../utils/utils";
-import { getSaleStatus } from "../../utils/product";
+import { getPricePerProduct, getSaleStatus } from "../../utils/product";
 import { useCategoryState } from "../../context/category.context";
 
 import ButtonGroup from "./viewTopContent/ButtonGroup";
@@ -8,6 +8,7 @@ import Option from "./viewTopContent/Option";
 import Benefits from "./viewTopContent/Benefits";
 import ColorChip from "./viewTopContent/ColorChip";
 import SnsShare from "./viewTopContent/SnsShare";
+import { toCurrencyString } from "../../utils/unit";
 
 
 export default function TobContent({
@@ -30,15 +31,20 @@ export default function TobContent({
   const saleStatus = getSaleStatus(status, reservationData);
 
   const isSoldOut = status.soldout || ['READY_RESERVE', 'SOLDOUT', 'READY'].includes(saleStatus);
+  
+  const priceInfo = getPricePerProduct(price);
   return (
     <form>
       <div className={`product_view_about ${status.soldout && 'soldout'}`}>
         <div className="cont">
           {
-            stickerLabels?.map((label, idx) => (
-              <span key={`${label}${idx}`} className={`flag ${tagColorMap[label]}`} style={{ color: tagColorMap[label] }}>{label}</span>
-            ))
+            stickerLabels.length > 0 && <span className={`flag ${tagColorMap[stickerLabels[0]]}`} style={{ color: tagColorMap[stickerLabels[0]], paddingRight: '5px' }}>{stickerLabels[0]}</span>
           }
+          {/* {
+            stickerLabels?.map((label, idx) => (
+              <span key={`${label}${idx}`} className={`flag ${tagColorMap[label]}`} style={{ color: tagColorMap[label], paddingRight: '5px' }}>{label}</span>
+            ))
+          } */}
           {/* <span className="flag new">NEW</span>class : new / event / best / hot */}
           <p className="product_tit">{productName}</p>
           { productNameEn && <p className="product_txt">{productNameEn}</p> }
@@ -52,10 +58,25 @@ export default function TobContent({
           <p className="delivery_txt">
             {deliveryFee.defaultDeliveryConditionLabel}
             </p>
-          <p className="product_price"><strong className="price">{wonComma(price.salePrice)}</strong> 원
+          <div className="product_price">
+            {
+              priceInfo?.origin ?
+              <>
+                <div className="sale">
+                  <strong className="price">{toCurrencyString(priceInfo.discount)}</strong> 원
+                </div>
+                <div className="original">
+                  <strong className="price">{toCurrencyString(priceInfo.origin)}</strong> 원
+                </div>
+              </>
+              :
+              <div className="sale">
+                <strong className="price">{toCurrencyString(priceInfo.discount)}</strong> 원
+              </div>
+            }
             {saleStatus === 'READY' && <span className={`badge__label badge__label__outofstock`}>일시품절<span className="icon_question">!</span></span>}
             {saleStatus === 'SOLDOUT' && <span className={`badge__label badge__label__soldout`}>품절<span className="icon_question">!</span></span>}
-          </p>
+          </div>
         </div>
         
         <Benefits

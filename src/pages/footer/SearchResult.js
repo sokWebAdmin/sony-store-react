@@ -68,7 +68,8 @@ export default function SearchResult({match}) {
 
     return {
       ...orderByQuery,
-      keywords: keyword,
+      'filter.keywords': keyword,
+      hasTotalCount: true,
       pageNumber,
       pageSize
     }
