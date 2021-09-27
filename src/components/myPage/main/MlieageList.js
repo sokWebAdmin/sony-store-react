@@ -1,11 +1,14 @@
-const MileageInfo = () => {
+import { toCurrencyString } from '../../../utils/unit';
+
+const MileageInfo = ({ availablemileage }) => {
   return (
     <div className="cont history_mileage">
       <h3 className="cont_tit" id="mileage-tit">마일리지</h3>
       <div className="history_inner">
         <div className="my_mileage">
           <p className="txt">사용 가능
-            <span className="mileage_val">153,248</span>
+            <span className="mileage_val">{toCurrencyString(
+              availablemileage)}</span>
             <span className="extinction">
                         (<strong className="val_txt"><span
               className="val">300</span>M</strong>당월 소멸 예정)
