@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toCurrencyString } from '../../../utils/unit';
 import { getCouponsSummary } from '../../../api/promotion';
+import { getWishCount } from '../../../api/order';
 
 const memberGradeClassName = {
   membership: 'family',
@@ -11,7 +12,7 @@ const memberGradeClassName = {
 
 };
 
-const MemberSummary = ({ tabChange, profile, availablemileage }) => {
+const MemberSummary = ({ tabChange, profile, availablemileage, wishCount }) => {
   const [couponCount, setCouponCount] = useState(0);
 
   const gradeClassName = useMemo(() => {
@@ -23,7 +24,9 @@ const MemberSummary = ({ tabChange, profile, availablemileage }) => {
   }, [profile]);
 
   useEffect(() => {
-    fetchCouponCount().catch(console.error);
+    Promise.all([
+      fetchCouponCount(),
+    ]).catch(console.error);
   }, []);
 
   async function fetchCouponCount () {
@@ -78,7 +81,7 @@ const MemberSummary = ({ tabChange, profile, availablemileage }) => {
                       <span className="ico_txt"><span
                         className="txt_arrow">찜</span></span>
               <span className="val_txt"><span
-                className="val">N</span></span>
+                className="val">{wishCount}</span></span>
             </a>
           </li>
         </ul>
