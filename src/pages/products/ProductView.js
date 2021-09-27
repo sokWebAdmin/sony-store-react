@@ -81,9 +81,11 @@ export default function ProductView({ match }) {
 
   const fetchProductGroupOptions = async (productNos) => {
     const { data } = await getProductsOptions({ productNos });
-    
     const flatOptions = _.chain(data.optionInfos)
-                         .flatMap(({ options }) => _.take(options, 1))
+                         .flatMap(({ options, mallProductNo }) => ({
+                           ..._.head(options),
+                           productNo: mallProductNo,
+                         }))
                          .map(({ children, ...rest }) => ({ ...rest }))
                          .map(o => ({ ...o, colors: getColorChipValues(o.value) }))
                          .value();

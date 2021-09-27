@@ -30,7 +30,8 @@ const getOrderSheetNo = async (productNo, selectedOption) => {
   }
 };
 
-const getCartRequest = (productNo, options) => options.map(
+const getCartRequest = (productNo, options) => {
+  return options.map(
     ({ buyCnt, ...rest }) => ({
         productNo,
         orderCnt: buyCnt,
@@ -38,7 +39,8 @@ const getCartRequest = (productNo, options) => options.map(
         optionInputs: null,
         ...rest
     })
-  );
+  )
+};
 
 
 
