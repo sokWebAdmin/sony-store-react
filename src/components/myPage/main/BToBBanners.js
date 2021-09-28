@@ -59,22 +59,19 @@ const BToBBanners = () => {
   );
 };
 
-const Banner = ({ banner }) => {
-  console.log(banner);
-
-  return (
-    <a href="#"
-       className="b2b_link"
-       style={{ background: `linear-gradient(to right, ${banner.leftSpaceColor}, ${banner.rightSpaceColor})` }}
-    >
-      <img className="banner_icon" src={banner.imageUrl}
-           alt={banner.name + ' 아이콘'} />
-      <div className="txt_box">
-        <p className="tit">{banner.name}</p>
-        <p className="txt">{banner.description}</p>
-      </div>
-    </a>
-  );
-};
+const Banner = ({ banner }) => (
+  <a href={banner.landingUrl}
+     target="_blank" // TODO. landingUrlType check
+     className="b2b_link"
+     style={{ background: `linear-gradient(to right, ${banner.leftSpaceColor}, ${banner.rightSpaceColor})` }}
+  >
+    <img className="banner_icon" src={banner.imageUrl}
+         alt={banner.name + ' 아이콘'} />
+    <div className="txt_box">
+      <p className="tit">{banner.name}</p>
+      <p className="txt">{banner.description}</p>
+    </div>
+  </a>
+);
 
 export default BToBBanners;
