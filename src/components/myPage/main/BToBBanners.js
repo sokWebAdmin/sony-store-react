@@ -61,10 +61,11 @@ const BToBBanners = () => {
 
 const Banner = ({ banner }) => {
   console.log(banner);
+
   return (
     <a href="#"
        className="b2b_link"
-       style={{ backgroundColor: '#f00' }}
+       style={{ background: `linear-gradient(to right, ${banner.leftSpaceColor}, ${banner.rightSpaceColor})` }}
     >
       <img className="banner_icon" src={banner.imageUrl}
            alt={banner.name + ' 아이콘'} />
