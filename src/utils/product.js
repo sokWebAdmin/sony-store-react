@@ -1,4 +1,4 @@
-import _, { add } from 'lodash';
+import _ from 'lodash';
 
 const heightStyle = (height, headerHeight) => {
    const marginTop = headerHeight > 0 ? (headerHeight / 2) *- 1 : 0;
