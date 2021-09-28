@@ -1,7 +1,7 @@
+import { useState } from "react";
 
-// @TODO color bomee.yoon
 export default function BoxSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedLabel, tag }) {
-  
+  const [bg, setBg] = useState(null);
   return (
     <div className="select_ui_zone">
       <div>
@@ -9,7 +9,14 @@ export default function BoxSelector({ selectOptions, onToggleHandler, onClickHan
           href="#select"
           className="selected_btn"
           onClick={ onToggleHandler }
-        >
+        > 
+          {
+            bg && (
+                <span className="circle_color">
+                  <span className="c_bg" style={{ background:bg }}></span>
+                </span>
+              )
+          }
           { selectedLabel }
         </a>
         <div className="select_inner" style={{ display }}>
@@ -23,7 +30,10 @@ export default function BoxSelector({ selectOptions, onToggleHandler, onClickHan
                     <a
                       href={ `#${label}` }
                       className={`opt_list ${option?.disabled && 'disabled'}`}
-                      onClick={ event => onClickHandler(event, option) }
+                      onClick={ event => {
+                        onClickHandler(event, option);
+                        setBg(option?.background);
+                      }}
                     >
                       <div className="item">
                         {
