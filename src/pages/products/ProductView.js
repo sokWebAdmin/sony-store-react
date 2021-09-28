@@ -33,17 +33,9 @@ import RelatedProducts from '../../components/products/RelatedProducts';
 import Event from '../../components/products/Event';
 import BottomContent from '../../components/products/ViewBottomContent';
 import { useHistory } from 'react-router';
-import { useAlert } from '../../hooks';
-import Alert from '../../components/common/Alert';
 
 export default function ProductView({ match }) {
   const history = useHistory();
-  const {
-    openAlert,
-    closeModal,
-    alertVisible,
-    alertMessage,
-  } = useAlert();
   const productNo = Number(match.params?.productNo) || 0;
 
   //ui
@@ -105,11 +97,7 @@ export default function ProductView({ match }) {
       ]);
       mapProductData(ret.map(({ data }) => data));
     } catch(e) {
-      if (e?.message) {
-        openAlert(e.message, () => () => history.push('/'))
-      } else {
-        history.push('/');
-      }
+      history.push('/');
     }
   }, []);
 
@@ -306,7 +294,6 @@ export default function ProductView({ match }) {
           </div>
         }
         </div>
-        { alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert> }
       </>  
     )
 }

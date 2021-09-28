@@ -47,7 +47,11 @@ const request = async (url, method, query = {}, requestBody = null) => {
     validateStatus: (status) => status,
   }).then((response) => {
     if (response.status === 401 && !url.includes('authentications')) {
-      alert('토큰이 만료되었습니다.');
+      if (response?.data?.message) {
+        alert(response?.data?.message);
+      } else {
+        alert('토큰이 만료되었습니다.');
+      }
       removeAccessToken();
       window.location.replace('/');
     }
