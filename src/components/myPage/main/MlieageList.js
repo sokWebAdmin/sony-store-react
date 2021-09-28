@@ -27,7 +27,9 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
 
   const search = async ({ startDate, endDate, more }) => {
     const { start, end } = changeDateTime(startDate, endDate);
-    setPageIdx(1);
+    if (!more) {
+      setPageIdx(1);
+    }
     const data = await fetchMH(start, end, pageIdx);
     const newList = data.body;
     console.log('more : %s', more);
