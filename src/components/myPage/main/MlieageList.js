@@ -32,7 +32,6 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
     }
     const data = await fetchMH(start, end, pageIdx);
     const newList = data.body;
-    console.log('more : %s', more);
     more ? setList([...list, ...newList]) : setList(newList);
     setTotalCount(data.paginationInfo.totalCount);
   };
@@ -44,7 +43,7 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
 
   useEffect(() => {
     if (pageIdx !== 1) {
-      search(startDateTime, endDateTime, true);
+      search({ startDateTime, endDateTime, more: true });
     }
   }, [pageIdx]);
 
