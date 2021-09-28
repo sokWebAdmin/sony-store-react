@@ -33,6 +33,7 @@ import { getOrderSheets, postOrderSheetCalculate } from '../../api/order';
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
+
 // functions
 import { getUrlParam } from '../../utils/location';
 import { truncate } from '../../utils/unit';
@@ -284,7 +285,7 @@ const OrderSheet = ({ location }) => {
                   <p>주문 완료</p>
                 </li>
               </ol>
-              <div className="order_box__cont">
+              <div className="order_box__cont" style={{ overflow: 'hidden' }}>
                 {/* 제품 정보 */}
                 <div className="col_table_wrap order_list">
                   <div className="col_table">
@@ -301,8 +302,7 @@ const OrderSheet = ({ location }) => {
                               setProducts={setProducts} />
                   </div>
                 </div>
-                <div className="order_info">
-                  {/* alpha test element */}
+                <div style={{ marginTop: '99px' }}>
                   {/* 왼쪽메뉴 */}
                   <div className="order_left">
                     <div className="acc acc_ui_zone">
