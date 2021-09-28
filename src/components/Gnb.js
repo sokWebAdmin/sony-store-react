@@ -19,7 +19,8 @@ export default function Gnb() {
 
   const routePushAndClose = gcc => {
     if (gcc?.href) {
-      window.location.href = gcc.href;
+      closeSideBar(headerDispatch);
+      window.open(gcc.href);
     }
 
     if (gcc?.route) {
@@ -55,7 +56,7 @@ export default function Gnb() {
                }
               }>
                 <a
-                  href="#"
+                  href="#none"
                   onClick={e => {
                     setActiveMIndex(index);
                     e.preventDefault();
@@ -68,7 +69,7 @@ export default function Gnb() {
                     gc.children.map((gcc, gccIndex) => {
                       return <li key={`gnb-menu-${index}-${gccIndex}`}>
                         <a
-                          href="#"
+                          href="#none"
                           onClick={e => {
                             routePushAndClose(gcc);
                             e.preventDefault();

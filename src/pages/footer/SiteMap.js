@@ -20,7 +20,7 @@ const mapClassName = {
 };
 
 function ProductCategory({ label }) {
-
+  
   const { gnbCategories, categories } = useCategoryState();
   const productCategories = _.chain(gnbCategories)
                              .filter(({ label }) => label === '제품')
@@ -28,7 +28,7 @@ function ProductCategory({ label }) {
                              .map(c => getCategoryByKey(categories, 'url', c.route))
                              .groupBy(c => c.label)
                              .value();
-
+  
   const getSubCategory = label => _.first(productCategories[label])?.children;
 
   return (
@@ -48,10 +48,10 @@ function SiteMapSubCategory({ children, parentLabel }) {
   return (
     <>
     {
-      children && children.map(({ label, route }, idx) => (
-        <li key={ `${label}${idx}` }>
-          <Link to={ route }>{ label }</Link>
-          { parentLabel === '제품' && <ProductCategory label={label}/> }
+      children && children.map((c, idx) => (
+        <li key={ `${c.label}${idx}` }>
+          {c.route ? <Link to={ c.route }>{ c.label }</Link> : <a href={c.href} target="_blank" rel="noreferrer">{c.label}</a>}
+          { parentLabel === '제품' && <ProductCategory label={c.label}/> }
         </li>
       ))
     }
