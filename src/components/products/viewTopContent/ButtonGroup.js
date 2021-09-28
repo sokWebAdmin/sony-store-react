@@ -42,9 +42,16 @@ const getCartRequest = (productNo, options) => {
   )
 };
 
+const ERROR_CODE_MAPPING_ROUTE = {
+  O8001: {
+    msg: `회원만 구매 가능한 상품입니다.<br/>로그인해 주세요.`,
+    route: '/member/login',
+  },
+
+};
 
 
-export default function ButtonGroup({ selectedOption, productNo, canBuy, wish, setWish, saleStatus }) {
+export default function ButtonGroup({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly }) {
   const history = useHistory();
   const { openAlert, closeModal, alertVisible, alertMessage  } = useAlert();
   const { isLogin } = useContext(GlobalContext);
@@ -52,18 +59,54 @@ export default function ButtonGroup({ selectedOption, productNo, canBuy, wish, s
   const [ cartVisible, setCartVisible ] = useState(false);
   const [ wishVisible, setWishVisible ] = useState(false);
 
+  const nextUri = history.location.pathname;
+  const getHistoryInfo = pathname => ({
+    pathname,
+    state: nextUri,
+  });
+
+  const _getOrderSheetNo = async (productNo, selectedOption, pathname) => {
+    try {
+      const result = await getOrderSheetNo(productNo, selectedOption);
+
+      if (result?.code) {
+        ERROR_CODE_MAPPING_ROUTE[result.code]?.msg 
+          ?
+            openAlert(
+              ERROR_CODE_MAPPING_ROUTE[result.code]?.msg, 
+              () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route))
+            )
+          :
+            openAlert(result?.message);
+      } else {
+        history.push({
+          pathname,
+          search: '?' + qs.stringify(result),
+        });
+      }
+
+    } catch(e) {
+      e?.message && openAlert(e.message);
+      console.log(e);
+    }
+  }
+
   const order = async (pathname = '/order/sheet') => {
     if (!canBuy) {
       openAlert('옵션을 선택하세요.');
       return;
     };
 
-    const result = await getOrderSheetNo(productNo, selectedOption);
+    if (memberOnly && !isLogin) {
+      const GUEST_ERROR = 'O8001';
+      openAlert(
+        ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg, 
+        () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route))
+      );
+      return;
+    }
 
-    history.push({
-      pathname,
-      search: '?' + qs.stringify(result),
-    });
+    _getOrderSheetNo(productNo, selectedOption, pathname);
   }
 
   const gift = () => {
@@ -74,33 +117,52 @@ export default function ButtonGroup({ selectedOption, productNo, canBuy, wish, s
     }
   };
 
+  const _getCartRequest = async (productNo, selectedOption) => {
+    const products = getCartRequest(productNo, selectedOption);
+
+    try {
+      if (isLogin) {
+        const result = await postCart(products);
+        result?.error && result?.message && openAlert(result.message);
+      } else {
+        gc.set(products);
+      }
+      setCartVisible(true);
+    } catch(e) {
+      e?.message && openAlert(e.message);
+      console.log(e);
+    }
+  }
+
   const cart = async () => {
     if (!canBuy) {
       openAlert('옵션을 선택하세요.');
       return;
     };
 
-    const products = getCartRequest(productNo, selectedOption);
-
-    try {
-      if (isLogin) {
-        await postCart(products);
-      } else {
-        gc.set(products);
-      }
-      setCartVisible(true);
-    } catch(e) {
-      console.error(e);
+    if (memberOnly && !isLogin) {
+      const GUEST_ERROR = 'O8001';
+      openAlert(
+        ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg, 
+        () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route))
+      );
+      return;
     }
+
+    _getCartRequest(productNo, selectedOption);
   };
 
   const wishHandler = async () => {
-    if (isLogin) {
-      const requestBody = { productNos: [productNo] };
-      const { data } = await postProfileLikeProducts(requestBody);
-      setWish(data[0].result);
-    } else {
-      setWishVisible(true)
+    try {
+      if (isLogin) {
+        const requestBody = { productNos: [productNo] };
+        const { data } = await postProfileLikeProducts(requestBody);
+        setWish(data[0].result);
+      } else {
+        setWishVisible(true)
+      }
+    } catch (e) {
+      e?.message && openAlert(e.message);
     }
   }
 

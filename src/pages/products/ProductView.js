@@ -32,8 +32,18 @@ import TobContent from '../../components/products/ViewTopContent';
 import RelatedProducts from '../../components/products/RelatedProducts';
 import Event from '../../components/products/Event';
 import BottomContent from '../../components/products/ViewBottomContent';
+import { useHistory } from 'react-router';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
 
 export default function ProductView({ match }) {
+  const history = useHistory();
+  const {
+    openAlert,
+    closeModal,
+    alertVisible,
+    alertMessage,
+  } = useAlert();
   const productNo = Number(match.params?.productNo) || 0;
 
   //ui
@@ -88,11 +98,19 @@ export default function ProductView({ match }) {
   }, []);
 
   const fetchProductData = useCallback(async (productNo) => {
-    const ret = await  Promise.all([
-      getProductDetail(productNo),
-      getProductOptions(productNo),
-    ]);
-    mapProductData(ret.map(({ data }) => data));
+    try {
+        const ret = await  Promise.all([
+        getProductDetail(productNo),
+        getProductOptions(productNo),
+      ]);
+      mapProductData(ret.map(({ data }) => data));
+    } catch(e) {
+      if (e?.message) {
+        openAlert(e.message, () => () => history.push('/'))
+      } else {
+        history.push('/');
+      }
+    }
   }, []);
 
   const fetchProductGroupOptions = async (productNos) => {
@@ -113,7 +131,7 @@ export default function ProductView({ match }) {
       hasColor,
     });
   }
-  // @TODO 101988965 컬러 테스트 상품 번호
+
   const mapProductGroupInfo = (({ mainImageUrl, options }) => {
     const { optionNo, value } = _.head(options);
     return {
@@ -288,6 +306,7 @@ export default function ProductView({ match }) {
           </div>
         }
         </div>
+        { alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert> }
       </>  
     )
 }
