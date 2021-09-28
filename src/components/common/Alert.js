@@ -28,7 +28,7 @@ const Alert = ({ children, onClose, type = 'default', customButton }) => {
           <div className='layer_content'>
             {/* 이 부분은 아이콘이 필요하신분이 알맞게 수정 부탁드립니다. */}
             {type === 'custom' && <p>Custom Icon</p>}
-            <p className='alert_text'>{children}</p>
+            <p className='alert_text' dangerouslySetInnerHTML={{__html: children}}></p>
             <div className='btn_box'>
               {type === 'default' ?
                 <button type='button' className='btn btn_dark btn_remove' onClick={close}>확인</button> :

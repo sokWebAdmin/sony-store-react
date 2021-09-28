@@ -90,7 +90,6 @@ export default function Login() {
         } else {
           Cookies.remove('sony_email');
         }
-
         if (!!history.location.state?.next) {
           history.push(history.location.state.next);
         }
