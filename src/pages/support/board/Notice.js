@@ -24,7 +24,7 @@ export default function Notice() {
 
   return (
     <>
-      <SEOHelmet title={"구매상담 이용약관 동의"} />
+      <SEOHelmet title={"소니스토어 공지사항"} />
       <div className="contents support">
         <div className="container full">
           <div className="content">
