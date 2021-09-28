@@ -62,13 +62,14 @@ export default function ButtonGroup({ selectedOption, productNo, canBuy, wish, s
   const nextUri = history.location.pathname;
   const getHistoryInfo = pathname => ({
     pathname,
-    state: nextUri,
+    state: { next: nextUri },
   });
 
   const _getOrderSheetNo = async (productNo, selectedOption, pathname) => {
+    
     try {
       const result = await getOrderSheetNo(productNo, selectedOption);
-
+      
       if (result?.code) {
         ERROR_CODE_MAPPING_ROUTE[result.code]?.msg 
           ?
