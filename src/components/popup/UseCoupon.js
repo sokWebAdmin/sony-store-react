@@ -33,7 +33,6 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   const reject = () => {
     alert('사용 가능한 쿠폰이 없습니다.');
     setReject(true);
-    close();
   };
 
   const fetchCoupons = async () => {
