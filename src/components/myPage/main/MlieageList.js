@@ -134,7 +134,7 @@ const MileageList = ({ list }) => {
       extraData,
       mappingKey,
       amount,
-      amountClassList: amount.includes('-')
+      amountClassList: 0 > amount
         ? 'col_table_cell order_mileage down'
         : 'col_table_cell order_mileage up',
     })), [list]);
