@@ -75,7 +75,7 @@ const MemberSummary = ({ tabChange, profile, availablemileage, wishCount }) => {
                 className="val">{couponCount}</span> 장</span>
             </a>
           </li>
-          <li cLinklassName="user_item like">
+          <li className="user_item like">
             <a href="#wish-tit" className="user_tabs"
                onClick={() => tabChange('wish')}>
                       <span className="ico_txt"><span

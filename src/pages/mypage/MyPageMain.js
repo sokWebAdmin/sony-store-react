@@ -87,6 +87,10 @@ export default function MyPageMain () {
     return my?.availablemileage || 0;
   }, [my]);
 
+  const totalExpireMileage = useMemo(() => {
+    return my?.totalExpireMileage || 0;
+  }, [my]);
+
   return (
     <>
       <SEOHelmet title={'마이페이지'} />
@@ -107,6 +111,7 @@ export default function MyPageMain () {
               <OrderSummary />
               {viewContent === 'mileage' &&
               <MileageInfo availablemileage={availablemileage}
+                           totalExpireMileage={totalExpireMileage}
                            profile={profile} />}
               {viewContent === 'coupon' && <CouponList />}
               {viewContent === 'wish' &&

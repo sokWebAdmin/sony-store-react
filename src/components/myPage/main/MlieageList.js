@@ -5,9 +5,7 @@ import DateBox from '../DateBox';
 import { getMileageHistories } from '../../../api/sony/mileage';
 import { getToday } from '../../../utils/dateFormat';
 
-const MileageInfo = ({ availablemileage, profile }) => {
-  const todo = 'N'; // 소멸 예정 마일리지. 대응하는 응답 없음
-
+const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
   const [pageIdx, setPageIdx] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [list, setList] = useState([]);
@@ -66,7 +64,7 @@ const MileageInfo = ({ availablemileage, profile }) => {
               availablemileage)}</span>
             <span className="extinction">
                         (<strong className="val_txt"><span
-              className="val">{todo}</span>M</strong>당월 소멸 예정)
+              className="val">{totalExpireMileage}</span>M</strong>당월 소멸 예정)
                         </span>
           </p>
         </div>
