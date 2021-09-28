@@ -12,7 +12,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } f
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
-import "swiper/swiper.scss"
+import "swiper/swiper.scss";
 
 //api
 import { getProductDetail, getProductOptions, getProductSearch, getProductsOptions, postProductsGroupManagementCode } from "../../api/product";
@@ -157,7 +157,20 @@ export default function ProductView({ match }) {
                       .join()
     });
     
-    setRelatedProducts(_.reject(ret.data.items, ({ productNo: no }) => no === productNo));
+    setRelatedProducts(
+      _.chain(ret.data.items)
+       .reject(({ productNo: no }) => no === productNo)
+       .map(o => ({
+         ...o,
+         groupManagementMappingProducts: [
+           {
+            options: [{ value: o.optionValues }],
+            mainImageUrl: _.head(o.imageUrls)
+          }
+         ]
+       }))
+       .value()
+    );
   }, [productNo]);
 
   const fetchEvent = useCallback(async productNo => {

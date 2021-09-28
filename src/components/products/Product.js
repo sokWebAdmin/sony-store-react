@@ -78,7 +78,10 @@ export default function Product({product, category, reset, micro}) {
   }
 
   return (
-    <div className="product">
+    <div className="product" onClick={ e => {
+      e.preventDefault();
+      history.push(`/product-view/${product.productNo}`);
+    }}>
       { product?.stickerLabels?.length > 0 && tagColorMap[product.stickerLabels[0]] &&
         <span className="badge__text" style={{ color: tagColorMap[product.stickerLabels[0]] }}>{product.stickerLabels[0]}</span>
       }
@@ -128,7 +131,7 @@ export default function Product({product, category, reset, micro}) {
       }
 
       <Link onClick={reset} to={`/product-view/${product.productNo}`} className="product__title">
-        <strong className="product__title__name">{product.productName}</strong>
+        <strong className="product__title__name">{product.productNameEn}</strong>
         {saleStatus === 'RESERVE' && <span className="badge__label badge__label__reserve">예약판매</span>}
         {saleStatus === 'READY' && <span className={`badge__label badge__label__outofstock`}>일시품절</span>}
         {saleStatus === 'SOLDOUT' && <span className={`badge__label badge__label__soldout`}>Sold out</span>}
@@ -136,7 +139,7 @@ export default function Product({product, category, reset, micro}) {
       </Link>
 
       { product.productNameEn &&
-      <Link to={`/product-view/${product.productNo}`} className="product__info">{product.productNameEn}</Link>
+      <Link to={`/product-view/${product.productNo}`} className="product__info">{product.productName}</Link>
       }
 
       <div className="product__price">

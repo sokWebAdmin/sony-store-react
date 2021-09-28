@@ -932,6 +932,22 @@
     }
   }
 
+  .slide_box.together_prd_slider {
+    .product_List>div {
+      .product-name {
+        .product-option {
+          .price {
+            font-size: 14px;
+
+            strong {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .exhibitions_slider {
     width: 100%;
     height: 320px;

@@ -1,9 +1,10 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } from 'swiper/core';
 import Product from './Product';
 import { useCategoryState } from '../../context/category.context';
 
 export default function RelatedProducts({ products, reset }) {
-
+  SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
   const { categories } = useCategoryState();
 
   return (
