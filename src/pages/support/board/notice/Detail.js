@@ -30,11 +30,6 @@ const fetchNotice = async (boardNo, articleNo, setNotice) => {
   }));
 }
 
-const goBack = (event, history) => {
-  event.preventDefault();
-  history.goBack();
-}
-
 export default function NoticeDetail({ match, history }) {
   const { config } = useBoardState();
   const [ notice, setNotice ] = useState({ });
