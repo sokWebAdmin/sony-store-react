@@ -5,29 +5,28 @@ import { useMemo } from "react";
 
 export default function Tabs() {
   const history = useHistory();
-  const testTab = useMemo(() => history.location.pathname.split('/')[1], [history.location.pathname]);
+  const prevTab = useMemo(() => history.location.pathname.split('/')[1], [history.location.pathname]);
   
   const dispatch = useBoardDispatch();
-  const { config } = useBoardState();
+  const { config: { faq, notice } } = useBoardState();
 
   const tabs = [
     {
-      name: config.faq?.name,
+      name: faq?.name,
       label: 'faq'
     },
     {
-      name: config.notice?.name,
+      name: notice?.name,
       label: 'notice',
     }
   ];
 
   const onClickTab = (event, currentTab) => {
     event.preventDefault();
-    if (currentTab === testTab) return;
-    dispatch({
+    currentTab !== prevTab && dispatch({
       type: 'SELECT_TAB',
       data: { currentTab }
-    })
+    });
   }
 
   return (
@@ -35,7 +34,7 @@ export default function Tabs() {
       <ul className="tab_link_inner">
         {
           tabs.map(({ name, label }) => (
-            <li key={ label } className={ `tabs ${ testTab === label ? 'on' : '' }` } onClick={ event => onClickTab(event, label) }>
+            <li key={ label } className={ `tabs ${ prevTab === label ? 'on' : '' }` } onClick={ event => onClickTab(event, label) }>
               <Link to={`/${label}`} className="tab_btn" title={ `${name} 보기` }><span className="tit">{ name }</span></Link>
             </li>
           ))

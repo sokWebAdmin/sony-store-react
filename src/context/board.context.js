@@ -25,7 +25,7 @@ const initialState = {
   },
   faqBoard: { ...defaultData.board },
   noticeBoard: { ...defaultData.board },
-  isAll: false,
+  isAll: true,
   currentCategoryNo: 0,
   currentTab: 'faq'
 };
@@ -67,6 +67,11 @@ function boardReducer(state, action) {
           items: action.reset 
             ? action.data.items 
             : draft[`${action.name}Board`].items.concat(action.data.items),
+        };
+
+        if (action.reset) {
+          draft.currentCategoryNo = 0;
+          draft.isAll = true;
         }
       })
     case 'SELECT_CATEGORY':

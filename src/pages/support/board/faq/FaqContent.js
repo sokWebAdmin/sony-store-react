@@ -32,13 +32,7 @@ export default function FaqContent() {
   const [ resetViewMore, setResetViewMore ] = useState(false);
 
   useEffect(() => {
-    if (boardNo > 0) {
-      const request = getReqeust(boardNo);
-      fetchBoards(dispatch, request)
-    }
-  }, [dispatch, boardNo]);
-
-  useEffect(() => {
+    
     if (currentCategoryNo > 0) {
       const request = getReqeust(boardNo, { categoryNo: currentCategoryNo })
       fetchBoards(dispatch, request);
@@ -46,13 +40,15 @@ export default function FaqContent() {
       return
     }
 
-    if (isAll) {
+  }, [dispatch, boardNo, currentCategoryNo]);
+
+  useEffect(() => {
+    if (boardNo > 0 && isAll) {
       const request = getReqeust(boardNo);
       fetchBoards(dispatch, request);
       setResetViewMore(true);
     }
-
-  }, [dispatch, boardNo, currentCategoryNo, isAll]);
+  }, [isAll, boardNo])
 
   const viewMore = pageNumber => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }));
 

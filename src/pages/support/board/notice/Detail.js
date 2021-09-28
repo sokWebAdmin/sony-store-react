@@ -30,11 +30,6 @@ const fetchNotice = async (boardNo, articleNo, setNotice) => {
   }));
 }
 
-const goBack = (event, history) => {
-  event.preventDefault();
-  history.goBack();
-}
-
 export default function NoticeDetail({ match, history }) {
   const { config } = useBoardState();
   const [ notice, setNotice ] = useState({ });
@@ -72,7 +67,7 @@ export default function NoticeDetail({ match, history }) {
                   </div>
                   <div className="notice_cont" dangerouslySetInnerHTML={{ __html: content }}></div>
                   <div className="btn_article">
-                    <Link to="/notice" className="button button_positive" type="button" onClick={ event => goBack(event, history) }>목록</Link>
+                    <Link to="/notice" className="button button_positive" type="button">목록</Link>
                   </div>
                 </div>
               </div>

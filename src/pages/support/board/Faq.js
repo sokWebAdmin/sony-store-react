@@ -27,7 +27,7 @@ export default function Faq() {
 
   return (
     <>
-      <SEOHelmet title={"구매상담 이용약관 동의"} />
+      <SEOHelmet title={"소니스토어 FAQ"} />
       <div className="contents support">
         <div className="container full">
           <div className="content">
