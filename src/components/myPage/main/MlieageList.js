@@ -136,7 +136,7 @@ const MileageList = ({ list }) => {
         replace(/-/g, '.') : '-',
       extraData,
       mappingKey,
-      amount,
+      amount: ['11', '21', 11, 21].includes(type) ? amount * -1 : amount,
       amountClassList: ['11', '21', 11, 21].includes(type)
         ? 'col_table_cell order_mileage down'
         : 'col_table_cell order_mileage up',
