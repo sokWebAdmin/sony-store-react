@@ -115,6 +115,13 @@ export default function PurchaseConsulting() {
       setValidation((prev) => ({ ...prev, dueDateInfo: true }));
     }
 
+    if (note === '') {
+      setValidation((prev) => ({ ...prev, note: false }));
+      validation = false;
+    } else {
+      setValidation((prev) => ({ ...prev, note: true }));
+    }
+
     if (!captcha) {
       openAlert(`'로봇이 아닙니다.' 인증이 필요합니다.`);
       validation = false;
@@ -139,7 +146,14 @@ export default function PurchaseConsulting() {
     if (type === '2') {
       data.company = company;
     }
-    await postPurchaseConsulting(data);
+    const res = await postPurchaseConsulting(data);
+    if (res?.description === 'email') {
+      openAlert('이메일을 확인해 주세요.');
+    } else if (res?.errorCode === '0000') {
+      openAlert('전송되었습니다.');
+    } else {
+      openAlert('전송을 실패했습니다.');
+    }
   };
 
   const onClickCancel = () => {
@@ -553,7 +567,10 @@ export default function PurchaseConsulting() {
                       </div>
                       <div className="inp_wrap_form">
                         <div className="acc_cell vat">
-                          <label htmlFor="requests">추가 문의 및 요청 사항</label>
+                          <label htmlFor="requests">
+                            추가 문의 및 요청 사항
+                            <i className="necessary" />
+                          </label>
                         </div>
                         <div className="acc_cell">
                           <div className="acc_group parent">
@@ -574,6 +591,11 @@ export default function PurchaseConsulting() {
                             {/*<div className="byte_count">*/}
                             {/*  <strong className="current">298</strong> / 4,000자*/}
                             {/*</div>*/}
+                            {!validation.node && (
+                              <p className="error_txt">
+                                <span className="ico" />이 정보는 필수 입력사항입니다.
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
