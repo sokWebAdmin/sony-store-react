@@ -127,13 +127,13 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
 
 const MileageList = ({ list }) => {
   const mileages = useMemo(() => list.map(
-    ({ sysRegDtime, expiredDateTime, amount, mappingKey, extraData }) => ({
+    ({ sysRegDtime, expiredDateTime, amount, mappingKey, extraData, type }) => ({
       regiDate: sysRegDtime,
       expiredDate: expiredDateTime,
       extraData,
       mappingKey,
       amount,
-      amountClassList: 0 > amount
+      amountClassList: ['11', '21', 11, 21].includes(type)
         ? 'col_table_cell order_mileage down'
         : 'col_table_cell order_mileage up',
     })), [list]);
