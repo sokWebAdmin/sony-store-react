@@ -41,7 +41,7 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
 
   useEffect(() => {
     if (pageIdx !== 1) {
-      fetchMH(startDateTime, endDateTime, true);
+      search(startDateTime, endDateTime, true);
     }
   }, [pageIdx]);
 
