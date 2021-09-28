@@ -1,13 +1,11 @@
-import { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 import { toCurrencyString } from '../../../utils/unit';
 import DateBox from '../DateBox';
 import { getMileageHistories } from '../../../api/sony/mileage';
-import { getToday } from '../../../utils/dateFormat';
+import { getStrDate } from '../../../utils/dateFormat';
 
-const MileageInfo = ({ availablemileage, profile }) => {
-  const todo = 'N'; // 소멸 예정 마일리지. 대응하는 응답 없음
-
+const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
   const [pageIdx, setPageIdx] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [list, setList] = useState([]);
@@ -17,15 +15,14 @@ const MileageInfo = ({ availablemileage, profile }) => {
   });
 
   const changeDateTime = (startDateTime, endDateTime) => setDateTime({
-    start: getToday(startDateTime).replace(/\-/g, ''),
-    end: getToday(endDateTime).replace(/\-/g, ''),
+    start: getStrDate(startDateTime).replace(/\-/g, ''),
+    end: getStrDate(endDateTime).replace(/\-/g, ''),
   });
 
   const hasMore = useMemo(() => totalCount > (list * pageIdx),
     [totalCount, list, pageIdx]);
 
   const search = async ({ startDate, endDate }) => {
-    console.log(startDate);
     changeDateTime(startDate, endDate);
     setPageIdx(1);
     const data = await fetchMH(dateTime.start, dateTime.end, pageIdx);
@@ -66,12 +63,12 @@ const MileageInfo = ({ availablemileage, profile }) => {
               availablemileage)}</span>
             <span className="extinction">
                         (<strong className="val_txt"><span
-              className="val">{todo}</span>M</strong>당월 소멸 예정)
+              className="val">{totalExpireMileage}</span>M</strong>당월 소멸 예정)
                         </span>
           </p>
         </div>
         <div className="mileage_inquiry">
-          <DateBox search={search} />
+          <DateBox search={search} firstSearch={true} />
           <div className="history_list">
             {list.length > 0 ?
               <div
