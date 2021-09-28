@@ -22,7 +22,7 @@ export default function TobContent({
   setWish
 }) {
   const { tagColorMap } = useCategoryState();
-  const { baseInfo, price, deliveryFee, status, reservationData } = productData;
+  const { baseInfo, price, deliveryFee, status, reservationData, limitations } = productData;
   const { productName, productNameEn, promotionText, stickerLabels } = baseInfo;
   const [selectedOption, setSelectedOption] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -41,6 +41,7 @@ export default function TobContent({
             stickerLabels.length > 0 && <span className={`flag ${tagColorMap[stickerLabels[0]]}`} style={{ color: tagColorMap[stickerLabels[0]], paddingRight: '5px' }}>{stickerLabels[0]}</span>
           }
           {/* {
+            스티커 복수개 노출 시 주석 해제 후 윗 부분 삭제
             stickerLabels?.map((label, idx) => (
               <span key={`${label}${idx}`} className={`flag ${tagColorMap[label]}`} style={{ color: tagColorMap[label], paddingRight: '5px' }}>{label}</span>
             ))
@@ -48,7 +49,6 @@ export default function TobContent({
           {/* <span className="flag new">NEW</span>class : new / event / best / hot */}
           <p className="product_tit">{productNameEn}</p>
           { productName && <p className="product_txt">{productName}</p> }
-          {/* @TODO promotionText 날짜가 api 에서 제공되지 않음 */}
           { promotionText && <p className="product_desc">{promotionText}</p> }
           <SnsShare productNameEn={productNameEn} />
         </div>
@@ -119,6 +119,7 @@ export default function TobContent({
             wish={wish}
             setWish={setWish}
             saleStatus={saleStatus}
+            memberOnly={limitations?.memberOnly}
           />
         </div>
       </div>
