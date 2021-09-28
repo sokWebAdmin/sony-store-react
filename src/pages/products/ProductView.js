@@ -188,16 +188,21 @@ export default function ProductView({ match }) {
     setSelectedOptionNo(0);
   };
 
-  const imageUrls = useMemo(() => selectedOptionNo > 0 
-                                  ? 
-                                    _.chain(productGroup) 
-                                     .filter(({ optionNo }) => optionNo === selectedOptionNo)
-                                     .map(({ img }) => img)
-                                     .value()
-                                  : 
-                                    productData?.baseInfo?.imageUrls, 
-                                  [selectedOptionNo, productData?.baseInfo?.imageUrls]
-                            )
+  const imageUrls = useMemo(() => {
+    if (selectedOptionNo > 0) {
+      return _.chain(productGroup) 
+              .filter(({ optionNo }) => optionNo === selectedOptionNo)
+              .map(({ img }) => img)
+              .value()
+    }
+    const firtImg = _.chain(productGroup) 
+                     .take(1)
+                     .map(({ img }) => img)
+                     .head()
+                     .value()
+
+    return firtImg ? [ firtImg ] : productData?.baseInfo?.imageUrls
+  }, [selectedOptionNo, productGroup, productData?.baseInfo?.imageUrls]);
 
   //
   const showProductDetail = useMemo(() => (headerHeight > 0 || size.height < 1280) && productData, [headerHeight, size.height, productData] )
