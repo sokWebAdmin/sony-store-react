@@ -27,11 +27,11 @@ const OrderFail = ({ location }) => {
               {status === 'PAY_FAIL' && <p className="order_confirm_box__dsc"
                                            style={{ fontWeight: 700 }}>결제가 정상적으로
                 이루어지지 않았습니다.<br />다시 결제 진행을 해주시기 바랍니다.<br />지속적으로 문제가 발생될 경우
-                관리자에게 문의 하시기 바랍니다.
+                고객센터에 문의 하시기 바랍니다.
               </p>}
               {status === 'UNDEFINED' && <p className="order_confirm_box__dsc"
                                             style={{ fontWeight: 700 }}>주문 정보가
-                없습니다.<br />다시 확인 바랍니다.<br />지속적으로 문제가 발생될 경우 관리자에게 문의 하시기 바랍니다
+                없습니다.<br />다시 확인 바랍니다.<br />지속적으로 문제가 발생될 경우 고객센터에 문의 하시기 바랍니다
               </p>}
               <div className="btn_box">
                 <Link to="/" className="button button_negative" type="button">계속
