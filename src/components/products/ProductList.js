@@ -24,6 +24,8 @@ export default function ProductList({category}) {
 
   const [orderOpen, setOrderOpen] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     setTotalCount(0);
     setCurrentOrder({ index: 0, update: false });
@@ -55,6 +57,8 @@ export default function ProductList({category}) {
   const _getProducts = async () => {
     const result = { list: [], page: page.number, totalCount: 0 };
 
+    setIsLoading(() => true);
+
     try {
       const { status, data } = await getProductSearch({
         categoryNos: category.categoryNo,
@@ -75,6 +79,8 @@ export default function ProductList({category}) {
       console.error(e);
     }
 
+    setIsLoading(() => false);
+
     return result;
   }
 
@@ -92,6 +98,10 @@ export default function ProductList({category}) {
           return unique.includes(item) ? unique : [...unique, item];
         });
 
+        if (!Array.isArray(arrExistGroup)) {
+          arrExistGroup = [arrExistGroup];
+        }
+
         const { status, data } = await postProductsGroupManagementCode({
           groupManagementCodes: arrExistGroup,
           saleStatus: 'ALL_CONDITIONS',
@@ -104,7 +114,7 @@ export default function ProductList({category}) {
 
         data.map(g => {
           result.filter(p => p.groupManagementCode === g.groupManagementCode).map(p => {
-            p.groupManagementMappingProducts = g.groupManagementMappingProducts;
+            p.groupManagementMappingProducts = g.groupManagementMappingProducts.sort(gp => gp.productNo === p.productNo ? -1 : 0);
           });
         });
       }
@@ -114,6 +124,12 @@ export default function ProductList({category}) {
     }
 
     return result;
+  }
+
+  const _addProducts = () => {
+    if (!isLoading) {
+      setPage({ number: page.number + 1, update: true });
+    }
   }
 
   return (
@@ -149,7 +165,7 @@ export default function ProductList({category}) {
       <InfiniteScroll
         className="product__list"
         dataLength={products.length}
-        next={() => { setPage({ number: page.number + 1, update: true }); }}
+        next={_addProducts}
         hasMore={true}
       >
         {products.map((product, index) => {
