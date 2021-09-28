@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { toCurrencyString } from '../../../utils/unit';
 import DateBox from '../DateBox';
@@ -21,7 +22,7 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
     return { start: strDate(startDate), end: strDate(endDate) };
   };
 
-  const hasMore = useMemo(() => totalCount > (list * pageIdx),
+  const hasMore = useMemo(() => totalCount > (list.length * pageIdx),
     [totalCount, list, pageIdx]);
 
   const search = async ({ startDate, endDate, more }) => {
@@ -128,8 +129,11 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
 const MileageList = ({ list }) => {
   const mileages = useMemo(() => list.map(
     ({ sysRegDtime, expiredDateTime, amount, mappingKey, extraData, type }) => ({
-      regiDate: sysRegDtime,
-      expiredDate: expiredDateTime,
+      regiDate: sysRegDtime
+        ? sysRegDtime.substr(0, 10).replace(/-/g, '.')
+        : '-',
+      expiredDate: expiredDateTime ? expiredDateTime.substr(0, 10).
+        replace(/-/g, '.') : '-',
       extraData,
       mappingKey,
       amount,
@@ -150,7 +154,11 @@ const MileageList = ({ list }) => {
               <p className="txt">{item.extraData}</p>
             </div>
             <div className="col_table_cell order_number">
-              <a className="txt">{item.mappingKey}</a>
+              {
+                item.mappingKey && item.mappingKey !== 'null' &&
+                <Link to={`/my-page/order-detail?orderNo=${item.mappingKey}`}
+                      className="txt">{item.mappingKey}</Link>
+              }
             </div>
             <div className={item.amountClassList}>
               <p className="txt">{item?.amount ?? 'N'}</p>
