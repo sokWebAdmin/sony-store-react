@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toCurrencyString } from '../../../utils/unit';
 import { getCouponsSummary } from '../../../api/promotion';
-import { getWishCount } from '../../../api/order';
 
 const memberGradeClassName = {
   membership: 'family',
