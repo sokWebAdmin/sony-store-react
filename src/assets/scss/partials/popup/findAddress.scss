@@ -49,7 +49,7 @@
       align-items: center;
       height: 40px;
       min-width: 64px;
-      font-size: 12px;;
+      font-size: 12px;
     }
   }
 
@@ -149,29 +149,29 @@
       font-weight: bold;
     }
 
-    > p {
+    >p {
       margin: 0 0 10px 0;
       font-size: 14px;
       color: #8a8a8a;
     }
   }
-}
 
-.page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
+  .page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
 
-  .count {
-    color: #222;
+    .count {
+      color: #222;
 
-    span {
-      margin: 0 2px;
+      span {
+        margin: 0 2px;
+      }
     }
-  }
 
-  button {
-    padding: 10px;
+    button {
+      padding: 10px;
+    }
   }
 }
