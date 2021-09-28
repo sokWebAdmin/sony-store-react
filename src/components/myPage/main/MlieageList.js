@@ -9,23 +9,25 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
   const [pageIdx, setPageIdx] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [list, setList] = useState([]);
-  const [dateTime, setDateTime] = useState({
-    start: '',
-    end: '',
-  });
+  const [startDateTime, setStartDateTime] = useState('');
+  const [endDateTime, setEndDateTime] = useState('');
 
-  const changeDateTime = (startDateTime, endDateTime) => setDateTime({
-    start: getStrDate(startDateTime).replace(/\-/g, ''),
-    end: getStrDate(endDateTime).replace(/\-/g, ''),
-  });
+  const changeDateTime = (startDate, endDate) => {
+    const strDate = date => getStrDate(date).replace(/\-/g, '');
+
+    setStartDateTime(strDate(startDate));
+    setEndDateTime(strDate(endDate));
+
+    return { start: strDate(startDate), end: strDate(endDate) };
+  };
 
   const hasMore = useMemo(() => totalCount > (list * pageIdx),
     [totalCount, list, pageIdx]);
 
   const search = async ({ startDate, endDate }) => {
-    changeDateTime(startDate, endDate);
+    const { start, end } = changeDateTime(startDate, endDate);
     setPageIdx(1);
-    const data = await fetchMH(dateTime.start, dateTime.end, pageIdx);
+    const data = await fetchMH(start, end, pageIdx);
     const newList = [...list];
     newList.push(data.body);
     setList(newList);
@@ -37,8 +39,10 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
     setPageIdx(pageIdx + 1);
   };
 
-  useEffect(async () => {
-    fetchMH(dateTime.start, dateTime.end, pageIdx);
+  useEffect(() => {
+    if (pageIdx !== 1) {
+      fetchMH(startDateTime, endDateTime, pageIdx);
+    }
   }, [pageIdx]);
 
   async function fetchMH (startDateTime, endDateTime, pageIdx) {
