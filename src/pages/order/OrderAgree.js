@@ -30,9 +30,9 @@ export default function OrderAgree ({ location }) {
 
   const [viewTerms, setViewTerms] = useState(false);
   const [viewPrivacy, setViewPrivacy] = useState(false);
-  const [allAgree, setAllAgree] = useState(false);
-  const [agreeTerms, setAgreeTerms] = useState(false);
-  const [agreePrivacy, setAgreePrivacy] = useState(false);
+  const [allAgree, setAllAgree] = useState(true);
+  const [agreeTerms, setAgreeTerms] = useState(true);
+  const [agreePrivacy, setAgreePrivacy] = useState(true);
   const [unValid, setUnValid] = useState(false);
 
   useEffect(() => {
