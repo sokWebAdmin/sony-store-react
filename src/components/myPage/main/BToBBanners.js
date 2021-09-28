@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { loadBanner } from '../../../api/display';
 
+import '../../../assets/scss/partials/myPageBanner.scss';
+
 const BToBBanners = () => {
   const history = useHistory();
 
@@ -61,7 +63,11 @@ const Banner = ({ banner }) => {
   console.log(banner);
   return (
     <a href="#"
-       className="b2b_link refurbish">
+       className="b2b_link"
+       style={{ backgroundColor: '#f00' }}
+    >
+      <img className="banner_icon" src={banner.imageUrl}
+           alt={banner.name + ' 아이콘'} />
       <div className="txt_box">
         <p className="tit">{banner.name}</p>
         <p className="txt">{banner.description}</p>
