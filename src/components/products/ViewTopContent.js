@@ -46,11 +46,11 @@ export default function TobContent({
             ))
           } */}
           {/* <span className="flag new">NEW</span>class : new / event / best / hot */}
-          <p className="product_tit">{productName}</p>
-          { productNameEn && <p className="product_txt">{productNameEn}</p> }
+          <p className="product_tit">{productNameEn}</p>
+          { productName && <p className="product_txt">{productName}</p> }
           {/* @TODO promotionText 날짜가 api 에서 제공되지 않음 */}
           { promotionText && <p className="product_desc">{promotionText}</p> }
-          <SnsShare productName={productName} />
+          <SnsShare productNameEn={productNameEn} />
         </div>
         
         {/* 배송 */}
@@ -91,7 +91,7 @@ export default function TobContent({
         {/* prd_select_wrap */}
         <div className="cont prd_select_wrap">
           <Option
-            productName={productName}
+            productNameEn={productNameEn}
             options={options}
             hasColor={hasColor}
             selectedOption={selectedOption}

@@ -3275,7 +3275,8 @@ body {
   height: 22px;
   border: 1px solid #ccc;
   border-radius: 50%;
-  vertical-align: top
+  vertical-align: top;
+  margin-right: 5px;
 }
 
 .circle_color .c_bg {
