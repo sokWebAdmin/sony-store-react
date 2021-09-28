@@ -22,7 +22,6 @@ const BToBBanners = () => {
   function mapData(data) {
     const result = data.flatMap((section) => section.accounts).flatMap((account) => account.banners);
     setBanners((prev) => [...prev, ...result]);
-    debugger;
   }
 
   return (
