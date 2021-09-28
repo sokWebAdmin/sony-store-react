@@ -28,7 +28,7 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
     const { start, end } = changeDateTime(startDate, endDate);
     setPageIdx(1);
     const data = await fetchMH(start, end, pageIdx);
-    const newList = [...list];
+    const newList = data.body;
     more ? newList.push(...data.body) : setList(newList);
     setTotalCount(data.paginationInfo.totalCount);
   };
