@@ -24,13 +24,12 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
   const hasMore = useMemo(() => totalCount > (list * pageIdx),
     [totalCount, list, pageIdx]);
 
-  const search = async ({ startDate, endDate }) => {
+  const search = async ({ startDate, endDate, more }) => {
     const { start, end } = changeDateTime(startDate, endDate);
     setPageIdx(1);
     const data = await fetchMH(start, end, pageIdx);
     const newList = [...list];
-    newList.push(data.body);
-    setList(newList);
+    more ? newList.push(...data.body) : setList(newList);
     setTotalCount(data.paginationInfo.totalCount);
   };
 
@@ -41,7 +40,7 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
 
   useEffect(() => {
     if (pageIdx !== 1) {
-      fetchMH(startDateTime, endDateTime, pageIdx);
+      fetchMH(startDateTime, endDateTime, true);
     }
   }, [pageIdx]);
 
@@ -128,13 +127,13 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
 
 const MileageList = ({ list }) => {
   const mileages = useMemo(() => list.map(
-    ({ sysRegDtime, expiredDateTime, amount, mappingKey, extraData }) => ({
+    ({ sysRegDtime, expiredDateTime, amount, mappingKey, extraData, type }) => ({
       regiDate: sysRegDtime,
       expiredDate: expiredDateTime,
       extraData,
       mappingKey,
       amount,
-      amountClassList: 0 > amount
+      amountClassList: ['11', '21', 11, 21].includes(type)
         ? 'col_table_cell order_mileage down'
         : 'col_table_cell order_mileage up',
     })), [list]);
