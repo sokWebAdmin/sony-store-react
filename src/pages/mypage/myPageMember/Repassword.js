@@ -1,8 +1,8 @@
 import LayerPopup from "../../../components/common/LayerPopup";
 
-import '../../../assets/scss/contents.scss';
 import '../../../assets/scss/partials/popup/repassword.scss';
-import { useState } from "react";
+import '../../../assets/scss/contents.scss';
+import { useRef, useState } from "react";
 import _ from "lodash";
 import { modifyMy } from "../../../api/sony/member";
 import { useProfileState } from "../../../context/profile.context";
@@ -18,8 +18,8 @@ const errorMsg = {
   },
   valid: {
     password: '현재 비밀번호가 올바르지 않습니다.',
-    newPassword: `비밀번호는 영문 대문자와 소문자, 숫자를 혼합하여 12자리 이상 15자리 미만으로 입력하시기 바랍니다. \n 일부 특수문자도 사용 가능합니다.`,
-    valNewPassword: `새 비밀번호가 일치 하지 않습니다. \n 다시 확인해주세요.`,
+    newPassword: `비밀번호는 대/소문자, 숫자, 특수문자를 혼합하여 12자리 이상으로 입력하시기 바랍니다. <br /> 일부 특수문자도 사용 가능합니다.`,
+    valNewPassword: `새 비밀번호가 일치 하지 않습니다. <br /> 다시 확인해주세요.`,
   }
 };
 
@@ -42,12 +42,35 @@ export default function Repassword({ setVisible }) {
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
 
   const { password, newPassword, valNewPassword } = state;
+  const [ passwordType, setPasswordType ] = useState({
+    password: true,
+    newPassword: true,
+    valNewPassword: true,
+  })
+  const passwordRef = useRef(null);
+  const newPasswordRef = useRef(null);
+  const valNewPasswordRef = useRef(null);
+
   const handleChange = ({ target: { name, value }}) => {
     setState(prev => ({
       ...prev,
       [name]: value
     }));
   };
+
+  const handleKeyPress = ({ key }, type) => {
+    if (key !== 'Tab') return;
+    // @TODO 탭 넘어가는 버그
+    type && type.current.focus();
+  };
+
+  const handlePassword = (e, type) => {
+    e.preventDefault();
+    setPasswordType(prev => ({
+      ...prev,
+      [type]: !!!prev[type]
+    }))
+  }
 
 
   const isValid = () => {
@@ -65,7 +88,7 @@ export default function Repassword({ setVisible }) {
       return false;
     }
 
-    const pattern = /^(?=.*[a-zA-Z])(?=.*[0-9]).{12,15}$/;
+    const pattern = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{12}$/;
     if (newPassword !== valNewPassword) {
       openAlert(errorMsg.valid.valNewPassword);
       return false
@@ -82,7 +105,6 @@ export default function Repassword({ setVisible }) {
   const isChanged = async () => {
     
     const ret = await modifyMy({ password, newPassword, customerid: my?.customerid || memberId });
-    console.log(ret);
     
     if (ret.data.errorCode === '0000' && ret.data.body) {
       // await openAlert(`비밀번호를 정상적으로 변경하였습니다. \n 소니스토어 메인 화면으로 이동합니다.`);
@@ -110,7 +132,7 @@ export default function Repassword({ setVisible }) {
     if (!isValid() || !(await isChanged())) return;
 
     // fetchProfile(profileDispatch);
-    openAlert(`비밀번호를 정상적으로 변경하였습니다. \n 소니스토어 메인 화면으로 이동합니다.`, () => history.push('/'))
+    openAlert(`비밀번호를 정상적으로 변경하였습니다. <br />소니스토어 메인 화면으로 이동합니다.`, () => () => history.push('/'))
     // history.push('/');
   }
 
@@ -127,29 +149,34 @@ export default function Repassword({ setVisible }) {
           <div className="form_zone">
             <div className="input_item">
               <div className="group">
-                <div className="inp_box password_box">
+                <div className={`inp_box password_box ${ passwordType.password && 'active' }`}>
                   <label className="inp_desc" htmlFor="popPw">
                     <input 
-                      type="password" 
+                      type={ passwordType.password ? 'password' : 'text' } 
                       id="popPw" 
                       className="inp center" 
                       placeholder="&nbsp;" 
                       name="password"
                       value={ password }
                       onChange={ handleChange }
+                      onKeyDown={ e => handleKeyPress(e, newPasswordRef) }
+                      autoFocus
+                      ref={ passwordRef }
                     />
                     <span className="label">비밀번호 입력</span>
                     <span className="focus_bg"></span>
-                    <div className="eyes"><a href="#none" className="eyes_btn" title="비밀번호 숨김"><i className="ico ico_eyes"></i></a></div>
+                    <div className="eyes">
+                      <button type="button" title={`${ passwordType.password ? '비밀번호 숨김' : '비밀번호 표시' }`} onClick={ e => handlePassword(e, 'password') }>
+                        <i className={`${ passwordType.password ? 'ico ico_eyes' : 'ico_eyes_open' }`}></i></button></div>
                   </label>
                 </div>
                 <div className="error_txt"><span className="ico"></span>현재 비밀번호가 올바르지 않습니다.</div>
               </div>
               <div className="group">
-                <div className="inp_box password_box">
+                <div className={`inp_box password_box ${ passwordType.newPassword && 'active' }`}>
                   <label className="inp_desc" htmlFor="popPw">
                     <input
-                      type="password" 
+                      type={ passwordType.newPassword ? 'password' : 'text' }
                       id="popPw" 
                       className="inp center" 
                       placeholder="&nbsp;" 
@@ -157,10 +184,13 @@ export default function Repassword({ setVisible }) {
                       name="newPassword"
                       value={ newPassword }
                       onChange={ handleChange }
+                      onKeyDown={ e => handleKeyPress(e, valNewPasswordRef) }
+                      ref={ newPasswordRef }
                     />
                     <span className="label"> 새 비밀번호 입력</span>
                     <span className="focus_bg"></span>
-                    <div className="eyes"><a href="#none" className="eyes_btn" title="비밀번호 숨김"><i className="ico ico_eyes"></i></a></div>
+                    <div className="eyes">
+                      <button type="button" title={`${ passwordType.newPassword ? '비밀번호 숨김' : '비밀번호 표시' }`} onClick={ e => handlePassword(e, 'newPassword') }><i className={`ico ${ passwordType.newPassword ? 'ico_eyes' : 'ico_eyes_open' }`}></i></button></div>
                   </label>
                 </div>
                 <div className="error_txt">
@@ -170,21 +200,24 @@ export default function Repassword({ setVisible }) {
                 </div>
               </div>
               <div className="group">
-                <div className="inp_box password_box">
+                <div className={`inp_box password_box ${ passwordType.valNewPassword && 'active' }`}>
                   <label className="inp_desc" htmlFor="popPw">
                     <input 
-                      type="password" 
+                      type={ passwordType.valNewPassword ? 'password' : 'text' }
                       id="popPw" 
                       className="inp center"
                       name="valNewPassword"
                       value={ valNewPassword }
                       onChange={ handleChange }
+                      ref={ valNewPasswordRef }
                       placeholder="&nbsp;" 
                       autoComplete="off" 
                     />
                     <span className="label">새 비밀번호 확인</span>
                     <span className="focus_bg"></span>
-                    <div className="eyes"><a href="#none" className="eyes_btn" title="비밀번호 숨김"><i className="ico ico_eyes"></i></a></div>
+                    <div className="eyes">
+                      <button type="button" title={`${ passwordType.newPassword ? '비밀번호 숨김' : '비밀번호 표시' }`} onClick={ e => handlePassword(e, 'valNewPassword') }>
+                        <i className={`${ passwordType.valNewPassword ? 'ico ico_eyes' : 'ico_eyes_open' }`}></i></button></div>
                   </label>
                 </div>
                 <div className="error_txt"><span className="ico"></span>새 비밀번호가 일치하지 않습니다.</div>
