@@ -50,7 +50,7 @@ export default function FaqItem() {
                               title
                             }) => {
           return (
-            <div key={ articleNo } className="acc_item" data-article-no={ articleNo }>
+            <div key={ articleNo } className={`acc_item ${answer[articleNo]?.show && 'on'}`} data-article-no={ articleNo } >
               <div className="acc_head">
                 <a href="상세 내용 토글" className="acc_btn" onClick={ event => onToggleAnswer(event, articleNo) } title="상세 내용 토글">
                   <span className="category_tit">{ categoryLabel }</span>
@@ -59,7 +59,7 @@ export default function FaqItem() {
                 </a>
 
               </div>
-              <div style={{ display: answer[articleNo]?.show ? 'block' : 'none' }}>
+              <div className="acc_inner" style={{ display: answer[articleNo]?.show ? 'block' : 'none' }}>
                 <div className="acc_box">
                   <p className="txt" dangerouslySetInnerHTML={{__html: answer[articleNo]?.content}} />
                 </div>
