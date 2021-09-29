@@ -37,12 +37,6 @@ const OrderFail = ({ location }) => {
                 <Link to="/" className="button button_negative" type="button">계속
                   쇼핑하기
                 </Link>
-                <a
-                  href="https://www.sony.co.kr/handler/EXCSATemplate-SurveyForm"
-                  target="_blank" className="button button_negative"
-                  type="button">설문조사
-                  참여하기
-                </a>
               </div>
             </div>
           </div>
