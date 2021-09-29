@@ -27,8 +27,8 @@ const BToBBanners = () => {
   return (
     <div className="cont_inner">
       <div className="b2b_banner">
-        {banners.map((banner) => (
-          <Banner banner={banner} />
+        {banners.map((banner, index) => (
+          <Banner banner={banner} key={index} />
         ))}
       </div>
     </div>
