@@ -1,3 +1,8 @@
+// @NOTE 추후 vvip 멤버 오픈 시점에 사용하세요.
+// 사용법:
+// 1) membership > Benefit.js 파일 삭제
+// 2) Benefit_Vvip.js -> Benefit.js 로 파일명을 변경하세요.
+
 import React, { useState } from 'react';
 import SEOHelmet from '../../components/SEOHelmet';
 
@@ -30,7 +35,7 @@ const Benefit = () => {
       <div className="contents membership">
         <div className="content">
           <div className="membership">
-            <div className="membership_kvarea temp">
+            <div className="membership_kvarea">
               <div className="membership_kvarea_titlebox">
                 <span className="subtitle">등급 &amp; 혜택 안내</span>
                 <h1 className="title">소니스토어 멤버십</h1>
@@ -51,7 +56,7 @@ const Benefit = () => {
               <div className="detail_veiw_area tab_ui_info">
 
                 {/* 마일리지 */}
-                <div className={ `tab_ui_inner ${ tabState === 'mileage' && 'view' } temp` }>
+                <div className={ `tab_ui_inner ${ tabState === 'mileage' && 'view' }` }>
                   <div className="mileage_info">
                     <div className="mileage_info_inner">
                       <strong className="mileage_info_inner_tit">마일리지 안내</strong>
@@ -61,12 +66,13 @@ const Benefit = () => {
                     </div>
                   </div>
                   {/* <!-- pc table --> */}
-                  <div className="col_table_wrap pc_tbl temp">
+                  <div className="col_table_wrap pc_tbl">
                     <div className="col_table">
                       <div className="col_table_head">
                         <div className="col_table_row">
-                          <div className="col_table_cell">구분</div>
+                          <div className="col_table_cell">회원구분</div>
                           
+                          <div className="col_table_cell">VVIP 회원</div>
                           <div className="col_table_cell">VIP 회원</div>
                           <div className="col_table_cell">MEMBERSHIP 회원</div>
                         </div>
@@ -77,6 +83,9 @@ const Benefit = () => {
                             <strong className="emp">회원등급</strong>
                           </div>
 
+                          <div className="col_table_cell">
+                            <img src="../../images/membership/membership_vvip2.svg" alt="vvip" />
+                          </div>
                           <div className="col_table_cell">
                             <img src='../../images/membership/membership_vip2.svg' alt="vip" />
                           </div>
@@ -90,6 +99,9 @@ const Benefit = () => {
                           </div>
                           
                           <div className="col_table_cell">
+                            구매금액(누적)이 <strong className="emp">2,000만원 이상</strong>이 되는 시점 익일부터 VVIP 혜택 2년 간 적용
+                          </div>
+                          <div className="col_table_cell">
                             구매금액(누적)이 <strong className="emp">200만원 이상</strong>이 되는 시점 익일부터 VIP 혜택 2년 간 적용
                           </div>
                           <div className="col_table_cell">
@@ -101,6 +113,9 @@ const Benefit = () => {
                             <strong className="emp">적립혜택</strong>
                           </div>
                           
+                          <div className="col_table_cell">
+                            제품 구매 시 결제 금액의 <strong className="emp">6%</strong> 적립
+                          </div>
                           <div className="col_table_cell">
                             제품 구매 시 결제 금액의 <strong className="emp">4%</strong> 적립
                           </div>
@@ -121,7 +136,16 @@ const Benefit = () => {
                         <col width="65%" />
                       </colgroup>
                       <tbody>   
-                        
+                        <tr>
+                          <th scope="row">
+                            <img src='../../images/membership/membership_vvip2.svg' alt="vvip" />
+                            <p className="name">VVIP 회원</p>
+                          </th>
+                          <td>
+                            <p className="benefit">구매 금액(누적)이 <strong>2,000만원 이상</strong>이 되는 시점 익일부터 VVIP 혜택 2년 간 적용</p>
+                            <p className="benefit">제품 구매 시 결제 금액의 <strong>6%</strong> 적립</p>
+                          </td>
+                        </tr>
                         <tr>
                           <th scope="row">
                             <img src='../../images/membership/membership_vip2.svg' alt="vip" />
@@ -314,7 +338,7 @@ const Benefit = () => {
                         </div>
                       </div>
                       
-                      {/* <div className="coupon_list">
+                      <div className="coupon_list">
                         <div className="coupon_box vvip">
                           <span className="coupon_type two">VVIP<br /> COUPON</span>
                           <div className="coupon">
@@ -419,7 +443,7 @@ const Benefit = () => {
                             </ul>
                           </div>
                         </div>
-                      </div> */}
+                      </div>
                     </div>
                     <div className="guide_list">
                       <p className="tit ico_tit">주의사항</p>

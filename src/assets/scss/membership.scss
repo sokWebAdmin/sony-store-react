@@ -798,7 +798,7 @@
   border-radius: 20px;
   background-color: #fff;
   background-repeat: no-repeat;
-  background-position: 50% 96px;
+  background-position: 50% 99px;
   background-size: 56px
 }
 
@@ -914,8 +914,8 @@
   .prmm_smry_list {
     -ms-flex-preferred-size: calc(25% - 18px);
     flex-basis: calc(25% - 18px);
-    height: 168px;
-    background-position: 50% 81px
+    height: 170px;
+    background-position: 50% 93px
   }
 
   .prmm_dtl {
@@ -971,8 +971,9 @@
     -ms-flex-preferred-size: calc(50% - 4px);
     flex-basis: calc(50% - 4px);
     height: calc(50vw - 52px);
+    min-height: 140px;
     padding-top: 4vw;
-    background-position: 50% 75%
+    background-position: 50% calc(50% + 28px);
   }
 
   .prmm_smry_lists {
