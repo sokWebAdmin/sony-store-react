@@ -62,7 +62,7 @@ const EventBottom = () => {
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
     const { data } = await getDisplayEvents(keyword);
-    sortEvents(data);
+    sortEvents(data, true);
   };
 
   const modifyTabs = (tabData = tabs) => {
@@ -75,18 +75,21 @@ const EventBottom = () => {
     if (tabs.length === 8) return;
     const { data } = await getDisplayEvents();
     const employee = data.find((event) => `/${event.url}` === '/event/employee');
+    const hasEmployee = tabs.find(({key}) => key === 'employee');
     let newTabs = [...tabs];
-    if (employee) {
+    if (employee && !hasEmployee) {
       newTabs = [...newTabs, { key: 'employee', label: '임직원몰' }];
     }
     const refurbish = data.find((event) => `/${event.url}` === '/event/refurbish');
-    if (refurbish) {
+    const hasRefurbish = tabs.find(({key}) => key === 'refurbish');
+    if (refurbish && !hasRefurbish) {
       newTabs = [...newTabs, { key: 'refurbish', label: '리퍼비시몰' }];
     }
     setTabs(newTabs);
+    modifyTabs(newTabs);
   };
 
-  const sortEvents = (data = events) => {
+  const sortEvents = (data = events, sortNewest = newest) => {
     const sortByLatestCreationDate = (a, b) => {
       const dateL = moment(a.startYmdt)
         .toDate()
@@ -105,7 +108,7 @@ const EventBottom = () => {
         .getTime();
       return dateL > dateR ? 1 : -1;
     };
-    const sortData = newest ? [...data].sort(sortByLatestCreationDate) : [...data].sort(sortByOldestCreationDate);
+    const sortData = sortNewest ? [...data].sort(sortByLatestCreationDate) : [...data].sort(sortByOldestCreationDate);
     setEvents(sortData);
   };
 
@@ -151,6 +154,7 @@ const EventBottom = () => {
   };
 
   useEffect(() => {
+    setNewest(true);
     fetchDisplayEvents();
   }, [tabState]);
 
