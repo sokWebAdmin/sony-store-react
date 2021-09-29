@@ -27,7 +27,7 @@ const Confirm = ({ children, onClose }) => {
       <div className='layer_wrap'>
         <div className='layer_container'>
           <div className='layer_content'>
-            <p className='alert_text'>{children}</p>
+            <p className='alert_text' dangerouslySetInnerHTML={{__html: children}}></p>
             <div className='btn_box'>
               <button type='button' className='close btn btn_default btn_remove' onClick={() => close('cancel')}>취소</button>
               <button type='button' className='btn btn_dark btn_func1' onClick={() => close('ok')}>확인</button>
