@@ -27,6 +27,7 @@ const BToBBanners = () => {
   return (
     <div className="cont_inner">
       <div className="b2b_banner">
+        {banners.length === 1 && <span className="banner_text">회원님께만 제공되는 특별한 혜택!</span>}
         {banners.map((banner, index) => (
           <Banner banner={banner} key={index} />
         ))}
