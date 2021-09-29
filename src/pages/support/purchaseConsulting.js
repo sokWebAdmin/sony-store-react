@@ -343,7 +343,6 @@ export default function PurchaseConsulting() {
                                 id="user_email"
                                 placeholder="예) sony@sony.co.kr"
                                 autoComplete="off"
-                                maxLength={20}
                                 value={email}
                                 onChange={(e) => {
                                   setEmail(e.target.value);
