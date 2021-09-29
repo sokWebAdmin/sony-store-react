@@ -82,10 +82,10 @@ export default function Withdraw() {
       password,
     });
     console.log(checkWithdraw);
-    if (checkWithdraw.errorCode === '0000') {
+    if (checkWithdraw.data.errorCode === '0000') {
       history.push('/member/withdraw-complete');
     } else {
-      openAlert(checkWithdraw.errorMessage);
+      openAlert(checkWithdraw.data.errorMessage);
     }
   }
 
