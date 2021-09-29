@@ -71,7 +71,11 @@ export default function Header() {
   }
 
   useEffect(() => {
-    setMemberCategory();
+    if (isLogin) {
+      setMemberCategory();
+    } else {
+      deleteGnbCategory(categoryDispatch);
+    }
   }, [isLogin]);
 
   return (

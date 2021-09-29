@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { getDisplayEvents } from '../../api/display';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { getUrlParam } from '../../utils/location';
@@ -9,6 +9,7 @@ import Alert from '../common/Alert';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
 import { shareKakaoButton, shareKakaoStoryButton } from '../../utils/share';
+import GlobalContext from '../../context/global.context';
 
 const initTabs = [
   { key: 'all', label: '전체' },
@@ -38,6 +39,7 @@ const EventBottom = () => {
   SwiperCore.use([Navigation]);
   const history = useHistory();
   const location = useLocation();
+  const { isLogin } = useContext(GlobalContext);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const [events, setEvents] = useState([]);
@@ -55,14 +57,19 @@ const EventBottom = () => {
   const [tag, setTag] = useState('');
   const [selectEvent, setSelectEvent] = useState(null);
   const [tabs, setTabs] = useState(initTabs);
-  const initShowLabel = initTabs.find(({ key }) => (getUrlParam('tab') || 'all') === key).label;
-  const [showLabel, setShowLabel] = useState(initShowLabel);
+  const [showLabel, setShowLabel] = useState('전체');
 
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
     const { data } = await getDisplayEvents(keyword);
     sortEvents(data);
   };
+
+  const modifyTabs = (tabData = tabs) => {
+    setTabState(getUrlParam('tab') || 'all');
+    const showLabel = tabData.find(({ key }) => (getUrlParam('tab') || 'all') === key)?.label;
+    setShowLabel(showLabel);
+  }
 
   const fetchInitDisplayEvents = async () => {
     if (tabs.length === 8) return;
@@ -152,14 +159,16 @@ const EventBottom = () => {
   }, [newest]);
 
   useEffect(() => {
-    setTabState(getUrlParam('tab') || 'all');
-    const showLabel = tabs.find(({ key }) => (getUrlParam('tab') || 'all') === key).label;
-    setShowLabel(showLabel);
+    modifyTabs();
   }, [location]);
 
   useEffect(() => {
-    fetchInitDisplayEvents();
-  }, []);
+    if (isLogin) {
+      fetchInitDisplayEvents();
+    } else {
+      setTabs(initTabs);
+    }
+  }, [isLogin]);
 
   return (
     <>
