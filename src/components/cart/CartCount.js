@@ -18,7 +18,11 @@ const CartCount = ({ isOpened }) => {
   };
 
   const [count, setCount] = useState(0);
-  useEffect(() => !isOpened && init, [items, isLogin, isOpened]);
+  useEffect(() => {
+    if (!isOpened && isLogin) {
+      init();
+    }
+  }, [items, isLogin, isOpened]);
 
   function fetchCount () {
     return getCartCount().then(({ data: { count } }) => setCount(count));
