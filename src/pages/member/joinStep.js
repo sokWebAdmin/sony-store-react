@@ -207,13 +207,14 @@ export default function JoinStep() {
         //성공
         openAlert('회원가입이 완료되었습니다.', async () => {
           const response = await loginApi(email, password);
+          console.log(response);
           if (response.status === 200) {
             const { accessToken, expireIn } = response.data;
             setAccessToken(accessToken, expireIn);
             onChangeGlobal({ isLogin: true });
             const profile = await getProfile();
             const data = { type: '30', customerid: profile.data.memberId };
-            setProfile(profileDispatch, response.data);
+            setProfile(profileDispatch, profile.data);
             await fetchMyProfile(profileDispatch, data);
             history.replace('/');
           } else {

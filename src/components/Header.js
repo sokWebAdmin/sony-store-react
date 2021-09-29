@@ -71,7 +71,11 @@ export default function Header() {
   }
 
   useEffect(() => {
-    setMemberCategory();
+    if (isLogin) {
+      setMemberCategory();
+    } else {
+      deleteGnbCategory(categoryDispatch);
+    }
   }, [isLogin]);
 
   return (
@@ -182,7 +186,7 @@ export default function Header() {
                 <div className={`member ${isInfoOpen && 'member--visible'}`}>
                   <div className="member__inner">
                     <p className="member__msg">
-                      {my?.firstname ?? ''}님<br />
+                      {my?.firstname ?? profile?.memberName}님<br />
                       안녕하세요!
                     </p>
                     <div className="member__menu">
