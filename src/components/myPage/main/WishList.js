@@ -171,7 +171,7 @@ const Products = ({ list, check, checkedProductNos }) => {
                        name="likeChk" onChange={() => check(item.productNo)} />
               </div>
               <div className="img"><img
-                src={item.listImageUrls}
+                src={item.listImageUrls[0]}
                 alt={item.productName} /></div>
               <div className="prd_info">
                 <p className="tit">{item.productName}</p>
