@@ -19,7 +19,14 @@ import { getUrlParam } from '../../utils/location';
 import GlobalContext from '../../context/global.context';
 import Alert from '../../components/common/Alert';
 import { getItem, KEY, setAccessToken } from '../../utils/token';
-import { fetchProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
+import {
+  fetchMyProfile,
+  fetchProfile,
+  setProfile,
+  useProfileState,
+  useProileDispatch,
+} from '../../context/profile.context';
+import { getProfile } from '../../api/member';
 
 export default function JoinStep() {
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
@@ -204,7 +211,10 @@ export default function JoinStep() {
             const { accessToken, expireIn } = response.data;
             setAccessToken(accessToken, expireIn);
             onChangeGlobal({ isLogin: true });
-            await fetchProfile(profileDispatch);
+            const profile = await getProfile();
+            const data = { type: '30', customerid: profile.data.memberId };
+            setProfile(profileDispatch, response.data);
+            await fetchMyProfile(profileDispatch, data);
             history.replace('/');
           } else {
             history.push('/member/login');
