@@ -147,9 +147,9 @@ export default function PurchaseConsulting() {
       data.company = company;
     }
     const res = await postPurchaseConsulting(data);
-    if (res?.description === 'email') {
-      openAlert('이메일을 확인해 주세요.');
-    } else if (res?.errorCode === '0000') {
+    if (res?.data?.description === 'email') {
+      openAlert('이메일 주소를 확인해 주세요.');
+    } else if (res?.data?.errorCode === '0000') {
       openAlert('전송되었습니다.');
     } else {
       openAlert('전송을 실패했습니다.');
