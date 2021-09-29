@@ -32,7 +32,6 @@ export default function Withdraw() {
   const [isPwVisible, setPwVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [withdrawReason, setWithdrawReason] = useState(null);
-  // const [mileage, setMileage] = useState(0);
 
   const availablemileage = useMemo(() => {
     return my?.availablemileage ?? 0;
@@ -77,11 +76,6 @@ export default function Withdraw() {
   }
 
   const onClickWithdraw = async () => {
-    const response = await deleteProfile(withdrawReason.label);
-    if (response.status !== 204) {
-      openAlert('잠시 후 다시 시도해 주세요.');
-      return;
-    }
     const checkWithdraw = await withdrawalMember({
       customerid: profile.memberId,
       withdrawReason: withdrawReason.optionNo,
