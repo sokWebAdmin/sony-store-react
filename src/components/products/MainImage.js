@@ -1,19 +1,21 @@
+import { useMemo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Controller, Navigation, Pagination } from 'swiper/core';
 
 export default function MainImage({ imageUrls }) {
+  SwiperCore.use([Navigation, Pagination, Controller]);
+
+  const hasImgs = useMemo(() => imageUrls.length > 1, [imageUrls]);
   return (
     <div className="view_slider swiper-container">
       <Swiper
         className="swiper-wrapper"
-        loop={ false }
+        loop={ true }
         slidesPerView={ 1 }
         pagination={{
           el: '.swiper-pagination',
           type: 'bullets',
           clickable: true,
-          renderBullet(index, className) {
-            return `<span className=${ className }>${ index + 1 }</span>`
-          }
         }}
         observer={true}
         observeParents={true}
@@ -32,18 +34,16 @@ export default function MainImage({ imageUrls }) {
             </SwiperSlide>
           ))
         }
-      </Swiper>
-      {
-        imageUrls.length > 1 && (
-          <>
+        {
+          hasImgs && (
             <div className="arrow_btn">
-              <a href="#none" className="arrow swiper-button-prev swiper-button-disabled"><img src="/images/common/arrow_19_34.png" alt="이전" /></a>
-              <a href="#none" className="arrow swiper-button-next swiper-button-disabled"><img src="/images/common/arrow_19_34.png" alt="다음" /></a>
+              <a className="arrow swiper-button-prev"><img src="/images/common/arrow_19_34.png" alt="이전" /></a>
+              <a className="arrow swiper-button-next"><img src="/images/common/arrow_19_34.png" alt="다음" /></a>
             </div>
-            <div className="swiper-pagination" />
-          </>
-        )
-      }
+          )
+        }
+        <div className="swiper-pagination" />
+      </Swiper>
     </div>
   ) 
 }
