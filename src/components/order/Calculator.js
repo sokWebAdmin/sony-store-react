@@ -48,7 +48,7 @@ const Calculator = ({ payment, paymentInfo }) => {
                                           <span
                                             className="sale_tit">총 할인 금액</span>
                     <em
-                      className="view_price minus"><strong>-
+                      className="view_price minus"><strong>
                       {toCurrency(
                         paymentInfo?.totalStandardAmt -
                         paymentInfo?.paymentAmt)}</strong>원</em>
