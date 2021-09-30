@@ -109,14 +109,9 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      "defaults"
-    ],
-    "development": [
-      "defaults"
-    ]
-  },
+  "browserslist": [
+    "defaults"
+  ],
   "reactSnap": {
     "puppeteerArgs": [
       "--no-sandbox",
