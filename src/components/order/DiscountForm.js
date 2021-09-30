@@ -33,6 +33,12 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
   const [useCouponVisible, setUseCouponVisible] = useState(false);
   const [noCoupon, setNoCoupon] = useState(false);
 
+  useEffect(() => {
+    if (!useCouponVisible) {
+      document.body.style.overflow = 'visible';
+    }
+  }, [useCouponVisible]);
+
   /**
    * Point
    */
