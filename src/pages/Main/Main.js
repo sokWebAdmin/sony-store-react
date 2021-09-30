@@ -551,13 +551,13 @@ export default function Main() {
             {/* <!-- // product --> */}
 
             {/* <!-- academy banner --> */}
-            {academyPcBanners?.banners && (
+            {academyPcBanners?.banners && academyMoBanners?.banners && (
               <div
                 className="main__banner"
                 style={{
                   backgroundImage:
                     size.width > breakPoint
-                      ? `url(${academyPcBanners.banners[0]?.imageUrl})`
+                      ? `url(${academyPcBanners?.banners[0]?.imageUrl})`
                       : `url(${academyMoBanners?.banners[0]?.imageUrl})`,
                 }}
               >
