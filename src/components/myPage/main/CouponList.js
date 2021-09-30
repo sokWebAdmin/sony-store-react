@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { getCoupons } from '../../../api/promotion';
+import { syncCoupon } from '../../../api/sony/coupon';
 import CouponListItem from './CouponListItem';
 
 const CouponList = () => {
@@ -8,7 +9,8 @@ const CouponList = () => {
   const [coupons, setCoupons] = useState([]);
   const nextPage = useRef(2);
 
-  useEffect(() => {
+  useEffect(async () => {
+    await syncCoupon();
     fetchCoupons({ pageNumber: 1, pageSize: 10 });
   }, []);
 
