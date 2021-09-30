@@ -7,6 +7,7 @@ import SelectBox from '../common/SelectBox';
 // api
 import { getOrderSheetCoupon } from '../../api/order.js';
 import { toCurrencyString } from '../../utils/unit.js';
+import { syncCoupon } from '../../api/sony/coupon.js';
 
 const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDiscount, show, setReject }) => {
   const close = () => setVisible(false);
@@ -36,6 +37,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   };
 
   const fetchCoupons = async () => {
+    await syncCoupon();
     const { data } = await getOrderSheetCoupon({ orderSheetNo });
     await setProducts(mapProducts([...data.products]));
     return [...data.products];

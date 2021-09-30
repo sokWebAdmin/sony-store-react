@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toCurrencyString } from '../../../utils/unit';
 import { getCouponsSummary } from '../../../api/promotion';
+import { syncCoupon } from '../../../api/sony/coupon';
 
 const memberGradeClassName = {
   membership: 'family',
@@ -29,6 +30,7 @@ const MemberSummary = ({ tabChange, profile, availablemileage, wishCount }) => {
   }, []);
 
   async function fetchCouponCount () {
+    await syncCoupon();
     const { data: { usableCouponCnt } } = await getCouponsSummary();
     setCouponCount(usableCouponCnt);
   }
