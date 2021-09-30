@@ -14,7 +14,7 @@ const getDisabledLabel = (reserved, o) => {
 
 // 선택된 옵션 리스트
 export default function Option({
-  productNameEn,
+  productName,
   options,
   hasColor, 
   selectedOption, 
@@ -27,11 +27,11 @@ export default function Option({
 }) {
   const reserved = saleStatus === 'RESERVE';
 
-  const colorByOptionNo = colorsGroupByOptionNo(options, productNameEn);
+  const colorByOptionNo = colorsGroupByOptionNo(options, productName);
   const getSelectOptions = useCallback(o => {
     const colorChipInfo = getColorChipInfo(
                         hasColor, 
-                        productNameEn, 
+                        productName, 
                         _.head(colorByOptionNo[o.optionNo])?.value,
                         o
                       );
@@ -45,7 +45,7 @@ export default function Option({
       label: colorChipInfo?.label,
       background: colorChipInfo?.background
     }
-  }, [colorByOptionNo, hasColor, productNameEn]);
+  }, [colorByOptionNo, hasColor, productName]);
 
   const [deleteOptionNo, setDeleteOptionNo] = useState(0);
 

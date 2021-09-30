@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Share from "../../popup/Share";
 
-export default function SnsShare({ productNameEn }) {
+export default function SnsShare({ productName }) {
   const [ shareVisible, setShareVisible ] = useState(false);
 
   const link = window.location.href;
@@ -19,7 +19,7 @@ export default function SnsShare({ productNameEn }) {
         </li>
       </ul>
       {
-        shareVisible && <Share link={link} label={productNameEn} setShareVisible={setShareVisible} />
+        shareVisible && <Share link={link} label={productName} setShareVisible={setShareVisible} />
       }
     </>
   )

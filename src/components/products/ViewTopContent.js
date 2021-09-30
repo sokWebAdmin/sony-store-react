@@ -47,10 +47,10 @@ export default function TobContent({
             ))
           } */}
           {/* <span className="flag new">NEW</span>class : new / event / best / hot */}
-          <p className="product_tit">{productNameEn}</p>
-          { productName && <p className="product_txt">{productName}</p> }
+          <p className="product_tit">{productName}</p>
+          { productNameEn && <p className="product_txt">{productNameEn}</p> }
           { promotionText && <p className="product_desc">{promotionText}</p> }
-          <SnsShare productNameEn={productNameEn} />
+          <SnsShare productName={productName} />
         </div>
         
         {/* 배송 */}
@@ -91,7 +91,7 @@ export default function TobContent({
         {/* prd_select_wrap */}
         <div className="cont prd_select_wrap">
           <Option
-            productNameEn={productNameEn}
+            productName={productName}
             options={options}
             hasColor={hasColor}
             selectedOption={selectedOption}
