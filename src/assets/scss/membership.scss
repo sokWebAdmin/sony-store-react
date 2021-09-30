@@ -1027,45 +1027,81 @@
 }
 
 .coupon_list {
-  position: relative;
+
   padding-top: 24px;
   border-top: 2px solid #222;
-
-  &:after {
-    display: block;
-    clear: both;
-    content: "";
-  }
+  // @todo new
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
 
   .coupon_box {
-    float: left;
+    // @todo new 
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
     position: relative;
     width: calc((100% - 24px)/2);
-    padding-right: 60px;
-    margin-bottom: 25px;
+    min-height: 257px;
+    margin: 0 0 25px 24px;
 
-    &:nth-child(2n) {
-      margin-left: 24px;
+    &:first-child {
+      margin-left: 0;
     }
 
     &:after {
       display: block;
       overflow: hidden;
       position: absolute;
+      z-index: 5;
       top: 0;
       right: 0;
-      width: 70px;
+      width: 90px;
       height: 100%;
       border-radius: 4px;
-      background: url('../images//mypage/bg_coupon_sony.svg') no-repeat center center;
-      background-size: 70px 225px;
+      background: #5865f5;
       content: "";
+    }
+
+    // @todo new
+    .coupon_type {
+      position: absolute;
+      z-index: 10;
+      top: 50%;
+      right: -36px;
+      font-size: 38px;
+      font-weight: bold;
+      letter-spacing: -0.5px;
+      opacity: .15;
+      -webkit-transform: translateY(-50%) rotate(90deg);
+      transform: translateY(-50%) rotate(90deg);
+      color: #fff;
     }
   }
 
   .coupon {
     position: relative;
     padding: 28px 34px 31px 34px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    // @todo new
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    position: relative;
+    z-index: 5;
+    width: 519px;
+    height: 100%;
+    padding: 28px 55px 30px 32px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background: #fff;
