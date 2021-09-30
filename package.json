@@ -111,13 +111,10 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "default"
     ],
     "development": [
-      ">0.2%",
-      "not dead"
+      "default"
     ]
   },
   "reactSnap": {
