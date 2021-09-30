@@ -204,6 +204,11 @@ export default function Login() {
                       onChange={(e) => {
                         setPw(e.target.value);
                       }}
+                      onKeyPress={(event) => {
+                        if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+                          _loginApi(email, pw);
+                        }
+                      }}
                     />
                     <span className="label">비밀번호</span>
                     <span className="focus_bg" />
@@ -316,6 +321,11 @@ export default function Login() {
                       placeholder=" "
                       value={orderPw}
                       onChange={(e) => setOrderPw(e.target.value)}
+                      onKeyPress={(event) => {
+                        if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+                          nonMemberLogin();
+                        }
+                      }}
                     />
                     <span className="label">비밀번호</span>
                     <div className="eyes">
