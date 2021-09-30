@@ -111,10 +111,10 @@
   },
   "browserslist": {
     "production": [
-      "default"
+      "defaults"
     ],
     "development": [
-      "default"
+      "defaults"
     ]
   },
   "reactSnap": {
