@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState, useMemo } from "react";
 import { useHistory } from "react-router";
 import GlobalContext from "../../context/global.context";
+import { useMallState } from "../../context/mall.context";
 import { useAlert, useScroll, useToggle } from "../../hooks";
 import Alert from "./Alert";
 import Confirm from "./Confirm";
@@ -8,13 +9,12 @@ import Confirm from "./Confirm";
 const SERVICE_CENTER = process.env.REACT_APP_KAKAO_SERVICE_CENTER_KEY; // http://pf.kakao.com/_xbxhExaj
 const JS_KEY = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY; // @FIXME 소니코리아 고객센터의 jsKey 로 연결해야 함.
 
-const TEL = '1588-0911';
 const MOBILE_WIDTH = 640;
 
-const message = {
-  alert: `고객님께서 원하시는 제품을 <br /> 빠르고 정확하게 구매하실 수 있도록 <br />도와드리겠습니다. <br /> 고객지원센터: 1588-0911`,
+const getMessage = tel => ({
+  alert: `고객님께서 원하시는 제품을 <br /> 빠르고 정확하게 구매하실 수 있도록 <br />도와드리겠습니다. <br /> 고객지원센터: ${tel}`,
   confirm: `카톡 상담을 위해선 로그인이 필요합니다. <br /> 로그인 하시겠습니까?`
-};
+});
 
 const chat = () => {
   window.Kakao.Channel.chat({ channelPublicId: SERVICE_CENTER });
@@ -22,6 +22,10 @@ const chat = () => {
 
 export default function Floating () {
   const history = useHistory();
+
+  const info = useMallState();
+  const TEL = info?.mall?.serviceCenter.phoneNo;
+  const message = getMessage(TEL);
   
   const windowWidth = window.innerWidth;
   const isMobile = useMemo(() => windowWidth <= MOBILE_WIDTH, [windowWidth]);
