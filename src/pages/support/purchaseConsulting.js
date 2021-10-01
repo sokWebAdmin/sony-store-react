@@ -150,7 +150,7 @@ export default function PurchaseConsulting() {
     if (res?.data?.description === 'email') {
       openAlert('이메일 주소를 확인해 주세요.');
     } else if (res?.data?.errorCode === '0000') {
-      openAlert('전송되었습니다.', () => history.push('/'));
+      openAlert('전송되었습니다.', () => () => history.push('/'));
     } else {
       openAlert('전송을 실패했습니다.');
     }
