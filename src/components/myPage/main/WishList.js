@@ -1,48 +1,43 @@
 import { useState, useMemo } from 'react';
 import { toCurrencyString } from '../../../utils/unit.js';
-import {
-  getProductsOptions,
-  postProfileLikeProducts,
-} from '../../../api/product';
+import { getProductsOptions, postProfileLikeProducts } from '../../../api/product';
 import Confirm from '../../common/Confirm';
 import Alert from '../../common/Alert';
 import { postCart } from '../../../api/order';
 import Notification from '../../products/Notification';
+import { useAlert } from '../../../hooks';
 
 const WishList = ({ wishList, wishCount, more, rerender }) => {
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
+
   const [checkedProductNos, setCheckedProductNos] = useState([]);
 
-  const allChecked = useMemo(
-    () => wishList.length === checkedProductNos.length,
-    [wishList, checkedProductNos]);
+  const allChecked = useMemo(() => wishList.length === checkedProductNos.length, [wishList, checkedProductNos]);
 
-  const check = productNo => {
+  const check = (productNo) => {
     const newList = checkedProductNos.includes(productNo)
-      ? checkedProductNos.filter(no => no !== productNo)
+      ? checkedProductNos.filter((no) => no !== productNo)
       : [...checkedProductNos, productNo];
     setCheckedProductNos(newList);
   };
 
-  const allCheck = all => {
+  const allCheck = (all) => {
     if (all) {
       const allProductNos = wishList.map(({ productNo }) => productNo);
       setCheckedProductNos(allProductNos);
-    }
-    else {
+    } else {
       setCheckedProductNos([]);
     }
   };
 
-  const deleteChecked = confirm => {
+  const deleteChecked = (confirm) => {
     if (!checkedProductNos.length) {
       setCheckAlert(true);
       return;
     }
 
     if (!confirm) {
-      wishList.length === checkedProductNos.length
-        ? setAllDeleteConfirm(true)
-        : setDeleteConfirm(true);
+      wishList.length === checkedProductNos.length ? setAllDeleteConfirm(true) : setDeleteConfirm(true);
       return;
     }
 
@@ -50,16 +45,20 @@ const WishList = ({ wishList, wishCount, more, rerender }) => {
       productNos: checkedProductNos,
     };
 
-    postProfileLikeProducts(request).
-      then(() => setCheckedProductNos([])).
-      then(rerender).
-      catch(console.error);
+    postProfileLikeProducts(request)
+      .then(() => setCheckedProductNos([]))
+      .then(rerender)
+      .catch(console.error);
   };
 
   const addToCart = async () => {
-    const { data: { optionInfos } } = await getProductsOptions(
-      { productNos: checkedProductNos });
-    const request = optionInfos.map(product => ({
+    if (checkedProductNos.length === 0) {
+      return openAlert('제품을 선택해 주세요');
+    }
+    const {
+      data: { optionInfos },
+    } = await getProductsOptions({ productNos: checkedProductNos });
+    const request = optionInfos.map((product) => ({
       productNo: product.mallProductNo,
       optionNo: product.options[0].optionNo,
       orderCnt: 1,
@@ -67,8 +66,7 @@ const WishList = ({ wishList, wishCount, more, rerender }) => {
     const { status } = await postCart(request);
     if (status === 200) {
       setCartNotify(true);
-    }
-    else {
+    } else {
       alert('장바구니 담기 실패');
     }
   };
@@ -78,112 +76,119 @@ const WishList = ({ wishList, wishCount, more, rerender }) => {
   const [checkAlert, setCheckAlert] = useState(false);
   const [cartNotify, setCartNotify] = useState(false);
 
-  const handleAllDeleteConfirm = status => {
+  const handleAllDeleteConfirm = (status) => {
     if (status === 'ok') {
       deleteChecked(true);
       setAllDeleteConfirm(false);
-    }
-    else {
+    } else {
       setAllDeleteConfirm(false);
     }
   };
 
-  const handleDeleteConfirm = status => {
+  const handleDeleteConfirm = (status) => {
     if (status === 'ok') {
       deleteChecked(true);
       setDeleteConfirm(false);
-    }
-    else {
+    } else {
       setDeleteConfirm(false);
     }
   };
 
   return (
-    <div className="cont history_like">
-      {allDeleteConfirm &&
-      <Confirm onClose={handleAllDeleteConfirm}>찜한 제품 전체를 삭제하시겠습니까?</Confirm>}
-      {deleteConfirm &&
-      <Confirm onClose={handleDeleteConfirm}>선택한 제품을 삭제하시겠습니까?</Confirm>}
-      {checkAlert &&
-      <Alert onClose={() => setCheckAlert(false)}>제품을 선택해주세요.</Alert>}
-      {cartNotify &&
-      <Notification setNotificationVisible={setCartNotify} type='cart' />}
+    <>
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+      <div className="cont history_like">
+        {allDeleteConfirm && <Confirm onClose={handleAllDeleteConfirm}>찜한 제품 전체를 삭제하시겠습니까?</Confirm>}
+        {deleteConfirm && <Confirm onClose={handleDeleteConfirm}>선택한 제품을 삭제하시겠습니까?</Confirm>}
+        {checkAlert && <Alert onClose={() => setCheckAlert(false)}>제품을 선택해주세요.</Alert>}
+        {cartNotify && <Notification setNotificationVisible={setCartNotify} type="cart" />}
 
-      <div className="cont_head">
-        <h3 className="cont_tit" id="wish-tit">찜</h3>
-        {/* s : 찜 목록이 없을 경우 display:none */}
-        <div className="like_select_btn">
-          <button onClick={() => deleteChecked(false)}
-                  className="button button_secondary button-s"
-                  type="button">선택 삭제
-          </button>
-          <button
-            className="button button_positive button-s popup_comm_btn"
-            type="button" data-popup-name="cart_pop" onClick={addToCart}>
-            <span>선택 제품</span> 장바구니 담기
-          </button>
+        <div className="cont_head">
+          <h3 className="cont_tit" id="wish-tit">
+            찜
+          </h3>
+          {/* s : 찜 목록이 없을 경우 display:none */}
+          <div className="like_select_btn">
+            <button onClick={() => deleteChecked(false)} className="button button_secondary button-s" type="button">
+              선택 삭제
+            </button>
+            <button
+              className="button button_positive button-s popup_comm_btn"
+              type="button"
+              data-popup-name="cart_pop"
+              onClick={addToCart}
+            >
+              <span>선택 제품</span> 장바구니 담기
+            </button>
+          </div>
+          {/* e : 찜 목록이 없을 경우 display:none */}
         </div>
-        {/* e : 찜 목록이 없을 경우 display:none */}
-      </div>
-      <div className="history_inner">
-        <div className="history_list">
-          {wishList?.length > 0
-            ?
-            <div className="like_inner on">
-              <div className="all_checked check">
-                <input type="checkbox" className="inp_check check_all"
-                       id="allChk" name="likeChk" checked={allChecked}
-                       onChange={() => allCheck(!allChecked)} />
-                <label htmlFor="allChk">전체</label>
-              </div>
-              <div className="like_prd_inner">
-                <Products list={wishList} check={check}
-                          checkedProductNos={checkedProductNos} />
-              </div>
-              {
-                wishList.length <= wishCount &&
-                <div className="btn_article line">
-                  <a href="#" className="more_btn" onClick={more}>더보기</a>
+        <div className="history_inner">
+          <div className="history_list">
+            {wishList?.length > 0 ? (
+              <div className="like_inner on">
+                <div className="all_checked check">
+                  <input
+                    type="checkbox"
+                    className="inp_check check_all"
+                    id="allChk"
+                    name="likeChk"
+                    checked={allChecked}
+                    onChange={() => allCheck(!allChecked)}
+                  />
+                  <label htmlFor="allChk">전체</label>
                 </div>
-              }
-            </div>
-            :
-            <div className="no_data on">
-              <span>내역이 없습니다.</span>
-            </div>
-          }
+                <div className="like_prd_inner">
+                  <Products list={wishList} check={check} checkedProductNos={checkedProductNos} />
+                </div>
+                {wishList.length <= wishCount && (
+                  <div className="btn_article line">
+                    <a href="#" className="more_btn" onClick={more}>
+                      더보기
+                    </a>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="no_data on">
+                <span>내역이 없습니다.</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 const Products = ({ list, check, checkedProductNos }) => {
   return (
     <ul className="like_prd_list">
-      {
-        list.map(item => (
-          <li className="like_list" key={item.productNo}>
-            <div className="item">
-              <div className="check check_only">
-                <input type="checkbox" className="inp_check"
-                       checked={checkedProductNos.includes(item.productNo)}
-                       name="likeChk" onChange={() => check(item.productNo)} />
-              </div>
-              <div className="img"><img
-                src={item.listImageUrls[0]}
-                alt={item.productName} /></div>
-              <div className="prd_info">
-                <p className="tit">{item.productName}</p>
-                <p className="txt">{item.productNameEn}</p>
-                <p className="prd_price"><span
-                  className="price">{toCurrencyString(item.salePrice)}</span>원
-                </p>
-              </div>
+      {list.map((item) => (
+        <li className="like_list" key={item.productNo}>
+          <div className="item">
+            <div className="check check_only">
+              <input
+                type="checkbox"
+                className="inp_check"
+                checked={checkedProductNos.includes(item.productNo)}
+                name="likeChk"
+                onChange={() => check(item.productNo)}
+              />
             </div>
-          </li>
-        ))
-      }
+            <div className="img">
+              <img src={item.listImageUrls[0]} alt={item.productName} />
+            </div>
+            <div className="prd_info">
+              <p className="tit">{item.productName}</p>
+              <p className="txt">{item.productNameEn}</p>
+              <p className="prd_price">
+                <span className="price">{toCurrencyString(item.salePrice)}</span>원
+              </p>
+            </div>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 };
