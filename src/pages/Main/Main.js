@@ -338,28 +338,6 @@ export default function Main() {
                     speed={600}
                     slidesPerView={1.5}
                     spaceBetween={157}
-                    breakpoints={{
-                      320: {
-                        slidesPerView: 1.5,
-                        spaceBetween: 50,
-                        allowTouchMove: true,
-                      },
-                      641: {
-                        slidesPerView: 1.8,
-                        spaceBetween: 92,
-                        allowTouchMove: true,
-                      },
-                      1281: {
-                        slidesPerView: 1.5,
-                        spaceBetween: 110,
-                        allowTouchMove: false,
-                      },
-                      1600: {
-                        slidesPerView: 1.5,
-                        spaceBetween: 157,
-                        allowTouchMove: false,
-                      },
-                    }}
                   >
                     {recommendedBanners.map((recommendedBanner, index) => (
                       <SwiperSlide className="recommend__item swiper-slide" key={index}>
@@ -467,33 +445,6 @@ export default function Main() {
                       scrollbar={{
                         el: '.event-scrollbar',
                         draggable: false,
-                      }}
-                      breakpoints={{
-                        320: {
-                          slidesPerView: 1.2,
-                          centeredSlides: true,
-                          spaceBetween: 15,
-                        },
-                        640: {
-                          slidesPerView: 1.2,
-                          centeredSlides: true,
-                          spaceBetween: 24,
-                        },
-                        1281: {
-                          slidesPerView: 3,
-                          centeredSlides: false,
-                          spaceBetween: 15,
-                        },
-                        1366: {
-                          slidesPerView: 3,
-                          centeredSlides: false,
-                          spaceBetween: 15,
-                        },
-                        1600: {
-                          slidesPerView: 3,
-                          centeredSlides: false,
-                          spaceBetween: 24,
-                        },
                       }}
                     >
                       {eventBanners.map((eventBanner, index) => (
