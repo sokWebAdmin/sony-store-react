@@ -180,7 +180,7 @@ export default function Main() {
           <div className="content main">
             {/* <!-- key visual --> */}
             <div
-              className={`kv swiper-container ${mPointer != 'none' && mPointer}`}
+              className={`kv swiper-container ${mPointer !== 'none' && mPointer}`}
               onMouseMove={(e) => {
                 if (size.width > breakPoint) {
                   let halfWidth = size.width / 2;
@@ -202,11 +202,11 @@ export default function Main() {
               }}
               onClick={() => {
                 if (size.width > breakPoint) {
-                  if (mPointer == 'hover-prev') {
+                  if (mPointer === 'hover-prev') {
                     if (topSwiper) {
                       topSwiper.slidePrev();
                     }
-                  } else if (mPointer == 'hover-next') {
+                  } else if (mPointer === 'hover-next') {
                     topSwiper.slideNext();
                   }
                 }
@@ -286,7 +286,7 @@ export default function Main() {
                   ))}
                 </Swiper>
               )}
-              <div className="swiper-pagination"></div>
+              <div className="swiper-pagination" />
             </div>
             {/* <!-- // key visual --> */}
 
@@ -421,7 +421,7 @@ export default function Main() {
                     </div>
                   </div>
                   <div className="event__main swiper-container">
-                    <button type="button" className="swiper-button-prev"></button>
+                    <button type="button" className="swiper-button-prev" />
                     {eventSections?.products?.length > 0 && (
                       <Swiper
                         className="swiper-wrapper"
@@ -451,7 +451,7 @@ export default function Main() {
                         ))}
                       </Swiper>
                     )}
-                    <button type="button" className="swiper-button-next"></button>
+                    <button type="button" className="swiper-button-next" />
                   </div>
                 </div>
                 <div className="event__sub swiper-container">
@@ -519,7 +519,7 @@ export default function Main() {
                       ))}
                     </Swiper>
                   )}
-                  <div className="swiper-scrollbar event-scrollbar" style={{ position: 'absolute' }}></div>
+                  <div className="swiper-scrollbar event-scrollbar" style={{ position: 'absolute' }} />
                 </div>
               </div>
               <Link to="event/list" className="btn__event__more">
