@@ -1,6 +1,5 @@
 @import "./import/variables";
 
-.order {
 //주문,결제 페이지일때 sidebar 위치
 .Order {
   @include under-pc {
@@ -43,6 +42,7 @@
       position: relative;
       padding-left: 80px;
       text-align: center;
+      z-index: 1; /* 2021-09-07 추가 */
       &.on {
         .step_ico {
           &.cart {
@@ -55,16 +55,16 @@
             background-image: url(../images/order/ic_cart_step3_on.svg);
           }
         }
-          p {
-            color: $primary-color;
-            font-weight: 700;
-          }
-          &:before {
-            background-color: $primary-color;
-          }
+        p {
+          color: $primary-color;
+          font-weight: 700;
+        }
+        &:before {
+          background-color: $primary-color;
+        }
       }
       &.d_type {
-         p {
+        p {
           color: $primary-color;
           font-weight: 500;
         }
@@ -383,15 +383,15 @@
         font-weight: 700;
         .necessary {
           &:after {
-          position: absolute;
-          top: 3px;
-          right: 0;
-          display: inline-block;
-          width: 4px;
-          height: 4px;
-          content: '';
-          background-color: #e70000;
-          border-radius: 100%;
+            position: absolute;
+            top: 3px;
+            right: 0;
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            content: '';
+            background-color: #e70000;
+            border-radius: 100%;
           }
         }
       }
@@ -413,6 +413,10 @@
           margin-top: 25px;
           .list_dot li {
             color: #888;
+            /* 2021-09-15 추가 */
+            @include only-mo {
+              font-size: 14px;
+            }
           }
         }
       }
@@ -434,6 +438,10 @@
         margin-top: 24px;
         li {
           color: #888;
+          /* 2021-09-15 추가 */
+          @include only-mo {
+            font-size: 14px;
+          }
         }
       }
       &+.acc_group {
@@ -638,7 +646,7 @@
           margin-left: 2%;
         }
       }
-     }
+    }
   }
 }
 .membership_info {
@@ -937,6 +945,10 @@
     margin: 17px 16px;
     li {
       color: #888;
+      /* 2021-09-15 추가 */
+      @include only-mo {
+        font-size: 14px;
+      }
     }
   }
 }
@@ -1173,6 +1185,36 @@
     }
   }
 }
-
+//2021-09-15 현금영수증 발행 영역 추가
+.cash_box {
+  margin-top: 32px;
+  &_tit {
+    display: block;
+    font-size: 14px;
+    color: #222;
+  }
+  &_list {
+    margin-top: 16px;
+    li {
+      position: relative;
+      padding-left: 8px;
+      font-size: 14px;
+      color: #888;
+      line-height: 22px;
+      + li {
+        margin-top: 5px;
+      }
+      &:before {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "·";
+      }
+      .link_mail {
+        color: $primary-color;
+        text-decoration: underline;
+      }
+    }
+  }
 }
-
