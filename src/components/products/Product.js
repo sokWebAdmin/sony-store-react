@@ -87,7 +87,10 @@ export default function Product({product, category, reset, micro}) {
       }
 
       <div className="product__pic">
-        <Link onClick={ reset } to={`/product-view/${product.productNo}`} className="product__pic__link" >
+        <Link onClick={(e) => {
+          e.preventDefault();
+          reset?.();
+        }} to={`/product-view/${product.productNo}`} className="product__pic__link" >
           {
             groupProducts.map((gp, index) => {
               return (
@@ -96,10 +99,6 @@ export default function Product({product, category, reset, micro}) {
                   alt={product.productNameEn}
                   className={`product__pic__img ${colorIndex === index && "product__pic__img--visible"}`}
                   key={`product-list-image-${index}`} 
-                  onClick={ e => {
-                    e.preventDefault();
-                    history.replace(`/product-view/${product.productNo}`)
-                  }}
                   />
               )
             })

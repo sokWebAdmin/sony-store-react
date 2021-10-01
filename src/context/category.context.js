@@ -74,18 +74,6 @@ const categoryReducer = (state, action) => {
         ...state,
         ...initCategoryState(action.data),
       };
-    case 'SET_GNB_CATEGORY':
-      state.gnbCategories[2]?.children.push(...action.data.data);
-
-      return {
-        ...state,
-      };
-    case 'DELETE_GNB_CATEGORY':
-      state.gnbCategories[2]?.children.splice(5);
-
-      return {
-        ...state,
-      };
     default:
       throw new Error('INVALID_CATEGORY_ACTION_TYPE');
   }
@@ -111,14 +99,6 @@ export const useCategoryState = () => {
 
 export const initCategory = (dispatch, data) => {
   dispatch({ type: 'INIT_CATEGORY', data: data?.multiLevelCategories || [] });
-};
-
-export const setGnbCategory = (dispatch, data) => {
-  dispatch({ type: 'SET_GNB_CATEGORY', data });
-};
-
-export const deleteGnbCategory = (dispatch) => {
-  dispatch({ type: 'DELETE_GNB_CATEGORY' });
 };
 
 export const useGetCategoryByKey = (key, value) => {
