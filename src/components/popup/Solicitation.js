@@ -16,9 +16,9 @@ const Solicitation = ({ goOrder, close }) => {
                 className="button button_negative button-m closed"
                 type="button">비회원 구매
         </button>
-        <Link to="/member/login" className="button button_positive button-m"
-              type="button">회원
-          구매
+        <Link to="/member/login?nextLocation=cart"
+              className="button button_positive button-m"
+              type="button">회원 구매
         </Link>
       </div>
     </LayerPopup>
