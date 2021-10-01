@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -24,9 +24,18 @@ import { fetchProfile, useProileDispatch } from '../../context/profile.context';
 import OpenLogin from '../../components/member/OpenLogin';
 import { postGuestOrdersOrderNo } from '../../api/order';
 
-export default function Login() {
+export default function Login ({ location }) {
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
+
+  // null | 'cart'
+  const nextLocation = useMemo(() => {
+    const { search } = location;
+    if (!search && !search.includes('nextLocation')) {
+      return null;
+    }
+    return search.split('=')[1];
+  }, [location]);
 
   const history = useHistory();
 
@@ -95,7 +104,7 @@ export default function Login() {
           history.push(history.location.state.next);
         }
         else {
-          history.push('/');
+          history.push(`/${nextLocation || '/'}`);
         }
       }
     }
