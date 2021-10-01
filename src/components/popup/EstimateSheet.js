@@ -5,6 +5,8 @@ import '../../assets/scss/demo.scss';
 import { getToday } from '../../utils/dateFormat';
 import { toCurrencyString } from '../../utils/unit';
 
+import logo from '../../assets/images/common/logo.svg';
+
 const EstimateSheet = ({ close, products }) => {
   const today = getToday().replace(/\-/g, '.');
   const totalAmt = useMemo(() => products.reduce((acc, cur) => acc + cur.buyAmt, 0), [products]);
@@ -22,7 +24,9 @@ const EstimateSheet = ({ close, products }) => {
       <div className="popup_wrap size_l estimate" style={{ display: 'block' }} tabIndex="0">
         <div className="pop_inner">
           <div className="pop_head">
-            <span className="pop_logo">{/*<img src="../../images/common/logo.svg" alt="SONY" />*/}</span>
+            <span className="pop_logo">
+              <img src={logo} alt="SONY" />
+            </span>
           </div>
           <div className="pop_cont scrollH">
             <div ref={printArea}>
@@ -123,12 +127,11 @@ const Products = ({ products }) => {
             <div className="prd">
               <div className="prd_info">
                 <div className="prd_info_name">{product.productName}</div>
-                <p className="prd_info_option line2">{product.optionText}</p>
               </div>
             </div>
           </div>
           <div className="col_table_cell prd_price">
-            {toCurrencyString(product.standardAmt)} <span className="won">원</span>
+            {toCurrencyString(product.salePrice)} <span className="won">원</span>
             <br />
             <span className="count">{product.orderCnt}개</span>
           </div>
