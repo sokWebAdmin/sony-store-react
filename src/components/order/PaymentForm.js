@@ -4,6 +4,8 @@ import paymentType from '../../const/paymentType';
 import InvoiceGuide from '../popup/InvoiceGuide';
 import InvoicePublish from '../popup/InvoicePublish';
 
+import '../../assets/scss/partials/payModal.scss';
+
 const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
   const changePaymentType = ({ pgType, payType }) => {
     setPayment({
