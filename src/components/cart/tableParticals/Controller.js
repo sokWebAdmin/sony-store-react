@@ -35,6 +35,9 @@ const Controller = ({ products, checkedIndexes, checkedProducts, setCheckedIndex
         </div>
       </div>
       <div className="cart_func_buttons">
+        <button type="button" class="button button_negative button-s button_del_checked_items">
+          선택 삭제
+        </button>
         <button
           type="button"
           className="button button_positive button-s button_print_esimate popup_comm_btn"
