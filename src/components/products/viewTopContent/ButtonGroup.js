@@ -8,7 +8,7 @@ import Alert from '../../common/Alert';
 import Notification from '../Notification';
 import { useAlert } from '../../../hooks';
 import gc from '../../../storage/guestCart';
-import HsValidationMiddleware from '../../cart/HsValidationMiddleware';
+import HsValidator from '../../cart/HsValidator';
 
 const getOrderSheetNo = async (productNo, selectedOption) => {
   try {
@@ -34,11 +34,11 @@ const getOrderSheetNo = async (productNo, selectedOption) => {
 const getCartRequest = (productNo, options) => {
   return options.map(
     ({ buyCnt, ...rest }) => ({
-        productNo,
-        orderCnt: buyCnt,
-        channelType: null,
-        optionInputs: null,
-        ...rest
+      productNo,
+      orderCnt: buyCnt,
+      channelType: null,
+      optionInputs: null,
+      ...rest,
     })
   )
 };
@@ -51,7 +51,7 @@ const ERROR_CODE_MAPPING_ROUTE = {
 
 };
 
-export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, isHsProduct }) {
+export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, hsCode }) {
   const history = useHistory();
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const { isLogin } = useContext(GlobalContext);
@@ -126,7 +126,8 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
         const result = await postCart(products);
         result?.error && result?.message && openAlert(result.message);
       } else {
-        gc.set(products);
+        gc.set(products.map(product => ({ ...product, hsCode }))); // TODO.
+                                                                   // 확인필요. @jk
       }
       setCartVisible(true);
     } catch(e) {
@@ -151,7 +152,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       return;
     }
 
-    const succeed = await hsValidation(isHsProduct);
+    const succeed = await hsValidation(!!hsCode);
     if (succeed) {
       _getCartRequest(productNo, selectedOption);
     }
@@ -192,9 +193,9 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   }
 
   // hsValidation
-  const hsValidationMiddleware = createRef();
+  const hsValidator = createRef();
   const hsValidation = validation =>
-    hsValidationMiddleware.current.validation(validation);
+    hsValidator.current.validation(validation);
 
   return (
     <>
@@ -212,7 +213,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
                 onClick={e => handleClick(e, 'cart')}
                 data-popup="popup_cart"
               >장바구니</a>
-              <HsValidationMiddleware ref={hsValidationMiddleware} />
+              <HsValidator ref={hsValidator} />
             </li>
             <li className="gift">
               <a 

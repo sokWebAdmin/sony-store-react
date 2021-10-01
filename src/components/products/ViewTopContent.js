@@ -35,7 +35,7 @@ export default function TobContent({
 
   const priceInfo = getPricePerProduct(price);
 
-  const isHsProduct = useMemo(() => !!productData?.baseInfo?.hsCode,
+  const hsCode = useMemo(() => productData?.baseInfo?.hsCode ?? null,
     [productData]);
 
   return (
@@ -129,7 +129,7 @@ export default function TobContent({
             setWish={setWish}
             saleStatus={saleStatus}
             memberOnly={limitations?.memberOnly}
-            isHsProduct={isHsProduct}
+            hsCode={hsCode}
           />
         </div>
       </div>

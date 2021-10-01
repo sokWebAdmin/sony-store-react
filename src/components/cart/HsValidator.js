@@ -1,33 +1,43 @@
-import { useContext, useState, forwardRef, useImperativeHandle } from 'react';
+import React, {
+  useContext,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 
 import Alert from '../common/Alert';
 import GlobalContext from '../../context/global.context';
 import { getCart } from '../../api/order';
+import gc from '../../storage/guestCart';
 
-const HsValidationMiddleware = forwardRef((prop, ref) => {
+const HsValidator = forwardRef((prop, ref) => {
   const { isLogin } = useContext(GlobalContext);
   const [rejectReason, setRejectReason] = useState(null); // null |
-                                                         // 'BASIC_PRODUCT_INSERTED'
-                                                         // |
-                                                         // 'HS_PRODUCT_INSERTED'
+  // 'BASIC_PRODUCT_INSERTED'
+  // |
+  // 'HS_PRODUCT_INSERTED'
 
   useImperativeHandle(ref, () => ({
     async validation (isHsCodeProduct) {
-      if (isLogin) {
-        const hasHsCode = await fetchHasHsCode();
-        const succeed = isHsCodeProduct === hasHsCode;
-        if (!succeed) {
-          setRejectReason(
-            hasHsCode ? 'HS_PRODUCT_INSERTED' : 'BASIC_PRODUCT_INSERTED');
-        }
+      if (!isLogin && gc.items.length < 1) {
+        return true;
+      }
 
-        return succeed;
+      const hasHsCode = isLogin ? await fetchHasHsCode() : guestCartHasHsCode();
+      const succeed = isHsCodeProduct === hasHsCode;
+      if (!succeed) {
+        setRejectReason(
+          hasHsCode ? 'HS_PRODUCT_INSERTED' : 'BASIC_PRODUCT_INSERTED');
       }
     },
   }));
 
   function fetchHasHsCode () {
     return fetchCart().then(hasHsCode);
+  }
+
+  function guestCartHasHsCode () {
+    return gc.items.some(({ hsCode }) => hsCode);
   }
 
   async function fetchCart () {
@@ -63,4 +73,4 @@ const HsValidationMiddleware = forwardRef((prop, ref) => {
   );
 });
 
-export default HsValidationMiddleware;
+export default HsValidator;
