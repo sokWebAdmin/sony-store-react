@@ -51,7 +51,7 @@ const Cart = () => {
     isUpdate && updateCart();
   }, [products]);
 
-  const productCount = useMemo(() => products.length, [products]);
+  const productCount = useMemo(() => products.reduce((sum, product) => (sum += product.orderCnt), 0), [products]);
 
   const [amount, setAmount] = useState(null);
   const [checkedIndexes, setCheckedIndexes] = useState([]);
