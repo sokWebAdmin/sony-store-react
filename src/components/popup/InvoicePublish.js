@@ -52,6 +52,7 @@ const InvoicePublish = ({ basketid, close }) => {
       ...formData,
     };
     try {
+      console.log(request);
       const res = await postInvoice(request);
       if (res?.status === '200' || res?.status === 200) {
         setProcessDone(true);
@@ -64,7 +65,7 @@ const InvoicePublish = ({ basketid, close }) => {
 
   async function fetchPostedData () {
     try {
-      const { body } = await getInvoice();
+      const { body } = await getInvoice(basketid);
       setPostedData(body);
     }
     catch (err) {
