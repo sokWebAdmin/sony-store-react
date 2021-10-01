@@ -25,7 +25,8 @@ const Controller = ({ products, checkedIndexes, checkedProducts, setCheckedIndex
       return;
     }
     const nos = checkedProducts[0].cartNo === 0 ? checkedIndexes : checkedProducts.map(({ cartNo }) => cartNo);
-    deleteItems(nos)
+    deleteItems(nos);
+    setCheckedIndexes([]);
   };
 
   return (
@@ -44,7 +45,11 @@ const Controller = ({ products, checkedIndexes, checkedProducts, setCheckedIndex
         </div>
       </div>
       <div className="cart_func_buttons">
-        <button type="button" className="button button_negative button-s button_del_checked_items" onClick={onClickDelete}>
+        <button
+          type="button"
+          className="button button_negative button-s button_del_checked_items"
+          onClick={onClickDelete}
+        >
           선택 삭제
         </button>
         <button
