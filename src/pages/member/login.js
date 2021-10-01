@@ -130,7 +130,6 @@ export default function Login ({ location }) {
       const response = await postGuestOrdersOrderNo(orderNo, { orderRequestType: 'ALL', password: orderPw });
       if (response.status === 200) {
         setGuestToken(response.data.guestToken);
-        // history.push('/');
         history.push(`/my-page/order-detail?orderNo=${orderNo}`);
       } else {
         alert('주문번호/비밀번호를 확인해 주세요.');
