@@ -1,3 +1,4 @@
+@import "./import/variables";
 @import"../css/common.css";
 
 @media screen and (max-width: 1280px) {
@@ -1012,18 +1013,18 @@
   background: url('../images//mypage/ico_mypage_coupon.svg') no-repeat 0 0;
 }
 
+/* 쿠폰 list */
 .coupon_list {
-
-  padding-top: 24px;
-  border-top: 2px solid #222;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   position: relative;
 
+  &:after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+
   .coupon_box {
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
     align-items: stretch;
     position: relative;
     width: calc((100% - 24px)/2);
@@ -1056,31 +1057,35 @@
       font-size: 50px;
       font-weight: bold;
       letter-spacing: -0.5px;
-      opacity: .15;
-      -webkit-transform: translateY(-50%) rotate(90deg);
+      opacity: 0.15;
       transform: translateY(-50%) rotate(90deg);
       color: #fff;
+
+      &.two {
+        right: -58px;
+        line-height: 45px;
+        text-align: center;
+      }
     }
 
-    .two {
-      right: -58px;
-      line-height: 45px;
-      text-align: center;
+    &.vvip {
+      &:after {
+        background: #e70000;
+      }
+
+      .coupon_type {
+        opacity: 0.2;
+      }
+
+      .percentage {
+        color: #e70000;
+      }
     }
-
-
   }
 
   .coupon {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
     flex-direction: column;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
     justify-content: space-between;
     position: relative;
     z-index: 5;
@@ -1090,13 +1095,21 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     background: #fff;
-  }
 
-  .coupon_no {
-    position: absolute;
-    top: 34px;
-    right: 34px;
-    color: #888;
+    &_no {
+      position: absolute;
+      top: 34px;
+      right: 55px;
+      color: #888;
+    }
+
+    &_expiration {
+      position: absolute;
+      top: 37px;
+      right: 55px;
+      font-size: 12px;
+      color: #888;
+    }
   }
 
   .tit {
@@ -1109,6 +1122,15 @@
 
   .percentage {
     color: #5865f5;
+  }
+
+  .cut_tit {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 450;
+    line-height: 20px;
+    letter-spacing: -0.35px;
+    color: #222;
   }
 
   .cut_txt {
@@ -1127,59 +1149,114 @@
       margin-right: 8px;
     }
   }
-}
 
-@media screen and (max-width: 1280px) {
-  .coupon_zone {
-    padding: 0 24px
-  }
-}
+  .coupon_desc {
+    margin-top: 52px;
 
-@media screen and (max-width: 359px) {
-  .membership_tabarea .tab_ui.size3>ul .tabs {
-    width: auto;
-    padding-left: 5px;
-    padding-right: 5px
-  }
-}
+    .lists {
+      position: relative;
+      margin-top: 12px;
+      padding-left: 60px;
 
-@media screen and (max-width: 1280px) {
+      &:first-child {
+        margin-top: 0;
+      }
 
-  /* 쿠폰 box 기본 틀 css */
-  .coupon_list .coupon_box {
-    width: calc((100% - 16px)/2);
-    min-height: auto;
-    margin: 0 0 24px 16px;
-  }
+      &_tit {
+        position: absolute;
+        top: 2px;
+        left: 0;
+        font-size: 12px;
+        letter-spacing: -0.3px;
+      }
 
-  .coupon_list .coupon {
-    width: calc(100% - 64px);
-    padding: 21px 10px 24px 23px;
+      &_txt {
+        line-height: 22px;
+      }
+    }
   }
 
-  /* 쿠폰 텍스트 바탕 */
-  .coupon_list .coupon_box:after {
-    width: 64px;
+  @include under-pc {
+
+    // ~ 1280
+    .coupon_box {
+      width: calc((100% - 16px)/2);
+      min-height: auto;
+      margin: 0 0 24px 16px;
+
+      &:after {
+        width: 64px;
+      }
+
+      .coupon_type {
+        font-size: 40px;
+
+        &.two {
+          right: -52px;
+          line-height: 33px;
+        }
+      }
+    }
+
+    .coupon {
+      width: calc(100% - 64px);
+      padding: 21px 10px 24px 23px;
+
+      &_no,
+      &_expiration {
+        position: relative;
+        top: 0;
+        right: 0;
+        font-size: 12px;
+      }
+    }
+
+    .coupon_desc {
+      margin-top: 30px;
+
+      .lists {
+        margin-top: 3px;
+      }
+
+      .lists_txt {
+        font-size: 12px;
+        line-height: 18px;
+      }
+    }
+
+    .tit {
+      margin-top: 2px;
+      font-size: 16px;
+      line-height: 26px;
+    }
+
+    .cut_tit {
+      margin-top: 2px;
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .cut_txt {
+      margin-top: 5px;
+    }
+
+    .expiration_txt {
+      margin-top: 26px;
+      font-size: 12px;
+    }
   }
 
-  /* 쿠폰 텍스트 css */
-  .coupon_list .coupon_box .coupon_type {
-    font-size: 40px;
-  }
-
-  .coupon_list .coupon_box .coupon_type.two {
-    right: -52px;
-    line-height: 33px;
-  }
-}
-
-@media screen and (max-width: 640px) {
-  .coupon_list {
+  @include only-mo {
+    // 640
     display: block;
-  }
 
-  .coupon_list .coupon_box {
-    width: 100%;
-    margin: 0 0 17px 0;
+    .coupon_box {
+      width: 100%;
+      margin: 0 0 17px 0;
+    }
+
+    .coupon_desc {
+      margin-top: 40px;
+    }
   }
 }
