@@ -50,6 +50,8 @@ const EventTop = () => {
         <Swiper className="swiper-wrapper"
                 slidesPerView={1}
                 loop={true}
+                speed={600}
+                autoplay={{ delay: 6000, disableOnInteraction: true }}
                 navigation={{
                   nextEl: '.swiper-button-next',
                   prevEl: '.swiper-button-prev',
