@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 
-import {
-  useHeaderDispatch,
-  closeSideBar,
-} from '../context/header.context';
+import { useHeaderDispatch, closeSideBar } from '../context/header.context';
 import { useCategoryState } from '../context/category.context';
 
 export default function Gnb() {
@@ -17,7 +14,7 @@ export default function Gnb() {
 
   const [activeMIndex, setActiveMIndex] = useState(-1);
 
-  const routePushAndClose = gcc => {
+  const routePushAndClose = (gcc) => {
     if (gcc?.href) {
       closeSideBar(headerDispatch);
       window.open(gcc.href);
@@ -30,10 +27,11 @@ export default function Gnb() {
   };
 
   const { gnbCategories } = useCategoryState();
+  const gnbRef = useRef();
 
   return (
     <>
-      <nav className={`gnb ${hovering ? 'gnb--active' : ''}`}>
+      <nav className={`gnb ${hovering ? 'gnb--active' : ''}`} ref={gnbRef}>
         <ul
           className="gnb__menu"
           onMouseOver={() => {
@@ -43,9 +41,9 @@ export default function Gnb() {
             setHovering(false);
           }}
         >
-          {
-            gnbCategories.map((gc, index) => {
-              return <li
+          {gnbCategories.map((gc, index) => {
+            return (
+              <li
                 key={`gnb-menu-${index}`}
                 className={`${activeIndex === index ? 'active' : ''} ${activeMIndex === index ? 'mo--active' : ''}`}
                 onMouseOver={() => {
@@ -53,11 +51,11 @@ export default function Gnb() {
                 }}
                 onMouseLeave={() => {
                   setActiveIndex(-1);
-               }
-              }>
+                }}
+              >
                 <a
                   href="#none"
-                  onClick={e => {
+                  onClick={(e) => {
                     setActiveMIndex(index);
                     e.preventDefault();
                   }}
@@ -65,12 +63,13 @@ export default function Gnb() {
                   {gc.label}
                 </a>
                 <ul className="gnb__menu__secondary">
-                  {
-                    gc.children.map((gcc, gccIndex) => {
-                      return <li key={`gnb-menu-${index}-${gccIndex}`}>
+                  {gc.children.map((gcc, gccIndex) => {
+                    return (
+                      <li key={`gnb-menu-${index}-${gccIndex}`}>
                         <a
                           href="#none"
-                          onClick={e => {
+                          onClick={(e) => {
+                            gnbRef.current.classList.remove('gnb--active');
                             routePushAndClose(gcc);
                             e.preventDefault();
                           }}
@@ -78,13 +77,12 @@ export default function Gnb() {
                           {gcc.label}
                         </a>
                       </li>
-                    })
-                  }
-
+                    );
+                  })}
                 </ul>
               </li>
-            })
-          }
+            );
+          })}
         </ul>
       </nav>
     </>
