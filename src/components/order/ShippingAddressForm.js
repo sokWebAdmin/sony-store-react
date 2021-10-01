@@ -330,7 +330,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
           </div>
         </div>
       </div>
-      <div className="acc_form">
+      <div className="acc_form" style={{ height: '423px' }}>
         <div className="acc_cell vat">
           <label htmlFor="delivery_choice">배송일 선택</label>
         </div>
