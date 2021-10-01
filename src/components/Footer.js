@@ -91,14 +91,14 @@ export default function Footer() {
         <div className="footer__legal">
           <div className="footer__legal__links">
             <Link to="/footer/terms" className="footer__legal__link">이용약관</Link>
-            <Link to="/footer/policy"  className="footer__legal__link privacy">개인정보처리방침</Link>
-            <a  onClick={()=>{setPop(true)}} className="footer__legal__link" data-modal-target="modal__customer__insurance" style={{cursor:"pointer"}}>소비자 피해 보상보험</a>
+            <a href="https://www.sony.co.kr/handler/ProductInfo-Start?PageName=jsp/footer/CF_policy.jsp" target="_blank" rel="noreferrer"  className="footer__legal__link privacy">개인정보처리방침</a>
+            <a href="#none"  onClick={(e)=>{e.preventDefault(); setPop(true)}} className="footer__legal__link" data-modal-target="modal__customer__insurance" style={{cursor:"pointer"}}>소비자 피해 보상보험</a>
             <Link to="/footer/sitemap" className="footer__legal__link">사이트맵</Link>
           </div>
           <div className="footer__legal__warning">
             <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
             <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br /> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.
-              <a className="escrow" href="https://mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat" target="_blank">클릭하시면 이니시스 결제시스템의 유효성을 확인하실 수 있습니다.</a>
+              <a className="escrow" href="https://mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat" target="_blank" rel="noreferrer">클릭하시면 이니시스 결제시스템의 유효성을 확인하실 수 있습니다.</a>
             </p>
           </div>
         </div>
