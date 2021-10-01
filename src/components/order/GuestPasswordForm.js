@@ -74,7 +74,7 @@ const GuestPasswordForm = forwardRef(({ setTempPassword }, ref) => {
         <div className="acc_cell">
           <div className="acc_group parent">
             <div className="acc_inp type3 error">
-              <input type="text" id="user_pwd" className="inp" value={pw}
+              <input type="password" id="user_pwd" className="inp" value={pw}
                      onChange={changePw} onBlur={() => blur('pw')}
                      ref={pwInput} />
               <span className="focus_bg"></span>
@@ -91,7 +91,7 @@ const GuestPasswordForm = forwardRef(({ setTempPassword }, ref) => {
         <div className="acc_cell">
           <div className="acc_group parent">
             <div className="acc_inp type3 error">
-              <input type="text" id="user_pwd2" className="inp"
+              <input type="password" id="user_pwd2" className="inp"
                      value={confirmPw} onChange={changeConfirmPw}
                      onBlur={() => blur('cpw')} ref={cpwInput} />
               <span className="focus_bg"></span>
