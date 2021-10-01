@@ -39,7 +39,6 @@ const EventBottom = () => {
   SwiperCore.use([Navigation]);
   const history = useHistory();
   const location = useLocation();
-  const { isLogin } = useContext(GlobalContext);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const [events, setEvents] = useState([]);
@@ -70,24 +69,6 @@ const EventBottom = () => {
     const showLabel = tabData.find(({ key }) => (getUrlParam('tab') || 'all') === key)?.label;
     setShowLabel(showLabel);
   }
-
-  const fetchInitDisplayEvents = async () => {
-    if (tabs.length === 8) return;
-    const { data } = await getDisplayEvents();
-    const employee = data.find((event) => `/${event.url}` === '/event/employee');
-    const hasEmployee = tabs.find(({key}) => key === 'employee');
-    let newTabs = [...tabs];
-    if (employee && !hasEmployee) {
-      newTabs = [...newTabs, { key: 'employee', label: '임직원몰' }];
-    }
-    const refurbish = data.find((event) => `/${event.url}` === '/event/refurbish');
-    const hasRefurbish = tabs.find(({key}) => key === 'refurbish');
-    if (refurbish && !hasRefurbish) {
-      newTabs = [...newTabs, { key: 'refurbish', label: '리퍼비시몰' }];
-    }
-    setTabs(newTabs);
-    modifyTabs(newTabs);
-  };
 
   const sortEvents = (data = events, sortNewest = newest) => {
     const sortByLatestCreationDate = (a, b) => {
@@ -165,14 +146,6 @@ const EventBottom = () => {
   useEffect(() => {
     modifyTabs();
   }, [location]);
-
-  useEffect(() => {
-    if (isLogin) {
-      fetchInitDisplayEvents();
-    } else {
-      setTabs(initTabs);
-    }
-  }, [isLogin]);
 
   return (
     <>
