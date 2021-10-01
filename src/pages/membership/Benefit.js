@@ -221,13 +221,13 @@ const Benefit = () => {
                       </li>
                       <li className="prmm_dtl_list">
                         <div className="prmm_dtl_pic"><img src='../../images/membership/premium2.jpg' alt="택배/퀵/친환경 서비스" className="prmm_dtl_img" /></div>
-                        <h3 className="prmm_dtl_title">택배/퀵/친환경 서비스</h3>
+                        <h3 className="prmm_dtl_title">퀵/친환경 패키지 서비스</h3>
                         <ul className="prmm_dtl_prctns">
                           <li className="prmm_dtl_prctn">소니스토어에서는 온라인 주문 한정으로 친환경 패키징을 제공합니다.</li>
                           <li className="prmm_dtl_prctn">박스/완충 포장재/테이프 모두 종이를 사용하여 환경 보호에 기여합니다.</li>
-                          <li className="prmm_dtl_prctn">택배/퀵 서비스는 소니스토어에서 구매한 제품에 한하여, 제품 가격에 따라 배송 비용이 할증될 수 있습니다.</li>
-                          <li className="prmm_dtl_prctn">제품 운송 중 파손/분실되는 경우에 이용 가능하며, 국내 지원만 가능합니다.</li>
-                          <li className="prmm_dtl_prctn">택배 : 구매 금액이 <strong className="primary-color">5만원 이상</strong>인 경우에 이용 가능하며, 국내 지역만 가능합니다.</li>
+                          <li className="prmm_dtl_prctn">퀵 서비스는 소니스토어에서 구매한 제품에 한하여, 제품 가격에 따라 배송 비용이 할증될 수 있습니다.</li>
+                          {/* <li className="prmm_dtl_prctn">제품 운송 중 파손/분실되는 경우에 이용 가능하며, 국내 지원만 가능합니다.</li> */}
+                          <li className="prmm_dtl_prctn">구매 금액이 <strong className="primary-color">5만원 이상</strong>인 경우에 이용 가능하며, 국내 지역만 가능합니다.</li>
                           <li className="prmm_dtl_prctn">퀵 서비스 : 구매금액이 <strong className="primary-color">200만원 이상</strong>인 경우에 이용 가능하며, 서울 지역에서만 가능합니다.</li>
                         </ul>
                         <p className="prmm_dtl_note">* 비용은 고객 부담입니다.</p>
