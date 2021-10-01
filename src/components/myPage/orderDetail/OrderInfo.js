@@ -12,6 +12,8 @@ export default function OrderInfo({ shippingAddress, ordererInfo }) {
           <dd className="order_desc">
             {shippingAddress.receiverName}({shippingAddress.ordererContact1})
           </dd>
+          <dt className="order_term">휴대폰 번호</dt>
+          <dd className="order_desc">{shippingAddress.receiverContact1}</dd>
           <dt className="order_term">배송지</dt>
           <dd className="order_desc">
             {shippingAddress.receiverAddress}
