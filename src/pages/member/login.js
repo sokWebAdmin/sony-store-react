@@ -104,7 +104,7 @@ export default function Login ({ location }) {
           history.push(history.location.state.next);
         }
         else {
-          history.push(`/${nextLocation || '/'}`);
+          nextLocation ? history.push(`/${nextLocation}`) : history.push('/');
         }
       }
     }
