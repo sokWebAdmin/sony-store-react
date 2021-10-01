@@ -16,18 +16,13 @@ import OrderSummary from '../../components/myPage/main/OrderSummary';
 import MileageInfo from '../../components/myPage/main/MlieageList';
 import CouponList from '../../components/myPage/main/CouponList';
 import WishList from '../../components/myPage/main/WishList';
-import {
-  fetchProfile,
-  fetchMyProfile,
-  useProfileState,
-  useProileDispatch,
-} from '../../context/profile.context';
+import { fetchProfile, fetchMyProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
 import { getWish } from '../../api/order';
 import { isMobile } from 'react-device-detect';
 
 const HOW_MANY_WISH = isMobile ? 9 : 10;
 
-export default function MyPageMain () {
+export default function MyPageMain() {
   const [viewContent, setViewContent] = useState('mileage');
 
   const { my, profile } = useProfileState();
@@ -38,10 +33,12 @@ export default function MyPageMain () {
   const [pageIndex, setPageIndex] = useState(1);
 
   const rerenderWish = () => {
-    fetchWish().then(({ items, totalCount }) => {
-      setWishList(items);
-      setWishCount(totalCount);
-    }).catch(console.error);
+    fetchWish()
+      .then(({ items, totalCount }) => {
+        setWishList(items);
+        setWishCount(totalCount);
+      })
+      .catch(console.error);
   };
 
   useEffect(async () => {
@@ -57,22 +54,24 @@ export default function MyPageMain () {
   }, []);
 
   useEffect(() => {
-    fetchWish().then(({ items, totalCount }) => {
-      setWishList([...wishList, ...items]);
-      setWishCount(totalCount);
-    }).catch(console.error);
+    fetchWish()
+      .then(({ items, totalCount }) => {
+        setWishList([...wishList, ...items]);
+        setWishCount(totalCount);
+      })
+      .catch(console.error);
   }, [pageIndex]);
 
-  const more = e => {
+  const more = (e) => {
     e.preventDefault();
     setPageIndex(pageIndex + 1);
   };
 
-  function fetchMy (customerid) {
+  function fetchMy(customerid) {
     return fetchMyProfile(profileDispatch, { type: '30', customerid });
   }
 
-  async function fetchWish () {
+  async function fetchWish() {
     const request = {
       pageNumber: pageIndex,
       pageSize: HOW_MANY_WISH,
@@ -98,33 +97,33 @@ export default function MyPageMain () {
         <div className="my_wrap">
           <div className="my_head">
             <h2 className="title">마이페이지</h2>
-            <MemberSummary tabChange={setViewContent} profile={profile}
-                           availablemileage={availablemileage}
-                           wishCount={wishCount}
+            <MemberSummary
+              tabChange={setViewContent}
+              profile={profile}
+              availablemileage={availablemileage}
+              wishCount={wishCount}
             />
           </div>
           <BToBBanners />
 
           <div className="cont_inner">
-            {profile &&
-            <>
-              <OrderSummary />
-              {viewContent === 'mileage' &&
-              <MileageInfo availablemileage={availablemileage}
-                           totalExpireMileage={totalExpireMileage}
-                           profile={profile} />}
-              {viewContent === 'coupon' && <CouponList />}
-              {viewContent === 'wish' &&
-              <WishList rerender={rerenderWish} wishList={wishList}
-                        wishCount={wishCount}
-                        more={more} />}
-            </>
-            }
+            {profile && (
+              <>
+                <OrderSummary />
+
+                <MileageInfo
+                  availablemileage={availablemileage}
+                  totalExpireMileage={totalExpireMileage}
+                  profile={profile}
+                />
+                <CouponList />
+
+                <WishList rerender={rerenderWish} wishList={wishList} wishCount={wishCount} more={more} />
+              </>
+            )}
           </div>
         </div>
       </div>
-
-
     </>
   );
 }
