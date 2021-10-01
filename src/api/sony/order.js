@@ -7,4 +7,4 @@ export const postInvoice = requestBody => request('IF_ORD_0004.do', 'post',
   null, requestBody);
 
 export const getInvoice = baseketid => request(
-  'IF_ORD_0003.do', 'post', null, { baseketid });
+  'IF_ORD_0003.do', 'get', { baseketid });
