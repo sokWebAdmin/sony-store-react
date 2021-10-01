@@ -1,0 +1,1042 @@
+@import "./import/variables";
+@import url("./common.css");
+
+/* membership */
+.Membership {
+  @include under-pc {
+    .content {
+      margin: 0;
+    }
+  }
+}
+
+.membership {
+  &_kvarea {
+    height: 600px;
+    background: url(/dist/images/membership/membership_kv_pcimg.jpg) no-repeat 50% 0;
+
+    &.temp {
+      background: url(/dist/images/membership/membership_kv_vippcimg.jpg) no-repeat 50% 0;
+    }
+
+    &_titlebox {
+      margin: 0 auto;
+      padding-top: 204px;
+      max-width: 1200px;
+      text-align: center;
+
+      .subtitle {
+        display: block;
+        margin-bottom: 24px;
+        font-size: 20px;
+        color: #fff;
+        letter-spacing: -0.5px;
+        font-weight: 700;
+        line-height: 20px;
+      }
+
+      .title {
+        margin-bottom: 32px;
+        font-size: 48px;
+        color: #fff;
+        font-weight: 700;
+        line-height: 48px;
+      }
+
+      .desc {
+        font-size: 16px;
+        color: #bbb;
+        letter-spacing: -0.4px;
+      }
+
+      .line_box {
+        margin-top: 135px;
+        border-top: 1px solid #444;
+        text-align: left;
+
+        .txt {
+          margin: 0 auto;
+          padding: 46px 0 40px;
+          max-width: 830px;
+          font-size: 20px;
+          color: #fff;
+          background: url(/dist/images/membership/ic_all.png) no-repeat 100% 40px;
+
+          .amp {
+            span {
+              position: relative;
+
+              &:before {
+                position: absolute;
+                top: -6px;
+                left: 50%;
+                width: 2px;
+                height: 2px;
+                content: '';
+                background: #ffde3f;
+                border-radius: 100%;
+                transform: translateX(-50%);
+              }
+
+              &:after {
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                content: '';
+                border-bottom: 1px solid #707070;
+              }
+
+              &:nth-of-type(3) {
+                padding-left: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &_tabarea {
+    margin: 80px 0 120px;
+
+    .tab_ui .btn {
+      padding: 22px 0 20px;
+      font-size: 20px;
+    }
+
+    .detail_veiw_area {
+      margin-top: 80px;
+
+      .col_table_wrap {
+        margin: 0 auto 120px;
+        max-width: 1200px;
+
+        .col_table_cell {
+          padding: 20px 48px;
+          width: 28%;
+          line-height: 24px;
+
+          &:first-of-type {
+            width: auto;
+          }
+        }
+
+        .emp {
+          color: #222;
+          font-weight: 700;
+        }
+
+        &.temp {
+          .col_table_cell {
+            padding: 20px 100px;
+            width: 40%;
+
+            &:first-of-type {
+              padding: 20px 64px;
+              width: auto;
+            }
+          }
+        }
+      }
+
+      .mo_tbl {
+        display: none;
+      }
+    }
+
+    .mileage_info {
+      margin: 0 auto 40px;
+      max-width: 1200px;
+      height: 600px;
+      background: url(/dist/images/membership/membership_mileage_pcimg.png) no-repeat 50% 0;
+
+      &_inner {
+        padding-top: 80px;
+        text-align: center;
+
+        &_tit {
+          font-size: 24px;
+          color: #222;
+          font-weight: 700;
+        }
+
+        &_txt {
+          margin-top: 40px;
+          color: #222;
+          font-size: 16px;
+          line-height: 24px;
+
+          .br {
+            display: block;
+          }
+
+          em {
+            color: $primary-color;
+            font-weight: 700;
+          }
+
+          &:last-of-type {
+            margin-top: 24px;
+            color: #888;
+            line-height: 22px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .mileage_bgarea {
+      margin-bottom: 40px;
+      height: 550px;
+      background: url(/dist/images/membership/membership_bgarea_pc.png) no-repeat 50% 0;
+
+      &_inner {
+        margin: 0 auto;
+        padding-top: 84px;
+        max-width: 1000px;
+
+        .tit {
+          display: block;
+          margin-bottom: 26px;
+          font-size: 24px;
+          color: #fff;
+          text-align: center;
+        }
+
+        .message {
+          &_lft {
+            .message_txt {
+              p {
+                background-color: #4e5172;
+
+                &:before {
+                  right: 32px;
+                  border-right: 22px solid #4e5172;
+                  border-bottom-left-radius: 2.2rem 0.9rem;
+                  transform: translate(0, -0.1rem);
+                }
+
+                &:after {
+                  right: 32px;
+                  border-bottom-left-radius: 2.2rem;
+                  transform: translate(0, -1px);
+                }
+              }
+            }
+          }
+
+          &_rgt {
+            text-align: right;
+
+            .message_txt {
+              p {
+                background-color: #5865f5;
+
+                &:before {
+                  left: 32px;
+                  border-left: 22px solid #5865f5;
+                  border-bottom-right-radius: 2.2rem 0.9rem;
+                  transform: translate(0, -0.1rem);
+                }
+
+                &:after {
+                  left: 32px;
+                  border-bottom-right-radius: 2.2rem;
+                  transform: translate(0, -1px);
+                }
+              }
+            }
+          }
+
+          &_txt {
+            position: relative;
+
+            p {
+              position: relative;
+              display: inline-block;
+              margin: 16px 0 10px;
+              padding: 20px 32px;
+              border-radius: 80px;
+              font-size: 16px;
+              line-height: 24px;
+              color: #fff;
+              font-weight: 500;
+
+              &:before,
+              &:after {
+                position: absolute;
+                bottom: -11px;
+                content: '';
+                height: 10px;
+              }
+
+              &:before {
+                height: 10px;
+              }
+
+              &:after {
+                background-color: #000;
+                width: 10px;
+              }
+            }
+
+            &:first-of-type {
+              p {
+                margin-top: 0;
+              }
+            }
+          }
+
+          .empcolor {
+            color: #ffff00;
+            font-weight: 700;
+          }
+
+          .emoticon {
+            display: inline-block;
+            margin: 3px 0 0 5px;
+            width: 18px;
+            height: 18px;
+            background: url(/dist/images/membership/ic_emoji.png) no-repeat 0 0;
+            vertical-align: top;
+          }
+
+          &:after {
+            display: block;
+            content: '';
+            clear: both;
+          }
+        }
+      }
+    }
+
+    .mileage_use {
+      margin: 0 auto;
+      max-width: 762px;
+      text-align: center;
+
+      &_txt {
+        p {
+          font-size: 16px;
+          color: #222;
+          line-height: 24px;
+          letter-spacing: -0.6px;
+
+          .emp {
+            color: $primary-color;
+            font-weight: 700;
+          }
+
+          &:last-of-type {
+            margin-top: 24px;
+            font-size: 14px;
+            color: #666;
+
+            strong {
+              color: #444;
+            }
+          }
+        }
+      }
+
+      &_method {
+        margin: 120px auto 0;
+        max-width: 588px;
+
+        .tit {
+          display: block;
+          margin-bottom: 40px;
+          font-size: 24px;
+          color: #222;
+          font-weight: 700;
+        }
+
+        &_list {
+          display: flex;
+          justify-content: space-between;
+          align-items: stretch;
+
+          li {
+            position: relative;
+            width: calc((100% - 8px)/2);
+            padding: 130px 0 44px;
+            color: #222;
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: 700;
+            border: 1px solid #e1e1e1;
+            letter-spacing: -0.3px;
+
+            .br {
+              display: block;
+            }
+
+            &.method_01 {
+              background: url(/dist/images/membership/ic_shopping.svg) no-repeat 50% 43px;
+            }
+
+            &.method_02 {
+              background: url(/dist/images/membership/ic_repair.svg) no-repeat 50% 43px;
+            }
+          }
+        }
+
+        &_txt {
+          margin-top: 40px;
+
+          p {
+            font-size: 16px;
+            color: #222;
+
+            strong {
+              color: $primary-color;
+              font-weight: 700;
+              line-height: 24px;
+            }
+
+            &:last-of-type {
+              margin-top: 24px;
+              font-size: 14px;
+              color: #666;
+              line-height: 22px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .tab_ui_inner.temp .mileage_info {
+    background: url(/dist/images/membership/membership_mileage_vippcimg.png) no-repeat 50% 0;
+  }
+
+  @include under-pc {
+    &_kvarea {
+      background: url(/dist/images/membership/membership_kv_tbimg.jpg) no-repeat 50% 0;
+      background-size: cover;
+
+      &_titlebox {
+        width: auto;
+
+        .line_box {
+          margin: 135px 24px 0;
+
+          .txt {
+            padding-left: 26px;
+            background: url(/dist/images/membership/ic_all_tb.png) no-repeat 96% 40px;
+          }
+        }
+      }
+
+      &.temp {
+        background: url(/dist/images/membership/membership_kv_viptbimg.jpg) no-repeat 50% 0;
+        background-size: cover;
+      }
+    }
+
+    &_tabarea {
+      margin-top: 40px;
+
+      .detail_tab {
+        margin: 0 114px;
+      }
+
+      .tab_ui .btn {
+        font-size: 18px;
+      }
+
+      .detail_veiw_area {
+        margin-top: 64px;
+
+        .mileage_info {
+          margin: 0 24px;
+        }
+
+        .col_table_wrap {
+          margin: 40px 24px 80px;
+
+          .col_table_cell {
+            padding: 20px 20px;
+          }
+
+          &.temp {
+            .col_table_cell {
+              padding: 20px 45px;
+              width: 40%;
+
+              &:first-of-type {
+                padding: 20px 25px;
+                width: auto;
+              }
+            }
+          }
+        }
+      }
+
+      .mileage_info {
+        height: 500px;
+        background: url(/dist/images/membership/membership_mileage_tbimg.png) no-repeat 50% 100%;
+        background-size: cover;
+      }
+
+      .mileage_bgarea {
+        height: 585px;
+        background: url(/dist/images/membership/membership_bgarea_tb.png) no-repeat 50% 100%;
+        background-size: cover;
+
+        &_inner {
+          padding-top: 80px;
+
+          .tit {
+            margin-bottom: 64px;
+          }
+
+          .message {
+            margin: 0 24px;
+          }
+        }
+      }
+
+      .mileage_use {
+        &_txt {
+          margin: 0 auto;
+          max-width: 500px;
+
+          .br {
+            display: block;
+          }
+        }
+
+        &_method {
+          margin: 80px auto 0;
+          max-width: 536px;
+
+          &_list li a {
+            padding: 128px 0 40px;
+            height: 100%;
+            font-size: 16px;
+            line-height: 24px;
+          }
+        }
+      }
+    }
+
+    .tab_ui_inner.temp .mileage_info {
+      background: url(/dist/images/membership/membership_mileage_viptbimg.png) no-repeat 50% 100%;
+      background-size: cover;
+    }
+  }
+
+  @include only-mo {
+    &_kvarea {
+      height: 696px;
+      background: url(/dist/images/membership/membership_kv_moimg.jpg) no-repeat 0 0;
+      background-size: cover;
+
+      &_titlebox {
+        padding-top: 194px;
+
+        .subtitle {
+          margin-bottom: 16px;
+          font-size: 16px;
+        }
+
+        .title {
+          margin-bottom: 24px;
+          font-size: 24px;
+          line-height: 36px;
+          ;
+        }
+
+        .desc {
+          margin: 0 auto;
+          width: 70%;
+          font-size: 14px;
+          line-height: 22px;
+          ;
+        }
+
+        .line_box {
+          margin: 170px 24px 0;
+
+          .txt {
+            padding: 35px 0 65px;
+            font-size: 14px;
+            line-height: 1;
+            background: url(/dist/images/membership/ic_all_mo.png) no-repeat 0 0;
+            background-position: center bottom;
+            text-align: center;
+            font-weight: 200;
+
+            .amp {
+              display: block;
+              margin-top: 18px;
+            }
+          }
+        }
+      }
+
+      &.temp {
+        background: url(/dist/images/membership/membership_kv_vipmoimg.jpg) no-repeat 0 0;
+        background-size: cover;
+      }
+    }
+
+    &_tabarea {
+      margin: 12px 0 80px;
+
+      .detail_tab {
+        margin: 0 24px;
+      }
+
+      .tab_ui .btn {
+        font-size: 16px;
+        letter-spacing: -1px;
+      }
+
+      .detail_veiw_area {
+        margin-top: 40px;
+
+        .pc_tbl {
+          display: none;
+        }
+
+        .mo_tbl {
+          display: block;
+          margin: 42px 24px 64px;
+
+          col:nth-child(1) {
+            width: 35%;
+          }
+
+          col:nth-child(2) {
+            width: 65%;
+          }
+
+          th {
+            padding: 24px 7px;
+            text-align: center;
+            background-color: transparent;
+            vertical-align: middle;
+
+            .name {
+              margin-top: 8px;
+              font-size: 14px;
+              line-height: 22px;
+            }
+          }
+
+          th,
+          td {
+            font-size: 14px;
+          }
+
+          td {
+            padding: 24px;
+
+            .benefit {
+              &:last-of-type {
+                margin-top: 16px;
+              }
+            }
+          }
+        }
+      }
+
+      .mileage_info {
+        height: 432px;
+        background: url(/dist/images/membership/membership_mileage_moimg.png) no-repeat 0 0;
+        background-size: 100% 100%;
+
+        &_inner {
+          margin: 0 24px;
+          padding-top: 64px;
+
+          &_tit {
+            font-size: 20px;
+          }
+
+          &_txt {
+            font-size: 14px;
+
+            .br {
+              display: inline;
+            }
+
+            &:last-of-type {
+              font-size: 12px;
+              line-height: 18px;
+            }
+          }
+        }
+      }
+
+      .mileage_use {
+        margin: 0 24px;
+
+        &_txt {
+          p {
+            font-size: 14px;
+            line-height: 22px;
+
+            &:last-of-type {
+              font-size: 12px;
+            }
+          }
+        }
+
+        &_method {
+          margin: 64px auto 0;
+
+          .tit {
+            margin-bottom: 24px;
+            font-size: 20px;
+          }
+
+          &_list {
+            li {
+              padding: 100px 15px 20px;
+              font-size: 12px;
+              line-height: 18px;
+
+              .m_br {
+                display: block;
+              }
+
+              .br {
+                display: inline;
+              }
+
+              &.method_01 {
+                background: url(/dist/images/membership/ic_shopping.svg) no-repeat 50% 24px;
+              }
+
+              &.method_02 {
+                background: url(/dist/images/membership/ic_repair.svg) no-repeat 50% 24px;
+              }
+            }
+          }
+
+          &_txt {
+            margin-top: 24px;
+
+            p {
+              font-size: 14px;
+              line-height: 22px;
+
+              &:last-of-type {
+                font-size: 12px;
+                line-height: 18px;
+              }
+            }
+          }
+        }
+      }
+
+      .mileage_bgarea {
+        height: 512px;
+        background: url(/dist/images/membership/membership_bgarea_mo.png) no-repeat 50% 100%;
+        background-size: cover;
+
+        &_inner {
+          padding-top: 64px;
+
+          .tit {
+            font-size: 20px;
+          }
+        }
+
+        .message {
+          height: 305px;
+
+          &_txt p {
+            padding: 13px 24px;
+            font-size: 12px;
+            line-height: 18px;
+          }
+
+          &_lft {
+            width: auto;
+          }
+
+          &_rgt {
+            margin-top: 16px;
+            width: auto;
+          }
+
+          .br {
+            display: block;
+          }
+
+          .emoticon {
+            margin: 0 0 0 5px;
+          }
+        }
+      }
+    }
+
+    .tab_ui_inner.temp .mileage_info {
+      background: url(/dist/images/membership/membership_mileage_vipmoimg.png) no-repeat 50% 100%;
+      background-size: cover;
+    }
+  }
+}
+
+/* primeum service */
+.prmm {
+  &_smry {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding: 80px 0;
+    text-align: center;
+    background-color: #f4f7fa;
+
+    &_title {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 1.5;
+      letter-spacing: -.025em;
+      color: #222;
+    }
+
+    &_desc {
+      margin: 36px 0;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: -.025em;
+      color: #222;
+    }
+
+    &_list {
+      &s {
+        display: flex;
+        justify-content: space-between;
+        max-width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      flex: 0 1 200px;
+      height: 194px;
+      padding-top: 30px;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: -.025em;
+      color: #222;
+      border-radius: 20px;
+      background-color: #fff;
+      background-repeat: no-repeat;
+      background-position: 50% 99px;
+      background-size: 56px;
+
+      &:nth-child(1) {
+        background-image: url("/dist/images/membership/ic_premium1.svg");
+      }
+
+      &:nth-child(2) {
+        background-image: url("/dist/images/membership/ic_premium2.svg");
+      }
+
+      &:nth-child(3) {
+        background-image: url("/dist/images/membership/ic_premium3.svg");
+      }
+
+      &:nth-child(4) {
+        background-image: url("/dist/images/membership/ic_premium4.svg");
+      }
+    }
+
+    &_item {
+      margin-top: .2em;
+      font-size: 16px;
+      letter-spacing: -.025em;
+    }
+  }
+
+  &_dtl {
+    max-width: 1200px;
+    margin: 80px auto 0;
+
+    &_list {
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: -.025em;
+      color: #222;
+
+      &:nth-child(even) {
+        padding-left: 208px;
+      }
+
+      &:nth-child(n+2) {
+        margin-top: 120px;
+      }
+    }
+
+    &_pic {
+      max-width: 992px;
+    }
+
+    &_img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    &_title {
+      margin: 1.5em 0 0.5em;
+      font-weight: 700;
+      font-size: 1.5em;
+      letter-spacing: -.025em;
+    }
+
+    &_note {
+      font-size: .875em;
+      letter-spacing: -.025em;
+      color: #666;
+    }
+
+    &_link {
+      display: inline-block;
+      margin-top: 1.1429em;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -.025em;
+      color: #222;
+
+      &::after {
+        content: "";
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        margin-left: .2em;
+        border-top: 2px solid #222;
+        border-right: 2px solid #222;
+        transform: rotate(45deg) translateY(-25%);
+      }
+    }
+
+    &_prctn {
+      &s {
+        margin: .75em 0 1.125em;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    &_smry {
+      margin: 0 24px 64px;
+      padding: 80px 24px 48px;
+
+      &_list {
+        flex-basis: calc(25% - 18px);
+        height: 170px;
+        background-position: 50% 93px;
+      }
+    }
+
+    &_dtl {
+      margin: 64px 24px 0;
+
+      &_list {
+        font-size: 14px;
+
+        &:nth-child(even) {
+          padding-left: 0;
+        }
+
+        &:nth-child(n+2) {
+          margin-top: 80px;
+        }
+      }
+
+      &_pic {
+        position: relative;
+        padding-top: 55.556%;
+      }
+
+      &_img {
+        position: absolute;
+        top: 0;
+        height: 100%;
+      }
+
+      &_title {
+        font-size: 1.429em;
+      }
+
+      &_note {
+        font-size: .8572em;
+      }
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    &_smry {
+      padding: 64px 24px 40px;
+
+      &_desc {
+        font-size: 14px;
+
+        br {
+          display: none;
+        }
+      }
+
+      &_list {
+        &s {
+          flex-wrap: wrap;
+        }
+
+        flex-basis: calc(50% - 4px);
+        height: calc(50vw - 52px);
+        min-height: 140px;
+        padding-top: 4vw;
+        background-position: 50% calc(50% + 28px);
+
+        &:nth-child(n+3) {
+          margin-top: 8px;
+        }
+      }
+
+      &_item {
+        font-size: 12px;
+      }
+    }
+
+    &_dtl {
+      &_list {
+        &:nth-child(n+2) {
+          margin-top: 64px;
+        }
+      }
+
+      &_pic {
+        padding-top: 61.54%;
+      }
+    }
+  }
+}
+
+.coupon_zone {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .coupon_inner {
+    padding-bottom: 16px;
+  }
+
+  @include under-pc {
+    padding: 0 24px;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .membership_tabarea .tab_ui.size3>ul .tabs {
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
