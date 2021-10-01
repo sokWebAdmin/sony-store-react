@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import EstimateSheet from '../../popup/EstimateSheet';
 
-const Controller = ({ products, checkedIndexes, checkedProducts, setCheckedIndexes }) => {
+const Controller = ({ products, checkedIndexes, checkedProducts, setCheckedIndexes, deleteItems }) => {
   const [allChecked, setAllChecked] = useState(false);
   const [viewES, setViewES] = useState(false);
 
@@ -19,6 +19,15 @@ const Controller = ({ products, checkedIndexes, checkedProducts, setCheckedIndex
 
   const onClickShowES = () => (checkedProducts.length ? setViewES(true) : alert('상품을 선택해주세요.'));
 
+  const onClickDelete = () => {
+    if (checkedProducts.length === 0) {
+      alert('상품을 선택해주세요.');
+      return;
+    }
+    const nos = checkedProducts[0].cartNo === 0 ? checkedIndexes : checkedProducts.map(({ cartNo }) => cartNo);
+    deleteItems(nos)
+  };
+
   return (
     <div className="cart_func">
       <div className="cart_func_check">
@@ -35,7 +44,7 @@ const Controller = ({ products, checkedIndexes, checkedProducts, setCheckedIndex
         </div>
       </div>
       <div className="cart_func_buttons">
-        <button type="button" class="button button_negative button-s button_del_checked_items">
+        <button type="button" className="button button_negative button-s button_del_checked_items" onClick={onClickDelete}>
           선택 삭제
         </button>
         <button

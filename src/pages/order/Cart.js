@@ -196,6 +196,17 @@ const Cart = () => {
     }
   }
 
+  function deleteItems(nos) {
+    // productNo 보다 유니크함
+    if (isLogin) {
+      const cartNos = nos;
+      deleteMemberCart(cartNos);
+    } else {
+      const indexs = nos;
+      deleteGuestCart(indexs);
+    }
+  }
+
   function deleteMemberCart(cartNos) {
     deleteCart({
       cartNo: cartNos.join(','),
@@ -284,6 +295,7 @@ const Cart = () => {
                     checkedIndexes={checkedIndexes}
                     setCheckedIndexes={setCheckedIndexes}
                     checkedProducts={checkedProducts}
+                    deleteItems={deleteItems}
                   />
                   <CartTable>
                     <ProductList
