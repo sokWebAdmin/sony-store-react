@@ -9,6 +9,8 @@ const BToBBanners = () => {
 
   const init = useCallback(async () => {
     mapData(await fetchBanner('018'));
+    mapData(await fetchBanner('025'));
+    mapData(await fetchBanner('026'));
     mapData(await fetchBanner('019'));
   }, []);
 
