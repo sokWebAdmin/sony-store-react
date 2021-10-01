@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import { isMobile } from 'react-device-detect';
 
 //utils
 import { Link, useHistory } from "react-router-dom";
@@ -13,11 +14,17 @@ import blog from "../assets/images/common/ic_blog.svg";
 import sidebar1 from "../assets/images/common/ic_sidebar1.svg";
 import InsurePop from "./InsurePop";
 import Floating from "./common/Floating";
+import { useToggle } from "../hooks";
+import { SONY_COMPANY, SONY_FAMILY } from "../const/footer";
 
 export default function Footer() {
   const history = useHistory();
 
   const [isPop, setPop] = useState(false);
+
+  const [ pcActive, setPcActive ] = useToggle(false);
+
+  const [ moActive, setMoActive ] = useToggle(false);
 
   return (
     <>
@@ -25,7 +32,7 @@ export default function Footer() {
           <Floating />
       <nav className="sidebar">
         <div className="sidebar__inner">
-          <a  onClick={()=>{history.push('/mypage/myPageMain.html')}} className="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+          <Link to="/my-page" className="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></Link>
           <a  className="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
           <a href="#header" className="sidebar__btn top"><span>페이지 상단</span></a>
         </div>
@@ -44,41 +51,37 @@ export default function Footer() {
           </div>
           <div className="footer__family">
             <div className="footer__family__links">
-              <div className="footer__family__link footer__pc">
-                <button type="button" className="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침">Sony Family</button>
+              <div className={`footer__family__link footer__pc ${pcActive && 'footer__family__link--active'}`}>
+                <button type="button" className="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침" onClick={ () => isMobile ? setMoActive() : setPcActive() }>Sony Family</button>
                 <div className="footer__family__link__inner">
                   <h4 className="optgroup__label">Sony Family</h4>
                   <ul className="optgroup">
-                    <li className="option"><a  target="_blank">소니코리아</a></li>
-                    <li className="option"><a  target="_blank">소니코리아 고객지원</a></li>
-                    <li className="option"><a  target="_blank">소니 알파 α</a></li>
-                    <li className="option"><a  target="_blank">소니 방송/업무용 솔루션</a></li>
-                    <li className="option"><a  target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
+                    {
+                      SONY_FAMILY.map(({ url, name }) => (
+                        <li className="option"><a href={url} target="_blank" rel="noreferrer" onClick={ () => setPcActive(false) }>{ name }</a></li>
+                      ))
+                    }
                   </ul>
                   <h4 className="optgroup__label">Family Company</h4>
                   <ul className="optgroup">
-                    <li className="option"><a  target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
-                    <li className="option"><a  target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
-                    <li className="option"><a  target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
-                    <li className="option"><a  target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
-                    <li className="option"><a  target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
+                    {
+                      SONY_COMPANY.map(({ url, name }) => (
+                        <li className="option"><a href={url} target="_blank" rel="noreferrer" onClick={ () => setPcActive(false) }>{ name }</a></li>
+                      ))
+                    }
                   </ul>
                 </div>
               </div>
-              <select className="footer__family__link footer__mo">
+              <select onChange={e => window.open(e.target.value)} className={`footer__family__link footer__mo ${moActive && 'footer__family__link--active'}`}>
                 <optgroup label="Sony Family">
-                  <option>소니코리아</option>
-                  <option>소니코리아 고객지원</option>
-                  <option>소니 알파 α</option>
-                  <option>소니 방송/업무용 솔루션</option>
-                  <option>소니 방송 업무용 솔루션 고객지원</option>
+                  {
+                    SONY_FAMILY.map(({ url, name }) => <option value={url}>{ name }</option>)
+                  }
                 </optgroup>
                 <optgroup label="Family Company">
-                  <option>소니 인터렉티브 엔터테인먼트 코리아</option>
-                  <option>소니 뮤직 엔터테인먼트 코리아</option>
-                  <option>소니 ATV 뮤직 퍼블리싱 코리아</option>
-                  <option>소니 픽쳐스 엔터테인먼트 코리아</option>
-                  <option>소니 픽쳐스 텔레비전 코리아</option>
+                  {
+                    SONY_COMPANY.map(({ url, name }) => <option value={url}>{ name }</option>)
+                  }
                 </optgroup>
               </select>
             </div>
