@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { useContext, useState } from "react";
+import React, { useContext, useState, createRef } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from "../../../context/global.context";
 import { postCart, postOrderSheets } from "../../../api/order";
@@ -8,6 +8,7 @@ import Alert from '../../common/Alert';
 import Notification from '../Notification';
 import { useAlert } from '../../../hooks';
 import gc from '../../../storage/guestCart';
+import HsValidationMiddleware from '../../cart/HsValidationMiddleware';
 
 const getOrderSheetNo = async (productNo, selectedOption) => {
   try {
@@ -50,14 +51,13 @@ const ERROR_CODE_MAPPING_ROUTE = {
 
 };
 
-
-export default function ButtonGroup({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly }) {
+export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, isHsProduct }) {
   const history = useHistory();
-  const { openAlert, closeModal, alertVisible, alertMessage  } = useAlert();
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const { isLogin } = useContext(GlobalContext);
-  const [ giftVisible, setGiftVisible ] = useState(false);
-  const [ cartVisible, setCartVisible ] = useState(false);
-  const [ wishVisible, setWishVisible ] = useState(false);
+  const [giftVisible, setGiftVisible] = useState(false);
+  const [cartVisible, setCartVisible] = useState(false);
+  const [wishVisible, setWishVisible] = useState(false);
 
   const nextUri = history.location.pathname;
   const getHistoryInfo = pathname => ({
@@ -144,13 +144,17 @@ export default function ButtonGroup({ selectedOption, productNo, canBuy, wish, s
     if (memberOnly && !isLogin) {
       const GUEST_ERROR = 'O8001';
       openAlert(
-        ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg, 
-        () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route))
+        ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg,
+        () => () => history.push(
+          getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
       );
       return;
     }
 
-    _getCartRequest(productNo, selectedOption);
+    const succeed = await hsValidation(isHsProduct);
+    if (succeed) {
+      _getCartRequest(productNo, selectedOption);
+    }
   };
 
   const wishHandler = async () => {
@@ -186,21 +190,29 @@ export default function ButtonGroup({ selectedOption, productNo, canBuy, wish, s
         break;
     }
   }
+
+  // hsValidation
+  const hsValidationMiddleware = createRef();
+  const hsValidation = validation =>
+    hsValidationMiddleware.current.validation(validation);
+
   return (
     <>
       <div className="result_btn_inner">
         <div className="result_btn_box">
           <ul>
             <li className="like">
-              <a href="#none" className={`btn_icon ${wish && 'on'}`} onClick={ e => handleClick(e, 'wish') }>찜하기</a>
+              <a href="#none" className={`btn_icon ${wish && 'on'}`}
+                 onClick={e => handleClick(e, 'wish')}>찜하기</a>
             </li>
             <li className="cart">
-              <a 
-                href="/cart" 
+              <a
+                href="/cart"
                 className="btn_icon"
-                onClick={ e => handleClick(e, 'cart') } 
+                onClick={e => handleClick(e, 'cart')}
                 data-popup="popup_cart"
               >장바구니</a>
+              <HsValidationMiddleware ref={hsValidationMiddleware} />
             </li>
             <li className="gift">
               <a 
