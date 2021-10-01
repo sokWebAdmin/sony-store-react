@@ -32,6 +32,7 @@ import { getOrderSheets, postOrderSheetCalculate } from '../../api/order';
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
+import '../../assets/scss/partials/orderBreadcrum.scss';
 
 
 // functions

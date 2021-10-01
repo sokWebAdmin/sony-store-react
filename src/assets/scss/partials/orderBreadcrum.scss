@@ -1,0 +1,12 @@
+.order .order_box__list {
+  li {
+    &:before {
+      z-index: 1;
+    }
+
+    .step_ico {
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
