@@ -24,7 +24,7 @@ const Expired = () => {
   const [keyword, setKeyword] = useState('');
 
   const fetchInitDisplayEvents = async (pageNumber = 1, keyword = '') => {
-    const query = keyword ? { keyword, pageNumber } : { pageNumber };
+    const query = keyword ? { keyword: keyword.trim(), pageNumber } : { pageNumber };
     const { data } = await getDisplayCloseEvents({ ...query, hasTotalCount: true });
     setEvents(data);
   };
@@ -78,7 +78,6 @@ const Expired = () => {
                     <input type="text" id="dd" className="search_inp" placeholder="검색어를 입력하세요." autoComplete="off"
                            maxLength="50" onChange={(e) => setKeyword(e.target.value)} value={keyword}
                            onKeyPress={(event) => {
-                             event.preventDefault();
                              if (event.code === 'Enter' || event.code === 'NumpadEnter') {
                                fetchInitDisplayEvents(1, keyword);
                              }
