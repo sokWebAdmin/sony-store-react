@@ -62,13 +62,13 @@ const Expired = () => {
                 <SelectBox
                   defaultInfo={{
                     type: 'dropdown',
-                    placeholder: '태그',
+                    placeholder: '제목',
                     className: 'search_category',
                   }}
                   selectOptions={[
                     {
                       optionNo: '01',
-                      label: '태그',
+                      label: '제목',
                     },
                   ]}
                   selectOption={() => console.log('')}
@@ -113,7 +113,7 @@ const Expired = () => {
                           <div className="col_table_cell divide">
                             <div className="divide_table">
                               <div className="table_cell tal event_name">
-                                <Link to={getLink(false, eventNo, tag, event)} className="txt">{label}</Link>
+                                <a className="txt">{label}</a>
                               </div>
                               <div className="table_cell event_duration">
                                 <p

@@ -48,6 +48,10 @@ const EventProducts = ({event, filterLabel, grade}) => {
     if (!grade) return;
 
     const newSection = !filterLabel || filterLabel === '전체' ? event?.section.flatMap(({ products }) => products) : event.section.find(({label}) => label === filterLabel).products;
+    if (grade === '전체') {
+      newSection && setSection(newSection);
+      return;
+    }
     const newGradeSection = newSection.filter(({stickerLabels}) => stickerLabels.length > 0 && stickerLabels[0] === grade)
     newGradeSection && setSection(newGradeSection);
   }, [grade, filterLabel]);

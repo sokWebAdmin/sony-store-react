@@ -284,14 +284,6 @@ const gnbCategories = [
         label: 'LIVE ON',
         route: '/event/list?tab=live-on',
       },
-      // {
-      //   label: '임직원몰',
-      //   route: '/event/list?tab=employee',
-      // },
-      // {
-      //   label: '리퍼비시몰',
-      //   route: '/event/list?tab=refurbish',
-      // },
     ],
   },
   {
