@@ -47,7 +47,6 @@ const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes,
                   </div>
                   <div className="prd_info">
                     <div className="prd_info_name">{product.productName}</div>
-                    <p className="prd_info_option">{product.optionText}</p>
                   </div>
                 </div>
               </div>
