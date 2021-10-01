@@ -31,7 +31,7 @@ export default function Employee() {
   const [event, setEvent] = useState(null);
   const [tabState, setTabState] = useState(getUrlParam('tab') || '전체');
   const [showLayer, setShowLayer] = useState(false);
-  const [grade, setGrade] = useState('A급');
+  const [grade, setGrade] = useState('전체');
 
   const fetchDetailEvent = async () => {
     const response = await getEventByEventNo(eventNo, { soldout: true });
@@ -216,6 +216,8 @@ export default function Employee() {
                         </button>
                         <div className="itemsort__drawer">
                           <ul className="itemsort__items">
+                            <li className={`itemsort__item ${grade === '전체' ? 'itemsort__item--active' : ''}`}><a href="javascript:void(0)" onClick={() => setGrade('전체')}
+                                                                                                                  className="itemsort__item__link">전체</a></li>
                             <li className={`itemsort__item ${grade === 'A급' ? 'itemsort__item--active' : ''}`}><a href="javascript:void(0)" onClick={() => setGrade('A급')}
                               className="itemsort__item__link">A급</a></li>
                             <li className={`itemsort__item ${grade === 'B급' ? 'itemsort__item--active' : ''}`}><a href="javascript:void(0)" onClick={() => setGrade('B급')} className="itemsort__item__link">B급</a></li>
