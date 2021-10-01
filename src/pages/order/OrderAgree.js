@@ -73,7 +73,7 @@ export default function OrderAgree ({ location }) {
 
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'비회원 구매동의'} />
       <div className="contents order">
         <div className="container" id="container">
           <div className="login join_agree order">

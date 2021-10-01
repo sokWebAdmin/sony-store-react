@@ -1,7 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useContext } from 'react';
 import { useHistory } from 'react-router';
 import { getUrlParam } from '../../utils/location';
-import { getProfileOrderByOrderNo } from '../../api/order';
+import { getGuestOrderByOrderNo, getProfileOrderByOrderNo, postGuestOrdersOrderNo } from '../../api/order';
+import GlobalContext from '../../context/global.context';
+import { setGuestToken } from '../../utils/token';
 
 // 주문결과 미들웨어
 /**
@@ -10,6 +12,7 @@ import { getProfileOrderByOrderNo } from '../../api/order';
  */
 const ResultParse = ({ location }) => {
   const history = useHistory();
+  const { isLogin } = useContext(GlobalContext);
 
   const orderNo = useMemo(() => getUrlParam('orderNo'), [location]);
   const result = useMemo(() => getUrlParam('result'), [location]);
@@ -42,7 +45,10 @@ const ResultParse = ({ location }) => {
   }
 
   async function orderTypeReferee () {
-    const { data } = await getProfileOrderByOrderNo({ path: { orderNo } });
+    if (!isLogin) {
+      setGuestToken(getUrlParam('guestToken'));
+    }
+    const { data } = isLogin ? await getProfileOrderByOrderNo({ path: { orderNo } }) : await getGuestOrderByOrderNo({ path: { orderNo } });
     const isDepositWait = data.defaultOrderStatusType === 'DEPOSIT_WAIT';
     if (isDepositWait) {
       return 'DEPOSIT_WAIT';
