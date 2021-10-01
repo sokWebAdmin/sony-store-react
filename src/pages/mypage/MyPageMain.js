@@ -62,8 +62,7 @@ export default function MyPageMain() {
       .catch(console.error);
   }, [pageIndex]);
 
-  const more = (e) => {
-    e.preventDefault();
+  const more = () => {
     setPageIndex(pageIndex + 1);
   };
 

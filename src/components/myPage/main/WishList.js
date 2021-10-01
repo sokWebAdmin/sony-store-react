@@ -6,6 +6,9 @@ import Alert from '../../common/Alert';
 import { postCart } from '../../../api/order';
 import Notification from '../../products/Notification';
 import { useAlert } from '../../../hooks';
+import ViewMore from '../../common/ViewMore';
+import { isMobile } from 'react-device-detect';
+import { Link, useHistory } from 'react-router-dom';
 
 const WishList = ({ wishList, wishCount, more, rerender }) => {
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
@@ -141,13 +144,18 @@ const WishList = ({ wishList, wishCount, more, rerender }) => {
                 <div className="like_prd_inner">
                   <Products list={wishList} check={check} checkedProductNos={checkedProductNos} />
                 </div>
-                {wishList.length <= wishCount && (
-                  <div className="btn_article line">
-                    <a href="#" className="more_btn" onClick={more}>
-                      더보기
-                    </a>
-                  </div>
-                )}
+                {/*{wishList.length <= wishCount && (*/}
+                {/*  <div className="btn_article line">*/}
+                {/*    <a href="#" className="more_btn" onClick={more}>*/}
+                {/*      더보기*/}
+                {/*    </a>*/}
+                {/*  </div>*/}
+                {/*)}*/}
+                <ViewMore
+                  totalCount={wishCount}
+                  viewMore={more}
+                  pageSize={isMobile ? 9 : 10}
+                />
               </div>
             ) : (
               <div className="no_data on">
@@ -162,6 +170,8 @@ const WishList = ({ wishList, wishCount, more, rerender }) => {
 };
 
 const Products = ({ list, check, checkedProductNos }) => {
+  const history = useHistory();
+
   return (
     <ul className="like_prd_list">
       {list.map((item) => (
@@ -176,10 +186,10 @@ const Products = ({ list, check, checkedProductNos }) => {
                 onChange={() => check(item.productNo)}
               />
             </div>
-            <div className="img">
+            <div className="img" onClick={() => history.push(`/product-view/${item.productNo}`)} style={{cursor: 'pointer'}}>
               <img src={item.listImageUrls[0]} alt={item.productName} />
             </div>
-            <div className="prd_info">
+            <div className="prd_info" onClick={() => history.push(`/product-view/${item.productNo}`)} style={{cursor: 'pointer'}}>
               <p className="tit">{item.productName}</p>
               <p className="txt">{item.productNameEn}</p>
               <p className="prd_price">
