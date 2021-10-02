@@ -833,86 +833,9 @@
     }
   }
 
-  .coupon_list {
-    position: relative;
+  .coupon_inner {
     padding-top: 24px;
     border-top: 2px solid #222;
-
-    &:after {
-      display: block;
-      clear: both;
-      content: "";
-    }
-
-    .coupon_box {
-      // float:left;
-      position: relative;
-      width: calc((100% - 24px)/2);
-      // padding-right:60px;
-      margin-bottom: 25px;
-
-      &:nth-child(2n) {
-        margin-left: 24px;
-      }
-
-      &:after {
-        display: block;
-        overflow: hidden;
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 70px;
-        height: 100%;
-        border-radius: 4px;
-        background: url('../images//mypage/bg_coupon_sony.svg') no-repeat center center;
-        background-size: 70px 225px;
-        content: "";
-      }
-    }
-
-    .coupon {
-      position: relative;
-      padding: 28px 34px 31px 34px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background: #fff;
-    }
-
-    .coupon_no {
-      position: absolute;
-      top: 34px;
-      right: 34px;
-      color: #888;
-    }
-
-    .tit {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 36px;
-      letter-spacing: -0.6px;
-      color: #222;
-    }
-
-    .percentage {
-      color: #5865f5;
-    }
-
-    .cut_txt {
-      margin-top: 13px;
-      font-size: 12px;
-      letter-spacing: -0.3px;
-      color: #222;
-    }
-
-    .expiration_txt {
-      margin-top: 44px;
-      font-size: 14px;
-
-      &>strong {
-        display: inline-block;
-        margin-right: 8px;
-      }
-    }
   }
 
   .history_like {
@@ -1925,48 +1848,8 @@
       }
     }
 
-    .coupon_list {
-      padding: 32px 0 12px;
-
-      .coupon_box {
-        width: calc((100% - 16px)/2);
-        margin-bottom: 20px;
-
-        &:nth-child(2n) {
-          margin-left: 16px;
-        }
-
-        &:after {
-          width: 75px;
-          background-size: 75px 100%;
-        }
-      }
-
-      .coupon {
-        padding: 21px 10px 24px 23px;
-      }
-
-      .coupon_no {
-        position: relative;
-        top: 0;
-        right: 0;
-        font-size: 12px;
-      }
-
-      .tit {
-        margin-top: 2px;
-        font-size: 16px;
-        line-height: 26px;
-      }
-
-      .cut_txt {
-        margin-top: 5px;
-      }
-
-      .expiration_txt {
-        margin-top: 26px;
-        font-size: 12px;
-      }
+    .coupon_inner {
+      padding-top: 32px;
     }
 
     .ico_box_link {
@@ -2438,21 +2321,8 @@
       }
     }
 
-    .coupon_list {
-      padding: 24px 0 7px;
-
-      .coupon_box {
-        width: 100%;
-        margin-bottom: 17px;
-
-        &:nth-child(2n) {
-          margin-left: 0;
-        }
-
-        &:after {
-          right: -10px;
-        }
-      }
+    .coupon_inner {
+      padding-top: 24px;
     }
 
     .ico_box_link {
