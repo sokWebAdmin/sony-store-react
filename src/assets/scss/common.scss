@@ -10,8 +10,8 @@
   font-style: normal;
   font-weight: 400;
   src: local(''),
-    url('/fonts/NotoSansKR-Regular.woff2') format('woff2'),
-    url('/fonts/NotoSansKR-Regular.woff') format('woff');
+    url('../fonts/NotoSansKR-Regular.woff2') format('woff2'),
+    url('../fonts/NotoSansKR-Regular.woff') format('woff');
 }
 
 @font-face {
@@ -19,8 +19,8 @@
   font-style: normal;
   font-weight: 500;
   src: local(''),
-    url('/fonts/NotoSansKR-Medium.woff2') format('woff2'),
-    url('/fonts/NotoSansKR-Medium.woff') format('woff');
+    url('../fonts/NotoSansKR-Medium.woff2') format('woff2'),
+    url('../fonts/NotoSansKR-Medium.woff') format('woff');
 }
 
 @font-face {
@@ -28,8 +28,8 @@
   font-style: normal;
   font-weight: 700;
   src: local(''),
-    url('/fonts/NotoSansKR-Bold.woff2') format('woff2'),
-    url('/fonts/NotoSansKR-Bold.woff') format('woff');
+    url('../fonts/NotoSansKR-Bold.woff2') format('woff2'),
+    url('../fonts/NotoSansKR-Bold.woff') format('woff');
 }
 
 @font-face {
@@ -352,6 +352,10 @@ em.color {
   color: #5865f5;
 }
 
+.primary-color {
+  color: $primary-color;
+}
+
 .under_line {
   text-decoration: underline;
 
@@ -433,31 +437,39 @@ body {
 }
 
 .header {
-  position: relative;
+  position: fixed;
+  left: 0;
+  top: 0;
   z-index: 120;
   width: 100%;
   min-width: 320px;
   height: 4em;
   font-size: 20px;
+  transform: translateY(0);
+  transition: all .2s ease-in-out .1s;
   background-color: #000;
+
+  &--visible {
+    // position: fixed;
+    transform: translateY(0);
+  }
+
+  &--invisible {
+    // position: fixed;
+    transform: translateY(-100%);
+  }
 
   &__wrapper {
     position: relative;
     background-color: #000;
   }
 
-  &--fixed {
-    .header__wrapper {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 100%;
-
-      @media (min-width: $pc-max-width) {
-        left: 50%;
-        width: 1920px;
-        transform: translateX(-50%);
-      }
+  &--visible .header__wrapper,
+  &--invisible .header__wrapper {
+    @media (min-width: $pc-max-width) {
+      left: 50%;
+      width: 1920px;
+      transform: translateX(-50%);
     }
   }
 
@@ -465,7 +477,6 @@ body {
   .btn {
     display: block;
     color: #fff;
-    cursor: pointer;
   }
 
   &__logo {
@@ -1512,6 +1523,22 @@ body {
   }
 }
 
+.header+div {
+  padding-top: 80px;
+
+  @include small-pc {
+    padding-top: between(80px, 64px, 1366px, $tab-width);
+  }
+
+  @include only-mo {
+    padding-top: between-mo(80px, 64px);
+  }
+
+  @include small-mo {
+    padding-top: 64px;
+  }
+}
+
 .footer {
   position: relative;
   z-index: 100;
@@ -1573,13 +1600,12 @@ body {
           padding-right: 3.5em;
 
           a {
-            display: inline-block;
             position: absolute;
             top: 0;
             right: 0;
             width: 33px;
             height: 33px;
-            background: url(https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_color.png) no-repeat 50%;
+            background: url("https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_color.png") no-repeat 50%;
             background-size: cover;
             text-indent: -9999em;
           }
@@ -2044,58 +2070,70 @@ body {
 
 // app only
 .app {
-  .header {
-    .appmenu {
-      display: block;
-      margin-top: 80px;
-      background-color: #222;
+  @include under-pc {
+    .header {
+      .appmenu {
+        display: block;
+        margin-top: 80px;
 
-      &__qr a {
-        background: {
-          image: url($path-common+'ic_app_qr.svg');
-          size: 18px;
-        }
-      }
-
-      &__setting a {
-        background: {
-          image: url($path-common+'ic_app_setting.svg');
-          size: 20px;
-        }
-      }
-
-      ul {
-        display: flex;
-
-        li {
-          position: relative;
-          flex: 0 1 50%;
-          text-align: center;
-          padding: 13px 0;
-
-          a {
-            display: inline-block;
-            padding: 4px;
-            padding-left: 30px;
-            font-size: 16px;
-            letter-spacing: -.025em;
-            color: #bbb;
-
-            background: {
-              repeat: no-repeat;
-              position: 4px 50%;
-            }
+        &__qr a {
+          background: {
+            image: url($path-common+'ic_app_qr.svg');
+            size: 18px;
           }
+        }
 
-          &:not(:first-child)::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 1em;
-            background-color: #666;
+        &__setting a {
+          background: {
+            image: url($path-common+'ic_app_setting.svg');
+            size: 20px;
+          }
+        }
+
+        // &__push a {
+        //   background-image: url($path-common+'ic_app_push.svg');
+        // }
+
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+
+          li {
+            position: relative;
+            flex: 0 1 50%;
+            text-align: center;
+            padding: 13px 0;
+            background-color: #222;
+
+            &.appmenu__push {
+              flex: 1 1 100%;
+              margin-top: 4px;
+            }
+
+            a {
+              display: inline-block;
+              padding: 4px;
+              padding-left: 30px;
+              font-size: 16px;
+              letter-spacing: -.025em;
+              color: #bbb;
+
+              background: {
+                repeat: no-repeat;
+                position: 4px 50%;
+              }
+            }
+
+            &:nth-child(2)::before {
+              content: "";
+              position: absolute;
+              top: 50%;
+              left: 0;
+              transform: translateY(-50%);
+              width: 1px;
+              height: 1em;
+              background-color: #666;
+            }
           }
         }
       }
@@ -2857,6 +2895,11 @@ body {
     }
   }
 
+  @media screen and (min-width: 1921px) {
+    right: 50%;
+    margin-right: -936px;
+  }
+
   @include under-pc {
     $baseSize: 48px;
 
@@ -3397,7 +3440,6 @@ body {
   border: 1px solid #ccc;
   border-radius: 50%;
   vertical-align: top;
-  margin-right: 5px;
 
   .c_bg {
     display: inline-block;
@@ -3412,7 +3454,8 @@ body {
 }
 
 /* 텍스트 목록 */
-.list_dot {
+.list_dot,
+.dotList {
   li {
     position: relative;
     margin-top: 4px;
@@ -3798,6 +3841,8 @@ body {
       .img {
         display: block;
         width: 80px;
+        height: 80px;
+        background: #f4f7fa;
       }
     }
 
@@ -5038,6 +5083,7 @@ body {
       padding-left: 18px;
       background: url(../images/common/ic_info_tit.svg) no-repeat 0 50%;
       background-size: 14px 14px;
+      font-size: 16px;
     }
   }
 
@@ -5053,6 +5099,14 @@ body {
     @include only-mo {
       li {
         font-size: 12px;
+      }
+    }
+  }
+
+  @include only-mo {
+    .tit {
+      &.ico_tit {
+        font-size: 14px;
       }
     }
   }
@@ -5338,7 +5392,7 @@ body {
     padding: 0 10px;
     border: 1px solid #ddd;
     background: #fff;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 40px;
     letter-spacing: -0.5px;
     text-overflow: ellipsis;
@@ -5352,7 +5406,7 @@ body {
     width: 77px;
     height: 40px;
     background: #03010f;
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: -0.35px;
     line-height: 40px;
     text-align: center;
@@ -5556,15 +5610,541 @@ body {
   }
 }
 
-.product__price {
-  .original {
-    padding-left: 5px;
-    color: #bbb;
-    vertical-align: bottom;
+/* 기획전 리스트 타입 배너 210908 s : 기획전 추가 */
+.exhibitions_zone {
+  width: 100%;
+  max-width: 1920px;
+  margin-top: 100px;
+  padding: 120px 0 100px;
+  background: #fbfbfb;
 
-    span {
-      font-size: 16px !important;
-      text-decoration: line-through !important;
+  .title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #222;
+  }
+
+  .exhibitions_inner {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto 0;
+
+    &.swiper_none {
+      .swiper-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .swiper-slide {
+        display: inline-block;
+        width: 588px;
+        margin-left: 24px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+
+      .arrow_btn {
+        display: none;
+      }
+    }
+
+    .img {
+      overflow: hidden;
+      position: relative;
+      width: 588px;
+      height: 330px;
     }
   }
+
+  .slide_item {
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+
+    .item {
+      display: block;
+    }
+
+    .event_desc {
+      padding: 20px 0 21px;
+    }
+
+    .tit {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.55px;
+      color: #222;
+    }
+
+    .event_duration {
+      margin-top: 7px;
+      font-size: 14px;
+      letter-spacing: -0.35px;
+      color: #888;
+    }
+  }
+
+  .arrow {
+    top: 147px;
+    margin-top: 0;
+    width: auto;
+    height: auto;
+    text-indent: -9999px;
+
+    &.swiper-button-disabled {
+      display: none;
+    }
+
+    &.swiper-button-prev {
+      left: 16px;
+    }
+
+    &.swiper-button-next {
+      right: 16px;
+      transform: rotate(180deg);
+    }
+
+    &:after {
+      content: "";
+    }
+  }
+
+  @include under-pc {
+    margin-top: 180px;
+    padding: 80px 24px 60px;
+
+    .exhibitions_inner {
+      &.swiper_none {
+        .swiper-slide {
+          width: calc((100% - 16px)/2);
+          margin-left: 16px;
+
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+      }
+
+      .img {
+        width: auto;
+        height: auto;
+      }
+    }
+
+    .slide_item {
+      .tit {
+        font-size: 20px;
+      }
+
+      .event_duration {
+        font-size: 16px;
+      }
+    }
+
+    .arrow {
+      top: calc((100vw - 48px) * 0.14 - 18px);
+
+      &.swiper-button-prev {
+        left: 4px;
+      }
+
+      &.swiper-button-next {
+        right: 4px;
+      }
+    }
+  }
+
+  @include only-mo {
+    // 640
+    margin-top: 76px;
+    padding: 64px 24px 48px;
+
+    .title {
+      font-size: 24px;
+    }
+
+    .exhibitions_inner {
+      margin: 24px auto 0;
+
+      &.swiper_none {
+        .swiper-wrapper {
+          display: block;
+        }
+
+        .swiper-slide {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+    }
+
+    .slide_item {
+      width: 100%;
+
+      .event_desc {
+        padding: 16px 0;
+      }
+
+      .tit {
+        font-size: 16px;
+      }
+
+      .event_duration {
+        margin-top: 4px;
+        font-size: 14px;
+      }
+    }
+
+    .arrow {
+      top: calc((100vw - 48px) * .5612 / 2 - 18px);
+      width: 24px;
+      height: 24px;
+      text-indent: -9999px;
+
+      &.swiper-button-disabled {
+        display: none;
+      }
+
+      &.swiper-button-prev {
+        left: 16px;
+      }
+
+      &.swiper-button-next {
+        right: 16px;
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+/* 210908 e : 기획전 추가 */
+
+/* 쿠폰 list */
+.coupon_list {
+  display: flex;
+  position: relative;
+
+  &:after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+
+  .coupon_box {
+    align-items: stretch;
+    position: relative;
+    width: calc((100% - 24px)/2);
+    min-height: 257px;
+    margin: 0 0 25px 24px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:after {
+      display: block;
+      overflow: hidden;
+      position: absolute;
+      z-index: 5;
+      top: 0;
+      right: 0;
+      width: 90px;
+      height: 100%;
+      border-radius: 4px;
+      background: #5865f5;
+      content: "";
+    }
+
+    .coupon_type {
+      position: absolute;
+      z-index: 10;
+      top: 50%;
+      right: -36px;
+      font-size: 50px;
+      font-weight: bold;
+      letter-spacing: -0.5px;
+      opacity: 0.15;
+      transform: translateY(-50%) rotate(90deg);
+      color: #fff;
+
+      &.two {
+        right: -58px;
+        line-height: 45px;
+        text-align: center;
+      }
+    }
+
+    &.vvip {
+      &:after {
+        background: #e70000;
+      }
+
+      .coupon_type {
+        opacity: 0.2;
+      }
+
+      .percentage {
+        color: #e70000;
+      }
+    }
+  }
+
+  .coupon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 5;
+    width: 519px;
+    height: 100%;
+    padding: 28px 55px 30px 32px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+
+    &_no {
+      position: absolute;
+      top: 34px;
+      right: 55px;
+      color: #888;
+    }
+
+    &_expiration {
+      position: absolute;
+      top: 37px;
+      right: 55px;
+      font-size: 12px;
+      color: #888;
+    }
+  }
+
+  .tit {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.6px;
+    color: #222;
+  }
+
+  .percentage {
+    color: #5865f5;
+  }
+
+  .cut_tit {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 450;
+    line-height: 20px;
+    letter-spacing: -0.35px;
+    color: #222;
+  }
+
+  .cut_txt {
+    margin-top: 13px;
+    font-size: 12px;
+    letter-spacing: -0.3px;
+    color: #222;
+  }
+
+  .expiration_txt {
+    margin-top: 44px;
+    font-size: 14px;
+
+    &>strong {
+      display: inline-block;
+      margin-right: 8px;
+    }
+  }
+
+  .coupon_desc {
+    margin-top: 52px;
+
+    .lists {
+      position: relative;
+      margin-top: 12px;
+      padding-left: 60px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &_tit {
+        position: absolute;
+        top: 2px;
+        left: 0;
+        font-size: 12px;
+        letter-spacing: -0.3px;
+      }
+
+      &_txt {
+        line-height: 22px;
+      }
+    }
+  }
+
+  @include under-pc {
+
+    // ~ 1280
+    .coupon_box {
+      width: calc((100% - 16px)/2);
+      min-height: auto;
+      margin: 0 0 24px 16px;
+
+      &:after {
+        width: 64px;
+      }
+
+      .coupon_type {
+        font-size: 40px;
+
+        &.two {
+          right: -52px;
+          line-height: 33px;
+        }
+      }
+    }
+
+    .coupon {
+      width: calc(100% - 64px);
+      padding: 21px 10px 24px 23px;
+
+      &_no,
+      &_expiration {
+        position: relative;
+        top: 0;
+        right: 0;
+        font-size: 12px;
+      }
+    }
+
+    .coupon_desc {
+      margin-top: 30px;
+
+      .lists {
+        margin-top: 3px;
+      }
+
+      .lists_txt {
+        font-size: 12px;
+        line-height: 18px;
+      }
+    }
+
+    .tit {
+      margin-top: 2px;
+      font-size: 16px;
+      line-height: 26px;
+    }
+
+    .cut_tit {
+      margin-top: 2px;
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .cut_txt {
+      margin-top: 5px;
+    }
+
+    .expiration_txt {
+      margin-top: 26px;
+      font-size: 12px;
+    }
+  }
+
+  @include only-mo {
+    // 640
+    display: block;
+
+    .coupon_box {
+      width: 100%;
+      margin: 0 0 17px 0;
+    }
+
+    .coupon_desc {
+      margin-top: 40px;
+    }
+  }
+}
+
+// app_nav_bar
+.app {
+  &navbar {
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(0);
+    transition: all .2s ease-in-out .1s;
+    background-color: rgba($color: #ffffff, $alpha: .95);
+
+    &--invisible {
+      transform: translateY(100%);
+
+      &+.footer .sidebar--visible:not(.sidebar--reachend) {
+        bottom: 88px;
+      }
+    }
+
+    &_inner {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 10px 0;
+    }
+
+    &_btn {
+      flex: 1 1 25%;
+      padding: 10px;
+      text-align: center;
+
+      &.ios,
+      &.android {
+        display: none;
+      }
+    }
+
+    &+.footer {
+      padding-bottom: 64px;
+    }
+  }
+
+  &.ios {
+    .appnavbar {
+      &_btn {
+        flex: 1 1 20%;
+
+        &.ios {
+          display: block;
+        }
+      }
+    }
+  }
+
+  &.android {
+    .appnavbar {
+      &_btn {
+        flex: 1 1 20%;
+
+        &.android {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// 임시
+.windows .appnavbar,
+.macos .appnavbar {
+  display: none;
 }
