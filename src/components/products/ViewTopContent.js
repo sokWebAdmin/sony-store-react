@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { wonComma } from "../../utils/utils";
+import { useState, useMemo } from 'react';
+import { wonComma } from '../../utils/utils';
 import { getPricePerProduct, getSaleStatus } from "../../utils/product";
 import { useCategoryState } from "../../context/category.context";
 
@@ -30,15 +30,24 @@ export default function TobContent({
 
   const saleStatus = getSaleStatus(status, reservationData);
 
-  const isSoldOut = status.soldout || ['READY_RESERVE', 'SOLDOUT', 'READY'].includes(saleStatus);
-  
+  const isSoldOut = status.soldout ||
+    ['READY_RESERVE', 'SOLDOUT', 'READY'].includes(saleStatus);
+
   const priceInfo = getPricePerProduct(price);
+
+  const hsCode = useMemo(() => productData?.baseInfo?.hsCode ?? null,
+    [productData]);
+
   return (
     <form>
       <div className={`product_view_about ${status.soldout && 'soldout'}`}>
         <div className="cont">
           {
-            stickerLabels.length > 0 && <span className={`flag ${tagColorMap[stickerLabels[0]]}`} style={{ color: tagColorMap[stickerLabels[0]], paddingRight: '5px' }}>{stickerLabels[0]}</span>
+            stickerLabels.length > 0 &&
+            <span className={`flag ${tagColorMap[stickerLabels[0]]}`} style={{
+              color: tagColorMap[stickerLabels[0]],
+              paddingRight: '5px',
+            }}>{stickerLabels[0]}</span>
           }
           {/* {
             스티커 복수개 노출 시 주석 해제 후 윗 부분 삭제
@@ -120,6 +129,7 @@ export default function TobContent({
             setWish={setWish}
             saleStatus={saleStatus}
             memberOnly={limitations?.memberOnly}
+            hsCode={hsCode}
           />
         </div>
       </div>
