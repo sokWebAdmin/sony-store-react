@@ -1338,6 +1338,18 @@
     }
   }
 
+  .purchaseConsulting {
+    padding: 120px 0 160px;
+    @include only-tab {
+          margin: 0 24px;
+          padding: 120px 0 160px
+    }
+    @include only-mo{
+      margin: 0;
+      padding: 40px 0;
+    }
+  }
+
   //구매상담 안내
   .purchase_wrap {
     margin: 80px auto 0;
