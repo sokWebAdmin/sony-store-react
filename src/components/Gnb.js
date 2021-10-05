@@ -1,9 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { useHeaderDispatch, closeSideBar } from '../context/header.context';
 import { useCategoryState } from '../context/category.context';
 import { getAgent } from '../utils/detectAgent.js';
+
+import '../assets/scss/partials/appMenu.scss';
 
 export default function Gnb () {
   const agent = getAgent(); // test code
@@ -90,21 +93,19 @@ export default function Gnb () {
           })}
         </ul>
       </nav>
-
-      {
-        agent.isApp &&
-        <>
-          <h1>app config : {JSON.stringify(agent)}</h1>
-          <a href="sonyapp://closemall/qr" style={{
-            display: 'inline-block',
-            marginTop: '20px',
-            backgroundColor: '#fff',
-            color: '#000',
-          }}>스키마 연동 테스트 (QR)</a>
-          <h1>user agent plain text : {window.navigator.userAgent}</h1>
-        </>
-      }
-
+      <div className="appmenu" style={{ display: 'block' }}>
+        <ul>
+          <li className="appmenu__qr"><a href="sonyapp://closemall/qr">QR스캔</a>
+          </li>
+          <li className="appmenu__setting"><a href="sonyapp://setting">설정</a>
+          </li>
+          <li className="appmenu__push"><a href='/app/push-list' onClick={e => {
+            e.preventDefault();
+            history.push('/app/push-list');
+            closeSideBar(headerDispatch);
+          }}>PUSH 알림 메시지함</a></li>
+        </ul>
+      </div>
     </>
   );
 }

@@ -1,0 +1,158 @@
+// break points
+$pc-max-width: 1920px;
+$pc-width: 1366px;
+$tab-width: 1280px;
+$mo-width: 640px;
+$mo-min-width: 360px;
+
+// responsive
+@mixin only-pc {
+  @media screen and (min-width: #{$tab-width + 1px}) {
+    @content;
+  }
+}
+
+@mixin large-pc {
+  @media screen and (min-width: #{$pc-width + 1px}) and (max-width: 1920px) {
+    @content;
+  }
+}
+
+@mixin small-pc {
+  @media screen and (min-width: #{$tab-width + 1px}) and (max-width: #{$pc-width}) {
+    @content;
+  }
+}
+
+@mixin under-pc {
+  @media screen and (max-width: #{$tab-width}) {
+    @content;
+  }
+}
+
+@mixin only-tab {
+  @media screen and (min-width: #{$mo-width + 1px}) and (max-width: #{$tab-width}) {
+    @content;
+  }
+}
+
+@mixin only-mo {
+  @media screen and (max-width: #{$mo-width}) {
+    @content;
+  }
+}
+
+@mixin small-mo {
+  @media screen and (max-width: #{$mo-min-width}) {
+    @content;
+  }
+}
+
+@include under-pc {
+  .appmenu {
+    display: block;
+    margin-top: 80px;
+
+    &__qr a {
+      background: {
+        image: url('../../images/common/ic_app_qr.svg');
+        size: 18px;
+      }
+    }
+
+    &__setting a {
+      background: {
+        image: url('../../images/common/ic_app_setting.svg');
+        size: 20px;
+      }
+    }
+
+    &__push a {
+      background-image: url('../../images/common/ic_app_push.svg');
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        position: relative;
+        flex: 0 1 50%;
+        text-align: center;
+        padding: 13px 0;
+        background-color: #222;
+
+        &.appmenu__push {
+          flex: 1 1 100%;
+          margin-top: 4px;
+        }
+
+        a {
+          display: inline-block;
+          padding: 4px;
+          padding-left: 30px;
+          font-size: 16px;
+          letter-spacing: -.025em;
+          color: #bbb;
+          background: {
+            repeat: no-repeat;
+            position: 4px 50%;
+          }
+        }
+
+        &:nth-child(2)::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          width: 1px;
+          height: 1em;
+          background-color: #666;
+        }
+      }
+    }
+  }
+}
+
+@include only-mo {
+  .appmenu {
+    &__qr a {
+      background-size: between-mo(18px, 14px);
+    }
+
+    &__setting a {
+      background-size: between-mo(20px, 16px);
+    }
+
+    ul li {
+      padding: between-mo(13px, 10px) 0;
+
+      a {
+        padding-left: between-mo(30px, 28px);
+        font-size: between-mo(16px, 12px);
+      }
+    }
+  }
+}
+
+@include small-mo {
+  .appmenu {
+    &__qr a {
+      background-size: 14px;
+    }
+
+    &__setting a {
+      background-size: 16px;
+    }
+
+    ul li {
+      padding: 10px 0;
+
+      a {
+        padding-left: 28px;
+        font-size: 12px;
+      }
+    }
+  }
+}

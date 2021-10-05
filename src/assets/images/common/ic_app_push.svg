@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15.098" height="17">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#bbb;stroke-linejoin:round}
+        </style>
+    </defs>
+    <g id="ic_push" transform="translate(-171.451 -1139.149)">
+        <path id="패스_1506" data-name="패스 1506" class="cls-1"
+              d="M173.216 1152.506a1.233 1.233 0 0 1-1.057-.588 1.114 1.114 0 0 1 .205-1.4l1.1-1v-4.055a5.54 5.54 0 1 1 11.066 0v4.055l1.1 1a1.114 1.114 0 0 1 .205 1.4 1.233 1.233 0 0 1-1.056.588z"/>
+        <path id="패스_1507" data-name="패스 1507" class="cls-1" d="M182.06 1152.569a3.06 3.06 0 1 1-6.12 0z"/>
+    </g>
+</svg>
