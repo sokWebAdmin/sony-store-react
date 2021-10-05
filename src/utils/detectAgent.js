@@ -24,12 +24,12 @@ export const getAgent = () => {
     };
   }
   const osTypeIndex = userAgent.indexOf('osType/');
-  if (!osTypeIndex) {
+  if (osTypeIndex) {
     return {
       isApp: true,
       device: osTypeReferee(userAgent.substr(osTypeIndex + 7, 2)),
     };
   }
 
-  return userAgent;
+  return null;
 };
