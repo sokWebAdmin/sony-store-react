@@ -101,8 +101,11 @@ import Expired from './pages/event/Expired';
 import EventDetail from './pages/event/EventDetail';
 import { getProfile } from './api/member';
 import Callback from './pages/member/Callback';
+import { getAgent } from './utils/detectAgent';
 
 const App = (props) => {
+  const agent = getAgent();
+
   const dispatch = useMallDispatch();
   const state = useMallState();
   const { isLogin } = useContext(GlobalContext);
@@ -260,8 +263,12 @@ const App = (props) => {
             <Route exact path="/callback" component={Callback} />
 
             {/* app */}
-
-            <Route exact path="/app/push-list" component={PushList} />
+            {
+              agent.isApp &&
+              <>
+                <Route exact path="/app/push-list" component={PushList} />
+              </>
+            }
 
             {/* 검색 결과  */}
             <Route exact path="/search-result/:keyword"
