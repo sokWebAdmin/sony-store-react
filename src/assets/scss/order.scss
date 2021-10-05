@@ -1,4 +1,4 @@
-@import "./import/variables";
+@import './import/variables';
 
 //주문,결제 페이지일때 sidebar 위치
 .Order {
@@ -15,7 +15,7 @@
 .content.order_page {
   padding: 0;
   @include only-mo {
-    .check:not(.check_only) .inp_check+label:before {
+    .check:not(.check_only) .inp_check + label:before {
       width: 14px;
       height: 14px;
       top: 1px;
@@ -121,7 +121,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
             text-indent: 0;
             font-size: 10px;
             color: #bbb;
@@ -164,7 +164,7 @@
             background-color: #fff;
           }
         }
-        +.on {
+        + .on {
           &:before {
             background-color: $primary-color;
           }
@@ -220,7 +220,7 @@
         clear: both;
       }
     }
-    .radio_box .inp_radio+label {
+    .radio_box .inp_radio + label {
       font-size: 14px;
     }
     @include only-pc {
@@ -234,8 +234,8 @@
         float: right;
         margin-top: 7px;
         width: 320px;
-        transition: top .2s $easeInCubic;
-        >.acc .acc_item {
+        transition: top 0.2s $easeInCubic;
+        > .acc .acc_item {
           margin-top: 0;
         }
         .pc_none {
@@ -274,7 +274,8 @@
           height: 3.858em;
           font-size: 16px;
           font-weight: normal;
-          em, span {
+          em,
+          span {
             display: inline-block;
             margin-left: 4px;
             font-size: 18px;
@@ -291,7 +292,7 @@
         .button {
           display: block;
           width: 100%;
-          +.button {
+          + .button {
             margin: 5px 0 0 0;
           }
         }
@@ -302,7 +303,8 @@
       .mo_pay_btn {
         .button-full {
           font-size: 14px;
-          em, span {
+          em,
+          span {
             font-size: 16px;
           }
         }
@@ -322,7 +324,7 @@
       border-bottom: 2px solid #222;
     }
     .acc_arrow {
-      &:before{
+      &:before {
         top: 15px;
         width: 8px;
         right: 5px;
@@ -354,7 +356,7 @@
         content: '';
         background-color: #e70000;
         border-radius: 100%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
       }
     }
     .acc_form {
@@ -362,7 +364,7 @@
       padding-top: 24px;
       width: 100%;
       .inp:focus {
-        outline: 0
+        outline: 0;
       }
       &:first-of-type {
         padding-top: 0;
@@ -374,7 +376,7 @@
       &:first-child {
         width: 165px;
       }
-      >label {
+      > label {
         position: relative;
         display: inline-block;
         padding-right: 8px;
@@ -444,7 +446,7 @@
           }
         }
       }
-      &+.acc_group {
+      & + .acc_group {
         margin-top: 24px;
       }
     }
@@ -471,15 +473,16 @@
         padding: 10px 0;
         font-size: 14px;
         color: #444;
-        transition: all .15s ease;
+        transition: all 0.15s ease;
         border-bottom: 1px solid #e1e1e1;
         line-height: 1.4;
         box-sizing: border-box;
-        &:focus+.focus_bg:before,&:focus+.focus_bg:after {
+        &:focus + .focus_bg:before,
+        &:focus + .focus_bg:after {
           width: 100%;
-          -webkit-transition: .4s;
-          transition: .4s;
-          left: 0
+          -webkit-transition: 0.4s;
+          transition: 0.4s;
+          left: 0;
         }
         &::placeholder {
           color: #888;
@@ -493,22 +496,23 @@
         &:-webkit-autofill,
         &:-webkit-autofill:hover,
         &:-webkit-autofill:focus,
-        &:-webkit-autofill:active  {
+        &:-webkit-autofill:active {
           box-shadow: 0 0 0 74px white inset !important;
         }
       }
       .focus_bg {
         position: relative;
         display: block;
-        &:before, &:after {
+        &:before,
+        &:after {
           position: absolute;
           bottom: 0;
           left: 50%;
           width: 0;
           height: 2px;
           background: #5865f5;
-          content: "";
-          transition: .4s;
+          content: '';
+          transition: 0.4s;
         }
       }
       &.type1 {
@@ -530,7 +534,7 @@
           right: 0;
           .button {
             min-width: 98px;
-            padding: inherit
+            padding: inherit;
           }
           &.type1 {
             @include only-pc {
@@ -603,7 +607,7 @@
       .my_point {
         position: absolute;
         top: -39px;
-        left: 80px
+        left: 80px;
       }
       .acc {
         float: none;
@@ -642,7 +646,7 @@
         float: left;
         min-width: auto;
         width: 49%;
-        &+.button {
+        & + .button {
           margin-left: 2%;
         }
       }
@@ -690,7 +694,7 @@
   color: #444;
   font-size: 14px;
 }
-.check +.info_tit {
+.check + .info_tit {
   margin-top: 40px;
 }
 .info_tit + .list_dot {
@@ -753,7 +757,7 @@
       padding: 40px;
     }
     .pc_pay_btn {
-      margin-top: 30px
+      margin-top: 30px;
     }
     .total {
       margin-top: 10px;
@@ -807,11 +811,13 @@
   .order_detailbox {
     margin-top: 33px;
   }
-  .view_headline,.view_detail {
+  .view_headline,
+  .view_detail {
     display: table;
     width: 100%;
   }
-  .acc_tit,.view_tit {
+  .acc_tit,
+  .view_tit {
     display: table-cell;
     font-size: 14px;
     line-height: 21px;
@@ -827,7 +833,10 @@
   }
   .view_detail {
     margin-top: 6px;
-    .view_tit, .acc_tit, .view_price, .sale_tit {
+    .view_tit,
+    .acc_tit,
+    .view_price,
+    .sale_tit {
       color: #888;
       font-weight: normal;
     }
@@ -849,7 +858,8 @@
     }
   }
   .acc_arrow {
-    &:after,&:before {
+    &:after,
+    &:before {
       top: 50%;
       width: 7px;
     }
@@ -857,7 +867,8 @@
       right: 5px;
     }
   }
-  .acc_btn, .sale_btn {
+  .acc_btn,
+  .sale_btn {
     height: 26px;
     padding: 0 30px 0 0;
     border-bottom: 0;
@@ -882,7 +893,7 @@
           transform: translateY(-50%) rotate(-45deg);
         }
         &:after {
-          transform: translateY(-50%) rotate(45deg)
+          transform: translateY(-50%) rotate(45deg);
         }
       }
     }
@@ -917,11 +928,11 @@
   .essential {
     background-color: #fbfbfb;
     box-sizing: border-box;
-    .inp_check+label {
+    .inp_check + label {
       line-height: 22px;
       letter-spacing: -0.35px;
       &:before {
-        top: 5px !important
+        top: 5px !important;
       }
     }
   }
@@ -995,7 +1006,7 @@
       font-weight: 700;
       &:before {
         display: inline-block;
-        content:     ":";
+        content: ':';
         margin-left: 10px;
         padding-right: 16px;
         color: #222;
@@ -1008,7 +1019,7 @@
   }
   .btn_box {
     margin-top: 80px;
-    button+button {
+    button + button {
       margin-left: 8px;
     }
     @include under-pc {
@@ -1029,7 +1040,7 @@
           margin: 10px 0 0 0;
           width: 100%;
         }
-        +button {
+        + button {
           margin-left: 2%;
         }
       }
@@ -1057,15 +1068,21 @@
       margin-top: 27px;
       width: auto;
       padding: 18px;
-      dt, dd {
-        font-size: 16px
+      dt,
+      dd {
+        font-size: 16px;
       }
     }
     .btn_box {
       margin-top: 40px;
       .button {
-        min-height: 48px;
-        font-size: 14px;
+        float: left;
+        min-width: auto;
+        width: 49%;
+      }
+      .button:nth-child(3) {
+        margin: 10px 0 0 0;
+        width: 100%;
       }
     }
   }
@@ -1089,7 +1106,7 @@
         color: #888;
         font-size: 14px;
         font-weight: normal;
-        &+.button {
+        & + .button {
           margin-left: 6px;
           padding-right: 0;
         }
@@ -1127,7 +1144,8 @@
       line-height: 18px;
     }
     .acc_arrow {
-      &:before,&:after {
+      &:before,
+      &:after {
         width: 10px;
       }
       &:before {
@@ -1209,7 +1227,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        content: "·";
+        content: '·';
       }
       .link_mail {
         color: $primary-color;
