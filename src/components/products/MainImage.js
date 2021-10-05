@@ -1,11 +1,10 @@
-import { useMemo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Controller, Navigation, Pagination } from 'swiper/core';
 
 export default function MainImage({ imageUrls }) {
   SwiperCore.use([Navigation, Pagination, Controller]);
 
-  const hasImgs = useMemo(() => imageUrls.length > 1, [imageUrls]);
+  const hasImgs = imageUrls.length > 1;
   return (
     <div className="view_slider swiper-container">
       <Swiper
