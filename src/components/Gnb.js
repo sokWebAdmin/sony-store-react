@@ -3,8 +3,11 @@ import { useHistory } from 'react-router';
 
 import { useHeaderDispatch, closeSideBar } from '../context/header.context';
 import { useCategoryState } from '../context/category.context';
+import { getAgent } from '../utils/detectAgent.js';
 
 export default function Gnb() {
+  const agent = JSON.stringify(getAgent()); // test code
+
   const history = useHistory();
   const headerDispatch = useHeaderDispatch();
 
@@ -85,6 +88,7 @@ export default function Gnb() {
           })}
         </ul>
       </nav>
+      <h1>app config : {agent}</h1>
     </>
   );
 }
