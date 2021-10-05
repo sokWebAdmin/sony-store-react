@@ -4,7 +4,7 @@ import { addMonth } from '../../utils/dateFormat';
 // components
 import DatePicker from '../common/DatePicker';
 
-export default function DateBox({ search, firstSearch }) {
+export default function DateBox({ search, firstSearch, style }) {
   const [selectMenu, setSelectMenu] = useState('threeM');
   const [period, setPeriod] = useState({ startDate: new Date(addMonth(new Date(), -3)), endDate: new Date() });
 
@@ -41,7 +41,7 @@ export default function DateBox({ search, firstSearch }) {
   }, [firstSearch]);
 
   return (
-    <div className="date_box">
+    <div className="date_box" style={style}>
       <ul className="date3_tab">
         <li className={`tabs ${selectMenu === 'threeM' && 'on'}`}>
           <a href="#" className="date3_btn" onClick={(e) => onClickTab(e, 'threeM')}>
