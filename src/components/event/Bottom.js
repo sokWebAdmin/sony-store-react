@@ -9,7 +9,7 @@ import Alert from '../common/Alert';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
 import { shareKakaoButton, shareKakaoStoryButton } from '../../utils/share';
-import GlobalContext from '../../context/global.context';
+import '../../assets/scss/event.scss';
 
 const initTabs = [
   { key: 'all', label: '전체' },
