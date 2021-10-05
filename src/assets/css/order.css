@@ -1075,10 +1075,6 @@
     font-size: 14px;
   }
 
-  .order_confirm_box .btn_box .button:nth-child(3) {
-    margin: 10px 0 0 0;
-    width: 100%;
-  }
 }
 .cart_func {
   display: -webkit-box;
