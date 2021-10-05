@@ -4,23 +4,16 @@ import { addMonth } from '../../utils/dateFormat';
 // components
 import DatePicker from '../common/DatePicker';
 
-export default function DateBox ({
-  search,
-  firstSearch,
-}) {
+export default function DateBox({ search, firstSearch }) {
   const [selectMenu, setSelectMenu] = useState('threeM');
-  const [period, setPeriod] = useState(
-    { startDate: new Date(addMonth(new Date(), -3)), endDate: new Date() });
+  const [period, setPeriod] = useState({ startDate: new Date(addMonth(new Date(), -3)), endDate: new Date() });
 
   const onClickTab = (e, menu) => {
     e.preventDefault();
     const setPeriodDate = {
-      threeM: () => setPeriod(
-        { ...period, startDate: new Date(addMonth(new Date(), -3)) }),
-      sixM: () => setPeriod(
-        { ...period, startDate: new Date(addMonth(new Date(), -6)) }),
-      oneY: () => setPeriod(
-        { ...period, startDate: new Date(addMonth(new Date(), -12)) }),
+      threeM: () => setPeriod({ ...period, startDate: new Date(addMonth(new Date(), -3)) }),
+      sixM: () => setPeriod({ ...period, startDate: new Date(addMonth(new Date(), -6)) }),
+      oneY: () => setPeriod({ ...period, startDate: new Date(addMonth(new Date(), -12)) }),
     };
 
     setSelectMenu(menu);
@@ -51,27 +44,25 @@ export default function DateBox ({
     <div className="date_box">
       <ul className="date3_tab">
         <li className={`tabs ${selectMenu === 'threeM' && 'on'}`}>
-          <a href="#" className="date3_btn"
-             onClick={(e) => onClickTab(e, 'threeM')}>
+          <a href="#" className="date3_btn" onClick={(e) => onClickTab(e, 'threeM')}>
             3개월
           </a>
         </li>
         <li className={`tabs ${selectMenu === 'sixM' && 'on'}`}>
-          <a href="#" className="date3_btn"
-             onClick={(e) => onClickTab(e, 'sixM')}>
+          <a href="#" className="date3_btn" onClick={(e) => onClickTab(e, 'sixM')}>
             6개월
           </a>
         </li>
         <li className={`tabs ${selectMenu === 'oneY' && 'on'}`}>
-          <a href="#" className="date3_btn"
-             onClick={(e) => onClickTab(e, 'oneY')}>
+          <a href="#" className="date3_btn" onClick={(e) => onClickTab(e, 'oneY')}>
             1년
           </a>
         </li>
       </ul>
-      <div className="date_rang">
+      <div className="date_rang" style={{ width: '312px' }}>
         <DatePicker
           dateValue={period.startDate}
+          width={'100%'}
           height={'32px'}
           bindDate={onChangeStartDate}
           option={{
@@ -81,14 +72,14 @@ export default function DateBox ({
         <span style={{ lineHeight: '32px' }}>&nbsp;~&nbsp;</span>
         <DatePicker
           dateValue={period.endDate}
+          width={'100%'}
           height={'32px'}
           bindDate={onChangeEndDate}
           option={{
             selectableRanges: [[null, new Date()]],
           }}
         />
-        <button className="button button_positive button-s" type="button"
-                onClick={onClickSearch}>
+        <button className="button button_positive button-s" type="button" onClick={onClickSearch}>
           조회
         </button>
       </div>
