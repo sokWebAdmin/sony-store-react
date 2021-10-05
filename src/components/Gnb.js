@@ -93,6 +93,7 @@ export default function Gnb () {
           })}
         </ul>
       </nav>
+      {agent.isApp &&
       <div className="appmenu" style={{ display: 'block' }}>
         <ul>
           <li className="appmenu__qr"><a href="sonyapp://closemall/qr">QR스캔</a>
@@ -106,6 +107,7 @@ export default function Gnb () {
           }}>PUSH 알림 메시지함</a></li>
         </ul>
       </div>
+      }
     </>
   );
 }
