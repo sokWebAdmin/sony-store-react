@@ -7,6 +7,12 @@ export default function BottomContent({ contents }) {
     const mobileWidth = 640;
     const regImg = document.querySelectorAll(".detail_info .regImg");
 
+    const images = document.querySelectorAll('img');
+
+    images.forEach(elem => {
+      elem.setAttribute('style', 'display: block; margin: 0px auto;')
+    });
+
     if (windowWidth <= mobileWidth) {
       regImg.forEach(elem => {
         let imgsrc = elem.getAttribute("src");
