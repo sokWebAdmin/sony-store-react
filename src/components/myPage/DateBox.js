@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
 import { addMonth } from '../../utils/dateFormat';
 
 // components
@@ -74,6 +75,7 @@ export default function DateBox({ search, firstSearch, style }) {
           dateValue={period.endDate}
           width={'100%'}
           height={'32px'}
+          calendarStyle={isMobile && { position: 'absolute', left:'-130px' }}
           bindDate={onChangeEndDate}
           option={{
             selectableRanges: [[null, new Date()]],
