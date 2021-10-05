@@ -120,10 +120,10 @@ export default function ProductView({ match }) {
     });
   }
 
-  const mapProductGroupInfo = (({ mainImageUrl, options }) => {
+  const mapProductGroupInfo = (({ imageUrls, options }) => {
     const { optionNo, value } = _.head(options);
     return {
-      img: mainImageUrl,
+      images: imageUrls,
       optionNo,
       colors: getColorChipValues(value),
     }
@@ -211,16 +211,17 @@ export default function ProductView({ match }) {
     if (selectedOptionNo > 0) {
       return _.chain(productGroup) 
               .filter(({ optionNo }) => optionNo === selectedOptionNo)
-              .map(({ img }) => img)
+              .flatMap(({ images }) => images)
               .value()
     }
-    const firtImg = _.chain(productGroup) 
-                     .take(1)
-                     .map(({ img }) => img)
-                     .head()
-                     .value()
 
-    return firtImg ? [ firtImg ] : productData?.baseInfo?.imageUrls
+    const images = _.chain(productGroup)
+                    .take(1)
+                    .flatMap(({ images }) => images)
+                    .compact()
+                    .value();
+                    
+    return images?.length > 0 ? images : productData?.baseInfo?.imageUrls
   }, [selectedOptionNo, productGroup, productData?.baseInfo?.imageUrls]);
 
   //
