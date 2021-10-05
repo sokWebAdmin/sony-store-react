@@ -57,6 +57,7 @@ const EventBottom = () => {
   const [selectEvent, setSelectEvent] = useState(null);
   const [tabs, setTabs] = useState(initTabs);
   const [showLabel, setShowLabel] = useState('전체');
+  const [sortSelect, setSortSelect] = useState(false);
 
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
@@ -222,15 +223,25 @@ const EventBottom = () => {
             <div className="event_list">
               <div className="category_head">
                 <p className="tit">{showLabel}</p>
-                <div className="itemsort" aria-label="기획전 전체 정렬">
+                <div className={`itemsort ${sortSelect ? 'itemsort--open' : ''}`} aria-label="기획전 전체 정렬">
+                  <button className="itemsort__button" onClick={() => setSortSelect(!sortSelect)}>
+                    <span className="itemsort__button__label sr-only">정렬기준:</span>
+                    <span className="itemsort__button__selected">{newest ? '최신순' : '오래된 순'}</span>
+                  </button>
                   <div className="itemsort__drawer">
                     <ul className="itemsort__items">
                       <li className={`itemsort__item ${newest ? 'itemsort__item--active' : ''}`}>
                         <a href="javascript:void(0)"
-                           className="itemsort__item__link" onClick={() => setNewest(true)}>최신순</a>
+                           className="itemsort__item__link" onClick={() => {
+                          setNewest(true);
+                          setSortSelect(false);
+                        }}>최신순</a>
                       </li>
                       <li className={`itemsort__item ${!newest ? 'itemsort__item--active' : ''}`}>
-                        <a href="javascript:void(0)" className="itemsort__item__link" onClick={() => setNewest(false)}>오래된
+                        <a href="javascript:void(0)" className="itemsort__item__link" onClick={() => {
+                          setNewest(false);
+                          setSortSelect(false);
+                        }}>오래된
                           순</a>
                       </li>
                     </ul>
