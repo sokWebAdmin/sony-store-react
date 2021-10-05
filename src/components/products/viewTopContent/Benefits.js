@@ -16,7 +16,7 @@ export default function Benefits({ price }) {
       <p className="tit">회원별 마일리지 적립혜택 <span className="icon_question">!</span></p>
       <ul className="membership_rating">
         {
-          mallInfo?.mall?.grades.filter(({ reserveBenefit }) => reserveBenefit.reserveRate > 0).map((g, idx) => {
+          mallInfo?.mall?.grades.reverse().filter(({ reserveBenefit }) => reserveBenefit.reserveRate > 0).map((g, idx) => {
             const UPPERCASE = g.label.toUpperCase();
             const LOWERCASE = g.label.toLowerCase();
             return (
