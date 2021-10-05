@@ -168,7 +168,7 @@ export default function PurchaseConsulting() {
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       <div className="contents support">
         <div className="container">
-          <div className="content" style={{ padding: `120px 0 160px` }}>
+          <div className="purchaseConsulting">
             <div className="support_head">
               <h1 className="support_head_title">구매상담 안내</h1>
               <p className="support_head_desc">
