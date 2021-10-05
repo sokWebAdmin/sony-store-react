@@ -100,6 +100,7 @@ export default function Gnb () {
           color: '#000',
         }}>스키마 연동 테스트 (QR)</a>
       }
+      <h1>user agent plain test : {window.navigator.userAgent}</h1>
     </>
   );
 }
