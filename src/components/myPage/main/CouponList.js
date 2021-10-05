@@ -10,7 +10,7 @@ const CouponList = () => {
   const nextPage = useRef(2);
 
   useEffect(async () => {
-    await syncCoupon();
+    // await syncCoupon();
     fetchCoupons({ pageNumber: 1, pageSize: 10 });
   }, []);
 

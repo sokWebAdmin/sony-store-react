@@ -807,8 +807,6 @@
 
 .coupon_list {
   position: relative;
-  padding-top: 24px;
-  border-top: 2px solid #222
 }
 
 .coupon_list:after {
