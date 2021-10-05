@@ -68,6 +68,8 @@ import ActiveAccounts from './pages/member/activeAccounts';
 import LockedAccounts from './pages/member/lockedAccounts';
 import OpenLogin from './components/member/OpenLogin';
 
+// app
+import PushList from './pages/app/PushList';
 
 //footer
 import Policy from './pages/footer/policy';
@@ -249,13 +251,21 @@ const App = (props) => {
             <Route exact path="/member/joinStep" component={joinStep} />
             <Route exact path="/member/login" component={login} />
             <Route exact path="/member/search" component={Search} />
-            <Route exact path="/member/inactiveAccounts" component={InactiveAccounts} />
-            <Route exact path="/member/activeAccounts" component={ActiveAccounts} />
-            <Route exact path="/member/lockedAccounts" component={LockedAccounts} />
+            <Route exact path="/member/inactiveAccounts"
+                   component={InactiveAccounts} />
+            <Route exact path="/member/activeAccounts"
+                   component={ActiveAccounts} />
+            <Route exact path="/member/lockedAccounts"
+                   component={LockedAccounts} />
             <Route exact path="/callback" component={Callback} />
 
+            {/* app */}
+
+            <Route exact path="/app/push-list" component={PushList} />
+
             {/* 검색 결과  */}
-            <Route exact path="/search-result/:keyword" component={SearchResult} />
+            <Route exact path="/search-result/:keyword"
+                   component={SearchResult} />
 
             {/* Footer  */}
             <Route exact path="/footer/policy" component={Policy} />

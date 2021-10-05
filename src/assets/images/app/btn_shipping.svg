@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.023" height="24">
+    <defs>
+        <style>
+            .cls-2,.cls-4{fill:none}.cls-2{stroke:#222;stroke-width:1.5px}.cls-3{stroke:none}
+        </style>
+    </defs>
+    <g id="Icon_Shipping" transform="translate(-1240.991 -1036.496)">
+        <g id="Icon">
+            <path id="패스_1749" data-name="패스 1749" class="cls-2"
+                  d="M1251 1060.51v-11.445h-3.865L1242 1056.1v4.966h2.845" transform="translate(-.259 -6.569)"/>
+            <g id="타원_12011" data-name="타원 12011" transform="translate(1250.287 1047.479)">
+                <path id="패스_1750" data-name="패스 1750" class="cls-2" d="M1270.8 1068.265h2.254v-6h-13.523v6h5.4"
+                      transform="translate(-1259.074 -1061.248)"/>
+                <g id="타원_863" data-name="타원 863" class="cls-2" transform="translate(4.713 4.017)">
+                    <circle class="cls-3" cx="4" cy="4" r="4"/>
+                    <circle class="cls-4" cx="4" cy="4" r="3.25"/>
+                </g>
+            </g>
+            <g id="타원_12011-2" data-name="타원 12011" transform="translate(1243.94 1051.137)">
+                <g id="타원_864" data-name="타원 864" class="cls-2" transform="translate(-.44 .36)">
+                    <circle class="cls-3" cx="4" cy="4" r="4"/>
+                    <circle class="cls-4" cx="4" cy="4" r="3.25"/>
+                </g>
+            </g>
+            <g id="사각형_1965" data-name="사각형 1965" transform="translate(1249.32 1037.496)">
+                <g id="사각형_1588" data-name="사각형 1588" class="cls-2">
+                    <path class="cls-3" d="M0 0h15v11H0z" transform="translate(.68 1)"/>
+                    <path class="cls-4" d="M.75.75h13.5v9.5H.75z" transform="translate(.68 1)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
