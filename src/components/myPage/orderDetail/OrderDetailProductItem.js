@@ -11,7 +11,7 @@ export default function OrderDetailProductItem({ productName, imageUrl, optionTi
           </div>
           <div className="prd_info">
             <div className="prd_info_name">{productName}</div>
-            <p className="prd_info_option">{optionTitle}</p>
+            {/* <p className="prd_info_option">{optionTitle}</p> */}
           </div>
         </div>
       </div>
