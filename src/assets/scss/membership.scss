@@ -574,7 +574,7 @@
   }
 
   .membership_tabarea .detail_tab {
-    margin: 0 24px
+    margin: 0;
   }
 
   .membership_tabarea .tab_ui .btn {
@@ -1018,7 +1018,7 @@
   display: flex;
   position: relative;
 
-  &:after {
+  border: none &:after {
     display: block;
     clear: both;
     content: "";
