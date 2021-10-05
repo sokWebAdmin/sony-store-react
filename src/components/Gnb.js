@@ -90,17 +90,21 @@ export default function Gnb () {
           })}
         </ul>
       </nav>
-      <h1>app config : {JSON.stringify(agent)}</h1>
+
       {
         agent.isApp &&
-        <a href="sonyapp://closemall/qr" style={{
-          display: 'inline-block',
-          marginTop: '20px',
-          backgroundColor: '#fff',
-          color: '#000',
-        }}>스키마 연동 테스트 (QR)</a>
+        <>
+          <h1>app config : {JSON.stringify(agent)}</h1>
+          <a href="sonyapp://closemall/qr" style={{
+            display: 'inline-block',
+            marginTop: '20px',
+            backgroundColor: '#fff',
+            color: '#000',
+          }}>스키마 연동 테스트 (QR)</a>
+          <h1>user agent plain text : {window.navigator.userAgent}</h1>
+        </>
       }
-      <h1>user agent plain test : {window.navigator.userAgent}</h1>
+
     </>
   );
 }
