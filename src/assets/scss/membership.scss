@@ -1017,8 +1017,9 @@
 .coupon_list {
   display: flex;
   position: relative;
+  border: none;
 
-  border: none &:after {
+  &:after {
     display: block;
     clear: both;
     content: "";
