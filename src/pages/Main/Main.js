@@ -446,6 +446,28 @@ export default function Main() {
                         el: '.event-scrollbar',
                         draggable: false,
                       }}
+                      breakpoints={{
+                        320: {
+                          slidesPerView: 1.5,
+                          spaceBetween: 50,
+                          allowTouchMove: true,
+                        },
+                        641: {
+                          slidesPerView: 1.8,
+                          spaceBetween: 92,
+                          allowTouchMove: true,
+                        },
+                        1281: {
+                          slidesPerView: 1.5,
+                          spaceBetween: 110,
+                          allowTouchMove: false,
+                        },
+                        1600: {
+                          slidesPerView: 1.5,
+                          spaceBetween: 157,
+                          allowTouchMove: false,
+                        },
+                      }}
                     >
                       {eventBanners.map((eventBanner, index) => (
                         <SwiperSlide
