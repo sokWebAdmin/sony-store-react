@@ -10,8 +10,8 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/swiper.scss';
 
 //css
-import '../../assets/scss/contents.scss';
 import '../../assets/scss/event.scss';
+import '../../assets/scss/contents.scss';
 import EventTop from '../../components/event/Top';
 import EventBottom from '../../components/event/Bottom';
 
