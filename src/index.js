@@ -11,12 +11,6 @@ import { ContextDevTool } from "react-context-devtool";
 
 const rootElement = document.getElementById('root');
 
-if (navigator.userAgent.indexOf("Trident") > 0) {
-  window.location = 'microsoft-edge:' + window.location;
-} else if (/MSIE \d |Trident.*rv:/.test(navigator.userAgent)) {
-  window.location = 'microsoft-edge:' + window.location;
-}
-
 if (rootElement.hasChildNodes()) {
   hydrate(
     <GlobalProvider>

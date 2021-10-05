@@ -42,6 +42,16 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <script>
+      // 익스플로어인 build error 가 발생하여 index.html 안에 엣지 실행하는 코드 추가
+      if (navigator.userAgent.indexOf("Trident") > 0) {
+        window.location = 'microsoft-edge:' + window.location;
+      } else if (/MSIE \d |Trident.*rv:/.test(navigator.userAgent)) {
+        window.location = 'microsoft-edge:' + window.location;
+      }
+    </script>
+
     <div id="root"></div>
     <!--
       This HTML file is a template.
