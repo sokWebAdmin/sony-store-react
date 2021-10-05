@@ -227,6 +227,17 @@ export default function ProductView({ match }) {
   //
   const showProductDetail = useMemo(() => (headerHeight > 0 || size.height < 1280) && productData, [headerHeight, size.height, productData] )
 
+  const getLinkInnerWidth = () => {
+    const width = size.width - 48;
+    const $lis = document.querySelectorAll('.link_inner >li');
+    const sum = _.chain($lis)
+                 .map(el => window.getComputedStyle(el).getPropertyValue('width'))
+                 .map(v => parseInt(v))
+                 .sum()
+                 .value();
+    const withPadding = ($lis.length - 1) * 40;
+    return width < (sum + withPadding) ? `${ sum + 1 + withPadding}px` : 'auto';
+  }
     return (
       <>        
         <SEOHelmet title={"상품 상세"} />
@@ -260,8 +271,8 @@ export default function ProductView({ match }) {
               productEvents.length > 0 && <Event events={productEvents} />
             }
             <div className="product_cont full">
-              <div className="relation_link">
-                <ul className="link_inner">
+              <div className="relation_link scroll">
+                <ul className="link_inner" style={{ width: getLinkInnerWidth() }}>
                   {
                     getInfoLinks().map(({
                       name,
