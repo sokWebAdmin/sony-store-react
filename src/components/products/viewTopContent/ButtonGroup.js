@@ -22,7 +22,7 @@ const getOrderSheetNo = async (productNo, selectedOption) => {
         orderCnt: p.buyCnt,
         optionInputs: null,
         optionNo: p.optionNo,
-        productNo: productNo
+        productNo: p.productNo
       }))
     });
     return data;
