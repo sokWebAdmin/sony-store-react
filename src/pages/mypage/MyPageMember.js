@@ -331,7 +331,7 @@ export default function MyPageMember() {
                             id="member_email" 
                             className={`inp disabled`} 
                             name="customerid"
-                            value={ myForm.customerid }
+                            value={ myForm.email }
                             autoComplete="off"
                             disabled='disabled'
                             maxLength={50} 
