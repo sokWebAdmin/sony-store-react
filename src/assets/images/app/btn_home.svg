@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+    <defs>
+        <style>
+            .cls-3{fill:none;stroke:#222;stroke-width:1.8px}
+        </style>
+    </defs>
+    <g id="Icon_Home" transform="translate(-24 -596)">
+        <g id="Icon" transform="translate(1 .909)">
+            <path id="패스_1752" data-name="패스 1752" class="cls-3" d="m24.387 608.049 10-9.091 10 9.091"
+                  transform="translate(.613 -.958)"/>
+            <path id="패스_1753" data-name="패스 1753" class="cls-3" d="M27.715 605.713v11.71l14.545.108v-11.268"
+                  transform="translate(.01 -1.349)"/>
+        </g>
+    </g>
+</svg>
