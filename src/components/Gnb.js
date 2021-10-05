@@ -5,7 +5,7 @@ import { useHeaderDispatch, closeSideBar } from '../context/header.context';
 import { useCategoryState } from '../context/category.context';
 import { getAgent } from '../utils/detectAgent.js';
 
-export default function Gnb() {
+export default function Gnb () {
   const agent = JSON.stringify(getAgent()); // test code
 
   const history = useHistory();
@@ -48,7 +48,9 @@ export default function Gnb() {
             return (
               <li
                 key={`gnb-menu-${index}`}
-                className={`${activeIndex === index ? 'active' : ''} ${activeMIndex === index ? 'mo--active' : ''}`}
+                className={`${activeIndex === index
+                  ? 'active'
+                  : ''} ${activeMIndex === index ? 'mo--active' : ''}`}
                 onMouseOver={() => {
                   setActiveIndex(index);
                 }}
@@ -89,6 +91,15 @@ export default function Gnb() {
         </ul>
       </nav>
       <h1>app config : {agent}</h1>
+      {
+        agent.isApp &&
+        <a href="sonyapp://closemall/qr" style={{
+          display: 'inline-block',
+          marginTop: '20px',
+          backgroundColor: '#fff',
+          color: '#000',
+        }}>스키마 연동 테스트 (QR)</a>
+      }
     </>
   );
 }

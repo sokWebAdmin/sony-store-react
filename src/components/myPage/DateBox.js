@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
 import { addMonth } from '../../utils/dateFormat';
 
 // components
 import DatePicker from '../common/DatePicker';
 
-export default function DateBox({ search, firstSearch }) {
+export default function DateBox({ search, firstSearch, style }) {
   const [selectMenu, setSelectMenu] = useState('threeM');
   const [period, setPeriod] = useState({ startDate: new Date(addMonth(new Date(), -3)), endDate: new Date() });
 
@@ -41,7 +42,7 @@ export default function DateBox({ search, firstSearch }) {
   }, [firstSearch]);
 
   return (
-    <div className="date_box">
+    <div className="date_box" style={style}>
       <ul className="date3_tab">
         <li className={`tabs ${selectMenu === 'threeM' && 'on'}`}>
           <a href="#" className="date3_btn" onClick={(e) => onClickTab(e, 'threeM')}>
@@ -74,6 +75,7 @@ export default function DateBox({ search, firstSearch }) {
           dateValue={period.endDate}
           width={'100%'}
           height={'32px'}
+          calendarStyle={isMobile && { position: 'absolute', left:'-130px' }}
           bindDate={onChangeEndDate}
           option={{
             selectableRanges: [[null, new Date()]],

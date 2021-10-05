@@ -10,7 +10,7 @@ import "swiper/swiper.scss"
 //css
 import "../../assets/scss/contents.scss";
 import "../../assets/scss/membership.scss";
-import "../../assets/scss/mypage.scss";
+// import "../../assets/scss/mypage.scss";
 
 import Tabs from '../../components/common/Tabs';
 
