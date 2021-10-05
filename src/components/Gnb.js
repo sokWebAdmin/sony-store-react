@@ -6,7 +6,7 @@ import { useCategoryState } from '../context/category.context';
 import { getAgent } from '../utils/detectAgent.js';
 
 export default function Gnb () {
-  const agent = JSON.stringify(getAgent()); // test code
+  const agent = getAgent(); // test code
 
   const history = useHistory();
   const headerDispatch = useHeaderDispatch();
@@ -90,7 +90,7 @@ export default function Gnb () {
           })}
         </ul>
       </nav>
-      <h1>app config : {agent}</h1>
+      <h1>app config : {JSON.stringify(agent)}</h1>
       {
         agent.isApp &&
         <a href="sonyapp://closemall/qr" style={{
@@ -100,6 +100,7 @@ export default function Gnb () {
           color: '#000',
         }}>스키마 연동 테스트 (QR)</a>
       }
+      <h1>user agent plain test : {window.navigator.userAgent}</h1>
     </>
   );
 }
