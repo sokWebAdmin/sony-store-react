@@ -7,6 +7,8 @@ import { wonComma } from '../utils/utils';
 import GlobalContext from '../context/global.context';
 import Confirm from './common/Confirm';
 
+const loginAlert = '로그인 후 구매하실 수 있습니다.<br/>로그인 페이지로 이동하시겠습니까?';
+
 export default function EspProduct({product}) {
   const description = useRef();
   const history = useHistory();
@@ -80,7 +82,7 @@ export default function EspProduct({product}) {
           }
         </div>
       </li>
-      {showComfirm && <Confirm onClose={confirmClose}>로그인 후 구매하실 수 있습니다.<br/>로그인 페이지로 이동하시겠습니까?</Confirm>}
+      {showComfirm && <Confirm onClose={confirmClose}>{loginAlert}</Confirm>}
     </>
   );
 }
