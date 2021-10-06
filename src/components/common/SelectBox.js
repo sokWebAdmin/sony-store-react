@@ -41,7 +41,6 @@ const validator = {
  *            background?: string(only color code); ex) '#fc5227';
  *          }; || reset 이 필요한 경우 {}
  */
-
 export default function SelectBox({ defaultInfo, selectOption, selectOptions, customOption, deleteOptionNo, setDeleteOptionNo }) {
   const initialSelectedState = useMemo(() => ({
     label: defaultInfo.placeholder,
