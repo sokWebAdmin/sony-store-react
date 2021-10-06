@@ -25,6 +25,7 @@ const HsValidator = forwardRef((prop, ref) => {
 
       const hasHsCode = isLogin ? await fetchHasHsCode() : guestCartHasHsCode();
       const succeed = isHsCodeProduct === hasHsCode;
+      
       if (!succeed) {
         setRejectReason(
           hasHsCode ? 'HS_PRODUCT_INSERTED' : 'BASIC_PRODUCT_INSERTED');
@@ -53,6 +54,8 @@ const HsValidator = forwardRef((prop, ref) => {
   }
 
   function hasHsCode (responseData) {
+    if (responseData.deliveryGroups.length === 0) return true;
+     
     return responseData.deliveryGroups.some(delivery =>
       delivery.orderProducts.some(({ hsCode }) => hsCode),
     );

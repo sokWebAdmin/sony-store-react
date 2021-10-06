@@ -158,6 +158,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     }
 
     const succeed = await hsValidation(!!hsCode);
+    
     if (succeed) {
       _getCartRequest(productNo, selectedOption);
     }
