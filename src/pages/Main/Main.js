@@ -501,12 +501,10 @@ export default function Main() {
                         320: {
                           slidesPerView: 1.2,
                           spaceBetween: 15,
-                          centeredSlides: true,
                         },
                         1281: {
                           slidesPerView: 3,
                           spaceBetween: 15,
-                          centeredSlides: true,
                         },
                       }}
                     >
