@@ -35,7 +35,7 @@ export default function Footer() {
                 <a href="https://www.facebook.com/sonykorea" target="_blank" rel="noreferrer" className="footer__social__link"><img src={facebook} alt="facebook" /></a>
                 <a href="https://www.instagram.com/sonykorea" target="_blank" rel="noreferrer" className="footer__social__link"><img src={instagram} alt="instagram" /></a>
                 <a href="https://www.youtube.com/user/sonystyleblog" target="_blank" rel="noreferrer" className="footer__social__link"><img src={youtube} alt="youtube" /></a>
-                <a href="https://www.stylezineblog.com/?intcmp=Main_Blog" target="_blank" rel="noreferrer" className="footer__social__link"><img src={blog} alt="blog" /></a>
+                <a href="https://stylezineblog.com/?intcmp=Main_Blog" target="_blank" rel="noreferrer" className="footer__social__link"><img src={blog} alt="blog" /></a>
               </div>
             </div>
             <div className="footer__family">
