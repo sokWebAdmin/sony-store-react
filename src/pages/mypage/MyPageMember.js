@@ -310,11 +310,11 @@ export default function MyPageMember() {
                                   type="text" 
                                   id="member_name" 
                                   name="firstname" 
-                                  className={`inp ${(!isEditMode || !nameEditMode) && 'disabled'}`}
+                                  className={`inp ${!nameEditMode && 'disabled'}`}
                                   value={ myForm.firstname }  
                                   maxLength={50} 
                                   autoComplete="off"
-                                  disabled={(!isEditMode || !nameEditMode) && 'disabled'}
+                                  disabled={!nameEditMode && 'disabled'}
                                   onChange={handleChange}
                                 />
                                 <span className="focus_bg" />
