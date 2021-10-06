@@ -168,7 +168,7 @@ export default function ProductList({category}) {
         next={_addProducts}
         hasMore={true}
       >
-        {products.map((product, index) => {
+        {products.filter(({ hsCode }) => !hsCode).map((product, index) => {
           return <React.Fragment key={`category-product-${index}`}>
             {
               index === 6 && !category.parent && <Banner category={category} />
