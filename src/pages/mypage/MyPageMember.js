@@ -11,7 +11,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import "../../assets/scss/contents.scss";
 import '../../assets/scss/mypage.scss';
 
-import { fetchMyProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
+import { fetchProfile, fetchMyProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
 import moment from 'moment';
 import { useHistory } from 'react-router';
 import FindAddress from '../../components/popup/FindAddress';
@@ -20,7 +20,6 @@ import MobileAuth from '../member/MobileAuth';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
 import { modifyMy } from '../../api/sony/member';
-import ReCAPTCHA from 'react-google-recaptcha';
 import AuthPassword from './myPageMember/AuthPassword';
 import { addHyphenToPhoneNo } from '../../utils/utils';
 import ReCaptcha from '../../components/common/ReCaptcha';
@@ -29,8 +28,6 @@ function getStrDate(date, format = 'YYYY-MM-DD') {
   if (!date) return;
   return moment(date).format(format);
 }
-
-const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY || '6LdoXFUcAAAAALtgWfChyS17dSHKwICv81fHgsA7';
 
 const initialState = {
   customerid : '',
@@ -54,9 +51,10 @@ const initialState = {
 
 // vvip / vip / family
 const memberGrade = {
-  N: { className: 'family', label: '일반' },
-  M: { className: 'vip', label: 'MEMBERSHIP' },
-  V: { className: 'vvip', label: 'VIP' }
+  N: { className: '', label: '일반' },
+  M: { className: 'family', label: 'MEMBERSHIP' },
+  V: { className: 'vip', label: 'VIP' },
+  VV: { className: 'vvip', label: 'VVIP' }
 };
 
 const required = ['firstname', 'mobile', 'homezipcode', 'homeaddress1', 'homeaddress2']
@@ -83,6 +81,7 @@ export default function MyPageMember() {
 
   
   const [isEditMode, setIsEditMode] = useState(false);
+  const [nameEditMode, setNameEditMode] = useState(false);
   const [ initForm, setInitForm ] = useState({...initialState});
   const [ myForm, setMyForm ] = useState({...initialState});
 
@@ -160,7 +159,7 @@ export default function MyPageMember() {
         history.push({ pathname: '/my-page/withdraw' })
         break;
       case 'name':
-        noticeEditMode() && history.push({ pathname: '/my-page/rename' });
+        noticeEditMode && setNameEditMode(true);
         break;
       case 'mobile':
         needsResend ? resend() : noticeEditMode() && remobile();
@@ -247,7 +246,7 @@ export default function MyPageMember() {
 
   // 초기화
   useEffect(() => {
-    console.log('MayPageMember - useEffect', profileState.my);
+
     setMyForm(prev => ({
       ...prev,
       ...profileState.my,
@@ -261,7 +260,13 @@ export default function MyPageMember() {
       sms: profileState.my?.sms === 'Y',
       email: profileState.my?.servicesite.news === 'Y',
     })
-  }, [profileState.my])
+  }, [profileState.my]);
+
+  useEffect(async () => {
+    if (!profileState.profile?.memberId) {
+      await fetchProfile(profileDispatch);
+    }
+  }, []);
 
     return (
     <>
@@ -277,303 +282,338 @@ export default function MyPageMember() {
           </div>
           <form onSubmit={ handleSubmit }>
             <div className="member_info">
-              <div className="member_withdrawal">
-                <a href="#none" className="button button_secondary button-s" onClick={ event => handleClick(event, 'password') }>비밀번호 변경</a>
-                {
-                  repasswordVisible &&
-                    <Repassword 
-                      setVisible={setRepasswordVisible}
-                    />
-                }
-                <a href="#none" className="button button_secondary button-s" onClick={ event => handleClick(event, 'withdrawal') }>회원탈퇴</a>
-              </div>
-              <div className="member_info_list">
-                <div className="member_list name">
-                  <div className="tit_inner">
-                    <label htmlFor="member_name" className="tit">이름</label>
-                  </div>
-                  <div className="info_inner">
-                    <div className="info_box">
-                    {/* <div className="info_box type_txt_btn"> */}
-                      {/* <div className="data_box sub_txt_box"> */}
-                      <div className="data_box">
-                        <div className="inp_box">
-                          <input 
-                            type="text" 
-                            id="member_name" 
-                            name="firstname" 
-                            className={`inp ${!isEditMode && 'disabled'}`}
-                            value={ myForm.firstname }  
-                            maxLength={50} 
-                            autoComplete="off"
-                            disabled="disabled"
+              {
+                profileState.profile?.memberId && (
+                  <>
+                    <div className="member_withdrawal">
+                      <a href="#none" className="button button_secondary button-s" onClick={ event => handleClick(event, 'password') }>비밀번호 변경</a>
+                      {
+                        repasswordVisible &&
+                          <Repassword 
+                            setVisible={setRepasswordVisible}
                           />
-                          <span className="focus_bg" />
-                        </div>
-                        {/* <p className="name_desc">※ 개명(이름 변경)한 경우 ‘이름 변경’ 버튼을 눌러주세요.</p> */}
-                      </div>
-                      {/* <div className="btn_box">
-                        <button className="button change_btn" type="button" onClick={ event => handleClick(event, 'name') }>이름변경</button>
-                      </div> */}
+                      }
+                      <a href="#none" className="button button_secondary button-s" onClick={ event => handleClick(event, 'withdrawal') }>회원탈퇴</a>
                     </div>
-                  </div>
-                </div>
-                <div className="member_list email">
-                  <div className="tit_inner">
-                    <label htmlFor="member_email" className="tit">이메일 ID</label>
-                  </div>
-                  <div className="info_inner">
-                    <div className="info_box">
-                      <div className="data_box">
-                        <div className="inp_box">
-                          <input 
-                            type="text" 
-                            id="member_email" 
-                            className={`inp disabled`} 
-                            name="customerid"
-                            value={ myForm.email }
-                            autoComplete="off"
-                            disabled='disabled'
-                            maxLength={50} 
-                          />
-                          <span className="focus_bg" />
+                    <div className="member_info_list">
+                      <div className="member_list name">
+                        <div className="tit_inner">
+                          <label htmlFor="member_name" className="tit">이름</label>
+                        </div>
+                        <div className="info_inner">
+                          {/* <div className="info_box"> */}
+                          <div className="info_box type_txt_btn">
+                            <div className="data_box sub_txt_box">
+                            {/* <div className="data_box"> */}
+                              <div className="inp_box">
+                                <input 
+                                  type="text" 
+                                  id="member_name" 
+                                  name="firstname" 
+                                  className={`inp ${(!isEditMode || !nameEditMode) && 'disabled'}`}
+                                  value={ myForm.firstname }  
+                                  maxLength={50} 
+                                  autoComplete="off"
+                                  disabled={(!isEditMode || !nameEditMode) && 'disabled'}
+                                  onChange={handleChange}
+                                />
+                                <span className="focus_bg" />
+                              </div>
+                              <p className="name_desc">※ 개명(이름 변경)한 경우 ‘이름 변경’ 버튼을 눌러주세요.</p>
+                            </div>
+                            <div className="btn_box">
+                              <button className="button change_btn" type="button" onClick={ event => handleClick(event, 'name') }>이름변경</button>
+                            </div>
+                          </div>
                         </div>
                       </div>
+                      
+                      <div className="member_list tel">
+                        <div className="tit_inner">
+                          <label htmlFor="member_tel" className="tit">휴대폰</label>
+                        </div>
+                        <div className="info_inner">
+                          <div className="info_box type_txt_btn">
+                            <div className="data_box">
+                              <div className="inp_box">
+                                <input 
+                                  type="text" 
+                                  id="member_tel" 
+                                  name="mobile" 
+                                  className={`inp tel_number ${!isEditMode && 'disabled'}`}
+                                  value={ addHyphenToPhoneNo(myForm.mobile) }
+                                  maxLength={13} 
+                                  autoComplete="off" 
+                                  placeholder=""
+                                  onChange={handleChange}
+                                  disabled={ !isEditMode && 'disabled' }
+                                />
+                                <span className="label">휴대폰 번호<span>(- 없이 입력하세요.)</span></span>
+                                <span className="focus_bg" />
+                              </div>
+                            </div>
+                            <div className="btn_box">
+                              <button 
+                                className="button change_btn" 
+                                type="button"
+                                onClick={ event => handleClick(event, 'mobile') }>{ needsResend ? '재전송' : '인증번호 전송' }</button>
+                            </div>
+                          </div>
+                          {
+                            remobileVisible 
+                              && <MobileAuth 
+                                    mobile={ myForm.mobile } 
+                                    visible={remobileVisible}
+                                    setVisible={ setRemobileVisible } 
+                                    handleResult={ handleRemobileResult }
+                                    setNeedsResend={setNeedsResend}
+                                    remobileReset={remobileReset}
+                                    setRemobileReset={setRemobileReset}
+                                  /> 
+                          }
+                        </div>
+                      </div>
+
+                      <div className="member_list email">
+                        <div className="tit_inner">
+                          <label htmlFor="member_email" className="tit">이메일 아이디</label>
+                        </div>
+                        <div className="info_inner">
+                          <div className="info_box">
+                            <div className="data_box">
+                              <div className="inp_box">
+                                <input 
+                                  type="text" 
+                                  id="member_email" 
+                                  className={`inp disabled`} 
+                                  name="customerid"
+                                  value={ myForm.email }
+                                  autoComplete="off"
+                                  disabled='disabled'
+                                  maxLength={50} 
+                                />
+                                <span className="focus_bg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="member_list birth_date">
+                        <div className="tit_inner">
+                          <label htmlFor="member_birth" className="tit">생년월일</label>
+                        </div>
+                        <div className="info_inner">
+                          <div className="info_box">
+                            <div className="data_box">
+                              <div className="inp_box">
+                                <input 
+                                  type="text" 
+                                  id="member_birth" 
+                                  name="birthday"
+                                  className={`inp disabled`} 
+                                  value={getStrDate(myForm.birthday)}  
+                                  disabled='disabled'
+                                  maxLength={8} 
+                                />
+                                <span className="focus_bg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="member_list gender">
+                        <div className="tit_inner">
+                          <label htmlFor="member_gender" className="tit">성별</label>
+                        </div>
+                        <div className="info_inner">
+                          <div className="info_box">
+                            <div className="data_box">
+                              <div className="inp_box">
+                                <input 
+                                  type="text" 
+                                  id="member_gender" 
+                                  name="gender"
+                                  className={`inp disabled`} 
+                                  value={Number(myForm.gender) === 1 ? '여' : '남'}  
+                                  disabled='disabled'
+                                />
+                                <span className="focus_bg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="member_list grade">
+                        <div className="tit_inner">
+                          <label htmlFor="member_grade" className="tit">회원구분</label>
+                        </div>
+                        <div className="info_inner">
+                          <div className="info_box">
+                            <div className="data_box">
+                              <div className="inp_box">
+                                <span className={ `ico_grade ${ memberGrade[myForm.custgrade]?.className }` }>
+                                  <input 
+                                    type="text" 
+                                    id="member_grade"
+                                    name="custgrade"
+                                    className={`inp disabled`} 
+                                    value={ memberGrade[myForm.custgrade]?.label }
+                                    disabled="disabled" 
+                                    maxLength={20} 
+                                  />
+                                  <span className="focus_bg" />
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> 
+                      
+                      <div className="member_list address">
+                        <div className="tit_inner">
+                          <label htmlFor="member_addr" className="tit">주소</label>
+                        </div>
+                        <div className="info_inner">
+                          <div className="info_box type_txt_btn">
+                            <div className="data_box">
+                              <div className="inp_box">
+                                <input 
+                                  type="text" 
+                                  id="member_addr"
+                                  name="homezipcode"
+                                  className={`inp disabled`} 
+                                  value={ myForm.homezipcode }
+                                  disabled="disabled" 
+                                  maxLength={50}
+                                  onChange={handleChange}
+                                />
+                                <span className="focus_bg" />
+                              </div>
+                            </div>
+                            <div className="btn_box">
+                              <button 
+                                className="button change_btn" 
+                                type="button" 
+                                onClick={ event => handleClick(event, 'address') }
+                                >우편번호찾기
+                              </button>
+                              {
+                                findAddressVisible &&
+                                  <FindAddress 
+                                    setVisible={setFindAddressVisible}
+                                    setAddress={bindReceiverAddress} 
+                                  />
+                              }
+                            </div>
+                          </div>
+                          <div className="info_box">
+                            <div className="data_box">
+                              <div className="inp_box">
+                                <input 
+                                  type="text" 
+                                  id="member_addr2" 
+                                  name="homeaddress1"
+                                  className={`inp disabled`} 
+                                  value={ myForm.homeaddress1 }
+                                  onChange={handleChange}
+                                  disabled="disabled" 
+                                  maxLength={50} 
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="info_box">
+                            <div className="data_box"><div className="inp_box">
+                                <input 
+                                  type="text" 
+                                  id="member_addr3" 
+                                  name="homeaddress2"
+                                  className={`inp ${ !isEditMode && 'disabled' }`} 
+                                  value={ myForm.homeaddress2 } 
+                                  onChange={handleChange}
+                                  disabled={ !isEditMode && 'disabled' }
+                                  maxLength={50} 
+                                />
+                                <span className="focus_bg" />
+                              </div>
+                            </div>
+                            <p className="name_desc">※ 주소는 사은품 및 기타 서비스를 제공받으실 때, 꼭 필요한 부분이므로 정확히 기입해 주시기 바랍니다.</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="member_list opt_in">
+                        <div className="tit_inner">
+                          <p className="tit">이벤트 등 프로모션<br className="mo_none" /> 알림</p>
+                        </div>
+                        <div className="info_inner">
+                          <div className="info_box">
+                            <div className="switchbtn_box">
+                              <div className="switchbtn">
+                                <span className="switch_tit">메일 수신</span>
+                                <label className="switch">
+                                  <input 
+                                    type="checkbox" 
+                                    name="email" 
+                                    className="check_all" 
+                                    disabled={ !isEditMode && 'disabled' }
+                                    checked={ active.email }
+                                    onChange={ handleChange }
+                                  />
+                                  <span className="toggle" />
+                                </label>
+                              </div>
+                              <div className="switchbtn">
+                                <span className="switch_tit">SMS 수신</span>
+                                <label className="switch">
+                                  <input 
+                                    type="checkbox" 
+                                    name="sms" 
+                                    className="check_all" 
+                                    disabled={ !isEditMode && 'disabled' }
+                                    onChange={ handleChange }
+                                    checked={ active.sms }
+                                  />
+                                  <span className="toggle" />
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {
+                        passwordVisible && <AuthPassword 
+                                              setVisible={ setPasswordVisible } 
+                                              authResult={ result => result && setIsEditMode(true) }
+                                            />
+                      }
+                      {
+                        isEditMode && <ReCaptcha setCaptcha={setCaptcha} />
+                      }
                     </div>
-                  </div>
-                </div>
-                <div className="member_list tel">
-                  <div className="tit_inner">
-                    <label htmlFor="member_tel" className="tit">휴대폰 번호</label>
-                  </div>
-                  <div className="info_inner">
-                    <div className="info_box type_txt_btn">
-                      <div className="data_box">
-                        <div className="inp_box">
-                          <input 
-                            type="text" 
-                            id="member_tel" 
-                            name="mobile" 
-                            className={`inp tel_number ${!isEditMode && 'disabled'}`}
-                            value={ addHyphenToPhoneNo(myForm.mobile) }
-                            maxLength={13} 
-                            autoComplete="off" 
-                            placeholder=""
-                            onChange={handleChange}
-                            disabled={ !isEditMode && 'disabled' }
-                          />
-                          <span className="label">휴대폰 번호<span>(- 없이 입력하세요.)</span></span>
-                          <span className="focus_bg" />
-                        </div>
-                      </div>
-                      <div className="btn_box">
-                        <button 
-                          className="button change_btn" 
-                          type="button"
-                          onClick={ event => handleClick(event, 'mobile') }>{ needsResend ? '재전송' : '인증번호 전송' }</button>
-                      </div>
-                    </div>
-                    {
-                      remobileVisible 
-                        && <MobileAuth 
-                              mobile={ myForm.mobile } 
-                              visible={remobileVisible}
-                              setVisible={ setRemobileVisible } 
-                              handleResult={ handleRemobileResult }
-                              setNeedsResend={setNeedsResend}
-                              remobileReset={remobileReset}
-                              setRemobileReset={setRemobileReset}
-                            /> 
-                    }
-                  </div>
-                </div>
-                <div className="member_list grade">
-                  <div className="tit_inner">
-                    <label htmlFor="member_grade" className="tit">회원구분</label>
-                  </div>
-                  <div className="info_inner">
-                    <div className="info_box">
-                      <div className="data_box">
-                        <div className="inp_box">
-                          <span className={ `ico_grade ${ memberGrade[myForm.custgrade]?.className }` }>
-                            <input 
-                              type="text" 
-                              id="member_grade"
-                              name="custgrade"
-                              className={`inp disabled`} 
-                              value={ memberGrade[myForm.custgrade]?.label }
-                              disabled="disabled" 
-                              maxLength={20} 
-                            />
-                            <span className="focus_bg" />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> 
-                <div className="member_list birth_date">
-                  <div className="tit_inner">
-                    <label htmlFor="member_birth" className="tit">생년월일</label>
-                  </div>
-                  <div className="info_inner">
-                    <div className="info_box">
-                      <div className="data_box">
-                        <div className="inp_box">
-                          <input 
-                            type="text" 
-                            id="member_birth" 
-                            name="birthday"
-                            className={`inp disabled`} 
-                            value={getStrDate(myForm.birthday)}  
-                            disabled='disabled'
-                            maxLength={8} 
-                          />
-                          <span className="focus_bg" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="member_list address">
-                  <div className="tit_inner">
-                    <label htmlFor="member_addr" className="tit">주소</label>
-                  </div>
-                  <div className="info_inner">
-                    <div className="info_box type_txt_btn">
-                      <div className="data_box">
-                        <div className="inp_box">
-                          <input 
-                            type="text" 
-                            id="member_addr"
-                            name="homezipcode"
-                            className={`inp disabled`} 
-                            value={ myForm.homezipcode }
-                            disabled="disabled" 
-                            maxLength={50}
-                            onChange={handleChange}
-                          />
-                          <span className="focus_bg" />
-                        </div>
-                      </div>
-                      <div className="btn_box">
-                        <button 
-                          className="button change_btn" 
-                          type="button" 
-                          onClick={ event => handleClick(event, 'address') }
-                          >우편번호찾기
-                        </button>
+                    <div className="btn_article">
                         {
-                          findAddressVisible &&
-                            <FindAddress 
-                              setVisible={setFindAddressVisible}
-                              setAddress={bindReceiverAddress} 
-                            />
+                          isEditMode ? 
+                            (
+                              <>
+                                <button className="button button_negative" type="button" onClick={ event => handleClick(event, 'cancle') }>취소</button>
+                                <button className="button button_positive" type="submit">저장</button>
+                              </>
+                            )
+                            :
+                          <button 
+                            className="button button_positive button-full popup_comm_btn" 
+                            data-popup-name="modify_pw_chk" 
+                            type="button"
+                            onClick={ () => setPasswordVisible(true)}
+                          >회원정보 수정</button>
                         }
-                      </div>
                     </div>
-                    <div className="info_box">
-                      <div className="data_box">
-                        <div className="inp_box">
-                          <input 
-                            type="text" 
-                            id="member_addr2" 
-                            name="homeaddress1"
-                            className={`inp disabled`} 
-                            value={ myForm.homeaddress1 }
-                            onChange={handleChange}
-                            disabled="disabled" 
-                            maxLength={50} 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="info_box">
-                      <div className="data_box"><div className="inp_box">
-                          <input 
-                            type="text" 
-                            id="member_addr3" 
-                            name="homeaddress2"
-                            className={`inp ${ !isEditMode && 'disabled' }`} 
-                            value={ myForm.homeaddress2 } 
-                            onChange={handleChange}
-                            disabled={ !isEditMode && 'disabled' }
-                            maxLength={50} 
-                          />
-                          <span className="focus_bg" />
-                        </div>
-                      </div>
-                      <p className="name_desc">※ 주소는 사은품 및 기타 서비스를 제공받으실 때, 꼭 필요한 부분이므로 정확히 기입해 주시기 바랍니다.</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="member_list opt_in">
-                  <div className="tit_inner">
-                    <p className="tit">이벤트 등 프로모션<br className="mo_none" /> 알림</p>
-                  </div>
-                  <div className="info_inner">
-                    <div className="info_box">
-                      <div className="switchbtn_box">
-                        <div className="switchbtn">
-                          <span className="switch_tit">메일 수신</span>
-                          <label className="switch">
-                            <input 
-                              type="checkbox" 
-                              name="email" 
-                              className="check_all" 
-                              disabled={ !isEditMode && 'disabled' }
-                              checked={ active.email }
-                              onChange={ handleChange }
-                            />
-                            <span className="toggle" />
-                          </label>
-                        </div>
-                        <div className="switchbtn">
-                          <span className="switch_tit">SMS 수신</span>
-                          <label className="switch">
-                            <input 
-                              type="checkbox" 
-                              name="sms" 
-                              className="check_all" 
-                              disabled={ !isEditMode && 'disabled' }
-                              onChange={ handleChange }
-                              checked={ active.sms }
-                            />
-                            <span className="toggle" />
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {
-                  passwordVisible && <AuthPassword 
-                                        setVisible={ setPasswordVisible } 
-                                        authResult={ result => result && setIsEditMode(true) }
-                                      />
-                }
-                {
-                  isEditMode && <ReCaptcha setCaptcha={setCaptcha} />
-                }
-              </div>
-              <div className="btn_article">
-                  {
-                    isEditMode ? 
-                      (
-                        <>
-                          <button className="button button_negative" type="button" onClick={ event => handleClick(event, 'cancle') }>취소</button>
-                          <button className="button button_positive" type="submit">저장</button>
-                        </>
-                      )
-                      :
-                    <button 
-                      className="button button_positive button-full popup_comm_btn" 
-                      data-popup-name="modify_pw_chk" 
-                      type="button"
-                      onClick={ () => setPasswordVisible(true)}
-                    >회원정보 수정</button>
-                  }
-              </div>
+                  </>
+                )
+              }
             </div>
           </form>
         </div>{/* // member_wrap */}
