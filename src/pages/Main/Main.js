@@ -377,6 +377,18 @@ export default function Main() {
                     speed={600}
                     slidesPerView={1.5}
                     spaceBetween={157}
+                    breakpoints={{
+                      320: {
+                        slidesPerView: 1.5,
+                        spaceBetween: 50,
+                        allowTouchMove: true,
+                      },
+                      1281: {
+                        slidesPerView: 1.5,
+                        spaceBetween: 110,
+                        allowTouchMove: false,
+                      },
+                    }}
                   >
                     {recommendedBanners.map((recommendedBanner, index) => (
                       <SwiperSlide className="recommend__item swiper-slide" key={index}>
@@ -489,10 +501,12 @@ export default function Main() {
                         320: {
                           slidesPerView: 1.2,
                           spaceBetween: 15,
+                          centeredSlides: true,
                         },
                         1281: {
                           slidesPerView: 3,
                           spaceBetween: 15,
+                          centeredSlides: true,
                         },
                       }}
                     >
