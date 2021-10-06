@@ -449,28 +449,11 @@ export default function Main() {
                       breakpoints={{
                         320: {
                           slidesPerView: 1.2,
-                          centeredSlides: true,
                           spaceBetween: 15,
-                        },
-                        640: {
-                          slidesPerView: 1.2,
-                          centeredSlides: true,
-                          spaceBetween: 24,
                         },
                         1281: {
                           slidesPerView: 3,
-                          centeredSlides: false,
                           spaceBetween: 15,
-                        },
-                        1366: {
-                          slidesPerView: 3,
-                          centeredSlides: false,
-                          spaceBetween: 15,
-                        },
-                        1600: {
-                          slidesPerView: 3,
-                          centeredSlides: false,
-                          spaceBetween: 24,
                         },
                       }}
                     >
