@@ -1,7 +1,7 @@
 import LayerPopup from "../../../components/common/LayerPopup";
 import OpenLogin from "../../../components/member/OpenLogin";
 import '../../../assets/scss/mypage.scss';
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAlert } from "../../../hooks";
 import { loginApi } from "../../../api/auth";
 import { useProfileState } from "../../../context/profile.context";
@@ -14,6 +14,8 @@ export default function AuthPassword({ setVisible, authResult }) {
   const { profile: { memberId }} = useProfileState();
   const [ password, setPassword ] = useState('');
   const close = () => setVisible(false);
+  const passwordRef = useRef(null);
+  const [pwType, setPwType] = useState(true)
 
   const submitPassword = async () => {
     if (!password) {
@@ -98,10 +100,15 @@ export default function AuthPassword({ setVisible, authResult }) {
                       name="password"
                       value={password}
                       onChange={({ target }) => setPassword(target.value)}
+                      ref={ passwordRef }
                     />
                     <span className="label">비밀번호 입력</span>
                     <span className="focus_bg"></span>
-                    <div className="eyes"><a href="#none" className="eyes_btn" title="비밀번호 숨김"><i className="ico ico_eyes"></i></a></div>
+                    <div className="eyes">
+                      <button type="button" title={`${ pwType ? '비밀번호 숨김' : '비밀번호 표시' }`} onClick={ () => setPwType(prev => !!!prev) }>
+                        <i className={`${ pwType ? 'ico ico_eyes' : 'ico_eyes_open' }`}></i>
+                      </button>
+                    </div>
                   </label>
                 </div>
                 <div className="error_txt"><span className="ico"></span>현재 비밀번호가 올바르지 않습니다.</div>
