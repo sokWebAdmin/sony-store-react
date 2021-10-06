@@ -60,7 +60,17 @@ export function useProfileState() {
 export async function fetchProfile(dispatch) {
   try {
     const response = await getProfile();
-    dispatch({ type: 'GET_PROFILE', data: response.data })
+
+    if (response.status === 200) {
+      dispatch({ type: 'GET_PROFILE', data: response.data });
+      return;
+    }
+
+    if (response.data?.message?.includes('AccessToken')) {
+      alert('로그인 상태가 만료되었습니다. 다시 로그인해주세요.');
+      window.location.href = "/"
+    }
+    
   } catch(e) {
     console.error(e);
   }
@@ -69,7 +79,6 @@ export async function fetchProfile(dispatch) {
 export async function fetchMyProfile(dispatch, query) {
   try {
     const response = await getMemberInfo(query);
-    console.log(response.data);
     response.data.errorCode === '0000' &&
       dispatch({ type: 'GET_MY_PROFILE', data: response.data.body });
   } catch(e) {
