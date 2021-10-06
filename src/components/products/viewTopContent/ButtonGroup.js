@@ -157,11 +157,11 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       return;
     }
 
-    const succeed = await hsValidation(!!hsCode);
+    // const succeed = await hsValidation(!!hsCode);
     
-    if (succeed) {
+    // if (succeed) {
       _getCartRequest(productNo, selectedOption);
-    }
+    // }
   };
 
   const wishHandler = async () => {
