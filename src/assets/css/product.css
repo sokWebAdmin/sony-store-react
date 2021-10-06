@@ -371,8 +371,8 @@
   float: left
 }
 
+/* .product_view_about.soldout .delivery_txt, */
 .product_view_about.soldout .product_price,
-.product_view_about.soldout .delivery_txt,
 .product_view_about.soldout .mileage {
   color: #bbb
 }

@@ -86,8 +86,8 @@ export default function TobContent({
                 <strong className="price">{toCurrencyString(priceInfo.discount)}</strong> 원
               </div>
             }
-            {saleStatus === 'READY' && <span className={`badge__label badge__label__outofstock`}>일시품절<span className="icon_question">!</span></span>}
-            {saleStatus === 'SOLDOUT' && <span className={`badge__label badge__label__soldout`}>품절<span className="icon_question">!</span></span>}
+            {saleStatus === 'READY' && <span className={`badge__label badge__label__outofstock`}>일시품절</span>}
+            {saleStatus === 'SOLDOUT' && <span className={`badge__label badge__label__soldout`}>품절</span>}
           </div>
         </div>
         
