@@ -239,7 +239,7 @@ const App = (props) => {
             {/*       component={BenefitZone} />/!*현재 데이터 없음*!/*/}
             {/*<Route exact path="/event/pre-order"*/}
             {/*       component={PreOrder} />/!*현재 데이터 없음*!/*/}
-            {/*<Route exact path="/event/asc" component={asc} />*/}
+            <Route exact path="/event/asc/:eventNo" component={asc} />
             <Route exact path="/event/refined/:eventNo" component={refined} />
             <Route exact path="/event/live-on/:eventNo" component={liveon} />
             <Route exact path="/event/refurbish/:eventNo" component={refurbish} />
