@@ -1028,6 +1028,9 @@
         &__sub {
           margin: 96px 0 56px;
           padding-bottom: 66px;
+          @include only-mo{
+            margin-left:36px;
+          }
           &__inner {
             position: absolute;
             bottom: 40px;

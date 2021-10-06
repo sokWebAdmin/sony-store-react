@@ -118,8 +118,6 @@ export default function Main() {
     }
   }, []);
 
-  const getKvBanner = (banner, setBanner) => {};
-
   //2. 섹션 조회
   const getSections = useCallback(async () => {
     // 5742: 추천상품 5833:이벤트
@@ -359,7 +357,7 @@ export default function Main() {
                             className="recommend__item__copy"
                             dangerouslySetInnerHTML={{ __html: recommendedBanner.banners[0].nameList }}
                           />
-                          <div className="recommend__item__pic" style={{ minHeight: '384px', textAlign: 'center' }}>
+                          <div className="recommend__item__pic" style={{ textAlign: 'center' }}>
                             <img
                               src={recommendedSections[index]?.listImageUrls[0]}
                               alt={`"${recommendedBanner?.banners[0]?.name}"`}
@@ -450,24 +448,29 @@ export default function Main() {
                       }}
                       breakpoints={{
                         320: {
-                          slidesPerView: 1.5,
-                          spaceBetween: 50,
-                          allowTouchMove: true,
+                          slidesPerView: 1.2,
+                          centeredSlides: true,
+                          spaceBetween: 15,
                         },
-                        641: {
-                          slidesPerView: 1.8,
-                          spaceBetween: 92,
-                          allowTouchMove: true,
+                        640: {
+                          slidesPerView: 1.2,
+                          centeredSlides: true,
+                          spaceBetween: 24,
                         },
                         1281: {
-                          slidesPerView: 1.5,
-                          spaceBetween: 110,
-                          allowTouchMove: false,
+                          slidesPerView: 3,
+                          centeredSlides: false,
+                          spaceBetween: 15,
+                        },
+                        1366: {
+                          slidesPerView: 3,
+                          centeredSlides: false,
+                          spaceBetween: 15,
                         },
                         1600: {
-                          slidesPerView: 1.5,
-                          spaceBetween: 157,
-                          allowTouchMove: false,
+                          slidesPerView: 3,
+                          centeredSlides: false,
+                          spaceBetween: 24,
                         },
                       }}
                     >
