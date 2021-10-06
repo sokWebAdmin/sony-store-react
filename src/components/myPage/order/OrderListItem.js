@@ -71,7 +71,8 @@ export default function OrderListItem({
   };
 
   const showRefundAccountInfo = (claimStatusType, payType) => {
-    return claimStatusType === 'CANCEL_REQUEST' && payType === 'VIRTUAL_ACCOUNT';
+    // return claimStatusType === 'CANCEL_REQUEST' && payType === 'VIRTUAL_ACCOUNT';
+    return true;
   };
 
   const onClickRefundAccount = () => setRefundAccountVisible(true);
@@ -109,7 +110,10 @@ export default function OrderListItem({
           openAlert('취소 실패하였습니다. 다시 시도해주세요.');
           return;
         }
-        openAlert(successMessage, () => () => window.location.reload());
+
+        openAlert(successMessage, () =>
+          payType === 'VIRTUAL_ACCOUNT' ? () => setRefundAccountVisible(true) : () => window.location.reload(),
+        );
       });
     } else if (status === 'cancel') {
       console.log('취소');

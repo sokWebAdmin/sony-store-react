@@ -47,7 +47,6 @@ const request = async (url, method, query = {}, requestBody = null) => {
     validateStatus: (status) => status,
   }).then((response) => {
     if (response.status === 401 && !url.includes('authentications')) {
-      console.log('response?.data?.message:', response?.data?.message);
       if (response?.data?.message) {
         window.location.pathname.includes('my-page')
           ? alert('로그인 상태가 만료되었습니다. 다시 로그인해주세요.')
