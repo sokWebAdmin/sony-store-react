@@ -81,7 +81,8 @@ export default function Main() {
     });
   };
 
-  const getAcademyPcBannerNames = (bannerInfoList) => {
+  const getAcademyBannerNames = (bannerInfoList) => {
+    if (Object.keys(bannerInfoList).length === 0) return;
     const bannerNames = bannerInfoList.banners[0].name.split('/');
     bannerInfoList.banners[0].nameList = bannerNames.reduce((acc, bannerName, index) => {
       const { length } = bannerNames;
@@ -93,8 +94,6 @@ export default function Main() {
   //1. 배너 노출 api
   const getBanners = useCallback(async () => {
     try {
-      //배너 코드 객체로 관리하기
-      //응답이 순서를 보징하지 않음
       const { data } = await loadBanner('000,001,002,003,004,005');
 
       const moBanners = data.find(({ code }) => code === '001')?.accounts || [];
@@ -102,9 +101,10 @@ export default function Main() {
       const eventBanners = data.find(({ code }) => code === '003')?.accounts || [];
       setEventBanners(eventBanners);
       const academyPcBanners = data.find(({ code }) => code === '004')?.accounts[0] || {};
-      getAcademyPcBannerNames(academyPcBanners);
+      getAcademyBannerNames(academyPcBanners);
       setAcademyPcBanners(academyPcBanners);
       const academyMoBanners = data.find(({ code }) => code === '005')?.accounts[0] || {};
+      getAcademyBannerNames(academyMoBanners);
       setAcademyMoBanners(academyMoBanners);
 
       const slidePcBanners = data.find(({ code }) => code === '000')?.accounts || [];
@@ -117,6 +117,8 @@ export default function Main() {
       console.error(e);
     }
   }, []);
+
+  const getKvBanner = (banner, setBanner) => {};
 
   //2. 섹션 조회
   const getSections = useCallback(async () => {
@@ -253,7 +255,7 @@ export default function Main() {
                             : `url(${slideMoBanners[index]?.banners[0]?.imageUrl})`,
                       }}
                     >
-                      {bannerInfo.banners[0].videoUrl !== '' && (
+                      {(bannerInfo.banners[0].videoUrl !== '' || slideMoBanners[index].banners[0].videoUrl !== '') && (
                         <video className="video-slide-player" preload="true" autoPlay muted={true} playsInline>
                           <source
                             src={
@@ -524,7 +526,8 @@ export default function Main() {
             {/* <!-- // product --> */}
 
             {/* <!-- academy banner --> */}
-            {academyPcBanners?.banners && academyMoBanners?.banners && (
+            {((size.width > breakPoint && academyPcBanners?.banners) ||
+              (size.width <= breakPoint && academyMoBanners?.banners)) && (
               <div
                 className="main__banner"
                 style={{
@@ -535,17 +538,34 @@ export default function Main() {
                 }}
               >
                 <div className="main__banner__inner">
-                  <h2
-                    className="main__banner__title"
-                    dangerouslySetInnerHTML={{ __html: academyPcBanners?.banners[0]?.nameList }}
-                  />
-                  <Link
-                    className="main__banner__link"
-                    to={academyPcBanners.banners[0]?.landingUrl}
-                    target={academyPcBanners?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
-                  >
-                    자세히 보기
-                  </Link>
+                  {size.width > breakPoint && academyPcBanners?.banners ? (
+                    <h2
+                      className="main__banner__title"
+                      dangerouslySetInnerHTML={{ __html: academyPcBanners?.banners[0]?.nameList }}
+                    />
+                  ) : (
+                    <h2
+                      className="main__banner__title"
+                      dangerouslySetInnerHTML={{ __html: academyMoBanners?.banners[0]?.nameList }}
+                    />
+                  )}
+                  {size.width > breakPoint && academyPcBanners?.banners ? (
+                    <Link
+                      className="main__banner__link"
+                      to={academyPcBanners.banners[0]?.landingUrl}
+                      target={academyPcBanners?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                    >
+                      자세히 보기
+                    </Link>
+                  ) : (
+                    <Link
+                      className="main__banner__link"
+                      to={academyMoBanners.banners[0]?.landingUrl}
+                      target={academyMoBanners?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                    >
+                      자세히 보기
+                    </Link>
+                  )}
                 </div>
               </div>
             )}
