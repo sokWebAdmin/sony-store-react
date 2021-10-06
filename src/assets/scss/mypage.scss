@@ -976,6 +976,8 @@
   .member_info {
     .btn_article {
       margin-top: 80px;
+      display: flex;
+      justify-content: center;
 
       .button_positive,
       .button_negative {

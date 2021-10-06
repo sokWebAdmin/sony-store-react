@@ -22,7 +22,8 @@ export default function ReCaptcha({ style, setCaptcha }) {
 
 ReCaptcha.defaultProps = {
   style: {
-    display: 'block',
-    margin: '10px auto'
+    margin: '10px auto',
+    display: 'flex',
+    justifyContent: 'center'
   }
 }
