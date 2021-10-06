@@ -156,13 +156,11 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       );
       return;
     }
-    _getCartRequest(productNo, selectedOption);
-    // const succeed = await hsValidation(!!hsCode);
-    // console.log(succeed);
-    // if (succeed) {
-      
-    //   _getCartRequest(productNo, selectedOption);
-    // }
+
+    const succeed = await hsValidation(!!hsCode);
+    if (succeed) {
+      _getCartRequest(productNo, selectedOption);
+    }
   };
 
   const wishHandler = async () => {
@@ -201,8 +199,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
 
   // hsValidation
   const hsValidator = createRef();
-  const hsValidation = validation =>
-    hsValidator.current.validation(validation);
+  const hsValidation = async validation => await hsValidator.current.validation(validation);
 
   return (
     <>

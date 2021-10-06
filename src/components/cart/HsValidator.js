@@ -29,6 +29,7 @@ const HsValidator = forwardRef((prop, ref) => {
         setRejectReason(
           hasHsCode ? 'HS_PRODUCT_INSERTED' : 'BASIC_PRODUCT_INSERTED');
       }
+      return succeed;
     },
   }));
 

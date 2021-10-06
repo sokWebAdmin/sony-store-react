@@ -1,4 +1,4 @@
-import { React ,useState, useEffect, useCallback, useMemo } from 'react';
+import { React ,useState, useEffect, useCallback, useMemo, useContext } from 'react';
 import { getEventByProductNo } from '../../api/display';
 import _ from 'lodash';
 
@@ -33,9 +33,13 @@ import RelatedProducts from '../../components/products/RelatedProducts';
 import Event from '../../components/products/Event';
 import BottomContent from '../../components/products/ViewBottomContent';
 import { useHistory } from 'react-router';
+import GlobalContext from '../../context/global.context';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
 
 export default function ProductView({ match }) {
   const history = useHistory();
+  const { isLogin } = useContext(GlobalContext);
   const productNo = Number(match.params?.productNo) || 0;
 
   //ui
@@ -62,8 +66,23 @@ export default function ProductView({ match }) {
   const [productEvents, setProductEvents] = useState([]);
   const [wish, setWish] = useState(false);
 
+  const {
+    openAlert,
+    closeModal,
+    alertVisible,
+    alertMessage,
+  } = useAlert();
+
+  const isInvalidForGradeProduct = hsCode => hsCode && !isLogin;
+
   // product init data
   const mapProductData = useCallback(([productData, { flatOptions, ...rest }]) => {
+
+    if (isInvalidForGradeProduct(productData.baseInfo.hsCode)) {
+      const historyInfo = { pathname: '/member/login', state: { next: `/product-view/${productData.baseInfo.productNo}` } };
+      openAlert('접근 불가한 등급상품입니다.', () => () => history.push(historyInfo));
+    };
+
     const hasColor = productData.groupManagementCode || (!productData.groupManagementCode && flatOptions.filter(({ value }) => value.includes('_#')).length > 0)
     setWish(productData.liked);
     setProductData(productData);
@@ -306,6 +325,7 @@ export default function ProductView({ match }) {
           </div>
         }
         </div>
+        {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       </>  
     )
 }
