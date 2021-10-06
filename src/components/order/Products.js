@@ -38,7 +38,7 @@ const Products = (props) => {
   return (
     <div className="col_table_body">
       {products?.length >= 1 ? (
-        products.map(({ id, imageUrl, productName, optionText, orderCnt, amount, totalAmount }) => (
+        products.map(({ id, imageUrl, productName, orderCnt, amount, totalAmount }) => (
           <div className="col_table_row" key={id}>
             <div className="col_table_cell prd_wrap">
               <div className="prd">
@@ -47,7 +47,6 @@ const Products = (props) => {
                 </div>
                 <div className="prd_info">
                   <div className="prd_info_name">{productName}</div>
-                  <p className="prd_info_option">{optionText}</p>
                 </div>
               </div>
             </div>
