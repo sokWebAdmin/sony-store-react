@@ -119,16 +119,20 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   };
 
   const _getCartRequest = async (productNo, selectedOption) => {
+    
     const products = getCartRequest(productNo, selectedOption);
 
     try {
       if (isLogin) {
+        
         const result = await postCart(products);
         result?.error && result?.message && openAlert(result.message);
       } else {
+        
         gc.set(products.map(product => ({ ...product, hsCode }))); // TODO.
                                                                    // 확인필요. @jk
       }
+      
       setCartVisible(true);
     } catch(e) {
       e?.message && openAlert(e.message);
@@ -137,6 +141,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   }
 
   const cart = async () => {
+    
     if (!canBuy) {
       openAlert('옵션을 선택하세요.');
       return;
@@ -151,11 +156,13 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       );
       return;
     }
-
-    const succeed = await hsValidation(!!hsCode);
-    if (succeed) {
-      _getCartRequest(productNo, selectedOption);
-    }
+    _getCartRequest(productNo, selectedOption);
+    // const succeed = await hsValidation(!!hsCode);
+    // console.log(succeed);
+    // if (succeed) {
+      
+    //   _getCartRequest(productNo, selectedOption);
+    // }
   };
 
   const wishHandler = async () => {
