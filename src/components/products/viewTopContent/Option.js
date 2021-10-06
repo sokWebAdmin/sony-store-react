@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { colorsGroupByOptionNo, getColorChipInfo } from "../../../utils/product";
 import _ from "lodash";
 import SelectBox from "../../common/SelectBox";
@@ -24,6 +24,8 @@ export default function Option({
   totalCnt,
   totalPrice,
   saleStatus,
+  optionVisible,
+  isMobileSize
 }) {
   const reserved = saleStatus === 'RESERVE';
 
@@ -49,15 +51,17 @@ export default function Option({
 
   const [deleteOptionNo, setDeleteOptionNo] = useState(0);
 
+  const showOption = options && ((!isMobileSize) || (isMobileSize && optionVisible));
+
+  useEffect(() => isMobileSize && !optionVisible && setSelectedOption(() => []), [optionVisible])
+
   return (
     <div className="prd_select_inner">
             
       <div className="prd_select_box">
         <p className="tit">제품선택</p>
-
         {
-          options &&
-          <SelectBox
+          showOption && <SelectBox
             selectOptions={options.map(getSelectOptions)}
             selectOption={
               option => {
@@ -70,13 +74,14 @@ export default function Option({
             }}
             deleteOptionNo={deleteOptionNo}
             setDeleteOptionNo={setDeleteOptionNo}
-        />
+            open={ isMobileSize && optionVisible }
+          />
         }
                 
       </div>
       
         
-      <div className="selected_opt">
+      <div className={`selected_opt ${isMobileSize && optionVisible && 'on'}`}>
         {selectedOption.length > 0 && selectedOption.map((item, itemIndex) => (
           <div className="opt_info" key={itemIndex}>
             <p className="opt_tag">제품</p>

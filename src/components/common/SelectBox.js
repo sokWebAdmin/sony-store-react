@@ -41,7 +41,7 @@ const validator = {
  *            background?: string(only color code); ex) '#fc5227';
  *          }; || reset 이 필요한 경우 {}
  */
-export default function SelectBox({ defaultInfo, selectOption, selectOptions, customOption, deleteOptionNo, setDeleteOptionNo }) {
+export default function SelectBox({ defaultInfo, selectOption, selectOptions, customOption, deleteOptionNo, setDeleteOptionNo, open }) {
   const initialSelectedState = useMemo(() => ({
     label: defaultInfo.placeholder,
     options: [],
@@ -113,6 +113,7 @@ export default function SelectBox({ defaultInfo, selectOption, selectOptions, cu
           className: defaultInfo.className,
           onToggleHandler,
           onClickHandler,
+          open,
         })
       }
     </>
@@ -122,10 +123,11 @@ export default function SelectBox({ defaultInfo, selectOption, selectOptions, cu
 SelectBox.defaultProps = {
   defaultInfo: {
     type: 'box',
-    placeholder: '제품을 선택해주세요.',
+    placeholder: '제품을 선택하세요.',
     tag: '제품',
   },
   customOptionNo: null,
   deleteOptionNo: 0,
   setDeleteOptionNo: () => null,
+  open: false
 }

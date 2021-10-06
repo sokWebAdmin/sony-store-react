@@ -19,7 +19,7 @@ export default function TobContent({
   setSelectedOptionNo,
   productGroup,
   wish,
-  setWish
+  setWish,
 }) {
   const size = useWindowSize();
   const isMobileSize = size.width <= 1280;
@@ -29,6 +29,7 @@ export default function TobContent({
   const [selectedOption, setSelectedOption] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCnt, setTotalCnt] = useState(0);
+  const [optionVisible, setOptionVisible] = useState(false);
 
   const saleStatus = getSaleStatus(status, reservationData);
 
@@ -99,8 +100,7 @@ export default function TobContent({
         }
 
         {/* prd_select_wrap */}
-        {/* todo view 여기 */}
-        <div className={`cont prd_select_wrap ${isMobileSize && 'view'}`}>
+        <div className={`cont prd_select_wrap ${isMobileSize && optionVisible && 'view'}`}>
           <Option
             productName={productName}
             options={options}
@@ -113,6 +113,8 @@ export default function TobContent({
             totalPrice={totalPrice}
             productGroup={productGroup}
             saleStatus={saleStatus}
+            optionVisible={optionVisible}
+            isMobileSize={isMobileSize}
           />
           
           {/* 총 상품금액 */}
@@ -132,6 +134,9 @@ export default function TobContent({
             saleStatus={saleStatus}
             memberOnly={limitations?.memberOnly}
             hsCode={hsCode}
+            optionVisible={optionVisible}
+            setOptionVisible={setOptionVisible}
+            isMobileSize={isMobileSize}
           />
         </div>
       </div>

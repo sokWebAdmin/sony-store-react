@@ -447,7 +447,7 @@
   padding: 13px 17px;
   border: 1px solid #ddd;
   background: #fff;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
   line-height: 22px;
   color: #666
@@ -1250,6 +1250,7 @@
   line-height: 40px;
   letter-spacing: -0.5px;
   text-overflow: ellipsis;
+  white-space: nowrap;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   color: #444
