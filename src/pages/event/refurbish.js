@@ -15,6 +15,7 @@ import { getUrlParam } from '../../utils/location';
 import EventProducts from '../../components/event/EventProducts';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
+import GradeSelect from '../../components/event/GradeSelect';
 
 const _scrollView = {
   pc : 5,
@@ -31,7 +32,7 @@ export default function Refurbish() {
   const [event, setEvent] = useState(null);
   const [tabState, setTabState] = useState(getUrlParam('tab') || '전체');
   const [showLayer, setShowLayer] = useState(false);
-  const [grade, setGrade] = useState('A급');
+  const [grade, setGrade] = useState('전체');
 
   const fetchDetailEvent = async () => {
     const response = await getEventByEventNo(eventNo, { soldout: true });
@@ -85,7 +86,7 @@ export default function Refurbish() {
                 <div className="event_header_link"><a href="javascript:void(0)" onClick={() => {
                   document.body.style.overflow = "hidden";
                   setShowLayer(true);
-                }}>임직원몰 이용규정</a></div>
+                }}>리퍼비시 제품 구매시 유의사항</a></div>
               </div>
             </div>
             <div className="event_tablist">
@@ -133,23 +134,7 @@ export default function Refurbish() {
               <div className="tab_ui_info">
                 <div className="tab_ui_inner view">
                   <div className="employee_prd">
-                    <div className="section_top">
-                      <h2 className="title">{tabState}</h2>
-                      <div className="itemsort" aria-label="상품 정렬">
-                        <button className="itemsort__button">
-                          <span className="itemsort__button__label sr-only">정렬기준:</span>
-                          <span className="itemsort__button__selected">선택</span>
-                        </button>
-                        <div className="itemsort__drawer">
-                          <ul className="itemsort__items">
-                            <li className={`itemsort__item ${grade === 'A급' ? 'itemsort__item--active' : ''}`}><a href="javascript:void(0)" onClick={() => setGrade('A급')}
-                                                                                                                  className="itemsort__item__link">A급</a></li>
-                            <li className={`itemsort__item ${grade === 'B급' ? 'itemsort__item--active' : ''}`}><a href="javascript:void(0)" onClick={() => setGrade('B급')} className="itemsort__item__link">B급</a></li>
-                            <li className={`itemsort__item ${grade === 'C급' ? 'itemsort__item--active' : ''}`}><a href="javascript:void(0)" onClick={() => setGrade('C급')} className="itemsort__item__link">C급</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
+                    <GradeSelect tabState={tabState} grade={grade} setGrade={setGrade} />
                     <EventProducts event={event} filterLabel={tabState} grade={grade} />
                   </div>
                 </div>
