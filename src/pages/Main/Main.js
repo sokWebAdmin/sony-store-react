@@ -19,7 +19,7 @@ import '../../assets/scss/main.scss';
 
 //utils
 import { useWindowSize, wonComma } from '../../utils/utils';
-import { breakPoint } from '../../utils/constants';
+import { breakPoint, breakPointTablet } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
 
 import { getDisplaySectionsSectionNo, loadBanner } from '../../api/display';
@@ -97,6 +97,7 @@ export default function Main() {
       const { data } = await loadBanner('000,001,002,003,004,005');
 
       const moBanners = data.find(({ code }) => code === '001')?.accounts || [];
+      getSlideBannerNames(moBanners);
       setSlideMoBanners(moBanners);
       const eventBanners = data.find(({ code }) => code === '003')?.accounts || [];
       setEventBanners(eventBanners);
@@ -113,6 +114,7 @@ export default function Main() {
       const recommendedBanners = data.find(({ code }) => code === '002')?.accounts || [];
       getRecommendedBannerNames(recommendedBanners);
       setRecommendedBanners(recommendedBanners);
+      debugger;
     } catch (e) {
       console.error(e);
     }
@@ -212,7 +214,7 @@ export default function Main() {
                 }
               }}
             >
-              {slidePcBanners.length > 0 && (
+              {slidePcBanners.length > 0 && slideMoBanners.length > 0 && (
                 <Swiper
                   className="swiper-wrapper"
                   onSwiper={setTopSwiper}
@@ -248,39 +250,76 @@ export default function Main() {
                       data-swiper-autoplay="10000"
                       style={{
                         backgroundImage:
-                          bannerInfo.banners[0].videoUrl === '' && size.width > breakPoint
-                            ? `url(${bannerInfo.banners[0].imageUrl})`
-                            : `url(${slideMoBanners[index]?.banners[0]?.imageUrl})`,
+                          size.width > breakPointTablet
+                            ? bannerInfo.banners[0].videoUrl === '' && `url(${bannerInfo.banners[0].imageUrl})`
+                            : slideMoBanners[index].banners[0].videoUrl === '' &&
+                              `url(${slideMoBanners[index]?.banners[0]?.imageUrl})`,
                       }}
                     >
-                      {(bannerInfo.banners[0].videoUrl !== '' || slideMoBanners[index].banners[0].videoUrl !== '') && (
-                        <video className="video-slide-player" preload="true" autoPlay muted={true} playsInline>
-                          <source
-                            src={
-                              size.width > breakPoint
-                                ? bannerInfo.banners[0].videoUrl
-                                : slideMoBanners[index].banners[0].videoUrl
-                            }
-                            type="video/mp4"
-                          />
-                        </video>
-                      )}
+                      {size.width > breakPointTablet
+                        ? bannerInfo.banners[0].videoUrl !== '' && (
+                            <video
+                              className="video-slide-player"
+                              preload="true"
+                              autoPlay={true}
+                              muted={true}
+                              playsInline
+                            >
+                              <source src={bannerInfo.banners[0].videoUrl} type="video/mp4" />
+                            </video>
+                          )
+                        : slideMoBanners[index].banners[0].videoUrl !== '' && (
+                            <video
+                              className="video-slide-player"
+                              preload="true"
+                              autoPlay={true}
+                              muted={true}
+                              playsInline
+                            >
+                              <source src={slideMoBanners[index].banners[0].videoUrl} type="video/mp4" />
+                            </video>
+                          )}
                       <div className="kv__slide">
-                        <div
-                          className="kv__head"
-                          dangerouslySetInnerHTML={{ __html: bannerInfo.banners[0].nameList }}
-                        />
+                        {size.width > breakPointTablet ? (
+                          <div
+                            className="kv__head"
+                            dangerouslySetInnerHTML={{ __html: bannerInfo.banners[0].nameList }}
+                          />
+                        ) : (
+                          <div
+                            className="kv__head"
+                            dangerouslySetInnerHTML={{ __html: slideMoBanners[index].banners[0].nameList }}
+                          />
+                        )}
+
                         <span className="kv__product">
-                          <span>{bannerInfo.banners[0].description}</span>
+                          <span>
+                            {size.width > breakPointTablet
+                              ? bannerInfo.banners[0].description
+                              : slideMoBanners[index].banners[0].description}
+                          </span>
                         </span>
-                        <Link
-                          to={bannerInfo?.banners[0]?.landingUrl}
-                          target={bannerInfo?.banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'}
-                          className="kv__link"
-                          style={{ height: '80px' }}
-                        >
-                          <span>자세히 보기</span>
-                        </Link>
+                        {size.width > breakPointTablet ? (
+                          <Link
+                            to={bannerInfo?.banners[0]?.landingUrl}
+                            target={bannerInfo?.banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                            className="kv__link"
+                            style={{ padding: '30px 10px 30px 0' }}
+                          >
+                            <span>자세히 보기</span>
+                          </Link>
+                        ) : (
+                          <Link
+                            to={slideMoBanners[index].banners[0]?.landingUrl}
+                            target={
+                              slideMoBanners[index].banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'
+                            }
+                            className="kv__link"
+                            style={{ padding: '30px 10px 30px 0' }}
+                          >
+                            <span>자세히 보기</span>
+                          </Link>
+                        )}
                       </div>
                     </SwiperSlide>
                   ))}
@@ -449,28 +488,11 @@ export default function Main() {
                       breakpoints={{
                         320: {
                           slidesPerView: 1.2,
-                          centeredSlides: true,
                           spaceBetween: 15,
-                        },
-                        640: {
-                          slidesPerView: 1.2,
-                          centeredSlides: true,
-                          spaceBetween: 24,
                         },
                         1281: {
                           slidesPerView: 3,
-                          centeredSlides: false,
                           spaceBetween: 15,
-                        },
-                        1366: {
-                          slidesPerView: 3,
-                          centeredSlides: false,
-                          spaceBetween: 15,
-                        },
-                        1600: {
-                          slidesPerView: 3,
-                          centeredSlides: false,
-                          spaceBetween: 24,
                         },
                       }}
                     >
@@ -529,19 +551,19 @@ export default function Main() {
             {/* <!-- // product --> */}
 
             {/* <!-- academy banner --> */}
-            {((size.width > breakPoint && academyPcBanners?.banners) ||
-              (size.width <= breakPoint && academyMoBanners?.banners)) && (
+            {((size.width > breakPointTablet && academyPcBanners?.banners) ||
+              (size.width <= breakPointTablet && academyMoBanners?.banners)) && (
               <div
                 className="main__banner"
                 style={{
                   backgroundImage:
-                    size.width > breakPoint
+                    size.width > breakPointTablet
                       ? `url(${academyPcBanners?.banners[0]?.imageUrl})`
                       : `url(${academyMoBanners?.banners[0]?.imageUrl})`,
                 }}
               >
                 <div className="main__banner__inner">
-                  {size.width > breakPoint && academyPcBanners?.banners ? (
+                  {size.width > breakPointTablet && academyPcBanners?.banners ? (
                     <h2
                       className="main__banner__title"
                       dangerouslySetInnerHTML={{ __html: academyPcBanners?.banners[0]?.nameList }}
@@ -552,7 +574,7 @@ export default function Main() {
                       dangerouslySetInnerHTML={{ __html: academyMoBanners?.banners[0]?.nameList }}
                     />
                   )}
-                  {size.width > breakPoint && academyPcBanners?.banners ? (
+                  {size.width > breakPointTablet && academyPcBanners?.banners ? (
                     <Link
                       className="main__banner__link"
                       to={academyPcBanners.banners[0]?.landingUrl}
