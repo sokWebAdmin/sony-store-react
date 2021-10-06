@@ -12,10 +12,11 @@ import '../../assets/scss/contents.scss';
 import { emptyCheck, timeFormat } from '../../utils/utils';
 import Alert from '../../components/common/Alert';
 import { Link, useHistory } from 'react-router-dom';
+import { getUrlParam } from '../../utils/location';
 
 export default function Search() {
   const history = useHistory();
-  const [tabState, setTabState] = useState('id');
+  const [tabState, setTabState] = useState(getUrlParam('type') || 'id');
 
   const initSearchValue = { mobileNo: '', memberName: '', email: '' };
   const [searchValue, setSearchValue] = useState(initSearchValue);

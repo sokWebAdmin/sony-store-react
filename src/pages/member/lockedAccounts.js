@@ -18,7 +18,7 @@ export default function LockedAccounts() {
             <p className="accounts_text">회원님의 잠긴 회원 계정 정보는 비밀번호 재발급을 통해 해제하실 수 있습니다.<br className="only-pc" />비밀번호 재발급
               페이지로 이동하셔서 계정 정보를 해제 하시겠습니까?</p>
             <div className="button_wrap">
-              <button type="button" className="button button_positive" onClick={() => history.push('/')}>확인</button>
+              <button type="button" className="button button_positive" onClick={() => history.push('/member/search?type=password')}>확인</button>
             </div>
           </div>
         </div>
