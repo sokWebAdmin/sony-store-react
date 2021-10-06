@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
 import { shareKakaoButton, shareKakaoStoryButton } from '../../utils/share';
 import '../../assets/scss/event.scss';
+import { getStrDate } from '../../utils/dateFormat';
 
 const initTabs = [
   { key: 'all', label: '전체' },
@@ -93,8 +94,6 @@ const EventBottom = () => {
     const sortData = sortNewest ? [...data].sort(sortByLatestCreationDate) : [...data].sort(sortByOldestCreationDate);
     setEvents(sortData);
   };
-
-  const formatYmdt = (ymdt) => new Date(ymdt).toISOString().slice(0, 10);
 
   const onClickEventDetail = (eventNo, tagName, event) => {
     setProductNo(eventNo);
@@ -264,7 +263,7 @@ const EventBottom = () => {
                           <div className="img"><img src={pcImageUrl} alt={label} /></div>
                           <div className="event_desc">
                             <p className="tit">{label}</p>
-                            <p className="event_duration">{formatYmdt(startYmdt)} ~ {formatYmdt(endYmdt)}</p>
+                            <p className="event_duration">{getStrDate(startYmdt)} ~ {getStrDate(endYmdt)}</p>
                           </div>
                         </a>
                         <a href="javascript:void(0)" className="event_share popup_comm_btn" onClick={(e) => {
