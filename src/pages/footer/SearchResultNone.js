@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { getProductSearch } from "../../api/product";
-import { head } from 'lodash';
 import { Link } from "react-router-dom";
 import { wonComma } from "../../utils/utils";
+import { getDisplaySectionsSectionNo } from "../../api/display";
+import _ from 'lodash';
 
 export default function SearchResultNone() {
 
@@ -11,8 +11,25 @@ export default function SearchResultNone() {
 
   const fetchRecommendedProducts = async () => {
     try {
-      const { data } = await getProductSearch({ 'order.by': 'MD_RECOMMEND' });
-      setRecommendedProducts(data.items.map(p => ({ img: head(p.imageUrls), ...p })));
+      const { data } = await getDisplaySectionsSectionNo({
+        pathParams: {
+          sectionNo: 5963
+        },
+        params: {
+          by: 'ADMIN_SETTING',
+          soldout: true,
+          pageNumber: 1,
+          pageSize: 4,
+        }
+      });
+      
+      setRecommendedProducts(
+        _.chain(data)
+         .take(1)
+         .flatMap(({ products }) => products)
+         .map(p => ({ img: _.head(p.imageUrls), ...p}))
+         .value()
+      );
 
     } catch(e) {
       console.error(e);
@@ -83,7 +100,7 @@ export default function SearchResultNone() {
                     <div className="product-option">
                       <Link to={`/product-view/${p.productNo}`}>
                         <strong>{p.productName}</strong>
-                        <p>{p.promotionText || '-'}</p>
+                        <p>{p.productNameEn}</p>
                       </Link>
                       <div className="price">
                         <strong>{wonComma(p?.salePrice || 0)}</strong>원

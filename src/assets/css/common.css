@@ -1868,7 +1868,11 @@ body {
 
   .footer__social__links {
     margin-top: 24px;
-    margin-left: 0
+    margin-left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .footer__family__link {
