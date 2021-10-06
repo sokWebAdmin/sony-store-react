@@ -7,11 +7,11 @@ import close from "../assets/images/common/ic_close.svg";
 
 //utils
 import { Link, useHistory } from "react-router-dom";
-import { getProductSearch, getProductsFavoriteKeywords } from "../api/product";
+import { getProductsFavoriteKeywords } from "../api/product";
 import Alert from "./common/Alert";
 import { useAlert } from "../hooks";
-// import { loadBanner } from "../api/display";
 import { tagColorMap } from "../const/category";
+import { getDisplaySectionsSectionNo } from "../api/display";
 
 export default function Search({ setSearchOpen }) {
   
@@ -38,22 +38,25 @@ export default function Search({ setSearchOpen }) {
 
   const fetchRecommendedProducts = async () => {
     try {
-      // @TODO 판매인기순? MD추천순?
-      const { data } = await getProductSearch({ 'order.by': 'MD_RECOMMEND' });
-      setRecommendedProducts(data.items.map(p => ({ img: _.head(p.imageUrls), ...p })));
-      // const { data } = await loadBanner('015');
-
-      // setRecommendedProducts(
-      //   () => _.chain(data)
-      //    .flatMap(({ accounts }) => accounts)
-      //    .flatMap(({ banners }) => banners)
-      //    .map(({ landingUrl, ...rest }) => ({
-      //       productNo: _.last(landingUrl.split('/')),
-      //       landingUrl,
-      //       ...rest
-      //    }))
-      //    .value()
-      // )
+      const { data } = await getDisplaySectionsSectionNo({
+        pathParams: {
+          sectionNo: 5963
+        },
+        params: {
+          by: 'ADMIN_SETTING',
+          soldout: true,
+          pageNumber: 1,
+          pageSize: 4,
+        }
+      });
+      
+      setRecommendedProducts(
+        _.chain(data)
+         .take(1)
+         .flatMap(({ products }) => products)
+         .map(p => ({ img: _.head(p.imageUrls), ...p}))
+         .value()
+      );
 
     } catch(e) {
       console.error(e);
@@ -105,7 +108,7 @@ export default function Search({ setSearchOpen }) {
           <div className="search__recomm">
             <h3 className="search__title">추천 제품</h3>
             <div className="search__recomm__wrapper">
-              <ul className="search__recomm__list" style={{ flexWrap: 'wrap' }}>
+              <ul className="search__recomm__list">
                 {
                   recommendedProducts?.map((rp, idx) => (
                     <li key={`${rp.productNo}${idx}`} className="search__recomm__item">
@@ -120,32 +123,11 @@ export default function Search({ setSearchOpen }) {
                         </div>
                         <div className="search__recomm__wrapper">
                           <span className="search__recomm__name ellipsis">{rp.productName}</span>
-                          <p className="search__recomm__desc ellipsis2">{rp.promotionText}</p>
+                          <p className="search__recomm__desc ellipsis2">{rp.productNameEn}</p>
                         </div>
                       </Link>
                     </li>
                   ))
-                }
-                {
-                  // // @TODO 네임은 다 다른데.. 상품번호는 모두 같은거지...
-                  // recommendedProducts?.map((rp, idx) => (
-                  //   <li key={`${rp.productNo}${idx}`} className="search__recomm__item">
-                  //     <Link to={`/product-view/${rp.productNo}`}>
-                  //       <div className="search__recomm__pic">
-                  //         <img src={rp.imageUrl} alt={rp.name} />
-
-                  //         {/* <span className="badge__text badge__text__best">BEST</span>
-                  //         <span className="badge__text badge__text__event">EVENT</span>
-                  //         <span className="badge__text badge__text__hot">HOT</span> */}
-
-                  //       </div>
-                  //       <div className="search__recomm__wrapper">
-                  //         <span className="search__recomm__name ellipsis">{rp.name}</span>
-                  //         <p className="search__recomm__desc ellipsis2">{rp.description}</p>
-                  //       </div>
-                  //     </Link>
-                  //   </li>
-                  // ))
                 }
               </ul>
             </div>
