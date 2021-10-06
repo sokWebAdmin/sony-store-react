@@ -6,8 +6,8 @@ import { useAlert, useScroll, useToggle } from "../../hooks";
 import Alert from "./Alert";
 import Confirm from "./Confirm";
 
-const SERVICE_CENTER = process.env.REACT_APP_KAKAO_SERVICE_CENTER_KEY; // http://pf.kakao.com/_xbxhExaj
-const JS_KEY = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY; // @FIXME 소니코리아 고객센터의 jsKey 로 연결해야 함.
+// const SERVICE_CENTER = process.env.REACT_APP_KAKAO_SERVICE_CENTER_KEY; // http://pf.kakao.com/_xbxhExaj
+// const JS_KEY = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY; // @FIXME 소니코리아 고객센터의 jsKey 로 연결해야 함.
 
 const MOBILE_WIDTH = 640;
 
@@ -17,7 +17,25 @@ const getMessage = tel => ({
 });
 
 const chat = () => {
-  window.Kakao.Channel.chat({ channelPublicId: SERVICE_CENTER });
+  const params = {
+    uuid: '@nty37zwcnjm1noq'
+  };
+
+  const $form = document.createElement('form');
+  $form.setAttribute('action', 'https://bizmessage.kakao.com/chat/open');
+  $form.setAttribute('method', 'post');
+  document.body.appendChild($form);
+
+  for (const k in params) {
+    const $hiddenField = document.createElement("input");
+    $hiddenField.setAttribute("type", "hidden");
+    $hiddenField.setAttribute("name", k);
+    $hiddenField.setAttribute("value", params[k]);
+    $form.appendChild($hiddenField);
+  }
+
+  $form.submit();
+  // window.Kakao.Channel.chat({ channelPublicId: SERVICE_CENTER });
 }
 
 export default function Floating () {
@@ -73,7 +91,7 @@ export default function Floating () {
     toggle(false);
   };
 
-  useEffect(() => window?.Kakao.init(JS_KEY), []);
+  // useEffect(() => window?.Kakao.init(JS_KEY), []);
 
   useEffect(() => scrollY < 300 && toggle(false), [scrollY, toggle]);
 
