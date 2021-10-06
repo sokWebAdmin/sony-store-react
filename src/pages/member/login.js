@@ -23,8 +23,10 @@ import { setAccessToken, setGuestToken } from '../../utils/token';
 import { fetchProfile, useProileDispatch } from '../../context/profile.context';
 import OpenLogin from '../../components/member/OpenLogin';
 import { postGuestOrdersOrderNo } from '../../api/order';
+import { getAgent } from '../../utils/detectAgent';
 
 export default function Login ({ location }) {
+  const agent = getAgent();
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
 
@@ -45,6 +47,7 @@ export default function Login ({ location }) {
   //state
   const [email, setEmail] = useState(Cookies.get('sony_email') ?? '');
   const [pw, setPw] = useState('');
+  const [autoLogin, setAutoLogin] = useState(false);
 
   //validation
   const [isEmail, setIsEmail] = useState(false);
@@ -98,6 +101,9 @@ export default function Login ({ location }) {
           Cookies.set('sony_email', email);
         } else {
           Cookies.remove('sony_email');
+        }
+        if (agent.isApp) {
+          history.push(`sonyapp://autoLoginYn?value=${autoLogin ? 'Y' : 'N'}`);
         }
         
         if (!!history.location.state?.next) {
@@ -251,22 +257,25 @@ export default function Login ({ location }) {
                 </button>
               </div>
               <div className="find_box">
-                <div className="check">
+                {!agent.isApp ? <div className="check">
                   <input
                     type="checkbox"
                     className="inp_check"
                     id="chk01"
                     checked={saveEmail}
-                    onChange={(e) => {
-                      if (e.target.checked == true) {
-                        setSaveEmail(true);
-                      } else {
-                        setSaveEmail(false);
-                      }
-                    }}
+                    onChange={(e) => setSaveEmail(e.target.checked)}
                   />
                   <label htmlFor="chk01">이메일 아이디 저장</label>
-                </div>
+                </div> : <div className="check">
+                  <input
+                    type="checkbox"
+                    className="inp_check"
+                    id="chk01"
+                    checked={autoLogin}
+                    onChange={(e) => setAutoLogin(e.target.checked)}
+                  />
+                  <label htmlFor="chk01">자동로그인</label>
+                </div>}
                 <ul className="user_menu">
                   <li>
                     <a
@@ -290,6 +299,7 @@ export default function Login ({ location }) {
                   </li>
                 </ul>
               </div>
+              {autoLogin && <p className="txt_nonmember">자동 로그인을 사용할 경우 타인에게<br />고객의 정보가 노출될 위험이 있습니다.</p>}
               <div className="txt_or">
                 <span className="txt">또는</span>
                 <span className="bar" />
