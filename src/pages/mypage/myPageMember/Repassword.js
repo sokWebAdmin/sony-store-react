@@ -167,7 +167,9 @@ export default function Repassword({ setVisible }) {
                     <span className="focus_bg"></span>
                     <div className="eyes">
                       <button type="button" title={`${ passwordType.password ? '비밀번호 숨김' : '비밀번호 표시' }`} onClick={ e => handlePassword(e, 'password') }>
-                        <i className={`${ passwordType.password ? 'ico ico_eyes' : 'ico_eyes_open' }`}></i></button></div>
+                        <i className={`${ passwordType.password ? 'ico ico_eyes' : 'ico_eyes_open' }`}></i>
+                      </button>
+                    </div>
                   </label>
                 </div>
                 <div className="error_txt"><span className="ico"></span>현재 비밀번호가 올바르지 않습니다.</div>
