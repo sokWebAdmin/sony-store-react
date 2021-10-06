@@ -395,7 +395,7 @@
 
     // 일시품절, 품절
     .product_price,
-    .delivery_txt,
+    // .delivery_txt,
     .mileage {
       color: #bbb;
     }
@@ -2420,5 +2420,20 @@
 .pb {
   &20 {
     padding-bottom: 20px;
+  }
+}
+
+.cont {
+  .product_price {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+    line-height: 36px;
+
+    .badge__label {
+      padding: 5px 6px;
+      margin-left: 3px;
+    }
   }
 }
