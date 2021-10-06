@@ -15,7 +15,7 @@ const Expired = () => {
   const fetchInitDisplayEvents = async (pageNumber = 1, keyword = '') => {
     const query = keyword ? { keyword: keyword.trim(), pageNumber } : { pageNumber };
     const { data } = await getDisplayCloseEvents({ ...query, hasTotalCount: true });
-    setEvents({totalCount: data.totalCount, items: events.items.concat(data.items)});
+    setEvents(data);
   };
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const Expired = () => {
                 <div className="col_table">
                   <div className="col_table_head">
                     <div className="col_table_row">
-                      <div className="col_table_cell">번호</div>
+                      <div className="col_table_cell"></div>
                       <div className="col_table_cell divide">
                         <div className="divide_table">
                           <div className="table_cell">제목</div>
@@ -81,8 +81,8 @@ const Expired = () => {
                       const { eventNo, label, startYmdt, endYmdt } = event;
                       return (
                         <div className="col_table_row" key={eventNo}>
-                          <div className="col_table_cell event_num">
-                            <p className="txt">{index + 1}</p>
+                          <div className="col_table_cell event_name">
+                            {/*<p className="txt"></p>*/}
                           </div>
                           <div className="col_table_cell divide">
                             <div className="divide_table">
