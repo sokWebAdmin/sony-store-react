@@ -46,15 +46,12 @@ export default function OrderList() {
   const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(true);
   const nextPage = useRef(2);
 
-  useEffect(() => {
-    getProfileOrdersSummaryStatus().then((res) => {
-      setSummary(res.data);
-    });
-  }, []);
-
-  useEffect(() => {
+  useEffect(async () => {
+    const summaryRes = await getProfileOrdersSummaryStatus();
     const orderRequestTypesQuery = query.get('orderRequestTypes');
-    search({
+
+    setSummary(summaryRes.data);
+    await search({
       startDate: new Date(addMonth(new Date(), -3)),
       endDate: new Date(),
       pageNumber: 1,
