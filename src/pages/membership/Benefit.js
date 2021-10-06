@@ -40,7 +40,7 @@ const Benefit = () => {
                 </div>
               </div>
             </div>
-            <div className="membership_tabarea">
+            <div className="membership_tabarea" style={{ marginBottom: 0 }}>
               <div className="detail_tab tab_ui size3">
                 <Tabs 
                   tabs={tabs}
