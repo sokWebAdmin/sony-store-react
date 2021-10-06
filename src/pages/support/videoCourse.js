@@ -12,7 +12,7 @@ import '../../assets/scss/support.scss';
 export default function videoCourse() {
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'동영상 강좌'} />
       <div className="contents support">
         <div className="container full">
           <div className="course_video">
