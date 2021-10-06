@@ -93,7 +93,7 @@ export default function AuthPassword({ setVisible, authResult }) {
                 <div className="inp_box password_box">
                   <label className="inp_desc" for="popPw">
                     <input 
-                      type="password" 
+                      type={ pwType ? 'password' : 'text' } 
                       id="popPw" 
                       className="inp center" 
                       placeholder="&nbsp;" 
