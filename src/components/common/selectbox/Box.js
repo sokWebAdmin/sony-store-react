@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-export default function BoxSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedLabel, tag }) {
+export default function BoxSelector({ selectOptions, onToggleHandler, onClickHandler, display, selectedLabel, tag, open }) {
   const [bg, setBg] = useState(null);
   return (
-    <div className="select_ui_zone">
+    <div className={`${!open ? 'select_ui_zone' : 'select_zone select_ui_zone open'}`}>
       <div>
         <a
           href="#select"

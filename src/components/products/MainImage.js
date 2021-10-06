@@ -1,8 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Controller, Navigation, Pagination } from 'swiper/core';
+import SwiperCore, { Controller, Navigation, Pagination, Scrollbar, Autoplay } from 'swiper/core';
 
 export default function MainImage({ imageUrls }) {
-  SwiperCore.use([Navigation, Pagination, Controller]);
+  SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 
   const hasImgs = imageUrls.length > 1;
   return (
@@ -17,7 +17,6 @@ export default function MainImage({ imageUrls }) {
           clickable: true,
         }}
         observer={true}
-        observeParents={true}
         navigation={{
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
@@ -26,7 +25,7 @@ export default function MainImage({ imageUrls }) {
         {
           imageUrls?.map((image, index) => (
             <SwiperSlide 
-              key={index} 
+              key={`${image}${index}`} 
               className="swiper-slide"
             >
               <img src={image} alt="상품 이미지" />
@@ -36,8 +35,8 @@ export default function MainImage({ imageUrls }) {
         {
           hasImgs && (
             <div className="arrow_btn">
-              <a className="arrow swiper-button-prev"><img src="/images/common/arrow_19_34.png" alt="이전" /></a>
-              <a className="arrow swiper-button-next"><img src="/images/common/arrow_19_34.png" alt="다음" /></a>
+              <button className="arrow swiper-button-prev"><img src="/images/common/arrow_19_34.png" alt="이전" /></button>
+              <button className="arrow swiper-button-next"><img src="/images/common/arrow_19_34.png" alt="다음" /></button>
             </div>
           )
         }

@@ -1,5 +1,5 @@
 import qs from 'qs';
-import React, { useContext, useState, createRef } from 'react';
+import React, { useContext, useState, createRef, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from "../../../context/global.context";
 import { postCart, postOrderSheets } from "../../../api/order";
@@ -51,13 +51,20 @@ const ERROR_CODE_MAPPING_ROUTE = {
 
 };
 
-export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, hsCode }) {
+export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, hsCode, isMobileSize, setOptionVisible, optionVisible }) {
+  const $body = document.querySelector('body');
   const history = useHistory();
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const { isLogin } = useContext(GlobalContext);
   const [giftVisible, setGiftVisible] = useState(false);
   const [cartVisible, setCartVisible] = useState(false);
   const [wishVisible, setWishVisible] = useState(false);
+
+  const preventScroll = value => value ? $body.classList.add('no_scroll') : $body.classList.remove('no_scroll')
+  useEffect(() => {
+    isMobileSize && optionVisible ? preventScroll(true) : preventScroll(false);
+    return () => preventScroll(false);
+  }, [isMobileSize, optionVisible]);
 
   const nextUri = history.location.pathname;
   const getHistoryInfo = pathname => ({
@@ -93,6 +100,11 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   }
 
   const order = async (pathname = '/order/sheet') => {
+    if (isMobileSize && !optionVisible) {
+      setOptionVisible(true);
+      return;
+    }
+
     if (!canBuy) {
       openAlert('옵션을 선택하세요.');
       return;
@@ -176,7 +188,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     } catch (e) {
       e?.message && openAlert(e.message);
     }
-  }
+  };
 
   const handleClick = (e, type) => {
     e.preventDefault();
@@ -242,7 +254,10 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
           </ul>
         </div>
       </div>
-      <a href="#none" className="select_closed" title="선택 목록 닫기">닫기</a>
+      <a href="#none" onClick={ e => {
+        e.preventDefault();
+        setOptionVisible(false);
+      } } className="select_closed" title="선택 목록 닫기">닫기</a>
       {
         giftVisible 
           && <Notification setNotificationVisible={setGiftVisible} type='gift' />

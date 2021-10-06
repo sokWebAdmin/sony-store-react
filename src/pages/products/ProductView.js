@@ -46,7 +46,7 @@ export default function ProductView({ match }) {
   const [headerHeight, setHeaderHeight] = useState(0);
   const size = useWindowSize();
 
-  SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
+  // SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 
   useEffect(()=>{
     const header = document.getElementsByClassName("header").clientHeight;
@@ -245,7 +245,7 @@ export default function ProductView({ match }) {
 
   //
   const showProductDetail = useMemo(() => (headerHeight > 0 || size.height < 1280) && productData, [headerHeight, size.height, productData] )
-
+  
   const getLinkInnerWidth = () => {
     const width = size.width - 48;
     const $lis = document.querySelectorAll('.link_inner >li');

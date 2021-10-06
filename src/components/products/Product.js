@@ -86,7 +86,7 @@ export default function Product({product, category, reset, micro}) {
         <span className="badge__text" style={{ color: tagColorMap[product.stickerLabels[0]] }}>{product.stickerLabels[0]}</span>
       }
 
-      <div className="product__pic">
+      <div className="product__pic" style={ micro ? { height: 'auto', paddingBottom: '100%' } : null}>
         <Link onClick={(e) => {
           e.preventDefault();
           reset?.();
