@@ -49,7 +49,7 @@ export default function Liveon() {
               <div className="event_video_inner prd_inner">
                 <div className="event_prd">
                   <h2 className="event_prd_title">LIVE ON 제품</h2>
-                  <EventProducts event={event} />
+                  <EventProducts event={event} gift={true} />
                 </div>
               </div>
             </div>

@@ -34,7 +34,7 @@ const EventDetail = () => {
             </div>
             <div className="event_tablist type1">
               <div className="employee_prd">
-                <EventProducts event={event}/>
+                <EventProducts event={event} gift={true} />
               </div>
             </div>
           </div>
