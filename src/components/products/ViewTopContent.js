@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { wonComma } from '../../utils/utils';
+import { useWindowSize, wonComma } from '../../utils/utils';
 import { getPricePerProduct, getSaleStatus } from "../../utils/product";
 import { useCategoryState } from "../../context/category.context";
 
@@ -21,6 +21,8 @@ export default function TobContent({
   wish,
   setWish
 }) {
+  const size = useWindowSize();
+  const isMobileSize = size.width <= 1280;
   const { tagColorMap } = useCategoryState();
   const { baseInfo, price, deliveryFee, status, reservationData, limitations } = productData;
   const { productName, productNameEn, promotionText, stickerLabels } = baseInfo;
@@ -97,7 +99,8 @@ export default function TobContent({
         }
 
         {/* prd_select_wrap */}
-        <div className="cont prd_select_wrap">
+        {/* todo view 여기 */}
+        <div className={`cont prd_select_wrap ${isMobileSize && 'view'}`}>
           <Option
             productName={productName}
             options={options}
