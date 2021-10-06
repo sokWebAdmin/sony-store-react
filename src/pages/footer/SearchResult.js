@@ -79,8 +79,8 @@ export default function SearchResult({match}) {
     async(keyword, orderBy, pageNumber = 1) => {
       try {
         const { data } = await getProductSearch(getProductQuery(keyword, orderBy, pageNumber))
-        
-        setProductList(prev => pageNumber > 1 ? prev.concat(data.items) : data.items)
+        const ret = data.items.filter(({ hsCode }) => !hsCode)
+        setProductList(prev => pageNumber > 1 ? prev.concat(ret) : ret)
         setProductCount(data.totalCount || 0);
       } catch(e) {
         console.error(e);
@@ -93,6 +93,7 @@ export default function SearchResult({match}) {
     async (keyword) => {
       try {
         const { data } = await getDisplayEvents(keyword);
+        
         setInitialEventList(data);
         setEventCount(data.length || 0);
         fetchEvent(1, data);
