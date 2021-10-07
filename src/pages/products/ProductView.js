@@ -61,6 +61,7 @@ export default function ProductView({ match }) {
     hasColor: false,
   });
   const [productGroup, setProductGroup] = useState([]);
+  const [productNos, setProductNos] = useState([]);
   const [contents, setContents] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [productEvents, setProductEvents] = useState([]);
@@ -163,12 +164,14 @@ export default function ProductView({ match }) {
        .value()
     );
 
-    fetchProductGroupOptions(
-      _.chain(gp)
+    const productNos = _.chain(gp)
        .flatMap(({ productNo }) => productNo)
        .join()
        .value()
-    )
+
+    fetchProductGroupOptions(productNos);
+    setProductNos(() => productNos);
+
   }, []);
 
   const fetchRelatedProducts = useCallback(async (categories) => {
@@ -199,8 +202,10 @@ export default function ProductView({ match }) {
   }, [productNo]);
 
   const fetchEvent = useCallback(async productNo => {
-    if (!productNo) return;
-
+    // @TODO 이벤트 api 확인중 완료 후 기획전 변경필요
+    const _productNos = productNos?.length > 0 ? productNos : [ productNo ];
+    // const test = await Promise.all(productNos?.map(async productNo => await getEventByProductNo({ pathParams: { productNo } })));
+    // console.log(test);
     const ret = await getEventByProductNo({ pathParams: { productNo }});
     setProductEvents(ret.data);
   }, [])
