@@ -16,6 +16,7 @@ export default function Share({ link, label, setShareVisible }) {
 
   const copyLink = e => {
     e.preventDefault();
+    e.stopPropagation();
     
     navigator.clipboard.writeText(link).then(() => {
       openAlert('링크가 복사되었습니다.');
@@ -24,6 +25,8 @@ export default function Share({ link, label, setShareVisible }) {
 
   const clickHandler = (e, name, link) => {
     e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     switch(name) {
       case 'kakaotalk':
         shareKakaoButton(link, label);
