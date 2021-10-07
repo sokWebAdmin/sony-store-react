@@ -308,26 +308,28 @@ export default function Recommend({ match }) {
                   >
                     {eventBanners.map((bannerInfo, index) => (
                       <SwiperSlide className="swiper-slide" key={index}>
-                        <div
-                          className="exhibitions_box"
-                          style={{ background: `url('${bannerInfo.banners[0].imageUrl}') no-repeat center top` }}
-                        >
-                          <img className="bg_img" src="/images/product/banner_thumb_01.png" alt="" />
-                          <div className="txt_box">
-                            <span className="tag" style={{ color: '#5865f5' }}>
-                              기획전
-                            </span>
-                            <p
-                              className="tit"
-                              dangerouslySetInnerHTML={{ __html: splitStr(bannerInfo?.banners[0]?.name) }}
-                            />
-                            {bannerInfo?.banners[0]?.displayPeriodType === 'PERIOD' && (
-                              <div>{`${getDate(bannerInfo?.banners[0]?.displayStartYmdt)} ~ ${getDate(
-                                bannerInfo?.banners[0]?.displayEndYmdt,
-                              )}`}</div>
-                            )}
+                        <Link to={bannerInfo.banners[0].landingUrl}>
+                          <div
+                            className="exhibitions_box"
+                            style={{ background: `url('${bannerInfo.banners[0].imageUrl}') no-repeat center top` }}
+                          >
+                            <img className="bg_img" src="/images/product/banner_thumb_01.png" alt="" />
+                            <div className="txt_box">
+                              <span className="tag" style={{ color: '#5865f5' }}>
+                                기획전
+                              </span>
+                              <p
+                                className="tit"
+                                dangerouslySetInnerHTML={{ __html: splitStr(bannerInfo?.banners[0]?.name) }}
+                              />
+                              {bannerInfo?.banners[0]?.displayPeriodType === 'PERIOD' && (
+                                <div>{`${getDate(bannerInfo?.banners[0]?.displayStartYmdt)} ~ ${getDate(
+                                  bannerInfo?.banners[0]?.displayEndYmdt,
+                                )}`}</div>
+                              )}
+                            </div>
                           </div>
-                        </div>
+                        </Link>
                       </SwiperSlide>
                     ))}
                   </Swiper>
