@@ -114,7 +114,6 @@ export default function Main() {
       const recommendedBanners = data.find(({ code }) => code === '002')?.accounts || [];
       getRecommendedBannerNames(recommendedBanners);
       setRecommendedBanners(recommendedBanners);
-      debugger;
     } catch (e) {
       console.error(e);
     }
