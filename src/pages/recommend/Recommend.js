@@ -81,15 +81,39 @@ export default function Recommend({ match }) {
       return acc;
     }, '');
   };
+  const trigger2 = useRef();
 
   useEffect(() => {
     getBanners();
+    onScroll();
   }, [getBanners]);
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay]);
 
+  const onScroll = () => {
+    const movingStart = trigger2.current.offsetTop;
+    Array(3)
+      .fill(null)
+      .forEach((_, index) => {
+        const scrollTo = movingStart * (index + 1);
+        const setTime = (time) => {
+          setTimeout(() => scrollScreen(scrollTo), 600 * time);
+        };
+        setTime(index + 1);
+      });
+
+    const scrollScreen = (top) => {
+      window.scrollTo({
+        top,
+        left: 0,
+        behavior: 'smooth',
+      });
+    };
+  };
+
   return (
     <>
+      <SEOHelmet title={'구매상담 이용약관 동의'} />
       <Controller>
         <div className="contents recommend">
           <div className="container">
@@ -97,7 +121,7 @@ export default function Recommend({ match }) {
               <div className="reco">
                 {/* kv */}
                 <div className="reco_kv">
-                  <div className={`reco_kv_inner ${isFinished == true && 'end'}`}>
+                  <div className={`reco_kv_inner ${isFinished === true && 'end'}`}>
                     <Scene triggerElement=".trigger-1" duration={size.height * 0.5}>
                       {(progress) => (
                         <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
@@ -113,7 +137,11 @@ export default function Recommend({ match }) {
                     <Scene triggerElement=".trigger-2" duration={size.height * 0.4}>
                       {(progress) => (
                         <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
-                          <div id="reco_kv_img-2" className={`reco_kv_img reco_kv_img-2 ${progress > 0 ? 'end' : ''}`}>
+                          <div
+                            id="reco_kv_img-2"
+                            className={`reco_kv_img reco_kv_img-2 ${progress > 0 ? 'end' : ''}`}
+                            ref={trigger2}
+                          >
                             <img src={slideBanners[1]?.banners[0]?.imageUrl} alt={slideBanners[1]?.banners[0]?.name} />
                           </div>
                         </Tween>
