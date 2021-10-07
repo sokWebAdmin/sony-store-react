@@ -194,6 +194,8 @@ const App = (props) => {
       if (action === 'POP' && state && state.scroll) {
         const { x, y, attempt = MAX_SYNC_ATTEMPT } = state.scroll;
         syncScroll(x, y, attempt);
+      } else {
+        window.scrollTo(0, 0);
       }
     });
     return unlisten;
