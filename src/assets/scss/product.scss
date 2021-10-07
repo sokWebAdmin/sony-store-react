@@ -2438,3 +2438,25 @@
     }
   }
 }
+
+.popup_cart.layer.order {
+  .layer_container {
+    width: 478px;
+    height: 268px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: relative;
+  }
+
+  .delete {
+    display: inline-block;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    background: url('../images/common/ico_closed.png') no-repeat 0 0;
+    text-indent: -9999px;
+  }
+}
