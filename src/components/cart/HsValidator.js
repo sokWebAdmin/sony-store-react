@@ -9,9 +9,11 @@ import Alert from '../common/Alert';
 import GlobalContext from '../../context/global.context';
 import { getCart } from '../../api/order';
 import gc from '../../storage/guestCart';
+import { useProfileState } from '../../context/profile.context';
 
 const HsValidator = forwardRef((prop, ref) => {
   const { isLogin } = useContext(GlobalContext);
+  const { hasMemberGroup } = useProfileState();
   const [rejectReason, setRejectReason] = useState(null); // null |
   // 'BASIC_PRODUCT_INSERTED'
   // |
@@ -19,16 +21,22 @@ const HsValidator = forwardRef((prop, ref) => {
 
   useImperativeHandle(ref, () => ({
     async validation (isHsCodeProduct) {
-      if (!isLogin && gc.items.length < 1) {
-        return true;
-      }
+      // if (!isLogin && gc.items.length < 1) {
+      //   return true;
+      // }
+      if (!isLogin || !hasMemberGroup) return true;
 
-      const hasHsCode = isLogin ? await fetchHasHsCode() : guestCartHasHsCode();
-      const succeed = isHsCodeProduct === hasHsCode;
+      const { deliveryGroups } = await fetchCart();
+      if (deliveryGroups.length === 0) return true;
+
+      // const hasHsCode = isLogin ? await fetchHasHsCode() : guestCartHasHsCode();
+      // const succeed = isHsCodeProduct === hasHsCode;
+      const _hasHsCode = hasHsCode(deliveryGroups);
+      const succeed = isHsCodeProduct === _hasHsCode;
       
       if (!succeed) {
         setRejectReason(
-          hasHsCode ? 'HS_PRODUCT_INSERTED' : 'BASIC_PRODUCT_INSERTED');
+          _hasHsCode ? 'HS_PRODUCT_INSERTED' : 'BASIC_PRODUCT_INSERTED');
       }
       return succeed;
     },
@@ -53,10 +61,8 @@ const HsValidator = forwardRef((prop, ref) => {
     return null;
   }
 
-  function hasHsCode (responseData) {
-    if (responseData.deliveryGroups.length === 0) return true;
-     
-    return responseData.deliveryGroups.some(delivery =>
+  function hasHsCode (deliveryGroups) {
+    return deliveryGroups.some(delivery =>
       delivery.orderProducts.some(({ hsCode }) => hsCode),
     );
   }
