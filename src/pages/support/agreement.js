@@ -29,8 +29,9 @@ export default function Agreement() {
     '[필수] 개인정보 수집에 관한 동의',
   ];
 
-  const onChangeAllCheckBox = () => {
-    setAgreementList((prevAgreementList) => prevAgreementList.map((agreement) => !agreement));
+  const onChangeAllCheckBox = (event) => {
+    const value = event.target.checked;
+    setAgreementList([value, value, value]);
   };
 
   const onChangCheckBox = (event, id) => {
@@ -83,6 +84,7 @@ export default function Agreement() {
                         onChange={onChangeAllCheckBox}
                         checked={!agreementList.includes(false)}
                       />
+                      {/*onChange={onChangeAllCheckBox}*/}
                       <span className="toggle" />
                     </label>
                   </div>
