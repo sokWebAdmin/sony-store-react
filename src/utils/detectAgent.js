@@ -1,17 +1,12 @@
 // osType : '01' | '02'
-const osTypeReferee = () => {
-  const varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
-
-  if ( varUA.indexOf('android') > -1) {
-    //안드로이드
-    return "android";
-  } else if ( varUA.indexOf("iphone") > -1||varUA.indexOf("ipad") > -1||varUA.indexOf("ipod") > -1 ) {
-    //IOS
-    return "ios";
-  } else {
-    //아이폰, 안드로이드 외
-    return "other";
+const osTypeReferee = osType => {
+  if (osType === '01') {
+    return 'android';
   }
+  if (osType === '02') {
+    return 'ios';
+  }
+  return 'unknown';
 };
 
 /*
@@ -33,7 +28,7 @@ export const getAgent = () => {
   if (osTypeIndex) {
     return {
       isApp: true,
-      device: osTypeReferee(),
+      device: osTypeReferee(userAgent.substr(osTypeIndex + 7, 2)),
     };
   }
 
