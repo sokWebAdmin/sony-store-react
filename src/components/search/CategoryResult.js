@@ -51,7 +51,7 @@ export default function CategoryResult({ fetchCategory, categoryList, categoryCo
       <div className="section_top">
         <h2 className="title">카테고리<span>({categoryCount})</span></h2>
       </div>
-      <div className="result_list">
+      <div className="result_list on">
         <ul className="category">
           {
             categoryList

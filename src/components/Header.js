@@ -52,7 +52,8 @@ export default function Header() {
   useEffect(() => {
     const $body = document.querySelector('body');
     const style = 'overflow: hidden'
-    $body.setAttribute('style', isSearchOpen ? style : null)
+    $body.setAttribute('style', isSearchOpen ? style : null);
+    !isSearchOpen && closeSubSlider();
   }, [isSearchOpen])
 
   return (
