@@ -21,16 +21,22 @@ const HsValidator = forwardRef((prop, ref) => {
 
   useImperativeHandle(ref, () => ({
     async validation (isHsCodeProduct) {
+      // if (!isLogin && gc.items.length < 1) {
+      //   return true;
+      // }
       if (!isLogin || !hasMemberGroup) return true;
 
       const { deliveryGroups } = await fetchCart();
       if (deliveryGroups.length === 0) return true;
 
-      const succeed = isHsCodeProduct === hasHsCode(deliveryGroups);
+      // const hasHsCode = isLogin ? await fetchHasHsCode() : guestCartHasHsCode();
+      // const succeed = isHsCodeProduct === hasHsCode;
+      const _hasHsCode = hasHsCode(deliveryGroups);
+      const succeed = isHsCodeProduct === _hasHsCode;
       
       if (!succeed) {
         setRejectReason(
-          isHsCodeProduct && !hasHsCode ? 'HS_PRODUCT_INSERTED' : 'BASIC_PRODUCT_INSERTED');
+          _hasHsCode ? 'HS_PRODUCT_INSERTED' : 'BASIC_PRODUCT_INSERTED');
       }
       return succeed;
     },
