@@ -268,7 +268,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       }
       {
         wishVisible
-          && <Notification setNotificationVisible={setWishVisible} type='wish' />
+          && <Notification setNotificationVisible={setWishVisible} unusableIcon={true} type='wish' />
       }
       {
         alertVisible 

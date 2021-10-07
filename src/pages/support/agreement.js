@@ -51,7 +51,10 @@ export default function Agreement() {
 
   const onClickAgreement = () => {
     if (validationAgreement() === false) return;
-    history.push('/purchase-consulting');
+    history.push({
+      pathname: '/purchase-consulting',
+      search: `?agreement=true`,
+    });
   };
 
   return (
