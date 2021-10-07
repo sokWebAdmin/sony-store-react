@@ -147,6 +147,32 @@ const EventBottom = () => {
     modifyTabs();
   }, [location]);
 
+  const Event = ({event}) => {
+    const { eventNo, label, pcImageUrl, startYmdt, endYmdt, tag: tagName } = event;
+    return (
+      <div className="event_item" key={eventNo} onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+        onClickEventDetail(eventNo, tagName, event);
+      }}>
+        <a href="javascript:" className="item">
+          <div className="img"><img src={pcImageUrl} alt={label} /></div>
+          <div className="event_desc">
+            <p className="tit">{label}</p>
+            <p className="event_duration">{getStrDate(startYmdt)} ~ {getStrDate(endYmdt)}</p>
+          </div>
+        </a>
+        <a href="javascript:void(0)" className="event_share popup_comm_btn" onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.nativeEvent.stopImmediatePropagation();
+          openShareEventLayer(eventNo, label, tagName, event);
+        }}>공유하기</a>
+      </div>
+    );
+  }
+
   return (
     <>
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
@@ -249,33 +275,14 @@ const EventBottom = () => {
                 <Link to="/event/expired" className="button button_positive button-s link_btn">종료된 기획전</Link>
               </div>
               <div className="item_list">
-                <div className="item_row">
-                  {events && events.map((event) => {
-                    const { eventNo, label, pcImageUrl, startYmdt, endYmdt, tag: tagName } = event;
-                    return (
-                      <div className="event_item" key={eventNo} onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        e.nativeEvent.stopImmediatePropagation();
-                        onClickEventDetail(eventNo, tagName, event);
-                      }}>
-                        <a href="javascript:" className="item">
-                          <div className="img"><img src={pcImageUrl} alt={label} /></div>
-                          <div className="event_desc">
-                            <p className="tit">{label}</p>
-                            <p className="event_duration">{getStrDate(startYmdt)} ~ {getStrDate(endYmdt)}</p>
-                          </div>
-                        </a>
-                        <a href="javascript:void(0)" className="event_share popup_comm_btn" onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          e.nativeEvent.stopImmediatePropagation();
-                          openShareEventLayer(eventNo, label, tagName, event);
-                        }}>공유하기</a>
-                      </div>
-                    );
-                  })}
-                </div>
+                {events && [...Array(Math.round(events.length / 2)).keys()].map((index) => {
+                  return (
+                    <div className="item_row">
+                      <Event event={events[index * 2]} />
+                      <Event event={events[index * 2 + 1]} />
+                    </div>
+                  )
+                })}
               </div>
             </div>
             {events.length === 0 && (<div className="no_data">
