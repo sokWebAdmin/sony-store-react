@@ -4,7 +4,7 @@ import Alert from "../../components/common/Alert";
 import { useAlert } from "../../hooks";
 import { timeFormat } from "../../utils/utils";
 
-export default function MobileAuth({ mobile, setVisible, handleResult, remobileReset, setRemobileReset, setNeedsResend }) {
+export default function MobileAuth({ mobile, setVisible, handleResult, remobileReset, setRemobileReset, setNeedsResend, authType = 'CHANGE_MOBILE_NO' }) {
   
   const { alertVisible, alertMessage, openAlert, closeModal } = useAlert();
 
@@ -18,7 +18,7 @@ export default function MobileAuth({ mobile, setVisible, handleResult, remobileR
 
 
   const _sendSMS = async () => {
-    const response = await sendSMS(mobile, 'CHANGE_MOBILE_NO');
+    const response = await sendSMS(mobile, authType);
     if (response.status === 200) {
       setAuthSent(true);
       setRemobileReset(false);
@@ -28,7 +28,7 @@ export default function MobileAuth({ mobile, setVisible, handleResult, remobileR
   };
 
   const _verifySMS = async (phoneNum, code) => {
-    const response = await verifySMS(phoneNum, code, 'CHANGE_MOBILE_NO');
+    const response = await verifySMS(phoneNum, code, authType);
     
     if (response.data.result) {
       //인증성공
@@ -83,7 +83,7 @@ export default function MobileAuth({ mobile, setVisible, handleResult, remobileR
           openAlert('인증번호를 입력해주세요.');
           return;
         }
-        _verifySMS(mobile, authCode, 'JOIN');
+        _verifySMS(mobile, authCode, authType);
       }
     }
   }
