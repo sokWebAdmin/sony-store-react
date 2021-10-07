@@ -141,7 +141,7 @@ function AgreementItem({ label, index, checked, onChange }) {
               <h1>소니스토어 쇼핑몰 이용약관 동의</h1>
             </div>
             <div class="layer_content">
-              <div class="scroll_inner">
+              <div class="scroll_inner" style={{ padding: '0 24px 100px 24px' }}>
                 <div class="foot_cont">
                   <h4 class="Fh4_tit">제1장 총칙</h4>
                   <ul>
@@ -888,7 +888,7 @@ function AgreementItem({ label, index, checked, onChange }) {
               <h1>소니 고객지원 사이트(SCS) 이용약관 동의</h1>
             </div>
             <div class="layer_content">
-              <div class="scroll_inner">
+              <div class="scroll_inner" style={{ padding: '0 24px 100px 24px' }}>
                 <div class="foot_cont">
                   <h4 class="Fh4_tit">제1장 총칙</h4>
                   <ul>
@@ -1747,7 +1747,7 @@ function AgreementItem({ label, index, checked, onChange }) {
               <h1>개인정보 수집에 관한 동의</h1>
             </div>
             <div class="layer_content">
-              <div class="scroll_inner">
+              <div class="scroll_inner" style={{ padding: '0 24px 55px 24px' }}>
                 <div class="foot_cont">
                   <div class="info_box">
                     <strong class="tit">수집, 이용목적</strong>
