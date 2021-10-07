@@ -49,9 +49,15 @@ export default function Header() {
     closeSideBar(headerDispatch);
   };
 
+  useEffect(() => {
+    const $body = document.querySelector('body');
+    const style = 'overflow: hidden'
+    $body.setAttribute('style', isSearchOpen ? style : null)
+  }, [isSearchOpen])
+
   return (
     <>
-      <header id="header" className={`header ${isSiderbarOpen === true && 'header--active'}`}>
+      <header id="header" className={`header ${isSiderbarOpen === true && 'header--active'} ${ isSearchOpen && 'header--visible header--search' }`}>
         <div className="header__wrapper">
           <h1 className="header__logo">
             <Link to="/">
