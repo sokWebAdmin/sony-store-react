@@ -6,6 +6,7 @@ const initialState = {
   // customerId: '',
   profile: null,
   my: null,
+  hasMemberGroup: false,
 };
 
 function profileReducer(state, action) {
@@ -13,7 +14,8 @@ function profileReducer(state, action) {
     case 'GET_PROFILE':
       return {
         ...state,
-        profile: { ...action.data }
+        profile: { ...action.data },
+        hasMemberGroup: action.data.memberGroupNames
       }
     case 'GET_MY_PROFILE':
       return {
@@ -24,6 +26,7 @@ function profileReducer(state, action) {
       return {
         profile: null,
         my: null,
+        hasMemberGroup: false,
       }
     default:
       throw new Error('INVALID_PROFILE_ACTION_TYPE')
