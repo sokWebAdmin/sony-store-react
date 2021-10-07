@@ -15,3 +15,7 @@ export const withdrawalMember = (data) => {
 export const modifyMy = bodyRequest => {
   return request('IF_CUS_0003.do', 'post', null, bodyRequest)
 }
+
+export const getPushs = (query) => {
+  return request('IF_CUS_0008.do', 'get', query)
+}

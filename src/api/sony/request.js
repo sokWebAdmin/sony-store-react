@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getAccessToken } from '../../utils/token';
+import { getAgent } from '../../utils/detectAgent';
 
 const SERVER = process.env.REACT_APP_SONY_API_URL;
 const Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb255IGFwaSB0b2tlbiIsImlzcyI6InN0b3JlLnNvbnkuY28ua3IiLCJpYXQiOjE2MjYwNTMxODAsIm5iZiI6MTYyNjA1MzEyMCwiZXhwIjozMzE2MjA1MzE4MH0.jCyxY2T4QqeDiIAIqqUcB835LpcFPnEyPU9lUhA_28c';
@@ -12,8 +13,17 @@ const request = async (url, method, query = {}, requestBody = null) => {
 
   let headers = { Authorization, 'Content-Type': 'application/json; charset=utf-8' };
   const accessToken = getAccessToken();
+  const agent = getAgent();
 
   if (accessToken) Object.assign(headers, { accessToken });
+  if (agent.isApp) {
+    Object.assign(headers, {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'User-Agent': `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 appVer/1.0.5 
+osType/${agent.device === 'android' ? '01' : '02'} osVer/1.0.9 deviceId/`
+    });
+  }
 
   return await axios({
     method,
