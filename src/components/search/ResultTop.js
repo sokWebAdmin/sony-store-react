@@ -1,4 +1,4 @@
-import { React, useRef, useState } from "react";
+import { React, useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router";
 
 export default function ResultTop({ handleSearch, allCount, initalKeyword }) {
@@ -15,6 +15,12 @@ export default function ResultTop({ handleSearch, allCount, initalKeyword }) {
   }
 
   const handleKeywordChange = ({ target }) => setKeyword(target.value);
+
+  useEffect(() => {
+    if(keyword === initalKeyword) return;
+    searchKeyword.current = initalKeyword;
+    setKeyword(initalKeyword);
+  }, [initalKeyword])
   
   return (
     <div className="searchResult">

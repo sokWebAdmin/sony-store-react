@@ -27,7 +27,7 @@ export default function NoticeResult({ noticeList, noticeCount, keyword, noticeN
           />
         </div>
       </div>
-      <div className="result_list">
+      <div className="result_list on">
         <ul className="noti">
           {
             noticeList.map(notice => (

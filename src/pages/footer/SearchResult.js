@@ -33,18 +33,29 @@ import { getCategoryListByKeyword, getDisplayEvents } from '../../api/display';
 import { orderList, PAGE_SIZE } from '../../const/search';
 import moment from 'moment';
 import SearchResultNone from './SearchResultNone';
+import { useHistory } from 'react-router';
 
 export default function SearchResult({match}) {
+  const history = useHistory();
   const initalKeyword = match.params.keyword;
 
   const { config } = useBoardState();
   const dispatch = useBoardDispatch();
 
   const [tabState, setTabState] = useState("ALL");
-  const [keyword, setKeyword] = useState(initalKeyword);
+  const [keyword, setKeyword] = useState('');
   const [orderBy, setOrderBy] = useState('RECENT_PRODUCT');
   const [newest, setNewest] = useState(true);
   const [noticeNewest, setNoticeNewest] = useState(true);
+
+  useEffect(() => {
+    console.log(history.location);
+    const word = _.chain(history.location.pathname).split('/').last().value();
+    console.log(word);
+    if (!word) return;
+    handleSearch(word);
+  
+  }, [history.location.pathname])
 
   const [productList, setProductList] = useState([]);
   const [initialEventList, setInitialEventList] = useState([]);
@@ -268,7 +279,6 @@ export default function SearchResult({match}) {
                         newest={newest}
                       />
                   }
-                  </div>
                   {
                     (isAll || tabState === 'CATEGORY') 
                       && 
@@ -291,6 +301,29 @@ export default function SearchResult({match}) {
                         searchNotice={searchNotice}
                       />
                   }
+                  </div>
+                  {/* {
+                    (isAll || tabState === 'CATEGORY') 
+                      && 
+                      <CategoryResult
+                        fetchCategory={fetchCategory}
+                        keyword={keyword}
+                        categoryList={categoryList}
+                        categoryCount={categoryCount}
+                      />
+                  }
+                  {
+                    (isAll || tabState === 'NOTICE') 
+                      && 
+                      <NoticeResult 
+                        noticeList={noticeList}
+                        noticeCount={noticeCount}
+                        keyword={keyword}
+                        noticeNewest={noticeNewest}
+                        setNoticeNewest={setNoticeNewest}
+                        searchNotice={searchNotice}
+                      />
+                  } */}
               </>
             }
           </div>
