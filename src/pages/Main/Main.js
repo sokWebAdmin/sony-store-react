@@ -258,24 +258,12 @@ export default function Main() {
                     >
                       {size.width > breakPointTablet
                         ? bannerInfo.banners[0].videoUrl !== '' && (
-                            <video
-                              className="video-slide-player"
-                              preload="true"
-                              autoPlay={true}
-                              muted={true}
-                              playsInline
-                            >
+                            <video className="video-slide-player" autoPlay muted playsInline loop>
                               <source src={bannerInfo.banners[0].videoUrl} type="video/mp4" />
                             </video>
                           )
                         : slideMoBanners[index].banners[0].videoUrl !== '' && (
-                            <video
-                              className="video-slide-player"
-                              preload="true"
-                              autoPlay={true}
-                              muted={true}
-                              playsInline
-                            >
+                            <video className="video-slide-player" autoPlay muted playsInline loop>
                               <source src={slideMoBanners[index].banners[0].videoUrl} type="video/mp4" />
                             </video>
                           )}
