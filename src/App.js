@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Switch, useLocation, Route } from 'react-router-dom';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
+import { Switch, useLocation, Route, useHistory } from 'react-router-dom';
+import { debounce } from 'lodash';
+import ScrollMemory from 'react-router-scroll-memory';
 
 //Component
 import Header from './components/Header';
@@ -105,6 +107,7 @@ import { getAgent } from './utils/detectAgent';
 
 const App = (props) => {
   const agent = getAgent();
+  const history = useHistory();
 
   const dispatch = useMallDispatch();
   const state = useMallState();
@@ -145,13 +148,56 @@ const App = (props) => {
 
   const [isStatus, setIsStatus] = useState(true);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location]);
+  const syncScroll = useCallback(
+    debounce((x, y, attempt) => {
+      requestAnimationFrame(() => {
+        if (attempt < 1) {
+          return;
+        }
+        const { pageXOffset, pageYOffset } = window;
+        if (x !== pageXOffset || y !== pageYOffset) {
+          console.log(x, y);
+          window.scrollTo(x, y);
+          syncScroll(x, y, attempt - 1);
+        }
+      });
+    }, 100),
+    [],
+  );
 
-  const handleScroll = (e) => {
-    // console.log(e.target.scrollingElement.scrollTop)
-  };
+  const handleScroll = useCallback(() => {
+    requestAnimationFrame(() => {
+      const { pageXOffset, pageYOffset, location } = window;
+      const { state: prevState = {} } = window.history;
+
+      window.history.replaceState(
+        {
+          ...prevState,
+          scroll: {
+            x: pageXOffset,
+            y: pageYOffset,
+          },
+        },
+        '',
+        location.href,
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    const MAX_SYNC_ATTEMPT = 5;
+    const unlisten = history.listen((location, action) => {
+      const { state } = window.history;
+      if (action === 'PUSH') {
+        window.scrollTo(0, 0);
+      }
+      if (action === 'POP' && state && state.scroll) {
+        const { x, y, attempt = MAX_SYNC_ATTEMPT } = state.scroll;
+        syncScroll(x, y, attempt);
+      }
+    });
+    return unlisten;
+  }, [location]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
