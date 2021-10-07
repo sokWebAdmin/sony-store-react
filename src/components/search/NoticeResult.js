@@ -7,7 +7,7 @@ import ViewMore from "../common/ViewMore";
 import Newest from "./Newest";
 const getHightKeyword = (title, keyword) => {
   const [ prev, next ] = title.split(keyword);
-  return `${prev}<strong class="keword">${keyword}</strong>${next}`
+  return `${prev}<strong class="keword">${keyword}</strong>${next || ''}`
 };
 
 export default function NoticeResult({ noticeList, noticeCount, keyword, noticeNewest, setNoticeNewest, searchNotice }) {
