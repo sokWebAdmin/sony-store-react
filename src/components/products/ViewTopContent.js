@@ -68,7 +68,7 @@ export default function TobContent({
         {/* 배송 */}
         <div className="cont">
           <p className="delivery_txt">
-            {deliveryFee.defaultDeliveryConditionLabel}
+            {deliveryFee?.defaultDeliveryConditionLabel}
             </p>
           <div className="product_price">
             {
