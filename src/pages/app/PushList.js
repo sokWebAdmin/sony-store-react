@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 // stylesheet
 import '../../assets/scss/app.scss';
+import { getPushs } from '../../api/sony/member';
 
 const PushList = () => {
+  const test = async () => {
+    const data = await getPushs({formData: '14', rowsPerPage: 10, pageIdx: 1});
+    console.log(data);
+  }
+
+  useEffect(() => {
+    test();
+  }, [])
+
   return (
     <>
       <SEOHelmet title={`PUSH 알림 메세지함`} />
