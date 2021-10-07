@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Switch, useLocation, Route, useHistory } from 'react-router-dom';
 import { debounce } from 'lodash';
-import ScrollMemory from 'react-router-scroll-memory';
 
 //Component
 import Header from './components/Header';
