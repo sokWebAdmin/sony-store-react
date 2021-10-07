@@ -23,10 +23,6 @@ const tabs = [
 const Benefit = () => {
   const [tabState, setTabState] = useState('mileage');
 
-  const onClick = () => {
-    debugger;
-  };
-
   return (
     <>
       <SEOHelmet title={'등급/혜택 안내'} />
