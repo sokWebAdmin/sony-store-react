@@ -6,8 +6,11 @@ import { formatDateWithDot } from "../../utils/dateFormat";
 import ViewMore from "../common/ViewMore";
 import Newest from "./Newest";
 const getHightKeyword = (title, keyword) => {
-  const [ prev, next ] = title.split(keyword);
-  return `${prev}<strong class="keword">${keyword}</strong>${next || ''}`
+  if (title.includes(keyword)) {
+    const [ prev, next ] = title.split(keyword);
+    return `${prev}<strong class="keword">${keyword}</strong>${next}`
+  }
+  return title;
 };
 
 export default function NoticeResult({ noticeList, noticeCount, keyword, noticeNewest, setNoticeNewest, searchNotice }) {

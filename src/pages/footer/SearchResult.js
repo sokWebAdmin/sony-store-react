@@ -173,8 +173,9 @@ export default function SearchResult({match}) {
     [],
   )
 
-  const searchNotice = useCallback( 
+  const searchNotice = useCallback(
     async (keyword, boardNo, noticeNewest=true, pageNumber = 1) => {
+      if (!keyword || !boardNo) return;
       const pathParams = {
         boardNo,
       };
