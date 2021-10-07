@@ -87,6 +87,7 @@ export default function StoreInfo() {
                     type="button"
                     className="button button_secondary button-s map_open"
                     onClick={onOpenMap}
+                    style={{ background: '#f2f2f2' }}
                   >
                     { isMapOpen ? '지도접기' : '지도보기' }
                   </button>

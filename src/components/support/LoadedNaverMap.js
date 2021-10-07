@@ -8,6 +8,7 @@ function NaverMapAPI() {
     height: '90vh',
     background: '#ddd',
     display: 'block',
+    marginTop: '48px'
   };
   return (
     <NaverMap
