@@ -1,9 +1,9 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
-
+import qs from 'qs';
 //api
 
 //css
@@ -18,6 +18,15 @@ import Alert from '../../components/common/Alert';
 export default function PurchaseConsulting() {
   const history = useHistory();
   const { openAlert, closeModal, alertMessage, alertVisible } = useAlert();
+
+  useEffect(() => {
+    const query = qs.parse(history.location.search, {
+      ignoreQueryPrefix: true,
+    });
+    if (!query?.agreement) {
+      history.push('/agreement');
+    }
+  }, []);
 
   const [type, setType] = useState('1');
   const [company, setCompany] = useState('');
