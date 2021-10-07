@@ -58,5 +58,14 @@ export const notificationInfo = {
      label2: '이용하실 수 있습니다.',
      to: '/member/login',
      toLabel: '로그인'
+  },
+  order: {
+     title: '로그인 후 주문해주세요.',
+     label1: '소니스토어 회원으로 로그인 하시고 다양한 멤버십 혜택을 누리세요!',
+     label2: '비회원으로 제품을 구매하시면 소니스토어의 쿠폰 및 마일리지 적립 혜택을',
+     label3: '받으실 수 없습니다.',
+     to: '/member/login',
+     toLabel: '회원 구매',
+     cancelLabel: '비회원 구매',
   }
 }

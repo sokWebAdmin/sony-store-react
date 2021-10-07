@@ -59,6 +59,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   const [giftVisible, setGiftVisible] = useState(false);
   const [cartVisible, setCartVisible] = useState(false);
   const [wishVisible, setWishVisible] = useState(false);
+  const [orderVisible, setOrderVisible] = useState(false);
 
   const preventScroll = value => value ? $body.classList.add('no_scroll') : $body.classList.remove('no_scroll')
   useEffect(() => {
@@ -72,12 +73,8 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     state: { next: nextUri },
   });
 
-  const _getOrderSheetNo = async (productNo, selectedOption, pathname) => {
-    
-    try {
-      const result = await getOrderSheetNo(productNo, selectedOption);
-      
-      if (result?.code) {
+  const goToOrderPage = (result, pathname) => {
+    if (result?.code) {
         ERROR_CODE_MAPPING_ROUTE[result.code]?.msg 
           ?
             openAlert(
@@ -92,6 +89,12 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
           search: '?' + qs.stringify(result),
         });
       }
+  }
+
+  const fetchOrderSheetNo = async (no = productNo, option = selectedOption, pathname = '/order/sheet') => {
+    try {
+      const result = await getOrderSheetNo(no, option);
+      goToOrderPage(result, pathname);
 
     } catch(e) {
       e?.message && openAlert(e.message);
@@ -119,7 +122,11 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       return;
     }
 
-    _getOrderSheetNo(productNo, selectedOption, pathname);
+    if (isLogin) {
+      fetchOrderSheetNo(productNo, selectedOption, pathname);
+      return;
+    }
+    setOrderVisible(true);
   }
 
   const gift = () => {
@@ -269,6 +276,10 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       {
         wishVisible
           && <Notification setNotificationVisible={setWishVisible} unusableIcon={true} type='wish' />
+      }
+      {
+        orderVisible
+          && <Notification setNotificationVisible={setOrderVisible} type='order' unusableIcon={true} fetchOrderSheetNo={fetchOrderSheetNo} />
       }
       {
         alertVisible 
