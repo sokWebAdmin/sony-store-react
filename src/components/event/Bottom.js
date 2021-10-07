@@ -279,7 +279,7 @@ const EventBottom = () => {
                   return (
                     <div className="item_row">
                       <Event event={events[index * 2]} />
-                      <Event event={events[index * 2 + 1]} />
+                      {index * 2 + 1 < events.length && <Event event={events[index * 2 + 1]} />}
                     </div>
                   )
                 })}
