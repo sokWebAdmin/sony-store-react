@@ -129,7 +129,8 @@ export default function OrderDetail() {
       couponDiscountAmt,
       mileageAmt: subPayAmt,
       totalDiscountAmount: promotionDiscountAmt + couponDiscountAmt + subPayAmt,
-      payAmt,
+      // payAmt는 할인 다 적용되고 적립금까지 포함된 금액이라 적립금은 제외해야함 (from 김진훈 선임)
+      payAmt: payAmt - subPayAmt,
     });
 
     setPayInfo({
