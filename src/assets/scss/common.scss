@@ -342,7 +342,7 @@ button {
   @include ir;
 }
 
-.clear {
+.clear::after {
   content: "";
   display: block;
   clear: both;

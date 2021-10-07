@@ -16,7 +16,7 @@ export default function ViewMore({ totalCount, viewMore, pageSize, reset = false
   useEffect(() => reset && setPageNumber(1), [reset])
 
   return (
-    <div className="btn_article comm_more" style={{ visibility: hide ? 'hidden' : 'visible' }}>
+    <div className="btn_article comm_more line" style={{ visibility: hide ? 'hidden' : 'visible' }}>
       <a 
         href="#none" 
         className="more_btn" 
