@@ -25,7 +25,9 @@ export default function Banner({category}) {
         bannerData.nameHtml = bannerData.name.split('/').map(s => `<span>${s}</span>`).join('');
         bannerData.descriptionHtml = bannerData.description.split('/').map(s => `<span>${s}</span>`).join('');
 
-        setBanner(bannerData);
+        if (!!bannerData.imageUrl) {
+          setBanner(bannerData);
+        }
       }
     }
     catch (e) {
