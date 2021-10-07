@@ -62,6 +62,7 @@ export default function Footer() {
                   </div>
                 </div>
                 <select onChange={e => window.open(e.target.value)} className={`footer__family__link footer__mo ${moActive && 'footer__family__link--active'}`}>
+                  <option value="" disabled selected hidden>Sony Family</option>
                   <optgroup label="Sony Family">
                     {
                       SONY_FAMILY.map(({ url, name }) => <option value={url} key={`footer-option-family-${name}`}>{ name }</option>)
