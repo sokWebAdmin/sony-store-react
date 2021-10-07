@@ -65,8 +65,7 @@ export default function OrderDetail() {
     bankInfo: null, // 신용카드일 때 Null
   });
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
-  const [confirmVisible, setConfirmVisible] = useState(false);
-  const [confirmMessage, setConfirmMessage] = useState('');
+  const [confirm, setConfirm] = useState({ visible: '', message: '', name: '' });
 
   useEffect(() => {
     const request = { path: { orderNo: query.get('orderNo') } };
@@ -175,46 +174,31 @@ export default function OrderDetail() {
     content: () => printArea.current,
   });
 
-  const openConfirm = (message) => {
-    setConfirmVisible(true);
-    setConfirmMessage(message);
-  };
-
   const onCloseConfirm = (status) => {
-    setConfirmVisible(false);
+    setConfirm(() => ({
+      visible: false,
+      message: '',
+      name: ''
+    }));
+
     if (status === 'ok') {
-      const request = {
-        path: { orderNo: query.get('orderNo') },
-        requestBody: {
-          claimType: 'CANCEL',
-          claimReasonType: 'CHANGE_MIND',
-          claimReasonDetail: '',
-          bankAccountInfo: null,
-          saveBankAccountInfo: false,
-          responsibleObjectType: null,
-        },
-      };
-
-      const orderCancelMap = {
-        profile: () => postProfileClaimOrderCancelByOrderNo(request),
-        guest: () => postGuestClaimOrderCancelByOrderNo(request),
-      };
-
-      return orderCancelMap[isLogin ? 'profile' : 'guest']().then((res) => {
-        if (res.data.status === 404 || res.data.status === 400) {
-          openAlert(res.data.message);
-          return;
-        }
-
-        openAlert('주문취소 신청이 완료되었습니다.', () => () => window.location.reload());
-      });
-    } else if (status === 'cancel') {
-      console.log('취소');
+      if (confirm.name === 'cancel-confirm') {
+        // 취소 로직
+        _cancelOrder();
+      }
     }
   };
 
   const onOrderCancel = () => {
-    openConfirm('현재의 주문에 대해서 환불계좌를 확정하시겠습니까?');
+    // 뭔지 몰라서 주석처리
+    // openConfirm('현재의 주문에 대해서 환불계좌를 확정하시겠습니까?');
+
+    setConfirm({
+      ...confirm,
+      visible: true,
+      message: '주문 취소 신청 후에는 변경하실 수 없습니다.\n취소 접수를 하시겠습니까?',
+      name: 'cancel-confirm'
+    });
   };
 
   // 클레임 중인 상품인지 확인 => 기획누락같은데, 클레임 상태일 땐 주문상태 UI disable 처리
@@ -223,11 +207,49 @@ export default function OrderDetail() {
     return claimStatuses.some((claimStatus) => defaultOrderStatusType.includes(claimStatus));
   };
 
+  const _cancelOrder = () => {
+    const request = {
+      path: { orderNo: query.get('orderNo') },
+      requestBody: {
+        claimType: 'CANCEL',
+        claimReasonType: 'CHANGE_MIND',
+        claimReasonDetail: '',
+        bankAccountInfo: null,
+        saveBankAccountInfo: false,
+        responsibleObjectType: null,
+      },
+    };
+
+    const orderCancelMap = {
+      profile: () => postProfileClaimOrderCancelByOrderNo(request),
+      guest: () => postGuestClaimOrderCancelByOrderNo(request),
+    };
+
+    return orderCancelMap[isLogin ? 'profile' : 'guest']().then((res) => {
+      if (res.data.status === 404 || res.data.status === 400) {
+        openAlert(res.data.message);
+        return;
+      }
+
+      let message = '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
+
+      if (isLogin) {
+        if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+          message += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.'
+        }
+
+        openAlert(message, () => () => window.location.reload());
+      }
+
+      openAlert(message, () => () => window.location.reload());
+    });
+  }
+
   return (
     <>
       <SEOHelmet title={'주문 상세 조회'} />
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
-      {confirmVisible && <Confirm onClose={onCloseConfirm}>{confirmMessage}</Confirm>}
+      {confirm.visible && <Confirm onClose={onCloseConfirm}>{confirm.message}</Confirm>}
       <div ref={printArea} className="contents mypage">
         <div className="container my">
           <div className="content">
