@@ -17,6 +17,32 @@ const OrderComplete = ({ location }) => {
   const orderType = useMemo(() => getUrlParam('orderType'), [location]);
   const orderNo = useMemo(() => getUrlParam('orderNo'), [location]);
 
+  const openSurvey = (e) => {
+    e.preventDefault();
+    const d = new Date();
+    const chkDate  = d.getFullYear()+""+(d.getMonth()+1)+""+d.getDate()+""+d.getHours()+""+d.getMinutes()+""+d.getSeconds();
+    const openUrl = process.env.NODE_ENV === 'development' ? 'https://testwww.sony.co.kr/handler/EXCSATemplate-SurveyForm' : 'https://www.sony.co.kr/handler/EXCSATemplate-SurveyForm';
+    const form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('target', '_blank');
+    form.setAttribute('action', openUrl);
+    // form.setAttribute('enctype', 'application/x-www-form-urlencoded;charset=euc-kr');
+    form.innerHTML = `
+      <input type="hidden" name="guestid" value="${chkDate}">
+      <input type="hidden" name="templateinstid" value="45073">
+      <input type="hidden" name="returnMode" value="__CLOSE__">
+    `;
+
+    document.body.appendChild(form);
+    // window.open(
+    //   openUrl,
+    //   'throw_external_popup',
+    //   `resizable=yes,toolbar=yes,menubar=yes,location=yes`,
+    // );
+    form.submit();
+    document.body.removeChild(form);
+  }
+
   useEffect(() => {
     if (!orderNo) {
       alert('잘못된 접근입니다.');
@@ -73,9 +99,11 @@ const OrderComplete = ({ location }) => {
                   쇼핑하기
                 </Link>
                 <a
-                  href="https://www.sony.co.kr/handler/EXCSATemplate-SurveyForm"
-                  target="_blank" className="button button_negative"
-                  type="button">설문조사
+                  href="#none"
+                  className="button button_negative"
+                  type="button"
+                  onClick={(e) => openSurvey(e)}
+                >설문조사
                   참여하기
                 </a>
                 <Link to={`/my-page/order-detail?orderNo=${orderNo}`}
