@@ -263,6 +263,7 @@ const gnbCategories = [
   },
   {
     label: '기획전',
+    route: '/event/list?tab=all',
     children: [
       {
         label: '소니스토어 단독',

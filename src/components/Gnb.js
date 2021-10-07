@@ -66,6 +66,7 @@ export default function Gnb () {
                   onClick={(e) => {
                     setActiveMIndex(index);
                     e.preventDefault();
+                    gc.route && history.push(gc.route);
                   }}
                 >
                   {gc.label}
