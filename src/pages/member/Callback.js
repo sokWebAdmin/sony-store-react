@@ -53,6 +53,7 @@ const Callback = () => {
       platformType: isMobile ? 'MOBILE_WEB' : 'PC',
     });
     console.log(openIdTokenResult);
+    setAccessToken(openIdTokenResult.data.accessToken, openIdTokenResult.data.expireIn);
 
     if (openIdTokenResult.status === 200) {
       const response = await getProfile();
