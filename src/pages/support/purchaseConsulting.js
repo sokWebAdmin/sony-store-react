@@ -180,7 +180,7 @@ export default function PurchaseConsulting() {
 
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'고객 서비스 : 구매상담입력'} />
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       <div className="contents support">
         <div className="container">

@@ -16,6 +16,7 @@ import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/swiper.scss';
 import { getEventByEventNo } from '../../api/display';
+import SEOHelmet from '../../components/SEOHelmet';
 
 export default function Curation() {
   const [url, setUrl] = useState('');
@@ -40,6 +41,7 @@ export default function Curation() {
 
   return (
     <>
+      <SEOHelmet title={'스토어 추천제품 : 선물제안'} />
       <Controller>
         <div className="contents recommend">
           <div className="container">
