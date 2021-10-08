@@ -52,11 +52,8 @@ const InvoicePublish = ({ basketid, close }) => {
       ...formData,
     };
     try {
-      const res = await postInvoice(request);
-      console.log(res);
-      if (res?.status === '200' || res?.status === 200) {
-        setProcessDone(true);
-      }
+      await postInvoice(request);
+      setProcessDone(true);
     }
     catch (err) {
       console.error(err);
@@ -66,8 +63,7 @@ const InvoicePublish = ({ basketid, close }) => {
   async function fetchPostedData () {
     try {
       const res = await getInvoice(basketid);
-      console.log(res);
-      setPostedData(res.body);
+      setPostedData(res.data.body);
       console.log('postedData : ', postedData);
       console.log('processDone : ', processDone);
       console.log('setter: ', !processDone || !postedData);
