@@ -23,9 +23,13 @@ import { breakPoint, breakPointTablet } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
 
 import { getDisplaySectionsSectionNo, loadBanner } from '../../api/display';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
+import LayerPopup from '../../components/common/LayerPopup';
 
 export default function Main() {
   const history = useHistory();
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
 
   const size = useWindowSize();
   //1. 슬라이드 배너 pc : 000
@@ -172,6 +176,12 @@ export default function Main() {
       recRightSwiper.controller.control = recLeftSwiper;
     }
   }, [recRightSwiper, recLeftSwiper]);
+
+  const onClickServiceCenter = () => {
+    openAlert(
+      '고객님께서 원하시는 제품을<br />빠르고 정확하게 구매하실 수 있도록<br />도와드리겠습니다.<br/>고객지원센터: 1588-0911',
+    );
+  };
 
   return (
     <>
@@ -604,20 +614,23 @@ export default function Main() {
               </h2>
               <ul className="main__help__lists">
                 <li className="main__help__list notice">
-                  <Link to="/notice">공지사항 & FAQ</Link>
+                  <Link to="/notice">FAQ & 공지사항</Link>
                 </li>
                 <li className="main__help__list location">
                   <Link to="/store-info">매장안내</Link>
                 </li>
                 <li className="main__help__list customer">
-                  <a>고객센터</a>
+                  <a onClick={onClickServiceCenter}>고객센터</a>
                 </li>
                 <li className="main__help__list service">
-                  <a href="https://www.sony.co.kr/electronics/support">제품지원</a>
+                  <a href="https://www.sony.co.kr/electronics/support" target="_blank">
+                    제품지원
+                  </a>
                 </li>
               </ul>
             </div>
             {/* customer service */}
+            {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
           </div>
         </div>
       </div>
