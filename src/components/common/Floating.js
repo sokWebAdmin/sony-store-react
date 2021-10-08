@@ -1,13 +1,12 @@
-import { useEffect, useContext, useState, useMemo } from "react";
+import { useEffect, useContext, useState, useMemo, useRef } from "react";
 import { useHistory } from "react-router";
+import { MAPPING_CLASS_NAME } from "../../const/footer";
 import GlobalContext from "../../context/global.context";
 import { useMallState } from "../../context/mall.context";
 import { useAlert, useScroll, useToggle } from "../../hooks";
+import { addClassName, removeClassName } from "../../utils/utils";
 import Alert from "./Alert";
 import Confirm from "./Confirm";
-
-// const SERVICE_CENTER = process.env.REACT_APP_KAKAO_SERVICE_CENTER_KEY; // http://pf.kakao.com/_xbxhExaj
-// const JS_KEY = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY; // @FIXME 소니코리아 고객센터의 jsKey 로 연결해야 함.
 
 const MOBILE_WIDTH = 640;
 
@@ -18,7 +17,7 @@ const getMessage = tel => ({
 
 const chat = () => {
   const params = {
-    uuid: '@nty37zwcnjm1noq'
+    uuid: process.env.REACT_APP_KAKAO_SERVICE_CENTER_ID
   };
 
   const $form = document.createElement('form');
@@ -35,11 +34,12 @@ const chat = () => {
   }
 
   $form.submit();
-  // window.Kakao.Channel.chat({ channelPublicId: SERVICE_CENTER });
 }
 
 export default function Floating () {
   const history = useHistory();
+
+  const { sidebarReachend } = MAPPING_CLASS_NAME;
 
   const info = useMallState();
   const TEL = info?.mall?.serviceCenter.phoneNo;
@@ -91,12 +91,36 @@ export default function Floating () {
     toggle(false);
   };
 
-  // useEffect(() => window?.Kakao.init(JS_KEY), []);
+  useEffect(() => scrollY < 250 && toggle(false), [scrollY, toggle]);
 
-  useEffect(() => scrollY < 300 && toggle(false), [scrollY, toggle]);
+  // 푸터영역에 고정
+  const sidebarRef = useRef(null);
+  const $footer = document.querySelector('.footer');
+  const prevScrollY = window.scrollY;
+  
+  const handleSidebarReachend = ($footer, $sidebar, currScrollY) => {
+    const winHeight = window.innerHeight;
+    const end = $footer.offsetTop - winHeight + $sidebar.offsetHeight + parseInt(getComputedStyle($sidebar).right) * 2;
+    currScrollY >= end ? addClassName($sidebar, sidebarReachend) : removeClassName($sidebar, sidebarReachend);
+  };
+
+  const handleSidebar = () => {
+    const currScrollY = window.scrollY;
+    if (prevScrollY === currScrollY) return;
+    
+    sidebarRef.current && handleSidebarReachend($footer, sidebarRef.current, currScrollY);
+  };
+
+  useEffect(() => {
+    handleSidebar();
+    return () => {
+      handleSidebar();
+    }
+  })
+  
 
   return (
-    <nav className={`sidebar ${scrollY >= 300 && 'sidebar--visible'} ${active && 'sidebar--active'}`}>
+    <nav ref={sidebarRef} className={`sidebar ${scrollY >= 250 && 'sidebar--visible'} ${active && 'sidebar--active'}`}>
       <div className="sidebar__inner">
         <a href="#none" onClick={ e => handleClick(e, 'kakao') } className="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
         <a href={isMobile ? `tel:${TEL}` : '#none'} onClick={ e=> handleClick(e, 'cs') } className="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
