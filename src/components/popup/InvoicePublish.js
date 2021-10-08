@@ -64,9 +64,6 @@ const InvoicePublish = ({ basketid, close }) => {
     try {
       const res = await getInvoice(basketid);
       setPostedData(res.data.body);
-      console.log('postedData : ', postedData);
-      console.log('processDone : ', processDone);
-      console.log('setter: ', !processDone || !postedData);
     }
     catch (err) {
       console.error(err);
