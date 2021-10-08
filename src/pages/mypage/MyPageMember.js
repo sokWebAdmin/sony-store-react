@@ -351,7 +351,7 @@ export default function MyPageMember() {
                             {
                               renameVisible
                                 && <MobileAuth 
-                                    mobile={ '01044758305' }
+                                    mobile={ myForm.mobile }
                                     visible={renameVisible}
                                     setVisible={setRenameVisible}
                                     handleResult={handleRenameResult}
