@@ -26,8 +26,8 @@ const LayerPopup = ({ children, onClose, className, popContClassName = '', popCo
 
   return createPortal(
     <>
-      <div className="layer_mask" tabIndex="0" style={{ display: show ? 'block' : 'none' }} />
-      <div className={`popup_wrap size_${size} ${className}`} style={{ display: show ? 'block' : 'none' }}>
+      <div className="layer_mask" tabIndex="0" style={{ display: show ? 'block' : 'none', zIndex: 1000 }} />
+      <div className={`popup_wrap size_${size} ${className}`} style={{ display: show ? 'block' : 'none', zIndex: 1000 }}>
         <div className="pop_inner">
           <div className={`pop_cont ${popContClassName}`} style={popContStyle}>
             {children}
