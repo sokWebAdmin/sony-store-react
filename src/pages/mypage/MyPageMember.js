@@ -476,7 +476,7 @@ export default function MyPageMember() {
                                   id="member_gender" 
                                   name="gender"
                                   className={`inp disabled`} 
-                                  value={Number(myForm.gender) === 1 ? '여' : '남'}  
+                                  value={myForm.gender === '1' ? '남' : '여'}  
                                   disabled='disabled'
                                 />
                                 <span className="focus_bg" />
