@@ -278,7 +278,7 @@ const gnbCategories = [
         route: '/event/list?tab=pre-order',
       },
       {
-        label: '정품 등록 이벤트',
+        label: '정품등록 이벤트',
         route: '/event/list?tab=refined',
       },
       {
