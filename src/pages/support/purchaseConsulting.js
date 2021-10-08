@@ -56,6 +56,13 @@ export default function PurchaseConsulting() {
 
   const [noticeVisible, setNoticeVisible] = useState(false);
 
+  const [count, setCount] = useState(0);
+
+  const onChangeNote = (target) => {
+    setCount(target.value.length);
+    setNote(target.value);
+  };
+
   // 캡챠
   const [captcha, setCaptcha] = useState(false);
 
@@ -591,14 +598,14 @@ export default function PurchaseConsulting() {
                                 maxLength={4000}
                                 value={note}
                                 onChange={(e) => {
-                                  setNote(e.target.value);
+                                  onChangeNote(e.target);
                                 }}
                               />
                               <span className="focus_bg" />
                             </div>
-                            {/*<div className="byte_count">*/}
-                            {/*  <strong className="current">298</strong> / 4,000자*/}
-                            {/*</div>*/}
+                            <div className="byte_count">
+                              <strong className="current">{count}</strong> / 4,000자
+                            </div>
                             {!validation.node && (
                               <p className="error_txt">
                                 <span className="ico" />이 정보는 필수 입력사항입니다.

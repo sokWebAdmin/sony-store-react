@@ -257,7 +257,7 @@ const Benefit = () => {
                       <li className="prmm_smry_list">
                         운송
                         <h3 className="prmm_smry_item">
-                          택배/퀵/친환경
+                          퀵/친환경
                           <br />
                           패키지 서비스
                         </h3>
@@ -346,7 +346,12 @@ const Benefit = () => {
                             있습니다.
                           </li>
                         </ul>
-                        <a href="https://www.sony.co.kr/scs/handler/Service-Media" target="_blank" rel="noreferrer" className="prmm_dtl_link">
+                        <a
+                          href="https://www.sony.co.kr/scs/handler/Service-Media"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="prmm_dtl_link"
+                        >
                           자세히 보기
                         </a>
                       </li>
@@ -377,7 +382,8 @@ const Benefit = () => {
                         <a
                           href="https://www.sony.co.kr/scs/handler/SCSWarranty-ESPOrderConfirm"
                           className="prmm_dtl_link"
-                          target="_blank" rel="noreferrer"
+                          target="_blank"
+                          rel="noreferrer"
                         >
                           자세히 보기
                         </a>

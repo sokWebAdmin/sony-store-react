@@ -1022,6 +1022,11 @@
     button + button {
       margin-left: 8px;
     }
+    .button {
+      @include only-mo {
+        margin-left: 26%;
+      }
+    }
     @include under-pc {
       margin-top: 64px;
       button {
