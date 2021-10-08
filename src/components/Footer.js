@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useRef, useState} from "react";
 import { isMobile } from 'react-device-detect';
 
 //utils
@@ -13,7 +13,7 @@ import blog from "../assets/images/common/ic_blog.svg";
 
 import InsurePop from "./InsurePop";
 import Floating from "./common/Floating";
-import { useToggle } from "../hooks";
+import { useClickOutside, useToggle } from "../hooks";
 import { SONY_COMPANY, SONY_FAMILY } from "../const/footer";
 
 export default function Footer() {
@@ -22,6 +22,9 @@ export default function Footer() {
   const [ pcActive, setPcActive ] = useToggle(false);
 
   const [ moActive, setMoActive ] = useToggle(false);
+
+  const footerRef = useRef(null);
+  useClickOutside(footerRef, () => setPcActive(false))
 
   return (
     <>
@@ -39,7 +42,7 @@ export default function Footer() {
               </div>
             </div>
             <div className="footer__family">
-              <div className="footer__family__links">
+              <div className="footer__family__links" ref={footerRef}>
                 <div className={`footer__family__link footer__pc ${pcActive && 'footer__family__link--active'}`}>
                   <button type="button" className="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침" onClick={ () => isMobile ? setMoActive() : setPcActive() }>Sony Family</button>
                   <div className="footer__family__link__inner">
