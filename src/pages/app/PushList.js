@@ -7,7 +7,6 @@ import SEOHelmet from '../../components/SEOHelmet';
 // stylesheet
 import '../../assets/scss/app.scss';
 import { getPushs } from '../../api/sony/member';
-import { getStrDate } from '../../utils/dateFormat';
 import ViewMore from '../../components/common/ViewMore';
 
 const PushList = () => {
@@ -15,7 +14,7 @@ const PushList = () => {
   const [pushData, setPushData] = useState({items: [], totalCount: 0});
 
   const fetchPushList = async (pageIdx = 1) => {
-    const { data } = await getPushs({fromDate: '14', rowsPerPage: 10, pageIdx});
+    const { data } = await getPushs({fromDate: '100', rowsPerPage: 10, pageIdx});
     console.log(data);
     setPushData({items: data.body, totalCount: data.paginationInfo.totalCount});
   }
@@ -52,9 +51,9 @@ const PushList = () => {
               {pushData.items.map((item) => {
                 return (
                   <li className="lists" onClick={() => history.push(item.linkUrl)}>
-                    <span className="category">공지</span>
+                    <span className="category"></span>
                     <strong className="tit">{item.title}</strong>
-                    <span className="duration">{getStrDate(item.resvDate)} ~ ??</span>
+                    <span className="duration">{item.text}</span>
                   </li>
                 )
               })}
