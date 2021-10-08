@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { useHistory } from 'react-router-dom';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -10,13 +9,12 @@ import { getPushs } from '../../api/sony/member';
 import ViewMore from '../../components/common/ViewMore';
 
 const PushList = () => {
-  const history = useHistory();
   const [pushData, setPushData] = useState({items: [], totalCount: 0});
 
   const fetchPushList = async (pageIdx = 1) => {
     const { data } = await getPushs({fromDate: '100', rowsPerPage: 10, pageIdx});
     console.log(data);
-    setPushData({items: data.body, totalCount: data.paginationInfo.totalCount});
+    setPushData({items: pushData.items.concat(data.body), totalCount: data.paginationInfo.totalCount});
   }
 
   useEffect(() => {
@@ -50,7 +48,7 @@ const PushList = () => {
             <ul className="app_push_list">
               {pushData.items.map((item) => {
                 return (
-                  <li className="lists" onClick={() => history.push(item.linkUrl)}>
+                  <li className="lists" onClick={() => window.open(item.linkUrl, '_blank')}>
                     <span className="category"></span>
                     <strong className="tit">{item.title}</strong>
                     <span className="duration">{item.text}</span>
