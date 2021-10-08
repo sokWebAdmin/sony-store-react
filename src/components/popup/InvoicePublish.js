@@ -53,6 +53,7 @@ const InvoicePublish = ({ basketid, close }) => {
     };
     try {
       const res = await postInvoice(request);
+      console.log(res);
       if (res?.status === '200' || res?.status === 200) {
         setProcessDone(true);
       }
