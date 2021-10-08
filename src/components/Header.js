@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 
 //images
 import logo from '../assets/images/common/logo.svg';
@@ -25,6 +25,7 @@ import {
   deleteGnbCategory,
   useCategoryDispatch,
 } from '../context/category.context';
+import { useClickOutside } from '../hooks';
 
 export default function Header() {
   const history = useHistory();
@@ -54,7 +55,10 @@ export default function Header() {
     const style = 'overflow: hidden'
     $body.setAttribute('style', isSearchOpen ? style : null);
     !isSearchOpen && closeSubSlider();
-  }, [isSearchOpen])
+  }, [isSearchOpen]);
+
+  const sideRef = useRef(null);
+  useClickOutside(sideRef, () => isInfoOpen && setInfoOpen(false))
 
   return (
     <>
@@ -161,7 +165,7 @@ export default function Header() {
             {/* 회원/로그인 */}
             {isLogin && (
               <>
-                <div className={`member ${isInfoOpen && 'member--visible'}`}>
+                <div ref={sideRef} className={`member ${isInfoOpen && 'member--visible'}`}>
                   <div className="member__inner">
                     <p className="member__msg">
                       {my?.firstname ?? profile?.memberName}님<br />
