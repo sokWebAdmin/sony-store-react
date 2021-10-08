@@ -52,7 +52,6 @@ const InvoicePublish = ({ basketid, close }) => {
       ...formData,
     };
     try {
-      console.log(request);
       const res = await postInvoice(request);
       if (res?.status === '200' || res?.status === 200) {
         setProcessDone(true);
@@ -67,6 +66,9 @@ const InvoicePublish = ({ basketid, close }) => {
     try {
       const { body } = await getInvoice(basketid);
       setPostedData(body);
+      console.log('postedData : ', postedData);
+      console.log('processDone : ', processDone);
+      console.log('setter: ', !processDone || !postedData);
     }
     catch (err) {
       console.error(err);
