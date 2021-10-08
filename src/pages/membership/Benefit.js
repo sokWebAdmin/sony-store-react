@@ -25,7 +25,7 @@ const Benefit = () => {
 
   return (
     <>
-      <SEOHelmet title={'등급/혜택 안내'} />
+      <SEOHelmet title={'멤버십 : 등급/혜택안내'} />
       <div className="contents membership full">
         <div className="content" style={{ padding: 0, margin: 0 }}>
           <div className="membership">

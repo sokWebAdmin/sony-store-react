@@ -119,7 +119,7 @@ export default function Recommend({ match }) {
 
   return (
     <>
-      <SEOHelmet title={'구매상담 이용약관 동의'} />
+      <SEOHelmet title={'스토어 추천제품 : 추천제품'} />
       <Controller>
         <div className="contents recommend">
           <div className="container">

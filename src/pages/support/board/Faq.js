@@ -27,7 +27,7 @@ export default function Faq() {
 
   return (
     <>
-      <SEOHelmet title={"소니스토어 FAQ"} />
+      <SEOHelmet title={"고객 서비스: FAQ"} />
       <div className="contents support">
         <div className="container full">
           <div className="content">

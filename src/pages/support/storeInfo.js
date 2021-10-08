@@ -34,7 +34,7 @@ export default function StoreInfo() {
 
   return (
     <>
-      <SEOHelmet title={'소니스토어 직영점'} />
+      <SEOHelmet title={'고객 서비스 : 직영점 안내'} />
       <div className="contents support">
         <div className="container full">
           <div className="content">
