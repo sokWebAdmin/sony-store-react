@@ -53,6 +53,12 @@ const OrderSheet = ({ location }) => {
   const [paymentInfo, setPaymentInfo] = useState(null);
   const [recentAddresses, setRecentAddresses] = useState([]);
 
+  const orderCnt = useMemo(() => {
+    return deliveryGroups.flatMap(group => group.orderProducts).
+      flatMap(orderProduct => orderProduct.orderProductOptions).
+      reduce((acc, { orderCnt }) => orderCnt + acc, 0);
+  }, [deliveryGroups]);
+
   // form refs
   const ordererForm = createRef();
   const shippingAddressForm = createRef();
@@ -378,7 +384,8 @@ const OrderSheet = ({ location }) => {
                       {/* acc_item */}
                       <Accordion title={'결제 예정 금액'} defaultVisible={true}>
                         <Calculator payment={submit}
-                                    paymentInfo={paymentInfo} />
+                                    paymentInfo={paymentInfo}
+                                    orderCnt={orderCnt} />
                       </Accordion>
                     </div>
                   </div>

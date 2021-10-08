@@ -4,7 +4,7 @@ import Alert from '../common/Alert';
 
 import { toCurrencyString } from '../../utils/unit.js';
 
-const Calculator = ({ payment, paymentInfo }) => {
+const Calculator = ({ payment, paymentInfo, orderCnt }) => {
 
   const toCurrency = val => val
     ? toCurrencyString(val)
@@ -27,6 +27,60 @@ const Calculator = ({ payment, paymentInfo }) => {
   return (
     <div className="payment_box">
       <div className="inner">
+        <div className="payment_list">
+          <dl className="total">
+            <dt className="tit">결제 예정 금액</dt>
+            <dd className="price">{toCurrency(paymentInfo?.paymentAmt)}<span
+              className="unit">원</span></dd>
+          </dl>
+          <div className="order_detailbox">
+            <div className="view_headline">
+              <span className="view_tit">주문 금액</span>
+              <em className="view_price"><strong>{toCurrency(
+                paymentInfo?.cartAmt)}</strong>원</em>
+            </div>
+            <div className="view_detail">
+              <span className="view_tit">제품 금액</span>
+              <em className="view_price"><strong>{toCurrency(
+                paymentInfo?.productAmt)}</strong>원</em>
+            </div>
+            <div className="view_detail">
+              <span className="view_tit">구매 수량</span>
+              <em className="view_price"><strong>{toCurrency(orderCnt)}</strong>개</em>
+            </div>
+          </div>
+          <div className="saleToggle">
+            <div className="sale_item">
+              <div className="sale_head">
+                <a href="#none" className="sale_btn" title="할인 금액 열기">
+                  <div className="view_headline">
+                    <span className="sale_tit">할인 금액</span>
+                    <em className="view_price minus"><strong>-
+                      2,300</strong>원</em>
+                  </div>
+                  <span className="acc_arrow">상세 보기</span>
+                </a>
+              </div>
+              <div className="sale_inner" style={{ display: 'none' }}>
+                <div className="sale_box">
+                  <div className="view_detail">
+                    <span className="sale_tit">프로모션 할인</span>
+                    <em className="view_price"><strong>- 0</strong>원</em>
+                  </div>
+                  <div className="view_detail">
+                    <span className="sale_tit">쿠폰 사용</span>
+                    <em className="view_price"><strong>- 0</strong>원</em>
+                  </div>
+                  <div className="view_detail">
+                    <span className="sale_tit">마일리지 사용</span>
+                    <em className="view_price"><strong>- 0</strong>원</em>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="payment_list">
           <dl className="total">
             <dt className="tit">최종 결제 금액</dt>
