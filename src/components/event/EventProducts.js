@@ -158,7 +158,7 @@ const EventProducts = ({event, filterLabel, grade, gift = false}) => {
                         </span>}
               {product.stickerLabels.length > 0 && <span className={`badge_state state_${product.stickerLabels[0].substring(0, 1).toLowerCase()}`}>{product.stickerLabels[0].substring(0, 1)}<span className="txt">급</span></span>}
               <div className="product_pic">
-                <Link to={`/product-view/${product.productNo}`}>
+                <Link className="product_link" to={`/product-view/${product.productNo}`}>
                   <img
                     src={product.imageUrls[0]}
                     alt={product.productName}
