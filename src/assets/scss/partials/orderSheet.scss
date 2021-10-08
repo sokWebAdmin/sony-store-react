@@ -1,0 +1,19 @@
+.clearFix:after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+.order_right {
+  @media screen and (min-width: 1281px) {
+    .acc_item.on {
+      .acc_head {
+        display: none;
+      }
+
+      .acc_box {
+        padding-top: 0;
+      }
+    }
+  }
+}
