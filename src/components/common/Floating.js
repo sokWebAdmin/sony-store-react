@@ -91,7 +91,7 @@ export default function Floating () {
     toggle(false);
   };
 
-  useEffect(() => scrollY < 300 && toggle(false), [scrollY, toggle]);
+  useEffect(() => scrollY < 250 && toggle(false), [scrollY, toggle]);
 
   // 푸터영역에 고정
   const sidebarRef = useRef(null);
@@ -120,7 +120,7 @@ export default function Floating () {
   
 
   return (
-    <nav ref={sidebarRef} className={`sidebar ${scrollY >= 300 && 'sidebar--visible'} ${active && 'sidebar--active'}`}>
+    <nav ref={sidebarRef} className={`sidebar ${scrollY >= 250 && 'sidebar--visible'} ${active && 'sidebar--active'}`}>
       <div className="sidebar__inner">
         <a href="#none" onClick={ e => handleClick(e, 'kakao') } className="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
         <a href={isMobile ? `tel:${TEL}` : '#none'} onClick={ e=> handleClick(e, 'cs') } className="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
