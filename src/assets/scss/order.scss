@@ -13,7 +13,7 @@
 }
 // 장바구니
 .content.order_page {
-  padding: 0;
+  padding: 0 !important;
   @include only-mo {
     .check:not(.check_only) .inp_check + label:before {
       width: 14px;
