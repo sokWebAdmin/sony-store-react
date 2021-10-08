@@ -25,13 +25,7 @@ const EventDetail = () => {
       {event && <div className="contents events">
         <div className="container full">
           <div className="content employee">
-            <div className="event_header">
-              <div className="event_header_inner"
-                   style={{ background: `url('${onlyMo ? event.top.mobile.url : event.top.pc.url}') no-repeat 0 0` }}>
-                <h1 className="event_header_title">{event.label}</h1>
-                <p className="event_header_desc">{event.promotionText}</p>
-              </div>
-            </div>
+            <div dangerouslySetInnerHTML={{__html: onlyMo ? event.top.mobile.url : event.top.pc.url}}></div>
             <div className="event_tablist type1">
               <div className="employee_prd">
                 <EventProducts event={event} gift={true} />
