@@ -95,8 +95,8 @@ if (process.env.NODE_ENV === 'development') {
   // 오디오 > 헤드폰/이어폰 > 헤드폰
   categoriesExtraDataMap.push({
     categoryNo: 81641,
-    url: '/products/audio/headphone'
-  })
+    url: '/products/audio/headphone',
+  });
   // 오디오 > 헤드폰/이어폰 > 무선 이어폰
   categoriesExtraDataMap.push({
     categoryNo: 60876,
@@ -328,7 +328,7 @@ const gnbCategories = [
 ];
 
 (async () => {
-  const res = await getEventByEventNo('461');
+  const res = await getEventByEventNo('467');
   if (res.status !== 400) {
     gnbCategories[0].children.push({ label: '선물제안', route: '/curation' });
   }

@@ -21,7 +21,7 @@ export default function Curation() {
   const [url, setUrl] = useState('');
 
   const getEvent = useCallback(async () => {
-    const response = await getEventByEventNo(461);
+    const response = await getEventByEventNo(467);
     if (response.status === 400) return;
     setUrl(response.data.url);
   }, []);
