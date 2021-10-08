@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -9,7 +9,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
-import { useProfileState } from '../../context/profile.context';
+import { resetProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
 import { Link, useHistory } from 'react-router-dom';
 import SelectBox from '../../components/common/SelectBox';
 import { withdrawalReasons } from '../../const/mypage';
@@ -22,10 +22,14 @@ import { getProfileOrdersSummaryStatus } from '../../api/order';
 import LayerPopup from '../../components/common/LayerPopup';
 import { loginApi } from '../../api/auth';
 import { toCurrencyString } from '../../utils/unit';
+import { removeAccessToken } from '../../utils/token';
+import GlobalContext from '../../context/global.context';
 
 export default function Withdraw() {
   const history = useHistory();
+  const { onChangeGlobal } = useContext(GlobalContext);
   const { profile, my } = useProfileState();
+  const profileDispatch = useProileDispatch();
 
   const {openAlert, closeModal, alertVisible, alertMessage} = useAlert();
   const {openAlert: openConfirm, closeModal: closeConfirm, alertVisible: confirmVisible} = useAlert();
@@ -83,7 +87,10 @@ export default function Withdraw() {
     });
     console.log(checkWithdraw);
     if (checkWithdraw.data.errorCode === '0000') {
-      history.push('/member/withdraw-complete');
+      removeAccessToken();
+      onChangeGlobal({ isLogin: false });
+      resetProfile(profileDispatch);
+      history.push('/my-page/withdraw-complete');
     } else {
       openAlert(checkWithdraw.data.errorMessage);
     }
