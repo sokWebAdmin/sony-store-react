@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msapplication-TileImage" content="/dist/images/favicon_144x144.png">
+<title>제품</title>
+<link rel="shortcut icon" href="/dist/images/favicon_144x144.png">
+<link rel="stylesheet" href="/dist/lib/css/swiper.min.css">
+<link rel="stylesheet" href="/dist/css/contents.css">
+<link rel="stylesheet" href="/dist/css/product.css">
+<script src="/dist/lib/js/jquery-3.6.0.min.js"></script>
+<script src="/dist/lib/js/swiper.min.js"></script>
+<script src="/dist/js/ux-common.js"></script>
+<script src="/dist/js/ux-sub.js"></script>
+</head>
+<body>
+<div class="wrapper preView">
+  <div id="skipnav" class="skipnav">
+  	<a href="#container"><span>본문 바로가기</span></a>
+  </div>
+  <header id="header" class="header">
+    <div class="header__wrapper">
+      <h1 class="header__logo"><a href="/dist/html/main.html"><img src="/dist/images/common/logo.svg" alt="SONY"></a></h1>
+      <div class="header__menu">
+        <button class="btn btn__mo__hidden btn__search"><img src="/dist/images/common/ic_search.svg" alt="검색창 열기"></button>
+        <a href="/dist/html/member/mypage.html" class="btn btn__desktop btn__mypage"><img src="/dist/images/common/ic_mypage.svg" alt="마이페이지"></a>
+        <a href="/dist/html/order/cart.html" class="btn btn__cart"><img src="/dist/images/common/ic_cart.svg" alt="장바구니"></a></li>
+        <button type="button" class="btn btn__mo btn__menu__open"><img src="/dist/images/common/ic_menu.svg" alt="메뉴 열기"></button>
+        <button type="button" class="btn btn__mo btn__mo__hidden btn__menu__close"><img src="/dist/images/common/ic_close.svg" alt="메뉴 닫기"></button>
+      </div>
+      <div class="header__inner">
+  
+        <!-- 비회원/로그인 전 -->
+        <!--
+        <div class="member">
+          <div class="member__inner">
+            <a href="#" class="member__msg member__msg__login">로그인이<br>필요합니다</a>
+            <button type="button" class="btn btn__login">로그인</button>
+            <div class="member__menu">
+              <ul>
+                <li class="member__menu__mypage"><a href="/dist/html/member/join.html">회원가입</a></li>
+                <li class="member__menu__order"><a href="/dist/html/order/orderList.html">주문/배송 조회</a></li>
+                <li class="member__menu__cart"><a href="/dist/html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        -->
+  
+        <!-- 회원/로그인 -->
+        <div class="member">
+          <div class="member__inner">
+            <p class="member__msg">박소니님<br>안녕하세요!</p>
+            <div class="member__menu">
+              <ul>
+                <li class="member__menu__mypage"><a href="/dist/html/member/mypage.html">마이페이지</a></li>
+                <li class="member__menu__order"><a href="/dist/html/order/orderList.html">주문/배송 조회</a></li>
+                <li class="member__menu__cart"><a href="/dist/html/order/cart.html">장바구니<span class="badge">99</span></a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn__logout">로그아웃</button>
+          </div>
+        </div>
+        <nav class="gnb">
+          <ul class="gnb__menu">
+            <li>
+              <a href="#">스토어 추천 제품</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="/dist/html/recommend/recommend.html">추천 제품</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/dist/html/product/List.html">제품</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="/dist/html/product/camera.html">카메라</a>
+                </li>
+                <li>
+                  <a href="/dist/html/product/videocamera.html">비디오카메라</a>
+                </li>
+                <li>
+                  <a href="/dist/html/product/audio.html">오디오</a>
+                </li>
+                <li>
+                  <a href="/dist/html/product/accessory.html">액세서리</a>
+                </li>
+                <li>
+                  <a href="/dist/html/product/playstation.html">PlayStation®</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">기획전</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">소니스토어 단독</a>
+                </li>
+                <li>
+                  <a href="#">혜택존</a>
+                </li>
+                <li>
+                  <a href="#">예약판매</a>
+                </li>
+                <li>
+                  <a href="#">정품 등록 이벤트</a>
+                </li>
+                <li>
+                  <a href="#">LIVE ON</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">멤버십</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">등급&amp;혜택 안내</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">고객 서비스</a>
+              <ul class="gnb__menu__secondary">
+                <li>
+                  <a href="#">FAQ&amp;공지사항</a>
+                </li>
+                <li>
+                  <a href="https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa">정품등록 안내</a>
+                </li>
+                <li>
+                  <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
+                </li>
+                <li>
+                  <a href="#">구매 상담</a>
+                </li>
+                <li>
+                  <a href="#">직영점 안내</a>
+                </li>
+                <li>
+                  <a href="#">동영상 강좌</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- ↓ 앱 전용 메뉴 -->
+        <div class="appmenu">
+          <ul>
+            <li class="appmenu__qr"><a href="#">QR스캔</a></li>
+            <li class="appmenu__setting"><a href="#">설정</a></li>
+            <li class="appmenu__push"><a href="/dist/html/app/pushList.html">PUSH 알림 메시지함</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- ↓ 검색 -->
+      <div class="search">
+        <h2 class="sr-only">통합검색</h2>
+        <div class="search__inner">
+          <div class="search__field">
+            <!-- <form action="get" role="search"> -->
+            <fieldset>
+              <legend>검색</legend>
+              <input type="text" id="search__input" class="search__field__input" placeholder="검색어를 입력해 주세요." title="검색어 입력" maxlength="40">
+              <button class="btn search__btn__submit"><img src="/dist/images/common/ic_search.svg" alt="검색"></button>
+            </fieldset>
+            <!-- </form> -->
+          </div>
+          <div class="search__keyword">
+            <h3 class="search__title">인기 검색어</h3>
+            <div class="search__keyword__list">
+              <a href="#" class="search__keyword__item"># SEL40F25G</a>
+              <a href="#" class="search__keyword__item"># SRS-RA5000/MKR2</a>
+              <a href="#" class="search__keyword__item"># 카메라의 초격차</a>
+              <a href="#" class="search__keyword__item"># 알파 야카데미 8월 강좌</a>
+              <a href="#" class="search__keyword__item"># 노이즈캔슬링</a>
+              <a href="#" class="search__keyword__item"># 벗지않는 헤드폰</a>
+              <a href="#" class="search__keyword__item"># WF-1000XM3SME</a>
+              <a href="#" class="search__keyword__item"># 무선 스피커</a>
+              <a href="#" class="search__keyword__item"># 하이 레졸루션 오디오</a>
+              <a href="#" class="search__keyword__item"># 프리미엄 SD카드</a>
+            </div>
+          </div>
+          <div class="search__recomm">
+            <h3 class="search__title">추천 제품</h3>
+            <div class="search__recomm__wrapper">
+              <ul class="search__recomm__list">
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="/dist/images/_tmp/item640x640_01.png" alt="상품명1">
+                      <span class="badge__text badge__text__new">NEW</span>
+                      <!--
+                      <span class="badge__text badge__text__best">BEST</span>
+                      <span class="badge__text badge__text__event">EVENT</span>
+                      <span class="badge__text badge__text__hot">HOT</span>
+                      -->
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                      <p class="search__recomm__desc ellipsis2">끄지마세요, 벗지마세요, 편하게 대화를 시작하세요!</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="/dist/images/_tmp/item640x640_02.png" alt="상품명2">
+                      <span class="badge__text badge__text__best">BEST</span>
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">microSDXC SR-64HXA Class 10 High Sound Quality Model with SD Card Adapter</span>
+                      <p class="search__recomm__desc ellipsis2">일렉트로닉 노이즈 억제, 맑고 깨끗한 사운드를 실현</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="search__recomm__item">
+                  <a href="#">
+                    <div class="search__recomm__pic">
+                      <img src="/dist/images/_tmp/item640x640_03.png" alt="상품명3">
+                      <span class="badge__text badge__text__event">EVENT</span>
+                    </div>
+                    <div class="search__recomm__wrapper">
+                      <span class="search__recomm__name ellipsis">WH-1000XM4</span>
+                      <p class="search__recomm__desc ellipsis2">모든 위대함은, 아주 작은 것들로부터. 원핸드 컴팩트 풀프레임 카메라, 독보적인 존재감, 예뻐지는 데일리 카메라</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <button class="btn search__btn__close"><img src="/dist/images/common/ic_close.svg" alt="검색창 닫기"></button>
+      </div>
+      <!-- ↑ 검색 -->
+    </div>
+  </header>
+  <div class="product_view_wrap">
+    <div class="product_view_main">
+      <div class="prd_main_slider">
+        <div class="view_slider swiper-container">
+          <ul class="swiper-wrapper">
+            <li class="swiper-slide"><img src="/dist/images/product/productView_colorType_fc5227_thumb_01.png" alt=""></li>
+            <li class="swiper-slide"><img src="/dist/images/product/productView_colorType_fc5227_thumb_02.png" alt=""></li>
+            <li class="swiper-slide"><img src="/dist/images/product/productView_colorType_fc5227_thumb_03.png" alt=""></li>
+            <!--
+              여러 색상일 경우.
+              productView_colorType_fc5227_thumb_01 이미지 명 : colorType_ 와 _thumb 사이 값으로 교체. = fc5227
+              .circle_color_box > .c_bg의 data-slide-img-type 값과 동일하게 적용.
+            -->
+          </ul>
+          <div class="arrow_btn">
+            <a class="arrow swiper-button-prev"><img src="/dist/images/common/arrow_19_34.png" alt="이전"></span></a>
+            <a class="arrow swiper-button-next"><img src="/dist/images/common/arrow_19_34.png" alt="다음"></span></a>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+      <form action="">
+      <div class="product_view_about"><!-- class :  soldout-품절, restock-재입고 텍스트 색상 변경을 위함 -->
+          <div class="cont">
+            <span class="flag new">NEW</span><!-- class : new / event / best / hot -->
+            <p class="product_tit">WF-SP800N</p>
+            <p class="product_txt">모든 순간에 몰입하다</p>
+            <p class="product_desc">이 제품은 예약 주문 상품으로 구매 후 1주일 뒤에 발송됩니다</p>
+            <ul class="social_list">
+              <li class="share"><a href="#" class="ico_btn" data-popup="popup_share">공유하기</a></li>
+            </ul>
+          </div>
+          <div class="cont">
+            <p class="delivery_txt">무료배송</p>
+            <p class="product_price"><strong class="price">219,000</strong> 원</p>
+          </div>
+          <div class="cont line">
+            <p class="tit">회원별 마일리지 적립혜택 <span class="icon_question">!</span></p>
+            <ul class="membership_rating">
+              <li class="vvip"><!-- class 별 등급 색상 지정 vvip / vip / family -->
+                <span class="mark">VV</span>
+                <div class="save_info">
+                    <span class="percentage">VVIP 8%</span>
+                    <p class="mileage"><span class="num">52,430</span> P</p>
+                </div>
+              </li>
+              <li class="vip">
+                <span class="mark">V</span>
+                <div class="save_info">
+                    <span class="percentage">VIP 4%</span>
+                    <p class="mileage"><span class="num">37,450</span> P</p>
+                </div>
+              </li>
+              <li class="family">
+                <span class="mark">M</span>
+                <div class="save_info">
+                    <span class="percentage">MEMBERSHIP 2%</span>
+                    <p class="mileage"><span class="num">22,420</span> P</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="cont line">
+            <div class="color_select">
+              <p class="tit">색상</p>
+              <ul class="circle_color_box">
+                <li class="on"><!-- 선택 class : on -->
+                  <a href="#" class="color_btn">
+                    <span class="circle_color">
+                      <span class="c_bg" data-slide-img-type="fc5227" style="background:#fc5227"></span>
+                    </span>
+                    <span class="color_name">오렌지</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="color_btn">
+                    <span class="circle_color">
+                      <span class="c_bg" data-slide-img-type="f7f5f5" style="background:#f7f5f5"></span>
+                    </span>
+                    <span class="color_name">화이트</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="color_btn">
+                    <span class="circle_color">
+                      <span class="c_bg" data-slide-img-type="1b8faa" style="background:#1b8faa"></span>
+                    </span>
+                    <span class="color_name">블루</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="color_btn">
+                    <span class="circle_color">
+                      <span class="c_bg" data-slide-img-type="222222" style="background:#222"></span>
+                    </span>
+                    <span class="color_name">블랙</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- prd_select_wrap -->
+          <div class="cont prd_select_wrap">
+            <div class="prd_select_inner">
+              <div class="prd_select_box">
+                <p class="tit">제품선택</p>
+                <div class="select_zone">
+                  <a href="#" class="selected_btn" data-default-text="제품을 선택하세요."><!-- disabled : 선택불가 품절 -->
+                    제품을 선택하세요.
+                  </a>
+                  <div class="select_inner">
+                    <p class="prd_tag">제품</p>
+                    <ul class="select_opt">
+                      <li>
+                        <a href="#" class="opt_list disabled"><!-- disabled : 선택 불가 품절 -->
+                          <div class="item">
+                            <span class="circle_color">
+                              <span class="c_bg" style="background:#fc5227"></span>
+                            </span>
+                            <span class="opt_name">WF-SP800N / 주황색 <span>품절</span></span>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="opt_list">
+                          <div class="item">
+                            <span class="circle_color">
+                              <span class="c_bg" style="background:#f7f5f5"></span>
+                            </span>
+                            <span class="opt_name">WF-SP800N / 화이트</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="opt_list">
+                          <div class="item">
+                            <span class="circle_color">
+                              <span class="c_bg" style="background:#1b8faa"></span>
+                            </span>
+                            <span class="opt_name">WF-SP800N / 블루</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="opt_list">
+                          <div class="item">
+                            <span class="circle_color">
+                              <span class="c_bg" style="background:#222"></span>
+                            </span>
+                            <span class="opt_name">WF-SP800N / 블랙</span>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="selected_opt"> <!-- 선택한 제품 -->
+                <!-- s : 상품 등록 예시 태그 구조
+                <div class="opt_info">
+                  <p class="opt_tag">제품</p>
+                  <div class="opt_item">
+                    <div class="item">
+                      <span class="circle_color">
+                        <span class="c_bg" style="background:#fc5227"></span>
+                      </span>
+                      <span class="opt_name">WF-SP800N / 오렌지</span>
+                    </div>
+                    <div class="item">
+                      <span class="circle_color">
+                        <span class="c_bg" style="background:#b5b5b5"></span>
+                      </span>
+                      <span class="opt_name">WF-SP800N / 화이트</span>
+                    </div>
+                  </div>
+                  <p class="opt_tag">사은품</p>
+                  <div class="opt_item">
+                    <div class="item">
+                      <span class="circle_color">
+                        <span class="c_bg" style="background:#bea07d"></span>
+                      </span>
+                      <span class="opt_name">헤드폰 거치대 사은품 / 우드</span>
+                    </div>
+                    <div class="item">
+                      <span class="circle_color">
+                        <span class="c_bg" style="background:#b5b5b5"></span>
+                      </span>
+                      <span class="opt_name">WF-SP800N / 화이트</span>
+                    </div>
+                  </div>
+                  <div class="opt_count">
+                    <div class="count_box">
+                      <button class="minus">감소</button>
+                      <input type="text" readonly="readonly" value="1" class="count">
+                      <button class="plus">증가</button>
+                    </div>
+                    <p class="opt_price"><strong class="price">219,000</strong>원</p>
+                  </div>
+                  <a href="#" class="prd_delete">구매 목록에서 삭제</a>
+                </div
+                // e : 상품 등록 예시 태그 구조 -->
+              </div>
+            </div>
+            <div class="result_list">
+              <div class="result_chk_box">
+                <p class="tit">총 상품금액 <span class="s_txt">(총 <span class="count">-</span>개)</span></p>
+                <p class="result_price"><span class="num">-</span> 원</p>
+              </div>
+            </div>
+            <div class="result_btn_inner">
+              <div class="result_btn_box">
+                <ul>
+                  <li class="like"><a href="#" class="btn_icon">찜하기</a></li>
+                  <li class="cart"><a href="#" class="btn_icon" data-popup="popup_cart">장바구니</a></li>
+                  <li class="gift"><a href="#" class="btn_icon" data-popup="popup_gift">선물</a></li>
+                  <li class="final">
+                    <a href="#" class="btn_style direct" style="background-color:#000;">바로 구매하기</a>
+                    <a href="#" class="btn_style disabled" style="display:none; background-color:#ddd;">품절</a>
+                    <a href="#" class="btn_style reservation" style="display:none; background-color:#5865F5;">예약구매</a>
+                    <!--
+                      * 버튼 참고
+                      btn_style : 기본 버튼 스타일
+                      class 추가
+                      direct : 바로 구매하기
+                      disabled : 일시 품절, 품절 (선택불가)
+                      reservation : 예약구매, 재입고 알림 신청
+                    -->
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <a href="#" class="select_closed" title="선택 목록 닫기">닫기</a>
+          </div>
+          <!-- 네이버 임시 -->
+          <div class="cont naver" style="margin-top:24px; padding-top:0;">
+            <img src="/dist/images/product/naver_btn.png" alt="" style="width:100%;">
+          </div>
+      </div>
+      </form>
+    </div>
+
+    <!-- ↓ 확인용 -->
+    <style>
+      .reference {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+        font-size: 10px;
+      }
+      .reference_title {
+        margin-bottom: 0.5em;
+        font-weight: 700;
+        font-size: 2em;
+      }
+      .reference_title::before {
+        content: "🏀";
+        margin-right: 1em;
+        font-size: 0.5em;
+        vertical-align: .3em;
+      }
+      .reference_link {
+        font-size: 1.2em;
+        color: #5865f5;
+        text-decoration: underline;
+      }
+    </style>
+    <div class="reference">
+      <h1 class="reference_title">텍스트+이미지+테이블 이미지</h1>
+      <a class="reference_link" target="_blank" href="https://store.sony.co.kr/handler/ViewProduct-Start?productId=84371650">https://store.sony.co.kr/handler/ViewProduct-Start?productId=84371650</a>
+    </div>
+
+    <!-- 제품 탭 정보 -->
+    <div class="product_cont">
+      <div class="detail_tab tab_ui size3">
+        <ul>
+          <li class="tabs on"><a href="#" class="btn">제품 개요</a></li>
+          <li class="tabs"><a href="#" class="btn">제품 상세</a></li>
+          <li class="tabs"><a href="#" class="btn">배송/환불규정</a></li>
+        </ul>
+      </div>
+      <div class="detail_info_zone tab_ui_info">
+        <!-- 제품 개요 -->
+        <div class="detail_info tab_ui_inner view">
+
+          <!-- EOS 제품소개 -->
+          <div class="proInfoEosSec txt_l">
+            <h3 class="common__title h3">제품 소개</h3>
+            <ul class="dotList">
+              <li>피사체와 풍경을 적절하게 배분시 적합</li>
+              <li>광각렌즈를 기반으로 한 컴팩트 단렌즈</li>
+              <li>20mm F2.8</li>
+              <li>풀 프레임 사이즈 대응</li>
+              <li>9군10매</li>
+              <li>최단 거리25cm</li>
+              <li>필터 지름 72mm</li>
+              <li>원산지 : 일본</li>
+            </ul>
+            <div class="mt20"><img src="//image.sony.co.kr/sonyProduct/DATA/info/lens_content_MTF_SAL20F28.jpg" alt=""></div>
+            <h3 class="common__title h3">제품 정보 / 사양</h3>
+            <ul class="dotList">
+              <li>A-마운트 렌즈 : 품질보증기준 1년</li>
+              <li>기본표준렌즈 : SAL50F18, SAL75300, SAL1118, SAL16105, SAL55200-2, SAL85F28, SAL35F18, SAL1855/B, SAL2875, SAL18135, SAL55300</li>
+              <li>와이드/표준렌즈 : SAL50F18, SAL20F28, SAL50F14, SAL50F14Z</li>
+              <li>매크로렌즈/텔레컨버터 : SAL100M28, SAL50M28, SAL20TC, SAL14TC, SAL30M28</li>
+              <li>특수렌즈 : SAL135F28, SAL16F28</li>
+              <li>Carl Zeiss 렌즈 : SAL2470Z, SAL85F14Z, SAL135F18Z, SAL1680Z/J, SAL24F20Z, SAL1635Z</li>
+              <li>G렌즈 : SAL70200G, SAL300F28G, SAL35F14G, SAL70400G, SAL70300G, SAL70400G2</li>
+            </ul>
+          </div>
+          <!-- //EOS 제품소개 -->
+
+        </div>
+        <!-- 제품 상세 -->
+        <div class="detail_info tab_ui_inner">
+          <div class="detail_box">
+            <h2 class="common__title h2">제품 상세</h2>
+            <h3 class="common__title h3">렌즈</h3>
+            <div class="common__table__wrap">
+              <table class="common__table" role="presentation">
+                <caption>렌즈 호환성 등의 정보</caption>
+                <colgroup>
+                  <col width="23.5%">
+                  <col width="76.5%">
+                </colgroup>
+                <tbody>
+                  <tr>
+                    <th scope="row">렌즈 호환성</th>
+                    <td>소니 E-마운트 렌즈</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">이미지 크기(픽셀), [3:2]</th>
+                    <td>35mm 풀프레임 L : 9504 x 6336(60M), M : 6240 x 4160(26M), S : 4752 x 3168(15M) APS-C L : 6240 x 4160(26M), M : 4752 x 3168(15M), S : 3120 x 2080(6.5M)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 class="common__title h3">이미지 센서</h3>
+            <div class="common__table__wrap">
+              <table class="common__table" role="presentation">
+                <caption>이미지 센서 등의 정보</caption>
+                <colgroup>
+                  <col width="23.5%">
+                  <col width="76.5%">
+                </colgroup>
+                <tbody>
+                  <tr>
+                    <th scope="row">화면비</th>
+                    <td>3:2</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">픽셀 수</th>
+                    <td>약 61.0 메가픽셀(유효) / 약 62.5 메가픽셀(전체)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">센서 유형</th>
+                    <td>35mm 풀프레임(35.7 x 23.8mm), Exmor R CMOS 센서</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">방진 시스템</th>
+                    <td>광학 필터 및 이미지 센서 시프트 메커니즘에 보호 코팅 제공</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 class="common__title h3">레코딩 (정지 이미지)</h3>
+            <div class="common__table__wrap">
+              <table class="common__table" role="presentation">
+                <caption>레코딩 (정지 이미지) 등의 정보</caption>
+                <colgroup>
+                  <col width="23.5%">
+                  <col width="76.5%">
+                </colgroup>
+                <tbody>
+                  <tr>
+                    <th scope="row">레코딩 포맷</th>
+                    <td>JPEG(DCF 버전 2.0, Exif 버전 2.31, MPF 베이스라인 지원), RAW(소니 ARW 2.3 포맷)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">이미지 크기(픽셀), [3:2]</th>
+                    <td>JPEG(DCF 버전 2.0, Exif 버전 2.31, MPF 베이스라인 지원), RAW(소니 ARW 2.3 포맷)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">이미지 크기(픽셀), [4:3]</th>
+                    <td>35mm 풀프레임 L : 9504 x 6336(60M), M : 6240 x 4160(26M), S : 4752 x 3168(15M) APS-C L : 6240 x 4160(26M), M : 4752 x 3168(15M), S : 3120 x 2080(6.5M)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">이미지 크기(픽셀), [16:9]</th>
+                    <td>35mm 풀프레임 L : 9504 x 6336(60M), M : 6240 x 4160(26M), S : 4752 x 3168(15M) APS-C L : 6240 x 4160(26M), M : 4752 x 3168(15M), S : 3120 x 2080(6.5M)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">이미지 크기(픽셀), [1:1]</th>
+                    <td>35mm 풀프레임 L : 9504 x 6336(60M), M : 6240 x 4160(26M), S : 4752 x 3168(15M) APS-C L : 6240 x 4160(26M), M : 4752 x 3168(15M), S : 3120 x 2080(6.5M)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">방진 시스템</th>
+                    <td>광학 필터 및 이미지 센서 시프트 메커니즘에 보호 코팅 제공</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- 배송/환불 규정 -->
+        <div class="detail_info tab_ui_inner">
+          <div class="detail_box">
+            <h2 class="common__title h2">배송 / 환불 규정</h2>
+            <h3 class="common__title h3">교환 / 반품 안내 및 보증 조건과 절차</h3>
+            <div class="common__table__wrap">
+              <table class="common__table" role="presentation">
+                <caption>교환 / 반품 안내 및 보증 조건과 절차 등의 정보</caption>
+                <colgroup>
+                  <col width="23.5%">
+                  <col width="76.5%">
+                </colgroup>
+                <tbody>
+                  <tr>
+                    <th scope="row">교환 / 반품 기준</th>
+                    <td>
+                      <ul class="dot_list">
+                        <li>고객 변심으로 인한 교환/반품은 상품을 수령하신 날로부터 7일 이내에 신청 가능합니다.</li>
+                        <li>반품 시 제공된 사은품은 모두 회수하며 회수가 되지 않을 경우 교환/반품이 불가능합니다.</li>
+                        <li>교환/환불 시 제품 특성에 따라 처리 소요시간이 상이할 수 있습니다.</li>
+                        <li>교환은 동일한 상품만 가능하며, 다른 상품으로 교환을 원하실 경우 해당 상품을 주문취소 후 재주문하여 주시기 바랍니다.<br>(색상변경 포함)</li>
+                        <li>전자상거래 등에서의 소비자 보호에 관한 법률로 규정되어 있는 소비자 청약철회 가능 범위에 해당하는 경우 신청 가능합니다.</li>
+                        <li>퀵배송 등으로 주문하신 상품과 설치상품의 교환/반품 접수는 고객지원센터(1588-0911)로 연락주시기 바랍니다.</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">교환 / 반품 기준</th>
+                    <td>
+                      <ul class="dot_list">
+                        <li>포장을 개봉하여 사용하거나 또는 설치가 완료되어 상품들의 가치가 훼손된 경우</li>
+                        <li>고객님의 단순변심으로 인한 교환/반품 요청이 상품을 수령한 날로부터 7일을 경과한 경우</li>
+                        <li>고객님의 귀책사유로 상품 등의 가치가 파손되거나 훼손된 경우</li>
+                        <li>배송된 상품이 하자없음을 확인한 후 설치가 완료된 상품의 경우</li>
+                        <li>기타 ‘전자상거래 등에서의 소비자보호에 관한 법률’이 정하는 청약철회 제한 사유에 해당되는 경우</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">교환 / 반품 기준</th>
+                    <td>
+                      <ul class="dot_list">
+                        <li>품질보증기준 : 제품별 별도표기</li>
+                        <li>A/S 관련 전화번호 : 고객지원센터 1588-0911</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 class="common__title h3">배송안내</h3>
+            <div class="common__table__wrap">
+              <table class="common__table" role="presentation">
+                <caption>배송안내 등의 정보</caption>
+                <colgroup>
+                  <col width="23.5%">
+                  <col width="76.5%">
+                </colgroup>
+                <tbody>
+                  <tr>
+                    <th scope="row">배송방법</th>
+                    <td>택배 배송 (설치상품일 경우, 업체에서 직접 방문하여 설치해드립니다.)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">배송가능지역</th>
+                    <td>전국</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">배송비</th>
+                    <td>
+                      <ul class="dot_list">
+                        <li>포장을 개봉하여 사용하거나 또는 설치가 완료되어 상품들의 가치가 훼손된 경우</li>
+                        <li>고객님의 단순변심으로 인한 교환/반품 요청이 상품을 수령한 날로부터 7일을 경과한 경우</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">배송기일</th>
+                    <td>
+                      <ul class="dot_list">
+                        <li>결제일 다음날부터 3~5일 이내 (일요일, 공휴일, 정기휴무 제외) 발송됩니다.</li>
+                        <li>예약판매 상품 등 일부 상품에 대해서는 상품 수급 또는 운송업체의 사정에 따라 배송이 지연될 수 있습니다.</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  </tr>
+                  <tr>
+                    <th scope="row">교환 / 반품 기준</th>
+                    <td>
+                      <ul class="dot_list">
+                        <li>품질보증기준 : 제품별 별도표기</li>
+                        <li>A/S 관련 전화번호 : 고객지원센터 1588-0911</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 class="common__title h3">거래약관</h3>
+            <p class="s_txt">웹사이트 하단의 이용약관을 참조하세요.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <nav class="sidebar">
+      <div class="sidebar__inner">
+        <a href="/dist/html/mypage/myPageMain.html" class="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+        <a href="#" class="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
+        <a href="#header" class="sidebar__btn top"><span>페이지 상단</span></a>
+      </div>
+      <button class="sidebar__btn sidebar__btn__toggle" type="button"><img src="/dist/images/common/ic_sidebar1.svg" alt="메뉴토글"></button>
+    </nav>
+    <div class="footer__inner">
+      <div class="footer__social__wrap">
+        <div class="footer__social">
+          <h3 class="footer__social__title">FOLLOW US</h2>
+          <div class="footer__social__links">
+            <a href="#" class="footer__social__link"><img src="/dist/images/common/ic_facebook.svg" alt="facebook"></a>
+            <a href="#" class="footer__social__link"><img src="/dist/images/common/ic_instagram.svg" alt="instagram"></a>
+            <a href="#" class="footer__social__link"><img src="/dist/images/common/ic_youtube.svg" alt="youtube"></a>
+            <a href="#" class="footer__social__link"><img src="/dist/images/common/ic_blog.svg" alt="blog"></a>
+          </div>
+        </div>
+        <div class="footer__family">
+          <div class="footer__family__links">
+            <div class="footer__family__link footer__pc">
+              <button type="button" class="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침">Sony Family</button>
+              <div class="footer__family__link__inner">
+                <h4 class="optgroup__label">Sony Family</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니코리아 고객지원</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 알파 α</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송/업무용 솔루션</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
+                </ul>
+                <h4 class="optgroup__label">Family Company</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
+                </ul>
+              </div>
+            </div>
+            <select class="footer__family__link footer__mo">
+              <optgroup label="Sony Family">
+                <option>소니코리아</option>
+                <option>소니코리아 고객지원</option>
+                <option>소니 알파 α</option>
+                <option>소니 방송/업무용 솔루션</option>
+                <option>소니 방송 업무용 솔루션 고객지원</option>
+              </optgroup>
+              <optgroup label="Family Company">
+                <option>소니 인터렉티브 엔터테인먼트 코리아</option>
+                <option>소니 뮤직 엔터테인먼트 코리아</option>
+                <option>소니 ATV 뮤직 퍼블리싱 코리아</option>
+                <option>소니 픽쳐스 엔터테인먼트 코리아</option>
+                <option>소니 픽쳐스 텔레비전 코리아</option>
+              </optgroup>
+            </select>
+          </div>
+          <a href="https://www.sony.com/" class="footer__family__global" target="_blank">Sony Global</a>
+        </div>
+      </div>
+      <div class="footer__legal">
+        <div class="footer__legal__links">
+          <a href="/dist/html/footer/terms.html" class="footer__legal__link">이용약관</a>
+          <a href="/dist/html/footer/policy.html" class="footer__legal__link privacy">개인정보처리방침</a>
+          <a href="javascript:openModal('modal__customer__insurance');" class="footer__legal__link" data-modal-target="modal__customer__insurance">소비자 피해 보상보험</a>
+          <a href="/dist/html/footer/siteMap.html" class="footer__legal__link">사이트맵</a>
+        </div>
+        <div class="footer__legal__warning">
+          <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
+          <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a class="escrow" href="https://mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat" target="_blank">클릭하시면 이니시스 결제시스템의 유효성을 확인하실 수 있습니다.</a></p>
+        </div>
+      </div>
+      <address class="address">
+        <span>사업장주소 : 서울특별시 영등포구 국제금융로 10 원아이에프씨 24F</span>
+        <span>사업자 등록번호 : 106-81-23810 통신판매번호 2012-서울영등포-1038 소니코리아㈜</span>
+        <span>대표이사 : Okura Kikuo</span>
+        <span>개인정보관리책임자 : Okura Kikuo</span>
+        <span>TEL : 소니코리아 고객센터 1588-0911</span>
+        <span>E-MAIL : <a href="mailto:cshelp@sony.co.kr">cshelp@sony.co.kr</a></span>
+        <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
+      </address>
+    </div>
+  </footer>
+  
+  <!-- 소비자피해보상 보험 팝업 -->
+  <div class="layer modal__customer__insurance">
+    <div class="layer_wrap">
+      <div class="layer_container">
+        <div class="layer_title">
+          <h1>소비자피해보상보험</h1>
+        </div>
+        <div class="layer_content">
+          <div class="consumer_logo">
+            <img src="/dist/images/img_consumerlogo.png">
+          </div>
+          <p>고객님은 안전거래를 위해 현금 결제 시 저희 쇼핑몰이 가입한 구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.</p>
+          <p>보상대상 : 미배송&#47;반품, 환불거부&#47;쇼핑몰부도</p>
+          <div class="btn_box">
+            <a href="https://mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810" target="_blank" title="새창열림">서비스 가입 사실 확인하기</a>
+          </div>
+        </div>
+        <button href="#" class="layer_close close" title="팝업창 닫기">
+          <span>팝업창 닫기</span>
+      </button>
+      </div>
+    </div>
+  </div>
+  <!--// 소비자피해보상 보험 팝업 -->
+  
+  <script>
+       //팝업 열기
+      function openModal(modalname) {
+          $("." + modalname).fadeIn(300);
+          $("body,html").css({"overflow":"hidden"});
+          return false;
+      }
+      // 팝업 닫기
+      $(document).ready(function(){
+        $layer = $(".layer");
+  
+        $('.close').click(function() {
+            $layer.fadeOut(300);
+            $('body,html').css({"overflow":"visible"});
+        });
+      });
+  </script></div>
+
+<!-- 공유하기 팝업 -->
+<div class="popup_share layer">
+  <div class="layer_wrap">
+    <div class="layer_container">
+      <p class="layer_title">공유하기</p>
+      <div class="layer_content">
+        <div class="copy_box">
+          <span class="copy_txt">https://store.sony.co.kr/handler/ViewProduct-Sta</span>
+          <a href="#" class="copy_url" data-clipboard-text="https://store.sony.co.kr/handler/ViewProduct-Sta">링크 복사</a>
+        </div>
+        <div class="share_list">
+          <ul>
+            <li class="lists"><a href="#" class="share_btn kakaotalk">카카오톡</a></li>
+            <li class="lists"><a href="#" class="share_btn kakaostory">카카오스토리</a></li>
+            <li class="lists"><a href="#" class="share_btn facebook">페이스북</a></li>
+            <li class="lists"><a href="#" class="share_btn line">라인</a></li>
+            <li class="lists"><a href="#" class="share_btn twitter">트위터</a></li>
+            <li class="lists"><a href="#" class="share_btn band">밴드</a></li>
+          </ul>
+        </div>
+      </div>
+      <button href="#" class="layer_close close" title="팝업창 닫기">
+        <span>팝업창 닫기</span>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- // e: 공유하기 팝업 -->
+<!-- 장바구니 담기 팝업 -->
+<div class="popup_cart layer">
+  <div class="layer_wrap">
+    <div class="layer_container">
+      <p class="layer_title ico cart">장바구니 담기 완료</p>
+      <p class="text">해당 상품이 장바구니에 담겼습니다.<br> 장바구니로 이동하시겠습니까?</p>
+      <div class="btn_article size2">
+        <a href="#" class="btn close white">쇼핑 계속하기</a>
+        <a href="#" class="btn cart">장바구니 이동</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- // e: 장바구니 담기 팝업 -->
+
+<!-- 선물하기 팝업 : 비로그인 시  -->
+<div class="popup_gift layer">
+  <div class="layer_wrap">
+    <div class="layer_container">
+      <p class="layer_title ico gift">소니스토어 선물하기</p>
+      <p class="text">선물하기는 소니스토어 회원만<br> 이용하실 수 있습니다.</p>
+      <div class="btn_article size2">
+        <a href="#" class="btn close white">쇼핑 계속하기</a>
+        <a href="#" class="btn cart">로그인</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- // e: 선물하기 팝업 -->
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+$(function(){
+
+
+  const productView = () => {
+    let $prdViewWrap = $('.product_view_wrap'),
+        $productSlider = $prdViewWrap.find('.view_slider');
+    let productSwiper = new Swiper($productSlider[0], {
+      slidesPerView: 1,
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+        renderBullet: function (index, className) {
+          return '<span class="' + className + '">' + (index + 1) + '</span>';
+        },
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+
+    function colorSelectChange(){
+      let $colorWrap = $prdViewWrap.find('.circle_color_box');
+
+      $colorWrap.find('.color_btn').on("click", function(){
+        let $colorLi = $(this).closest('li'),
+            _colorType = $(this).find('.c_bg').data("slide-img-type"),
+            _prdChkW = $(window).outerWidth();
+
+        $colorLi.addClass("on").siblings().removeClass("on");
+        $productSlider.find('.swiper-slide').each(function(_slideI, _slideE){
+          let $slideImg = $(_slideE).find('img'),
+              _slideSrc = $slideImg.attr("src"),
+              _colorStart = _slideSrc.indexOf("colorType_"),
+              _colorEnd = _slideSrc.indexOf("_thumb");
+
+          $slideImg.attr("src", _slideSrc.split(_slideSrc.substr(_colorStart,_colorEnd - _colorStart)).join("colorType_"+_colorType));
+          productSwiper.update();
+        });
+        /* 이미지 전체 경로 -> 파일명 -> colorType_fc5227 부분만 교체
+        ex)
+        /dist/images/product/productView_  colorType_fc5227  _thumb_01.png
+        /dist/images/product/productView_  colorType_변경된컬러값  _thumb_01.png
+        */
+        if(_prdChkW < 1280 ){ // TB, Mo 컬러칩 클릭 시 제품으로 스크롤 이동
+          $('html,body').animate({scrollTop:0}, 200);
+        }
+        return false;
+      });
+    }
+    colorSelectChange();
+  };
+
+  const slideHeightChk = (e) => {
+    let _baseW = $(window).outerWidth(),
+        _baseH = $(window).outerHeight(),
+        _headerH = $('.header').height(),
+        _setH = _baseH;
+
+    if(_baseW > 1280){
+      if(_baseH - _headerH  < 500 ){ // 최소 보정 값
+        _baseH = 500;
+      }
+      $('.prd_main_slider').css({"height":_baseH, "margin-top": (_headerH/2)*-1});
+    }else{
+      $('.prd_main_slider').removeAttr("style");
+    }
+  }
+
+  // selectbox
+  const selectBox = (e) => {
+    for(let _selectNum = 0 ; _selectNum < $('.select_zone').length ; _selectNum++){
+      let $currentS = $('.select_zone').eq(_selectNum);
+      if($currentS.hasClass("disabled") == false) {
+        $currentS.addClass("selectOn");
+      }
+    }
+
+    let $selectOn = $('.selectOn'),
+        $prdSelect = $('.selected_btn');
+
+    iniPush();
+    function iniPush(){
+      if($(window).width() > 1280){ // 초기 접속 시 PC에서 처음 상품 등록
+        iniInput();
+      }
+      function iniInput(){  // 초기 제일 첫번째 상품 선택 목록에 등록
+        let $firstSelect = $('.select_zone').eq(0),
+            $optList = $firstSelect.find('.select_opt .opt_list'),
+            $optTagName = $firstSelect.find('.prd_tag').text(),
+            _iniArr = [[$optTagName]];
+
+        for( let _optChk =0; _optChk < $optList.length; _optChk++){
+          let $forOtp = $optList.eq(_optChk);
+          if($forOtp.hasClass("disabled") == false){
+            _iniArr[0][1] = $forOtp.html();
+            _optChk = $optList.length;
+          }
+        }
+        productAdd(_iniArr);
+        resultChk();
+      }
+    }
+
+    $prdSelect.on("click", function(_thisEvent){ // 제품 및 사은품 선택
+      let $thisSelect = $(this).closest('.select_zone'),
+          $selectList = $thisSelect.find('.select_inner');
+
+      if($thisSelect.hasClass("disabled")) { // 클릭 막기
+        _thisEvent.preventDefault
+        return false;
+      }
+      if($thisSelect.find(".select_inner:animated").length < 1){ // 열고 닫고 여러번 중독 안되게 하기 위함.
+        if($thisSelect.hasClass("open")){
+          $thisSelect.removeClass("open");
+          $selectList.slideUp(200);
+          $(this).html($(this).data("default-text"));
+        }else{
+          $thisSelect.addClass("open").siblings().removeClass("open");
+          $thisSelect.siblings().find('.select_inner').hide();
+          $selectList.slideDown(200);
+        }
+        optSelect($thisSelect);
+        selectClosed($thisSelect); // 다른 영역 클릭 시 닫기
+      }
+      return false;
+    });
+
+    function optSelect(_list){ // option 클릭
+      let $openBtn = $(_list).find('.selected_btn');
+          $thisOpt = $(_list).find('.opt_list'),
+          _currentIndex = $(_list).index(),
+          $selectSize = $selectOn.length,
+          _optData = [];
+
+      $thisOpt.off().on("click", function(_thisEvent){
+        let _tagName = $(this).closest('.select_inner').find('.prd_tag').text(),
+            _optClone = $(this).html();
+
+        if($(this).hasClass("disabled")){ // 품절 제품 막기
+          _thisEvent.preventDefault
+          return false;
+        }
+
+        $openBtn.html(_optClone);
+        for(let _indexChk =0; _indexChk < _currentIndex;_indexChk++){ // select 수량 체크에서 disabled 제외
+          let _disabledSize = 0;
+          if($('.select_zone').eq(_indexChk).hasClass("disabled")){
+            _disabledSize++;
+          }
+          _currentIndex = _currentIndex - _disabledSize;
+        }
+
+        if(_currentIndex >= $selectSize){ // select 마지막 선택 시 입력
+          if($(window).width() <= 1280){
+            $('.selected_opt').addClass("on");
+            $('.result_list').addClass("on");
+          }
+          dataPush();
+        }
+
+        function dataPush(){ // 선택된 selectbox 값 입력
+          for(let _pushUp = 0; _pushUp < $selectSize;_pushUp++ ){
+            _optData.push([]);
+            let _tag = $selectOn.eq(_pushUp).find('.prd_tag').text(),
+                $selectedBtn = $selectOn.eq(_pushUp).find('.selected_btn'),
+                _clone = $selectedBtn.html();
+            _optData[_pushUp][0] = _tag;
+            _optData[_pushUp][1] = _clone; // 선택 된 제품 및 옵션 복제된 값 입력
+            $selectedBtn.html($selectedBtn.data("default-text")); // 기본 텍스트로 초기화
+          }
+          productAdd(_optData);
+        }
+        $(_list).removeClass("open");
+        $(_list).find('.select_inner').slideUp(200);
+
+        return false;
+      });
+    }
+    // 해당 select 외에 다른 영역 클릭 시 닫기
+    function selectClosed($zone){
+      $(document).off().on('click', function(event) {
+        let $selectChk = $(event.target).closest('.select_zone');
+        if($selectChk.length == 0){
+          $zone.removeClass("open");
+          $zone.find('.select_inner').slideUp(200);
+        }
+      });
+    }
+  } // e: selectBox
+
+  const productAdd = (_data) => { // 선택 제품 리스트에 추가
+    let $selectedList = $('.selected_opt'),
+        $optInfoLast ="",
+        _prdPrice = $('.product_price .price').text(); // 상품 금액 가져오기
+    let _optBoxArr = [
+      ['<div class="opt_info"></div>'],
+      ['<p class="opt_tag"></p><div class="opt_item"></div>'],
+      ['<div class="opt_count"><div class="count_box"><button class="minus">감소</button><input type="text" readonly="readonly" value="1" class="count"><button class="plus">증가</button></div><p class="opt_price"><strong class="price">'+_prdPrice+'</strong>원</p></div><a href="#" class="prd_delete">구매 목록에서 삭제</a>']
+    ];
+
+    $selectedList.append(_optBoxArr[0]);
+    $optInfoLast = $selectedList.find('.opt_info:last');
+    for(let _infoPush = 0 ; _infoPush < _data.length ;_infoPush++ ){
+      $optInfoLast.append(_optBoxArr[1]);
+      $optInfoLast.find('.opt_tag:last').html(_data[_infoPush][0]); // 선택 된 타입 : 제품, 사은품, 옵션
+      $optInfoLast.find('.opt_item:last').html(_data[_infoPush][1]); // 선택 된 제품 및 옵션
+    }
+    $optInfoLast.append(_optBoxArr[2]); // 수량 버튼 박스 및 가격 영역 생성
+    prdCount($optInfoLast); // 수량 클릭 이벤트
+    resultChk();
+    $optInfoLast.find('.prd_delete').on("click", function(){ // 선택 목록 삭제
+      $(this).closest('.opt_info').remove();
+      resultChk();
+      moOptListChk();
+      return false;
+    });
+
+    function moOptListChk(){ // TB, MO 선택된 상품 없을 시 목록 및 총 수량, 가격 정보 숨김
+      if($(window).width() <= 1280){
+        let _optSize = $selectedList.find('.opt_info').length;
+        if(_optSize <= 0){
+          $selectedList.removeClass("on");
+          $('.result_list').removeClass("on");
+        }
+      }
+    }
+  } //productAdd
+
+  const prdCount = (e) =>{ // 제품 수량 체크
+    let $countWrap = $(e).find('.opt_count'),
+        $inputCount = $countWrap.find('.count'),
+        $price = $countWrap.find('.price'),
+        _iniPrice = $price.text().split(",").join(''),
+        _count = $inputCount.val();
+
+    $countWrap.find('button').off().on("click",function(){
+      let _priceNum = 0;
+      if($(this).hasClass("minus")){ // 감소
+        _count--;
+        countChk(_count);
+      }else{ // 증가
+        _count++;
+        countChk(_count);
+      }
+      $inputCount.val(_count);
+
+      function countChk(){
+        if(_count < 1){ _count = 1;
+        }else if(_count >= 100 ){ // 수량 증가 제한
+          _count = 99
+        }
+        _priceNum = priceComma(parseInt(_iniPrice * _count));
+        $price.text(_priceNum);
+      }
+      resultChk();
+      return false;
+    });
+  }
+
+  function resultChk(){
+    let $selectedBox = $('.selected_opt');
+        _allCount = 0,
+        _allPrice = 0;
+
+    $selectedBox.find('.opt_info').each(function(optIndex, optEl){ // 선택 된 목록에 있는 상품
+      let _thisCount = parseInt($(optEl).find('.count').val()),
+          _thisPrice = parseInt($(optEl).find('.price').text().split(",").join('')); // 금액 콤마 제거
+
+      _allCount += _thisCount;
+      _allPrice += _thisPrice;
+    });
+    _allPrice = priceComma(_allPrice); // 금액 콤마 입력 = 1,000,000
+    $('.result_list .count').text(_allCount); // 총 상품 수
+    $('.result_list .num').text(_allPrice);   // 총 상품 금액
+  }
+
+  //콤마찍기
+  function priceComma(_price) {
+    _price = String(_price);
+    return _price.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+  }
+
+  // 찜하기, 장바구니, 바로 구매하기
+  const resultBtn = (e) => {
+    let $resultWrap = $('.result_btn_box');
+
+    $resultWrap.find('.btn_icon').on("click", function(){
+      let $thisLi = $(this).closest('li'),
+          _popupName = $(this).data("popup");
+
+      if($thisLi.hasClass("like")){ // 찜하기
+        if($(this).hasClass("on")){
+          $(this).removeClass("on");
+        }else{
+          $(this).addClass("on");
+        }
+      }else{ // 장바구니, 선물하기 팝업 열기
+        openModal(_popupName);
+      }
+      return false;
+    });
+
+    // 바로 구매하기
+    $('.btn_style').on("click", function(){
+
+      if($(this).hasClass("disabled")){ // 품절 제품 막기
+        _thisEvent.preventDefault
+        return false;
+      }else if($(this).hasClass("direct")){ // 바로구매 가능할떄 버튼
+        if($(window).width() <= 1280){
+          directMo();
+        }else{
+          directPC();
+        }
+      }else{ // 재입고 알림, 예약 구매 등
+
+      }
+
+      function directMo(){ // TB,MO 바로구매 버튼 기능
+        let $selWrap = $('.prd_select_wrap');
+        if($selWrap.hasClass("view") == false){
+          directOnOff(true);
+        }
+        $('.select_closed').off().on("click", function(){ // 제품 선택 리스트 닫기
+          directOnOff();
+          return false;
+        });
+      }
+      function directPC(){
+        console.log("pc");
+      }
+      return false;
+    });
+  }
+
+  function directOnOff(_OnOff){ // 바로 구매하기 TB, Mo 비/노출
+    if(_OnOff){
+      $('.prd_select_wrap').addClass("view");
+      $('body').addClass("no_scroll");
+    }else{
+      $('.prd_select_wrap').removeClass("view");
+      $('body').removeClass("no_scroll");
+      $('.selected_opt').removeClass("on");
+      $('.result_list').removeClass("on");
+    }
+  }
+
+  const prdEtcSlider = () => {
+    // 함께 구매하시면 좋은 추천 제품
+    let togetherSwiper = new Swiper(".together_prd_slider", {
+      slidesPerView: 2,
+      spaceBetween: 10,
+      navigation : {
+        nextEl : '.swiper-button-next',
+        prevEl : '.swiper-button-prev',
+      },
+      breakpointsInverse: true,
+      breakpoints: {
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 10
+        },
+        1200: {
+          slidesPerView: 4,
+          spaceBetween: 24,
+        }
+      }
+    });
+  }
+
+  const relationLink = () => { // SNS 배너 링크
+    let $linkWrap = $('.relation_link'),
+        $linkList = $linkWrap.find('.link_inner'),
+        $links = $linkList.find('>li'),
+        _widthW = parseInt($(window).width());
+        _sumW = 0;
+    for(let _rNum = 0 ; _rNum < $links.length ; _rNum++ ){
+      let _liW = Math.ceil($links.eq(_rNum).outerWidth(true));
+      _sumW += _liW;
+    }
+    if(_widthW - 48 <= _sumW){ // 48 : padding: 간격
+      $linkWrap.addClass("scroll");
+      $linkList.css("width", _sumW);
+    }else{
+      $linkWrap.removeClass("scroll");
+      $linkList.css("width", "auto");
+    }
+  }
+
+
+/*
+  (테스트용) 임시 주석 추후 삭제 : 제품 개요 iframe 페이지 내 이전
+  const prdDetail = (e) =>{
+    $('.detail_main_view').siblings().hide(); // 상세 메인 외 보여지는 이미지 외 숨김.
+    $('.btn_article .btn__event__more').on("click",function(){
+      let $thisInfo = $(this).closest('.detail_info');
+      $('.detail_main_view').siblings().show();
+      $(this).parent().hide();
+      detailSwiper.update();
+      return false;
+    });
+
+    let $detailSlider = $('.detail_slider');
+    let detailSwiper = new Swiper($detailSlider[0], {
+      slidesPerView: 1,
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+        renderBullet: function (index, className) {
+          return '<span class="' + className + '">' + (index + 1) + '</span>';
+        },
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  }
+
+  const imgChange = (e) => { // 제품 개요 이미지
+    let $detailWrap = $('.detail_box'),
+        $imgBox = $detailWrap.find('.img');
+
+    $imgBox.each(function(_index, _el){
+      let _thisImg = $(_el).find('img'),
+          _src =  _thisImg.attr("src"),
+          _winW = $(window).width();
+
+      if(_winW > 640){ // pc
+        _src = _src.split("/mo_").join('/pc_');
+      }else{ //mo
+        _src = _src.split("/pc_").join('/mo_');
+      }
+      _thisImg.attr("src",_src);
+    });
+  }
+  */
+
+  // 기타 클릭
+  const productEtc = (e) =>{
+    $('.share').find('a').on("click",function(){
+      let _popupName = $(this).data("popup");
+      openModal(_popupName);
+      return false;
+    });
+
+    $('.copy_url').on("click", function(){
+      let _thisUrl = $(this).data("clipboard-text");
+      copyFunc(_thisUrl);
+    });
+  }
+
+  // 문구 카피
+  const copyFunc = (val) => {
+    const copy = document.createElement("textarea");
+    document.body.appendChild(copy);
+    copy.value = val;
+    copy.select();
+    document.execCommand('copy');
+    document.body.removeChild(copy);
+    alert('복사가 완료되었습니다.');
+  }
+  $(window).resize(function(){
+    let _windowW = $(window).width();
+
+    // TB,Mo 사이즈에서 바로 구매 - 선택 목록 열려 있는 상태에서 PC 사이즈로 왔을경우 초기화
+    if(_windowW > 1280 && $('.prd_select_wrap').hasClass("view") == true){
+      directOnOff(); //
+    }
+
+    slideHeightChk();
+    relationLink(); // 배너 링크 영역
+    iframeSetting();
+    // imgChange();  // pc_mo 이미지명 변경
+  });
+
+  productView(); // 제품 썸네일 슬라이드, 컬러칩
+  slideHeightChk(); // 제품 썸네일 크기 조정
+  selectBox();  // 제품 선택 selectbox
+  resultBtn();  // 찜하기, 장바구니, 구매 버튼
+  prdEtcSlider(); // 슬라이드 관련
+  relationLink(); // 배너 링크 영역
+
+  productEtc(); // 기타
+
+  // 임시 주석 추후 삭제 - iframe 페이지 내에서 필요.
+  // prdDetail(); // 제품 개요
+  // imgChange(); // PC, MO 이미지 명 변경
+});
+
+$(window).on("load",function(){
+  iframeSetting();
+});
+
+const iframeSetting = (e) =>{
+  let $iframe = $('iframe');
+  $iframe.each(function(_index, _e){
+    let $thisIframe = $(_e),
+        _$body = $thisIframe.contents().find('body'),
+        _iframeH = parseInt(_$body.outerHeight());
+
+    $thisIframe.css("height",_iframeH + 20);
+
+    setTimeout(function(){ // 비상용.
+      $thisIframe.css("height",_iframeH + 20);
+    },100)
+  });
+}
+
+</script>
