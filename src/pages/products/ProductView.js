@@ -274,9 +274,10 @@ export default function ProductView({ match }) {
     const categoryCode = _.chain(productData.categories)
                   .take(1)
                   .flatMap(({ categories }) => categories)
-                  .map(({ categoryNo }) => categoryNo)
+                  .map(({ categoryNo, label }) => `${label}(${categoryNo})`)
                   .join('/')
                   .value();
+
     return `${categoryCode}/${productData.baseInfo.productName}`
   
   }, [productData?.baseInfo?.productName])
