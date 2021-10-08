@@ -68,7 +68,6 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
         </ul>
       </div>
       }
-
       {rootParent &&
         <div className="category__header__links">
           {rootParent.isAvailableMoveProductCompare && <a href="#" className="category__header__link" onClick={e => {
@@ -78,7 +77,7 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
           {rootParent.isAvailableMoveAccessoryCompatibility && <a href="#" className="category__header__link" onClick={e => {
             openLink({isAvailableMoveAccessoryCompatibility: true, e});
           }}>액세서리 호환성</a>}
-          {rootParent.isAvailableMoveESP && <Link to="/esp" className="category__header__link">연장서비스플랜 ESP 보기</Link>}
+          {rootParent.isAvailableMoveESP && <Link to="/esp" className="category__header__link">연장 서비스 플랜 ESP 보기</Link>}
         </div>
       }
 

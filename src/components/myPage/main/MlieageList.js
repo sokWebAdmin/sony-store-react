@@ -66,14 +66,14 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
       <div className="history_inner">
         <div className="my_mileage">
           <p className="txt">
-            사용 가능
+            {`사용 가능 `}
             <span className="mileage_val">{toCurrencyString(availablemileage)}</span>
             <span className="extinction">
               (
               <strong className="val_txt">
                 <span className="val">{totalExpireMileage}</span>M
               </strong>
-              당월 소멸 예정)
+              {` 당월 소멸 예정`})
             </span>
           </p>
         </div>

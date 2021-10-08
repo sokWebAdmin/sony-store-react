@@ -41,6 +41,7 @@ export default function videoCourse() {
                         data-video-url="https://www.youtube.com/embed/V_VgQhpS5MA"
                         target="_blank"
                         title="새창열림"
+                        rel="noreferrer"
                       >
                         <img src="/images/_tmp/course_video_thumb_list_02.png" alt="" />
                       </a>
@@ -60,6 +61,7 @@ export default function videoCourse() {
                         data-video-url="https://www.youtube.com/embed/64y3hTkGV5A"
                         target="_blank"
                         title="새창열림"
+                        rel="noreferrer"
                       >
                         <img src="/images/_tmp/course_video_thumb_list_01.png" alt="" />
                       </a>
@@ -79,6 +81,7 @@ export default function videoCourse() {
                         data-video-url="https://www.youtube.com/embed/GCHITgvg-8w"
                         target="_blank"
                         title="새창열림"
+                        rel="noreferrer"
                       >
                         <img src="/images/_tmp/course_video_thumb_list_03.png" alt="" />
                       </a>
@@ -100,6 +103,9 @@ export default function videoCourse() {
               <a
                 href="https://www.sony.co.kr/scs/handler/Common-PageView?pageName=/jsp/scs/lecture/playlist.jsp"
                 className="box_link_inner ico_course1"
+                target="_blank"
+                rel="noreferrer"
+                title="새창열림"
               >
                 <div className="txt_box">
                   <p className="tit">동영상 강좌</p>
@@ -110,6 +116,7 @@ export default function videoCourse() {
                 href="https://www.youtube.com/channel/UC_NlkiLtoPVHWuByWvF64Fw"
                 target="_blank"
                 title="새 창 열림"
+                rel="noreferrer"
                 className="box_link_inner ico_course2"
               >
                 <div className="txt_box">

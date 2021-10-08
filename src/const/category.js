@@ -330,7 +330,7 @@ const gnbCategories = [
 (async () => {
   const res = await getEventByEventNo('467');
   if (res.status !== 400) {
-    gnbCategories[0].children.push({ label: '선물제안', route: '/curation' });
+    gnbCategories[0].children.push({ label: '선물 제안', route: '/curation' });
   }
 })();
 
