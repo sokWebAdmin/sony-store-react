@@ -465,12 +465,12 @@ export default function Main() {
                         {eventSections?.products?.map((eventSection, index) => (
                           <SwiperSlide className="swiper-slide" key={index}>
                             <Link to={`product-view/${eventSection.productNo}`} style={{ textAlign: 'center' }}>
-                              <img src={eventSection?.listImageUrls[0]} alt="상품명" />
+                              <img src={eventSection?.listImageUrls[0]} alt="상품이미지" />
                             </Link>
                             <div className="event__main__inner">
                               <div className="event__product">
-                                <span className="event__product__name">{eventSection.productNameEn}</span>
-                                <span className="event__product__price">{wonComma(eventSection.salePrice)}</span>
+                                <span className="event__product__name">{eventSection.productName}</span>
+                                <span className="event__product__price">{wonComma(eventSection.salePrice)}원</span>
                               </div>
                             </div>
                           </SwiperSlide>
