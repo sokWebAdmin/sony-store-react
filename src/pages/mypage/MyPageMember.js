@@ -292,6 +292,8 @@ export default function MyPageMember() {
 
   console.log(profileState, 'profileState');
 
+  console.log(myForm, 'myForm')
+
     return (
     <>
       <SEOHelmet title={"회원정보"} />
