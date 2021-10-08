@@ -120,7 +120,7 @@ export default function Header() {
             {/* 비회원/로그인 전 */}
             {!isLogin && (
               <>
-                <div className={`member ${isInfoOpen && 'member--visible'}`}>
+                <div ref={sideRef} className={`member ${isInfoOpen && 'member--visible'}`}>
                   <div className="member__inner">
                     <Link to="/member/login" onClick={closeSubSlider} className="member__msg member__msg__login">
                       로그인이
