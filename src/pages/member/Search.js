@@ -76,6 +76,10 @@ export default function Search() {
   }
 
   const searchMember = async () => {
+    if (!authSent || !authCheck) {
+      openAlert('휴대폰 번호 인증을 하십시오.');
+      return;
+    }
     if (tabState === 'id') {
       if (!validationSearch(searchValue.mobileNo, searchValue.memberName)) return;
       const { data: response } = await getMemberInfo({
