@@ -346,7 +346,7 @@ const Benefit = () => {
                             있습니다.
                           </li>
                         </ul>
-                        <a href="https://www.sony.co.kr/scs/handler/Service-Media" className="prmm_dtl_link">
+                        <a href="https://www.sony.co.kr/scs/handler/Service-Media" target="_blank" rel="noreferrer" className="prmm_dtl_link">
                           자세히 보기
                         </a>
                       </li>
@@ -377,6 +377,7 @@ const Benefit = () => {
                         <a
                           href="https://www.sony.co.kr/scs/handler/SCSWarranty-ESPOrderConfirm"
                           className="prmm_dtl_link"
+                          target="_blank" rel="noreferrer"
                         >
                           자세히 보기
                         </a>

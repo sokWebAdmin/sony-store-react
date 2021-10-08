@@ -1,8 +1,3 @@
-// @NOTE 추후 vvip 멤버 오픈 시점에 사용하세요.
-// 사용법:
-// 1) membership > Benefit.js 파일 삭제
-// 2) Benefit_Vvip.js -> Benefit.js 로 파일명을 변경하세요.
-
 import React, { useState } from 'react';
 import SEOHelmet from '../../components/SEOHelmet';
 
