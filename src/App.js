@@ -216,7 +216,7 @@ const App = (props) => {
   return (
     <div className="App" onScroll={handleScroll}>
       {isStatus ? (
-        <div className="wrapper" style={{ backgroundColor: 'white' }}>
+        <div className="wrapper" >
           <div id="skipnav" className="skipnav">
             <a href="#container"><span>본문 바로가기</span></a>
           </div>

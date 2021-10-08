@@ -21,11 +21,7 @@ import { useHeaderDispatch, useHeaderState, openSideBar, closeSideBar } from '..
 import { Link, useHistory } from 'react-router-dom';
 import { removeAccessToken } from '../utils/token';
 import { resetProfile, useProfileState, useProileDispatch } from '../context/profile.context';
-import {
-  deleteGnbCategory,
-  useCategoryDispatch,
-} from '../context/category.context';
-import { useClickOutside } from '../hooks';
+import { useClickOutside, useScroll } from '../hooks';
 
 export default function Header() {
   const history = useHistory();
@@ -34,16 +30,26 @@ export default function Header() {
   const { isSiderbarOpen } = useHeaderState();
   const profileDispatch = useProileDispatch();
   const headerDispatch = useHeaderDispatch();
-  const categoryDispatch = useCategoryDispatch();
 
+  const [visible, setVisible] = useState(true);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
-  const [sideBarOpen, setMobileSideBarOpen] = useState(false);
 
-  const routePushAndClose = (url) => {
-    history.push(url);
-    closeSideBar(headerDispatch);
-  };
+  const { scrollY } = useScroll();
+
+  const [prevScrollY, setPrevScrollY] = useState(window.scrollY);
+
+  const header = useRef();
+
+  useEffect(() => {
+    if (prevScrollY > window.scrollY || header.current.offsetHeight > window.scrollY) {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+
+    setPrevScrollY(window.scrollY);
+  }, [scrollY]);
 
   const closeSubSlider = () => {
     setInfoOpen(false);
@@ -58,11 +64,11 @@ export default function Header() {
   }, [isSearchOpen]);
 
   const sideRef = useRef(null);
-  useClickOutside(sideRef, () => isInfoOpen && setInfoOpen(false))
+  useClickOutside(sideRef, () => isInfoOpen && setInfoOpen(false));
 
   return (
     <>
-      <header id="header" className={`header ${isSiderbarOpen === true && 'header--active'} ${ isSearchOpen && 'header--visible header--search' }`}>
+      <header ref={ header } id="header" className={`header ${visible ?'header--visible' : 'header--invisible'} ${isSiderbarOpen ? 'header--active' : ''} ${ isSearchOpen ? 'header--search' : '' }`}>
         <div className="header__wrapper">
           <h1 className="header__logo">
             <Link to="/">
