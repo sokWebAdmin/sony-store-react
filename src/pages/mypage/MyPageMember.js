@@ -290,6 +290,8 @@ export default function MyPageMember() {
     }
   }, []);
 
+  console.log(profileState, 'profileState');
+
     return (
     <>
       <SEOHelmet title={"회원정보"} />
