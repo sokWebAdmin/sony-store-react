@@ -58,7 +58,7 @@ export default function EspProduct({product}) {
           <img src={product.imageUrls[0]} />
         </div>
         <div className="cont_box">
-          <em className="info_tit">{product.productName}</em>
+          <em className="info_tit" style={{"padding-left": 0, background: "url()"}}>{product.productName}</em>
           <p className="info_dsc">{product.productNameEn}</p>
           <div className="buy_box">
             <p className="info_price"><strong>{wonComma(product.salePrice)}</strong>원</p>
