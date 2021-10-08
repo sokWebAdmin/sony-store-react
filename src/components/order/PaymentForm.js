@@ -43,7 +43,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
               }
             </div>
             <div className="tabResult">
-              {payment.payType === 'CREDIT_CARD' && <div
+              {payment.payType !== 'VIRTUAL_ACCOUNT' && <div
                 className="result_cont radio_tab1 on">
                 <strong className="info_tit">신용카드 무이자 할부
                   유의사항</strong>
