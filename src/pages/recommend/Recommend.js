@@ -82,6 +82,9 @@ export default function Recommend({ match }) {
     }, '');
   };
   const trigger2 = useRef();
+  useEffect(() => {
+    document.body.style.position = 'fixed';
+  }, []);
 
   useEffect(() => {
     getBanners();
@@ -97,12 +100,15 @@ export default function Recommend({ match }) {
       .forEach((_, index) => {
         const scrollTo = movingStart * (index + 1);
         const setTime = (time) => {
-          setTimeout(() => scrollScreen(scrollTo), 600 * time);
+          setTimeout(() => scrollScreen(scrollTo, index), 800 * time);
         };
         setTime(index + 1);
       });
 
-    const scrollScreen = (top) => {
+    const scrollScreen = (top, index) => {
+      if (index === 0) {
+        document.body.style.position = 'static';
+      }
       window.scrollTo({
         top,
         left: 0,
@@ -120,74 +126,88 @@ export default function Recommend({ match }) {
             <div className="content">
               <div className="reco">
                 {/* kv */}
-                <div className="reco_kv">
-                  <div className={`reco_kv_inner ${isFinished === true && 'end'}`}>
-                    <Scene triggerElement=".trigger-1" duration={size.height * 0.5}>
-                      {(progress) => (
-                        <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
-                          <div
-                            id="reco_kv_img-1"
-                            className={`reco_kv_img reco_kv_img-1 ${progress === 1 ? 'end' : ''}`}
-                          >
-                            <img src={slideBanners[0]?.banners[0]?.imageUrl} alt={slideBanners[0]?.banners[0]?.name} />
-                          </div>
-                        </Tween>
-                      )}
-                    </Scene>
-                    <Scene triggerElement=".trigger-2" duration={size.height * 0.4}>
-                      {(progress) => (
-                        <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
-                          <div
-                            id="reco_kv_img-2"
-                            className={`reco_kv_img reco_kv_img-2 ${progress > 0 ? 'end' : ''}`}
-                            ref={trigger2}
-                          >
-                            <img src={slideBanners[1]?.banners[0]?.imageUrl} alt={slideBanners[1]?.banners[0]?.name} />
-                          </div>
-                        </Tween>
-                      )}
-                    </Scene>
-                    <Scene triggerElement=".trigger-3" duration={size.height * 0.5}>
-                      {(progress) => (
-                        <Tween duration={1} totalProgress={progress} paused>
-                          <div id="reco_kv_img-3" className={`reco_kv_img reco_kv_img-3 ${progress > 0 ? 'end' : ''}`}>
-                            <img src={slideBanners[2]?.banners[0]?.imageUrl} alt={slideBanners[2]?.banners[0]?.name} />
-                          </div>
-                        </Tween>
-                      )}
-                    </Scene>
-                    <Scene triggerElement=".trigger-4" duration={size.height * 0.5}>
-                      {(progress) => (
-                        <Tween duration={1}>
-                          <div className={`reco_kv_copy ${progress > 0 ? 'end' : ''}`}>
-                            <h1
-                              className="reco_kv_title"
-                              dangerouslySetInnerHTML={{ __html: splitStr(slideBanners[2]?.banners[0]?.name) }}
-                            />
-                            <p
-                              className="reco_kv_desc"
-                              dangerouslySetInnerHTML={{
-                                __html: splitStr(slideBanners[2]?.banners[0]?.description),
-                              }}
-                            />
-                          </div>
-                        </Tween>
-                      )}
-                    </Scene>
-                    <Scene triggerElement=".trigger-end">
-                      {(progress) => {
-                        setFinished(true);
-                        return <></>;
-                      }}
-                    </Scene>
-                  </div>
+                {slideBanners && (
+                  <div className="reco_kv">
+                    <div className={`reco_kv_inner ${isFinished === true && 'end'}`}>
+                      <Scene triggerElement=".trigger-1" duration={size.height * 0.5}>
+                        {(progress) => (
+                          <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
+                            <div
+                              id="reco_kv_img-1"
+                              className={`reco_kv_img reco_kv_img-1 ${progress === 1 ? 'end' : ''}`}
+                            >
+                              <img
+                                src={slideBanners[0]?.banners[0]?.imageUrl}
+                                alt={slideBanners[0]?.banners[0]?.name}
+                              />
+                            </div>
+                          </Tween>
+                        )}
+                      </Scene>
+                      <Scene triggerElement=".trigger-2" duration={size.height * 0.4}>
+                        {(progress) => (
+                          <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
+                            <div
+                              id="reco_kv_img-2"
+                              className={`reco_kv_img reco_kv_img-2 ${progress > 0 ? 'end' : ''}`}
+                              ref={trigger2}
+                            >
+                              <img
+                                src={slideBanners[1]?.banners[0]?.imageUrl}
+                                alt={slideBanners[1]?.banners[0]?.name}
+                              />
+                            </div>
+                          </Tween>
+                        )}
+                      </Scene>
+                      <Scene triggerElement=".trigger-3" duration={size.height * 0.5}>
+                        {(progress) => (
+                          <Tween duration={1} totalProgress={progress} paused>
+                            <div
+                              id="reco_kv_img-3"
+                              className={`reco_kv_img reco_kv_img-3 ${progress > 0 ? 'end' : ''}`}
+                            >
+                              <img
+                                src={slideBanners[2]?.banners[0]?.imageUrl}
+                                alt={slideBanners[2]?.banners[0]?.name}
+                              />
+                            </div>
+                          </Tween>
+                        )}
+                      </Scene>
+                      <Scene triggerElement=".trigger-4" duration={size.height * 0.5}>
+                        {(progress) => (
+                          <Tween duration={1}>
+                            <div className={`reco_kv_copy ${progress > 0 ? 'end' : ''}`}>
+                              <h1
+                                className="reco_kv_title"
+                                dangerouslySetInnerHTML={{ __html: splitStr(slideBanners[2]?.banners[0]?.name) }}
+                              />
+                              <p
+                                className="reco_kv_desc"
+                                dangerouslySetInnerHTML={{
+                                  __html: splitStr(slideBanners[2]?.banners[0]?.description),
+                                }}
+                              />
+                            </div>
+                          </Tween>
+                        )}
+                      </Scene>
+                      <Scene triggerElement=".trigger-end">
+                        {(progress) => {
+                          setFinished(true);
+                          return <></>;
+                        }}
+                      </Scene>
+                    </div>
 
-                  <div className="trigger trigger-1" />
-                  <div className="trigger trigger-2" />
-                  <div className="trigger trigger-3" />
-                  <div className="trigger trigger-4" />
-                  <div className="trigger trigger-end" />
-                </div>
+                    <div className="trigger trigger-1" />
+                    <div className="trigger trigger-2" />
+                    <div className="trigger trigger-3" />
+                    <div className="trigger trigger-4" />
+                    <div className="trigger trigger-end" />
+                  </div>
+                )}
                 {/* //kv */}
                 {/* flex */}
                 <div className="reco_items">
