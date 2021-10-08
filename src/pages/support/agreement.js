@@ -115,12 +115,17 @@ export default function Agreement() {
 }
 
 function AgreementItem({ label, index, checked, onChange }) {
+
+  const $body = document.querySelector('body');
+
   const openAgreeLayer = (name) => {
     document.querySelector(`.${name}`).style.display = 'block';
+    $body.style.overflow = 'hidden';
   };
 
   const closeAgreeLayer = (name) => {
     document.querySelector(`.${name}`).style.display = 'none';
+    $body.style.overflow = 'auto';
   };
 
   return (

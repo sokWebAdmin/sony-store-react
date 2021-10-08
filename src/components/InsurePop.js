@@ -1,6 +1,9 @@
 import React from 'react';
 
 export default function InsurePop({ setPop }) {
+  const $body = document.querySelector('body');
+  $body.style.overflow = 'hidden';
+
   return (
     <>
       <div
@@ -10,7 +13,7 @@ export default function InsurePop({ setPop }) {
         <div className="layer_wrap">
           <div className="layer_container">
             <div className="layer_title">
-              <h1>소비자피해보상보험</h1>
+              <h1>소비자 피해 보상보험</h1>
             </div>
             <div className="layer_content">
               <div className="consumer_logo">
@@ -18,7 +21,7 @@ export default function InsurePop({ setPop }) {
               </div>
               <p>
                 고객님은 안전거래를 위해 현금 결제 시 저희 쇼핑몰이 가입한
-                구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.
+                구매안전서비스 소비자 피해 보상보험서비스를 이용하실 수 있습니다.
               </p>
               <p>보상대상 : 미배송/반품, 환불거부/쇼핑몰부도</p>
               <div className="btn_box">
@@ -35,7 +38,10 @@ export default function InsurePop({ setPop }) {
             <button
               className="layer_close close"
               title="팝업창 닫기"
-              onClick={() => setPop(false)}
+              onClick={() => {
+                setPop(false);
+                $body.style.overflow = 'auto';
+              }}
             >
               <span>팝업창 닫기</span>
             </button>

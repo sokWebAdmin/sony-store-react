@@ -86,12 +86,12 @@ export default function OrderListItem({
 
   const onCloseConfirm = (status) => {
     setConfirmVisible(false);
+
     if (status === 'ok') {
-      const virtualAccountSuccess =
-        '주문 취소 요청이 정상적으로 완료되었습니다.\n주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 쇼요됩니다.\n환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.';
-      const creditCardSuccess =
-        '주문 취소 요청이 정상적으로 완료되었습니다.\n주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 쇼요됩니다.';
-      const successMessage = payType === 'VIRTUAL_ACCOUNT' ? virtualAccountSuccess : creditCardSuccess;
+      let successMessage = '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
+      if (payType === 'VIRTUAL_ACCOUNT') {
+        successMessage += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.'
+      }
 
       return postProfileOrderCancelByOrderOptionNo({
         path: { orderOptionNo },
@@ -110,12 +110,14 @@ export default function OrderListItem({
           return;
         }
 
-        openAlert(successMessage, () =>
-          payType === 'VIRTUAL_ACCOUNT' ? () => setRefundAccountVisible(true) : () => window.location.reload(),
-        );
+        openAlert(successMessage, () => {
+          if (showRefundAccountInfo(claimStatusType, payType)) {
+            return () => setRefundAccountVisible(true);
+          } else {
+            return () => window.location.reload();
+          }
+        });
       });
-    } else if (status === 'cancel') {
-      console.log('취소');
     }
   };
 

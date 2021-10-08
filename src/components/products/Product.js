@@ -106,7 +106,7 @@ export default function Product({product, category, reset, micro}) {
         </Link>
       </div>
 
-      {groupProducts.filter(gp => !!gp.colorLabel && !!gp.colorCode).length > 0 &&
+      {groupProducts.filter(gp => !!gp.colorLabel && !!gp.colorCode).length > 0 ?
       <div className="colorchip">
         <span className="sr-only">전체 색상</span>
         {
@@ -126,7 +126,8 @@ export default function Product({product, category, reset, micro}) {
             )
           })
         }
-      </div>
+      </div> :
+      <div className="colorchip"></div>
       }
 
       <Link onClick={reset} to={`/product-view/${product.productNo}`} className="product__title">

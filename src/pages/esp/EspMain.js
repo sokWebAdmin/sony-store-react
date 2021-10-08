@@ -101,16 +101,16 @@ export default function EspMain() {
 
     return (
         <>
-            <SEOHelmet title={`연장서비스플랜 ESP`} />
+            <SEOHelmet title={`연장 서비스 플랜 ESP`} />
             <div className="category">
                 <div className="container">
                     <div className="contents">
                         <div className="category__header">
-                            <h1 className="category__header__name">연장서비스플랜 ESP</h1>
+                            <h1 className="category__header__name">연장 서비스 플랜 ESP</h1>
                             <p className="category__header__desc">보다 편리하게 소니 상품을 이용하실 수 있는 소니스토어 프리미엄 서비스를 경험해 보세요.</p>
                         </div>
                         <div className="espinfo">
-                            <h2 className="espinfo__title">연장서비스플랜 구매 안내</h2>
+                            <h2 className="espinfo__title">연장 서비스 플랜 구매 안내</h2>
                             <div className="problem-solving">
                                 <div className="graph">
                                     <table>
@@ -135,7 +135,7 @@ export default function EspMain() {
                                 </div>
                                 <p className="txt_plan">* ESP : Extended Service Plan(연장 서비스 플랜)</p>
                             </div>
-                            <h3 className="espinfo__title2">연장서비스플랜 상품 구매방법</h3>
+                            <h3 className="espinfo__title2">연장 서비스 플랜 상품 구매방법</h3>
                             <ul className="list_dot">
                                 <li>제품 구매일로부터 1년 이내에 구매하셔야 합니다.</li>
                                 <li>정품등록 후 구매하실 수 있습니다. <strong>단, VAIO의 경우 구입일로부터 30일 이내 정품등록 및 제품설문을 통한 3개월 보증기간 연장 후

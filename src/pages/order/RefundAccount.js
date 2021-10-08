@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useMallState } from '../../context/mall.context';
-import { putProfileClaimRefundAccountByClaimNo } from '../../api/claim';
+import { putGuestClaimRefundAccountByClaimNo, putProfileClaimRefundAccountByClaimNo } from '../../api/claim';
 import LayerPopup from '../../components/common/LayerPopup';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
@@ -8,6 +8,7 @@ import Confirm from '../../components/common/Confirm';
 
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
+import GlobalContext from '../../context/global.context';
 
 export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   const close = () => setVisible(false);
@@ -23,6 +24,8 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState('');
 
+  const { isLogin } = useContext(GlobalContext);
+
   const openConfirm = (message) => {
     setConfirmVisible(true);
     setConfirmMessage(message);
@@ -31,7 +34,9 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   const onCloseConfirm = (status) => {
     setConfirmVisible(false);
     if (status === 'ok') {
-      return putProfileClaimRefundAccountByClaimNo({ path: { claimNo }, requestBody: { ...form } }).then((res) => {
+      const putClaimRefundAcountByClaimNo = isLogin ? putProfileClaimRefundAccountByClaimNo : putGuestClaimRefundAccountByClaimNo;
+
+      return putClaimRefundAcountByClaimNo({ path: { claimNo }, requestBody: { ...form } }).then((res) => {
         if (res.data.status === 400) {
           openAlert(res.data.message);
           return;

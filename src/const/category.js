@@ -278,7 +278,7 @@ const gnbCategories = [
         route: '/event/list?tab=pre-order',
       },
       {
-        label: '정품 등록 이벤트',
+        label: '정품등록 이벤트',
         route: '/event/list?tab=refined',
       },
       {
@@ -330,8 +330,20 @@ const gnbCategories = [
 (async () => {
   const res = await getEventByEventNo('467');
   if (res.status !== 400) {
-    gnbCategories[0].children.push({ label: '선물제안', route: '/curation' });
+    gnbCategories[0].children.push({ label: '선물 제안', route: '/curation' });
   }
 })();
 
-export { tagColorMap, categoriesExtraDataMap, espCategoryNo, gnbCategories };
+const categoriesLinkMap = {
+  compact: 'https://www.sony.co.kr/electronics/compact-cameras/t/cyber-shot-digital-cameras',
+  cinema: 'https://www.sony.co.kr/electronics/cinema-line',
+  camcoder: 'https://www.sony.co.kr/electronics/camcorders/t/handycam-camcorders',
+  action: 'https://www.sony.co.kr/electronics/action-cam/t/action-cam',
+  headphone: 'https://www.sony.co.kr/electronics/headphones/t/headband-headphones',
+  speaker: 'https://www.sony.co.kr/electronics/wireless-speakers-docks/t/wireless-speakers',
+  homeaudio: 'https://www.sony.co.kr/electronics/audio-systems/t/audio-components',
+  recorder: 'https://www.sony.co.kr/electronics/walkman-digital-music-players/t/walkman',
+  lens: 'https://www.sony.co.kr/electronics/interchangeable-lens-camera-products/t/interchangeable-lens-cameras'
+}
+
+export { tagColorMap, categoriesExtraDataMap, espCategoryNo, gnbCategories, categoriesLinkMap };

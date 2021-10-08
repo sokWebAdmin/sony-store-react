@@ -183,7 +183,7 @@ export default function EspList({history}) {
 
   return (
     <>
-      <SEOHelmet title={`연장서비스플랜 ESP`} />
+      <SEOHelmet title={`연장 서비스 플랜 ESP`} />
       <div className="category">
         <div className="contents">
           <div className="container">
@@ -192,8 +192,8 @@ export default function EspList({history}) {
                 <a href="#" className="common_head_back" onClick={e => {
                   history.goBack();
                   e.preventDefault();
-                }}>연장서비스플랜 ESP</a>
-                <h1 className="common_head_name">정품/보증기간/연장서비스플랜</h1>
+                }}>연장 서비스 플랜 ESP</a>
+                <h1 className="common_head_name">정품/보증기간/연장 서비스 플랜</h1>
               </div>
               {
                 products?.length === 0 &&
@@ -219,7 +219,7 @@ export default function EspList({history}) {
                                 <div className="col_table_cell">모델명</div>
                                 <div className="col_table_cell">정품등록일</div>
                                 <div className="col_table_cell">보증기간 만료일 (제품번호)</div>
-                                <div className="col_table_cell">연장서비스플랜 구매 신청</div>
+                                <div className="col_table_cell">연장 서비스 플랜 구매 신청</div>
                             </div>
                         </div>
                         <div className="col_table_body">
@@ -263,7 +263,7 @@ export default function EspList({history}) {
                     <strong className="esp_tit">[안내]</strong>
                     <ul className="list_dot">
                       <li>고객님의 아이디로 정품등록 되어진 모델에 대한 정보입니다.</li>
-                      <li>연장서비스플랜을 구매하실 수 있는 경우 &lt;구매신청&gt;버튼이 노출되며, 클릭하시면 장바구니 페이지로 이동합니다.</li>
+                      <li>연장 서비스 플랜을 구매하실 수 있는 경우 &lt;구매신청&gt;버튼이 노출되며, 클릭하시면 장바구니 페이지로 이동합니다.</li>
                     </ul>
                   </div>
                 </div>

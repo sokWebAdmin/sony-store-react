@@ -24,6 +24,7 @@ import { postProfileClaimOrderCancelByOrderNo, postGuestClaimOrderCancelByOrderN
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
+import RefundAccount from '../order/RefundAccount';
 
 export default function OrderDetail() {
   const query = useQuery();
@@ -33,7 +34,10 @@ export default function OrderDetail() {
     orderNo: '',
     orderYmdt: '',
     defaultOrderStatusType: '', // order의 가장 첫번째 옵션주문의 주문상태(api 동일)
-    defaultClaimStatusType: '', // order의 가장 첫번째 옵션주문의 클레임상태(api에 없는 데이터, front에서 가공)
+  });
+  const [claimInfo, setClaimInfo] = useState({
+    claimStatusType: '',
+    claimNo: '',
   });
   const [orderProducts, setOrderProducts] = useState([]); // 주문 상품
   const [ordererInfo, setOrdererInfo] = useState({ ordererName: '', ordererContact1: '' }); // 주문 정보
@@ -67,15 +71,23 @@ export default function OrderDetail() {
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [confirm, setConfirm] = useState({ visible: '', message: '', name: '' });
 
-  useEffect(() => {
-    const request = { path: { orderNo: query.get('orderNo') } };
-    const fetchOrderDetailMap = {
-      guest: () => getGuestOrderByOrderNo(request),
-      profile: () => getProfileOrderByOrderNo(request),
-    };
+  const [refundAccountVisible, setRefundAccountVisible] = useState(false);
 
-    fetchOrderDetailMap[isLogin ? 'profile' : 'guest']().then((res) => setStates(res));
+  useEffect(async () => {
+    setStates(await _getOrderByOrderNo());
   }, []);
+
+  const _getOrderByOrderNo = async () => {
+    const request = { path: { orderNo: query.get('orderNo') } };
+    const getOrderByOrderNo = isLogin ? getProfileOrderByOrderNo : getGuestOrderByOrderNo;
+
+    try {
+      return await getOrderByOrderNo(request);
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
 
   const setStates = (res) => {
     const {
@@ -104,9 +116,13 @@ export default function OrderDetail() {
       orderNo,
       orderYmdt: orderYmdt.split(' ')[0],
       defaultOrderStatusType,
-      defaultClaimStatusType:
-        orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0].claimStatusType,
     });
+
+    setClaimInfo(() => ({
+      claimStatusType: orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0].claimStatusType,
+      claimNo: orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0].claimNo,
+    }));
+
     setOrderProducts(makeOrderProducts(res.data));
     setOrdererInfo({ ordererName, ordererContact1 });
     setShippingAddress({
@@ -190,9 +206,6 @@ export default function OrderDetail() {
   };
 
   const onOrderCancel = () => {
-    // 뭔지 몰라서 주석처리
-    // openConfirm('현재의 주문에 대해서 환불계좌를 확정하시겠습니까?');
-
     setConfirm({
       ...confirm,
       visible: true,
@@ -232,16 +245,25 @@ export default function OrderDetail() {
       }
 
       let message = '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
-
-      if (isLogin) {
-        if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
-          message += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.'
-        }
-
-        openAlert(message, () => () => window.location.reload());
+      if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+        message += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.'
       }
 
-      openAlert(message, () => () => window.location.reload());
+      openAlert(message, () => {
+        if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+          return async () => {
+            const { data } = await _getOrderByOrderNo();
+            const { claimStatusType, claimNo } = data.orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0];
+
+            if (!!claimNo && claimStatusType === 'CANCEL_REQUEST' && payInfo.payType === 'VIRTUAL_ACCOUNT') {
+              setClaimInfo(() => ({ claimStatusType, claimNo }));
+              setRefundAccountVisible(() => true);
+            }
+          };
+        }
+
+        return () => window.location.reload();
+      });
     });
   }
 
@@ -283,7 +305,7 @@ export default function OrderDetail() {
             <OrderInfo ordererInfo={ordererInfo} shippingAddress={shippingAddress} />
             <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
-              {showOrderCancel(orderInfo.defaultOrderStatusType, orderInfo.defaultClaimStatusType) && (
+              {showOrderCancel(orderInfo.defaultOrderStatusType, claimInfo.claimStatusType) && (
                 <button type="button" className="button button_negative" onClick={onOrderCancel}>
                   주문 취소
                 </button>
@@ -301,6 +323,7 @@ export default function OrderDetail() {
           </div>
         </div>
       </div>
+      {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} claimNo={claimInfo.claimNo} />}
     </>
   );
 }
