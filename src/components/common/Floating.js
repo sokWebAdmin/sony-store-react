@@ -107,8 +107,8 @@ export default function Floating () {
   const handleSidebar = () => {
     const currScrollY = window.scrollY;
     if (prevScrollY === currScrollY) return;
-    
-    sidebarRef.current && handleSidebarReachend($footer, sidebarRef.current, currScrollY);
+
+    sidebarRef.current && $footer && handleSidebarReachend($footer, sidebarRef.current, currScrollY);
   };
 
   useEffect(() => {
