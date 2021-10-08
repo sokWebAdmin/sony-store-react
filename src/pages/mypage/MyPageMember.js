@@ -1,4 +1,4 @@
-import { React, useEffect, useRef, useState } from 'react';
+import { React, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 //SEO
@@ -290,6 +290,11 @@ export default function MyPageMember() {
     }
   }, []);
 
+  const gender = useMemo(() => {
+    if (myForm.gender === '1') return '남';
+    if (myForm.gender === '2') return '여';
+  }, [myForm])
+
     return (
     <>
       <SEOHelmet title={"회원정보"} />
@@ -472,7 +477,7 @@ export default function MyPageMember() {
                                   id="member_gender" 
                                   name="gender"
                                   className={`inp disabled`} 
-                                  value={myForm.gender === '1' ? '남' : '여'}  
+                                  value={gender}  
                                   disabled='disabled'
                                 />
                                 <span className="focus_bg" />
