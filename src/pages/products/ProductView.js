@@ -205,7 +205,7 @@ export default function ProductView({ match }) {
   const fetchEvent = useCallback(async productNo => {
     // @TODO 이벤트 api 확인중 완료 후 기획전 변경필요
     const _productNos = productNos?.length > 0 ? productNos : [ productNo ];
-    console.log(_productNos);
+    // console.log(_productNos);
     // const test = await Promise.all(productNos?.map(async productNo => await getEventByProductNo({ pathParams: { productNo } })));
     // console.log(test);
     const ret = await getEventByProductNo({ pathParams: { productNo: 102007706 }});
@@ -264,9 +264,25 @@ export default function ProductView({ match }) {
     const withPadding = ($lis.length - 1) * 40;
     return width < (sum + withPadding) ? `${ sum + 1 + withPadding}px` : 'auto';
   }
+
+  const getTitle = useMemo(() => {
+    if (!productData?.baseInfo?.productName) return;
+    const { productName } = productData.baseInfo;
+
+    if (!productData.categories) return productName;
+
+    const categoryCode = _.chain(productData.categories)
+                  .take(1)
+                  .flatMap(({ categories }) => categories)
+                  .map(({ categoryNo }) => categoryNo)
+                  .join('/')
+                  .value();
+    return `${categoryCode}/${productData.baseInfo.productName}`
+  
+  }, [productData?.baseInfo?.productName])
     return (
       <>        
-        <SEOHelmet title={"상품 상세"} />
+        <SEOHelmet title={ getTitle } />
         <div className="contents product">
         {
           showProductDetail &&
