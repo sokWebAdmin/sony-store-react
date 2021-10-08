@@ -34,11 +34,13 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 import '../../assets/scss/partials/orderBreadcrum.scss';
 
-
 // functions
 import { getUrlParam } from '../../utils/location';
 import { truncate } from '../../utils/unit';
 import { useGuestState } from '../../context/guest.context';
+import { getAgent } from '../../utils/detectAgent';
+
+const agent = getAgent();
 
 const OrderSheet = ({ location }) => {
   const history = useHistory();
@@ -195,6 +197,7 @@ const OrderSheet = ({ location }) => {
       availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
       ...discount,
       deliveryMemo: shippingAddress.deliveryMemo,
+      inAppYn: agent.isApp ? 'Y' : 'N',
     };
 
     delete result.shippingAddress.deliveryMemo;
@@ -216,6 +219,7 @@ const OrderSheet = ({ location }) => {
       accumulationAmt: paymentInfo.accumulationAmt,
       availableMaxAccumulationAmt: paymentInfo.availableMaxAccumulationAmt,
       ...discount,
+      inAppYn: agent.isApp ? 'Y' : 'N',
     };
 
     delete result.shippingAddress.deliveryMemo;

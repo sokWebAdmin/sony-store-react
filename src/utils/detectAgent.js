@@ -32,5 +32,8 @@ export const getAgent = () => {
     };
   }
 
-  return null;
+  return {
+    isApp: true,
+    device: 'unknown',
+  };
 };
