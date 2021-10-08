@@ -1,8 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 
 import Alert from '../common/Alert';
 
 import { toCurrencyString } from '../../utils/unit.js';
+import '../../assets/scss/partials/discountDetail.scss';
 
 const Calculator = ({ payment, paymentInfo, orderCnt }) => {
 
@@ -12,6 +13,7 @@ const Calculator = ({ payment, paymentInfo, orderCnt }) => {
 
   const [agree, setAgree] = useState(false);
   const [agreeAlert, setAgreeAlert] = useState(false);
+
   const agreeEl = useRef();
 
   const submit = () => {
@@ -23,6 +25,19 @@ const Calculator = ({ payment, paymentInfo, orderCnt }) => {
 
     payment();
   };
+
+  const toggleDiscountDetail = evt => {
+    evt.preventDefault();
+
+    evt.currentTarget.parentNode.classList.toggle('on');
+  };
+
+  const promotionDiscountAmount = useMemo(
+    () => paymentInfo?.totalImmediateDiscountAmt +
+      paymentInfo?.totalAdditionalDiscountAmt, [paymentInfo]);
+  const totalDiscountAmount = useMemo(
+    () => promotionDiscountAmount + paymentInfo?.productCouponAmt +
+      paymentInfo?.usedAccumulationAmt, [promotionDiscountAmount, paymentInfo]);
 
   return (
     <div className="payment_box">
@@ -52,28 +67,33 @@ const Calculator = ({ payment, paymentInfo, orderCnt }) => {
           <div className="saleToggle">
             <div className="sale_item">
               <div className="sale_head">
-                <a href="#none" className="sale_btn" title="할인 금액 열기">
+                <a href="#discount-detail" onClick={toggleDiscountDetail}
+                   className="sale_btn" title="할인 금액 열기">
                   <div className="view_headline">
                     <span className="sale_tit">할인 금액</span>
                     <em className="view_price minus"><strong>-
-                      2,300</strong>원</em>
+                      {toCurrency(
+                        totalDiscountAmount)}</strong>원</em>
                   </div>
                   <span className="acc_arrow">상세 보기</span>
                 </a>
               </div>
-              <div className="sale_inner" style={{ display: 'none' }}>
+              <div id="discount-detail" className="sale_inner">
                 <div className="sale_box">
                   <div className="view_detail">
                     <span className="sale_tit">프로모션 할인</span>
-                    <em className="view_price"><strong>- 0</strong>원</em>
+                    <em className="view_price"><strong>- {toCurrency(
+                      promotionDiscountAmount)}</strong>원</em>
                   </div>
                   <div className="view_detail">
                     <span className="sale_tit">쿠폰 사용</span>
-                    <em className="view_price"><strong>- 0</strong>원</em>
+                    <em className="view_price"><strong>- {toCurrency(
+                      paymentInfo?.productCouponAmt)}</strong>원</em>
                   </div>
                   <div className="view_detail">
                     <span className="sale_tit">마일리지 사용</span>
-                    <em className="view_price"><strong>- 0</strong>원</em>
+                    <em className="view_price"><strong>- {toCurrency(
+                      paymentInfo?.usedAccumulationAmt)}</strong>원</em>
                   </div>
                 </div>
               </div>
@@ -81,60 +101,6 @@ const Calculator = ({ payment, paymentInfo, orderCnt }) => {
           </div>
         </div>
 
-        <div className="payment_list">
-          <dl className="total">
-            <dt className="tit">최종 결제 금액</dt>
-            <dd className="price">{toCurrency(paymentInfo?.paymentAmt)}<span
-              className="unit">원</span></dd>
-          </dl>
-          <div className="order_detailbox">
-            <div className="view_headline">
-              <span className="view_tit">결제 예정 금액</span>
-              <em
-                className="view_price"><strong>{toCurrency(
-                paymentInfo?.totalStandardAmt)}</strong>원</em>
-            </div>
-          </div>
-          <div className="saleToggle">
-            <div className="sale_item">{/* on 클래스 제어 */}
-              <div className="sale_head">
-                  <div className="view_headline">
-                                          <span
-                                            className="sale_tit">총 할인 금액</span>
-                    <em
-                      className="view_price minus"><strong>
-                      {toCurrency(
-                        paymentInfo?.totalStandardAmt -
-                        paymentInfo?.paymentAmt)}</strong>원</em>
-                  </div>
-              </div>
-              <div className="sale_inner"
-                   style={{ display: 'none' }}>
-                <div className="sale_box">
-                  <div className="view_detail">
-                                          <span
-                                            className="sale_tit">프로모션 할인</span>
-                    <em className="view_price"><strong>-
-                      0</strong>원</em>
-                  </div>
-                  <div className="view_detail">
-                                          <span
-                                            className="sale_tit">쿠폰 사용</span>
-                    <em className="view_price"><strong>-
-                      0</strong>원</em>
-                  </div>
-                  <div className="view_detail">
-                                          <span
-                                            className="sale_tit">마일리지 사용</span>
-                    <em className="view_price"><strong>-
-                      0</strong>원</em>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* // acc_item */}
-          </div>
-        </div>
         <div className="essential">
           <div style={{ marginBottom: '20px' }}>
             <p style={{ marginBottom: '10px', color: '#e70000' }}>주문 내용을 확인해
