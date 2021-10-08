@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+    <defs>
+        <style>
+            .cls-3{fill:#222}
+        </style>
+    </defs>
+    <g id="ic_menu" transform="translate(-6044.5 145)">
+        <g id="Icon">
+            <path id="bg" transform="translate(6044.5 -145)" style="fill:transparent" d="M0 0h24v24H0z"/>
+            <g id="그룹_3447" data-name="그룹 3447" transform="translate(-38 3)">
+                <path id="사각형_159" data-name="사각형 159" class="cls-3" transform="translate(6084.5 -129)" d="M0 0h20v2H0z"/>
+                <path id="사각형_160" data-name="사각형 160" class="cls-3" transform="translate(6084.5 -137)" d="M0 0h20v2H0z"/>
+                <path id="사각형_158" data-name="사각형 158" class="cls-3" transform="translate(6084.5 -145)" d="M0 0h20v2H0z"/>
+            </g>
+        </g>
+    </g>
+</svg>

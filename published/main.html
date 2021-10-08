@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="app">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -150,6 +150,7 @@
           <ul>
             <li class="appmenu__qr"><a href="#">QR스캔</a></li>
             <li class="appmenu__setting"><a href="#">설정</a></li>
+            <li class="appmenu__push"><a href="../html/app/pushList.html">PUSH 알림 메시지함</a></li>
           </ul>
         </div>
       </div>
@@ -499,7 +500,16 @@
 
     </div>
   </div>
-  <footer class="footer">
+  <div class="appnavbar">
+    <div class="appnavbar_inner">
+      <a href="#" class="appnavbar_btn ios"><img src="../images/app/btn_arrow.svg" alt="뒤로 가기"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_home.svg" alt="홈"></a>
+      <a href="#" class="appnavbar_btn android"><img src="../images/app/btn_menu.svg" alt="메뉴"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_cart.svg" alt="장바구니"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_shipping.svg" alt="주문/배송"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_my.svg" alt="마이메뉴"></a>
+    </div>
+  </div>  <footer class="footer">
     <nav class="sidebar">
       <div class="sidebar__inner">
         <a href="../html/mypage/myPageMain.html" class="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
@@ -605,8 +615,8 @@
         </div>
         <button href="#" class="layer_close close" title="팝업창 닫기">
           <span>팝업창 닫기</span>
-      </button>        
-      </div>    
+      </button>
+      </div>
     </div>
   </div>
   <!--// 소비자피해보상 보험 팝업 -->
@@ -615,7 +625,7 @@
        //팝업 열기
       function openModal(modalname) {
           $("." + modalname).fadeIn(300);
-          $("body,html").css({"overflow":"hidden"});        
+          $("body,html").css({"overflow":"hidden"});
           return false;
       }
       // 팝업 닫기

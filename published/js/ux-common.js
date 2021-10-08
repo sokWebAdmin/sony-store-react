@@ -788,8 +788,6 @@ function fullSliderBanner(){
   }
   function slideFunc(_obj){
     let _sliderSize = $(_obj).find('.swiper-slide').length;
-    console.log(_sliderSize);
-    console.log($(_obj))
     if(_sliderSize > 1){ // 2개 이상 부터 swiper 사용.
       $(_obj).removeClass("swiper_none");
       swiperIni($(_obj))
