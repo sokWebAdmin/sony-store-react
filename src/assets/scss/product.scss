@@ -2546,4 +2546,17 @@
       right: 5.7589%;
     }
   }
+
+  .product_pagination {
+    position: absolute;
+    text-align: center;
+    transition: 300ms opacity;
+    transform: translate3d(0, 0, 0);
+    z-index: 10;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    bottom: 5.7143%;
+
+  }
 }
