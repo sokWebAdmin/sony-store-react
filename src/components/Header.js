@@ -78,22 +78,16 @@ export default function Header() {
             >
               <img src={search} alt="검색창 열기" />
             </button>
-            <a className="btn btn__desktop btn__mypage">
-              <img
-                style={{ cursor: 'pointer' }}
-                src={mypage}
-                alt="마이페이지"
-                onClick={() => {
-                  setInfoOpen(!isInfoOpen);
-                }}
-              />
+            <a href="#" className="btn btn__desktop btn__mypage" onClick={e => {
+              e.preventDefault();
+              setInfoOpen(!isInfoOpen);
+            }}>
+              <img src={mypage} alt="마이페이지" />
             </a>
-            <a
-              onClick={() => {
-                history.push('/cart');
-              }}
-              className="btn btn__cart"
-            >
+            <a href="#" className="btn btn__cart" onClick={e => {
+              e.preventDefault();
+              history.push('/cart');
+            }}>
               <img src={cart} alt="장바구니" />
             </a>
             <button
