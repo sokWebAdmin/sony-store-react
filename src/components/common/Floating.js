@@ -1,10 +1,8 @@
 import { useEffect, useContext, useState, useMemo, useRef } from "react";
 import { useHistory } from "react-router";
-import { MAPPING_CLASS_NAME } from "../../const/footer";
 import GlobalContext from "../../context/global.context";
 import { useMallState } from "../../context/mall.context";
 import { useAlert, useScroll, useToggle } from "../../hooks";
-import { addClassName, removeClassName } from "../../utils/utils";
 import Alert from "./Alert";
 import Confirm from "./Confirm";
 
@@ -38,8 +36,6 @@ const chat = () => {
 
 export default function Floating () {
   const history = useHistory();
-
-  const { sidebarReachend } = MAPPING_CLASS_NAME;
 
   const info = useMallState();
   const TEL = info?.mall?.serviceCenter.phoneNo;
@@ -97,11 +93,13 @@ export default function Floating () {
   const sidebarRef = useRef(null);
   const $footer = document.querySelector('.footer');
   const prevScrollY = window.scrollY;
+  const [reachend, setReachend] = useState(false);
   
   const handleSidebarReachend = ($footer, $sidebar, currScrollY) => {
     const winHeight = window.innerHeight;
+    if (!$footer && $sidebar) return;
     const end = $footer.offsetTop - winHeight + $sidebar.offsetHeight + parseInt(getComputedStyle($sidebar).right) * 2;
-    currScrollY >= end ? addClassName($sidebar, sidebarReachend) : removeClassName($sidebar, sidebarReachend);
+    setReachend(() => currScrollY >= end)
   };
 
   const handleSidebar = () => {
@@ -120,7 +118,7 @@ export default function Floating () {
   
 
   return (
-    <nav ref={sidebarRef} className={`sidebar ${scrollY >= 250 && 'sidebar--visible'} ${active && 'sidebar--active'}`}>
+    <nav ref={sidebarRef} className={`sidebar ${ reachend && 'sidebar--reachend' } ${scrollY >= 250 && 'sidebar--visible'} ${active && 'sidebar--active'}`}>
       <div className="sidebar__inner">
         <a href="#none" onClick={ e => handleClick(e, 'kakao') } className="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
         <a href={isMobile ? `tel:${TEL}` : '#none'} onClick={ e=> handleClick(e, 'cs') } className="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>

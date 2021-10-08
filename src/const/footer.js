@@ -43,11 +43,3 @@ export const SONY_COMPANY = [
     name: '소니 픽쳐스 텔레비전 코리아',
   },
 ];
-
-export const MAPPING_CLASS_NAME = {
-  headerInvisible: 'header--invisible',
-  headerVisible: 'header--visible',
-  appnavbarInvisible: 'appnavbar--invisible',
-  sidebarVisible: 'sidebar--visible',
-  sidebarReachend: 'sidebar--reachend',
-}
