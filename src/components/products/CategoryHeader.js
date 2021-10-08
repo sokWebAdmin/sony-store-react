@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 //util
 import { Link, useHistory } from 'react-router-dom';
@@ -7,9 +7,16 @@ import categoryLeft from '../../assets/images/category/btn_category_left.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } from 'swiper/core';
 import categoryRight from '../../assets/images/category/btn_category_right.svg';
+import { categoriesLinkMap } from '../../const/category';
 
 export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
   const history = useHistory();
+  const categoryLabel = useMemo(() => {
+    const path = category.url.split('/');
+    return path[path.length - 1];
+  }, [category]);
+
+  console.log(categoryLabel);
   
   let backgroundImage = '';
   if (category && category.content) {
@@ -36,7 +43,7 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
 
   const openLink = ({isAvailableMoveProductCompare, isAvailableMoveAccessoryCompatibility, e}) => {
     if (isAvailableMoveProductCompare) {
-      window.open('https://www.sony.co.kr/electronics/interchangeable-lens-camera-products/t/interchangeable-lens-cameras', "_blank");
+      window.open(categoriesLinkMap[categoryLabel], "_blank");
     }
 
     if (isAvailableMoveAccessoryCompatibility) {
@@ -74,7 +81,7 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
             openLink({isAvailableMoveProductCompare: true, e});
             e.preventDefault();
           }}>제품 비교</a>}
-          {rootParent.isAvailableMoveAccessoryCompatibility && <a href="#" className="category__header__link" onClick={e => {
+          {(rootParent.isAvailableMoveAccessoryCompatibility && categoryLabel !== 'audio') && <a href="#" className="category__header__link" onClick={e => {
             openLink({isAvailableMoveAccessoryCompatibility: true, e});
           }}>액세서리 호환성</a>}
           {rootParent.isAvailableMoveESP && <Link to="/esp" className="category__header__link">연장 서비스 플랜 ESP 보기</Link>}
