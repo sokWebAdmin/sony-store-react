@@ -34,7 +34,7 @@ export default function Faq() {
             <div className="faq_notice_head">
               <div className="common_head first_tit">
                 <h1 className="common_head_name">FAQ &amp; 공지사항</h1>
-                <p className="common_head_txt">소니스토어에 많이 물어보시는 질문과<br className="pc_none" />새로운 소식을 만나보세요.</p>
+                <p className="common_head_txt">소니스토어에 많이 물어보시는 질문과<br className="pc_none" /> 새로운 소식을 만나보세요.</p>
               </div>
               <Tabs />
             </div>

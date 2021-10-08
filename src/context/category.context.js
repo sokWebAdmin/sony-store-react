@@ -36,6 +36,7 @@ const getConvertCategories = (categories, parentCategory) => {
         children: getConvertCategories(c.children, c),
         ...extra,
         parent: parentCategory,
+        label: c.label.includes('PlayStation') ? 'PlayStation®' : c.label,
       };
 
       category.children = getConvertCategories(c.children, category);

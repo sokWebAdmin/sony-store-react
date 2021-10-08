@@ -67,10 +67,10 @@ export default function EspAddCart ({product, onClose}) {
   return (
     <>
       <LayerPopup className="esp_pop" size={'m'} popContClassName={'scrollH'} onClose={onClose} >
-        <p className="pop_tit">연장서비스플랜 이용약관</p>
+        <p className="pop_tit">연장 서비스 플랜 이용약관</p>
         <div className="pop_cont_scroll" style={{ height: '573.703px' }}>
           <p className="pop_txt txt_l">본 이용약관은 고객님께서 Sony(이하 본문의 "Sony"는 Sony Korea Corporation을 의미)로부터 주문하신
-            연장서비스플랜(Extended Service Plan, 이하 "ESP")의 범위 및 조건이 명시되어 있습니다.</p>
+            연장 서비스 플랜(Extended Service Plan, 이하 "ESP")의 범위 및 조건이 명시되어 있습니다.</p>
           <div className="inner_scroll">
             <div className="related_laws">
               <ul className="dot_line">

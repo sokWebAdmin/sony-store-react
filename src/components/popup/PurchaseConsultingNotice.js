@@ -5,7 +5,7 @@ import '../../assets/scss/contents.scss';
 
 export default function PurchaseConsultingNotice({ setVisible }) {
   const closeModal = () => setVisible(false);
-
+  
   return (
     <div className="layer agree_layer modal_pop" style={{ display: 'block' }}>
       <div className="layer_wrap">
