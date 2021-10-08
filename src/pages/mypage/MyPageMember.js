@@ -85,6 +85,29 @@ export default function MyPageMember() {
   const [ initForm, setInitForm ] = useState({...initialState});
   const [ myForm, setMyForm ] = useState({...initialState});
 
+  // 이름변경 하기
+  const firstnameRef = useRef(null);
+  const [renameVisible, setRenameVisible] = useState(false);
+  const [needsResendForName, setNeedsResendForName] = useState(false);
+  const [renameReset, setRenameReset] = useState(false);
+  const handleRenameResult = result => {
+    if (result) {
+      setNameEditMode(true);
+      firstnameRef.current.disabled = false;
+      firstnameRef.current.focus();
+    }
+  };
+  const rename = async () => {
+    // 인증하기 
+    setRenameVisible(true);
+    // 인증성공하면 setNameEditMode(true)
+  };
+  const validateName = () => {
+    if (!myForm.firstname) {
+      openAlert('이름을 입력하세요.', () => () => firstnameRef.current.focus())
+    }
+  }
+ 
   // 우편번호 찾기
   const [findAddressVisible, setFindAddressVisible] = useState(false);
   const bindReceiverAddress = selectedAddress => {
@@ -148,7 +171,6 @@ export default function MyPageMember() {
     return false;
   };
   
-  
   const handleClick = (event, type) => {
     event.preventDefault();
     switch(type) {
@@ -159,7 +181,7 @@ export default function MyPageMember() {
         history.push({ pathname: '/my-page/withdraw' })
         break;
       case 'name':
-        noticeEditMode && setNameEditMode(true);
+        noticeEditMode() && rename();
         break;
       case 'mobile':
         needsResend ? resend() : noticeEditMode() && remobile();
@@ -312,10 +334,12 @@ export default function MyPageMember() {
                                   name="firstname" 
                                   className={`inp ${!nameEditMode && 'disabled'}`}
                                   value={ myForm.firstname }  
-                                  maxLength={50} 
-                                  autoComplete="off"
+                                  maxLength={10} 
+                                  autoComplete={true}
                                   disabled={!nameEditMode && 'disabled'}
                                   onChange={handleChange}
+                                  onBlur={validateName}
+                                  ref={firstnameRef}
                                 />
                                 <span className="focus_bg" />
                               </div>
@@ -324,6 +348,18 @@ export default function MyPageMember() {
                             <div className="btn_box">
                               <button className="button change_btn" type="button" onClick={ event => handleClick(event, 'name') }>이름변경</button>
                             </div>
+                            {
+                              renameVisible
+                                && <MobileAuth 
+                                    mobile={ '01044758305' }
+                                    visible={renameVisible}
+                                    setVisible={setRenameVisible}
+                                    handleResult={handleRenameResult}
+                                    setNeedsResend ={setNeedsResendForName}
+                                    remobileReset={renameReset}
+                                    setRemobileReset={setRenameReset}
+                                  />
+                            }
                           </div>
                         </div>
                       </div>
@@ -454,7 +490,7 @@ export default function MyPageMember() {
                           <div className="info_box">
                             <div className="data_box">
                               <div className="inp_box">
-                                <span className={ `ico_grade ${ memberGrade[myForm.custgrade]?.className }` }>
+                                <span className={  memberGrade[myForm.custgrade]?.className ? `ico_grade ${ memberGrade[myForm.custgrade]?.className }` : '' }>
                                   <input 
                                     type="text" 
                                     id="member_grade"
