@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Switch, useLocation, Route, useHistory } from 'react-router-dom';
-import { debounce } from 'lodash';
+import { throttle, debounce } from 'lodash';
 
 //Component
 import Header from './components/Header';
@@ -165,27 +165,25 @@ const App = (props) => {
     [],
   );
 
-  const handleScroll = useCallback(() => {
-    // FIXME: to @sh.c : securityerror: attempt to use history.pushstate() more
-    // than 100 times per 30 seconds
-    requestAnimationFrame(() => {
-      console.log('handleScroll call');
-      // const { pageXOffset, pageYOffset, location } = window;
-      // const { state: prevState = {} } = window.history;
-      //
-      // window.history.replaceState(
-      //   {
-      //     ...prevState,
-      //     scroll: {
-      //       x: pageXOffset,
-      //       y: pageYOffset,
-      //     },
-      //   },
-      //   '',
-      //   location.href,
-      // );
-    });
-  }, []);
+  const handleScroll =
+    // WARN : safari 등 브라우저에서 history 변경 여러번하면 SecurityError 발생합니다.
+    // 때문에 throttle 1000ms 로 제한을 둡니다.
+    throttle(() => {
+      const { pageXOffset, pageYOffset, location } = window;
+      const { state: prevState = {} } = window.history;
+
+      window.history.replaceState(
+        {
+          ...prevState,
+          scroll: {
+            x: pageXOffset,
+            y: pageYOffset,
+          },
+        },
+        '',
+        location.href,
+      );
+    }, 1000);
 
   useEffect(() => {
     const MAX_SYNC_ATTEMPT = 5;
