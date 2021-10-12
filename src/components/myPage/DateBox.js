@@ -2,10 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 import { addMonth } from '../../utils/dateFormat';
 
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/mypage.scss';
-
 // components
 import DatePicker from '../common/DatePicker';
 
