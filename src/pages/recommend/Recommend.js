@@ -68,9 +68,7 @@ export default function Recommend({ match }) {
 
   const getDate = (data) => {
     const date = data.split(' ')[0];
-    const day = getDay(date);
-    const time = getStrHM(data);
-    return `${changeDateFormat(date, 'YYYY.MM.DD')}(${day}) ${time}`;
+    return `${changeDateFormat(date, 'YYYY.MM.DD')}`;
   };
 
   const splitStr = (str) => {
@@ -318,50 +316,64 @@ export default function Recommend({ match }) {
                 </div>
                 {/* //flex */}
                 {/* 기획전 슬라이드 */}
-                <div className="exhibitions_slider swiper-container">
-                  <Swiper
-                    className="swiper-wrapper"
-                    navigation={{
-                      nextEl: '.swiper-button-next',
-                      prevEl: '.swiper-button-prev',
-                    }}
-                  >
-                    {eventBanners.map((bannerInfo, index) => (
-                      <SwiperSlide className="swiper-slide" key={index}>
-                        <Link to={bannerInfo.banners[0].landingUrl}>
-                          <div
-                            className="exhibitions_box"
-                            style={{ background: `url('${bannerInfo.banners[0].imageUrl}') no-repeat center top` }}
-                          >
-                            <img className="bg_img" src="/images/product/banner_thumb_01.png" alt="" />
-                            <div className="txt_box">
-                              <span className="tag" style={{ color: '#5865f5' }}>
-                                기획전
-                              </span>
-                              <p
-                                className="tit"
-                                dangerouslySetInnerHTML={{ __html: splitStr(bannerInfo?.banners[0]?.name) }}
-                              />
-                              {bannerInfo?.banners[0]?.displayPeriodType === 'PERIOD' && (
-                                <div>{`${getDate(bannerInfo?.banners[0]?.displayStartYmdt)} ~ ${getDate(
-                                  bannerInfo?.banners[0]?.displayEndYmdt,
-                                )}`}</div>
-                              )}
-                            </div>
+                <div className="exhibitions_zone">
+                  <p className="title">진행중인 기획전</p>
+                  <div className="exhibitions_inner swiper-container swiper_none">
+                    <Swiper
+                      className="swiper-wrapper"
+                      navigation={{
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                      }}
+                      slidesPerView={2}
+                      spaceBetween={24}
+                      breakpoints={{
+                        320: {
+                          slidesPerView: 1,
+                          spaceBetween: 0,
+                        },
+                        641: {
+                          slidesPerView: 2,
+                          spaceBetween: 16,
+                        },
+                        1281: {
+                          slidesPerView: 2,
+                          spaceBetween: 24,
+                        },
+                      }}
+                    >
+                      {eventBanners.map((bannerInfo, index) => (
+                        <SwiperSlide className="swiper-slide" key={index}>
+                          <div className="slide_item">
+                            <Link to={bannerInfo.banners[0].landingUrl} className="item">
+                              <div className="img">
+                                <img src={bannerInfo.banners[0].imageUrl} alt="" />
+                              </div>
+                              <div className="event_desc">
+                                <p
+                                  className="tit"
+                                  dangerouslySetInnerHTML={{ __html: splitStr(bannerInfo?.banners[0]?.name) }}
+                                />
+                                {bannerInfo?.banners[0]?.displayPeriodType === 'PERIOD' && (
+                                  <p className="event_duration">{`${getDate(
+                                    bannerInfo?.banners[0]?.displayStartYmdt,
+                                  )} ~ ${getDate(bannerInfo?.banners[0]?.displayEndYmdt)}`}</p>
+                                )}
+                              </div>
+                            </Link>
                           </div>
-                        </Link>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                  <div className="arrow_btn">
-                    <a className="arrow swiper-button-prev">
-                      <img src="/images/common/arrow_19_34.png" alt="이전" />
-                    </a>
-                    <a className="arrow swiper-button-next">
-                      <img src="/images/common/arrow_19_34.png" alt="다음" />
-                    </a>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                    <div className="arrow_btn">
+                      <a className="arrow swiper-button-prev">
+                        <img src="../../assets/images/common/arrow_recommend.png" alt="이전" />
+                      </a>
+                      <a className="arrow swiper-button-next">
+                        <img src="../../assets/images/common/arrow_recommend.png" alt="다음" />
+                      </a>
+                    </div>
                   </div>
-                  <div className="swiper-pagination" />
                 </div>
               </div>
             </div>
