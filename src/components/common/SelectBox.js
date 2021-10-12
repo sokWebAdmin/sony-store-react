@@ -1,25 +1,24 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useToggle } from "../../hooks";
-import BoxSelector from "./selectbox/Box";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useToggle } from '../../hooks';
+import BoxSelector from './selectbox/Box';
 import DropdownSelector from './selectbox/Dropdown';
-import DropdownHighlightSelector from "./selectbox/DropdownHighlight";
+import DropdownHighlightSelector from './selectbox/DropdownHighlight';
 
 const selector = {
   box: BoxSelector,
   dropdown: DropdownSelector,
-  dropdownHighlight: DropdownHighlightSelector
+  dropdownHighlight: DropdownHighlightSelector,
 };
 
 const validator = {
   isDuplicated(selectedOptions, selectedNo) {
-    return selectedOptions.some(option => option.optionNo === selectedNo);
+    return selectedOptions.some((option) => option.optionNo === selectedNo);
   },
-}
-
+};
 
 /**
  * SelectBox
- * 
+ *
  * @params defaultInfo = {
  *            type?: 'dropdown' | 'dropdownHighlight' | 'box'; default = 'box';
  *            placeholder?: string;
@@ -41,38 +40,52 @@ const validator = {
  *            background?: string(only color code); ex) '#fc5227';
  *          }; || reset 이 필요한 경우 {}
  */
-export default function SelectBox({ defaultInfo, selectOption, selectOptions, customOption, deleteOptionNo, setDeleteOptionNo, open }) {
-  const initialSelectedState = useMemo(() => ({
-    label: defaultInfo.placeholder,
-    options: [],
-  }), [defaultInfo.placeholder]);
-  
+export default function SelectBox({
+  defaultInfo,
+  selectOption,
+  selectOptions,
+  customOption,
+  deleteOptionNo,
+  setDeleteOptionNo,
+  open,
+}) {
+  const initialSelectedState = useMemo(
+    () => ({
+      label: defaultInfo.placeholder,
+      options: [],
+    }),
+    [defaultInfo.placeholder],
+  );
+
   const [isOpened, onToggle] = useToggle(false);
   const [selectedValue, setSelectedValue] = useState({ ...initialSelectedState });
-  
-  const onToggleHandler = useCallback((event) => {
-    event.preventDefault();
-    onToggle(!isOpened);
-  }, [onToggle, isOpened]);
 
-  const onClickHandler = useCallback((event, option) => {
-    event.preventDefault();
-    if (validator.isDuplicated(selectedValue.options, option.optionNo)) {
-      alert('이미 선택된 옵션입니다.');
-    } else {
-      setSelectedValue(({ options }) => ({
-        label: option.label,
-        options: options.concat(option)
-      }));
-      selectOption(option);
-    }
-    
-    onToggle(false);
+  const onToggleHandler = useCallback(
+    (event) => {
+      event.preventDefault();
+      onToggle(!isOpened);
+    },
+    [onToggle, isOpened],
+  );
 
-  }, [setSelectedValue, selectOption, onToggle, selectedValue.options]);
+  const onClickHandler = useCallback(
+    (event, option) => {
+      event.preventDefault();
+      if (validator.isDuplicated(selectedValue.options, option.optionNo)) {
+        alert('이미 선택된 옵션입니다.');
+      } else {
+        setSelectedValue(({ options }) => ({
+          label: option.label,
+          options: [option],
+        }));
+        selectOption(option);
+      }
+      onToggle(false);
+    },
+    [setSelectedValue, selectOption, onToggle, selectedValue.options],
+  );
 
   useEffect(() => {
-
     if (!customOption) return;
 
     if (!customOption?.optionNo) {
@@ -81,43 +94,39 @@ export default function SelectBox({ defaultInfo, selectOption, selectOptions, cu
     }
 
     const isDuplicated = validator.isDuplicated(selectedValue.options, customOption.optionNo);
-    
+
     setSelectedValue(({ options }) => ({
       label: customOption.label,
-      options: isDuplicated 
-                  ? [ ...options ] 
-                  : options.concat(customOption)
+      options: isDuplicated ? [...options] : options.concat(customOption),
     }));
-
   }, [customOption, initialSelectedState, selectedValue.options]);
 
   useEffect(() => {
     if (!deleteOptionNo) return;
-    setSelectedValue(prev => {
-      prev.options = prev.options.filter(o => o.optionNo !== deleteOptionNo);
+    setSelectedValue((prev) => {
+      prev.options = prev.options.filter((o) => o.optionNo !== deleteOptionNo);
       return prev;
     });
 
     setDeleteOptionNo(0);
+  }, [deleteOptionNo]);
 
-  }, [deleteOptionNo])
+  useEffect(() => {}, []);
 
   return (
     <>
-      {
-        React.createElement(selector[defaultInfo.type], {
-          selectOptions,
-          display: isOpened ? 'block' : 'none',
-          selectedLabel: selectedValue.label,
-          tag: defaultInfo.tag,
-          className: defaultInfo.className,
-          onToggleHandler,
-          onClickHandler,
-          open,
-        })
-      }
+      {React.createElement(selector[defaultInfo.type], {
+        selectOptions,
+        display: isOpened ? 'block' : 'none',
+        selectedLabel: selectedValue.label,
+        tag: defaultInfo.tag,
+        className: defaultInfo.className,
+        onToggleHandler,
+        onClickHandler,
+        open,
+      })}
     </>
-  )
+  );
 }
 
 SelectBox.defaultProps = {
@@ -129,5 +138,5 @@ SelectBox.defaultProps = {
   customOptionNo: null,
   deleteOptionNo: 0,
   setDeleteOptionNo: () => null,
-  open: false
-}
+  open: false,
+};
