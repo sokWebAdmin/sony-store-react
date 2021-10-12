@@ -231,7 +231,7 @@ export default function Main() {
                   observer={true}
                   loop={true}
                   speed={600}
-                  autoplay={{ delay: 6000, disableOnInteraction: true }}
+                  autoplay={{ delay: 20000, disableOnInteraction: true }}
                   pagination={{
                     el: '.swiper-pagination',
                     type: 'custom',
