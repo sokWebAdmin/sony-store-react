@@ -124,7 +124,7 @@ const OrderSummary = () => {
                   {summary.exchangeDoneCnt +
                     summary.returnDoneCnt +
                     summary.returnProcessingCnt +
-                    summary.returnProcessingCnt}
+                    summary.exchangeProcessingCnt}
                 </span>{' '}
                 건
               </strong>
