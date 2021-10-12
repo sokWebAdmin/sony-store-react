@@ -296,27 +296,29 @@ export default function Main() {
                               : slideMoBanners[index].banners[0].description}
                           </span>
                         </span>
-                        {size.width > breakPointTablet ? (
-                          <Link
-                            to={bannerInfo?.banners[0]?.landingUrl}
-                            target={bannerInfo?.banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'}
-                            className="kv__link"
-                            style={{ padding: '30px 10px 30px 0' }}
-                          >
-                            <span>자세히 보기</span>
-                          </Link>
-                        ) : (
-                          <Link
-                            to={slideMoBanners[index].banners[0]?.landingUrl}
-                            target={
-                              slideMoBanners[index].banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'
-                            }
-                            className="kv__link"
-                            style={{ padding: '30px 10px 30px 0' }}
-                          >
-                            <span>자세히 보기</span>
-                          </Link>
-                        )}
+                        {size.width > breakPointTablet
+                          ? bannerInfo?.banners[0]?.landingUrl !== '//' && (
+                              <Link
+                                to={bannerInfo?.banners[0]?.landingUrl}
+                                target={bannerInfo?.banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                                className="kv__link"
+                                style={{ padding: '30px 10px 30px 0' }}
+                              >
+                                <span>자세히 보기</span>
+                              </Link>
+                            )
+                          : slideMoBanners[index]?.banners[0]?.landingUrl !== '//' && (
+                              <Link
+                                to={slideMoBanners[index].banners[0]?.landingUrl}
+                                target={
+                                  slideMoBanners[index].banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'
+                                }
+                                className="kv__link"
+                                style={{ padding: '30px 10px 30px 0' }}
+                              >
+                                <span>자세히 보기</span>
+                              </Link>
+                            )}
                       </div>
                     </SwiperSlide>
                   ))}
@@ -584,13 +586,13 @@ export default function Main() {
                     />
                   )}
                   {size.width > breakPointTablet && academyPcBanners?.banners ? (
-                    <Link
+                    <a
                       className="main__banner__link"
-                      to={academyPcBanners.banners[0]?.landingUrl}
+                      href={academyPcBanners.banners[0]?.landingUrl}
                       target={academyPcBanners?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
                     >
                       자세히 보기
-                    </Link>
+                    </a>
                   ) : (
                     <Link
                       className="main__banner__link"
