@@ -7,11 +7,10 @@ import close from "../assets/images/common/ic_close.svg";
 
 //utils
 import { Link, useHistory } from "react-router-dom";
-import { getProductsFavoriteKeywords } from "../api/product";
 import Alert from "./common/Alert";
 import { useAlert } from "../hooks";
 import { tagColorMap } from "../const/category";
-import { getDisplaySectionsSectionNo } from "../api/display";
+import { getDisplaySectionsSectionNo, loadBanner } from "../api/display";
 
 export default function Search({ setSearchOpen }) {
   
@@ -28,9 +27,17 @@ export default function Search({ setSearchOpen }) {
   } = useAlert();
 
   const fetchFavoriteKeywords = async () => {
+    const FAVORITE_SECTION_CODE = '027';
     try {
-      const { data } = await getProductsFavoriteKeywords();
-      setFavoriteKeywords(data);
+      const { data } = await loadBanner(FAVORITE_SECTION_CODE);
+      setFavoriteKeywords(
+        _.chain(data)
+         .flatMap(({ accounts }) => accounts)
+         .flatMap(({ banners }) => banners)
+         .take(10)
+         .map(({ name, landingUrl }) => ({ label: name, url: landingUrl }))
+         .value()
+      );
     } catch(e) {
       console.error(e)
     }
@@ -99,8 +106,8 @@ export default function Search({ setSearchOpen }) {
             <h3 className="search__title">인기 검색어</h3>
             <div className="search__keyword__list">
               {
-                favoriteKeywords.map((k, idx) => (
-                  <button key={`${k}${idx}`} className="search__keyword__item" onClick={e => searchHandler(e, k)}>{`# ${k}`}</button>
+                favoriteKeywords.map(({ label, url }, idx) => (
+                  <Link to={url || `/search-result/${label}`} key={`${label}${idx}`} className="search__keyword__item" onClick={() => setSearchOpen(false)}>{`# ${label}`}</Link>
                 ))
               }
             </div>
