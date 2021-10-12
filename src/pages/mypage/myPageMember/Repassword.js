@@ -18,7 +18,7 @@ const errorMsg = {
   },
   valid: {
     password: '현재 비밀번호가 올바르지 않습니다.',
-    newPassword: `비밀번호는 대/소문자, 숫자, 특수문자를 혼합하여 12자리 이상으로 입력하시기 바랍니다. <br /> 일부 특수문자도 사용 가능합니다.`,
+    newPassword: `비밀번호는 대/소문자, 숫자, 특수문자를 혼합하여 12~15자리로 입력하시기 바랍니다. <br /> 일부 특수문자도 사용 가능합니다.`,
     valNewPassword: `새 비밀번호가 일치 하지 않습니다. <br /> 다시 확인해주세요.`,
   }
 };
@@ -88,7 +88,7 @@ export default function Repassword({ setVisible }) {
       return false;
     }
 
-    const pattern = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{12}$/;
+    const pattern = /^(?=.*[a-zA-Z0-9!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{12,15}$/;
     if (newPassword !== valNewPassword) {
       openAlert(errorMsg.valid.valNewPassword);
       return false
