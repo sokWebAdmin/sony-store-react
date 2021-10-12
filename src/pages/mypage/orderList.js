@@ -42,6 +42,7 @@ export default function OrderList() {
     startDate: new Date(addMonth(new Date(), -3)),
     endDate: new Date(),
   });
+  const [nextOrderRequestTypes, setNextOrderRequestTypes] = useState('');
   const [orderProducts, setOrderProducts] = useState([]);
   const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(true);
   const nextPage = useRef(2);
@@ -70,6 +71,7 @@ export default function OrderList() {
     showLoadMoreBtn(newOrderProducts);
     setOrderProducts(newOrderProducts);
     setSearchPeriod({ startDate, endDate });
+    setNextOrderRequestTypes(orderRequestTypes);
     nextPage.current = 2;
   };
 
@@ -90,16 +92,16 @@ export default function OrderList() {
 
   const onClickLoadMore = (e) => {
     e.preventDefault();
-    loadMore(nextPage.current, 10);
+    loadMore(nextPage.current, 10, nextOrderRequestTypes);
   };
 
-  const loadMore = async (pageNumber, pageSize) => {
+  const loadMore = async (pageNumber, pageSize, orderRequestTypes = '') => {
     const { startDate, endDate } = searchPeriod;
     const startYmd = changeDateFormat(startDate, 'YYYY-MM-DD');
     const endYmd = changeDateFormat(endDate, 'YYYY-MM-DD');
 
     const res = await getProfileOrders({
-      params: { startYmd, endYmd, pageNumber, pageSize },
+      params: { startYmd, endYmd, pageNumber, pageSize, orderRequestTypes },
     });
     const newOrderProducts = makeOrderProductsList(res.data);
 
