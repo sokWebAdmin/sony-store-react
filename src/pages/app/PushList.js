@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { getPushs } from '../../api/sony/member';
+import ViewMore from '../../components/common/ViewMore';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 // stylesheet
 import '../../assets/scss/app.scss';
-import { getPushs } from '../../api/sony/member';
-import ViewMore from '../../components/common/ViewMore';
 
 const PushList = () => {
-  const [pushData, setPushData] = useState({items: [], totalCount: 0});
+  const [pushData, setPushData] = useState({ items: [], totalCount: 0 });
 
   const fetchPushList = async (pageIdx = 1) => {
     const { data } = await getPushs({fromDate: '100', rowsPerPage: 10, pageIdx});
@@ -27,7 +28,7 @@ const PushList = () => {
       <div className="wrapper">
         <div className="container" id="container">
           <div className="app_head">
-            <a href="/" className="back_btn">뒤로 가기</a>
+            <GoBack />
             <h1 className="app_head_tit">PUSH 알림 메시지함</h1>
           </div>
           <div className="app_guide">
@@ -56,11 +57,31 @@ const PushList = () => {
                 )
               })}
             </ul>
-            <ViewMore totalCount={pushData.totalCount} pageSize={10} viewMore={fetchPushList} />
+            <ViewMore totalCount={pushData.totalCount} pageSize={10}
+                      viewMore={fetchPushList} />
           </div>}
         </div>
       </div>
     </>
+  );
+};
+
+const GoBack = () => {
+  const history = useHistory();
+
+  const goBack = evt => {
+    evt.preventDefault();
+
+    history.push({
+      pathname: '/',
+      state: {
+        menuOpen: true,
+      },
+    });
+  };
+
+  return (
+    <a href="/" onClick={goBack} className="back_btn">뒤로 가기</a>
   );
 };
 
