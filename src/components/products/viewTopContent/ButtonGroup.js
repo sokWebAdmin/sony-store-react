@@ -2,7 +2,7 @@ import qs from 'qs';
 import React, { useContext, useState, createRef, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from "../../../context/global.context";
-import { getCart, postCart, postOrderSheets, postPaymentsReserve } from "../../../api/order";
+import { getCart, postCart, postOrderSheets } from "../../../api/order";
 import { postProfileLikeProducts } from "../../../api/product";
 import Alert from '../../common/Alert';
 import Notification from '../Notification';
