@@ -20,6 +20,9 @@ const CouponList = () => {
     });
     setCoupons(res.data.items);
 
+    if(res.data.items.length < 10){
+      setLoadMoreBtnVisible(false)
+    }
     nextPage.current = 2;
   };
 
