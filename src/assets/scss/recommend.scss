@@ -448,4 +448,7 @@
       transition-property: transform;
     }
   }
+  .exhibitions_zone .exhibitions_inner.swiper_none .arrow_btn{
+    display: inline-block !important;
+  }
 }
