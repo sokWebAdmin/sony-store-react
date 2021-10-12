@@ -29,6 +29,10 @@ const initialState = {
   valNewPassword: '',
 };
 
+const patternNumber = /[0-9]/g;
+const patternEnglish = /[a-zA-Z]/g;
+const patternSpecial = /[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]/g;
+
 // const labels = Object.keys(initialState);
 
 export default function Repassword({ setVisible }) {
@@ -88,13 +92,17 @@ export default function Repassword({ setVisible }) {
       return false;
     }
 
-    const pattern = /^(?=.*[a-zA-Z0-9!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{12,15}$/;
     if (newPassword !== valNewPassword) {
       openAlert(errorMsg.valid.valNewPassword);
       return false
     };
 
-    if (!(pattern.test(newPassword))) {
+    if (
+      newPassword.length < 12 || 
+      !patternNumber.test(newPassword) || 
+      !patternSpecial.test(newPassword) || 
+      !patternEnglish.test(newPassword)
+    ) {
       openAlert(errorMsg.valid.newPassword);
       return false
     };
