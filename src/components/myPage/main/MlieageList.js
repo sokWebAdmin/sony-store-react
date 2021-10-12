@@ -26,6 +26,7 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
 
   const search = async ({ startDate, endDate, more }) => {
     const { start, end } = changeDateTime(startDate, endDate);
+    console.log(start, end, '2');
     if (!more) {
       setPageIdx(1);
     }
@@ -41,6 +42,7 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
   };
 
   useEffect(() => {
+    console.log(startDateTime, endDateTime, pageIdx, '1');
     if (pageIdx !== 1) {
       search({ startDateTime, endDateTime, more: true });
     }
