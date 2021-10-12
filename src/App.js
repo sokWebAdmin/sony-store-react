@@ -166,21 +166,24 @@ const App = (props) => {
   );
 
   const handleScroll = useCallback(() => {
+    // FIXME: to @sh.c : securityerror: attempt to use history.pushstate() more
+    // than 100 times per 30 seconds
     requestAnimationFrame(() => {
-      const { pageXOffset, pageYOffset, location } = window;
-      const { state: prevState = {} } = window.history;
-
-      window.history.replaceState(
-        {
-          ...prevState,
-          scroll: {
-            x: pageXOffset,
-            y: pageYOffset,
-          },
-        },
-        '',
-        location.href,
-      );
+      console.log('handleScroll call');
+      // const { pageXOffset, pageYOffset, location } = window;
+      // const { state: prevState = {} } = window.history;
+      //
+      // window.history.replaceState(
+      //   {
+      //     ...prevState,
+      //     scroll: {
+      //       x: pageXOffset,
+      //       y: pageYOffset,
+      //     },
+      //   },
+      //   '',
+      //   location.href,
+      // );
     });
   }, []);
 
