@@ -118,13 +118,17 @@ const OrderSummary = () => {
             )}`}
           >
             교환 반품{' '}
-            <a title="교환 반품 건">
+            <a
+              href="#"
+              title="교환 반품 건"
+              onClick={(e) => onClickOrderStatus(e, 'EXCHANGE_PROCESSING,EXCHANGE_DONE,RETURN_PROCESSING,RETURN_DONE')}
+            >
               <strong className="val_txt">
                 <span className="val">
                   {summary.exchangeDoneCnt +
                     summary.returnDoneCnt +
                     summary.returnProcessingCnt +
-                    summary.returnProcessingCnt}
+                    summary.exchangeProcessingCnt}
                 </span>{' '}
                 건
               </strong>

@@ -108,7 +108,7 @@ export default function OrderStatusSummary({
           </p>
           <p className={`txt return ${hasOrder(totalExchangeAndReturnCnt)}`}>
             교환 반품{' '}
-            <a href="#" title="교환 반품 건">
+            <a href="#" title="교환 반품 건" onClick={(e) => onClickOrderStatus(e, 'EXCHANGE_PROCESSING,EXCHANGE_DONE,RETURN_PROCESSING,RETURN_DONE')}>
               <strong className="val_txt">
                 <span className="val">{totalExchangeAndReturnCnt}</span> 건
               </strong>
