@@ -119,7 +119,7 @@ export default function Search({ setSearchOpen }) {
                 {
                   recommendedProducts?.map((rp, idx) => (
                     <li key={`${rp.productNo}${idx}`} className="search__recomm__item">
-                      <Link to={`/product-view/${rp.productNo}`}>
+                      <Link to={`/product-view/${rp.productNo}`} onClick={() => setSearchOpen(false)}>
                         <div className="search__recomm__pic">
                           <img src={rp.img} alt={rp.productName} />
                           {
