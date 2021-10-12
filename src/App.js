@@ -71,6 +71,7 @@ import OpenLogin from './components/member/OpenLogin';
 
 // app
 import PushList from './pages/app/PushList';
+import AppLanding from './pages/app/Landing';
 
 //footer
 import Policy from './pages/footer/policy';
@@ -314,6 +315,7 @@ const App = (props) => {
               agent.isApp &&
               <>
                 <Route exact path="/app/push-list" component={PushList} />
+                <Route exact path="/app/landing" component={AppLanding} />
               </>
             }
 
