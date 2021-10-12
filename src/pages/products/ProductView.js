@@ -93,7 +93,8 @@ export default function ProductView({ match }) {
       flatOptions: flatOptions.length > 0 ? flatOptions.map(o => {
         return {
           ...o,
-          colors: o.value.includes('_#') ? getColorChipValues(o.value) : null
+          colors: o.value.includes('_#') ? getColorChipValues(o.value) : null,
+          productNo: productData.baseInfo.productNo
         }
       }) : [],
       hasColor,
