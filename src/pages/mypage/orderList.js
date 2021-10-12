@@ -157,6 +157,7 @@ export default function OrderList() {
                           claimNo={orderProduct.claimNo}
                           claimStatusType={orderProduct.claimStatusType}
                           orderStatusTypeLabel={orderProduct.orderStatusTypeLabel}
+                          claimStatusTypeLabel={orderProduct.claimStatusTypeLabel}
                           delivery={orderProduct.delivery}
                           key={index}
                         />

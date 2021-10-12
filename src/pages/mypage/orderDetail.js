@@ -34,6 +34,7 @@ export default function OrderDetail() {
     orderNo: '',
     orderYmdt: '',
     defaultOrderStatusType: '', // order의 가장 첫번째 옵션주문의 주문상태(api 동일)
+    claimStatusTypeLabel: '', // 클레임 상태 라벨(기획 누락으로 샵바이 API에서 던져주는 claimStatusTypeLabel 사용)
   });
   const [claimInfo, setClaimInfo] = useState({
     claimStatusType: '',
@@ -83,11 +84,10 @@ export default function OrderDetail() {
 
     try {
       return await getOrderByOrderNo(request);
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   const setStates = (res) => {
     const {
@@ -116,6 +116,9 @@ export default function OrderDetail() {
       orderNo,
       orderYmdt: orderYmdt.split(' ')[0],
       defaultOrderStatusType,
+      claimStatusTypeLabel:
+        orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0].claimStatusTypeLabel,
+      retrieveInvoiceUrl: orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].retrieveInvoiceUrl,
     });
 
     setClaimInfo(() => ({
@@ -194,7 +197,7 @@ export default function OrderDetail() {
     setConfirm(() => ({
       visible: false,
       message: '',
-      name: ''
+      name: '',
     }));
 
     if (status === 'ok') {
@@ -210,7 +213,7 @@ export default function OrderDetail() {
       ...confirm,
       visible: true,
       message: '주문 취소 신청 후에는 변경하실 수 없습니다.\n취소 접수를 하시겠습니까?',
-      name: 'cancel-confirm'
+      name: 'cancel-confirm',
     });
   };
 
@@ -244,16 +247,18 @@ export default function OrderDetail() {
         return;
       }
 
-      let message = '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
+      let message =
+        '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
       if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
-        message += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.'
+        message += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.';
       }
 
       openAlert(message, () => {
         if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
           return async () => {
             const { data } = await _getOrderByOrderNo();
-            const { claimStatusType, claimNo } = data.orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0];
+            const { claimStatusType, claimNo } =
+              data.orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0];
 
             if (!!claimNo && claimStatusType === 'CANCEL_REQUEST' && payInfo.payType === 'VIRTUAL_ACCOUNT') {
               setClaimInfo(() => ({ claimStatusType, claimNo }));
@@ -265,7 +270,7 @@ export default function OrderDetail() {
         return () => window.location.reload();
       });
     });
-  }
+  };
 
   return (
     <>

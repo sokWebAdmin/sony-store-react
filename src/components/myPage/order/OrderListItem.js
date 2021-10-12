@@ -24,6 +24,7 @@ export default function OrderListItem({
   orderStatusType,
   claimNo,
   claimStatusType,
+  claimStatusTypeLabel,
   delivery,
 }) {
   const [refundAccountVisible, setRefundAccountVisible] = useState(false);
@@ -53,6 +54,7 @@ export default function OrderListItem({
     EXCHANGE_REQUEST: '교환',
     EXCHANGE_DONE: '교환완료',
     RETURN_REQUEST: '반품',
+    RETURN_PROC_BEFORE_RECEIVE:'반품 처리중',
     RETURN_DONE: '반품완료',
   };
 
@@ -146,7 +148,7 @@ export default function OrderListItem({
         {orderCnt} <span className="unit">개</span>
       </div>
       <div className="col_table_cell order">
-        <span className="order_status">{claimStatusMap[claimStatusType] ?? orderStatusMap[orderStatusType]}</span>
+        <span className="order_status">{claimStatusTypeLabel ?? orderStatusMap[orderStatusType]}</span>
         {showOrderCancel(orderStatusType, claimStatusType) && (
           <button type="button" className="button button_negative button-s" onClick={onClickOrderCancel}>
             주문취소

@@ -1,10 +1,14 @@
 export default function OrderSummary({ orderInfo }) {
+  console.log('orderInfo:', orderInfo);
   const orderStatus = orderInfo.defaultClaimStatusType ?? orderInfo.defaultOrderStatusType;
 
   // 기획이랑 기존 샵바이 주문 프로세스랑 기획이 너무 상이함.
   // 소니 기획: 주문별 주문상태출력, 샵바아: 옵션별 주문상태
   // 주문상세조회 API에서 defaultOrderStatusType를 대표로 출력하는데, 이값은 서버에서 orderOptions의 첫번째 아이템의 상태를 의미함
-  const getOrderStatus = (defaultOrderStatusType) => {
+  const getOrderStatus = (orderInfo) => {
+    if (orderInfo.claimStatusTypeLabel !== '') {
+      return orderInfo.claimStatusTypeLabel;
+    }
     const orderStatus = {
       DEPOSIT_WAIT: '입금대기',
       PAY_DONE: '결제완료',
@@ -26,11 +30,15 @@ export default function OrderSummary({ orderInfo }) {
       RETURN_DONE: '반품완료',
     };
 
-    return orderStatus[defaultOrderStatusType];
+    return orderStatus[orderInfo.defaultOrderStatusType];
   };
 
   const showFindDelivery = (defaultOrderStatusType) => {
     return defaultOrderStatusType === 'DELIVERY_ING' || defaultOrderStatusType === 'DELIVERY_DONE';
+  };
+
+  const openFindDeliveryPopup = () => {
+    window.open(orderInfo.retrieveInvoiceUrl);
   };
 
   return (
@@ -38,9 +46,9 @@ export default function OrderSummary({ orderInfo }) {
       <dl className="o_summary_status">
         <dt className="o_summary_term">처리상태</dt>
         <dd className="o_summary_desc">
-          <strong>{getOrderStatus(orderStatus)}</strong>
+          <strong>{getOrderStatus(orderInfo)}</strong>
           {showFindDelivery(orderInfo.defaultOrderStatusType) && (
-            <button type="button" className="button button_positive button-s">
+            <button type="button" className="button button_positive button-s" onClick={openFindDeliveryPopup}>
               배송조회
             </button>
           )}
