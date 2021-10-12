@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, createRef, useMemo } from 'react';
 import { toCurrencyString } from '../../utils/unit';
 import { Link, useHistory } from 'react-router-dom';
 import { postCart, postOrderSheets } from '../../api/order';
@@ -9,6 +9,7 @@ import qs from 'qs';
 import { useAlert } from '../../hooks';
 import Notification from '../products/Notification';
 import Alert from '../common/Alert';
+import HsValidator from '../cart/HsValidator';
 
 const ERROR_CODE_MAPPING_ROUTE = {
   O8001: {
@@ -17,14 +18,29 @@ const ERROR_CODE_MAPPING_ROUTE = {
   },
 };
 
+const forGradeTags = ['liveon', 'refurbish', 'employee'];
+
+const filterProductsByGrade = (event, isGrade) => event?.section.flatMap(({ products }) => products)?.filter(({ hsCode }) => isGrade === !!hsCode);
+
 const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
   const { isLogin } = useContext(GlobalContext);
   const history = useHistory();
-  const [section, setSection] = useState(event?.section.flatMap(({ products }) => products));
+  const isMemberGrade = useMemo(() => {
+    const splitPathname = history.location.pathname.split('/');
+    return forGradeTags.includes(splitPathname[splitPathname.length - 2]);
+  }, [history.location.pathname]);
+
+  const [section, setSection] = useState(filterProductsByGrade(event, isMemberGrade));
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [giftVisible, setGiftVisible] = useState(false);
+  
+  
 
-  const goCart = async (productNo) => {
+  const goCart = async (productNo, hsCode) => {
+
+    const succeed = await hsValidation(!!hsCode);
+    if (!succeed) return;
+
     const { data } = await getProductOptions(productNo);
     const products = [data.flatOptions[0]].map((option) => {
       return {
@@ -120,10 +136,10 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
 
   useEffect(() => {
     if (!filterLabel || filterLabel === '전체') {
-      setSection(event?.section.flatMap(({ products }) => products));
+      setSection(filterProductsByGrade(event, isMemberGrade));
       return;
     }
-    const newSection = event.section.find(({ label }) => label === filterLabel).products;
+    const newSection = event.section.find(({ label }) => label === filterLabel).products?.filter(({ hsCode }) => isMemberGrade === !!hsCode);
     newSection && setSection(newSection);
   }, [filterLabel]);
 
@@ -132,8 +148,8 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
 
     const newSection =
       !filterLabel || filterLabel === '전체'
-        ? event?.section.flatMap(({ products }) => products)
-        : event.section.find(({ label }) => label === filterLabel).products;
+        ? filterProductsByGrade(event, isMemberGrade)
+        : event.section.find(({ label }) => label === filterLabel).products?.filter(({ hsCode }) => isMemberGrade === !!hsCode);
     if (grade === '전체') {
       newSection && setSection(newSection);
       return;
@@ -143,6 +159,10 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
     );
     newGradeSection && setSection(newGradeSection);
   }, [grade, filterLabel]);
+
+  // hsValidation
+  const hsValidator = createRef(null);
+  const hsValidation = async validation => await hsValidator.current.validation(validation);
 
   return (
     <>
@@ -226,10 +246,11 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
                     <button
                       type="button"
                       className="button button_positive button-s"
-                      onClick={() => goCart(product.productNo)}
+                      onClick={() => goCart(product.productNo, product.hsCode)}
                     >
                       바로 구매
                     </button>
+                    <HsValidator ref={hsValidator} />
                   </div>
                 </div>
               </div>

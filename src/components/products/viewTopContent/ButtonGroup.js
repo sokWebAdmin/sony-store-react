@@ -218,7 +218,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   }
 
   // hsValidation
-  const hsValidator = createRef();
+  const hsValidator = createRef(null);
   const hsValidation = async validation => await hsValidator.current.validation(validation);
 
   return (
