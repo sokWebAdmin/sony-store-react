@@ -8,7 +8,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/recommend.scss';
-
+import arrow from '../../assets/images/common/arrow_recommend.png';
 //context
 import GlobalContext from '../../context/global.context';
 
@@ -367,10 +367,10 @@ export default function Recommend({ match }) {
                     </Swiper>
                     <div className="arrow_btn">
                       <a className="arrow swiper-button-prev">
-                        <img src="../../assets/images/common/arrow_recommend.png" alt="이전" />
+                        <img src={arrow} alt="이전" />
                       </a>
                       <a className="arrow swiper-button-next">
-                        <img src="../../assets/images/common/arrow_recommend.png" alt="다음" />
+                        <img src={arrow} alt="다음" />
                       </a>
                     </div>
                   </div>
