@@ -37,6 +37,10 @@ export default function OrderSummary({ orderInfo }) {
     return defaultOrderStatusType === 'DELIVERY_ING' || defaultOrderStatusType === 'DELIVERY_DONE';
   };
 
+  const openFindDeliveryPopup = () => {
+    window.open(orderInfo.retrieveInvoiceUrl);
+  };
+
   return (
     <div className="o_summary">
       <dl className="o_summary_status">
@@ -44,7 +48,7 @@ export default function OrderSummary({ orderInfo }) {
         <dd className="o_summary_desc">
           <strong>{getOrderStatus(orderInfo)}</strong>
           {showFindDelivery(orderInfo.defaultOrderStatusType) && (
-            <button type="button" className="button button_positive button-s">
+            <button type="button" className="button button_positive button-s" onClick={openFindDeliveryPopup}>
               배송조회
             </button>
           )}

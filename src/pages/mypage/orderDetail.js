@@ -34,7 +34,7 @@ export default function OrderDetail() {
     orderNo: '',
     orderYmdt: '',
     defaultOrderStatusType: '', // order의 가장 첫번째 옵션주문의 주문상태(api 동일)
-    claimStatusTypeLabel:'', // 클레임 상태 라벨(기획 누락으로 샵바이 API에서 던져주는 claimStatusTypeLabel 사용)
+    claimStatusTypeLabel: '', // 클레임 상태 라벨(기획 누락으로 샵바이 API에서 던져주는 claimStatusTypeLabel 사용)
   });
   const [claimInfo, setClaimInfo] = useState({
     claimStatusType: '',
@@ -118,6 +118,7 @@ export default function OrderDetail() {
       defaultOrderStatusType,
       claimStatusTypeLabel:
         orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0].claimStatusTypeLabel,
+      retrieveInvoiceUrl: orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].retrieveInvoiceUrl,
     });
 
     setClaimInfo(() => ({
