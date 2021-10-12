@@ -498,6 +498,7 @@
       max-width: 1080px;
       height: 608px;
       margin: 0 auto;
+      z-index: 50;
     }
 
     &_tit {
@@ -1340,11 +1341,13 @@
 
   .purchaseConsulting {
     padding: 120px 0 160px;
+
     @include only-tab {
-          margin: 0 24px;
-          padding: 120px 0 160px
+      margin: 0 24px;
+      padding: 120px 0 160px
     }
-    @include only-mo{
+
+    @include only-mo {
       margin: 0;
       padding: 40px 0;
     }

@@ -2,7 +2,7 @@ import qs from 'qs';
 import React, { useContext, useState, createRef, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from "../../../context/global.context";
-import { postCart, postOrderSheets } from "../../../api/order";
+import { postCart, postOrderSheets, postPaymentsReserve } from "../../../api/order";
 import { postProfileLikeProducts } from "../../../api/product";
 import Alert from '../../common/Alert';
 import Notification from '../Notification';
@@ -212,6 +212,9 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       case 'wish':
         wishHandler();
         break;
+      case 'reserve':
+        order();
+        break;
       default:
         break;
     }
@@ -253,7 +256,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
                 className="btn_style direct" 
                 style={{backgroundColor: '#000'}}
               >바로 구매하기</a>}
-              {saleStatus === 'RESERVE' && <a href="#none" className="btn_style reservation" style={{display: 'block', backgroundColor: '#5865F5'}}>예약판매</a>}
+              {saleStatus === 'RESERVE' && <a onClick={ e => handleClick(e, 'reserve') } href="#none" className="btn_style reservation" style={{display: 'block', backgroundColor: '#5865F5'}}>예약판매</a>}
               {saleStatus === 'READY_RESERVE' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#ff4e4e'}}>출시예정</a>}
               {saleStatus === 'READY' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#888'}}>임시품절</a>}
               {saleStatus === 'SOLDOUT' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#ddd'}}>품절</a>}

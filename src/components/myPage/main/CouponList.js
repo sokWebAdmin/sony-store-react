@@ -101,7 +101,10 @@ const CouponList = () => {
         </div>
         <div className="ico_box_link">
           {/* TODO: 멤버십 > 쿠폰안내 탭으로 이동 가능해야함 */}
-          <Link to="membership/benefit" className="box_link_inner ico_type1">
+          <Link to={{
+            pathname: `membership/benefit`,
+            state: { type: 'coupon' }
+          }} className="box_link_inner ico_type1">
             <div className="txt_box">
               <p className="tit">소니스토어의 쿠폰 보기</p>
               <p className="txt">첫 구매 등 소니스토어의 다양한 쿠폰 혜택을 받으세요!</p>

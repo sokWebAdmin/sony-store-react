@@ -32,8 +32,8 @@ const LayerPopup = ({ children, onClose, className, popContClassName = '', popCo
           <div className={`pop_cont ${popContClassName}`} style={popContStyle}>
             {children}
           </div>
-          <button type="button" className="ico_x closed" title="팝업창 닫기" onClick={close}>
-            <span>팝업창 닫기</span>
+          <button type="button" className="ico_x closed delete" title="팝업창 닫기" onClick={close}>
+            <span className="delete">팝업창 닫기</span>
           </button>
         </div>
       </div>

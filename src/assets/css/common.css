@@ -1161,6 +1161,7 @@ body {
   }
 
   .header--active {
+    z-index: 999;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -1517,7 +1518,7 @@ body {
 
 .footer {
   position: relative;
-  z-index: 100;
+  z-index: 900;
   color: #bbb;
   background-color: #000
 }

@@ -446,7 +446,7 @@ body {
 
 .header--visible {
   -webkit-transform: translateY(0);
-  transform: translateY(0)
+  transform: translateY(0);
 }
 
 .header--invisible {
@@ -1170,7 +1170,8 @@ body {
     width: 100%;
     min-width: 320px;
     max-width: 1920px;
-    height: 100%
+    height: 100%;
+    z-index: 999;
   }
 
   .header--active .header__logo {
@@ -1517,7 +1518,7 @@ body {
 
 .footer {
   position: relative;
-  z-index: 100;
+  z-index: 900;
   color: #bbb;
   background-color: #000
 }
