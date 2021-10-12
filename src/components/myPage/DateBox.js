@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 import { addMonth } from '../../utils/dateFormat';
 
+//css
+import '../../assets/scss/contents.scss';
+import '../../assets/scss/mypage.scss';
+
 // components
 import DatePicker from '../common/DatePicker';
 
@@ -60,7 +64,7 @@ export default function DateBox({ search, firstSearch, style }) {
           </a>
         </li>
       </ul>
-      <div className="date_rang" style={{ width: '312px' }}>
+      <div className="date_rang">
         <DatePicker
           dateValue={period.startDate}
           width={'100%'}
@@ -69,17 +73,19 @@ export default function DateBox({ search, firstSearch, style }) {
           option={{
             selectableRanges: [[null, new Date()]],
           }}
+          style={{ flexBasis: '100%' }}
         />
         <span style={{ lineHeight: '32px' }}>&nbsp;~&nbsp;</span>
         <DatePicker
           dateValue={period.endDate}
           width={'100%'}
           height={'32px'}
-          calendarStyle={isMobile && { position: 'absolute', left:'-130px' }}
+          calendarStyle={isMobile && { position: 'absolute', left: '-130px' }}
           bindDate={onChangeEndDate}
           option={{
             selectableRanges: [[null, new Date()]],
           }}
+          style={{ flexBasis: '100%' }}
         />
         <button className="button button_positive button-s" type="button" onClick={onClickSearch}>
           조회
