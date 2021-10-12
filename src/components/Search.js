@@ -117,7 +117,7 @@ export default function Search({ setSearchOpen }) {
             <div className="search__recomm__wrapper">
               <ul className="search__recomm__list">
                 {
-                  recommendedProducts?.map((rp, idx) => (
+                  [...recommendedProducts].splice(0, 3)?.map((rp, idx) => (
                     <li key={`${rp.productNo}${idx}`} className="search__recomm__item">
                       <Link to={`/product-view/${rp.productNo}`} onClick={() => setSearchOpen(false)}>
                         <div className="search__recomm__pic">
