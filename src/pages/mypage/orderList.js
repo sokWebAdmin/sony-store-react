@@ -112,7 +112,7 @@ export default function OrderList() {
 
   // 다음 페이지가 없는 경우 loadmore 버튼 숨김
   const showLoadMoreBtn = (newOrderProducts) => {
-    if (newOrderProducts.length === 0) {
+    if (newOrderProducts.length < 10) {
       setLoadMoreBtnVisible(false);
       return;
     }
