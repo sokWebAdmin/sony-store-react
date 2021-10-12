@@ -23,7 +23,7 @@ import { removeAccessToken } from '../utils/token';
 import { resetProfile, useProfileState, useProileDispatch } from '../context/profile.context';
 import { useClickOutside, useScroll } from '../hooks';
 
-export default function Header() {
+export default function Header (location) {
   const history = useHistory();
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
   const { profile, my } = useProfileState();
@@ -42,9 +42,16 @@ export default function Header() {
   const header = useRef();
 
   useEffect(() => {
-    if (prevScrollY > window.scrollY || header.current.offsetHeight > window.scrollY) {
+    const menuOpen = history.location.state?.menuOpen;
+    menuOpen && openSideBar(headerDispatch);
+  }, [location]);
+
+  useEffect(() => {
+    if (prevScrollY > window.scrollY || header.current.offsetHeight >
+      window.scrollY) {
       setVisible(true);
-    } else {
+    }
+    else {
       setVisible(false);
     }
 
