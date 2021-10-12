@@ -3478,7 +3478,7 @@ body {
 .select_ui_zone .select_inner {
   display: none;
   position: absolute;
-  z-index: 200;
+  z-index: 100;
   left: 0;
   width: 100%;
   border: 1px solid #ddd;
