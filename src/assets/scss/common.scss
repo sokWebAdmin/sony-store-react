@@ -1196,6 +1196,7 @@ body {
       min-width: 320px;
       max-width: 1920px;
       height: 100%;
+      z-index: 999;
 
       .header__logo {
         display: none;
@@ -1541,7 +1542,7 @@ body {
 
 .footer {
   position: relative;
-  z-index: 100;
+  z-index: 900;
   color: #bbb;
   background-color: #000;
 

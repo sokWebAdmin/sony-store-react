@@ -189,6 +189,7 @@ export default function ProductView({ match }) {
     setRelatedProducts(
       _.chain(ret.data.items)
        .reject(({ productNo: no }) => no === productNo)
+       .filter(({ hsCode }) => !hsCode)
        .map(o => ({
          ...o,
          groupManagementMappingProducts: [

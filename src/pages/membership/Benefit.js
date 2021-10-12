@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SEOHelmet from '../../components/SEOHelmet';
 
 //lib-css
@@ -20,8 +20,10 @@ const tabs = [
   { tabName: 'coupon', label: '쿠폰 안내' },
 ];
 
-const Benefit = () => {
-  const [tabState, setTabState] = useState('mileage');
+const Benefit = (props) => {
+
+  const [tabState, setTabState] = useState(props.location?.state?.type || 'mileage');
+  useEffect(() => setTabState(props.location?.state?.type || 'mileage'), [props.location?.state?.type]);
 
   return (
     <>
@@ -49,7 +51,7 @@ const Benefit = () => {
             </div>
             <div className="membership_tabarea" style={{ marginBottom: 0 }}>
               <div className="detail_tab tab_ui size3">
-                <Tabs tabs={tabs} tabState={tabState} setTabState={setTabState} defaultState={'coupon'} />
+                <Tabs tabs={tabs} tabState={tabState} setTabState={setTabState} />
               </div>
               <div className="detail_veiw_area tab_ui_info">
                 {/* 마일리지 */}

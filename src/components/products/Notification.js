@@ -11,7 +11,7 @@ export default function Notification({ type, setNotificationVisible, unusableIco
   const closePopup = e => {
     e.preventDefault();
     setNotificationVisible(false);
-    isOrder && e.target.className !== 'delete' && fetchOrderSheetNo();
+    isOrder && !e.target.classList.contains('delete') && fetchOrderSheetNo();
   }
   return (
     <>
