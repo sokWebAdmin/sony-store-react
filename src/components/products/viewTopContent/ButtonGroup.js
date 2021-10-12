@@ -1,14 +1,15 @@
 import qs from 'qs';
-import React, { useContext, useState, createRef, useEffect } from 'react';
+import React, { useContext, useState, createRef, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from "../../../context/global.context";
-import { postCart, postOrderSheets, postPaymentsReserve } from "../../../api/order";
+import { getCart, postCart, postOrderSheets, postPaymentsReserve } from "../../../api/order";
 import { postProfileLikeProducts } from "../../../api/product";
 import Alert from '../../common/Alert';
 import Notification from '../Notification';
 import { useAlert } from '../../../hooks';
 import gc from '../../../storage/guestCart';
 import HsValidator from '../../cart/HsValidator';
+import _, { add } from 'lodash';
 
 const getOrderSheetNo = async (productNo, selectedOption) => {
   try {
@@ -51,7 +52,19 @@ const ERROR_CODE_MAPPING_ROUTE = {
 
 };
 
-export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, hsCode, isMobileSize, setOptionVisible, optionVisible }) {
+const mergeWithOrderCnt = (accProduct, currProduct) => {
+      if (accProduct.productNo === currProduct.productNo) {
+        accProduct.orderCnt = accProduct.orderCnt + currProduct.orderCnt;
+      } else {
+        accProduct = {
+          ...accProduct,
+          ...currProduct,
+        }
+      };
+      return accProduct;
+    }
+
+export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, hsCode, isMobileSize, setOptionVisible, optionVisible, limitaions }) {
   const $body = document.querySelector('body');
   const history = useHistory();
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
@@ -60,6 +73,8 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   const [cartVisible, setCartVisible] = useState(false);
   const [wishVisible, setWishVisible] = useState(false);
   const [orderVisible, setOrderVisible] = useState(false);
+
+  const maxBuyTimeCnt = useMemo(() => limitaions?.maxBuyTimeCnt, [limitaions]);
 
   const preventScroll = value => value ? $body.classList.add('no_scroll') : $body.classList.remove('no_scroll')
   useEffect(() => {
@@ -157,6 +172,34 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       e?.message && openAlert(e.message);
       console.log(e);
     }
+  };
+
+  const sameProductCount = async productNos => {
+    const mapOrderCnt = products => _.chain(products)
+                                    .filter(o => productNos.includes(o.productNo))
+                                    .map(({ productNo, optionNo, orderCnt }) => ({ productNo, optionNo, orderCnt  }))
+                                    .reduce(mergeWithOrderCnt, {})
+                                    .value();
+                                    
+    if (isLogin) {
+      const { data } = await getCart();
+      return mapOrderCnt(
+              _.chain(data.deliveryGroups)
+              .flatMap(({ orderProducts }) => orderProducts)
+              .flatMap(({ orderProductOptions }) => orderProductOptions)
+            )
+              
+    } else {
+      return mapOrderCnt(gc.items);
+    }
+  };
+
+  const hasLimitedProduct = async () => {
+    if (maxBuyTimeCnt > 0) {
+      const counts = await sameProductCount(selectedOption.flatMap(({ productNo }) => productNo));
+      return !_.every(counts, c => maxBuyTimeCnt - c.orderCnt > 0);
+    }
+    return false
   }
 
   const cart = async () => {
@@ -173,6 +216,11 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
         () => () => history.push(
           getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
       );
+      return;
+    };
+
+    if (await hasLimitedProduct()) {
+      openAlert(`구매 수량 제한 상품입니다. (제한 수량: ${maxBuyTimeCnt})`);
       return;
     }
 

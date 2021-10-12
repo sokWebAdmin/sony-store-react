@@ -137,6 +137,7 @@ export default function TobContent({
             optionVisible={optionVisible}
             setOptionVisible={setOptionVisible}
             isMobileSize={isMobileSize}
+            limitaions={limitations}
           />
         </div>
       </div>
