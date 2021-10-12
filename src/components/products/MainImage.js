@@ -34,10 +34,14 @@ export default function MainImage({ imageUrls }) {
       {
         imageUrls?.map((image, i) => <SwiperSlide className="swiper-slide" key={i}><img src={image} alt="상품이미지" /></SwiperSlide>)
       }
-      <div className="arrow_btn">
-        <button className="product_prev product_arrow" ref={prevRef}><img src="/images/common/arrow_19_34.png" alt="이전" /></button>
-        <button className="product_next product_arrow" ref={nextRef}><img src="/images/common/arrow_19_34.png" alt="다음" /></button>
-      </div>
+      {
+        imageUrls?.length > 1 && (
+        <div className="arrow_btn">
+          <button className="product_prev product_arrow" ref={prevRef}><img src="/images/common/arrow_19_34.png" alt="이전" /></button>
+          <button className="product_next product_arrow" ref={nextRef}><img src="/images/common/arrow_19_34.png" alt="다음" /></button>
+        </div>
+        )
+      }
       <div className="product_pagination" ref={paginationRef}></div>
     </Swiper>
     </div>
