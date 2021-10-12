@@ -257,9 +257,10 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
             );
           })
         ) : (
-          <div className="no_data">
-            <span className="ico_no_data">등록된 상품이 없습니다.</span>
-          </div>
+          null
+          // <div className="no_data">
+          //   <span className="ico_no_data">등록된 상품이 없습니다.</span>
+          // </div>
         )}
       </div>
       <div className="button_wrap">
