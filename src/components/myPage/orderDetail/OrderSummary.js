@@ -6,7 +6,7 @@ export default function OrderSummary({ orderInfo }) {
   // 소니 기획: 주문별 주문상태출력, 샵바아: 옵션별 주문상태
   // 주문상세조회 API에서 defaultOrderStatusType를 대표로 출력하는데, 이값은 서버에서 orderOptions의 첫번째 아이템의 상태를 의미함
   const getOrderStatus = (orderInfo) => {
-    if (orderInfo.claimStatusTypeLabel !== '') {
+    if (orderInfo.claimStatusTypeLabel) {
       return orderInfo.claimStatusTypeLabel;
     }
     const orderStatus = {
