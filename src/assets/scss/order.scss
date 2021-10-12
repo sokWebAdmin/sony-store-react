@@ -1,4 +1,4 @@
-@import './import/variables';
+@import "./import/variables";
 
 //주문,결제 페이지일때 sidebar 위치
 .Order {
@@ -6,91 +6,113 @@
     .sidebar--visible {
       transform: translateY(-45px);
     }
+
     .sidebar--reachend {
       transform: none;
     }
   }
 }
+
 // 장바구니
 .content.order_page {
-  padding: 0 !important;
+  padding: 0;
+
   @include only-mo {
-    .check:not(.check_only) .inp_check + label:before {
+    .check:not(.check_only) .inp_check+label:before {
       width: 14px;
       height: 14px;
       top: 1px;
     }
   }
 }
+
 .order_box {
   padding: 120px 0;
+
   &__tit {
     margin-bottom: 32px;
     font-size: 48px;
     color: #222;
     text-align: center;
     font-weight: 700;
+
     @include only-mo {
       margin-bottom: 16px;
       font-size: 24px;
     }
   }
+
   &__list {
     display: flex;
     justify-content: center;
+
     li {
       position: relative;
       padding-left: 80px;
       text-align: center;
-      z-index: 1; /* 2021-09-07 추가 */
+      z-index: 1;
+
+      /* 2021-09-07 추가 */
       &.on {
         .step_ico {
           &.cart {
             background-image: url(../images/order/ic_cart_step1_on.svg);
           }
+
           &.order {
             background-image: url(../images/order/ic_cart_step2_on.svg);
           }
+
           &.confirm {
             background-image: url(../images/order/ic_cart_step3_on.svg);
           }
         }
+
         p {
           color: $primary-color;
           font-weight: 700;
         }
+
         &:before {
           background-color: $primary-color;
         }
       }
+
       &.d_type {
         p {
           color: $primary-color;
           font-weight: 500;
         }
       }
+
       p {
         padding-top: 15px;
         font-size: 14px;
         color: #888;
       }
+
       .step_ico {
         display: block;
         width: 80px;
         height: 80px;
+
         &.cart {
           background-image: url(../images/order/ic_cart_step1_off.svg);
         }
+
         &.order {
           background-image: url(../images/order/ic_cart_step2_off.svg);
         }
+
         &.confirm {
           background-image: url(../images/order/ic_cart_step3_off.svg);
         }
       }
+
       &:first-child {
         padding-left: 0;
       }
+
       &:before {
         position: absolute;
         top: 39px;
@@ -102,12 +124,15 @@
         background-color: #f1f1f1;
       }
     }
+
     @include only-mo {
       li {
         padding-left: 24px;
+
         .step_ico {
           display: none;
         }
+
         p {
           position: relative;
           border-radius: 100%;
@@ -115,6 +140,7 @@
           text-indent: -9999em;
           width: 24px;
           height: 24px;
+
           &:before {
             content: '1';
             display: inline-block;
@@ -127,107 +153,131 @@
             color: #bbb;
           }
         }
+
         &:nth-child(2) {
           p:before {
             content: '2';
           }
         }
+
         &:nth-child(3) {
           p:before {
             content: '3';
           }
         }
+
         &:nth-child(4) {
           p:before {
             content: '4';
           }
         }
+
         &:nth-child(5) {
           p:before {
             content: '5';
           }
         }
+
         &.on {
           p {
             background-color: $primary-color;
+
             &:before {
               color: #fff;
             }
           }
         }
+
         &::before {
           top: 12px;
         }
+
         &.d_type {
           p {
             border: 1px solid $primary-color;
             background-color: #fff;
           }
         }
-        + .on {
+
+        +.on {
           &:before {
             background-color: $primary-color;
           }
         }
+
         &:before {
           height: 1px;
         }
       }
     }
   }
+
   .empty_cart_box {
     margin-top: 80px;
     padding: 144px 0;
     border-top: 2px solid #222;
     text-align: center;
+
     .empty_ico {
       display: inline-block;
       width: 56px;
       height: 56px;
       background: url(../images/order/ic_empty_cart.svg) no-repeat 0 0;
     }
+
     .emptyinfo_tit {
       margin-top: 24px;
       font-size: 20px;
       color: #222;
       font-weight: 700;
     }
+
     .btn_box {
       margin-top: 40px;
     }
+
     @include only-mo {
       margin-top: 40px;
       padding: 80px 0;
+
       .emptyinfo_tit {
         font-size: 16px;
       }
     }
   }
+
   @include under-pc {
     padding: 80px 0;
   }
+
   @include only-mo {
     padding: 40px 0;
   }
+
   &__cont {
     margin-top: 80px;
+
     .order_info {
       position: relative;
       margin-top: 99px;
+
       &:after {
         display: block;
         content: '';
         clear: both;
       }
     }
-    .radio_box .inp_radio + label {
+
+    .radio_box .inp_radio+label {
       font-size: 14px;
     }
+
     @include only-pc {
       .order_left {
         float: left;
         width: 840px;
       }
+
       .order_right {
         position: sticky;
         top: 0;
@@ -235,31 +285,39 @@
         margin-top: 7px;
         width: 320px;
         transition: top 0.2s $easeInCubic;
-        > .acc .acc_item {
+
+        >.acc .acc_item {
           margin-top: 0;
         }
+
         .pc_none {
           display: none;
         }
       }
-      @at-root .header--fixed ~ .container .order_right {
+
+      @at-root .header--fixed~.container .order_right {
         top: 80px;
       }
+
       .acc_item:first-of-type {
         margin-top: 0;
       }
+
       .mo_pay_btn {
         display: none;
       }
     }
+
     @include under-pc {
       .order_info {
         margin-top: 64px;
       }
+
       .btn_card_box {
         position: static;
         margin-top: 30px;
       }
+
       .mo_pay_btn {
         display: block;
         position: fixed;
@@ -267,6 +325,7 @@
         left: 0;
         width: 100%;
         z-index: 900;
+
         .button-full {
           margin-top: 0;
           padding: 0;
@@ -274,35 +333,43 @@
           height: 3.858em;
           font-size: 16px;
           font-weight: normal;
+
           em,
           span {
             display: inline-block;
             margin-left: 4px;
             font-size: 18px;
           }
+
           span {
             font-weight: 700;
           }
         }
       }
     }
+
     @include only-mo {
       .bg_recipe_box {
         padding: 24px;
+
         .button {
           display: block;
           width: 100%;
-          + .button {
+
+          +.button {
             margin: 5px 0 0 0;
           }
         }
       }
+
       .acc_tit {
         font-size: 20px;
       }
+
       .mo_pay_btn {
         .button-full {
           font-size: 14px;
+
           em,
           span {
             font-size: 16px;
@@ -310,35 +377,43 @@
         }
       }
     }
+
     .result_cont {
       display: none;
+
       &.on {
         display: block;
       }
     }
+
     .acc_item {
       margin-top: 40px;
     }
+
     .acc_btn {
       padding-bottom: 24px;
       border-bottom: 2px solid #222;
     }
+
     .acc_arrow {
       &:before {
         top: 15px;
         width: 8px;
         right: 5px;
       }
+
       &:after {
         top: 15px;
         width: 8px;
         right: 0;
       }
     }
+
     .acc_box {
       position: relative;
       padding: 40px 0;
     }
+
     .acc_dsc_top {
       position: absolute;
       top: 16px;
@@ -346,6 +421,7 @@
       padding-left: 8px;
       color: #222;
       font-size: 14px;
+
       &:before {
         position: absolute;
         top: 50%;
@@ -359,30 +435,37 @@
         transform: translate(-50%, -50%);
       }
     }
+
     .acc_form {
       display: table;
       padding-top: 24px;
       width: 100%;
+
       .inp:focus {
         outline: 0;
       }
+
       &:first-of-type {
         padding-top: 0;
       }
     }
+
     .acc_cell {
       display: table-cell;
       vertical-align: middle;
+
       &:first-child {
         width: 165px;
       }
-      > label {
+
+      >label {
         position: relative;
         display: inline-block;
         padding-right: 8px;
         color: #222;
         font-size: 14px;
         font-weight: 700;
+
         .necessary {
           &:after {
             position: absolute;
@@ -397,24 +480,31 @@
           }
         }
       }
+
       &.vat {
         padding-top: 10px;
         vertical-align: top;
       }
+
       &.vat2 {
         vertical-align: top;
       }
+
       .button {
         min-width: auto;
       }
     }
+
     .acc_group {
       &.parent {
         position: relative;
+
         .tabResult {
           margin-top: 25px;
+
           .list_dot li {
             color: #888;
+
             /* 2021-09-15 추가 */
             @include only-mo {
               font-size: 14px;
@@ -422,50 +512,62 @@
           }
         }
       }
+
       &:after {
         display: block;
         content: '';
         clear: both;
       }
+
       .delivery_txt {
         float: left;
         padding: 10px 0;
         min-height: 40px;
         color: #666;
       }
+
       .select_ui_zone {
         margin-top: 0;
       }
-      + .list_dot {
+
+      +.list_dot {
         margin-top: 24px;
+
         li {
           color: #888;
+
           /* 2021-09-15 추가 */
           @include only-mo {
             font-size: 14px;
           }
         }
       }
-      & + .acc_group {
+
+      &+.acc_group {
         margin-top: 24px;
       }
     }
+
     .acc_btn_box {
       float: left;
       margin: 4px 0 0 16px;
+
       .my_point {
         display: inline-block;
         margin: 6px 0 0 15px;
         color: #888;
         font-size: 14px;
+
         em {
           color: $primary-color;
           font-weight: 700;
         }
       }
     }
+
     .acc_inp {
       position: relative;
+
       .inp {
         appearance: none;
         width: 100%;
@@ -473,26 +575,30 @@
         padding: 10px 0;
         font-size: 14px;
         color: #444;
-        transition: all 0.15s ease;
+        transition: all .15s ease;
         border-bottom: 1px solid #e1e1e1;
         line-height: 1.4;
         box-sizing: border-box;
-        &:focus + .focus_bg:before,
-        &:focus + .focus_bg:after {
+
+        &:focus+.focus_bg:before,
+        &:focus+.focus_bg:after {
           width: 100%;
           -webkit-transition: 0.4s;
           transition: 0.4s;
           left: 0;
         }
+
         &::placeholder {
           color: #888;
         }
+
         &:disabled {
           background-color: transparent;
           border-bottom: 0;
           color: #444;
           font-weight: 700;
         }
+
         &:-webkit-autofill,
         &:-webkit-autofill:hover,
         &:-webkit-autofill:focus,
@@ -500,9 +606,11 @@
           box-shadow: 0 0 0 74px white inset !important;
         }
       }
+
       .focus_bg {
         position: relative;
         display: block;
+
         &:before,
         &:after {
           position: absolute;
@@ -515,46 +623,57 @@
           transition: 0.4s;
         }
       }
+
       &.type1 {
         width: 610px;
       }
+
       &.type2 {
         width: 490px;
       }
+
       &.type3 {
         width: 330px;
       }
+
       &.type4 {
         float: left;
         padding-right: 115px;
         width: 330px;
+
         .delivery_btn_box {
           position: absolute;
           top: 0;
           right: 0;
+
           .button {
             min-width: 98px;
             padding: inherit;
           }
+
           &.type1 {
             @include only-pc {
               top: 8px;
             }
+
             @include under-pc {
               top: 4px;
             }
           }
         }
       }
+
       &.type5 {
         width: 450px;
       }
+
       &.disable_type {
         float: left;
         padding-right: 30px;
         width: 216px;
         background-color: #fbfbfb;
         border-bottom: 1px solid #e1e1e1;
+
         .inp {
           padding: 10px 16px;
           background-color: #fbfbfb;
@@ -563,12 +682,14 @@
           font-weight: 700;
         }
       }
+
       .unit {
         display: inline-block;
         position: absolute;
         top: 10px;
         right: 16px;
       }
+
       &:after {
         display: block;
         content: '';
@@ -580,17 +701,21 @@
       .order_list .prd {
         margin-top: 0;
       }
+
       .acc_cell {
         display: block;
         width: 100%;
+
         &:first-child {
           margin-bottom: 13px;
           width: 100%;
         }
+
         &.vat {
           padding-top: 0;
         }
       }
+
       .acc_inp.type1,
       .acc_inp.type2,
       .acc_inp.type3,
@@ -598,33 +723,42 @@
       .acc_inp.type5 {
         width: 100%;
       }
+
       .acc_inp.disable_type {
         width: calc(100% - 100px);
       }
+
       .acc_btn_box {
         float: right;
       }
+
       .my_point {
         position: absolute;
         top: -39px;
         left: 80px;
       }
+
       .acc {
         float: none;
         width: auto;
       }
+
       .parent {
         position: relative;
       }
     }
+
     @include only-mo {
       margin-top: 40px;
+
       .acc_group {
         .calendar_box {
           width: 100%;
+
           input {
             min-height: 34px;
           }
+
           button {
             width: 32px;
             height: 32px;
@@ -633,49 +767,60 @@
       }
     }
   }
+
   .email_check {
     margin-top: 13px;
   }
+
   // .error + .email_check {
   //   margin-top: 34px;
   // }
   @include only-mo {
     .button_wrap {
       overflow: hidden;
+
       .button {
         float: left;
         min-width: auto;
         width: 49%;
-        & + .button {
+
+        &+.button {
           margin-left: 2%;
         }
       }
     }
   }
 }
+
 .membership_info {
   margin-top: 16px;
   font-size: 14px;
   color: #888;
   line-height: 28px;
 }
+
 .acc_radio {
   display: flex;
+
   .radio_box {
     margin-left: 24px;
+
     &:first-of-type {
       margin-left: 0;
     }
   }
 }
+
 .btn_card_box {
   position: absolute;
   top: -6px;
   right: 0;
+
   .button {
     color: #444;
   }
 }
+
 .info_tit {
   display: block;
   padding-left: 18px;
@@ -684,29 +829,36 @@
   background: url(../images/common/ic_info_tit.svg) no-repeat 0 50%;
   background-size: 14px 14px;
 }
+
 .info_tit2 {
   display: block;
   color: #222;
   font-size: 14px;
 }
+
 .info_tit3 {
   display: block;
   color: #444;
   font-size: 14px;
 }
-.check + .info_tit {
+
+.check+.info_tit {
   margin-top: 40px;
 }
-.info_tit + .list_dot {
+
+.info_tit+.list_dot {
   margin-top: 5px;
 }
-.info_tit2 + .list_dot,
-.info_tit3 + .list_dot {
+
+.info_tit2+.list_dot,
+.info_tit3+.list_dot {
   margin-top: 10px;
 }
-.bg_recipe_box + .info_tit3 {
+
+.bg_recipe_box+.info_tit3 {
   margin-top: 40px;
 }
+
 .bg_recipe_box {
   margin-top: 24px;
   padding: 32px;
@@ -714,108 +866,134 @@
   background-color: #f8f8f8;
   border-top: 1px solid #ddd;
 }
+
 .btn_recipe_box {
   margin-top: 24px;
 }
+
 .pw_info {
   dt {
     font-size: 18px;
     color: #222;
     font-weight: 500;
   }
+
   dd {
     margin-top: 5px;
     font-size: 16px;
     color: #444;
   }
+
   @include only-mo {
     dt {
       font-size: 16px;
     }
+
     dd {
       font-size: 14px;
     }
   }
 }
-.pw_info + .acc_form {
+
+.pw_info+.acc_form {
   margin-top: 38px;
 }
+
 .chk_same {
   margin-top: 16px;
 }
+
 // 결제예정금액
 .payment_box {
   @include only-pc {
     .inner {
       border: 2px solid #222;
     }
+
     .payment_list {
       padding: 40px 47px 40px;
       box-sizing: border-box;
     }
+
     .essential {
       padding: 40px;
     }
+
     .pc_pay_btn {
-      margin-top: 30px;
+      margin-top: 30px
     }
+
     .total {
       margin-top: 10px;
       padding-bottom: 40px;
+
       .tit {
         font-size: 24px;
       }
+
       .price {
         font-size: 40px;
+
         .unit {
           font-size: 24px;
         }
       }
     }
   }
+
   @include under-pc {
     float: none;
     width: auto;
+
     .total {
       display: table;
       margin: 0;
       padding: 30px 0;
       width: 100%;
+
       .tit {
         display: table-cell;
         text-align: left;
         font-size: 18px;
       }
+
       .price {
         display: table-cell;
         text-align: right;
         font-size: 24px;
+
         .unit {
           font-size: 16px;
         }
       }
     }
+
     .essential {
       margin-top: 40px;
       padding: 24px;
     }
+
     .pc_pay_btn {
       display: none;
     }
   }
+
   .acc {
     float: none;
     margin-top: 18px;
     width: auto;
   }
+
   .order_detailbox {
     margin-top: 33px;
   }
+
   .view_headline,
   .view_detail {
     display: table;
     width: 100%;
   }
+
   .acc_tit,
   .view_tit {
     display: table-cell;
@@ -824,15 +1002,19 @@
     vertical-align: middle;
     font-weight: 500;
   }
+
   .view_detail .acc_tit {
     position: relative;
     padding-left: 18px;
   }
+
   .view_tit {
     color: #222;
   }
+
   .view_detail {
     margin-top: 6px;
+
     .view_tit,
     .acc_tit,
     .view_price,
@@ -841,63 +1023,77 @@
       font-weight: normal;
     }
   }
+
   .view_price {
     display: table-cell;
     text-align: right;
     font-size: 14px;
     color: #222;
     vertical-align: middle;
+
     strong {
       margin-right: 3px;
       font-size: 18px;
       line-height: 27px;
       font-weight: normal;
     }
+
     &.minus {
       color: #e70000;
     }
   }
+
   .acc_arrow {
+
     &:after,
     &:before {
       top: 50%;
       width: 7px;
     }
+
     &::before {
       right: 5px;
     }
   }
+
   .acc_btn,
   .sale_btn {
     height: 26px;
     padding: 0 30px 0 0;
     border-bottom: 0;
   }
+
   .sale_item {
     margin-top: 18px;
   }
+
   .sale_btn {
     position: relative;
     display: block;
+
     .acc_arrow {
       &:before {
         transform: translateY(-50%) rotate(-135deg);
       }
+
       &:after {
         transform: translateY(-50%) rotate(135deg);
       }
     }
+
     &.arrow_on {
       .acc_arrow {
         &:before {
           transform: translateY(-50%) rotate(-45deg);
         }
+
         &:after {
-          transform: translateY(-50%) rotate(45deg);
+          transform: translateY(-50%) rotate(45deg)
         }
       }
     }
   }
+
   .sale_tit {
     display: table-cell;
     color: #222;
@@ -905,9 +1101,11 @@
     line-height: 21px;
     vertical-align: middle;
   }
+
   .sale_box .sale_tit {
     position: relative;
     padding-left: 18px;
+
     &:before {
       position: absolute;
       top: 9px;
@@ -919,32 +1117,41 @@
       content: '';
     }
   }
+
   .acc_box {
     padding: 0;
   }
+
   .acc_item {
     margin-top: 18px;
   }
+
   .essential {
     background-color: #fbfbfb;
     box-sizing: border-box;
-    .inp_check + label {
+
+    .inp_check+label {
       line-height: 22px;
       letter-spacing: -0.35px;
+
       &:before {
-        top: 5px !important;
+        top: 5px !important
       }
     }
   }
+
   .total {
     text-align: right;
     border-bottom: 2px solid #ddd;
+
     .tit {
       color: #222;
     }
+
     .price {
       color: $primary-color;
       font-weight: 700;
+
       .unit {
         display: inline-block;
         margin-left: 2px;
@@ -952,10 +1159,13 @@
       }
     }
   }
+
   .list_dot {
     margin: 17px 16px;
+
     li {
       color: #888;
+
       /* 2021-09-15 추가 */
       @include only-mo {
         font-size: 14px;
@@ -963,30 +1173,36 @@
     }
   }
 }
+
 .order_confirm_box {
   padding: 240px 0;
   text-align: center;
+
   .icon {
     display: inline-block;
     width: 80px;
     height: 80px;
     background-size: cover;
+
     &.receipe {
       background: url(../images/order/ic_step03.svg) no-repeat 0 0;
       background-size: cover;
     }
   }
+
   &__tit {
     margin-top: 15px;
     font-size: 32px;
     color: #222;
     font-weight: 700;
   }
+
   &__dsc {
     margin-top: 15px;
     font-size: 32px;
     color: #444;
   }
+
   &__oder_num_box {
     margin: 32px auto 24px;
     padding: 29px 27px;
@@ -995,96 +1211,119 @@
     color: #222;
     font-size: 24px;
     word-break: break-all;
+
     dt {
       display: inline-block;
     }
+
     dd {
       position: relative;
       display: inline-block;
       font-size: 24px;
       color: $primary-color;
       font-weight: 700;
+
       &:before {
         display: inline-block;
-        content: ':';
+        content: ":";
         margin-left: 10px;
         padding-right: 16px;
         color: #222;
       }
     }
   }
+
   &__txt {
     font-size: 12px;
     color: #888;
   }
+
   .btn_box {
     margin-top: 80px;
-    button + button {
+
+    button+button {
       margin-left: 8px;
     }
+
     .button {
       @include only-mo {
         margin-left: 26%;
       }
     }
+
     @include under-pc {
       margin-top: 64px;
+
       button {
         min-width: 200px;
         min-height: 64px;
         font-size: 18px;
       }
     }
+
     @include only-mo {
       overflow: hidden;
+
       button {
         float: left;
         min-width: auto;
         width: 49%;
+
         &:nth-child(3) {
           margin: 10px 0 0 0;
           width: 100%;
         }
-        + button {
+
+        +button {
           margin-left: 2%;
         }
       }
     }
   }
+
   @include only-tab {
     padding: 120px 0;
   }
+
   @include only-mo {
     padding: 80px 0;
+
     .receipe {
       width: 56px;
       height: 56px;
     }
+
     &__tit {
       font-size: 24px;
       line-height: 36px;
     }
+
     &__dsc {
       font-size: 24px;
       margin-top: 5px;
       line-height: 36px;
     }
+
     &__oder_num_box {
       margin-top: 27px;
       width: auto;
       padding: 18px;
+
       dt,
       dd {
         font-size: 16px;
       }
     }
+
     .btn_box {
       margin-top: 40px;
+
       .button {
         float: left;
         min-width: auto;
         width: 49%;
       }
+
       .button:nth-child(3) {
         margin: 10px 0 0 0;
         width: 100%;
@@ -1092,6 +1331,7 @@
     }
   }
 }
+
 // 장바구니
 // 眞 장바구니
 .cart_func {
@@ -1099,8 +1339,10 @@
   justify-content: space-between;
   align-items: center;
   margin: 80px 0 16px;
+
   @include only-mo {
     margin: 40px 0 16px;
+
     &_buttons {
       .button {
         padding: 5px;
@@ -1111,7 +1353,8 @@
         color: #888;
         font-size: 14px;
         font-weight: normal;
-        & + .button {
+
+        &+.button {
           margin-left: 6px;
           padding-right: 0;
         }
@@ -1119,43 +1362,54 @@
     }
   }
 }
+
 .acc_cart {
   margin-top: 96px;
+
   @include only-mo {
     margin-top: 64px;
   }
 }
+
 //col_table_cell
 .col_table_cell {
   &.prd_total {
     font-weight: 700;
   }
+
   @include under-pc {
     padding: 32px 8px;
   }
 }
+
 //faq
 .acc_faq {
   @include only-mo {
     .acc_btn {
       padding: 24px 16px;
     }
+
     .acc_tit {
       font-size: 14px;
     }
+
     .acc_box {
       padding: 24px;
       font-size: 12px;
       line-height: 18px;
     }
+
     .acc_arrow {
+
       &:before,
       &:after {
         width: 10px;
       }
+
       &:before {
         right: 22px;
       }
+
       &:after {
         right: 16px;
       }
@@ -1171,35 +1425,43 @@
     max-width: 1200px;
     padding: 40px 0 80px;
   }
+
   &_info {
     line-height: 1;
     text-align: center;
-    + .order_box__cont {
+
+    +.order_box__cont {
       margin-top: 64px;
+
       .acc_item {
         margin-top: 0;
       }
+
       .acc_inner {
         display: block;
       }
     }
   }
+
   &_tit {
     margin-top: 12px;
     font-size: 20px;
     color: #222;
     font-weight: 700;
   }
+
   &_dsc {
     margin-top: 12px;
     font-size: 14px;
     color: #444;
   }
 }
+
 //orderAgree
 .join_agree.order .all_box {
   margin-top: 80px;
 }
+
 //.login_chk_order popup
 .login_chk_order {
   @include only-mo {
@@ -1208,25 +1470,31 @@
     }
   }
 }
+
 //2021-09-15 현금영수증 발행 영역 추가
 .cash_box {
   margin-top: 32px;
+
   &_tit {
     display: block;
     font-size: 14px;
     color: #222;
   }
+
   &_list {
     margin-top: 16px;
+
     li {
       position: relative;
       padding-left: 8px;
       font-size: 14px;
       color: #888;
       line-height: 22px;
-      + li {
+
+      +li {
         margin-top: 5px;
       }
+
       &:before {
         display: inline-block;
         position: absolute;
@@ -1234,10 +1502,17 @@
         left: 0;
         content: '·';
       }
+
       .link_mail {
         color: $primary-color;
         text-decoration: underline;
       }
     }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .button_print_esimate {
+    display: none;
   }
 }
