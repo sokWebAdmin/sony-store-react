@@ -47,6 +47,9 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
   const { my, profile } = useProfileState();
   const profileDispatch = useProileDispatch();
 
+  const minPriceLimitUnder = useMemo(
+    () => paymentInfo.minPriceLimit > paymentInfo.cartAmt, [paymentInfo]);
+
   useEffect(() => {
     fetchPoint();
   }, []);
@@ -145,7 +148,8 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
           </div>
         </div>
 
-        {fetchedLatestMileage && availablemileage !== undefined &&
+        {fetchedLatestMileage && !minPriceLimitUnder && availablemileage !==
+        undefined &&
         <div className="acc_form">
           <div className="acc_cell vat">
             <label htmlFor="mileage">멤버십 마일리지</label>
