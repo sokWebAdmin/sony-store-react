@@ -31,8 +31,11 @@ export const getEventByEventNo = (eventNo, params) => {
   return request(`display/events/${eventNo}`, "get", query.toString(), {});
 };
 
-export const getEventByProductNo = ({ pathParams }) => {
-  return request(`display/events/products/${pathParams.productNo}`)
+export const getEventByProductNo = (query) => {
+  if (query?.params) {
+    return request('display/events/products', 'get', query.params);
+  }
+  return request(`display/events/products/${query.pathParams.productNo}`)
 }
 
 export const getDisplaySectionsSectionNo = ({ pathParams, params }) => {

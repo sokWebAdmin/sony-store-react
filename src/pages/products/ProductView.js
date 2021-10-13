@@ -203,16 +203,14 @@ export default function ProductView({ match }) {
        .value()
     );
   }, [productNo]);
-
+  
   const fetchEvent = useCallback(async productNo => {
-    // @TODO 이벤트 api 확인중 완료 후 기획전 변경필요
-    const _productNos = productNos?.length > 0 ? productNos : [ productNo ];
-    // console.log(_productNos); 
-    // const test = await Promise.all(productNos?.map(async productNo => await getEventByProductNo({ pathParams: { productNo } })));
-    // console.log(test);
-    const ret = await getEventByProductNo({ pathParams: { productNo: 102007706 }});
+    const query = productNos?.length > 0 ? { params: { productNos }} : { pathParams: { productNo }};
+    
+    const ret = await getEventByProductNo(query);
     setProductEvents(ret.data);
-  }, [productNos?.length])
+    
+  }, [productNos?.length]);
 
   useEffect(() => fetchProductData(productNo), [fetchProductData, productNo]);
   useEffect(() => productData?.groupManagementCode && fetchProductGroupData(productData.groupManagementCode), [fetchProductGroupData, productData?.groupManagementCode, productNo])
