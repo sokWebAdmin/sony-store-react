@@ -50,6 +50,7 @@ const CouponList = () => {
   };
 
   const divideCoupons = (coupons) => {
+    if (!coupons) return;
     let result = [];
     for (let i = 0; i < coupons.length; i += 2) {
       result.push(coupons.slice(i, i + 2));
@@ -70,10 +71,10 @@ const CouponList = () => {
         <div className="history_list">
           <div className={`coupon_inner ${hasCoupons(coupons) ? 'on' : ''}`}>
             {/* class : on 내역이 있을 경우 on */}
-            {divideCoupons(coupons).map((coupon) => {
+            {divideCoupons(coupons)?.map((couponList, index) => {
               return (
-                <div className="coupon_list">
-                  {coupon.map((coupon) => (
+                <div className="coupon_list" key={index}>
+                  {couponList?.map((coupon) => (
                     <CouponListItem
                       key={coupon.couponIssueNo}
                       couponIssueNo={coupon.couponIssueNo}
