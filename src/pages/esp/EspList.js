@@ -64,7 +64,7 @@ export default function EspList({history}) {
     try {
       const { data } = await getRegisteredProduct({ requsetBody });
 
-      if (data?.resultCode === '0000') {
+      if (data?.errorCode === '0000') {
         result.totalCount = data?.paginationInfo?.totalCount || totalCount;
         result.list = data?.body || [];
       }
