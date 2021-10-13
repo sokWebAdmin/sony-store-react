@@ -260,7 +260,7 @@ export default function OrderDetail() {
             const { claimStatusType, claimNo } =
               data.orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0];
 
-            if (!!claimNo && claimStatusType === 'CANCEL_REQUEST' && payInfo.payType === 'VIRTUAL_ACCOUNT') {
+            if (!!claimNo && payInfo.payType === 'VIRTUAL_ACCOUNT') {
               setClaimInfo(() => ({ claimStatusType, claimNo }));
               setRefundAccountVisible(() => true);
             }

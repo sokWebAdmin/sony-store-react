@@ -1,5 +1,4 @@
 export default function OrderSummary({ orderInfo }) {
-  console.log('orderInfo:', orderInfo);
   const orderStatus = orderInfo.defaultClaimStatusType ?? orderInfo.defaultOrderStatusType;
 
   // 기획이랑 기존 샵바이 주문 프로세스랑 기획이 너무 상이함.
