@@ -147,23 +147,41 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
   );
 };
 
+const getMileageDetail = type => {
+  if (type === 10) {
+    return '적립';
+  }
+  if (type === 11) {
+    return '적립 취소';
+  }
+  if (type === 20) {
+    return '사용';
+  }
+  if (type === 20) {
+    return '사용 취소';
+  }
+  return '-';
+};
+
 const MileageList = ({ list }) => {
   const mileages = useMemo(
     () =>
-      list.map(({ sysRegDtime, expiredDateTime, amount, mappingKey, extraData, type }) => ({
-        regiDate: sysRegDtime
-          ? sysRegDtime.substr(0, 10).replace(/-/g, '.')
-          : '-',
-        expiredDate: expiredDateTime ? expiredDateTime.substr(0, 10).
-          replace(/-/g, '.') : '-',
-        extraData,
-        mappingKey,
-        amount: amount,
-        isMinus: ['11', '20', 11, 20].includes(type),
-        amountClassList: ['11', '20', 11, 20].includes(type)
-          ? 'col_table_cell order_mileage down'
-          : 'col_table_cell order_mileage up',
-      })),
+      list.map(
+        ({ sysRegDtime, expiredDateTime, amount, mappingKey, extraData, type }) => ({
+          regiDate: sysRegDtime
+            ? sysRegDtime.substr(0, 10).replace(/-/g, '.')
+            : '-',
+          expiredDate: expiredDateTime ? expiredDateTime.substr(0, 10).
+            replace(/-/g, '.') : '-',
+          extraData,
+          mappingKey,
+          detail: getMileageDetail(type),
+          amount: amount,
+          isMinus: [11, 20].includes(type),
+          amountClassList: [11, 20].includes(type)
+            ? 'col_table_cell order_mileage down'
+            : 'col_table_cell order_mileage up',
+        })),
     [list],
   );
 
@@ -175,7 +193,7 @@ const MileageList = ({ list }) => {
             <p className="txt">{item.regiDate}</p>
           </div>
           <div className="col_table_cell order_details">
-            <p className="txt">{item.extraData}</p>
+            <p className="txt">{item.detail}</p>
           </div>
           <div className="col_table_cell order_number">
             {item.mappingKey && item.mappingKey !== 'null' && (
