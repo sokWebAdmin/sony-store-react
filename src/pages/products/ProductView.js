@@ -76,6 +76,10 @@ export default function ProductView({ match }) {
   } = useAlert();
 
   const isInvalidForGradeProduct = hsCode => hsCode && !isLogin;
+  const unescapeProductName = (productData) => {
+    productData.baseInfo.productName = _.unescape(productData.baseInfo.productName);
+    return productData;
+  }
 
   // product init data
   const mapProductData = useCallback(([productData, { flatOptions, ...rest }]) => {
@@ -85,9 +89,10 @@ export default function ProductView({ match }) {
       openAlert('접근 불가한 등급상품입니다.', () => () => history.push(historyInfo));
     };
 
-    const hasColor = productData.groupManagementCode || (!productData.groupManagementCode && flatOptions.filter(({ value }) => value.includes('_#')).length > 0)
+    const hasColor = productData.groupManagementCode || (!productData.groupManagementCode && flatOptions.filter(({ value }) => value.includes('_#')).length > 0);
+
     setWish(productData.liked);
-    setProductData(productData);
+    setProductData(unescapeProductName(productData));
     setProductOptions({
       ...rest,
       flatOptions: flatOptions.length > 0 ? flatOptions.map(o => {
@@ -193,6 +198,7 @@ export default function ProductView({ match }) {
        .filter(({ hsCode }) => !hsCode)
        .map(o => ({
          ...o,
+         productName: _.unescape(o.productName),
          groupManagementMappingProducts: [
            {
             options: [{ value: o.optionValues }],

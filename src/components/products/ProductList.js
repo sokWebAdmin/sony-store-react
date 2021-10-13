@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { unescape } from 'lodash';
 
 //util
 import Product from './Product';
@@ -73,7 +74,7 @@ export default function ProductList({category}) {
         throw 'get produts is not 200';
       }
 
-      result.list = await _getGroupManagementMappingProducts(data.items);
+      result.list = await _getGroupManagementMappingProducts(data.items.map(({ productName, ...rest }) => ({ ...rest, productName: unescape(productName) })));
       result.totalCount = data.totalCount;
     }
     catch (e) {
