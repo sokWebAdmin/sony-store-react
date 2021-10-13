@@ -117,9 +117,14 @@ const OrderSheet = ({ location }) => {
       requestBody: getCalculateInfo(),
     };
 
-    const { data: { paymentInfo } } = await postOrderSheetCalculate(request);
-    if (paymentInfo) {
-      setPaymentInfo(paymentInfo);
+    try {
+      const { data: { paymentInfo } } = await postOrderSheetCalculate(request);
+      if (paymentInfo) {
+        setPaymentInfo(paymentInfo);
+      }
+    }
+    catch (err) {
+      console.error(err);
     }
   };
   useEffect(() => {
@@ -163,7 +168,13 @@ const OrderSheet = ({ location }) => {
         });
       }
 
-      await this.fetchOrderSheet(orderSheetNo);
+      try {
+        await this.fetchOrderSheet(orderSheetNo);
+      }
+      catch (err) {
+        alert('주문서 발행 실패');
+        location.goBack();
+      }
     },
     guestAgreeCheck () {
       if (!orderAgree) {
@@ -277,7 +288,7 @@ const OrderSheet = ({ location }) => {
 
   return (
     <>
-      <SEOHelmet title={'선물하기 : 주문/결제'} />
+      <SEOHelmet title={'주문/결제'} />
       <div className="contents order">
         <div className="container" id="container">
           <div className="content order_page">
