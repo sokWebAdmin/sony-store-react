@@ -48,7 +48,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
   const profileDispatch = useProileDispatch();
 
   const minPriceLimitUnder = useMemo(
-    () => paymentInfo.minPriceLimit > paymentInfo.cartAmt, [paymentInfo]);
+    () => paymentInfo?.minPriceLimit > paymentInfo?.cartAmt, [paymentInfo]);
 
   useEffect(() => {
     fetchPoint();
