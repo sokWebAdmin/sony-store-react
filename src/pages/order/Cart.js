@@ -49,9 +49,11 @@ const Cart = () => {
   useEffect(() => {
     const isUpdate = products.some(({ update }) => update);
     isUpdate && updateCart();
+    setCheckedIndexes(allProductIndexes)
   }, [products]);
 
   const productCount = useMemo(() => products.reduce((sum, product) => (sum += product.orderCnt), 0), [products]);
+  const allProductIndexes = useMemo(() => products.map((_, i) => i), [products]);
 
   const [amount, setAmount] = useState(null);
   const [checkedIndexes, setCheckedIndexes] = useState([]);
