@@ -148,16 +148,16 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
 };
 
 const getMileageDetail = type => {
-  if (type === 10) {
+  if (type === 10 || type === '10') {
     return '적립';
   }
-  if (type === 11) {
+  if (type === 11 || type === '11') {
     return '적립 취소';
   }
-  if (type === 20) {
+  if (type === 20 || type === '20') {
     return '사용';
   }
-  if (type === 20) {
+  if (type === 21 || type === '21') {
     return '사용 취소';
   }
   return '-';
@@ -177,8 +177,8 @@ const MileageList = ({ list }) => {
           mappingKey,
           detail: getMileageDetail(type),
           amount: amount,
-          isMinus: [11, 20].includes(type),
-          amountClassList: [11, 20].includes(type)
+          isMinus: ['11', '20', 11, 20].includes(type),
+          amountClassList: ['11', '20', 11, 20].includes(type)
             ? 'col_table_cell order_mileage down'
             : 'col_table_cell order_mileage up',
         })),
