@@ -42,6 +42,8 @@ export default function Main() {
 
   //4. 이벤트 : 003
   const [eventBanners, setEventBanners] = useState([]);
+  const [eventBgPcBanners, setEventBgPcBanners] = useState([]);
+  const [eventBgMoBanners, setEventBgMoBanners] = useState([]);
 
   //5. 아카데미 pc : 004
   const [academyPcBanners, setAcademyPcBanners] = useState({});
@@ -98,8 +100,7 @@ export default function Main() {
   //1. 배너 노출 api
   const getBanners = useCallback(async () => {
     try {
-      const { data } = await loadBanner('000,001,002,003,004,005');
-
+      const { data } = await loadBanner('000,001,002,003,004,005,028,029');
       const moBanners = data.find(({ code }) => code === '001')?.accounts || [];
       getSlideBannerNames(moBanners);
       setSlideMoBanners(moBanners);
@@ -118,6 +119,11 @@ export default function Main() {
       const recommendedBanners = data.find(({ code }) => code === '002')?.accounts || [];
       getRecommendedBannerNames(recommendedBanners);
       setRecommendedBanners(recommendedBanners);
+
+      const eventBgPcBanners = data.find(({ code }) => code === '028')?.accounts[0] || [];
+      setEventBgPcBanners(eventBgPcBanners);
+      const eventBgMoBanners = data.find(({ code }) => code === '029')?.accounts[0] || [];
+      setEventBgMoBanners(eventBgMoBanners);
     } catch (e) {
       console.error(e);
     }
@@ -429,59 +435,63 @@ export default function Main() {
             <div className="event">
               <h2 className="event__title">EVENT</h2>
               <div className="event__list">
-                <div
-                  className="event__wrapper"
-                  style={{
-                    backgroundImage:
-                      size.width > breakPoint
-                        ? `url(/images/_tmp/main_event_bg_pc1.png)`
-                        : `url(/images/_tmp/main_event_bg_mo1.png)`,
-                  }}
-                >
-                  <div className="event__main__info">
-                    <div className="event__copy">
-                      <p className="event__copy__head">
-                        {eventSections?.label?.split('/').map((eventLabel, index) => (
-                          <span key={index}>{eventLabel}</span>
-                        ))}
-                      </p>
-                      <p className="event__copy__desc">{eventSections?.sectionExplain}</p>
+                {((size.width > breakPointTablet && eventBgPcBanners?.banners) ||
+                  (size.width <= breakPointTablet && eventBgMoBanners?.banners)) && (
+                  <div
+                    className="event__wrapper"
+                    style={{
+                      backgroundImage:
+                        size.width > breakPoint
+                          ? `url(${eventBgPcBanners?.banners[0]?.imageUrl})`
+                          : `url(${eventBgMoBanners?.banners[0]?.imageUrl})`,
+                    }}
+                  >
+                    <div className="event__main__info">
+                      <div className="event__copy">
+                        <p className="event__copy__head">
+                          {eventSections?.label?.split('/').map((eventLabel, index) => (
+                            <span key={index}>{eventLabel}</span>
+                          ))}
+                        </p>
+                        <p className="event__copy__desc">{eventSections?.sectionExplain}</p>
+                      </div>
+                    </div>
+                    <div className="event__main swiper-container">
+                      <button type="button" className="swiper-button-prev" />
+                      {eventSections?.products?.length > 0 && (
+                        <Swiper
+                          className="swiper-wrapper"
+                          slidesPerView={1}
+                          observer={true}
+                          resizeObserver={true}
+                          loop={true}
+                          speed={600}
+                          autoplay={{ delay: 5000 }}
+                          navigation={{
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                          }}
+                        >
+                          {eventSections?.products?.map((eventSection, index) => (
+                            <SwiperSlide className="swiper-slide" key={index}>
+                              <Link to={`product-view/${eventSection.productNo}`} style={{ textAlign: 'center' }}>
+                                <img src={eventSection?.listImageUrls[0]} alt="상품이미지" />
+                              </Link>
+                              <div className="event__main__inner">
+                                <div className="event__product">
+                                  <span className="event__product__name">{eventSection.productName}</span>
+                                  <span className="event__product__price">{wonComma(eventSection.salePrice)}원</span>
+                                </div>
+                              </div>
+                            </SwiperSlide>
+                          ))}
+                        </Swiper>
+                      )}
+                      <button type="button" className="swiper-button-next" />
                     </div>
                   </div>
-                  <div className="event__main swiper-container">
-                    <button type="button" className="swiper-button-prev" />
-                    {eventSections?.products?.length > 0 && (
-                      <Swiper
-                        className="swiper-wrapper"
-                        slidesPerView={1}
-                        observer={true}
-                        resizeObserver={true}
-                        loop={true}
-                        speed={600}
-                        autoplay={{ delay: 5000 }}
-                        navigation={{
-                          nextEl: '.swiper-button-next',
-                          prevEl: '.swiper-button-prev',
-                        }}
-                      >
-                        {eventSections?.products?.map((eventSection, index) => (
-                          <SwiperSlide className="swiper-slide" key={index}>
-                            <Link to={`product-view/${eventSection.productNo}`} style={{ textAlign: 'center' }}>
-                              <img src={eventSection?.listImageUrls[0]} alt="상품이미지" />
-                            </Link>
-                            <div className="event__main__inner">
-                              <div className="event__product">
-                                <span className="event__product__name">{eventSection.productName}</span>
-                                <span className="event__product__price">{wonComma(eventSection.salePrice)}원</span>
-                              </div>
-                            </div>
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
-                    )}
-                    <button type="button" className="swiper-button-next" />
-                  </div>
-                </div>
+                )}
+
                 <div className="event__sub swiper-container">
                   {eventBanners.length > 0 && (
                     <Swiper
