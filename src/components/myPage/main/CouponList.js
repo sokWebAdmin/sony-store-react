@@ -84,7 +84,19 @@ const CouponList = () => {
         <div className="history_list">
           <div className={`coupon_inner ${hasCoupons(coupons) ? 'on' : ''}`}>
             {/* class : on 내역이 있을 경우 on */}
-            <div dangerouslySetInnerHTML={{ __html: getCouponList() }} />
+            <div className="coupon_list">
+              {coupons.map((coupon) => (
+                <CouponListItem
+                  key={coupon.couponIssueNo}
+                  couponIssueNo={coupon.couponIssueNo}
+                  couponName={coupon.couponName}
+                  discountRate={coupon.discountRate}
+                  minSalePrice={coupon.minSalePrice}
+                  issueYmdt={coupon.issueYmdt}
+                  useEndYmdt={coupon.useEndYmdt}
+                />
+              ))}
+            </div>
             {loadMoreBtnVisible && (
               <div className="btn_article line">
                 <a href="#" className="more_btn" onClick={onClickLoadMore}>
