@@ -10,7 +10,6 @@ import ColorChip from "./viewTopContent/ColorChip";
 import SnsShare from "./viewTopContent/SnsShare";
 import { toCurrencyString } from "../../utils/unit";
 
-
 export default function TobContent({
   productData,
   options,
@@ -20,6 +19,7 @@ export default function TobContent({
   productGroup,
   wish,
   setWish,
+  naverPayBtnKey
 }) {
   const size = useWindowSize();
   const isMobileSize = size.width <= 1280;
@@ -40,7 +40,6 @@ export default function TobContent({
 
   const hsCode = useMemo(() => productData?.baseInfo?.hsCode ?? null,
     [productData]);
-
   return (
     <form>
       <div className={`product_view_about ${status.soldout && 'soldout'}`}>

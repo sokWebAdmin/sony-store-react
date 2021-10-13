@@ -1,5 +1,5 @@
 import qs from 'qs';
-import React, { useContext, useState, createRef, useEffect, useMemo } from 'react';
+import React, { useContext, useState, createRef, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from "../../../context/global.context";
 import { getCart, postCart, postOrderSheets } from "../../../api/order";
@@ -9,7 +9,8 @@ import Notification from '../Notification';
 import { useAlert } from '../../../hooks';
 import gc from '../../../storage/guestCart';
 import HsValidator from '../../cart/HsValidator';
-import _, { add } from 'lodash';
+import _ from 'lodash';
+import orderPayment from '../../order/orderPayment';
 
 const getOrderSheetNo = async (productNo, selectedOption) => {
   try {
@@ -53,19 +54,47 @@ const ERROR_CODE_MAPPING_ROUTE = {
 };
 
 const mergeWithOrderCnt = (accProduct, currProduct) => {
-      if (accProduct.productNo === currProduct.productNo) {
-        accProduct.orderCnt = accProduct.orderCnt + currProduct.orderCnt;
-      } else {
-        accProduct = {
-          ...accProduct,
-          ...currProduct,
-        }
-      };
-      return accProduct;
+  if (accProduct.productNo === currProduct.productNo) {
+    accProduct.orderCnt = accProduct.orderCnt + currProduct.orderCnt;
+  } else {
+    accProduct = {
+      ...accProduct,
+      ...currProduct,
     }
+  };
+  return accProduct;
+};
 
-export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, hsCode, isMobileSize, setOptionVisible, optionVisible, limitaions }) {
+const mapOrderCnt = (products, productNos) => _.chain(products)
+                                    .filter(o => productNos.includes(o.productNo))
+                                    .map(({ productNo, optionNo, orderCnt }) => ({ productNo, optionNo, orderCnt  }))
+                                    .reduce(mergeWithOrderCnt, {})
+                                    .value();
+
+const scrollHandle = () => {
   const $body = document.querySelector('body');
+  return {
+    stop() {
+      $body.classList.add('no_scroll');
+    },
+    start() {
+      $body.classList.remove('no_scroll');
+    }
+  }
+};
+
+const naverPayErrorHandle = (error, history) => {
+  const ERROR_CODE = {
+    NO_EXHIBITION: 'PPVE0019',
+  };
+  
+  if (error?.code === ERROR_CODE.NO_EXHIBITION) {
+    history.push('/');
+    return
+  }
+}
+
+export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, hsCode, isMobileSize, setOptionVisible, optionVisible, limitaions, naverPayBtnKey }) {
   const history = useHistory();
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const { isLogin } = useContext(GlobalContext);
@@ -76,10 +105,10 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
 
   const maxBuyTimeCnt = useMemo(() => limitaions?.maxBuyTimeCnt, [limitaions]);
 
-  const preventScroll = value => value ? $body.classList.add('no_scroll') : $body.classList.remove('no_scroll')
+  const scroll = scrollHandle();
   useEffect(() => {
-    isMobileSize && optionVisible ? preventScroll(true) : preventScroll(false);
-    return () => preventScroll(false);
+    isMobileSize && optionVisible ? scroll.stop() : scroll.start();
+    return () => scroll.start();
   }, [isMobileSize, optionVisible]);
 
   const nextUri = history.location.pathname;
@@ -117,7 +146,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     }
   }
 
-  const order = async (pathname = '/order/sheet') => {
+  const order = (pathname = '/order/sheet', type) => {
     if (isMobileSize && !optionVisible) {
       setOptionVisible(true);
       return;
@@ -135,12 +164,17 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
         () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route))
       );
       return;
-    }
+    };
+
+    if (type === 'naverPay') {
+      return;
+    };
 
     if (isLogin) {
       fetchOrderSheetNo(productNo, selectedOption, pathname);
       return;
-    }
+    };
+
     setOrderVisible(true);
   }
 
@@ -174,29 +208,25 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     }
   };
 
-  const sameProductCount = async productNos => {
-    const mapOrderCnt = products => _.chain(products)
-                                    .filter(o => productNos.includes(o.productNo))
-                                    .map(({ productNo, optionNo, orderCnt }) => ({ productNo, optionNo, orderCnt  }))
-                                    .reduce(mergeWithOrderCnt, {})
-                                    .value();
+  const countProductsInCart = async productNos => {
                                     
     if (isLogin) {
       const { data } = await getCart();
       return mapOrderCnt(
               _.chain(data.deliveryGroups)
               .flatMap(({ orderProducts }) => orderProducts)
-              .flatMap(({ orderProductOptions }) => orderProductOptions)
+              .flatMap(({ orderProductOptions }) => orderProductOptions),
+              productNos
             )
               
     } else {
-      return mapOrderCnt(gc.items);
+      return mapOrderCnt(gc.items, productNos);
     }
   };
 
   const hasLimitedProduct = async () => {
     if (maxBuyTimeCnt > 0) {
-      const counts = await sameProductCount(selectedOption.flatMap(({ productNo }) => productNo));
+      const counts = await countProductsInCart(selectedOption.flatMap(({ productNo }) => productNo));
       return !_.every(counts, c => maxBuyTimeCnt - c.orderCnt > 0);
     }
     return false
@@ -238,7 +268,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
         const { data } = await postProfileLikeProducts(requestBody);
         setWish(data[0].result);
       } else {
-        setWishVisible(true)
+        setWishVisible(true);
       }
     } catch (e) {
       e?.message && openAlert(e.message);
@@ -271,6 +301,38 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   // hsValidation
   const hsValidator = createRef(null);
   const hsValidation = async validation => await hsValidator.current.validation(validation);
+
+  // naverPay
+  const naver =  window.naver;
+  const naverPayOrder = () => {
+    order('', 'naverPay');
+
+    const requestBody = selectedOption.map(o => ({
+      productNo: o.productNo,
+      optionNo: o.optionNo,
+      additionalProductNo: 0,
+      orderCnt: o.orderCnt,
+    }));
+    
+    orderPayment.naverPayOrder(requestBody, naverPayErrorHandle);
+    
+  }
+  const naverPayWishHandler = () => orderPayment.naverPayWishList(productNo);
+
+  const naverPayRef = useRef(null);
+  useEffect(() => {
+    naverPayRef.current.innerHTML = '';
+    naver.NaverPayButton.apply({
+      EMBED_ID: 'naverPay',
+      BUTTON_KEY: 'AAAA', //buttonKey,
+      TYPE: "A",
+      COLOR: 1,
+      COUNT: 2,
+      ENABLE: 'Y', // 'Y' / 'N'
+      BUY_BUTTON_HANDLER: naverPayOrder,
+      WISHLIST_BUTTON_HANDLER: naverPayWishHandler
+    });
+  }, [selectedOption]);
 
   return (
     <>
@@ -336,6 +398,10 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
         alertVisible 
           && <Alert onClose={closeModal}>{alertMessage}</Alert>
       }
+      <div className="cont naver" style={{ marginTop: '24px', paddingTop: 0 }}>
+        <button ref={naverPayRef} style={{ width: '100%', display: 'flex', justifyContent: 'end' }} id="naverPay"></button>
+      </div>
     </>
+    
   )
 }

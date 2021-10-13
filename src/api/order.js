@@ -45,3 +45,5 @@ export const deleteCart = query => request('cart', 'delete', query);
 export const getCartCount = () => request('cart/count', 'get');
 
 export const getWish = query => request('profile/like-products', 'get', query);
+
+export const getOrderConfigs = () => request('order-configs', 'get', null, null)

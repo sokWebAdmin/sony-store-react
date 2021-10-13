@@ -45,7 +45,6 @@ export default function Rename() {
   }
 
   const close = () => {
-    // @todo 개명 대상여부 확인 어떻게 할지 문의하기
     const 개명대상아님에도본인인증함 = false;
     if (개명대상아님에도본인인증함) {
       openAlert('개명 대상이 아닙니다.');

@@ -23,16 +23,43 @@ const orderPayment = {
       confirmUrl: `${window.location.origin}/order/parse`,
     };
   },
-  setConfiguration () {
-    this.NCPPay.setConfiguration(this.config);
+  get clientReturnUrl () {
+    return window.location.href;
+  },
+  setConfiguration (config) {
+    this.NCPPay.setConfiguration(config || this.config);
   },
   post (requestBody) {
     this.NCPPay.reservation(requestBody);
+  },
+  order (requestBody, errorHandler) {
+    this.NCPPay.requestNaverPayOrder({
+      items: requestBody,
+      clientReturnUrl: this.clientReturnUrl
+    }, 
+    () => errorHandler
+    )
+  },
+  wish (productNo) {
+    this.NCPPay.requestNaverPayWishList({
+      productNo,
+      clientReturnUrl: this.clientReturnUrl
+    })
   },
   run (requestBody) {
     this.setConfiguration();
     this.post(requestBody);
   },
+  naverPayOrder (requestBody, errorHandler) {
+    const { confirmUrl, ...rest } = this.config;
+    this.setConfiguration({ ...rest });
+    this.order(requestBody, errorHandler)
+  },
+  naverPayWishList (productNo) {
+    const { clientId, platform } = this.config;
+    this.setConfiguration({ clientId, platform });
+    this.wish(productNo);
+  }
 };
 
 export default orderPayment;
