@@ -37,14 +37,14 @@ export default function Event({ events }) {
             {
               events?.map(({ eventNo, pcImageUrl, mobileimageUrl, startYmdt, endYmdt, label, displayPeriodType }) => (
                 <SwiperSlide className="swiper-slide" key={eventNo}>
-                  <div className="slide_item" onClick={e => {
+                  <div className="slide_item" style={{width: '100%'}} onClick={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     e.nativeEvent.stopImmediatePropagation();
                     history.push(`/event/detail/${eventNo}`)
                   }}>
                     <Link to={`/event/detail/${eventNo}`} className="item">
-                      <div className="img">
+                      <div className="img" style={{ display: 'flex', justifyContent: 'center' }}>
                         <img src={pcImageUrl} alt={label} />
                       </div>
                       <div className="event_desc">
