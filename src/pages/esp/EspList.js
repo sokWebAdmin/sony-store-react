@@ -55,13 +55,14 @@ export default function EspList({history}) {
 
   const _getRegisteredProduct = async () => {
     const result = {list: [], totalCount: 0};
+    const requsetBody = {
+      customerid: profile?.memberId || '',
+      rowsPerPage: 10,
+      pageIdx: pageIndex
+    };
 
     try {
-      const { data } = await getRegisteredProduct({
-        customerid: profile?.memberId || '',
-        rowsPerPage: 10,
-        pageIdx: pageIndex
-      });
+      const { data } = await getRegisteredProduct({ requsetBody });
 
       if (data?.resultCode === '0000') {
         result.totalCount = data?.paginationInfo?.totalCount || totalCount;
@@ -70,101 +71,6 @@ export default function EspList({history}) {
     }
     catch (e) {
       console.error(e);
-
-      // TODO test 를 위한 더미 데이터
-  //     result.list = [
-  //         {
-  //             "serialno": "2081560",
-  //             "lastdate": "2007-07-03 00:00:00",
-  //             "slipReceiveDate": "2017-11-29 10:27:55",
-  //             "customernr": "2780336",
-  //             "customerid": "scs@test.com",
-  //             "modelname": "DSC-RX100M4",
-  //             "purSgtPsbYn": "Y"
-  //         },
-  //         {
-  //             "serialno": "9153020",
-  //             "lastdate": "2007-07-08 00:00:00",
-  //             "slipReceiveDate": "2020-09-15 16:20:29",
-  //             "customernr": "2780336",
-  //             "customerid": "scs@test.com",
-  //             "modelname": "CMT-NEZ3",
-  //             "purSgtPsbYn": "N"
-  //         },
-  //         {
-  //         "serialno": "9151333",
-  //       "lastdate": "2007-09-11 00:00:00",
-  //       "slipReceiveDate": "2020-09-15 13:54:38",
-  //       "customernr": "2780336",
-  //       "customerid": "scs@test.com",
-  //       "modelname": "MHC-EC50",
-  //       "purSgtPsbYn": "N"
-  // },
-  //         {
-  //             "serialno": "2710150",
-  //           "lastdate": "2007-10-10 00:00:00",
-  //           "slipReceiveDate": "2017-11-29 14:28:25",
-  //           "customernr": "2780336",
-  //           "customerid": "scs@test.com",
-  //           "modelname": "DSC-RX100M4",
-  //           "purSgtPsbYn": "N"
-  //         },
-  //         {
-  //             "serialno": "1843185",
-  //           "lastdate": "2007-10-10 00:00:00",
-  //           "slipReceiveDate": "2017-11-29 14:28:25",
-  //           "customernr": "2780336",
-  //           "customerid": "scs@test.com",
-  //           "modelname": "DSC-RX100M4",
-  //           "purSgtPsbYn": "N"
-  //         },
-  //         {
-  //             "serialno": "9165530",
-  //           "lastdate": "2007-10-22 00:00:00",
-  //           "slipReceiveDate": "2020-09-15 12:08:40",
-  //           "customernr": "2780336",
-  //           "customerid": "scs@test.com",
-  //           "modelname": "CMT-GPZ6",
-  //           "purSgtPsbYn": "N"
-  //         },
-  //         {
-  //             "serialno": "0127604",
-  //           "lastdate": "2008-02-13 00:00:00",
-  //           "slipReceiveDate": "2020-09-15 11:44:57",
-  //           "customernr": "2780336",
-  //           "customerid": "scs@test.com",
-  //           "modelname": "M-475",
-  //           "purSgtPsbYn": "N"
-  //         },
-  //         {
-  //             "serialno": "9999999",
-  //           "lastdate": "2011-05-19 00:00:00",
-  //           "slipReceiveDate": "2020-04-01 14:45:15",
-  //           "customernr": "2780336",
-  //           "customerid": "scs@test.com",
-  //           "modelname": "VGN-SR45L",
-  //           "purSgtPsbYn": "N"
-  //         },
-  //         {
-  //             "serialno": "5188256",
-  //           "lastdate": "2015-02-06 00:00:00",
-  //           "slipReceiveDate": "2017-10-17 09:25:32",
-  //           "customernr": "2780336",
-  //           "customerid": "scs@test.com",
-  //           "modelname": "ILCE-5000L",
-  //           "purSgtPsbYn": "N"
-  //         },
-  //         {
-  //             "serialno": "982674",
-  //           "lastdate": "2015-03-28 00:00:00",
-  //           "slipReceiveDate": "2017-10-20 18:02:44",
-  //           "customernr": "2780336",
-  //           "customerid": "scs@test.com",
-  //           "modelname": "VX9137C",
-  //           "purSgtPsbYn": "N"
-  //         }
-  //     ];
-  //     result.totalCount = 11;
     }
 
     return result;
