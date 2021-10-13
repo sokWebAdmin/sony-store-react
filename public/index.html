@@ -32,10 +32,13 @@
     <script src="https://stdpay.inicis.com/stdjs/INIStdPay.js"></script>
     <!-- development only. NEVER INCLUDE THIS SCRIPT IN REAL -->
     <script src="https://testpay.kcp.co.kr/plugin/payplus_web.jsp"></script>
+    <script type="text/javascript" src="http://test-pay.naver.com/customer/js/naverPayButton.js" charset="UTF-8"></script>
+    
     <% } %>
     <% if (process.env.NODE_ENV === 'production') { %>
     <script src="https://shop-api.e-ncp.com/payments/ncp_pay.js"></script>
     <script src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js"></script>
+    <script type="text/javascript" src="http://pay.naver.com/customer/js/naverPayButton.js" charset="UTF-8"></script>
     <% } %>
 
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>

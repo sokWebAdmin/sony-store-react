@@ -47,7 +47,6 @@ export default function AuthPassword({ setVisible, authResult }) {
   };
 
   const handleLogin = profileResult => {
-    console.log('handleLogin profileResult : ', profileResult);
     if (!profileResult) {
       openAlert('간편 인증에 실패하였습니다.', () => {
         authResult(false);

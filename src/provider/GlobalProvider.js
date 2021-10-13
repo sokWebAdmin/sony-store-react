@@ -11,7 +11,6 @@ import { GuestProvider } from '../context/guest.context';
 
 const GlobalProvider = ({ children }) => {
   const onChangeGlobal = (values) => {
-    console.log(values);
     setOption({
       ...option,
       ...values,
