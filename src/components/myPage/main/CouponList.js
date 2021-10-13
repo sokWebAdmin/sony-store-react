@@ -49,6 +49,14 @@ const CouponList = () => {
     setLoadMoreBtnVisible(true);
   };
 
+  const divideCoupons = (coupons) => {
+    let result = [];
+    for (let i = 0; i < coupons.length; i += 2) {
+      result.push(coupons.slice(i, i + 2));
+    }
+    return result;
+  };
+
   const hasCoupons = (coupons) => {
     return coupons.length > 0;
   };
@@ -62,20 +70,23 @@ const CouponList = () => {
         <div className="history_list">
           <div className={`coupon_inner ${hasCoupons(coupons) ? 'on' : ''}`}>
             {/* class : on 내역이 있을 경우 on */}
-            <div className="coupon_list">
-              {coupons.map((coupon, index) => (
-                <CouponListItem
-                  key={coupon.couponIssueNo}
-                  couponIssueNo={coupon.couponIssueNo}
-                  couponName={coupon.couponName}
-                  discountRate={coupon.discountRate}
-                  minSalePrice={coupon.minSalePrice}
-                  issueYmdt={coupon.issueYmdt}
-                  useEndYmdt={coupon.useEndYmdt}
-                  index={index}
-                />
-              ))}
-            </div>
+            {divideCoupons(coupons).map((coupon) => {
+              return (
+                <div className="coupon_list">
+                  {coupon.map((coupon) => (
+                    <CouponListItem
+                      key={coupon.couponIssueNo}
+                      couponIssueNo={coupon.couponIssueNo}
+                      couponName={coupon.couponName}
+                      discountRate={coupon.discountRate}
+                      minSalePrice={coupon.minSalePrice}
+                      issueYmdt={coupon.issueYmdt}
+                      useEndYmdt={coupon.useEndYmdt}
+                    />
+                  ))}
+                </div>
+              );
+            })}
             {loadMoreBtnVisible && (
               <div className="btn_article line">
                 <a href="#" className="more_btn" onClick={onClickLoadMore}>
