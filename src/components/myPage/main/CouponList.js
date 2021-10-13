@@ -53,28 +53,6 @@ const CouponList = () => {
     return coupons.length > 0;
   };
 
-  const getCouponList = () => {
-    const couponList = (coupon) => (
-      <CouponListItem
-        key={coupon.couponIssueNo}
-        couponIssueNo={coupon.couponIssueNo}
-        couponName={coupon.couponName}
-        discountRate={coupon.discountRate}
-        minSalePrice={coupon.minSalePrice}
-        issueYmdt={coupon.issueYmdt}
-        useEndYmdt={coupon.useEndYmdt}
-      />
-    );
-    return coupons.reduce((acc, coupon, index) => {
-      if (index % 2 === 0) {
-        acc += `<div className="coupon_list">${couponList(coupon)}</div>`;
-      } else {
-        acc += couponList(coupon);
-      }
-      return acc;
-    }, '');
-  };
-
   return (
     <div className="cont history_coupon">
       <h3 className="cont_tit" id="coupon-tit">
@@ -85,7 +63,7 @@ const CouponList = () => {
           <div className={`coupon_inner ${hasCoupons(coupons) ? 'on' : ''}`}>
             {/* class : on 내역이 있을 경우 on */}
             <div className="coupon_list">
-              {coupons.map((coupon) => (
+              {coupons.map((coupon, index) => (
                 <CouponListItem
                   key={coupon.couponIssueNo}
                   couponIssueNo={coupon.couponIssueNo}
@@ -94,6 +72,7 @@ const CouponList = () => {
                   minSalePrice={coupon.minSalePrice}
                   issueYmdt={coupon.issueYmdt}
                   useEndYmdt={coupon.useEndYmdt}
+                  index={index}
                 />
               ))}
             </div>
