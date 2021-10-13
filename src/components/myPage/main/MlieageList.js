@@ -13,20 +13,26 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
   const [startDateTime, setStartDateTime] = useState('');
   const [endDateTime, setEndDateTime] = useState('');
 
-  const changeDateTime = (startDate, endDate) => {
+  const changeDateTime = (startDate, endDate, more) => {
     const strDate = (date) => getStrDate(date).replace(/\-/g, '');
+    let date;
+    if (more === true) {
+      date = { start: startDate, end: endDate };
+    } else {
+      date = { start: strDate(startDate), end: strDate(endDate) };
+    }
 
-    setStartDateTime(strDate(startDate));
-    setEndDateTime(strDate(endDate));
+    setStartDateTime(date.startDate);
+    setEndDateTime(date.endDate);
 
-    return { start: strDate(startDate), end: strDate(endDate) };
+    return date;
   };
 
   const hasMore = useMemo(() => totalCount > list.length * pageIdx, [totalCount, list, pageIdx]);
 
   const search = async ({ startDate, endDate, more }) => {
-    const { start, end } = changeDateTime(startDate, endDate);
-    console.log(start, end, '2');
+    const { start, end } = changeDateTime(startDate, endDate, more);
+
     if (!more) {
       setPageIdx(1);
     }
