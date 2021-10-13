@@ -297,7 +297,7 @@ export default function MyPageMember() {
 
     return (
     <>
-      <SEOHelmet title={"회원정보"} />
+      <SEOHelmet title={"마이페이지 : 회원 정보 수정"} />
       {
         alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>
       }

@@ -98,7 +98,7 @@ export default function Withdraw() {
 
   return (
     <>
-      <SEOHelmet title={'회원 탈퇴'} />
+      <SEOHelmet title={'마이페이지 : 회원 탈퇴'} />
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       {confirmVisible && <LayerPopup size="ms" className="withdraw_pop">
         <p className="pop_tit">정말 탈퇴하시겠습니까?</p>

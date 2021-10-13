@@ -277,7 +277,7 @@ const OrderSheet = ({ location }) => {
 
   return (
     <>
-      <SEOHelmet title={'주문·결제'} />
+      <SEOHelmet title={'선물하기 : 주문/결제'} />
       <div className="contents order">
         <div className="container" id="container">
           <div className="content order_page">

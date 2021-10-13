@@ -100,7 +100,7 @@ export default function OldOrderList() {
 
   return (
     <>
-      <SEOHelmet title={'이전 주문/배송내역'} />
+      <SEOHelmet title={'마이페이지 : 이전 주문/배송 내역'} />
       <div className="contents mypage">
         <div className="container my">
           <div className="content">
