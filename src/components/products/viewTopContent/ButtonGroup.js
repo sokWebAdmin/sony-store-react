@@ -321,7 +321,9 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
 
   const naverPayRef = useRef(null);
   useEffect(() => {
-    naverPayRef.current.innerHTML = '';
+    if (naverPayRef?.current) {
+      naverPayRef.current.innerHTML = '';
+    }
     naver.NaverPayButton.apply({
       EMBED_ID: 'naverPay',
       BUTTON_KEY: 'AAAA', //buttonKey,
