@@ -398,9 +398,13 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
         alertVisible 
           && <Alert onClose={closeModal}>{alertMessage}</Alert>
       }
-      <div className="cont naver" style={{ marginTop: '24px', paddingTop: 0 }}>
-        <button ref={naverPayRef} style={{ width: '100%', display: 'flex', justifyContent: 'end' }} id="naverPay"></button>
-      </div>
+      {
+        naverPayBtnKey && (
+          <div className="cont naver" style={{ marginTop: '24px', paddingTop: 0 }}>
+            <button ref={naverPayRef} style={{ width: '100%', display: 'flex', justifyContent: 'end' }} id="naverPay"></button>
+          </div>
+        )
+      }
     </>
     
   )
