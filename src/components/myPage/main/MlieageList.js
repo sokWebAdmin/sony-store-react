@@ -159,8 +159,8 @@ const MileageList = ({ list }) => {
         extraData,
         mappingKey,
         amount: amount,
-        isMinus: ['11', '21', 11, 21].includes(type),
-        amountClassList: ['11', '21', 11, 21].includes(type)
+        isMinus: ['11', '20', 11, 20].includes(type),
+        amountClassList: ['11', '20', 11, 20].includes(type)
           ? 'col_table_cell order_mileage down'
           : 'col_table_cell order_mileage up',
       })),
