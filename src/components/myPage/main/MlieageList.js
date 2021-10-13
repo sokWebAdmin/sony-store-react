@@ -151,11 +151,15 @@ const MileageList = ({ list }) => {
   const mileages = useMemo(
     () =>
       list.map(({ sysRegDtime, expiredDateTime, amount, mappingKey, extraData, type }) => ({
-        regiDate: sysRegDtime ? sysRegDtime.substr(0, 10).replace(/-/g, '.') : '-',
-        expiredDate: expiredDateTime ? expiredDateTime.substr(0, 10).replace(/-/g, '.') : '-',
+        regiDate: sysRegDtime
+          ? sysRegDtime.substr(0, 10).replace(/-/g, '.')
+          : '-',
+        expiredDate: expiredDateTime ? expiredDateTime.substr(0, 10).
+          replace(/-/g, '.') : '-',
         extraData,
         mappingKey,
-        amount: ['11', '21', 11, 21].includes(type) ? amount * -1 : amount,
+        amount: amount,
+        isMinus: ['11', '21', 11, 21].includes(type),
         amountClassList: ['11', '21', 11, 21].includes(type)
           ? 'col_table_cell order_mileage down'
           : 'col_table_cell order_mileage up',
@@ -181,7 +185,9 @@ const MileageList = ({ list }) => {
             )}
           </div>
           <div className={item.amountClassList}>
-            <p className="txt">{item?.amount ?? 'N'}</p>
+            <p className="txt">{item.isMinus ? '- ' : '+ '} {item?.amount
+              ? toCurrencyString(item.amount).replace('-', '')
+              : 'N'}</p>
           </div>
           <div className="col_table_cell order_expiration">
             <p className="txt">{item.expiredDate}</p>
