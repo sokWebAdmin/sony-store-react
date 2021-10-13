@@ -13,7 +13,7 @@ export default function WithdrawComplete() {
 
   return (
     <>
-      <SEOHelmet title={'회원 탈퇴 신청 완료'} />
+      <SEOHelmet title={'마이페이지 : 회원 탈퇴 완료'} />
       <div className="contents mypage">
         <div className="container" id="container">
           <div className="accounts withdrawComplete">

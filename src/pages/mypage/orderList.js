@@ -122,7 +122,7 @@ export default function OrderList() {
 
   return (
     <>
-      <SEOHelmet title={'주문/배송내역'} />
+      <SEOHelmet title={'마이페이지 : 주문/배송 내역'} />
       <div className="contents mypage">
         <div className="container my">
           <div className="content">

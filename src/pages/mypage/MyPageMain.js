@@ -91,7 +91,7 @@ export default function MyPageMain() {
 
   return (
     <>
-      <SEOHelmet title={'마이페이지'} />
+      <SEOHelmet title={'마이페이지 메인'} />
       <div className="contents mypage my">
         <div className="my_wrap">
           <div className="my_head">
