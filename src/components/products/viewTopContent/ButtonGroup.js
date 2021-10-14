@@ -233,12 +233,6 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   }
 
   const cart = async () => {
-    
-    if (!canBuy) {
-      openAlert('옵션을 선택하세요.');
-      return;
-    };
-
     if (memberOnly && !isLogin) {
       const GUEST_ERROR = 'O8001';
       openAlert(
@@ -246,6 +240,17 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
         () => () => history.push(
           getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
       );
+      return;
+    };
+
+    if (isMobileSize && !optionVisible) {
+      setOptionVisible(true);
+      return;
+    }
+
+    
+    if (!canBuy) {
+      openAlert('옵션을 선택하세요.');
       return;
     };
 
@@ -325,15 +330,15 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       naverPayRef.current.innerHTML = '';
 
       naver.NaverPayButton.apply({
-        EMBED_ID: 'naverPay',
-        BUTTON_KEY: 'AAAA', //buttonKey,
-        TYPE: "A",
-        COLOR: 1,
-        COUNT: 2,
-        ENABLE: 'Y', // 'Y' / 'N'
-        BUY_BUTTON_HANDLER: naverPayOrder,
-        WISHLIST_BUTTON_HANDLER: naverPayWishHandler
-      });
+      EMBED_ID: 'naverPay',
+      BUTTON_KEY: 'AAAA', //buttonKey,
+      TYPE: "A",
+      COLOR: 1,
+      COUNT: 2,
+      ENABLE: 'Y', // 'Y' / 'N'
+      BUY_BUTTON_HANDLER: naverPayOrder,
+      WISHLIST_BUTTON_HANDLER: naverPayWishHandler
+    });
     };
   }, [selectedOption]);
 
@@ -351,7 +356,6 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
                 href="/cart"
                 className="btn_icon"
                 onClick={e => handleClick(e, 'cart')}
-                data-popup="popup_cart"
               >장바구니</a>
               <HsValidator ref={hsValidator} />
             </li>
