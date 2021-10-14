@@ -193,6 +193,12 @@ export default function OrderDetail() {
     content: () => printArea.current,
   });
 
+  // 클레임 중인 상품인지 확인 => 기획누락같은데, 클레임 상태일 땐 주문상태 UI disable 처리
+  const isClaimStart = (defaultOrderStatusType) => {
+    const claimStatuses = ['CANCEL', 'EXCHANGE', 'RETURN'];
+    return claimStatuses.some((claimStatus) => defaultOrderStatusType.includes(claimStatus));
+  };
+
   const onCloseConfirm = (status) => {
     setConfirm(() => ({
       visible: false,
@@ -202,25 +208,16 @@ export default function OrderDetail() {
 
     if (status === 'ok') {
       if (confirm.name === 'cancel-confirm') {
+        if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+          setRefundAccountVisible(() => true); // 가상계좌일때만 이거, _cancelOrder를 프롭스로 내려서 Refund 팝업에서 처리하면 될려나
+        } else {
+          _cancelOrder(); // 그외 이거
+        }
+
         // 취소 로직
-        _cancelOrder();
+        // _cancelOrder(); // 그외 이거
       }
     }
-  };
-
-  const onOrderCancel = () => {
-    setConfirm({
-      ...confirm,
-      visible: true,
-      message: '주문 취소 신청 후에는 변경하실 수 없습니다.\n취소 접수를 하시겠습니까?',
-      name: 'cancel-confirm',
-    });
-  };
-
-  // 클레임 중인 상품인지 확인 => 기획누락같은데, 클레임 상태일 땐 주문상태 UI disable 처리
-  const isClaimStart = (defaultOrderStatusType) => {
-    const claimStatuses = ['CANCEL', 'EXCHANGE', 'RETURN'];
-    return claimStatuses.some((claimStatus) => defaultOrderStatusType.includes(claimStatus));
   };
 
   const _cancelOrder = () => {
@@ -262,13 +259,22 @@ export default function OrderDetail() {
 
             if (!!claimNo && payInfo.payType === 'VIRTUAL_ACCOUNT') {
               setClaimInfo(() => ({ claimStatusType, claimNo }));
-              setRefundAccountVisible(() => true);
+              setRefundAccountVisible(() => false);
             }
           };
         }
 
         return () => window.location.reload();
       });
+    });
+  };
+
+  const onOrderCancel = () => {
+    setConfirm({
+      ...confirm,
+      visible: true,
+      message: '주문 취소 신청 후에는 변경하실 수 없습니다.\n취소 접수를 하시겠습니까?',
+      name: 'cancel-confirm',
     });
   };
 
@@ -328,7 +334,7 @@ export default function OrderDetail() {
           </div>
         </div>
       </div>
-      {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} claimNo={claimInfo.claimNo} />}
+      {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} claimNo={claimInfo.claimNo} cancelOrder={_cancelOrder}/>}
     </>
   );
 }

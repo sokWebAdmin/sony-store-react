@@ -10,7 +10,7 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 import GlobalContext from '../../context/global.context';
 
-export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
+export default function RefundAccount({ setVisible, claimNo, orderOptionNo, cancelOrder }) {
   const close = () => setVisible(false);
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [form, setForm] = useState({
@@ -26,27 +26,6 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
 
   const { isLogin } = useContext(GlobalContext);
 
-  const openConfirm = (message) => {
-    setConfirmVisible(true);
-    setConfirmMessage(message);
-  };
-
-  const onCloseConfirm = (status) => {
-    setConfirmVisible(false);
-    if (status === 'ok') {
-      const putClaimRefundAcountByClaimNo = isLogin ? putProfileClaimRefundAccountByClaimNo : putGuestClaimRefundAccountByClaimNo;
-
-      return putClaimRefundAcountByClaimNo({ path: { claimNo }, requestBody: { ...form } }).then((res) => {
-        if (res.data.status === 400) {
-          openAlert(res.data.message);
-          return;
-        }
-
-        openAlert('환불계좌 등록이 완료되었습니다.', () => () => window.location.reload());
-      });
-    }
-  };
-
   useEffect(async () => {
     setBackSelectList(bankType);
   }, []);
@@ -57,6 +36,11 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
     }
 
     openConfirm('현재의 주문에 대해서 환불계좌를 확정하시겠습니까?');
+  };
+
+  const openConfirm = (message) => {
+    setConfirmVisible(true);
+    setConfirmMessage(message);
   };
 
   const validate = (form) => {
@@ -81,6 +65,25 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
   const onChangeAccount = (e) => {
     e.preventDefault();
     setForm({ ...form, account: e.target.value.replace(/\D/, '') });
+  };
+
+  const onCloseConfirm = (status) => {
+    setConfirmVisible(false);
+    if (status === 'ok') {
+      cancelOrder();
+      // const putClaimRefundAcountByClaimNo = isLogin
+      //   ? putProfileClaimRefundAccountByClaimNo
+      //   : putGuestClaimRefundAccountByClaimNo;
+
+      // return putClaimRefundAcountByClaimNo({ path: { claimNo }, requestBody: { ...form } }).then((res) => {
+      //   if (res.data.status === 400) {
+      //     openAlert(res.data.message);
+      //     return;
+      //   }
+
+      //   openAlert('환불계좌 등록이 완료되었습니다.', () => () => window.location.reload());
+      // });
+    }
   };
 
   return (
