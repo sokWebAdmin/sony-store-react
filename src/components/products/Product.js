@@ -13,7 +13,7 @@ export default function Product({product, category, reset, micro}) {
 
   const priceInfo = getPricePerProduct(product);
 
-  const saleStatus = getSaleStatus(product, product.reservationData, product.stockCnt, product.reservationData.reservationStockCnt)
+  const saleStatus = getSaleStatus(product, product.reservationData, product.stockCnt, product.reservationData?.reservationStockCnt)
 
   // if (product.reservationData) {
   //   const {reservationStartYmdt, reservationEndYmdt} = product.reservationData;
