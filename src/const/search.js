@@ -10,7 +10,7 @@ export const orderList = [
   {
     orderBy: 'MD_RECOMMEND',
     label: '최신순',
-    query: { 'order.by': 'MD_RECOMMEND' },
+    query: { 'order.by': 'MD_RECOMMEND', 'order.direction': 'ASC' },
   },
   {
     orderBy: 'DISCOUNTED_PRICE',

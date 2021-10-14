@@ -12,7 +12,7 @@ const orderList = [
   {
     orderBy: 'MD_RECOMMEND',
     title: '최신순',
-    query: { 'order.by': 'MD_RECOMMEND' },
+    query: { 'order.by': 'MD_RECOMMEND', 'order.direction': 'ASC' },
   },
   {
     orderBy: 'TOP_PRICE',
