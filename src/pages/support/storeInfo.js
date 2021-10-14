@@ -66,11 +66,8 @@ export default function StoreInfo() {
                 <strong className="info_txt">직영점 안내</strong>
                 <h1 className="info_store_tit">소니스토어 압구정</h1>
                 <p className="info_desc">
-                  렌즈교환식 카메라, 디지털 카메라, 캠코더, 모바일, 이어폰,
-                  헤드폰, MP3,
-                  <span className="br">
-                    블루투스 스피커, 기타 액세서리 등 소니의 전 제품 판매
-                  </span>
+                  소니 전 제품을 직접 체험하고,<br/>
+                  컨설팅도 받아 볼 수 있는 소니스토어 직영점을 방문해 보세요!
                 </p>
               </div>
               <StoreGuide />
