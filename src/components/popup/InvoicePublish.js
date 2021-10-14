@@ -27,7 +27,6 @@ const InvoicePublish = ({ isView, basketid, close }) => {
   const item = useRef();
 
   useEffect(async () => {
-    console.log(isView);
     if (isView) {
       const data = await fetchPostedData();
       data && setFormData(data);
@@ -51,8 +50,7 @@ const InvoicePublish = ({ isView, basketid, close }) => {
     }
 
     post().then(fetchPostedData).then(data => {
-      console.log(data);
-      setPostedData(data);
+      setPostedData(postedData.concat(data));
     });
   };
 
