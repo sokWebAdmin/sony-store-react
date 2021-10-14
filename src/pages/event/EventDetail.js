@@ -19,13 +19,23 @@ const EventDetail = () => {
     fetchDetailEvent();
   }, []);
 
+  const TopContent = ({ url, type }) => {
+    return (
+      <>
+        {type === 'FILE' ? <img src={url} alt="" style={{ width: '100%' }} /> :
+          <div dangerouslySetInnerHTML={{ __html: url }} />}
+      </>
+    );
+  };
+
   return (
     <>
       <SEOHelmet title={event?.label} />
       {event && <div className="contents events">
         <div className="container full">
           <div className="content employee">
-            <div dangerouslySetInnerHTML={{__html: onlyMo ? event.top.mobile.url : event.top.pc.url}}></div>
+            <TopContent url={onlyMo ? event.top.mobile.url : event.top.pc.url}
+                        type={onlyMo ? event.top.mobile.type : event.top.pc.type} />
             <div className="event_tablist type1">
               <div className="employee_prd">
                 <EventProducts event={event} gift={true} />
