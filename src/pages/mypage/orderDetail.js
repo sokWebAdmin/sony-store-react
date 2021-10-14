@@ -220,14 +220,14 @@ export default function OrderDetail() {
     }
   };
 
-  const _cancelOrder = () => {
+  const _cancelOrder = (bankAccountInfo = null) => {
     const request = {
       path: { orderNo: query.get('orderNo') },
       requestBody: {
         claimType: 'CANCEL',
         claimReasonType: 'CHANGE_MIND',
         claimReasonDetail: '',
-        bankAccountInfo: null,
+        bankAccountInfo,
         saveBankAccountInfo: false,
         responsibleObjectType: null,
       },
@@ -334,7 +334,9 @@ export default function OrderDetail() {
           </div>
         </div>
       </div>
-      {refundAccountVisible && <RefundAccount setVisible={setRefundAccountVisible} claimNo={claimInfo.claimNo} cancelOrder={_cancelOrder}/>}
+      {refundAccountVisible && (
+        <RefundAccount setVisible={setRefundAccountVisible} claimNo={claimInfo.claimNo} cancelOrder={_cancelOrder} />
+      )}
     </>
   );
 }

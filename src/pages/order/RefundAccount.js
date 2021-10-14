@@ -15,8 +15,9 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo, canc
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [form, setForm] = useState({
     bank: '',
-    account: '',
-    depositorName: '',
+    bankName: '',
+    bankAccount: '',
+    bankDepositorName: '',
   });
   const [bankSelectBoxVisible, setBankSelectBoxVisible] = useState(false);
   const [bankSelectList, setBackSelectList] = useState([]);
@@ -49,12 +50,12 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo, canc
       return false;
     }
 
-    if (!form.account) {
+    if (!form.bankAccount) {
       openAlert('계좌번호를 입력하세요.');
       return false;
     }
 
-    if (!form.depositorName) {
+    if (!form.bankDepositorName) {
       openAlert('예금주를 입력하세요.');
       return false;
     }
@@ -64,23 +65,23 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo, canc
 
   const onChangeAccount = (e) => {
     e.preventDefault();
-    setForm({ ...form, account: e.target.value.replace(/\D/, '') });
+    setForm({ ...form, bankAccount: e.target.value.replace(/\D/, '') });
   };
 
   const onCloseConfirm = (status) => {
     setConfirmVisible(false);
     if (status === 'ok') {
-      cancelOrder();
+      console.log('form:', form);
+      cancelOrder(form); // 요기에 form 데이터 넘기기
+
       // const putClaimRefundAcountByClaimNo = isLogin
       //   ? putProfileClaimRefundAccountByClaimNo
       //   : putGuestClaimRefundAccountByClaimNo;
-
       // return putClaimRefundAcountByClaimNo({ path: { claimNo }, requestBody: { ...form } }).then((res) => {
       //   if (res.data.status === 400) {
       //     openAlert(res.data.message);
       //     return;
       //   }
-
       //   openAlert('환불계좌 등록이 완료되었습니다.', () => () => window.location.reload());
       // });
     }
@@ -121,7 +122,7 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo, canc
                               className="opt_list"
                               onClick={(e) => {
                                 e.preventDefault();
-                                setForm({ ...form, bank: value });
+                                setForm({ ...form, bank: value, bankName: name });
                                 setBankSelectBoxVisible(false);
                               }}
                             >
@@ -146,7 +147,7 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo, canc
                       id="refund_account"
                       className="inp center"
                       placeholder="&nbsp;"
-                      value={form.account}
+                      value={form.bankAccount}
                       onChange={onChangeAccount}
                     />
                     <span className="label">계좌번호</span>
@@ -165,7 +166,7 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo, canc
                       id="refund_name"
                       className="inp center"
                       placeholder="&nbsp;"
-                      onChange={(e) => setForm({ ...form, depositorName: e.target.value })}
+                      onChange={(e) => setForm({ ...form, bankDepositorName: e.target.value })}
                     />
                     <span className="label">예금주명</span>
                     <span className="focus_bg"></span>
