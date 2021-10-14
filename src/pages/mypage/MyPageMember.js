@@ -311,13 +311,7 @@ export default function MyPageMember() {
                 profileState.profile?.memberId && (
                   <>
                     <div className="member_withdrawal">
-                      <a href="#none" className="button button_secondary button-s" onClick={ event => handleClick(event, 'password') }>비밀번호 변경</a>
-                      {
-                        repasswordVisible &&
-                          <Repassword 
-                            setVisible={setRepasswordVisible}
-                          />
-                      }
+                      
                       <a href="#none" className="button button_secondary button-s" onClick={ event => handleClick(event, 'withdrawal') }>회원탈퇴</a>
                     </div>
                     <div className="member_info_list">
@@ -326,10 +320,8 @@ export default function MyPageMember() {
                           <label htmlFor="member_name" className="tit">이름</label>
                         </div>
                         <div className="info_inner">
-                          {/* <div className="info_box"> */}
                           <div className="info_box type_txt_btn">
                             <div className="data_box sub_txt_box">
-                            {/* <div className="data_box"> */}
                               <div className="inp_box">
                                 <input 
                                   type="text" 
@@ -509,7 +501,40 @@ export default function MyPageMember() {
                             </div>
                           </div>
                         </div>
-                      </div> 
+                      </div>
+
+                      <div className="member_list password">
+                        <div className="tit_inner">
+                          <label htmlFor="member_password" className="tit">비밀번호</label>
+                        </div>
+                        <div className="info_inner">
+                          <div className="info_box type_txt_btn">
+                            <div className="data_box">
+                              <div className="inp_box">
+                                <input 
+                                  type="password" 
+                                  id="member_password"
+                                  name="password"
+                                  className="inp disabled" 
+                                  value="**********"
+                                  autoComplete="off"
+                                  disabled="disabled"
+                                />
+                                {/* <span className="focus_bg" /> */}
+                              </div>
+                            </div>
+                            <div className="btn_box">
+                              <button className="button change_btn" type="button" onClick={ event => handleClick(event, 'password') }>비밀번호 변경</button>
+                              {
+                                repasswordVisible &&
+                                  <Repassword 
+                                    setVisible={setRepasswordVisible}
+                                  />
+                              }
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       
                       <div className="member_list address">
                         <div className="tit_inner">
@@ -537,7 +562,7 @@ export default function MyPageMember() {
                                 className="button change_btn" 
                                 type="button" 
                                 onClick={ event => handleClick(event, 'address') }
-                                >우편번호찾기
+                                >주소 변경
                               </button>
                               {
                                 findAddressVisible &&
@@ -585,7 +610,7 @@ export default function MyPageMember() {
                       </div>
                       <div className="member_list opt_in">
                         <div className="tit_inner">
-                          <p className="tit">이벤트 등 프로모션<br className="mo_none" /> 알림</p>
+                          <p className="tit">이벤트/프로모션 알림<br className="mo_none" /> 알림</p>
                         </div>
                         <div className="info_inner">
                           <div className="info_box">
