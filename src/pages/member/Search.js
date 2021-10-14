@@ -288,7 +288,7 @@ export default function Search() {
                   </div>}
               </div>
               <div className="caution_txt">
-                <p>· 가입하신 종류와 일치하지 않을 경우 검색이 안될 수 있습니다.</p>
+                <p>· 가입하신 정보와 일치하지 않을 경우 검색이 안될 수 있습니다.</p>
               </div>
             </div>
           </div>
