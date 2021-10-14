@@ -79,7 +79,7 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
 
   useEffect(() => {
     firstDepthCategoryHandler();
-  }, [size?.width]);
+  }, [size?.width, history?.location.pathname]);
 
   return (
     <div ref={categoryHeaderRef} className={ category?.depth > 1 ? 'category__header category__header__sub' : 'category__header '} style={{backgroundImage: `url(${backgroundImage})`}}>
@@ -116,7 +116,7 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
           }
           {
             category?.depth === 1 && category?.children.map(c => {
-              return <SwiperSlide className="swiper-slide" style={{backgroundImage: `url(${c.icon})`}} key={`sub-category-${c.categoryNo}`}><Link to={c.url}><span>{c.label}</span></Link></SwiperSlide>
+              return <SwiperSlide onClick={() => history.push(c.url)} className="swiper-slide" style={{backgroundImage: `url(${c.icon})`}} key={`sub-category-${c.categoryNo}`}><Link to={c.url}><span>{c.label}</span></Link></SwiperSlide>
             })
           }
         </Swiper>
