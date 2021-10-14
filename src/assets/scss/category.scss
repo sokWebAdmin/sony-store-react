@@ -1133,3 +1133,12 @@
 .centered {
   justify-content: center;
 }
+
+.swiper-slide {
+  .sub-category-link {
+    display: inline-flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}

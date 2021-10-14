@@ -159,18 +159,20 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
             prevEl: '.swiper-button-prev',
           }}
         >
-          <SwiperSlide className={`swiper-slide all ${currentCategoryNo === category.categoryNo ? "category__header__menu--active" : ""}`}>
+          <SwiperSlide className={`swiper-slide all ${currentCategoryNo === category.categoryNo ? "category__header__menu--active" : ""}`} style={{ flexGrow: 1 }}>
             <a href="#" onClick={e => {
               setCurrentCategoryNo(category.categoryNo);
               e.preventDefault();
-            }}><span>전체보기</span></a>
+            }} className="sub-category-link"><span>전체보기</span></a>
           </SwiperSlide>
           {category?.children.map(c => {
-            return <SwiperSlide className={`swiper-slide ${currentCategoryNo === c.categoryNo ? "category__header__menu--active" : "" }`} key={`sub-category-${c.categoryNo}`}>
+            return <SwiperSlide style={{ flexGrow: 1 }} className={`swiper-slide ${currentCategoryNo === c.categoryNo ? "category__header__menu--active" : "" }`} key={`sub-category-${c.categoryNo}`}>
               <a href="#" onClick={e => {
                 setCurrentCategoryNo(c.categoryNo);
                 e.preventDefault();
-              }}><span>{c.label}</span></a>
+              }}
+              className="sub-category-link"
+              ><span>{c.label}</span></a>
             </SwiperSlide>
           })}
         </Swiper>
