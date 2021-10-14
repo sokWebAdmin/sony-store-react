@@ -51,7 +51,7 @@ const initialState = {
 
 // vvip / vip / family
 const memberGrade = {
-  N: { className: '', label: '일반' },
+  N: { className: 'family', label: 'MEMBERSHIP' }, // 일반도 MEMBERSHIP 
   M: { className: 'family', label: 'MEMBERSHIP' },
   V: { className: 'vip', label: 'VIP' },
   VV: { className: 'vvip', label: 'VVIP' }
