@@ -56,9 +56,7 @@ const InvoicePublish = ({ isView, basketid, close }) => {
       return;
     }
 
-    post().then(fetchPostedData).then(data => {
-      setPostedData(postedData.concat(data));
-    });
+    post().then(fetchPostedData).then(setPostedData);
   };
 
   async function post () {
