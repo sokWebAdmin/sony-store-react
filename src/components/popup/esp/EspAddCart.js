@@ -23,7 +23,7 @@ export default function EspAddCart({ product, onClose }) {
         { inputLabel: 'sonyProductNo', inputValue: product.modelcod },
       ]);
     }
-
+    console.log(success);
     if (success) {
       setShowCompletePopup(true);
     }
@@ -247,7 +247,7 @@ export default function EspAddCart({ product, onClose }) {
           </p>
         </div>
       </LayerPopup>
-      {showCompletePopup && <EspAddCartComplete onClose={onClose}></EspAddCartComplete>}
+      {showCompletePopup && <EspAddCartComplete onClose={onClose} />}
     </>
   );
 }
