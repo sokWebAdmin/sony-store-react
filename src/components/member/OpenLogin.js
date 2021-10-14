@@ -84,6 +84,7 @@ const OpenLogin = ({ title, message, customCallback }) => {
       history.push('/member/join-agree');
     } else {
       await fetchMyProfile(profileDispatch, { type: '30', customerid: profileResult.email });
+      onChangeGlobal({ isLogin: true });
       openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
     }
     
