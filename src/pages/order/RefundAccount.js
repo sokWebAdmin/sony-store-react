@@ -1,6 +1,6 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useMallState } from '../../context/mall.context';
-import { putGuestClaimRefundAccountByClaimNo, putProfileClaimRefundAccountByClaimNo } from '../../api/claim';
+
 import LayerPopup from '../../components/common/LayerPopup';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
@@ -8,44 +8,21 @@ import Confirm from '../../components/common/Confirm';
 
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
-import GlobalContext from '../../context/global.context';
 
-export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
+export default function RefundAccount({ setVisible, cancelOrder }) {
   const close = () => setVisible(false);
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [form, setForm] = useState({
     bank: '',
-    account: '',
-    depositorName: '',
+    bankName: '',
+    bankAccount: '',
+    bankDepositorName: '',
   });
   const [bankSelectBoxVisible, setBankSelectBoxVisible] = useState(false);
   const [bankSelectList, setBackSelectList] = useState([]);
   const { bankType } = useMallState();
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState('');
-
-  const { isLogin } = useContext(GlobalContext);
-
-  const openConfirm = (message) => {
-    setConfirmVisible(true);
-    setConfirmMessage(message);
-  };
-
-  const onCloseConfirm = (status) => {
-    setConfirmVisible(false);
-    if (status === 'ok') {
-      const putClaimRefundAcountByClaimNo = isLogin ? putProfileClaimRefundAccountByClaimNo : putGuestClaimRefundAccountByClaimNo;
-
-      return putClaimRefundAcountByClaimNo({ path: { claimNo }, requestBody: { ...form } }).then((res) => {
-        if (res.data.status === 400) {
-          openAlert(res.data.message);
-          return;
-        }
-
-        openAlert('환불계좌 등록이 완료되었습니다.', () => () => window.location.reload());
-      });
-    }
-  };
 
   useEffect(async () => {
     setBackSelectList(bankType);
@@ -59,18 +36,23 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
     openConfirm('현재의 주문에 대해서 환불계좌를 확정하시겠습니까?');
   };
 
+  const openConfirm = (message) => {
+    setConfirmVisible(true);
+    setConfirmMessage(message);
+  };
+
   const validate = (form) => {
     if (!form.bank) {
       openAlert('은행을 선택하세요.');
       return false;
     }
 
-    if (!form.account) {
+    if (!form.bankAccount) {
       openAlert('계좌번호를 입력하세요.');
       return false;
     }
 
-    if (!form.depositorName) {
+    if (!form.bankDepositorName) {
       openAlert('예금주를 입력하세요.');
       return false;
     }
@@ -80,7 +62,14 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
 
   const onChangeAccount = (e) => {
     e.preventDefault();
-    setForm({ ...form, account: e.target.value.replace(/\D/, '') });
+    setForm({ ...form, bankAccount: e.target.value.replace(/\D/, '') });
+  };
+
+  const onCloseConfirm = (status) => {
+    setConfirmVisible(false);
+    if (status === 'ok') {
+      cancelOrder(form);
+    }
   };
 
   return (
@@ -118,7 +107,7 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
                               className="opt_list"
                               onClick={(e) => {
                                 e.preventDefault();
-                                setForm({ ...form, bank: value });
+                                setForm({ ...form, bank: value, bankName: name });
                                 setBankSelectBoxVisible(false);
                               }}
                             >
@@ -143,7 +132,7 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
                       id="refund_account"
                       className="inp center"
                       placeholder="&nbsp;"
-                      value={form.account}
+                      value={form.bankAccount}
                       onChange={onChangeAccount}
                     />
                     <span className="label">계좌번호</span>
@@ -162,7 +151,7 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo }) {
                       id="refund_name"
                       className="inp center"
                       placeholder="&nbsp;"
-                      onChange={(e) => setForm({ ...form, depositorName: e.target.value })}
+                      onChange={(e) => setForm({ ...form, bankDepositorName: e.target.value })}
                     />
                     <span className="label">예금주명</span>
                     <span className="focus_bg"></span>
