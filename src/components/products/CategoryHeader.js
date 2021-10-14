@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 
 //util
 import { Link, useHistory } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } from 'swiper/core';
 import categoryRight from '../../assets/images/category/btn_category_right.svg';
 import { categoriesLinkMap } from '../../const/category';
+import { useWindowSize } from '../../utils/utils';
 
 export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
   const history = useHistory();
@@ -51,8 +52,37 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
     e.preventDefault();
   };
 
+  // 1뎁스 탭
+  const categoryHeaderRef = useRef(null);
+  const firstDepthCategoryRef = useRef(null);
+  const size = useWindowSize();
+
+  const firstDepthCategoryHandler = () => {
+    if (!firstDepthCategoryRef?.current) return;
+
+    const list = firstDepthCategoryRef.current.querySelectorAll('.swiper-slide');
+    const listCount = list.length - 1;
+    
+    if (listCount < 1) return;
+
+    const computedStyle = getComputedStyle(list[1]);
+    const width = parseInt(computedStyle.width);
+    const marginLeft = parseInt(computedStyle.marginLeft);
+    const headerWidth = parseInt(getComputedStyle(categoryHeaderRef.current).width);
+    const innerWrapper = firstDepthCategoryRef.current.querySelector('.swiper-wrapper');
+
+    const listWidth = width + ((marginLeft + width) * (listCount));
+    const centered = headerWidth >= listWidth || headerWidth >= 1064;
+
+    innerWrapper.style.justifyContent = centered ? 'center' : '';
+  }
+
+  useEffect(() => {
+    firstDepthCategoryHandler();
+  }, [size?.width]);
+
   return (
-    <div className={ category?.depth > 1 ? 'category__header category__header__sub' : 'category__header '} style={{backgroundImage: `url(${backgroundImage})`}}>
+    <div ref={categoryHeaderRef} className={ category?.depth > 1 ? 'category__header category__header__sub' : 'category__header '} style={{backgroundImage: `url(${backgroundImage})`}}>
       {category?.parent && <a href="#" className="category__header__back" onClick={e => {
         history.goBack();
         e.preventDefault();
@@ -62,15 +92,34 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
 
       {category?.depth === 1 &&
       <div className="category__header__menu swiper-container">
-        <ul className="swiper-wrapper centered">
-          {category?.children.length > 0 && <li className="swiper-slide all category__header__menu--active"><a><span>전체보기</span></a></li>}
-
-          {category?.depth === 1 && category?.children.map(c => {
-            return <li className="swiper-slide" style={{backgroundImage: `url(${c.icon})`}} key={`sub-category-${c.categoryNo}`}>
-              <Link to={c.url}><span>{c.label}</span></Link>
-            </li>
-          })}
-        </ul>
+        <Swiper
+          ref={ firstDepthCategoryRef }
+          className="swiper-wrapper"
+          slidesPerView="auto"
+          resizeObserver={true}
+          observer={true}
+          observeParents={true}
+          on={{
+            init: (swiper) => {
+              swiper.update();
+            },
+            resize: (swiper) => {
+              swiper.update();
+            },
+            update: (swiper) => {},
+          }}
+        >
+          {
+            category?.children.length > 0 && <SwiperSlide key="all" className="swiper-slide all category__header__menu--active">
+              <a><span>전체보기</span></a>
+            </SwiperSlide>
+          }
+          {
+            category?.depth === 1 && category?.children.map(c => {
+              return <SwiperSlide className="swiper-slide" style={{backgroundImage: `url(${c.icon})`}} key={`sub-category-${c.categoryNo}`}><Link to={c.url}><span>{c.label}</span></Link></SwiperSlide>
+            })
+          }
+        </Swiper>
       </div>
       }
       {rootParent &&
@@ -93,15 +142,15 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
         {category?.children.length > 0 &&
         <Swiper
           //centered
-          className="swiper-wrapper centered"
+          className="swiper-wrapper"
           slidesPerView="auto"
           breakpoints={
             {
               320: {
-                allowTouchMove: true
+                allowTouchMove: true,
               },
               1281: {
-                allowTouchMove: false
+                allowTouchMove: false,
               }
             }
           }
