@@ -102,7 +102,8 @@ export default function ProductView({ match }) {
         return {
           ...o,
           colors: o.value.includes('_#') ? getColorChipValues(o.value) : null,
-          productNo: productData.baseInfo.productNo
+          productNo: productData.baseInfo.productNo,
+          forcedSoldOut: o.stockCnt === 0 && o.saleType !== 'SOLD_OUT',
         }
       }) : [],
       hasColor,
