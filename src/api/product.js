@@ -35,16 +35,6 @@ export const bestProductList = ()=> {
   return request("products/main-best-products", "get", null, {});
 };
 
-export const newProductList = ()=> {
-  return request('products/search?order.by=MD_RECOMMEND&pageSize=4', 'get',
-    null, {});
-};
-
-export const themeProducts = (categoryNo)=> {
-  return request('products/search?fromDB=true&categoryNos=' + categoryNo +
-    '&order.by=MD_RECOMMEND&pageSize=4', 'get', null, {});
-};
-
 export const getProductSearch = query => {
   return request(`products/search`, "get", query, {});
 };
