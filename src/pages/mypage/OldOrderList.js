@@ -113,7 +113,7 @@ export default function OldOrderList() {
 
             <div className="cont recent_order prev_order">
               <div className="tit_head mileage_inquiry">
-                <h3 className="cont_tit">2021년 9월 이전 주문 내역</h3>
+                <h3 className="cont_tit">2021년 10월 이전 주문 내역</h3>
                 <DateBox search={search} />
               </div>
 
