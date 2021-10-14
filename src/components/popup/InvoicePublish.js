@@ -16,7 +16,14 @@ const InvoicePublish = ({ isView, basketid, close }) => {
     kind: '',
     item: '',
   });
-  const [postedData, setPostedData] = useState(null);
+  const [postedData, setPostedData] = useState({
+    regnum: '',
+    company: '',
+    president: '',
+    address: '',
+    kind: '',
+    item: '',
+  });
 
   // fields. validation 시 focus 필요
   const regnum = useRef();
