@@ -4,7 +4,7 @@ import React, {useState, useEffect} from 'react';
 //util
 import { Link, useHistory } from 'react-router-dom';
 import { useCategoryState } from '../../context/category.context';
-import { getPricePerProduct } from '../../utils/product';
+import { getPricePerProduct, getSaleStatus } from '../../utils/product';
 import { toCurrencyString } from '../../utils/unit';
 
 export default function Product({product, category, reset, micro}) {
@@ -13,28 +13,28 @@ export default function Product({product, category, reset, micro}) {
 
   const priceInfo = getPricePerProduct(product);
 
-  let saleStatus = 'READY';
+  const saleStatus = getSaleStatus(product, product.reservationData, product.stockCnt, product.reservationData.reservationStockCnt)
 
-  if (product.reservationData) {
-    const {reservationStartYmdt, reservationEndYmdt} = product.reservationData;
-    const reservStart = (new Date(reservationStartYmdt)).getTime();
-    const reservEnd = (new Date(reservationEndYmdt)).getTime();
-    const now = (new Date()).getTime();
+  // if (product.reservationData) {
+  //   const {reservationStartYmdt, reservationEndYmdt} = product.reservationData;
+  //   const reservStart = (new Date(reservationStartYmdt)).getTime();
+  //   const reservEnd = (new Date(reservationEndYmdt)).getTime();
+  //   const now = (new Date()).getTime();
 
-    if (reservStart > now) {
-      saleStatus = 'READY_RESERVE';
-    } else if (reservEnd >= now) {
-      saleStatus = 'RESERVE';
-    }
-  }
+  //   if (reservStart > now) {
+  //     saleStatus = 'READY_RESERVE';
+  //   } else if (reservEnd >= now) {
+  //     saleStatus = 'RESERVE';
+  //   }
+  // }
 
-  if (product.stockCnt === 0) {
-    saleStatus = 'SOLDOUT';
-  }
+  // if (product.stockCnt === 0) {
+  //   saleStatus = 'SOLDOUT';
+  // }
 
-  if (['ONSALE', 'FINISHED', 'STOP', 'PROHIBITION'].includes(product.saleStatusType)) {
-    saleStatus = '';
-  }
+  // if (['ONSALE', 'FINISHED', 'STOP', 'PROHIBITION'].includes(product.saleStatusType)) {
+  //   saleStatus = '';
+  // }
 
   const [groupProducts, setGroupProducts] = useState([]);
   const [colorIndex, setColorIndex] = useState(0);
