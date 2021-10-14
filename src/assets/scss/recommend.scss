@@ -433,14 +433,13 @@
       width: 100%;
       height: 100%;
       z-index: 1;
-      display: flex;
+      display: flex !important;
       transition-property: transform;
       box-sizing: content-box;
       justify-content: normal !important;
       align-items: normal !important;
     }
     .swiper-slide {
-      width: 588px !important;
       margin-right: 24px;
       flex-shrink: 0;
       height: 100%;
