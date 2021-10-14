@@ -132,6 +132,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
       attachError(emptyRef);
       return false;
     },
+    sameAsOrderer
   }));
 
   function attachError (ref) {

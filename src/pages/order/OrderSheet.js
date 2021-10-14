@@ -287,6 +287,12 @@ const OrderSheet = ({ location }) => {
     init().start();
   }, [init]);
 
+  useEffect(() => {
+    !isLogin 
+      && shippingAddressForm?.current?.sameAsOrderer 
+      && ordererForm.current.fieldValidation(true);
+  });
+
   const representativeProductName = useMemo(
     () => deliveryGroups[0]?.orderProducts[0]?.productName);
 
