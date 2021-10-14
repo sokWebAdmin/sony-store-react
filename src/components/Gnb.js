@@ -7,9 +7,11 @@ import { useCategoryState } from '../context/category.context';
 import { getAgent } from '../utils/detectAgent.js';
 
 import '../assets/scss/partials/appMenu.scss';
+import { useMediaQuery } from '../hooks';
 
 export default function Gnb () {
   const agent = getAgent(); // test code
+  const underPc = useMediaQuery('(max-width: 1280px)');
 
   const history = useHistory();
   const headerDispatch = useHeaderDispatch();
@@ -66,7 +68,9 @@ export default function Gnb () {
                   onClick={(e) => {
                     setActiveMIndex(index);
                     e.preventDefault();
-                    gc.route && history.push(gc.route);
+                    if (activeMIndex === index || !underPc) {
+                      routePushAndClose(gc);
+                    }
                   }}
                 >
                   {gc.label}
