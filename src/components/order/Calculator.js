@@ -4,6 +4,7 @@ import Alert from '../common/Alert';
 
 import { toCurrencyString } from '../../utils/unit.js';
 import '../../assets/scss/partials/discountDetail.scss';
+import '../../assets/scss/partials/amount.scss';
 
 const Calculator = ({ payment, paymentInfo, orderCnt }) => {
 
@@ -45,7 +46,8 @@ const Calculator = ({ payment, paymentInfo, orderCnt }) => {
         <div className="payment_list">
           <dl className="total">
             <dt className="tit">결제 예정 금액</dt>
-            <dd className="price">{toCurrency(paymentInfo?.paymentAmt)}<span
+            <dd className="price one_line_amount">{toCurrency(
+              paymentInfo?.paymentAmt)}<span
               className="unit">원</span></dd>
           </dl>
           <div className="order_detailbox">
