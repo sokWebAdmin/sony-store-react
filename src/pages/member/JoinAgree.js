@@ -4,6 +4,7 @@ import Alert from '../../components/common/Alert';
 
 import { useToggle } from '../../hooks';
 import { useHistory } from 'react-router-dom';
+import { getUrlParam } from '../../utils/location';
 
 const labels = [
   '[필수] 소니스토어 쇼핑몰 이용약관 동의',
@@ -35,7 +36,7 @@ const JoinAgree = () => {
     if (requireAgree) {
       history.push({
         pathname: '/member/joinStep',
-        search: `?agree=USE,PI_COLLECTION_AND_USE_REQUIRED,PI_PROCESS_CONSIGNMENT&sms=${checkList[4]}&email=${checkList[5]}`,
+        search: getUrlParam('sns') === 'true' ? `?sns=true&sms=${checkList[4]}&email=${checkList[5]}` : `?sms=${checkList[4]}&email=${checkList[5]}`,
       });
     } else {
       openAlert('이용약관에 동의해주세요.');

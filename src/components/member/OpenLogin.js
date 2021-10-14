@@ -81,7 +81,7 @@ const OpenLogin = ({ title, message, customCallback }) => {
 
     setProfile(profileDispatch, profileResult);
     if (profileResult.memberStatus === 'WAITING') {
-      history.push('/member/join-agree');
+      history.push('/member/join-agree?sns=true');
     } else {
       await fetchMyProfile(profileDispatch, { type: '30', customerid: profileResult.email });
       onChangeGlobal({ isLogin: true });
