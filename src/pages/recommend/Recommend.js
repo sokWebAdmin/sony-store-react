@@ -325,6 +325,8 @@ export default function Recommend({ match }) {
                         nextEl: '.swiper-button-next',
                         prevEl: '.swiper-button-prev',
                       }}
+                      observer={true}
+                      resizeObserver={true}
                       slidesPerView={2}
                       spaceBetween={24}
                       breakpoints={{
