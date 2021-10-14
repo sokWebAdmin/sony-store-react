@@ -144,13 +144,6 @@ const WishList = ({ wishList, wishCount, more, rerender }) => {
                 <div className="like_prd_inner">
                   <Products list={wishList} check={check} checkedProductNos={checkedProductNos} />
                 </div>
-                {/*{wishList.length <= wishCount && (*/}
-                {/*  <div className="btn_article line">*/}
-                {/*    <a href="#" className="more_btn" onClick={more}>*/}
-                {/*      더보기*/}
-                {/*    </a>*/}
-                {/*  </div>*/}
-                {/*)}*/}
                 <ViewMore
                   totalCount={wishCount}
                   viewMore={more}
