@@ -19,8 +19,15 @@ const OrdererForm = forwardRef((prop, ref) => {
   const ordererEmail = useRef();
 
   useImperativeHandle(ref, () => ({
-    fieldValidation () {
+    fieldValidation (chekAll = false) {
       const refs = { ordererName, ordererEmail, ordererContact1 };
+      
+      if (chekAll) {
+        Object.entries(refs)
+              .filter(([k]) => !orderer[k])
+              .map(([_, r]) => r)
+              .forEach(r => attachError(r));
+      }
 
       const emptyRef = Object.entries(refs).find(([k]) => !orderer[k])?.[1];
       if (!emptyRef) {
