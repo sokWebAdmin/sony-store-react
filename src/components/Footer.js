@@ -1,5 +1,5 @@
-import React,{useRef, useState} from "react";
-import { isMobile } from 'react-device-detect';
+import React,{useRef, useState, useMemo} from "react";
+// import { isMobile } from 'react-device-detect';
 
 //utils
 import { Link } from "react-router-dom";
@@ -16,7 +16,12 @@ import Floating from "./common/Floating";
 import { useClickOutside, useToggle } from "../hooks";
 import { SONY_COMPANY, SONY_FAMILY } from "../const/footer";
 
+const MOBILE_WIDTH = 640;
+
 export default function Footer() {
+  const windowWidth = window.innerWidth;
+  const isMobile = useMemo(() => windowWidth <= MOBILE_WIDTH, [windowWidth]);
+
   const [isPop, setPop] = useState(false);
 
   const [ pcActive, setPcActive ] = useToggle(false);
@@ -24,7 +29,7 @@ export default function Footer() {
   const [ moActive, setMoActive ] = useToggle(false);
 
   const footerRef = useRef(null);
-  useClickOutside(footerRef, () => setPcActive(false))
+  useClickOutside(footerRef, () => setPcActive(false));
 
   return (
     <>
@@ -100,7 +105,9 @@ export default function Footer() {
             <span>사업자 등록번호 : 106-81-23810 통신판매번호 2012-서울영등포-1038 소니코리아㈜</span>
             <span>대표이사 : Okura Kikuo</span>
             <span>개인정보관리책임자 : Okura Kikuo</span>
-            <span>TEL : 소니코리아 고객센터 1588-0911</span>
+            {
+              isMobile ? <span><a href="tel:1588-0911">TEL : 소니코리아 고객센터 1588-0911</a></span> : <span>TEL : 소니코리아 고객센터 1588-0911</span>
+            }
             <span>E-MAIL : <a href="mailto:cshelp@sony.co.kr">cshelp@sony.co.kr</a></span>
             <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
           </address>

@@ -329,8 +329,7 @@ export default function MyPageMember() {
                                   name="firstname" 
                                   className={`inp ${!nameEditMode && 'disabled'}`}
                                   value={ myForm.firstname }  
-                                  maxLength={10} 
-                                  autoComplete={true}
+                                  maxLength={10}
                                   disabled={!nameEditMode && 'disabled'}
                                   onChange={handleChange}
                                   onBlur={validateName}
