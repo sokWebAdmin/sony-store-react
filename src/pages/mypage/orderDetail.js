@@ -252,14 +252,17 @@ export default function OrderDetail() {
 
       openAlert(message, () => {
         if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+          console.log('들어오나 1');
           return async () => {
             const { data } = await _getOrderByOrderNo();
             const { claimStatusType, claimNo } =
               data.orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0];
 
             if (!!claimNo && payInfo.payType === 'VIRTUAL_ACCOUNT') {
+              console.log('들어오나 2', claimStatusType, claimNo);
               setClaimInfo(() => ({ claimStatusType, claimNo }));
               setRefundAccountVisible(() => false);
+              window.location.reload();
             }
           };
         }
