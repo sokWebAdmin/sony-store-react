@@ -89,6 +89,7 @@ export function usePrevious (value) {
   const ref = useRef();
   useEffect(() => {
     ref.current = value;
+    console.log(ref, value, 'usePrevious');
   });
   return ref.current;
 }
