@@ -33,7 +33,7 @@ const CouponList = () => {
     const res = await getCoupons({
       params: { pageNumber, pageSize, usable: true },
     });
-
+    console.log(pageNumber, pageSize, res, coupons, nextPage.current);
     showLoadMoreBtn(res.data.items);
     setCoupons([...coupons, ...res.data.items]);
     nextPage.current += 1;
