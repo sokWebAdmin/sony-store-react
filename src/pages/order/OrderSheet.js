@@ -150,7 +150,7 @@ const OrderSheet = ({ location }) => {
     async start () {
       if (!isLogin && isGiftOrder) {
         alert('로그인시 선물하기가 가능합니다.');
-        location.goBack();
+        history.goBack();
         return;
       }
 
@@ -172,8 +172,8 @@ const OrderSheet = ({ location }) => {
         await this.fetchOrderSheet(orderSheetNo);
       }
       catch (err) {
-        alert('주문서 발행 실패');
-        location.goBack();
+        alert(err.message);
+        history.goBack();
       }
     },
     guestAgreeCheck () {
@@ -186,8 +186,12 @@ const OrderSheet = ({ location }) => {
     },
     async fetchOrderSheet (orderSheetNo) {
       try {
-        const { data: { ordererContact, deliveryGroups, paymentInfo, orderSheetAddress } } = await getOrderSheets(
+        const res = await getOrderSheets(
           orderSheetNo);
+        if (res.status === 400) {
+          return Promise.reject(res.data);
+        }
+        const { data: { ordererContact, deliveryGroups, paymentInfo, orderSheetAddress } } = res;
         isLogin && setOrderer(ordererContact);
         setPaymentInfo(paymentInfo);
         setDeliveryGroups(deliveryGroups);
