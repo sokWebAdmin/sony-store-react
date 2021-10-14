@@ -10,6 +10,7 @@ import { useAlert } from '../../hooks';
 import Notification from '../products/Notification';
 import Alert from '../common/Alert';
 import HsValidator from '../cart/HsValidator';
+import { unescape } from 'lodash';
 
 const ERROR_CODE_MAPPING_ROUTE = {
   O8001: {
@@ -197,7 +198,7 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
                 </div>
                 <div className="product_name">
                   <Link to={`/product-view/${product.productNo}`} className="product_name_title">
-                    {product.productName}
+                    {unescape(product.productName)}
                   </Link>
                   <p className="product_name_desc">{product.productNameEn}</p>
                   <div className="product_name_price">
