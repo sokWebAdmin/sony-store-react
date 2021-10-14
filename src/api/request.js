@@ -37,6 +37,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
     if (guestToken) Object.assign(headers, { guestToken });
   }
 
+  const exceptErrorUrls = ['authentications', 'cart/count'];
   const goErrorCodes = ['AE001', 'PRDT0001'];
 
   return await axios({
@@ -46,7 +47,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
     data: requestBody,
     validateStatus: (status) => status,
   }).then((response) => {
-    if (response.status === 401 && !url.includes('authentications')) {
+    if (response.status === 401 && !exceptErrorUrls.includes(url)) {
       if (response?.data?.message) {
         window.location.pathname.includes('my-page')
           ? alert('로그인 상태가 만료되었습니다. 다시 로그인해주세요.')
