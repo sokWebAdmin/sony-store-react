@@ -21,6 +21,7 @@ import useDebounce from '../../hooks';
 
 // 배송지 정보
 const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderProducts }) => {
+
   const { accumulationConfig } = useMallState();
 
   // subPayAmt: number , coupons: nested object
