@@ -6,7 +6,7 @@ import { getOauthLoginUrl } from '../../api/member';
 import Alert from '../common/Alert';
 import { useHistory } from 'react-router-dom';
 import GlobalContext from '../../context/global.context';
-import { resetProfile, setProfile, useProileDispatch } from '../../context/profile.context';
+import { fetchMyProfile, resetProfile, setProfile, useProileDispatch } from '../../context/profile.context';
 
 const label = {
   naver: '네이버',
@@ -67,7 +67,7 @@ const OpenLogin = ({ title, message, customCallback }) => {
     window.shopOauthCallback = customCallback || _openIdAuthCallback;
   };
 
-  const _openIdAuthCallback = (profileResult = null) => {
+  const _openIdAuthCallback = async (profileResult = null) => {
     window.shopOauthCallback = null;
 
     console.log(profileResult);
@@ -79,10 +79,11 @@ const OpenLogin = ({ title, message, customCallback }) => {
       return;
     }
 
+    setProfile(profileDispatch, profileResult);
     if (profileResult.memberStatus === 'WAITING') {
-      setProfile(profileDispatch, profileResult);
       history.push('/member/join-agree');
     } else {
+      await fetchMyProfile(profileDispatch, { type: '30', customerid: profileResult.email });
       openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
     }
     
