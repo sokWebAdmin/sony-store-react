@@ -136,7 +136,6 @@ const EventBottom = () => {
 
   const Event = ({ event }) => {
     const { eventNo, label, pcImageUrl, startYmdt, endYmdt, tag: tagName, displayPeriodType } = event;
-    debugger;
     return (
       <div
         className="event_item"
