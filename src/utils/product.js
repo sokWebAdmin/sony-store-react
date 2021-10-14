@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { isSameOrAfter } from './dateFormat';
 
 const heightStyle = (height, headerHeight) => {
    const marginTop = headerHeight > 0 ? (headerHeight / 2) *- 1 : 0;
@@ -68,35 +69,47 @@ export const getColorChipInfo = (hasColor, productName, values, option) => {
                  .value()
       }
    }
-}
+};
 
-export const getSaleStatus = (status, reservationDate) => {
-   const { saleStatusType, soldout } = status;
-
-   if (soldout) {
+const getNoneCountType = (statusType) => {
+   if (statusType === 'STOP') {
       return 'SOLDOUT';
    };
 
-   if (reservationDate?.reservationStartYmdt) {
-      const { reservationStartYmdt, reservationEndYmdt } = reservationDate;
-      const reservStart = (new Date(reservationStartYmdt)).getTime();
-      const reservEnd = (new Date(reservationEndYmdt)).getTime();
-      const now = (new Date()).getTime();
-
-      if (reservStart > now) {
-         return 'READY_RESERVE';
-      }
-
-      if (reservEnd >= now) {
-         return 'RESERVE';
-      }
-   }
-
-   if (['ONSALE', 'FINISHED', 'STOP', 'PROHIBITION'].includes(saleStatusType)) {
-      return '';
-   }
-
    return 'READY';
+}
+
+const reservationStatusType = (statusType, date, cnt) => {
+   
+   if (cnt === 0) {
+      return getNoneCountType(statusType);
+   };
+
+   const { reservationStartYmdt } = date;
+   const rvStart = (new Date(reservationStartYmdt)).getTime();
+   const now = (new Date()).getTime();
+
+   if (rvStart > now) {
+      return 'READY_RESERVE'; // 출시예정
+   }
+
+   if (rvStart <= now) {
+      return 'RESERVE'; // 예약판매
+   }
+};
+
+export const getSaleStatus = (status, reservationDate, stockCnt, reservationStockCnt) => {
+   const { saleStatusType } = status;
+
+   if (reservationDate?.reservationStartYmdt) {
+      return reservationStatusType(saleStatusType, reservationDate, reservationStockCnt);
+   }
+
+   if (stockCnt === 0) {
+      return getNoneCountType(saleStatusType);
+   };
+
+   return '';
 };
 
 export const getPricePerProduct = ({ salePrice, immediateDiscountAmt, additionDiscountAmt }) => {

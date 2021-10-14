@@ -20,7 +20,7 @@ export default function EspAddCart ({product, onClose}) {
     const options = await _getProductOptions(product.mallProductNo);
 
     if (options.length > 0) {
-      success = await _postCart(product.mallProductNo, options[0].optionNo);
+      success = await _postCart(product.mallProductNo, options[0].optionNo, [{inputLabel: '', inputValue: product.serialno}]);
     }
 
     if (success) {
@@ -45,11 +45,12 @@ export default function EspAddCart ({product, onClose}) {
     return flatOptions;
   }
 
-  const _postCart = async (productNo, optionNo) => {
+  const _postCart = async (productNo, optionNo, optionInputs) => {
     try {
       const {status} = await postCart([{
         productNo,
         optionNo,
+        optionInputs,
         orderCnt: 1
       }]);
 

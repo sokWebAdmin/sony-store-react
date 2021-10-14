@@ -352,7 +352,7 @@ const OrderSheet = ({ location }) => {
                           />
                         </Accordion>
                         :
-                        <Accordion title={'선물 받으신 분'}
+                        <Accordion title={'선물 받으실 분'}
                                    defaultVisible={true}>
                           <p className="acc_dsc_top">표시는 필수입력 정보</p>
                           <GiftReceiverForm

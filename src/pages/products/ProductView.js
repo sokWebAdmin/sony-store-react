@@ -37,6 +37,7 @@ import { useHistory } from 'react-router';
 import GlobalContext from '../../context/global.context';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
+import { getOrderConfigs } from '../../api/order';
 
 export default function ProductView({ match }) {
   const history = useHistory();
@@ -67,6 +68,7 @@ export default function ProductView({ match }) {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [productEvents, setProductEvents] = useState([]);
   const [wish, setWish] = useState(false);
+  const [naverPayBtnKey, setNaverPayBtnKey] = useState(null);
 
   const {
     openAlert,
@@ -92,6 +94,7 @@ export default function ProductView({ match }) {
     const hasColor = productData.groupManagementCode || (!productData.groupManagementCode && flatOptions.filter(({ value }) => value.includes('_#')).length > 0);
 
     setWish(productData.liked);
+    fetchOrderConfigs(!!productData.limitations.naverPayHandling)
     setProductData(unescapeProductName(productData));
     setProductOptions({
       ...rest,
@@ -99,7 +102,8 @@ export default function ProductView({ match }) {
         return {
           ...o,
           colors: o.value.includes('_#') ? getColorChipValues(o.value) : null,
-          productNo: productData.baseInfo.productNo
+          productNo: productData.baseInfo.productNo,
+          forcedSoldOut: o.stockCnt === 0 && o.saleType !== 'SOLD_OUT',
         }
       }) : [],
       hasColor,
@@ -218,6 +222,13 @@ export default function ProductView({ match }) {
     
   }, [productNos?.length]);
 
+  const fetchOrderConfigs = async (naverPayHandling) => {
+    const { data: { naverPay }} = await getOrderConfigs();
+    if (naverPayHandling && naverPay) {
+      setNaverPayBtnKey(naverPay.buttonKey);
+    }
+  }
+
   useEffect(() => fetchProductData(productNo), [fetchProductData, productNo]);
   useEffect(() => productData?.groupManagementCode && fetchProductGroupData(productData.groupManagementCode), [fetchProductGroupData, productData?.groupManagementCode, productNo])
   useEffect(() => {
@@ -311,6 +322,7 @@ export default function ProductView({ match }) {
                 productGroup={productGroup}
                 wish={wish}
                 setWish={setWish}
+                naverPayBtnKey={naverPayBtnKey}
               />
             </div>
             <RelatedProducts

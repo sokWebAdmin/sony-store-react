@@ -64,7 +64,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                     계산서
                     발행</strong>
                   <ul className="list_dot">
-                    <li>2011년 1월부터 전자세금서 제도를 시행하고 있습니다.
+                    <li>2011년 1월부터 전자 세금계산서 제도를 시행하고 있습니다.
                     </li>
                     <li>구매 후 다음달 8일 이후에 요청되는 세금계산서는 발행이
                       불가합니다.

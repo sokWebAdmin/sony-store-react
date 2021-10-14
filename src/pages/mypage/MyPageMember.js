@@ -260,8 +260,6 @@ export default function MyPageMember() {
         setCaptcha(false);
       } else {
         openAlert(ret.data.errorMessage);
-        console.log('에러 발생한 항목 : ', ret.data.description);
-        console.log(`에러 발생 항목 요청 값 : ${ ret.data.description } : ${ request[ret.data.description] }`);
       }
     }
   };

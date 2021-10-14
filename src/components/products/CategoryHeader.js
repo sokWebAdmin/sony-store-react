@@ -15,8 +15,6 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
     const path = category.url.split('/');
     return path[path.length - 1];
   }, [category]);
-
-  console.log(categoryLabel);
   
   let backgroundImage = '';
   if (category && category.content) {

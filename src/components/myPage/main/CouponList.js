@@ -49,6 +49,15 @@ const CouponList = () => {
     setLoadMoreBtnVisible(true);
   };
 
+  const divideCoupons = (coupons) => {
+    if (!coupons) return;
+    let result = [];
+    for (let i = 0; i < coupons.length; i += 2) {
+      result.push(coupons.slice(i, i + 2));
+    }
+    return result;
+  };
+
   const hasCoupons = (coupons) => {
     return coupons.length > 0;
   };
@@ -62,19 +71,23 @@ const CouponList = () => {
         <div className="history_list">
           <div className={`coupon_inner ${hasCoupons(coupons) ? 'on' : ''}`}>
             {/* class : on 내역이 있을 경우 on */}
-            <div className="coupon_list">
-              {coupons.map((coupon) => (
-                <CouponListItem
-                  key={coupon.couponIssueNo}
-                  couponIssueNo={coupon.couponIssueNo}
-                  couponName={coupon.couponName}
-                  discountRate={coupon.discountRate}
-                  minSalePrice={coupon.minSalePrice}
-                  issueYmdt={coupon.issueYmdt}
-                  useEndYmdt={coupon.useEndYmdt}
-                />
-              ))}
-            </div>
+            {divideCoupons(coupons)?.map((couponList, index) => {
+              return (
+                <div className="coupon_list" key={index}>
+                  {couponList?.map((coupon) => (
+                    <CouponListItem
+                      key={coupon.couponIssueNo}
+                      couponIssueNo={coupon.couponIssueNo}
+                      couponName={coupon.couponName}
+                      discountRate={coupon.discountRate}
+                      minSalePrice={coupon.minSalePrice}
+                      issueYmdt={coupon.issueYmdt}
+                      useEndYmdt={coupon.useEndYmdt}
+                    />
+                  ))}
+                </div>
+              );
+            })}
             {loadMoreBtnVisible && (
               <div className="btn_article line">
                 <a href="#" className="more_btn" onClick={onClickLoadMore}>
@@ -101,10 +114,13 @@ const CouponList = () => {
         </div>
         <div className="ico_box_link">
           {/* TODO: 멤버십 > 쿠폰안내 탭으로 이동 가능해야함 */}
-          <Link to={{
-            pathname: `membership/benefit`,
-            state: { type: 'coupon' }
-          }} className="box_link_inner ico_type1">
+          <Link
+            to={{
+              pathname: `membership/benefit`,
+              state: { type: 'coupon' },
+            }}
+            className="box_link_inner ico_type1"
+          >
             <div className="txt_box">
               <p className="tit">소니스토어의 쿠폰 보기</p>
               <p className="txt">첫 구매 등 소니스토어의 다양한 쿠폰 혜택을 받으세요!</p>

@@ -13,25 +13,19 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
   const [startDateTime, setStartDateTime] = useState('');
   const [endDateTime, setEndDateTime] = useState('');
 
-  const changeDateTime = (startDate, endDate, more) => {
+  const changeDateTime = (startDate, endDate) => {
     const strDate = (date) => getStrDate(date).replace(/\-/g, '');
-    let date;
-    if (more === true) {
-      date = { start: startDate, end: endDate };
-    } else {
-      date = { start: strDate(startDate), end: strDate(endDate) };
-    }
 
-    setStartDateTime(date.startDate);
-    setEndDateTime(date.endDate);
+    setStartDateTime(strDate(startDate));
+    setEndDateTime(strDate(endDate));
 
-    return date;
+    return { start: strDate(startDate), end: strDate(endDate) };
   };
 
   const hasMore = useMemo(() => totalCount > list.length * pageIdx, [totalCount, list, pageIdx]);
 
   const search = async ({ startDate, endDate, more }) => {
-    const { start, end } = changeDateTime(startDate, endDate, more);
+    const { start, end } = changeDateTime(startDate, endDate);
 
     if (!more) {
       setPageIdx(1);
@@ -48,9 +42,8 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
   };
 
   useEffect(() => {
-    console.log(startDateTime, endDateTime, pageIdx, '1');
     if (pageIdx !== 1) {
-      search({ startDateTime, endDateTime, more: true });
+      search({ startDate: startDateTime, endDate: endDateTime, more: true });
     }
   }, [pageIdx]);
 
@@ -147,7 +140,7 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
   );
 };
 
-const getMileageDetail = type => {
+const getMileageDetail = (type) => {
   if (type === 10 || type === '10') {
     return '적립';
   }
@@ -166,22 +159,18 @@ const getMileageDetail = type => {
 const MileageList = ({ list }) => {
   const mileages = useMemo(
     () =>
-      list.map(
-        ({ sysRegDtime, expiredDateTime, amount, mappingKey, extraData, type }) => ({
-          regiDate: sysRegDtime
-            ? sysRegDtime.substr(0, 10).replace(/-/g, '.')
-            : '-',
-          expiredDate: expiredDateTime ? expiredDateTime.substr(0, 10).
-            replace(/-/g, '.') : '-',
-          extraData,
-          mappingKey,
-          detail: getMileageDetail(type),
-          amount: amount,
-          isMinus: ['11', '20', 11, 20].includes(type),
-          amountClassList: ['11', '20', 11, 20].includes(type)
-            ? 'col_table_cell order_mileage down'
-            : 'col_table_cell order_mileage up',
-        })),
+      list.map(({ sysRegDtime, expiredDateTime, amount, mappingKey, extraData, type }) => ({
+        regiDate: sysRegDtime ? sysRegDtime.substr(0, 10).replace(/-/g, '.') : '-',
+        expiredDate: expiredDateTime ? expiredDateTime.substr(0, 10).replace(/-/g, '.') : '-',
+        extraData,
+        mappingKey,
+        detail: getMileageDetail(type),
+        amount: amount,
+        isMinus: ['11', '20', 11, 20].includes(type),
+        amountClassList: ['11', '20', 11, 20].includes(type)
+          ? 'col_table_cell order_mileage down'
+          : 'col_table_cell order_mileage up',
+      })),
     [list],
   );
 
@@ -203,9 +192,9 @@ const MileageList = ({ list }) => {
             )}
           </div>
           <div className={item.amountClassList}>
-            <p className="txt">{item.isMinus ? '- ' : '+ '} {item?.amount
-              ? toCurrencyString(item.amount).replace('-', '')
-              : 'N'}</p>
+            <p className="txt">
+              {item.isMinus ? '- ' : '+ '} {item?.amount ? toCurrencyString(item.amount).replace('-', '') : 'N'}
+            </p>
           </div>
           <div className="col_table_cell order_expiration">
             <p className="txt">{item.expiredDate}</p>

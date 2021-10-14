@@ -105,6 +105,7 @@ export default function Footer() {
             <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
           </address>
         </div>
+        <script type="text/javascript" src="//image.sony.co.kr/omniture/omni_dev/sonystore_code_2021.js"></script>
       </footer>
 
       {

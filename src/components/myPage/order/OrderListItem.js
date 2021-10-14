@@ -54,7 +54,7 @@ export default function OrderListItem({
     EXCHANGE_REQUEST: '교환',
     EXCHANGE_DONE: '교환완료',
     RETURN_REQUEST: '반품',
-    RETURN_PROC_BEFORE_RECEIVE:'반품 처리중',
+    RETURN_PROC_BEFORE_RECEIVE: '반품 처리중',
     RETURN_DONE: '반품완료',
   };
 
@@ -90,9 +90,10 @@ export default function OrderListItem({
     setConfirmVisible(false);
 
     if (status === 'ok') {
-      let successMessage = '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
+      let successMessage =
+        '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
       if (payType === 'VIRTUAL_ACCOUNT') {
-        successMessage += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.'
+        successMessage += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.';
       }
 
       return postProfileOrderCancelByOrderOptionNo({
@@ -149,17 +150,17 @@ export default function OrderListItem({
       </div>
       <div className="col_table_cell order">
         <span className="order_status">{claimStatusTypeLabel ?? orderStatusMap[orderStatusType]}</span>
-        {showOrderCancel(orderStatusType, claimStatusType) && (
+        {/* {showOrderCancel(orderStatusType, claimStatusType) && (
           <button type="button" className="button button_negative button-s" onClick={onClickOrderCancel}>
             주문취소
           </button>
-        )}
+        )} */}
         {showDeliveryFind(orderStatusType) && (
           <button type="button" className="button button_negative button-s" onClick={openFindDeliveryPopup}>
             배송조회
           </button>
         )}
-        {showRefundAccountInfo(claimStatusType, payType) && (
+        {/* {showRefundAccountInfo(claimStatusType, payType) && (
           <>
             <button type="button" className="button button_negative button-s" onClick={onClickRefundAccount}>
               환불계좌정보
@@ -168,7 +169,7 @@ export default function OrderListItem({
               <RefundAccount setVisible={setRefundAccountVisible} claimNo={claimNo} orderOptionNo={orderOptionNo} />
             )}
           </>
-        )}
+        )} */}
       </div>
     </div>
   );

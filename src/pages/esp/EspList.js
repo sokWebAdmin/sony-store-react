@@ -38,20 +38,26 @@ export default function EspList({history}) {
   const [pageIndex, setPageIndex] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [products, setProducts] = useState([]);
+  const [initial, setInitial] = useState(false);
 
   const [targetProduct, setTargetProduct] = useState(null);
 
   useEffect(async () => {
-      const result = await _getRegisteredProduct();
+    if (!profile) {
+      return;
+    }
 
-      setTotalCount(result.totalCount);
+    const result = await _getRegisteredProduct();
 
-      if (pageIndex === 1) {
-          setProducts([...result.list]);
-      } else {
-          setProducts([...products, ...result.list]);
-      }
-  },[pageIndex]);
+    setInitial(true);
+    setTotalCount(result.totalCount);
+
+    if (pageIndex === 1) {
+      setProducts([...result.list]);
+    } else {
+      setProducts([...products, ...result.list]);
+    }
+  },[pageIndex, profile]);
 
   const _getRegisteredProduct = async () => {
     const result = {list: [], totalCount: 0};
@@ -71,6 +77,10 @@ export default function EspList({history}) {
     }
     catch (e) {
       console.error(e);
+
+      // const testResponse = {"errorCode":"0000","errorMessage":"성공","responseTime":"2021-10-13 14:11:20","paginationInfo":{"rowsPerPage":10,"pageIdx":1,"totalCount":6},"body":[{"modelcod":"02439180","serialno":"3526065","lastdate":"2021-10-12 17:40:27","slipReceiveDate":"2021-10-12 17:40:27","customernr":"2780336","customerid":"scs@test.com","modelname":"HDR-CX405","purSgtPsbYn":"Y"},{"modelcod":"02439180","serialno":"3525845","lastdate":"2021-10-12 17:40:27","slipReceiveDate":"2021-10-12 17:40:27","customernr":"2780336","customerid":"scs@test.com","modelname":"HDR-CX405","purSgtPsbYn":"Y"},{"modelcod":"02439180","serialno":"3525844","lastdate":"2021-10-12 17:40:27","slipReceiveDate":"2021-10-12 17:40:27","customernr":"2780336","customerid":"scs@test.com","modelname":"HDR-CX405","purSgtPsbYn":"Y"},{"modelcod":"02439180","serialno":"3526160","lastdate":"2021-10-12 17:40:27","slipReceiveDate":"2021-10-12 17:40:27","customernr":"2780336","customerid":"scs@test.com","modelname":"HDR-CX405","purSgtPsbYn":"Y"},{"modelcod":"02439180","serialno":"3526159","lastdate":"2021-10-12 17:40:27","slipReceiveDate":"2021-10-12 17:40:27","customernr":"2780336","customerid":"scs@test.com","modelname":"HDR-CX405","purSgtPsbYn":"Y"},{"modelcod":"84370450","serialno":"0183030","slipReceiveDate":"2021-09-01 15:38:48","customernr":"2780336","customerid":"scs@test.com","modelname":"SAL85F14Z","purSgtPsbYn":"N"}]};
+      // result.totalCount = testResponse?.paginationInfo?.totalCount || totalCount;
+      // result.list = testResponse?.body || [];
     }
 
     return result;
@@ -104,14 +114,20 @@ export default function EspList({history}) {
               {
                 products?.length === 0 &&
                 <div className="empty_buy_box">
-                  <i className="empty_buy_ico"></i>
-                  <strong className="empty_tit">구매 가능한 ESP가 없습니다.</strong>
-                  <p className="empty_desc">My SCS에서 정품등록 여부를 먼저 확인하세요!</p>
-                  <div className="button_wrap">
-                    <button type="button" className="button button_negative" onClick={() => {
-                      _openGenuineRegisterSite();
-                    }}>정품등록 바로가기</button>
-                  </div>
+                  {
+                    initial &&
+                    <>
+                      <i className="empty_buy_ico"></i>
+                      <strong className="empty_tit">구매 가능한 ESP가 없습니다.</strong>
+                      <p className="empty_desc">My SCS에서 정품등록 여부를 먼저 확인하세요!</p>
+                      <div className="button_wrap">
+                        <button type="button" className="button button_negative" onClick={() => {
+                          _openGenuineRegisterSite();
+                        }}>정품등록 바로가기</button>
+                      </div>
+                    </>
+                  }
+
                 </div>
               }
               {

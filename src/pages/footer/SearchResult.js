@@ -49,9 +49,7 @@ export default function SearchResult({match}) {
   const [noticeNewest, setNoticeNewest] = useState(true);
 
   useEffect(() => {
-    console.log(history.location);
     const word = _.chain(history.location.pathname).split('/').last().value();
-    console.log(word);
     if (!word) return;
     handleSearch(word);
   

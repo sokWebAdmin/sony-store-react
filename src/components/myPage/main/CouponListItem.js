@@ -16,7 +16,7 @@ const CouponListItem = ({ couponIssueNo, couponName, discountRate, minSalePrice,
           <p className="tit">
             {couponName} <span className="percentage">{discountRate}%</span> 할인
           </p>
-          <p className="cut_txt">{toCurrencyString(minSalePrice)}원 이상 구매 시 </p>  
+          <p className="cut_txt">{toCurrencyString(minSalePrice)}원 이상 구매 시 </p>
         </div>
         <p className="expiration_txt">
           <strong>유효 기간 </strong>
