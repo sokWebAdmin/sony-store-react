@@ -304,7 +304,7 @@ export default function ProductView({ match }) {
         <SEOHelmet title={ getTitle } />
         <div className="contents product">
         {
-          showProductDetail &&
+          productData &&
           <div className="product_view_wrap" style={{backgroundColor:"#fff"}}>
             <div className="product_view_main">
               <div className="prd_main_slider" style={getMainSliderStyle(size)}>
