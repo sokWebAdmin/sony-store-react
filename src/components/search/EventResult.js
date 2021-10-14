@@ -4,6 +4,7 @@ import { PAGE_SIZE } from "../../const/search";
 import { formatDateWithDot } from "../../utils/dateFormat";
 import ViewMore from "../common/ViewMore";
 import Newest from "./Newest";
+import { unescape } from "lodash";
 export default function EventResult({ fetchEvent, eventList, eventCount, newest, setNewest }) {
   return (
     <>
@@ -33,9 +34,9 @@ export default function EventResult({ fetchEvent, eventList, eventCount, newest,
               </div>
               <dl className="grid_info">
                 <dt>
-                  <Link to={`/event/detail/${event.eventNo}`}>{ event.label }</Link>
+                  <Link to={`/event/detail/${event.eventNo}`}>{ unescape(event.label) }</Link>
                 </dt>
-                <dd>{`${formatDateWithDot(event.startYmdt)} ~ ${formatDateWithDot(event.endYmdt)}`}</dd>
+                <dd>{`${formatDateWithDot(event.startYmdt)} ~ ${event.displayPeriodType === 'REGULAR' ? '재고 소진 시' : formatDateWithDot(event.endYmdt)}`}</dd>
               </dl>
             </div>
           </li>
