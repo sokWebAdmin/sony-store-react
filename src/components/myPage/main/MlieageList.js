@@ -176,8 +176,8 @@ const MileageList = ({ list }) => {
 
   return (
     <div className="col_table_body">
-      {mileages.map((item) => (
-        <div className="col_table_row" key={item.regiDate}>
+      {mileages.map((item, idx) => (
+        <div className="col_table_row" key={idx}>
           <div className="col_table_cell order_date">
             <p className="txt">{item.regiDate}</p>
           </div>
@@ -186,7 +186,8 @@ const MileageList = ({ list }) => {
           </div>
           <div className="col_table_cell order_number">
             {item.mappingKey && item.mappingKey !== 'null' && (
-              <Link to={`/my-page/order-detail?orderNo=${item.mappingKey}`} className="txt">
+              <Link to={`/my-page/order-detail?orderNo=${item.mappingKey}`}
+                    className="txt">
                 {item.mappingKey}
               </Link>
             )}
