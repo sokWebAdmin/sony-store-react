@@ -209,13 +209,10 @@ export default function OrderDetail() {
     if (status === 'ok') {
       if (confirm.name === 'cancel-confirm') {
         if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
-          setRefundAccountVisible(() => true); // 가상계좌일때만 이거, _cancelOrder를 프롭스로 내려서 Refund 팝업에서 처리하면 될려나
+          setRefundAccountVisible(() => true);
         } else {
-          _cancelOrder(); // 그외 이거
+          _cancelOrder();
         }
-
-        // 취소 로직
-        // _cancelOrder(); // 그외 이거
       }
     }
   };
@@ -252,14 +249,12 @@ export default function OrderDetail() {
 
       openAlert(message, () => {
         if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
-          console.log('들어오나 1');
           return async () => {
             const { data } = await _getOrderByOrderNo();
             const { claimStatusType, claimNo } =
               data.orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0];
 
             if (!!claimNo && payInfo.payType === 'VIRTUAL_ACCOUNT') {
-              console.log('들어오나 2', claimStatusType, claimNo);
               setClaimInfo(() => ({ claimStatusType, claimNo }));
               setRefundAccountVisible(() => false);
               window.location.reload();

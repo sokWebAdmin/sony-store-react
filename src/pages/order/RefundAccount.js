@@ -1,6 +1,6 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useMallState } from '../../context/mall.context';
-import { putGuestClaimRefundAccountByClaimNo, putProfileClaimRefundAccountByClaimNo } from '../../api/claim';
+
 import LayerPopup from '../../components/common/LayerPopup';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
@@ -8,9 +8,8 @@ import Confirm from '../../components/common/Confirm';
 
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
-import GlobalContext from '../../context/global.context';
 
-export default function RefundAccount({ setVisible, claimNo, orderOptionNo, cancelOrder }) {
+export default function RefundAccount({ setVisible, cancelOrder }) {
   const close = () => setVisible(false);
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [form, setForm] = useState({
@@ -24,8 +23,6 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo, canc
   const { bankType } = useMallState();
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState('');
-
-  const { isLogin } = useContext(GlobalContext);
 
   useEffect(async () => {
     setBackSelectList(bankType);
@@ -71,19 +68,7 @@ export default function RefundAccount({ setVisible, claimNo, orderOptionNo, canc
   const onCloseConfirm = (status) => {
     setConfirmVisible(false);
     if (status === 'ok') {
-      console.log('form:', form);
-      cancelOrder(form); // 요기에 form 데이터 넘기기
-
-      // const putClaimRefundAcountByClaimNo = isLogin
-      //   ? putProfileClaimRefundAccountByClaimNo
-      //   : putGuestClaimRefundAccountByClaimNo;
-      // return putClaimRefundAcountByClaimNo({ path: { claimNo }, requestBody: { ...form } }).then((res) => {
-      //   if (res.data.status === 400) {
-      //     openAlert(res.data.message);
-      //     return;
-      //   }
-      //   openAlert('환불계좌 등록이 완료되었습니다.', () => () => window.location.reload());
-      // });
+      cancelOrder(form);
     }
   };
 
