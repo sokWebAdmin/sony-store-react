@@ -27,7 +27,7 @@ const InvoicePublish = ({ basketid, close }) => {
   const item = useRef();
 
   useEffect(() => {
-    fetchPostedData.then(setPostedData);
+    fetchPostedData.then(setFormData);
   }, []);
 
   const onChangeInput = event => {
