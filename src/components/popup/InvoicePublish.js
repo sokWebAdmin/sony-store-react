@@ -6,7 +6,7 @@ import { postInvoice, getInvoice } from '../../api/sony/order';
 
 import '../../assets/scss/partials/popup/invoice.scss';
 
-const InvoicePublish = ({ basketid, close }) => {
+const InvoicePublish = ({ isView, basketid, close }) => {
   const [processDone, setProcessDone] = useState(false);
   const [formData, setFormData] = useState({
     regnum: '',
@@ -26,9 +26,12 @@ const InvoicePublish = ({ basketid, close }) => {
   const kind = useRef();
   const item = useRef();
 
-  useEffect(() => {
-    fetchPostedData.then(setFormData);
-  }, []);
+  useEffect(async () => {
+    if (isView) {
+      const data = await fetchPostedData();
+      data && setFormData(data);
+    }
+  }, [isView]);
 
   const onChangeInput = event => {
     const el = event.target;

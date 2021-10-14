@@ -87,6 +87,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                     </button>
                     {viewInvoicePublish && <InvoicePublish
                       basketid={orderSheetNo}
+                      isView={viewInvoicePublish}
                       close={() => setViewInvoicePublish(false)} />}
                   </div>
                   <div className="cash_box">
