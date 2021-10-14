@@ -88,6 +88,13 @@ export default function JoinStep() {
     alertCloseFunc?.();
   };
 
+  const getSnsInfo = () => {
+    const provider = getItem(KEY.OPENID_PROVIDER);
+
+    if (!provider || getUrlParam('sns') !== 'true') return null;
+    return provider.split('_')[1].substring(0, 1).toUpperCase();
+  }
+
   const onChangeGender = (e) => setGender(e.target.value);
   const _registerApi = async () => {
     //이메일
@@ -197,7 +204,10 @@ export default function JoinStep() {
       viasite: 'SonyStyle',
       sms: getUrlParam('sms') === 'true' ? 'Y' : 'N',
       mobileflag: 'N',
-      servicesite: { news: getUrlParam('email') === 'true' ? 'Y' : 'N', snsinfo: null },
+      servicesite: {
+        news: getUrlParam('email') === 'true' ? 'Y' : 'N',
+        snsinfo: getSnsInfo() ?? null,
+      },
       password: password,
     };
 
