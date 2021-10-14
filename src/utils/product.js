@@ -109,7 +109,7 @@ export const getSaleStatus = (status, reservationDate, stockCnt, reservationStoc
       return getNoneCountType(saleStatusType);
    };
 
-   return saleStatusType;
+   return '';
 };
 
 export const getPricePerProduct = ({ salePrice, immediateDiscountAmt, additionDiscountAmt }) => {
