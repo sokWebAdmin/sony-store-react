@@ -52,8 +52,10 @@ const EventBottom = () => {
   const [tag, setTag] = useState('');
   const [selectEvent, setSelectEvent] = useState(null);
   const [tabs, setTabs] = useState(initTabs);
+  const [swiperTab, setSwiperTab] = useState(null);
   const [showLabel, setShowLabel] = useState('전체');
   const [sortSelect, setSortSelect] = useState(false);
+  
 
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
@@ -124,6 +126,7 @@ const EventBottom = () => {
   useEffect(() => {
     setNewest(true);
     fetchDisplayEvents();
+    swiperTab?.slideTo(Object.keys(tags).findIndex(t => t === tabState));
   }, [tabState]);
 
   useEffect(() => {
@@ -279,6 +282,7 @@ const EventBottom = () => {
                 swiper.navigation.update();
               },
             }}
+            onSwiper={setSwiperTab}
           >
             {tabs &&
               tabs.map(({ key, label }) => {
