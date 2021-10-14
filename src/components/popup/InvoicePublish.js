@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import LayerPopup from '../../components/common/LayerPopup';
 import { handleChange } from '../../utils/state';
@@ -7,7 +7,6 @@ import { postInvoice, getInvoice } from '../../api/sony/order';
 import '../../assets/scss/partials/popup/invoice.scss';
 
 const InvoicePublish = ({ basketid, close }) => {
-
   const [processDone, setProcessDone] = useState(false);
   const [formData, setFormData] = useState({
     regnum: '',
@@ -27,6 +26,10 @@ const InvoicePublish = ({ basketid, close }) => {
   const kind = useRef();
   const item = useRef();
 
+  useEffect(() => {
+    fetchPostedData.then(setPostedData);
+  }, []);
+
   const onChangeInput = event => {
     const el = event.target;
 
@@ -43,7 +46,7 @@ const InvoicePublish = ({ basketid, close }) => {
       return;
     }
 
-    post().then(() => fetchPostedData());
+    post().then(fetchPostedData).then(setPostedData);
   };
 
   async function post () {
@@ -63,7 +66,9 @@ const InvoicePublish = ({ basketid, close }) => {
   async function fetchPostedData () {
     try {
       const res = await getInvoice(basketid);
-      setPostedData(res.data.body);
+      if (res?.data?.body) {
+        return res.data.body
+      }
     }
     catch (err) {
       console.error(err);
@@ -103,7 +108,7 @@ const InvoicePublish = ({ basketid, close }) => {
     >
       <p className="pop_tit">전자 세금계산서 신청</p>
       <div className="pop_cont_scroll tax_invoice2" style={{ height: '651px' }}>
-        {!processDone || !postedData ?
+        {!processDone ?
           <>
             <form onSubmit={submit}>
               <div className="form_zone">
