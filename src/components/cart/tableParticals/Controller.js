@@ -1,10 +1,12 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import EstimateSheet from '../../popup/EstimateSheet';
+import { breakPoint } from '../../../utils/constants';
+import { useWindowSize } from '../../../utils/utils';
 
 const Controller = ({ products, checkedIndexes, checkedProducts, setCheckedIndexes, deleteItems }) => {
   const [allChecked, setAllChecked] = useState(false);
   const [viewES, setViewES] = useState(false);
-
+  const size = useWindowSize();
   const allProductIndexes = useMemo(() => products.map((_, i) => i), [products]);
 
   useEffect(() => {
@@ -52,14 +54,16 @@ const Controller = ({ products, checkedIndexes, checkedProducts, setCheckedIndex
         >
           선택 삭제
         </button>
-        <button
-          type="button"
-          className="button button_positive button-s button_print_esimate popup_comm_btn"
-          onClick={onClickShowES}
-          data-popup-name="estimate"
-        >
-          견적서 출력하기
-        </button>
+        {size.width > breakPoint && (
+          <button
+            type="button"
+            className="button button_positive button-s button_print_esimate popup_comm_btn"
+            onClick={onClickShowES}
+            data-popup-name="estimate"
+          >
+            견적서 출력하기
+          </button>
+        )}
       </div>
       {viewES && <EstimateSheet products={checkedProducts} close={() => setViewES(false)} />}
     </div>
