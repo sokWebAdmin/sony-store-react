@@ -47,7 +47,10 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
               setMobileOrderOpen(!mobileOrderOpen)
           }}>
             <span className="itemsort__button__label sr-only">정렬기준:</span>
-            <span className="itemsort__button__selected">{orderBy === "RECENT_PRODUCT" ? "최신순" : (orderBy === "LOW_PRICE" ? "낮은 가격순" : "높은 가격순")}</span>
+            <span className="itemsort__button__selected">{orderBy ===
+            'MD_RECOMMEND' ? '최신순' : (orderBy === 'LOW_PRICE'
+              ? '낮은 가격순'
+              : '높은 가격순')}</span>
           </button>
           <div className="itemsort__drawer">
             <ul className="itemsort__items">

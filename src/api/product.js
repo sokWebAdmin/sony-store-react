@@ -7,7 +7,8 @@ export const getProductListByCategoryNo = (categoryNo, orderBy)=> {
     return request("products/search?categoryNos="+categoryNo+"&order.by="+orderBy, "get", null, {});
   }
   
-  //POPULAR:판매인기순(검색엔진 도입), SALE_YMD:판매일자, DISCOUNTED_PRICE:가격순, REVIEW:상품평, SALE_CNT:총판매량순, RECENT_PRODUCT:최근상품순, MD_RECOMMEND:MD추천순
+  //POPULAR:판매인기순(검색엔진 도입), SALE_YMD:판매일자, DISCOUNTED_PRICE:가격순, REVIEW:상품평,
+  // SALE_CNT:총판매량순, MD_RECOMMEND:최근상품순, MD_RECOMMEND:MD추천순
 };
 
 export const productSearch = (keyword, orderBy)=> {
@@ -35,11 +36,13 @@ export const bestProductList = ()=> {
 };
 
 export const newProductList = ()=> {
-  return request("products/search?order.by=RECENT_PRODUCT&pageSize=4", "get", null, {});
+  return request('products/search?order.by=MD_RECOMMEND&pageSize=4', 'get',
+    null, {});
 };
 
 export const themeProducts = (categoryNo)=> {
-  return request("products/search?fromDB=true&categoryNos="+categoryNo+"&order.by=RECENT_PRODUCT&pageSize=4", "get", null, {});
+  return request('products/search?fromDB=true&categoryNos=' + categoryNo +
+    '&order.by=MD_RECOMMEND&pageSize=4', 'get', null, {});
 };
 
 export const getProductSearch = query => {

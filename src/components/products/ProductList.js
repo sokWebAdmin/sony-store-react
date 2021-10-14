@@ -9,9 +9,21 @@ import { getProductSearch, postProductsGroupManagementCode } from '../../api/pro
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const orderList = [
-  {orderBy: 'RECENT_PRODUCT', title: '최신순', query: { 'order.by': 'RECENT_PRODUCT' }},
-  {orderBy: 'TOP_PRICE', title: '높은 가격순', query: { 'order.by': 'DISCOUNTED_PRICE' }},
-  {orderBy: 'LOW_PRICE', title: '낮은 가격순', query: { 'order.by': 'DISCOUNTED_PRICE', 'order.direction': 'ASC' }},
+  {
+    orderBy: 'MD_RECOMMEND',
+    title: '최신순',
+    query: { 'order.by': 'MD_RECOMMEND' },
+  },
+  {
+    orderBy: 'TOP_PRICE',
+    title: '높은 가격순',
+    query: { 'order.by': 'DISCOUNTED_PRICE' },
+  },
+  {
+    orderBy: 'LOW_PRICE',
+    title: '낮은 가격순',
+    query: { 'order.by': 'DISCOUNTED_PRICE', 'order.direction': 'ASC' },
+  },
 ];
 
 export default function ProductList({category}) {

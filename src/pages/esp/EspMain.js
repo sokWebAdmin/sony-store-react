@@ -75,7 +75,7 @@ export default function EspMain() {
             if (focusCategory) {
                 const { status, data } = await getProductSearch({
                     categoryNos: focusCategory.categoryNo,
-                    'order.by': 'RECENT_PRODUCT',
+                    'order.by': 'MD_RECOMMEND',
                     pageNumber: pageNumber,
                     pageSize: 15,
                     hasOptionValues: true,

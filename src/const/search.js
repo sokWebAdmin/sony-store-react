@@ -7,9 +7,21 @@ export const TAB_MAP = {
 };
 
 export const orderList = [
-  { orderBy: 'RECENT_PRODUCT', label: '최신순', query: {'order.by': 'RECENT_PRODUCT'}},
-  { orderBy: 'DISCOUNTED_PRICE', label: '높은 가격순', query: {'order.by': 'DISCOUNTED_PRICE'}},
-  { orderBy: 'LOW_PRICE', label: '낮은 가격순', query: {'order.by': 'DISCOUNTED_PRICE', 'order.direction': 'ASC'}},
+  {
+    orderBy: 'MD_RECOMMEND',
+    label: '최신순',
+    query: { 'order.by': 'MD_RECOMMEND' },
+  },
+  {
+    orderBy: 'DISCOUNTED_PRICE',
+    label: '높은 가격순',
+    query: { 'order.by': 'DISCOUNTED_PRICE' },
+  },
+  {
+    orderBy: 'LOW_PRICE',
+    label: '낮은 가격순',
+    query: { 'order.by': 'DISCOUNTED_PRICE', 'order.direction': 'ASC' },
+  },
 ];
 
 export const PAGE_SIZE = {
