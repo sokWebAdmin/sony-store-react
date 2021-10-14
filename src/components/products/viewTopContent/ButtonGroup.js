@@ -323,17 +323,18 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   useEffect(() => {
     if (naverPayRef?.current) {
       naverPayRef.current.innerHTML = '';
-    }
-    naver.NaverPayButton.apply({
-      EMBED_ID: 'naverPay',
-      BUTTON_KEY: 'AAAA', //buttonKey,
-      TYPE: "A",
-      COLOR: 1,
-      COUNT: 2,
-      ENABLE: 'Y', // 'Y' / 'N'
-      BUY_BUTTON_HANDLER: naverPayOrder,
-      WISHLIST_BUTTON_HANDLER: naverPayWishHandler
-    });
+
+      naver.NaverPayButton.apply({
+        EMBED_ID: 'naverPay',
+        BUTTON_KEY: 'AAAA', //buttonKey,
+        TYPE: "A",
+        COLOR: 1,
+        COUNT: 2,
+        ENABLE: 'Y', // 'Y' / 'N'
+        BUY_BUTTON_HANDLER: naverPayOrder,
+        WISHLIST_BUTTON_HANDLER: naverPayWishHandler
+      });
+    };
   }, [selectedOption]);
 
   return (
