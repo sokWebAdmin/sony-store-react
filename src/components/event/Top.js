@@ -48,7 +48,7 @@ const EventTop = () => {
   return (
     <>
       <div className="event_slider swiper-container">
-        {(banners.length > 0 || bannersMo.length > 0) &&
+        {(banners.length > 0 && !underPc) &&
         <Swiper
           className="swiper-wrapper"
           slidesPerView={1}
@@ -73,8 +73,38 @@ const EventTop = () => {
             },
           }}
         >
-          {banners.length && !underPc && banners.map(bannerMap)}
-          {bannersMo.length && underPc && bannersMo.map(bannerMap)}
+          {banners.map(bannerMap)}
+          <div className="arrow_btn">
+            <a href="javascript:void(0)" className="arrow swiper-button-prev"><span className="ico_btn">이전</span></a>
+            <a href="javascript:void(0)" className="arrow swiper-button-next"><span className="ico_btn">다음</span></a>
+          </div>
+        </Swiper>}
+        {(bannersMo.length && underPc) &&
+        <Swiper
+          className="swiper-wrapper"
+          slidesPerView={1}
+          loop={true}
+          speed={600}
+          autoplay={{ delay: 6000, disableOnInteraction: true }}
+          initialSlide={0}
+          navigation={{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          }}
+          pagination={{
+            el: '.event-banner-pagination',
+            type: 'custom',
+            renderCustom: (swiper, current, total) => {
+              let _current = current;
+              let _total = total;
+              if (current < 10) _current = '0' + current;
+              if (total < 10) _total = '0' + total;
+              return '<span class=\'swiper-pagination-current\'>' + _current + '</span> / ' +
+                '<span class=\'swiper-pagination-total\'>' + _total + '</span>';
+            },
+          }}
+        >
+          {bannersMo.map(bannerMap)}
           <div className="arrow_btn">
             <a href="javascript:void(0)" className="arrow swiper-button-prev"><span className="ico_btn">이전</span></a>
             <a href="javascript:void(0)" className="arrow swiper-button-next"><span className="ico_btn">다음</span></a>
