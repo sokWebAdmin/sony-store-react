@@ -299,10 +299,12 @@ const OrderSheet = ({ location }) => {
             <div className="order_box">
               <h2 className="order_box__tit">주문·결제</h2>
               <ol className="order_box__list">
-                <li className="d_type">{/* 주문결제 상태일때 장바구니 d_type 클래스 추가 */}
+                {!isGiftOrder &&
+                <li className="d_type">
                   <i className="step_ico cart" />
                   <p>장바구니</p>
                 </li>
+                }
                 <li className="on">
                   <i className="step_ico order" />
                   <p>주문·결제</p>
