@@ -1,7 +1,6 @@
 @import './import/variables';
 
 .mypage {
-
   /* mypage */
   .my {
     .container .content {
@@ -250,7 +249,7 @@
         margin-left: 0;
       }
 
-      &:nth-child(2n)~.b2b_link {
+      &:nth-child(2n) ~ .b2b_link {
         margin-top: 20px;
       }
 
@@ -645,7 +644,7 @@
           background: url('../images/mypage/ico_calendar.svg') no-repeat 0 0;
         }
 
-        &+.calendar_box {
+        & + .calendar_box {
           margin-left: 24px;
 
           &:before {
@@ -670,11 +669,11 @@
   }
 
   .history_list {
-    &>* {
+    & > * {
       display: none;
     }
 
-    &>.on {
+    & > .on {
       display: block;
     }
 
@@ -845,7 +844,7 @@
         margin-top: 21px;
         text-align: right;
 
-        .inp_check+label {
+        .inp_check + label {
           color: #444;
         }
       }
@@ -853,6 +852,11 @@
 
     .like_prd_inner {
       margin: 24px 0 34px;
+    }
+
+    .like_prd_list {
+      display: flex;
+      flex-wrap: wrap;
     }
 
     .like_prd_list {
@@ -870,13 +874,12 @@
       transition: all 0.2s;
 
       @include only-pc {
-
         &:first-child,
         &:nth-child(4n + 1) {
           margin-left: 0;
         }
 
-        &:nth-child(4n)~li {
+        &:nth-child(4n) ~ li {
           margin-top: 40px;
         }
 
@@ -896,7 +899,7 @@
           margin-left: 0;
         }
 
-        &:nth-child(3n)~li {
+        &:nth-child(3n) ~ li {
           margin-top: 32px;
         }
 
@@ -1102,17 +1105,17 @@
         }
 
         &:placeholder-shown {
-          +.label {
+          + .label {
             top: 50%;
             transform: translateY(-50%) scale(1);
           }
         }
 
-        &.disabled+.label {
+        &.disabled + .label {
           display: none;
         }
 
-        &:focus+.label {
+        &:focus + .label {
           transform: translate3d(0, -12px, 0) scale(0.75);
           color: #bbb;
           top: 10px;
@@ -1123,7 +1126,7 @@
         }
 
         &:not(:placeholder-shown) {
-          +.label {
+          + .label {
             @include only-mo {
               top: 5px;
             }
@@ -1296,7 +1299,7 @@
         font-size: 14px;
 
         &:placeholder-shown {
-          +.label {
+          + .label {
             top: 20px;
             transform: translate3d(0, 0, 0) scale(1);
 
@@ -1307,7 +1310,7 @@
         }
 
         &:not(:placeholder-shown) {
-          +.label {
+          + .label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
           }
@@ -1316,7 +1319,7 @@
         &:focus {
           outline: 0;
 
-          +.label {
+          + .label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
             color: #bbb;
@@ -1430,7 +1433,7 @@
         font-size: 14px;
 
         &:placeholder-shown {
-          +.label {
+          + .label {
             top: 20px;
             transform: translate3d(0, 0, 0) scale(1);
 
@@ -1441,7 +1444,7 @@
         }
 
         &:not(:placeholder-shown) {
-          +.label {
+          + .label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
           }
@@ -1450,7 +1453,7 @@
         &:focus {
           outline: 0;
 
-          +.label {
+          + .label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
             color: #bbb;
@@ -1519,7 +1522,7 @@
         font-size: 14px;
 
         &:placeholder-shown {
-          +.label {
+          + .label {
             top: 20px;
             transform: translate3d(0, 0, 0) scale(1);
 
@@ -1530,7 +1533,7 @@
         }
 
         &:not(:placeholder-shown) {
-          +.label {
+          + .label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
           }
@@ -1539,7 +1542,7 @@
         &:focus {
           outline: 0;
 
-          +.label {
+          + .label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
             color: #bbb;
@@ -1699,7 +1702,7 @@
         min-width: auto;
         font-size: 16px;
 
-        &+.button {
+        & + .button {
           margin-left: 8px;
         }
       }
@@ -1733,7 +1736,7 @@
     .user_item {
       width: 50%;
 
-      &:nth-child(2)~.user_item {
+      &:nth-child(2) ~ .user_item {
         border-top: 1px solid #444;
       }
     }
@@ -1781,7 +1784,7 @@
           right: 16px;
         }
 
-        &:nth-child(2n)~.b2b_link {
+        &:nth-child(2n) ~ .b2b_link {
           margin-top: 16px;
         }
       }
@@ -1980,7 +1983,6 @@
 
       .certify_box {
         .certify_list {
-
           &.on,
           &:hover {
             .certify {
@@ -2016,7 +2018,7 @@
           font-size: 20px;
         }
 
-        &+.cont {
+        & + .cont {
           .cont_tit {
             margin-top: 64px;
           }
@@ -2090,7 +2092,7 @@
         width: 100%;
         margin: 0;
 
-        &:nth-child(2n)~.b2b_link {
+        &:nth-child(2n) ~ .b2b_link {
           margin: 0;
         }
 
@@ -2169,7 +2171,7 @@
             font-size: 14px;
             vertical-align: top;
 
-            &+span {
+            & + span {
               display: none;
             }
           }
@@ -2229,7 +2231,7 @@
           width: calc((100% - 74px) / 2);
           padding-right: 0;
 
-          &+.calendar_box {
+          & + .calendar_box {
             margin-left: 8px;
 
             &:before {
@@ -2346,7 +2348,6 @@
     }
 
     .history_like {
-
       .button_positive,
       .button_negative {
         font-size: 14px;
@@ -2354,7 +2355,7 @@
         background: none;
         color: #888;
 
-        &>span {
+        & > span {
           display: none;
         }
       }
@@ -2368,7 +2369,8 @@
           margin-left: 0;
         }
 
-        &:nth-child(2)~.like_list {}
+        &:nth-child(2) ~ .like_list {
+        }
       }
 
       .like_prd_inner {
@@ -2508,7 +2510,7 @@
 
       &.tel {
         .button {
-          &>span {
+          & > span {
             display: none;
           }
         }
@@ -2540,7 +2542,6 @@
 
       .certify_box {
         .certify_list {
-
           &.on,
           &:hover {
             .certify {
@@ -2724,7 +2725,6 @@
     }
 
     @media screen and (max-width: 1280px) {
-
       &_term,
       &_desc {
         font-size: 14px;
@@ -2796,7 +2796,6 @@
       }
 
       @media screen and (max-width: 640px) {
-
         &_term,
         &_desc {
           float: none;
@@ -2962,7 +2961,7 @@
       }
     }
 
-    &~.button_wrap {
+    & ~ .button_wrap {
       clear: both;
     }
   }
@@ -3027,7 +3026,7 @@
           }
         }
 
-        &~[class*='step'] {
+        & ~ [class*='step'] {
           &::before {
             background-color: #ddd;
           }
@@ -3108,7 +3107,7 @@
               color: #fff;
             }
 
-            &~[class*='step'] {
+            & ~ [class*='step'] {
               &::before {
                 background-color: #ddd;
               }
@@ -3410,7 +3409,6 @@
 
     @include only-mo {
       .point_box {
-
         dt,
         dd {
           display: block;
@@ -3436,7 +3434,7 @@
       margin-bottom: 14px;
     }
 
-    .group+.check {
+    .group + .check {
       margin-top: 24px;
     }
 
@@ -3445,7 +3443,7 @@
         padding: 21px 0 9px;
         letter-spacing: -0.025em;
 
-        &:placeholder-shown+.label {
+        &:placeholder-shown + .label {
           top: 20px;
         }
       }
@@ -3468,7 +3466,6 @@
     }
 
     @media screen and (min-width: 641px) {
-
       .inp_box .label,
       .inp_box .inp,
       .select_ui_zone .selected_btn {
@@ -3484,7 +3481,6 @@
   }
 
   @media print {
-
     // -webkit-print-color-adjust: exact;
     .button {
       display: none;
@@ -3525,7 +3521,6 @@
 
     .order {
       &_detail_cont {
-
         // page-break-after: always;
         &::before {
           content: '제품 정보';
@@ -3651,7 +3646,6 @@
 }
 
 @media screen and (max-width: 640px) {
-
   .withdraw_pop .point_box dt,
   .withdraw_pop .point_box dd {
     display: block;
