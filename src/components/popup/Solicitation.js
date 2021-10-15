@@ -7,6 +7,7 @@ const Solicitation = ({ goOrder, close }) => {
     <LayerPopup
       size={'m'}
       onClose={close}
+      className="login_chk_order"
     >
       <p className="pop_tit">로그인 후 주문해주세요.</p>
       <p className="pop_txt">소니스토어 회원으로 로그인 하시고 다양한 멤버십 혜택을 누리세요!

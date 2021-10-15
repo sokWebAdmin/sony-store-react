@@ -2,7 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { notificationInfo } from "../../const/productView";
 import LayerPopup from '../common/LayerPopup';
 
-export default function Notification({ type, setNotificationVisible, unusableIcon, fetchOrderSheetNo, popupType = 'default' }) {
+export default function Notification({ type, setNotificationVisible, unusableIcon, goOrder, popupType = 'default' }) {
   const history = useHistory();
   const isOrder = type === 'order';
   const info = notificationInfo[type];
@@ -11,7 +11,7 @@ export default function Notification({ type, setNotificationVisible, unusableIco
   const closePopup = e => {
     e.preventDefault();
     setNotificationVisible(false);
-    isOrder && !e.target.classList.contains('delete') && fetchOrderSheetNo();
+    isOrder && !e.target.classList.contains('delete') && goOrder();
   }
   return (
     <>
@@ -33,7 +33,14 @@ export default function Notification({ type, setNotificationVisible, unusableIco
           <p className="pop_txt">{label1}</p>
           <div className="btn_article">
             <button className="button button_negative button-m closed" type="button" onClick={closePopup}>{info?.cancelLabel}</button>
-            <button className="button button_positive button-m" type="button" onClick={() => history.push(to)}>{toLabel}</button>
+            <button className="button button_positive button-m" type="button" onClick={
+              () => history.push({
+                pathname: to,
+                state: {
+                  next: history.location.pathname
+                }
+              })
+            }>{toLabel}</button>
           </div>
         </>
       </LayerPopup>}

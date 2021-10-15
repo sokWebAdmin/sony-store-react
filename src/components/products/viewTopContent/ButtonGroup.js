@@ -399,7 +399,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       }
       {
         orderVisible
-          && <Notification setNotificationVisible={setOrderVisible} type='order' unusableIcon={true} fetchOrderSheetNo={fetchOrderSheetNo} popupType="popCont" />
+          && <Notification setNotificationVisible={setOrderVisible} type='order' unusableIcon={true} goOrder={fetchOrderSheetNo} popupType="popCont" />
       }
       {
         alertVisible 
