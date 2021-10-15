@@ -59,6 +59,7 @@ const Expired = () => {
                       value={keyword}
                       onKeyPress={(event) => {
                         if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+                          event.preventDefault();
                           fetchInitDisplayEvents(1, keyword);
                         }
                       }}
