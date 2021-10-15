@@ -359,7 +359,7 @@ export default function PurchaseConsulting() {
                                 id="user_email"
                                 placeholder="예) sony@sony.co.kr"
                                 autoComplete="off"
-                                maxLength={80}
+                                maxLength={25}
                                 value={email}
                                 onChange={(e) => {
                                   setEmail(e.target.value);
@@ -596,7 +596,7 @@ export default function PurchaseConsulting() {
                                 className="requests_cont"
                                 cols={50}
                                 rows={5}
-                                maxLength={4000}
+                                maxLength={1000}
                                 value={note}
                                 onChange={(e) => {
                                   onChangeNote(e.target);
@@ -605,7 +605,7 @@ export default function PurchaseConsulting() {
                               <span className="focus_bg" />
                             </div>
                             <div className="byte_count">
-                              <strong className="current">{count}</strong> / 4,000자
+                              <strong className="current">{count}</strong> / 1,000자
                             </div>
                             {!validation.node && (
                               <p className="error_txt">
