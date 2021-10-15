@@ -138,7 +138,7 @@ const Calculator = ({ payment, paymentInfo, orderCnt }) => {
           className="button button_positive button-full"
           onClick={() => submit()}
           type="button">총 <em>{toCurrency(paymentInfo?.totalStandardAmt)}</em> 원
-          (1개) <span>결제하기</span></button>
+          ({toCurrency(orderCnt)}개) <span>결제하기</span></button>
       </div>
     </div>
   );
