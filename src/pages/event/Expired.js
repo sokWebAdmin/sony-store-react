@@ -40,7 +40,7 @@ const Expired = () => {
                   style={{
                     fontSize: '14px',
                     color: '#222',
-                    borderBottom: '1px solid #e1e1e1',
+                    borderBottom: '1px solid #222',
                     padding: '10px 50px 16px',
                   }}
                 >
