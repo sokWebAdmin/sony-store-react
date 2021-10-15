@@ -425,6 +425,12 @@ body {
   letter-spacing: -.025em;
   word-break: keep-all;
   color: #666;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+  }
 }
 
 .wrapper {
