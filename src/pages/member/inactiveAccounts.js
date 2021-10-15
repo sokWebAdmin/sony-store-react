@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 
 //utils
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 //css
 import '../../assets/scss/contents.scss';
@@ -14,31 +14,33 @@ import Authentication from '../../components/popup/Authentication';
 
 export default function InactiveAccounts() {
   const history = useHistory();
-  const CONFIRM_MESSAGE = '휴대폰 인증 서비스를 사용하여 휴면계정을 활성화 합니다. 계속하시겠습니까?'
+  const CONFIRM_MESSAGE = '휴대폰 인증 서비스를 사용하여 휴면계정을 활성화 합니다. 계속하시겠습니까?';
   const [dormantDate, setDormantDate] = useState('');
   const [isConfirm, setIsConfirm] = useState(false);
   const [authenticationVisible, setAuthenticationVisible] = useState(false);
 
   const getDormancyInfo = useCallback(async () => {
-    try{
-    const {data} = await getDormancy()
-      const date = data.split(' ')[0]
-      const day = getDay(date)
-      const formattedDate = `${changeDateFormat(date,'YYYY.MM.DD')}(${day})`
-      setDormantDate(formattedDate)
-    }catch (e){
-      console.error(e)
+    try {
+      const { data } = await getDormancy();
+      const date = data.split(' ')[0];
+      const day = getDay(date);
+      const formattedDate = `${changeDateFormat(date, 'YYYY.MM.DD')}(${day})`;
+      setDormantDate(formattedDate);
+    } catch (e) {
+      console.error(e);
     }
   }, []);
 
   const closeConfirm = (state) => {
-    if(state === 'ok') {
-      setAuthenticationVisible(true)
+    if (state === 'ok') {
+      setAuthenticationVisible(true);
     }
-   setIsConfirm(false)
-  }
+    setIsConfirm(false);
+  };
 
-  useEffect(() => {getDormancyInfo()}, [getDormancyInfo]);
+  useEffect(() => {
+    getDormancyInfo();
+  }, [getDormancyInfo]);
 
 
   return (
@@ -58,7 +60,8 @@ export default function InactiveAccounts() {
               <li className="accounts_text_list">휴면계정을 활성화하고자 하는 경우에는 하단의 휴면계정 활성화 하기 버튼을 이용하시기 바랍니다.</li>
             </ul>
             <div className="button_wrap">
-              <button type="button" onClick={() => setIsConfirm(true)} className="alertLayerBtn button button_positive" data-open-layer="alert_pop2">휴면계정 활성화
+              <button type="button" onClick={() => setIsConfirm(true)} className="alertLayerBtn button button_positive"
+                      data-open-layer="alert_pop2">휴면계정 활성화
               </button>
             </div>
           </div>
@@ -66,6 +69,6 @@ export default function InactiveAccounts() {
       </div>
       {isConfirm && <Confirm onClose={closeConfirm}>{CONFIRM_MESSAGE}</Confirm>}
       {authenticationVisible && <Authentication setVisible={setAuthenticationVisible} />}
-      </>
+    </>
   );
 }
