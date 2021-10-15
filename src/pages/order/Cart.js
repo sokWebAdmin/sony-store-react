@@ -80,7 +80,9 @@ const Cart = ({ location }) => {
 
     if (isLogin && savingGuestCart) {
       gc.fetch();
-      await postGuestCartToMemberCart(gc.items);
+      if (gc.items.length) {
+        await postGuestCartToMemberCart(gc.items);
+      }
       history.replace({ query: '' });
     }
 
