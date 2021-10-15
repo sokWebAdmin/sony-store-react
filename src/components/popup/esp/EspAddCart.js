@@ -16,7 +16,7 @@ export default function EspAddCart({ product, onClose }) {
     let success = false;
     console.log(product);
     const options = await _getProductOptions(product.modelcod);
-
+    debugger;
     if (options.length > 0) {
       success = await _postCart(product.modelcod, options[0].optionNo, [
         { inputLabel: 'serialNo', inputValue: product.serialno },
@@ -24,6 +24,7 @@ export default function EspAddCart({ product, onClose }) {
       ]);
     }
     console.log(success);
+    debugger;
     if (success) {
       setShowCompletePopup(true);
     }
