@@ -19,16 +19,29 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 
 // api
-import { getCart, putCart, postGuestCart, deleteCart, postOrderSheets } from '../../api/order';
+import {
+  getCart,
+  postCart,
+  putCart,
+  postGuestCart,
+  deleteCart,
+  postOrderSheets,
+} from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 
-const Cart = () => {
+const Cart = ({ location }) => {
   const { isLogin } = useContext(GlobalContext);
   const history = useHistory();
+
+  const savingGuestCart = useMemo(() => {
+    const { search } = location;
+    return search?.includes('savingGuestCart=true');
+
+  }, [location]);
 
   // popup
   const [showSolicitation, setShowSolicitation] = useState(false);
@@ -62,15 +75,22 @@ const Cart = () => {
     [products, checkedIndexes],
   );
 
-  const init = () => {
+  const init = async () => {
     setWait(true);
 
+    if (isLogin && savingGuestCart) {
+      gc.fetch();
+      await postGuestCartToMemberCart(gc.items);
+      history.replace({ query: '' });
+    }
+
     if (isLogin) {
-      fetchCart()
-        .then(mapData)
-        .catch(console.error)
-        .finally(() => setWait(false));
-    } else {
+      fetchCart().
+        then(mapData).
+        catch(console.error).
+        finally(() => setWait(false));
+    }
+    else {
       gc.fetch();
       const body = getGuestCartRequest(gc.items);
       fetchGuestCart(body)
@@ -131,21 +151,39 @@ const Cart = () => {
 
   useEffect(init, []);
 
-  async function fetchCart() {
+  async function fetchCart () {
     try {
       const { data } = await getCart();
       return data;
-    } catch (err) {
+    }
+    catch (err) {
       console.error(err);
     }
     return null;
   }
 
-  async function fetchGuestCart(gcItems) {
+  function postGuestCartToMemberCart (items) {
+    const result = items.map(
+      ({ productNo, optionNo, orderCnt, optionInputs }) => ({
+        productNo,
+        optionNo,
+        orderCnt,
+        optionInputs,
+      }));
+    return postMemberCart(result);
+  }
+
+  async function postMemberCart (req) {
+    const { status } = await postCart(req);
+    return status === 200;
+  }
+
+  async function fetchGuestCart (gcItems) {
     try {
       const { data } = await postGuestCart(gcItems); // post & get cart data
       return data;
-    } catch (err) {
+    }
+    catch (err) {
       console.error(err);
     }
     return null;
