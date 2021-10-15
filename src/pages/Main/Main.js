@@ -265,13 +265,13 @@ export default function Main() {
                       data-swiper-autoplay="10000"
                       style={{
                         backgroundImage:
-                          size.width > breakPointTablet
+                          size.width > breakPoint
                             ? bannerInfo.banners[0].videoUrl === '' && `url(${bannerInfo.banners[0].imageUrl})`
                             : slideMoBanners[index].banners[0].videoUrl === '' &&
                               `url(${slideMoBanners[index]?.banners[0]?.imageUrl})`,
                       }}
                     >
-                      {size.width > breakPointTablet
+                      {size.width > breakPoint
                         ? bannerInfo.banners[0].videoUrl !== '' && (
                             <video className="video-slide-player" autoPlay muted playsInline loop>
                               <source src={bannerInfo.banners[0].videoUrl} type="video/mp4" />
@@ -283,7 +283,7 @@ export default function Main() {
                             </video>
                           )}
                       <div className="kv__slide">
-                        {size.width > breakPointTablet ? (
+                        {size.width > breakPoint ? (
                           <div
                             className="kv__head"
                             dangerouslySetInnerHTML={{ __html: bannerInfo.banners[0].nameList }}
@@ -297,12 +297,12 @@ export default function Main() {
 
                         <span className="kv__product">
                           <span>
-                            {size.width > breakPointTablet
+                            {size.width > breakPoint
                               ? bannerInfo.banners[0].description
                               : slideMoBanners[index].banners[0].description}
                           </span>
                         </span>
-                        {size.width > breakPointTablet
+                        {size.width > breakPoint
                           ? bannerInfo?.banners[0]?.landingUrl !== '//' && (
                               <Link
                                 to={bannerInfo?.banners[0]?.landingUrl}
@@ -435,8 +435,8 @@ export default function Main() {
             <div className="event">
               <h2 className="event__title">EVENT</h2>
               <div className="event__list">
-                {((size.width > breakPointTablet && eventBgPcBanners?.banners) ||
-                  (size.width <= breakPointTablet && eventBgMoBanners?.banners)) && (
+                {((size.width > breakPoint && eventBgPcBanners?.banners) ||
+                  (size.width <= breakPoint && eventBgMoBanners?.banners)) && (
                   <div
                     className="event__wrapper"
                     style={{
@@ -572,19 +572,19 @@ export default function Main() {
             {/* <!-- // product --> */}
 
             {/* <!-- academy banner --> */}
-            {((size.width > breakPointTablet && academyPcBanners?.banners) ||
-              (size.width <= breakPointTablet && academyMoBanners?.banners)) && (
+            {((size.width > breakPoint && academyPcBanners?.banners) ||
+              (size.width <= breakPoint && academyMoBanners?.banners)) && (
               <div
                 className="main__banner"
                 style={{
                   backgroundImage:
-                    size.width > breakPointTablet
+                    size.width > breakPoint
                       ? `url(${academyPcBanners?.banners[0]?.imageUrl})`
                       : `url(${academyMoBanners?.banners[0]?.imageUrl})`,
                 }}
               >
                 <div className="main__banner__inner">
-                  {size.width > breakPointTablet && academyPcBanners?.banners ? (
+                  {size.width > breakPoint && academyPcBanners?.banners ? (
                     <h2
                       className="main__banner__title"
                       dangerouslySetInnerHTML={{ __html: academyPcBanners?.banners[0]?.nameList }}
@@ -595,7 +595,7 @@ export default function Main() {
                       dangerouslySetInnerHTML={{ __html: academyMoBanners?.banners[0]?.nameList }}
                     />
                   )}
-                  {size.width > breakPointTablet && academyPcBanners?.banners ? (
+                  {size.width > breakPoint && academyPcBanners?.banners ? (
                     <a
                       className="main__banner__link"
                       href={academyPcBanners.banners[0]?.landingUrl}
