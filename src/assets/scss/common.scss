@@ -5116,6 +5116,11 @@ body {
 @include only-mo {
   .popup_wrap {
     width: 90% !important;
+
+    &.password_change {
+      position: fixed !important;
+      top: 464px !important;
+    }
   }
 
   .pop_inner {

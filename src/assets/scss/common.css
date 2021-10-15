@@ -5013,6 +5013,11 @@ body {
     width: 90% !important
   }
 
+  .password_change {
+    position: fixed;
+    top: 464px;
+  }
+
   .pop_inner .pop_cont {
     padding: 24px
   }
