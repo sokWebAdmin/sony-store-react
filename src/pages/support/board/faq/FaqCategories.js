@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller  } from 'swiper/core';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useBoardDispatch, useBoardState } from "../../../../context/board.context";
@@ -6,6 +7,7 @@ import { useWindowSize } from "../../../../utils/utils";
 
 export default function FaqCategories() {
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
+  const history = useHistory();
   const size = useWindowSize();
   const [swiperTab, setSwiperTab] = useState(null);
 
@@ -23,6 +25,13 @@ export default function FaqCategories() {
 
     swiperTab?.slideTo(idx);
   };
+
+  useEffect(() => {
+    dispatch({
+      type: 'SELECT_CATEGORY',
+      data: { categoryNo: 0 }
+    });
+  }, [history.location.pathname]);
 
   return (
     <div className="category_center">

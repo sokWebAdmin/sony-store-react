@@ -48,7 +48,7 @@ export default function FaqContent() {
       fetchBoards(dispatch, request);
       setResetViewMore(true);
     }
-  }, [isAll, boardNo])
+  }, [isAll, boardNo]);
 
   const viewMore = pageNumber => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }));
 

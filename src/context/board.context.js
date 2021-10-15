@@ -64,7 +64,7 @@ function boardReducer(state, action) {
       return produce(state, draft => {
         draft[`${action.name}Board`] = {
           totalCount: action.data.totalCount,
-          items: action.reset 
+          items: action.reset || action.isInit
             ? action.data.items 
             : draft[`${action.name}Board`].items.concat(action.data.items),
         };
@@ -132,7 +132,7 @@ export async function fetchBoardConfig(dispatch, boardNo) {
 export async function fetchBoards(dispatch, data, name='faq', reset = false) {
   try {
     const response = await getBoards(data);
-    dispatch({ type: 'GET_BOARD_LIST', data: response.data, name, reset })
+    dispatch({ type: 'GET_BOARD_LIST', data: response.data, name, reset, isInit: data.params.pageNumber === 1})
   } catch (e) {
     console.error(e);
   }

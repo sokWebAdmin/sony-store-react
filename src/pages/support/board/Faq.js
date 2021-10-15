@@ -25,6 +25,7 @@ export default function Faq() {
     fetchBoardConfig(dispatch, config.faq?.boardNo);
   }, [dispatch, config.faq?.boardNo]);
 
+
   return (
     <>
       <SEOHelmet title={"고객 서비스: FAQ"} />
