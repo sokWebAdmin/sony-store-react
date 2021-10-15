@@ -14,17 +14,13 @@ export default function EspAddCart({ product, onClose }) {
 
   const _addCart = async () => {
     let success = false;
-    console.log(product);
-    const options = await _getProductOptions(product.modelcod);
-    debugger;
+    const options = await _getProductOptions(product.mallProductNo);
     if (options.length > 0) {
-      success = await _postCart(product.modelcod, options[0].optionNo, [
+      success = await _postCart(product.mallProductNo, options[0].optionNo, [
         { inputLabel: 'serialNo', inputValue: product.serialno },
         { inputLabel: 'sonyProductNo', inputValue: product.modelcod },
       ]);
     }
-    console.log(success);
-    debugger;
     if (success) {
       setShowCompletePopup(true);
     }
