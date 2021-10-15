@@ -1,4 +1,4 @@
-@import "./import/variables";
+@import './import/variables';
 
 //주문,결제 페이지일때 sidebar 위치
 .Order {
@@ -18,7 +18,7 @@
   padding: 0;
 
   @include only-mo {
-    .check:not(.check_only) .inp_check+label:before {
+    .check:not(.check_only) .inp_check + label:before {
       width: 14px;
       height: 14px;
       top: 1px;
@@ -199,7 +199,7 @@
           }
         }
 
-        +.on {
+        + .on {
           &:before {
             background-color: $primary-color;
           }
@@ -268,7 +268,7 @@
       }
     }
 
-    .radio_box .inp_radio+label {
+    .radio_box .inp_radio + label {
       font-size: 14px;
     }
 
@@ -286,7 +286,7 @@
         width: 320px;
         transition: top 0.2s $easeInCubic;
 
-        >.acc .acc_item {
+        > .acc .acc_item {
           margin-top: 0;
         }
 
@@ -295,7 +295,7 @@
         }
       }
 
-      @at-root .header--fixed~.container .order_right {
+      @at-root .header--fixed ~ .container .order_right {
         top: 80px;
       }
 
@@ -356,7 +356,7 @@
           display: block;
           width: 100%;
 
-          +.button {
+          + .button {
             margin: 5px 0 0 0;
           }
         }
@@ -458,7 +458,7 @@
         width: 165px;
       }
 
-      >label {
+      > label {
         position: relative;
         display: inline-block;
         padding-right: 8px;
@@ -530,7 +530,7 @@
         margin-top: 0;
       }
 
-      +.list_dot {
+      + .list_dot {
         margin-top: 24px;
 
         li {
@@ -543,7 +543,7 @@
         }
       }
 
-      &+.acc_group {
+      & + .acc_group {
         margin-top: 24px;
       }
     }
@@ -575,13 +575,13 @@
         padding: 10px 0;
         font-size: 14px;
         color: #444;
-        transition: all .15s ease;
+        transition: all 0.15s ease;
         border-bottom: 1px solid #e1e1e1;
         line-height: 1.4;
         box-sizing: border-box;
 
-        &:focus+.focus_bg:before,
-        &:focus+.focus_bg:after {
+        &:focus + .focus_bg:before,
+        &:focus + .focus_bg:after {
           width: 100%;
           -webkit-transition: 0.4s;
           transition: 0.4s;
@@ -784,7 +784,7 @@
         min-width: auto;
         width: 49%;
 
-        &+.button {
+        & + .button {
           margin-left: 2%;
         }
       }
@@ -842,20 +842,20 @@
   font-size: 14px;
 }
 
-.check+.info_tit {
+.check + .info_tit {
   margin-top: 40px;
 }
 
-.info_tit+.list_dot {
+.info_tit + .list_dot {
   margin-top: 5px;
 }
 
-.info_tit2+.list_dot,
-.info_tit3+.list_dot {
+.info_tit2 + .list_dot,
+.info_tit3 + .list_dot {
   margin-top: 10px;
 }
 
-.bg_recipe_box+.info_tit3 {
+.bg_recipe_box + .info_tit3 {
   margin-top: 40px;
 }
 
@@ -895,7 +895,7 @@
   }
 }
 
-.pw_info+.acc_form {
+.pw_info + .acc_form {
   margin-top: 38px;
 }
 
@@ -920,7 +920,7 @@
     }
 
     .pc_pay_btn {
-      margin-top: 30px
+      margin-top: 30px;
     }
 
     .total {
@@ -1044,7 +1044,6 @@
   }
 
   .acc_arrow {
-
     &:after,
     &:before {
       top: 50%;
@@ -1088,7 +1087,7 @@
         }
 
         &:after {
-          transform: translateY(-50%) rotate(45deg)
+          transform: translateY(-50%) rotate(45deg);
         }
       }
     }
@@ -1130,12 +1129,12 @@
     background-color: #fbfbfb;
     box-sizing: border-box;
 
-    .inp_check+label {
+    .inp_check + label {
       line-height: 22px;
       letter-spacing: -0.35px;
 
       &:before {
-        top: 5px !important
+        top: 5px !important;
       }
     }
   }
@@ -1225,7 +1224,7 @@
 
       &:before {
         display: inline-block;
-        content: ":";
+        content: ':';
         margin-left: 10px;
         padding-right: 16px;
         color: #222;
@@ -1241,14 +1240,8 @@
   .btn_box {
     margin-top: 80px;
 
-    button+button {
+    button + button {
       margin-left: 8px;
-    }
-
-    .button {
-      @include only-mo {
-        margin-left: 26%;
-      }
     }
 
     @include under-pc {
@@ -1274,7 +1267,7 @@
           width: 100%;
         }
 
-        +button {
+        + button {
           margin-left: 2%;
         }
       }
@@ -1354,7 +1347,7 @@
         font-size: 14px;
         font-weight: normal;
 
-        &+.button {
+        & + .button {
           margin-left: 6px;
           padding-right: 0;
         }
@@ -1400,7 +1393,6 @@
     }
 
     .acc_arrow {
-
       &:before,
       &:after {
         width: 10px;
@@ -1430,7 +1422,7 @@
     line-height: 1;
     text-align: center;
 
-    +.order_box__cont {
+    + .order_box__cont {
       margin-top: 64px;
 
       .acc_item {
@@ -1491,7 +1483,7 @@
       color: #888;
       line-height: 22px;
 
-      +li {
+      + li {
         margin-top: 5px;
       }
 
