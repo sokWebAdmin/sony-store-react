@@ -24,8 +24,9 @@ export const sendSMS = (number, type, memberName = null) => {
     memberName,
   });
 };
-export const verifySMS = (number, code, type) => {
-  return request("authentications/sms", "get", "mobileNo="+number+"&key="+code+"&usage="+type, null);
+export const verifySMS = (mobileNo, key, usage, memberName) => {
+  const query = { mobileNo, key, usage };
+  return request("authentications/sms", "get", memberName ? { ...query, memberName } : query, null);
 };
 export const getOauthOpenId = (query) => {
   return request('oauth/openid', 'get', query);
