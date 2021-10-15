@@ -31,6 +31,8 @@ export default function Footer() {
   const footerRef = useRef(null);
   useClickOutside(footerRef, () => setPcActive(false));
 
+  const selectRef = useRef(null);
+
   return (
     <>
       <footer className="footer" style={{
@@ -81,9 +83,12 @@ export default function Footer() {
                     </ul>
                   </div>
                 </div>
-                <select defaultValue="default" onChange={e => window.open(e.target.value)} className={`footer__family__link footer__mo ${moActive && 'footer__family__link--active'}`}>
+                <select defaultValue="default" ref={selectRef} onChange={e => {
+                  window.open(e.target.value);
+                  selectRef.current.value='default';
+                }} className={`footer__family__link footer__mo ${moActive && 'footer__family__link--active'}`}>
                   <option value="default" disabled hidden>Sony Family</option>
-                  <optgroup label="Sony Family">
+                  <optgroup label="Sony Family" >
                     {
                       SONY_FAMILY.map(({ url, name }) => <option value={url} key={`footer-option-family-${name}`}>{ name }</option>)
                     }
