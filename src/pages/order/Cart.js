@@ -194,22 +194,40 @@ const Cart = ({ location }) => {
   function updateCart() {
     setWait(true);
     if (isLogin) {
-      updateMemberCart()
-        .then(() => setWait(false))
-        .catch(() => window.location.reload());
-    } else {
-      updateGuestCart()
-        .then(() => setWait(false))
-        .catch(() => window.location.reload());
+      updateMemberCart().then(() => setWait(false)).catch(handlePutCartError);
+    }
+    else {
+      updateGuestCart().
+        then(() => setWait(false)).
+        catch(() => window.location.reload());
     }
   }
 
-  async function updateMemberCart() {
+  function handlePutCartError ({ code }) {
+    if (!code) {
+      window.location.reload();
+    }
+    if (code === 'PPVE0011') {
+      alert('상품의 재고가 충분치 않습니다.');
+    }
+    if (code === 'O8002' || code === 'O8003' || code === 'O8004') {
+      alert(
+        '최대 구매 가능갯수를 초과하였습니다.');
+    }
+
+    window.location.reload();
+  }
+
+  async function updateMemberCart () {
     try {
-      await putCart(putProducts);
+      const res = await putCart(putProducts);
+      if (res.status === 400) {
+        return Promise.reject(res.data);
+      }
       const data = await fetchCart();
       mapData(data);
-    } catch (err) {
+    }
+    catch (err) {
       console.error(err);
     }
     return null;
