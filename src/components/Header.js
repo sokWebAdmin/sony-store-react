@@ -18,13 +18,15 @@ import GlobalContext from '../context/global.context';
 import { useHeaderDispatch, useHeaderState, openSideBar, closeSideBar } from '../context/header.context';
 
 //utils
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { removeAccessToken } from '../utils/token';
 import { resetProfile, useProfileState, useProileDispatch } from '../context/profile.context';
 import { useClickOutside, useScroll } from '../hooks';
+import { getAgent } from '../utils/detectAgent';
 
 export default function Header (location) {
   const history = useHistory();
+  const currLocation = useLocation();
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
   const { profile, my } = useProfileState();
   const { isSiderbarOpen } = useHeaderState();
@@ -36,6 +38,7 @@ export default function Header (location) {
   const [isInfoOpen, setInfoOpen] = useState(false);
 
   const { scrollY } = useScroll();
+  const agent = getAgent();
 
   const [prevScrollY, setPrevScrollY] = useState(window.scrollY);
 
@@ -44,9 +47,18 @@ export default function Header (location) {
   useEffect(() => {
     const menuOpen = history.location.state?.menuOpen;
     menuOpen && openSideBar(headerDispatch);
-  }, [location]);
+    if (agent.isApp && currLocation.pathname.includes('/app/terms/')) {
+      setVisible(false);
+    } else {
+      setVisible(true);
+    }
+  }, [location, currLocation]);
 
   useEffect(() => {
+    if (agent.isApp && window.location.href.includes('/app/terms/')) {
+      setVisible(false);
+      return;
+    }
     if (prevScrollY > window.scrollY || header.current.offsetHeight >
       window.scrollY) {
       setVisible(true);
