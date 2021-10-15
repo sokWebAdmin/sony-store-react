@@ -2,7 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { notificationInfo } from "../../const/productView";
 import LayerPopup from '../common/LayerPopup';
 
-export default function Notification({ type, setNotificationVisible, unusableIcon, fetchOrderSheetNo, popupType = 'default' }) {
+export default function Notification({ type, setNotificationVisible, unusableIcon, goOrder, popupType = 'default' }) {
   const history = useHistory();
   const isOrder = type === 'order';
   const info = notificationInfo[type];
@@ -11,7 +11,7 @@ export default function Notification({ type, setNotificationVisible, unusableIco
   const closePopup = e => {
     e.preventDefault();
     setNotificationVisible(false);
-    isOrder && !e.target.classList.contains('delete') && fetchOrderSheetNo();
+    isOrder && !e.target.classList.contains('delete') && goOrder();
   }
   return (
     <>

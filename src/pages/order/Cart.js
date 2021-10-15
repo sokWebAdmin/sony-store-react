@@ -12,7 +12,7 @@ import CartTable from '../../components/cart/CartTable';
 import Controller from '../../components/cart/tableParticals/Controller';
 import ProductList from '../../components/cart/tableParticals/ProductList';
 import TotalAmount from '../../components/cart/tableParticals/TotalAmount';
-import Solicitation from '../../components/popup/Solicitation';
+// import Solicitation from '../../components/popup/Solicitation';
 
 //css
 import '../../assets/scss/contents.scss';
@@ -25,6 +25,7 @@ import { getCart, putCart, postGuestCart, deleteCart, postOrderSheets } from '..
 import gc from '../../storage/guestCart.js';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import Notification from '../../components/products/Notification';
 
 const Cart = () => {
   const { isLogin } = useContext(GlobalContext);
@@ -315,7 +316,15 @@ const Cart = () => {
                       <button type="button" className="button button_positive popup_comm_btn" onClick={submit}>
                         구매하기
                       </button>
-                      {showSolicitation && <Solicitation goOrder={goOrder} close={() => setShowSolicitation(false)} />}
+                      { showSolicitation 
+                          &&  <Notification
+                                setNotificationVisible={setShowSolicitation}
+                                type='order' 
+                                unusableIcon={true} 
+                                goOrder={goOrder} 
+                                popupType="popCont"
+                              />
+                      }
                     </div>
                   </CartTable>
                   <QnA />
