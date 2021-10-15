@@ -11,6 +11,7 @@ import Notification from '../products/Notification';
 import Alert from '../common/Alert';
 import HsValidator from '../cart/HsValidator';
 import { unescape } from 'lodash';
+import { getSaleStatus } from '../../utils/product';
 
 const ERROR_CODE_MAPPING_ROUTE = {
   O8001: {
@@ -175,6 +176,8 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
   const hsValidator = createRef(null);
   const hsValidation = async validation => await hsValidator.current.validation(validation);
 
+  // 판매상태
+  const saleStatus = p => getSaleStatus({saleStatusType: p.saleStatusType}, p.reservationData, p.stockCnt, p.reservationData?.reservationStockCnt);
   return (
     <>
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
@@ -182,6 +185,7 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
       <div className="event_prd_list">
         {section.length > 0 ? (
           section.map((product) => {
+            const isSoldOut = ['SOLDOUT', 'READY'].includes(saleStatus(product));
             return (
               <div className="product" key={product.productNo}>
                 {product.immediateDiscountAmt + product.additionDiscountAmt > 0 && (
@@ -200,7 +204,7 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
                   <Link className="product_link" to={`/product-view/${product.productNo}`}>
                     <img src={product.imageUrls[0]} alt={product.productName} />
                   </Link>
-                  {!product.stockCnt && (
+                  {isSoldOut && (
                     <div className="sold_out">
                       <span>SOLD OUT</span>
                     </div>
@@ -237,7 +241,7 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
                     )}
                   </div>
                   <div className="product_btn_wrap">
-                    {gift && (
+                    {!isSoldOut && gift && (
                       <button
                         type="button"
                         className="button button_secondary button-s"
@@ -250,8 +254,9 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
                       type="button"
                       className="button button_positive button-s"
                       onClick={() => goCart(product.productNo, product.hsCode)}
+                      disabled={isSoldOut}
                     >
-                      바로 구매
+                      { isSoldOut ? '일시품절' : '바로 구매'}
                     </button>
                     <HsValidator ref={hsValidator} />
                   </div>

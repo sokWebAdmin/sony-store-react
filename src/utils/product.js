@@ -101,13 +101,13 @@ const reservationStatusType = (statusType, date, cnt) => {
 export const getSaleStatus = (status, reservationDate, stockCnt, reservationStockCnt) => {
    const { saleStatusType } = status;
 
+   if (reservationDate === null && stockCnt === 0) {
+      return getNoneCountType(saleStatusType);
+   };
+
    if (reservationDate?.reservationStartYmdt) {
       return reservationStatusType(saleStatusType, reservationDate, reservationStockCnt);
    }
-
-   if (stockCnt === 0) {
-      return getNoneCountType(saleStatusType);
-   };
 
    return '';
 };
