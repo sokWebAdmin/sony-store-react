@@ -55,6 +55,7 @@ export const useTerms = termsTypes => {
   const handleHistory = e => {
     e.preventDefault();
     setHistoryVisible(prev => !prev);
+    document.querySelector('.contents').scrollIntoView();
   };
 
   return {
