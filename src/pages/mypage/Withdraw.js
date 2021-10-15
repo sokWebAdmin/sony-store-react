@@ -81,7 +81,7 @@ export default function Withdraw() {
 
   const onClickWithdraw = async () => {
     const checkWithdraw = await withdrawalMember({
-      customerid: profile.memberId,
+      customerid: profile?.memberId ?? profile?.email,
       withdrawreason: withdrawReason.optionNo,
       password,
     });
@@ -123,7 +123,7 @@ export default function Withdraw() {
               <div className="common_head_name">회원탈퇴</div>
             </div>
             <div className="withdraw_wrap">
-              <div className="member_idbox">{profile.memberId}</div>
+              <div className="member_idbox">{profile?.memberId ?? ''}</div>
               <p className="txt_primary">개인정보, 쿠폰 정보, 보유하신 마일리지, 정품등록 정보 등 회원 탈퇴 시 삭제됩니다.</p>
               <form>
                 <div className="withdraw_box">
