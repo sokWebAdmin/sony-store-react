@@ -112,7 +112,9 @@ export default function Login ({ location }) {
           history.push(history.location.state.next);
         }
         else {
-          nextLocation ? history.push(`/${nextLocation}`) : history.push('/');
+          console.log(nextLocation);
+          nextLocation === 'cart' ? history.push(
+            `/${nextLocation}?savingGuestCart=true`) : history.push('/');
         }
       }
     }
