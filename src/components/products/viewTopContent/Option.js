@@ -6,8 +6,8 @@ import CountBox from "../../common/CountBox";
 import { wonComma } from "../../../utils/utils";
 
 const getDisabledLabel = (reserved, o) => {
-  if (o.forcedSoldOut) return '임시품절';
-  if (reserved && o.reservationStockCnt === 0 && o.saleType !=='SOLD_OUT') return '임시품절';
+  if (o.forcedSoldOut) return '일시품절';
+  if (reserved && o.reservationStockCnt === 0 && o.saleType !=='SOLD_OUT') return '일시품절';
   if (reserved && o.reservationStockCnt === 0 && o.saleType ==='SOLD_OUT') return '품절';
   if (o.saleType === 'SOLD_OUT') return '품절';
   return '';

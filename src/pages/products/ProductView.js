@@ -298,7 +298,9 @@ export default function ProductView({ match }) {
 
     return `${categoryCode} : ${productData.baseInfo.productNo} : ${productData.baseInfo.productName}`;
   
-  }, [productData?.baseInfo?.productName])
+  }, [productData?.baseInfo?.productName]);
+
+  const hasEvents = useMemo(() => productEvents?.length > 0, [productEvents]);
     return (
       <>        
         <SEOHelmet title={ getTitle } />
@@ -330,10 +332,10 @@ export default function ProductView({ match }) {
               products={relatedProducts}
             />
             {
-              productEvents.length > 0 && <Event events={productEvents} />
+              hasEvents && <Event events={productEvents} />
             }
             <div className="product_cont full">
-              <div className="relation_link scroll">
+              <div className="relation_link scroll" style={hasEvents ? null : { marginTop: '116px'}}>
                 <ul className="link_inner" style={{ width: getLinkInnerWidth() }}>
                   {
                     getInfoLinks().map(({

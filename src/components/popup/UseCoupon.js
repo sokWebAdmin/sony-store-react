@@ -8,6 +8,7 @@ import SelectBox from '../common/SelectBox';
 import { getOrderSheetCoupon } from '../../api/order.js';
 import { toCurrencyString } from '../../utils/unit.js';
 import { syncCoupon } from '../../api/sony/coupon.js';
+import { wonComma } from '../../utils/utils';
 
 const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDiscount, show, setReject }) => {
   const close = () => setVisible(false);
@@ -62,6 +63,10 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
       },
     });
     close();
+  };
+
+  const getCouponDisplayName = (couponName, couponDiscountAmt) => {
+    return `${wonComma(couponDiscountAmt)}원 할인 (${couponName})`;
   };
 
   function mapProducts(products) {
@@ -132,7 +137,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
               selectOptions={[{ couponIssueNo: 0, displayCouponName: '쿠폰 적용 안함' }, ...productCoupons.items].map(
                 (item) => ({
                   optionNo: item.couponIssueNo,
-                  label: item.displayCouponName,
+                  label: getCouponDisplayName(item.couponName, item.couponDiscountAmt),
                 }),
               )}
               selectOption={({ optionNo }) => {
