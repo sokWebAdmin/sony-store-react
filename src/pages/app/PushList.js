@@ -66,7 +66,7 @@ const PushList = () => {
   );
 };
 
-const GoBack = () => {
+export const GoBack = () => {
   const history = useHistory();
 
   const goBack = evt => {
