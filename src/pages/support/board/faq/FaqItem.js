@@ -1,6 +1,7 @@
-import { React, useState } from 'react';
+import { React, useRef, useState, useEffect } from 'react';
 import { useBoardState } from "../../../../context/board.context";
 import { getBoardByArticleId } from '../../../../api/manage';
+import { useClickOutside } from '../../../../hooks';
 
 
 export default function FaqItem() {
@@ -39,10 +40,23 @@ export default function FaqItem() {
         }
       }
     });
-  }
+  };
+
+  const articleZoneRef = useRef(null);
+
+  useClickOutside(articleZoneRef, () => setAnswer(prev => {
+    for (const no in prev) {
+      prev[no] = {
+        ...prev[no],
+        show: false
+      }
+    };
+
+    return prev;
+  }));
 
   return (
-    <div className="acc acc_ui_zone">
+    <div ref={articleZoneRef} className="acc acc_ui_zone">
       {
         faqBoard.items.map(({
                               articleNo,
