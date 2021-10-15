@@ -24,14 +24,14 @@ export default function TobContent({
   const size = useWindowSize();
   const isMobileSize = size.width <= 1280;
   const { tagColorMap } = useCategoryState();
-  const { baseInfo, price, deliveryFee, status, reservationData, limitations } = productData;
+  const { baseInfo, price, deliveryFee, status, reservationData, limitations, stock } = productData;
   const { productName, productNameEn, promotionText, stickerLabels } = baseInfo;
   const [selectedOption, setSelectedOption] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCnt, setTotalCnt] = useState(0);
   const [optionVisible, setOptionVisible] = useState(false);
 
-  const saleStatus = getSaleStatus(status, reservationData);
+  const saleStatus = getSaleStatus(status, reservationData, stock.saleCnt, reservationData?.reservationStockCnt);
 
   const isSoldOut = status.soldout ||
     ['READY_RESERVE', 'SOLDOUT', 'READY'].includes(saleStatus);
