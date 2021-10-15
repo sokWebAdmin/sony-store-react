@@ -48,6 +48,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
       productNo: FIRST_PRODUCT.productNo,
       items: FIRST_PRODUCT.productCoupons,
     });
+    console.log(FIRST_PRODUCT.productCoupons, 1);
   };
 
   const submit = () => {
@@ -66,7 +67,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   };
 
   const getCouponDisplayName = (couponName, couponDiscountAmt) => {
-    return `${wonComma(couponDiscountAmt)}원 할인 (${couponName})`;
+    // return `${wonComma(couponDiscountAmt)}원 할인 (${couponName})`;
   };
 
   function mapProducts(products) {
@@ -137,7 +138,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
               selectOptions={[{ couponIssueNo: 0, displayCouponName: '쿠폰 적용 안함' }, ...productCoupons.items].map(
                 (item) => ({
                   optionNo: item.couponIssueNo,
-                  label: getCouponDisplayName(item.couponName, item.couponDiscountAmt),
+                  label: item.displayCouponName,
                 }),
               )}
               selectOption={({ optionNo }) => {
