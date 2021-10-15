@@ -33,17 +33,29 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="footer">
+      <footer className="footer" style={{
+        paddingBottom: '64px',
+      }}>
         <Floating />
         <div className="footer__inner">
           <div className="footer__social__wrap">
             <div className="footer__social">
               <h3 className="footer__social__title">FOLLOW US</h3>
               <div className="footer__social__links">
-                <a href="https://www.facebook.com/sonykorea" target="_blank" rel="noreferrer" className="footer__social__link"><img src={facebook} alt="facebook" /></a>
-                <a href="https://www.instagram.com/sonykorea" target="_blank" rel="noreferrer" className="footer__social__link"><img src={instagram} alt="instagram" /></a>
-                <a href="https://www.youtube.com/user/sonystyleblog" target="_blank" rel="noreferrer" className="footer__social__link"><img src={youtube} alt="youtube" /></a>
-                <a href="https://stylezineblog.com/?intcmp=Main_Blog" target="_blank" rel="noreferrer" className="footer__social__link"><img src={blog} alt="blog" /></a>
+                <a href="https://www.facebook.com/sonykorea" target="_blank"
+                   rel="noreferrer" className="footer__social__link"><img
+                  src={facebook} alt="facebook" /></a>
+                <a href="https://www.instagram.com/sonykorea" target="_blank"
+                   rel="noreferrer" className="footer__social__link"><img
+                  src={instagram} alt="instagram" /></a>
+                <a href="https://www.youtube.com/user/sonystyleblog"
+                   target="_blank" rel="noreferrer"
+                   className="footer__social__link"><img src={youtube}
+                                                         alt="youtube" /></a>
+                <a href="https://stylezineblog.com/?intcmp=Main_Blog"
+                   target="_blank" rel="noreferrer"
+                   className="footer__social__link"><img src={blog}
+                                                         alt="blog" /></a>
               </div>
             </div>
             <div className="footer__family">
@@ -95,8 +107,14 @@ export default function Footer() {
             </div>
             <div className="footer__legal__warning">
               <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
-              <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br /> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.
-                <a className="escrow" href="https://mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat" target="_blank" rel="noreferrer">클릭하시면 이니시스 결제시스템의 유효성을 확인하실 수 있습니다.</a>
+              <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br /> KG이니시스의 구매
+                안전서비스(채무지급보증)를 이용하실 수 있습니다.
+                <a className="escrow"
+                   href="https://mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat"
+                   style={{
+                     backgroundImage: 'url(https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_color.png)',
+                   }} target="_blank" rel="noreferrer">클릭하시면 이니시스 결제시스템의 유효성을
+                  확인하실 수 있습니다.</a>
               </p>
             </div>
           </div>
