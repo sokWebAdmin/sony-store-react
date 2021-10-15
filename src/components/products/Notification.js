@@ -33,7 +33,14 @@ export default function Notification({ type, setNotificationVisible, unusableIco
           <p className="pop_txt">{label1}</p>
           <div className="btn_article">
             <button className="button button_negative button-m closed" type="button" onClick={closePopup}>{info?.cancelLabel}</button>
-            <button className="button button_positive button-m" type="button" onClick={() => history.push(to)}>{toLabel}</button>
+            <button className="button button_positive button-m" type="button" onClick={
+              () => history.push({
+                pathname: to,
+                state: {
+                  next: history.location.pathname
+                }
+              })
+            }>{toLabel}</button>
           </div>
         </>
       </LayerPopup>}
