@@ -12,7 +12,7 @@ const orderPayment = {
     if (!agent.isApp) {
       return isMobile ? 'MOBILE_WEB' : 'PC';
     }
-    // ios 아닌경우 android 로 판단. android 특정 기기에서 이슈있다면 이곳 확인할것
+    // WARN. ios 아닌경우 android 로 판단. android 특정 기기에서 이슈있다면 이곳 확인할것
     return agent.device === 'ios' ? 'IOS' : 'AOS';
   },
   get config () {
@@ -29,16 +29,23 @@ const orderPayment = {
   setConfiguration (config) {
     this.NCPPay.setConfiguration(config || this.config);
   },
-  post (requestBody) {
-    this.NCPPay.reservation(requestBody);
+  post (requestBody, next) {
+    this.NCPPay.reservation(requestBody, next);
+  },
+  scrollToMiddle () {
+    const height = document.body.scrollHeight;
+    const innerHeight = window.innerHeight;
+    const middleYPosition = (height - innerHeight) / 2;
+
+    window.scroll(0, middleYPosition);
   },
   order (requestBody, errorHandler) {
     this.NCPPay.requestNaverPayOrder({
-      items: requestBody,
-      clientReturnUrl: this.clientReturnUrl
-    }, 
-    () => errorHandler
-    )
+        items: requestBody,
+        clientReturnUrl: this.clientReturnUrl,
+      },
+      () => errorHandler,
+    );
   },
   wish (productNo) {
     this.NCPPay.requestNaverPayWishList({
@@ -48,7 +55,7 @@ const orderPayment = {
   },
   run (requestBody) {
     this.setConfiguration();
-    this.post(requestBody);
+    this.post(requestBody, this.scrollToMiddle);
   },
   naverPayOrder (requestBody, errorHandler) {
     const { confirmUrl, ...rest } = this.config;
