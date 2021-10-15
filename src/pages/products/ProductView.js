@@ -20,7 +20,7 @@ import { getProductDetail, getProductOptions, getProductSearch, getProductsOptio
 //css
 import "../../assets/scss/contents.scss"
 import "../../assets/scss/product.scss"
-import '../../assets/scss/event.scss'
+// import '../../assets/scss/event.scss'
 
 //util
 import {useWindowSize} from '../../utils/utils';
