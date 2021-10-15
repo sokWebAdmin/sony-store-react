@@ -632,7 +632,7 @@ export default function Main() {
                   <Link to="/store-info">매장안내</Link>
                 </li>
                 <li className="main__help__list customer">
-                  <a onClick={onClickServiceCenter}>고객센터</a>
+                  <a href="javascript:void(0)" onClick={onClickServiceCenter}>고객센터</a>
                 </li>
                 <li className="main__help__list service">
                   <a href="https://www.sony.co.kr/electronics/support" target="_blank">
