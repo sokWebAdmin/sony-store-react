@@ -104,6 +104,9 @@ import EventDetail from './pages/event/EventDetail';
 import { getProfile } from './api/member';
 import Callback from './pages/member/Callback';
 import { getAgent } from './utils/detectAgent';
+import TermsUse from './pages/app/terms/Use';
+import TermsLicense from './pages/app/terms/License';
+import TermsPrivacy from './pages/app/terms/Privacy';
 
 const App = (props) => {
   const agent = getAgent();
@@ -317,6 +320,9 @@ const App = (props) => {
               <>
                 <Route exact path="/app/push-list" component={PushList} />
                 <Route exact path="/app/landing" component={AppLanding} />
+                <Route exact path="/app/terms/use" component={TermsUse} />
+                <Route exact path="/app/terms/privacy" component={TermsPrivacy} />
+                <Route exact path="/app/terms/license" component={TermsLicense} />
               </>
             }
 
