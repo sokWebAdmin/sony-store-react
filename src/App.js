@@ -199,8 +199,8 @@ const App = (props) => {
         window.scrollTo(0, 0);
       }
     });
-    return unlisten;
-  }, [location]);
+    return () => unlisten;
+  }, []);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
