@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, React } from 'react';
 
 import LayerPopup from '../../components/common/LayerPopup';
 import { handleChange } from '../../utils/state';
@@ -345,6 +345,9 @@ const InvoicePublish = ({ isView, basketid, close }) => {
             <div className="btn_article">
               <button className="button button_positive button-m" onClick={() => setProcessDone(false)}>
                 신청정보 변경
+              </button>
+              <button onClick={close} className="layer_close close" title="팝업창 닫기">
+                <span>닫기</span>
               </button>
             </div>
           </>
