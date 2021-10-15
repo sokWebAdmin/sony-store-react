@@ -5,6 +5,7 @@ import { loadBanner } from '../../api/display';
 import { getStrDate } from '../../utils/dateFormat';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from '../../hooks';
+import styled from 'styled-components';
 
 const EventTop = () => {
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
@@ -37,7 +38,8 @@ const EventTop = () => {
             <p
               className="event_duration">{getStrDate(banner.displayStartYmdt)} ~ {getStrDate(banner.displayEndYmdt)}</p>
             <div className="btn_article">
-              <Link to={banner.landingUrl} className="event_link">자세히 보기</Link>
+              {/*<Link to={banner.landingUrl} className="event_link" >자세히 보기</Link>*/}
+              <DetailLink to={banner.landingUrl} className="event_link" color={banner.nameColor}>자세히 보기</DetailLink>
             </div>
           </div>
         </div>
@@ -115,5 +117,13 @@ const EventTop = () => {
     </>
   );
 };
+
+const DetailLink = styled(Link)`
+  color: ${({color}) => color};
+  &:after {
+    border-top: 2px solid ${({color}) => color};
+    border-right: 2px solid ${({color}) => color};
+  }
+`;
 
 export default EventTop;
