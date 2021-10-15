@@ -1,7 +1,7 @@
 import LayerPopup from "../../../components/common/LayerPopup";
 
-import '../../../assets/scss/partials/popup/repassword.scss';
 import '../../../assets/scss/contents.scss';
+import '../../../assets/scss/partials/popup/repassword.scss';
 import { useRef, useState } from "react";
 import _ from "lodash";
 import { modifyMy } from "../../../api/sony/member";
