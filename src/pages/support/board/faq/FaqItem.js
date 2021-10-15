@@ -1,4 +1,4 @@
-import { React, useRef, useState, useEffect } from 'react';
+import { React, useRef, useState } from 'react';
 import { useBoardState } from "../../../../context/board.context";
 import { getBoardByArticleId } from '../../../../api/manage';
 import { useClickOutside } from '../../../../hooks';
