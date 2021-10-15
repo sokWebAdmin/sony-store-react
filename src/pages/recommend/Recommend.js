@@ -356,11 +356,13 @@ export default function Recommend({ match }) {
                                   className="tit"
                                   dangerouslySetInnerHTML={{ __html: splitStr(bannerInfo?.banners[0]?.name) }}
                                 />
-                                {bannerInfo?.banners[0]?.displayPeriodType === 'PERIOD' && (
-                                  <p className="event_duration">{`${getDate(
-                                    bannerInfo?.banners[0]?.displayStartYmdt,
-                                  )} ~ ${getDate(bannerInfo?.banners[0]?.displayEndYmdt)}`}</p>
-                                )}
+                                <p className="event_duration">{`${getDate(
+                                  bannerInfo?.banners[0]?.displayStartYmdt,
+                                )} ~ ${
+                                  bannerInfo?.banners[0]?.displayPeriodType === 'PERIOD'
+                                    ? getDate(bannerInfo?.banners[0]?.displayEndYmdt)
+                                    : '재고 소진 시'
+                                }`}</p>
                               </div>
                             </Link>
                           </div>

@@ -2,17 +2,17 @@ const paymentType = {
   creditCard: {
     pgType: 'INICIS',
     payType: 'CREDIT_CARD',
-    label: '신용 카드',
+    label: '신용카드',
   },
   virtualAccount: {
     pgType: 'INICIS',
     payType: 'VIRTUAL_ACCOUNT',
-    label: '가상 계좌',
+    label: '가상계좌',
   },
   nPay: {
     pgType: 'INICIS',
     payType: 'NAVER_EASY_PAY',
-    label: '네이버 페이',
+    label: '네이버페이',
   },
 };
 
