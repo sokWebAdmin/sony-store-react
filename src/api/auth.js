@@ -17,12 +17,12 @@ export const joinApi = (memberId, password, name, phone, email) => {
     email: email,
   });
 };
-export const sendSMS = (mobileNo, usage, memberName) => {
-  const requestBody = {
-    mobileNo,
-    usage
-  }
-  return request("authentications/sms", "post", null, memberName ? { ...requestBody, memberName } : requestBody);
+export const sendSMS = (number, type, memberName = null) => {
+  return request("authentications/sms", "post", null, {
+    mobileNo: number,
+    usage: type,
+    memberName,
+  });
 };
 export const verifySMS = (mobileNo, key, usage, memberName) => {
   const query = { mobileNo, key, usage };

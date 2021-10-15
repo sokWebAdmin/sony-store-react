@@ -89,7 +89,9 @@ export default function Login ({ location }) {
       } else if (code === '3003') {
         history.push('/member/lockedAccounts');
         //휴먼 계정
-      } else if (response?.dormantMemberResponse) {
+      } else if (response?.data?.dormantMemberResponse) {
+        const { accessToken, expireIn } = response.data;
+        setAccessToken(accessToken, expireIn);
         history.push('/member/inactiveAccounts');
       } else {
         const { accessToken, expireIn } = response.data;
