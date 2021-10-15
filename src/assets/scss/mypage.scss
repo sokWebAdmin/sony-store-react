@@ -1,6 +1,7 @@
 @import './import/variables';
 
 .mypage {
+
   /* mypage */
   .my {
     .container .content {
@@ -194,17 +195,17 @@
         }
 
         &.vvip:after {
-          background: url(../images//common/membership_vvip.svg) no-repeat;
+          background: url(../images/common/membership_vvip.svg) no-repeat;
           background-size: 32px 32px;
         }
 
         &.vip:after {
-          background: url(../images//common/membership_vip.svg) no-repeat;
+          background: url(../images/common/membership_vip.svg) no-repeat;
           background-size: 32px 32px;
         }
 
         &.family:after {
-          background: url(../images//common/membership_family.svg) no-repeat;
+          background: url(../images/common/membership_family.svg) no-repeat;
           background-size: 32px 32px;
         }
       }
@@ -212,19 +213,19 @@
   }
 
   .grade .ico_txt:after {
-    background: url('../images//mypage/ico_mypage_grade.svg') no-repeat 0 0;
+    background: url('../images/mypage/ico_mypage_grade.svg') no-repeat 0 0;
   }
 
   .mileage .ico_txt:after {
-    background: url('../images//mypage/ico_mypage_mileage.svg') no-repeat 0 0;
+    background: url('../images/mypage/ico_mypage_mileage.svg') no-repeat 0 0;
   }
 
   .coupon .ico_txt:after {
-    background: url('../images//mypage/ico_mypage_coupon.svg') no-repeat 0 0;
+    background: url('../images/mypage/ico_mypage_coupon.svg') no-repeat 0 0;
   }
 
   .like .ico_txt:after {
-    background: url('../images//mypage/ico_mypage_like.svg') no-repeat 0 0;
+    background: url('../images/mypage/ico_mypage_like.svg') no-repeat 0 0;
   }
 
   .b2b_banner {
@@ -249,7 +250,7 @@
         margin-left: 0;
       }
 
-      &:nth-child(2n) ~ .b2b_link {
+      &:nth-child(2n)~.b2b_link {
         margin-top: 20px;
       }
 
@@ -268,7 +269,7 @@
         background: linear-gradient(to right, #70b5ba, #28a7b1);
 
         &:before {
-          background: url('../images//mypage/ico_banner_refurbish.svg') no-repeat 0 0;
+          background: url('../images/mypage/ico_banner_refurbish.svg') no-repeat 0 0;
         }
       }
 
@@ -276,7 +277,7 @@
         background-image: linear-gradient(to right, #ce60ff, #793aef);
 
         &:before {
-          background: url('../images//mypage/ico_banner_executives.svg') no-repeat 0 0;
+          background: url('../images/mypage/ico_banner_executives.svg') no-repeat 0 0;
         }
       }
 
@@ -284,7 +285,7 @@
         background-image: linear-gradient(to right, #5543e2, #4280e3);
 
         &:before {
-          background: url('../images//mypage/ico_banner_refined_article.svg') no-repeat 0 0;
+          background: url('../images/mypage/ico_banner_refined_article.svg') no-repeat 0 0;
         }
       }
 
@@ -292,7 +293,7 @@
         background-image: linear-gradient(to right, #e6954e, #dd7941);
 
         &:before {
-          background: url('../images//mypage/ico_banner_asc.svg') no-repeat 0 0;
+          background: url('../images/mypage/ico_banner_asc.svg') no-repeat 0 0;
         }
       }
 
@@ -303,7 +304,7 @@
         right: 32px;
         width: 9px;
         height: 14px;
-        background: url('../images//mypage/ico_txt_link_arrow_white.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_txt_link_arrow_white.svg') no-repeat 0 0;
         transform: translateY(-50%);
         content: '';
       }
@@ -405,51 +406,51 @@
 
     .step_1 {
       .ship_box:after {
-        background: url('../images//mypage/ico_order_step_1_off.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_order_step_1_off.svg') no-repeat 0 0;
       }
 
       &.on .ship_box:after {
-        background: url('../images//mypage/ico_order_step_1_on.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_order_step_1_on.svg') no-repeat 0 0;
       }
     }
 
     .step_2 {
       .ship_box:after {
-        background: url('../images//mypage/ico_order_step_2_off.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_order_step_2_off.svg') no-repeat 0 0;
       }
 
       &.on .ship_box:after {
-        background: url('../images//mypage/ico_order_step_2_on.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_order_step_2_on.svg') no-repeat 0 0;
       }
     }
 
     .step_3 {
       .ship_box:after {
-        background: url('../images//mypage/ico_order_step_3_off.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_order_step_3_off.svg') no-repeat 0 0;
       }
 
       &.on .ship_box:after {
-        background: url('../images//mypage/ico_order_step_3_on.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_order_step_3_on.svg') no-repeat 0 0;
       }
     }
 
     .step_4 {
       .ship_box:after {
-        background: url('../images//mypage/ico_order_step_4_off.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_order_step_4_off.svg') no-repeat 0 0;
       }
 
       &.on .ship_box:after {
-        background: url('../images//mypage/ico_order_step_4_on.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_order_step_4_on.svg') no-repeat 0 0;
       }
     }
 
     .step_5 {
       .ship_box:after {
-        background: url('../images//mypage/ico_order_step_5_off.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_order_step_5_off.svg') no-repeat 0 0;
       }
 
       &.on .ship_box:after {
-        background: url('../images//mypage/ico_order_step_5_on.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_order_step_5_on.svg') no-repeat 0 0;
       }
     }
 
@@ -551,7 +552,7 @@
         right: 0;
         width: 24px;
         height: 24px;
-        background: url('../images//mypage/ico_my_mileage.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_my_mileage.svg') no-repeat 0 0;
         content: '';
       }
     }
@@ -641,10 +642,10 @@
         .ui-datepicker-trigger {
           width: 32px;
           height: 32px;
-          background: url('../images//mypage/ico_calendar.svg') no-repeat 0 0;
+          background: url('../images/mypage/ico_calendar.svg') no-repeat 0 0;
         }
 
-        & + .calendar_box {
+        &+.calendar_box {
           margin-left: 24px;
 
           &:before {
@@ -669,11 +670,11 @@
   }
 
   .history_list {
-    & > * {
+    &>* {
       display: none;
     }
 
-    & > .on {
+    &>.on {
       display: block;
     }
 
@@ -788,19 +789,19 @@
       }
 
       &.ico_type1:before {
-        background: url('../images//mypage/ico_mypage_link_1.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_mypage_link_1.svg') no-repeat 0 0;
       }
 
       &.ico_type2:before {
-        background: url('../images//mypage/ico_mypage_link_2.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_mypage_link_2.svg') no-repeat 0 0;
       }
 
       &.ico_type3:before {
-        background: url('../images//mypage/ico_mypage_link_3.svg') no-repeat 50% / cover;
+        background: url('../images/mypage/ico_mypage_link_3.svg') no-repeat 50% / cover;
       }
 
       &.ico_type4:before {
-        background: url('../images//mypage/ico_mypage_link_4.svg') no-repeat 50% / cover;
+        background: url('../images/mypage/ico_mypage_link_4.svg') no-repeat 50% / cover;
       }
 
       &:after {
@@ -810,7 +811,7 @@
         right: 32px;
         width: 9px;
         height: 14px;
-        background: url('../images//mypage/ico_txt_link_arrow.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_txt_link_arrow.svg') no-repeat 0 0;
         transform: translateY(-50%);
         content: '';
       }
@@ -844,7 +845,7 @@
         margin-top: 21px;
         text-align: right;
 
-        .inp_check + label {
+        .inp_check+label {
           color: #444;
         }
       }
@@ -869,12 +870,13 @@
       transition: all 0.2s;
 
       @include only-pc {
+
         &:first-child,
         &:nth-child(4n + 1) {
           margin-left: 0;
         }
 
-        &:nth-child(4n) ~ li {
+        &:nth-child(4n)~li {
           margin-top: 40px;
         }
 
@@ -894,7 +896,7 @@
           margin-left: 0;
         }
 
-        &:nth-child(3n) ~ li {
+        &:nth-child(3n)~li {
           margin-top: 32px;
         }
 
@@ -1100,17 +1102,17 @@
         }
 
         &:placeholder-shown {
-          + .label {
+          +.label {
             top: 50%;
             transform: translateY(-50%) scale(1);
           }
         }
 
-        &.disabled + .label {
+        &.disabled+.label {
           display: none;
         }
 
-        &:focus + .label {
+        &:focus+.label {
           transform: translate3d(0, -12px, 0) scale(0.75);
           color: #bbb;
           top: 10px;
@@ -1121,7 +1123,7 @@
         }
 
         &:not(:placeholder-shown) {
-          + .label {
+          +.label {
             @include only-mo {
               top: 5px;
             }
@@ -1152,7 +1154,7 @@
 
         &.vvip {
           &:after {
-            background: url(../images//common/membership_vvip.svg) no-repeat 0 0;
+            background: url(../images/common/membership_vvip.svg) no-repeat 0 0;
             background-size: 24px 24px;
           }
 
@@ -1163,7 +1165,7 @@
 
         &.vip {
           &:after {
-            background: url(../images//common/membership_vip.svg) no-repeat 0 0;
+            background: url(../images/common/membership_vip.svg) no-repeat 0 0;
             background-size: 24px 24px;
           }
 
@@ -1174,7 +1176,7 @@
 
         &.family {
           &:after {
-            background: url(../images//common/membership_family.svg) no-repeat 0 0;
+            background: url(../images/common/membership_family.svg) no-repeat 0 0;
             background-size: 24px 24px;
           }
 
@@ -1294,7 +1296,7 @@
         font-size: 14px;
 
         &:placeholder-shown {
-          + .label {
+          +.label {
             top: 20px;
             transform: translate3d(0, 0, 0) scale(1);
 
@@ -1305,7 +1307,7 @@
         }
 
         &:not(:placeholder-shown) {
-          + .label {
+          +.label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
           }
@@ -1314,7 +1316,7 @@
         &:focus {
           outline: 0;
 
-          + .label {
+          +.label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
             color: #bbb;
@@ -1381,11 +1383,11 @@
         }
 
         .ico_phone_certify {
-          background: url(../images//common/ic_phone_certify.svg) no-repeat 0 0;
+          background: url(../images/common/ic_phone_certify.svg) no-repeat 0 0;
         }
 
         .ico_ipn_certify {
-          background: url(../images//common/ic_ipn_certify.svg) no-repeat 0 0;
+          background: url(../images/common/ic_ipn_certify.svg) no-repeat 0 0;
         }
       }
 
@@ -1428,7 +1430,7 @@
         font-size: 14px;
 
         &:placeholder-shown {
-          + .label {
+          +.label {
             top: 20px;
             transform: translate3d(0, 0, 0) scale(1);
 
@@ -1439,7 +1441,7 @@
         }
 
         &:not(:placeholder-shown) {
-          + .label {
+          +.label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
           }
@@ -1448,7 +1450,7 @@
         &:focus {
           outline: 0;
 
-          + .label {
+          +.label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
             color: #bbb;
@@ -1517,7 +1519,7 @@
         font-size: 14px;
 
         &:placeholder-shown {
-          + .label {
+          +.label {
             top: 20px;
             transform: translate3d(0, 0, 0) scale(1);
 
@@ -1528,7 +1530,7 @@
         }
 
         &:not(:placeholder-shown) {
-          + .label {
+          +.label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
           }
@@ -1537,7 +1539,7 @@
         &:focus {
           outline: 0;
 
-          + .label {
+          +.label {
             transform: translate3d(0, -12px, 0) scale(0.75);
             top: 10px;
             color: #bbb;
@@ -1677,7 +1679,7 @@
         left: 50%;
         width: 56px;
         height: 56px;
-        background: url('../images//mypage/ico_like_cart.svg') no-repeat 0 0;
+        background: url('../images/mypage/ico_like_cart.svg') no-repeat 0 0;
         transform: translateX(-50%);
         content: '';
       }
@@ -1697,7 +1699,7 @@
         min-width: auto;
         font-size: 16px;
 
-        & + .button {
+        &+.button {
           margin-left: 8px;
         }
       }
@@ -1731,7 +1733,7 @@
     .user_item {
       width: 50%;
 
-      &:nth-child(2) ~ .user_item {
+      &:nth-child(2)~.user_item {
         border-top: 1px solid #444;
       }
     }
@@ -1779,7 +1781,7 @@
           right: 16px;
         }
 
-        &:nth-child(2n) ~ .b2b_link {
+        &:nth-child(2n)~.b2b_link {
           margin-top: 16px;
         }
       }
@@ -1978,6 +1980,7 @@
 
       .certify_box {
         .certify_list {
+
           &.on,
           &:hover {
             .certify {
@@ -2013,7 +2016,7 @@
           font-size: 20px;
         }
 
-        & + .cont {
+        &+.cont {
           .cont_tit {
             margin-top: 64px;
           }
@@ -2087,7 +2090,7 @@
         width: 100%;
         margin: 0;
 
-        &:nth-child(2n) ~ .b2b_link {
+        &:nth-child(2n)~.b2b_link {
           margin: 0;
         }
 
@@ -2166,7 +2169,7 @@
             font-size: 14px;
             vertical-align: top;
 
-            & + span {
+            &+span {
               display: none;
             }
           }
@@ -2226,7 +2229,7 @@
           width: calc((100% - 74px) / 2);
           padding-right: 0;
 
-          & + .calendar_box {
+          &+.calendar_box {
             margin-left: 8px;
 
             &:before {
@@ -2343,6 +2346,7 @@
     }
 
     .history_like {
+
       .button_positive,
       .button_negative {
         font-size: 14px;
@@ -2350,7 +2354,7 @@
         background: none;
         color: #888;
 
-        & > span {
+        &>span {
           display: none;
         }
       }
@@ -2364,8 +2368,7 @@
           margin-left: 0;
         }
 
-        &:nth-child(2) ~ .like_list {
-        }
+        &:nth-child(2)~.like_list {}
       }
 
       .like_prd_inner {
@@ -2505,7 +2508,7 @@
 
       &.tel {
         .button {
-          & > span {
+          &>span {
             display: none;
           }
         }
@@ -2537,6 +2540,7 @@
 
       .certify_box {
         .certify_list {
+
           &.on,
           &:hover {
             .certify {
@@ -2720,6 +2724,7 @@
     }
 
     @media screen and (max-width: 1280px) {
+
       &_term,
       &_desc {
         font-size: 14px;
@@ -2791,6 +2796,7 @@
       }
 
       @media screen and (max-width: 640px) {
+
         &_term,
         &_desc {
           float: none;
@@ -2956,7 +2962,7 @@
       }
     }
 
-    & ~ .button_wrap {
+    &~.button_wrap {
       clear: both;
     }
   }
@@ -3021,7 +3027,7 @@
           }
         }
 
-        & ~ [class*='step'] {
+        &~[class*='step'] {
           &::before {
             background-color: #ddd;
           }
@@ -3102,7 +3108,7 @@
               color: #fff;
             }
 
-            & ~ [class*='step'] {
+            &~[class*='step'] {
               &::before {
                 background-color: #ddd;
               }
@@ -3153,7 +3159,7 @@
 
   //회원탈퇴
   .withdrawComplete {
-    background-image: url(../images//mypage/ic_withdraw_comp.svg);
+    background-image: url(../images/mypage/ic_withdraw_comp.svg);
 
     .accounts_text {
       margin-top: 19px;
@@ -3388,7 +3394,7 @@
           width: 24px;
           height: 24px;
           content: '';
-          background: url(../images//mypage/ic_pop_mileage.svg) no-repeat 0 50%;
+          background: url(../images/mypage/ic_pop_mileage.svg) no-repeat 0 50%;
           vertical-align: top;
         }
       }
@@ -3404,6 +3410,7 @@
 
     @include only-mo {
       .point_box {
+
         dt,
         dd {
           display: block;
@@ -3429,7 +3436,7 @@
       margin-bottom: 14px;
     }
 
-    .group + .check {
+    .group+.check {
       margin-top: 24px;
     }
 
@@ -3438,7 +3445,7 @@
         padding: 21px 0 9px;
         letter-spacing: -0.025em;
 
-        &:placeholder-shown + .label {
+        &:placeholder-shown+.label {
           top: 20px;
         }
       }
@@ -3461,6 +3468,7 @@
     }
 
     @media screen and (min-width: 641px) {
+
       .inp_box .label,
       .inp_box .inp,
       .select_ui_zone .selected_btn {
@@ -3476,6 +3484,7 @@
   }
 
   @media print {
+
     // -webkit-print-color-adjust: exact;
     .button {
       display: none;
@@ -3516,6 +3525,7 @@
 
     .order {
       &_detail_cont {
+
         // page-break-after: always;
         &::before {
           content: '제품 정보';
@@ -3641,6 +3651,7 @@
 }
 
 @media screen and (max-width: 640px) {
+
   .withdraw_pop .point_box dt,
   .withdraw_pop .point_box dd {
     display: block;

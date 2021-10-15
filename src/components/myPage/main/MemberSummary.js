@@ -5,23 +5,18 @@ import { toCurrencyString } from '../../../utils/unit';
 import { getCouponsSummary } from '../../../api/promotion';
 import { syncCoupon } from '../../../api/sony/coupon';
 
-const memberGradeClassName = {
-  membership: 'family',
-  vip: 'vip',
-  vvip: 'vvip',
-
+// vvip / vip / family
+const memberGrade = {
+  일반: { className: 'family', label: 'MEMBERSHIP' }, // 일반도 MEMBERSHIP 
+  membership: { className: 'family', label: 'MEMBERSHIP' },
+  vip: { className: 'vip', label: 'VIP' },
+  vvip: { className: 'vvip', label: 'VVIP' }
 };
 
 const MemberSummary = ({ tabChange, profile, availablemileage, wishCount }) => {
   const [couponCount, setCouponCount] = useState(0);
 
-  const gradeClassName = useMemo(() => {
-    const grade = profile?.memberGradeName?.toLowerCase();
-    const key = Object.keys(memberGradeClassName).find(k => k === grade);
-
-    return key ? 'val ' + memberGradeClassName[key] : 'val';
-
-  }, [profile]);
+  const grade = useMemo(() => memberGrade[profile?.memberGradeName?.toLowerCase()], [profile])
 
   useEffect(() => {
     Promise.all([
@@ -52,7 +47,7 @@ const MemberSummary = ({ tabChange, profile, availablemileage, wishCount }) => {
                         className="txt_arrow">회원등급</span></span>
               <span className="val_txt">
                             <span
-                              className={gradeClassName}>{profile?.memberGradeName ||
+                              className={`val ${grade?.className}`}>{grade?.label ||
                             ''}</span>
                         </span>
             </Link>
