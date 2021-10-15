@@ -104,6 +104,7 @@ import EventDetail from './pages/event/EventDetail';
 import { getProfile } from './api/member';
 import Callback from './pages/member/Callback';
 import { getAgent } from './utils/detectAgent';
+import CustomPopup from './components/common/CustomPopup';
 
 const App = (props) => {
   const agent = getAgent();
@@ -223,6 +224,7 @@ const App = (props) => {
             <a href="#container"><span>본문 바로가기</span></a>
           </div>
           {/* 헤더 */}
+          <CustomPopup />
           <Header />
           <Switch>
             {/* 메인 */}
