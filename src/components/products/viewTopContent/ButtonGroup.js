@@ -135,7 +135,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       }
   }
 
-  const goOrder = async (no = productNo, option = selectedOption, pathname = '/order/sheet') => {
+  const fetchOrderSheetNo = async (no = productNo, option = selectedOption, pathname = '/order/sheet') => {
     try {
       const result = await getOrderSheetNo(no, option);
       goToOrderPage(result, pathname);
@@ -171,7 +171,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     };
 
     if (isLogin) {
-      goOrder(productNo, selectedOption, pathname);
+      fetchOrderSheetNo(productNo, selectedOption, pathname);
       return;
     };
 
@@ -399,7 +399,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       }
       {
         orderVisible
-          && <Notification setNotificationVisible={setOrderVisible} type='order' unusableIcon={true} goOrder={goOrder} popupType="popCont" />
+          && <Notification setNotificationVisible={setOrderVisible} type='order' unusableIcon={true} fetchOrderSheetNo={fetchOrderSheetNo} popupType="popCont" />
       }
       {
         alertVisible 
