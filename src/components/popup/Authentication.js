@@ -11,7 +11,7 @@ import Alert from '../common/Alert';
 import { putDormancy } from '../../api/member';
 import { useHistory } from 'react-router-dom';
 
-export default function Authentication({ setVisible }) {
+export default function Authentication({ title, setVisible, usage="RELEASE_DORMANT", authType="" }) {
   const history = useHistory();
   const initMemberInfo = { mobileNo: '', memberName: '' };
   const [memberInfo, setMemberInfo] = useState(initMemberInfo);
@@ -86,18 +86,18 @@ export default function Authentication({ setVisible }) {
   };
 
   const _sendSMS = async (phoneNum, name) => {
-    const response = await sendSMS(phoneNum, 'RELEASE_DORMANT', name);
+    const response = await sendSMS(phoneNum, usage, name);
     if (response.status === 200) {
       setAuthSent(true);
     } else {
       openAlert(response.data.message);
-      setAuthSent(true);
+      setAuthSent(false);
     }
   };
 
-  const _verifySMS = async (phoneNum, code) => {
+  const _verifySMS = async (phoneNum, code, name) => {
     setCode(code);
-    const response = await verifySMS(phoneNum, code, 'RELEASE_DORMANT');
+    const response = await verifySMS(phoneNum, code, usage, name);
     if (response.status === 200) {
       setAuthCheck(true);
       openAlert('인증되었습니다.');
@@ -154,7 +154,7 @@ export default function Authentication({ setVisible }) {
   return (
     <LayerPopup className="certifi_pop" onClose={closePopup}>
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
-      <p className="pop_tit">휴대폰 본인 인증</p>
+      <p className="pop_tit">{title || '휴대폰 본인 인증'}</p>
       <div className="pop_cont_scroll contents">
         <form action="">
           <div className="form_zone">
@@ -298,7 +298,7 @@ export default function Authentication({ setVisible }) {
                                   openAlert('인증번호를 입력해주세요.');
                                   return;
                                 }
-                                _verifySMS(memberInfo.mobileNo, authCode);
+                                _verifySMS(memberInfo.mobileNo, authCode, memberInfo.memberName);
                               }
                             }
                           }}
@@ -316,7 +316,7 @@ export default function Authentication({ setVisible }) {
         </form>
       </div>
       <div className="btn_article">
-        <button className="button button_positive button-m closed" onClick={onClickAuthentication} type="button">
+        <button className="button button_positive button-m closed" onClick={!authType ? onClickAuthentication : closePopup} type="button">
           확인
         </button>
       </div>

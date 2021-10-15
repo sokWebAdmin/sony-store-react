@@ -23,6 +23,7 @@ import { modifyMy } from '../../api/sony/member';
 import AuthPassword from './myPageMember/AuthPassword';
 import { addHyphenToPhoneNo } from '../../utils/utils';
 import ReCaptcha from '../../components/common/ReCaptcha';
+import Authentication from '../../components/popup/Authentication';
 
 function getStrDate(date, format = 'YYYY-MM-DD') {
   if (!date) return;
@@ -311,7 +312,6 @@ export default function MyPageMember() {
                 profileState.profile?.memberId && (
                   <>
                     <div className="member_withdrawal">
-                      
                       <a href="#none" className="button button_secondary button-s" onClick={ event => handleClick(event, 'withdrawal') }>회원탈퇴</a>
                     </div>
                     <div className="member_info_list">
@@ -343,16 +343,13 @@ export default function MyPageMember() {
                               <button className="button change_btn" type="button" onClick={ event => handleClick(event, 'name') }>이름변경</button>
                             </div>
                             {
-                              renameVisible
-                                && <MobileAuth 
-                                    mobile={ myForm.mobile }
-                                    visible={renameVisible}
-                                    setVisible={setRenameVisible}
-                                    handleResult={handleRenameResult}
-                                    setNeedsResend ={setNeedsResendForName}
-                                    remobileReset={renameReset}
-                                    setRemobileReset={setRenameReset}
-                                  />
+                              renameVisible 
+                                && <Authentication 
+                                      title="개명 회원 본인 확인" 
+                                      setVisible={setRenameVisible} 
+                                      usage="JOIN"
+                                      authType="Rename" 
+                                    />
                             }
                           </div>
                         </div>
