@@ -9,8 +9,8 @@ const InvoiceGuide = ({ close }) => {
     >
       <p className="pop_tit">전자 세금계산서 발행 안내</p>
       <div className="pop_cont_scroll" style={{ height: '651px' }}>
-        <p className="pop_txt txt_l">2011년 1월부터 전자세금계산서 제도를 시행하고 있습니다.<br />
-          이에 따라 전자세금계산서 발행이 의무화되었으며, <strong className="under_line">재화를 공급한 달의
+        <p className="pop_txt txt_l">2011년 1월부터 전자 세금계산서 제도를 시행하고 있습니다.<br />
+          이에 따라 전자 세금계산서 발행이 의무화되었으며, <strong className="under_line">재화를 공급한 달의
             익월 8일</strong> 까지 세금계산서를 발행하도록 규정하고 있습니다. <br />
           <strong className="under_line">익월 8일 이후</strong>에 요청되는 세금계산서 발행 요청에
           대해서는 불가한 점 고객님들의 양해를 구합니다.</p>
