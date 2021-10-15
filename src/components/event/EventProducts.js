@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { postCart, postOrderSheets } from '../../api/order';
 import gc from '../../storage/guestCart';
 import GlobalContext from '../../context/global.context';
-import { getProductOptions } from '../../api/product';
+import { getProductOptions, getProductsOptions } from '../../api/product';
 import qs from 'qs';
 import { useAlert } from '../../hooks';
 import Notification from '../products/Notification';
@@ -32,10 +32,9 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
   }, [history.location.pathname]);
 
   const [section, setSection] = useState(filterProductsByGrade(event, isMemberGrade));
+  // const [optionInfos, setOptionInfos] = useState(null);
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [giftVisible, setGiftVisible] = useState(false);
-  
-  
 
   const goCart = async (productNo, hsCode) => {
 
@@ -161,6 +160,17 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
     newGradeSection && setSection(newGradeSection);
   }, [grade, filterLabel]);
 
+  // const fetchOptions = async (productNos) => {
+  //   const { data: { optionInfos } } = await getProductsOptions({ productNos });
+  //   setOptionInfos(optionInfos);
+  //   console.log(optionInfos);
+  // }
+  //
+  // useEffect(() => {
+  //   console.log(section.map(({productNo}) => productNo));
+  //   fetchOptions(section.map(({productNo}) => productNo));
+  // }, [section]);
+
   // hsValidation
   const hsValidator = createRef(null);
   const hsValidation = async validation => await hsValidator.current.validation(validation);
@@ -227,14 +237,6 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
                     )}
                   </div>
                   <div className="product_btn_wrap">
-                    <button
-                      type="button"
-                      className="button button_secondary button-s view"
-                      onClick={() => history.push(`/product-view/${product.productNo}`)}
-                    >
-                      <i className="ico search" />
-                      제품 보기
-                    </button>
                     {gift && (
                       <button
                         type="button"
