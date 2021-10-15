@@ -375,7 +375,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
               >바로 구매하기</a>}
               {saleStatus === 'RESERVE' && <a onClick={ e => handleClick(e, 'reserve') } href="#none" className="btn_style reservation" style={{display: 'block', backgroundColor: '#5865F5'}}>예약판매</a>}
               {saleStatus === 'READY_RESERVE' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#ff4e4e'}}>출시예정</a>}
-              {saleStatus === 'READY' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#888'}}>임시품절</a>}
+              {saleStatus === 'READY' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#888'}}>일시품절</a>}
               {saleStatus === 'SOLDOUT' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#ddd'}}>품절</a>}
             </li>
           </ul>
