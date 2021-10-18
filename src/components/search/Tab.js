@@ -13,8 +13,8 @@ const tabs = Object.keys(TAB_MAP);
 export default function Tab({ tabState, setTabState, count }) {
   return (
     <>
-      <div class="swipe_tab swiper-container">
-        <ul class="swiper-wrapper">
+      <div className="swipe_tab swiper-container">
+        <ul className="swiper-wrapper">
           {
             tabs.map((tab, idx) => (
               <li key={`${tab}${idx}`} className={`swiper-slide ${tabState === tab && 'active'}`}>
