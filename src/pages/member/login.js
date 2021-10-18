@@ -80,7 +80,7 @@ export default function Login ({ location }) {
     }
 
     if (validation) {
-      const response = await loginApi(email, password);
+      const response = await loginApi(email, password, autoLogin || null);
       const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
 
       if (code === '3000') {
