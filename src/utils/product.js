@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import { isSameOrAfter } from './dateFormat';
+import _, { uniq } from 'lodash';
 
 const heightStyle = (height, headerHeight) => {
    const marginTop = headerHeight > 0 ? (headerHeight / 2) *- 1 : 0;
@@ -112,8 +111,24 @@ export const getSaleStatus = (status, reservationDate, stockCnt, reservationStoc
    return '';
 };
 
+export const mapOptionData = ({ saleType, stockCnt, reservationStockCnt }, reservationData) => {
+   return {
+   status: { saleStatusType: saleType === 'SOLD_OUT' || saleType === 'SOLDOUT' ? 'SOLDOUT' : 'ONSALE' },
+   reservationData,
+   stockCnt,
+   reservationStockCnt,
+   }
+};
+
+export const checkUniqStatus = optionStatus => uniq(optionStatus).length === 1 ? optionStatus[0] : '';
+
+export const getSaleStatusForOption = (options, reservationData) => {
+   const optionStatus = options.map( o => mapOptionData(o, reservationData)).map(({ status, reservationData, stockCnt, reservationStockCnt }) => getSaleStatus(status, reservationData, stockCnt, reservationStockCnt));
+   return checkUniqStatus(optionStatus);
+};
+
 export const getPricePerProduct = ({ salePrice, immediateDiscountAmt, additionDiscountAmt }) => {
    const discount = salePrice - immediateDiscountAmt - additionDiscountAmt;
 
    return salePrice !== discount ? { origin: salePrice, discount } : { discount }
-}
+};
