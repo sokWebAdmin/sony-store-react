@@ -66,17 +66,39 @@ const CustomPopup = ({ location, data }) => {
       filter(popup => popup.type === 'LAYER'). // layer 여부
       filter(popup => popup.displayTypes.includes(
         getDisplayType())). // 노출 환경(pc or mob) 일치 여부
-      filter(validPageDisplayOption). // 페이지 / 노출 세부 설정 일치 여부
+      filter(popup => validPageDisplayOption(popup,
+        currentPage)). // 페이지 / 노출 세부 설정 일치 여부
       filter(popup => validTodayNotShow(popup.popupNo)); // 오늘 하루 보지 않음 여부
   }
 
-  function validPageDisplayOption (popup) {
+  function validPageDisplayOption (popup, currentPage) {
     if (!popup.pageTypes.includes(currentPage)) {
       return false;
     }
 
-    console.log(popup);
+    switch (currentPage) {
+      case 'MAIN':
+        return true;
+      case 'CATEGORY':
+        return validCategoryPageDisplayOption();
+      case 'EVENT':
+        return validEventPageDisplayOption();
+      case 'PRODUCT':
+        return validProductPageDisplayOption();
+      default:
+        return true;
+    }
+  }
 
+  function validCategoryPageDisplayOption () {
+    return true;
+  }
+
+  function validEventPageDisplayOption () {
+    return true;
+  }
+
+  function validProductPageDisplayOption () {
     return true;
   }
 
