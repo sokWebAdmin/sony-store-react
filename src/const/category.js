@@ -278,6 +278,10 @@ const gnbCategories = [
         route: '/event/list?tab=pre-order',
       },
       {
+        label: '정품등록 이벤트',
+        route: '/event/list?tab=refined',
+      },
+      {
         label: 'LIVE ON',
         route: '/event/list?tab=live-on',
       },
