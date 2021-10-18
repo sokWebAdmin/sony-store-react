@@ -120,7 +120,7 @@ export default function Product({product, category, reset, micro}) {
       }
 
       <div className="product__price">
-          <span className="sale">
+          <span className="sale" style={{ display: 'flex', alignItems: 'center' }}>
             <span className="product__price__num">{toCurrencyString(product.salePrice)}</span>
             <span className="product__price__unit">원</span>
           </span>
