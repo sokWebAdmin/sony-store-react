@@ -1,5 +1,5 @@
 import qs from 'qs';
-import React, { useContext, useState, createRef, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { useContext, useState, createRef, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from "../../../context/global.context";
 import { getCart, postCart, postOrderSheets } from "../../../api/order";

@@ -15,27 +15,6 @@ export default function Product({product, category, reset, micro}) {
 
   const saleStatus = getSaleStatus(product, product.reservationData, product.stockCnt, product.reservationData?.reservationStockCnt)
 
-  // if (product.reservationData) {
-  //   const {reservationStartYmdt, reservationEndYmdt} = product.reservationData;
-  //   const reservStart = (new Date(reservationStartYmdt)).getTime();
-  //   const reservEnd = (new Date(reservationEndYmdt)).getTime();
-  //   const now = (new Date()).getTime();
-
-  //   if (reservStart > now) {
-  //     saleStatus = 'READY_RESERVE';
-  //   } else if (reservEnd >= now) {
-  //     saleStatus = 'RESERVE';
-  //   }
-  // }
-
-  // if (product.stockCnt === 0) {
-  //   saleStatus = 'SOLDOUT';
-  // }
-
-  // if (['ONSALE', 'FINISHED', 'STOP', 'PROHIBITION'].includes(product.saleStatusType)) {
-  //   saleStatus = '';
-  // }
-
   const [groupProducts, setGroupProducts] = useState([]);
   const [colorIndex, setColorIndex] = useState(0);
 
@@ -134,7 +113,7 @@ export default function Product({product, category, reset, micro}) {
         <strong className="product__title__name">{product.productName}</strong>
         {saleStatus === 'RESERVE' && <span className="badge__label badge__label__reserve">예약판매</span>}
         {saleStatus === 'READY' && <span className={`badge__label badge__label__outofstock`}>일시품절</span>}
-        {saleStatus === 'SOLDOUT' && <span className={`badge__label badge__label__soldout`}>Sold out</span>}
+        {saleStatus === 'SOLDOUT' && <span className={`badge__label badge__label__soldout`}>품절</span>}
         {saleStatus === 'READY_RESERVE' && <span className={`badge__label badge__label__release`}>출시예정</span>}
       </Link>
 
