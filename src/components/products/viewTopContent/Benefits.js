@@ -6,8 +6,8 @@ import { wonComma } from "../../../utils/utils";
 export default function Benefits({ price }) {
 
   const mallInfo = useMallState();
-
-  const { discount } = getPricePerProduct(price);
+  const discount = price.salePrice;
+  // const { discount } = getPricePerProduct(price);
 
   const unit = mallInfo?.accumulationUnit;
   
