@@ -3411,6 +3411,20 @@
       }
     }
 
+    //app
+    .app_txt {
+      margin-top: 24px;
+      padding: 16px 10px;
+      background-color: #f8f8f8;
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+      line-height: 18px;
+      + .txt_or {
+        margin-top: 37px;
+      }
+    }
+
     .txt_or {
       position: relative;
       margin-top: 72px;
