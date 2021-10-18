@@ -224,7 +224,7 @@ const App = (props) => {
             <a href="#container"><span>본문 바로가기</span></a>
           </div>
           {/* 헤더 */}
-          <CustomPopup />
+          <CustomPopup location={location} />
           <Header />
           <Switch>
             {/* 메인 */}

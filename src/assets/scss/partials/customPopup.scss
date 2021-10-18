@@ -1,4 +1,6 @@
 .custom_popup_layer {
+  width: auto !important;
+
   .custom_popup_layer--container {
     padding: 0;
   }
@@ -7,10 +9,21 @@
     top: 10px;
     right: 10px;
 
-    span {
-      &:before, &:after {
-        background-color: #fff;
-      }
+    //span {
+    //  &:before, &:after {
+    //    background-color: #fff;
+    //  }
+    //}
+  }
+
+  .today_not_opened {
+    width: 100%;
+    padding: 5px 5px 7px 5px;
+
+    label {
+      display: flex;
+      align-items: center;
+      line-height: 1;
     }
   }
 }
