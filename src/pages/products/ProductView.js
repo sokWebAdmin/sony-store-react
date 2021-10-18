@@ -36,6 +36,12 @@ import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
 import { getOrderConfigs } from '../../api/order';
 
+  const sortOptionsByProductNo = (options, productNo) => {
+    const findIdx = options.findIndex(({ productNo: no }) => no === productNo);
+    const head = options.splice(findIdx, 1);
+    return head.concat(options);
+  }
+
 export default function ProductView({ match }) {
   const history = useHistory();
   const { isLogin } = useContext(GlobalContext);
@@ -83,7 +89,6 @@ export default function ProductView({ match }) {
 
   // product init data
   const mapProductData = useCallback(([productData, { flatOptions, ...rest }]) => {
-
     if (isInvalidForGradeProduct(productData.baseInfo.hsCode)) {
       const historyInfo = { pathname: '/member/login', state: { next: `/product-view/${productData.baseInfo.productNo}` } };
       openAlert('접근 불가한 등급상품입니다.', () => () => history.push(historyInfo));
@@ -142,10 +147,10 @@ export default function ProductView({ match }) {
                          .value();
 
     const hasColor = flatOptions?.length > 0;
-    setProductOptions({
-      flatOptions,
+    setProductOptions(() => ({
+      flatOptions: sortOptionsByProductNo(flatOptions, productNo),
       hasColor,
-    });
+    }));
   }
 
   const mapProductGroupInfo = (({ imageUrls, options }) => {
@@ -164,7 +169,7 @@ export default function ProductView({ match }) {
       isSoldOut: true,
     });
     
-    const gp = data.flatMap(({ groupManagementMappingProducts }) => groupManagementMappingProducts)
+    const gp = sortOptionsByProductNo(data.flatMap(({ groupManagementMappingProducts }) => groupManagementMappingProducts), productNo);
     
     setProductGroup(
       _.chain(gp)
