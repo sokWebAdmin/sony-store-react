@@ -104,7 +104,7 @@ import EventDetail from './pages/event/EventDetail';
 import { getProfile } from './api/member';
 import Callback from './pages/member/Callback';
 import { getAgent } from './utils/detectAgent';
-import CustomPopup from './components/common/CustomPopup';
+import CustomPopup from './components/common/customPopup/CustomPopup';
 
 const App = (props) => {
   const agent = getAgent();

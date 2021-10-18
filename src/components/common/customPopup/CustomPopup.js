@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { getDisplayPopups, getDisplayPopupsPopupNos } from '../../api/display';
+
+// api
+import {
+  getDisplayPopups,
+  getDisplayPopupsPopupNos,
+} from '../../../api/display';
+
+// components
+import Popup from './partials/Popup';
 
 const CustomPopup = () => {
   const [popups, setPopups] = useState([]);
@@ -32,8 +40,3 @@ const CustomPopup = () => {
 
 export default CustomPopup;
 
-const Popup = ({ popup }) => {
-  return (
-    <p>{JSON.stringify(popup)}</p>
-  );
-};
