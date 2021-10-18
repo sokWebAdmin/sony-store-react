@@ -6,6 +6,7 @@ import todayNotShow from './partials/todayNotShow';
 
 // components
 import LayerPopup from './partials/LayerPopup';
+import validPageDisplayOption from './partials/validPageDisplayOption';
 
 const SPEC = {
   type: 'LAYER',
@@ -69,37 +70,6 @@ const CustomPopup = ({ location, data }) => {
       filter(popup => validPageDisplayOption(popup,
         currentPage)). // 페이지 / 노출 세부 설정 일치 여부
       filter(popup => validTodayNotShow(popup.popupNo)); // 오늘 하루 보지 않음 여부
-  }
-
-  function validPageDisplayOption (popup, currentPage) {
-    if (!popup.pageTypes.includes(currentPage)) {
-      return false;
-    }
-
-    switch (currentPage) {
-      case 'MAIN':
-        return true;
-      case 'CATEGORY':
-        return validCategoryPageDisplayOption();
-      case 'EVENT':
-        return validEventPageDisplayOption();
-      case 'PRODUCT':
-        return validProductPageDisplayOption();
-      default:
-        return true;
-    }
-  }
-
-  function validCategoryPageDisplayOption () {
-    return true;
-  }
-
-  function validEventPageDisplayOption () {
-    return true;
-  }
-
-  function validProductPageDisplayOption () {
-    return true;
   }
 
   function validTodayNotShow (popupNo) {
