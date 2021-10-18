@@ -18,9 +18,9 @@ import CouponList from '../../components/myPage/main/CouponList';
 import WishList from '../../components/myPage/main/WishList';
 import { fetchProfile, fetchMyProfile, useProfileState, useProileDispatch } from '../../context/profile.context';
 import { getWish } from '../../api/order';
-import { isMobile } from 'react-device-detect';
+import { isTablet } from 'react-device-detect';
 
-const HOW_MANY_WISH = isMobile ? 9 : 10;
+const HOW_MANY_WISH = isTablet ? 9 : 8;
 
 export default function MyPageMain() {
   const [viewContent, setViewContent] = useState('mileage');
