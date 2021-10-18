@@ -36,11 +36,7 @@ const EventDetail = () => {
           <div className="content employee">
             <TopContent url={onlyMo ? event.top.mobile.url : event.top.pc.url}
                         type={onlyMo ? event.top.mobile.type : event.top.pc.type} />
-            <div className="event_tablist type1">
-              <div className="employee_prd">
-                <EventProducts event={event} gift={true} />
-              </div>
-            </div>
+            <EventProducts event={event} gift={true} sectionImage={true} />
           </div>
         </div>
       </div>}
