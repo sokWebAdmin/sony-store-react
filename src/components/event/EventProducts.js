@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createRef, useMemo } from 'react';
+import React, { useState, useEffect, useContext, createRef, useMemo, Fragment } from 'react';
 import { toCurrencyString } from '../../utils/unit';
 import { Link, useHistory } from 'react-router-dom';
 import { getCartCount, postCart, postOrderSheets } from '../../api/order';
@@ -274,7 +274,7 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
       {sectionImage ?
         event.section.map(({ imageUrl, products }, index) => {
           return (
-            <>
+            <Fragment key={`${products.productNo}-${index}`}>
               <SectionImage onlyMo={onlyMo}>
                 <img src={imageUrl} alt="" style={{ width: '100%' }} />
               </SectionImage>
@@ -290,7 +290,7 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
                   </div>}
                 </div>
               </div>
-            </>
+            </Fragment>
           );
         }) :
         <div className="event_tablist type1">
