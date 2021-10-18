@@ -7,7 +7,8 @@ const todayNotShow = {
     return Date.now() + (1000 * 60 * 60 * 24);
   },
   set (popupNo) {
-    Cookies.set(NAME_SPACE + popupNo.toString(), this.getPeriod());
+    Cookies.set(NAME_SPACE + popupNo.toString(), this.getPeriod(),
+      { expires: 1 });
   },
   get (popupNo) {
     return Cookies.get(NAME_SPACE + popupNo.toString());
