@@ -4412,6 +4412,25 @@
     }
   }
 
+  // 마이페이지 최근 주문
+  .my {
+    .order_list {
+      @media screen and (max-width: 767px) {
+        .col_table_row {
+          &:after {
+            display: block;
+            clear: both;
+            content: '';
+          }
+        }
+        .prd_thumb {
+          float: right;
+          position: relative;
+        }
+      }
+    }
+  }
+
   //주문배송조회 table, 주문결제 table mobile type
   .order_box__cont,
   .order_detail_cont {
