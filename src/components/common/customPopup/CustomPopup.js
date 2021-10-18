@@ -7,7 +7,7 @@ import {
 } from '../../../api/display';
 
 // components
-import Popup from './partials/Popup';
+import LayerPopup from './partials/LayerPopup';
 
 const CustomPopup = () => {
   const [popups, setPopups] = useState([]);
@@ -33,7 +33,7 @@ const CustomPopup = () => {
 
   return (
     <div style={{ padding: '100px', maxWidth: '100%' }}>
-      {popups.map(popup => <Popup popup={popup} />)}
+      {popups.map(popup => <LayerPopup popup={popup} key={popup.popupNo} />)}
     </div>
   );
 };
