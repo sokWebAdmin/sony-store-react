@@ -5,9 +5,6 @@ import _ from 'lodash';
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
-//lib
-import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } from 'swiper/core';
-
 //lib-css
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
@@ -25,7 +22,7 @@ import "../../assets/scss/product.scss"
 //util
 import {useWindowSize} from '../../utils/utils';
 import { getInfoLinks, mapContents } from '../../const/productView';
-import { getColorChipValues, getMainSliderStyle, getSaleStatus } from '../../utils/product';
+import { getColorChipValues, getMainSliderStyle, getSaleStatus, getSaleStatusForOption } from '../../utils/product';
 
 
 import MainImage from '../../components/products/MainImage';
@@ -300,15 +297,6 @@ export default function ProductView({ match }) {
 
   const hasEvents = useMemo(() => productEvents?.length > 0, [productEvents]);
 
-  const mapOptionData = ({ saleType, stockCnt, reservationStockCnt }, reservationData) => {
-    return {
-      status: { saleStatusType: saleType === 'SOLD_OUT' || saleType === 'SOLDOUT' ? 'SOLDOUT' : 'ONSALE' },
-      reservationData,
-      stockCnt,
-      reservationStockCnt,
-    }
-  };
-
   useEffect(() => {
     if (!productData) return;
     
@@ -317,15 +305,10 @@ export default function ProductView({ match }) {
       setSaleStatus(getSaleStatus(status, reservationData, stock.stockCnt, reservationData?.reservationStockCnt))
     } else {
       if (productOptions.flatOptions.length > 1) {
-        const optionStatus = productOptions.flatOptions.map( o => mapOptionData(o, reservationData)).map(({ status, reservationData, stockCnt, reservationStockCnt }) => getSaleStatus(status, reservationData, stockCnt, reservationStockCnt));
-        setSaleStatus(_.uniq(optionStatus).length === 1 ? optionStatus[0] : '');
+        setSaleStatus(getSaleStatusForOption(productOptions.flatOptions, reservationData));
       }
     }
   }, [productData, productOptions.flatOptions]);
-
-  useEffect(() => {
-
-  }, []);
 
     return (
       <>        
