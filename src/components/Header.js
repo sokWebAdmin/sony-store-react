@@ -21,10 +21,10 @@ import { useHeaderDispatch, useHeaderState, openSideBar, closeSideBar } from '..
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { removeAccessToken } from '../utils/token';
 import { resetProfile, useProfileState, useProileDispatch } from '../context/profile.context';
-import { useClickOutside, useScroll } from '../hooks';
+import { useClickOutside, useMediaQuery, useScroll } from '../hooks';
 import { getAgent } from '../utils/detectAgent';
 
-export default function Header (location) {
+export default function Header(location) {
   const history = useHistory();
   const currLocation = useLocation();
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
@@ -39,6 +39,7 @@ export default function Header (location) {
 
   const { scrollY } = useScroll();
   const agent = getAgent();
+  const underPc = useMediaQuery('(max-width: 1280px)');
 
   const [prevScrollY, setPrevScrollY] = useState(window.scrollY);
 
@@ -59,11 +60,11 @@ export default function Header (location) {
       setVisible(false);
       return;
     }
+    if (underPc) return;
     if (prevScrollY > window.scrollY || header.current.offsetHeight >
       window.scrollY) {
       setVisible(true);
-    }
-    else {
+    } else {
       setVisible(false);
     }
 
@@ -74,6 +75,13 @@ export default function Header (location) {
     setInfoOpen(false);
     closeSideBar(headerDispatch);
   };
+
+  const hideBodyScroll = (hide) => {
+    if (underPc) {
+      const body = document.querySelector('body');
+      body.style.overflow = hide ? 'hidden' : 'auto';
+    }
+  }
 
   useEffect(() => {
     const $body = document.querySelector('body');
@@ -86,7 +94,8 @@ export default function Header (location) {
 
   return (
     <>
-      <header ref={ header } id="header" className={`header ${visible ?'header--visible' : 'header--invisible'} ${isSiderbarOpen ? 'header--active' : ''} ${ isSearchOpen ? 'header--search' : '' }`}>
+      <header ref={header} id="header"
+              className={`header ${visible ? 'header--visible' : 'header--invisible'} ${isSiderbarOpen ? 'header--active' : ''} ${isSearchOpen ? 'header--search' : ''}`}>
         <div className="header__wrapper">
           <h1 className="header__logo">
             <Link to="/">
@@ -119,6 +128,7 @@ export default function Header (location) {
               className="btn btn__mo btn__menu__open"
               onClick={() => {
                 openSideBar(headerDispatch);
+                hideBodyScroll(true);
               }}
             >
               <img src={menu} alt="메뉴 열기" />
@@ -128,6 +138,7 @@ export default function Header (location) {
               className="btn btn__mo btn__mo__hidden btn__menu__close"
               onClick={() => {
                 closeSideBar(headerDispatch);
+                hideBodyScroll(false);
               }}
             >
               <img src={close} alt="메뉴 닫기" />
