@@ -9,7 +9,7 @@ import { getAgent } from '../utils/detectAgent.js';
 import '../assets/scss/partials/appMenu.scss';
 import { useMediaQuery } from '../hooks';
 
-export default function Gnb () {
+export default function Gnb() {
   const agent = getAgent(); // test code
   const underPc = useMediaQuery('(max-width: 1280px)');
 
