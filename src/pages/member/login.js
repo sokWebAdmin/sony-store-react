@@ -80,7 +80,7 @@ export default function Login ({ location }) {
     }
 
     if (validation) {
-      const response = await loginApi(email, password);
+      const response = await loginApi(email, password, autoLogin || null);
       const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
 
       if (code === '3000') {
@@ -303,7 +303,9 @@ export default function Login ({ location }) {
                   </li>
                 </ul>
               </div>
-              {autoLogin && <p className="txt_nonmember">자동 로그인을 사용할 경우 타인에게<br />고객의 정보가 노출될 위험이 있습니다.</p>}
+              {autoLogin && <div className="app_txt">
+                자동 로그인을 사용할 경우<br />타인에게 고객의 정보가 노출될 위험이 있습니다.
+              </div>}
               <div className="txt_or">
                 <span className="txt">또는</span>
                 <span className="bar" />

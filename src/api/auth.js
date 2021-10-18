@@ -1,10 +1,11 @@
 import request from "./request";
 
 // profile > authentication
-export const loginApi = (memberId, password) => {
+export const loginApi = (memberId, password, keepLogin = null) => {
   return request("oauth/token", "post", null, {
-    memberId: memberId,
-    password: password,
+    memberId,
+    password,
+    keepLogin,
     provider: "shopbystore"
   });
 };
