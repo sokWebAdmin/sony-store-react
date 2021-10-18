@@ -117,7 +117,7 @@ export default function Footer() {
                 <a className="escrow"
                    href="https://mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat"
                    style={{
-                     backgroundImage: 'url(https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_color.png)',
+                     backgroundImage: 'url(https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_gray.png)',
                    }} target="_blank" rel="noreferrer">클릭하시면 이니시스 결제시스템의 유효성을
                   확인하실 수 있습니다.</a>
               </p>
