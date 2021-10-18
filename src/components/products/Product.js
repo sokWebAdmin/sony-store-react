@@ -4,14 +4,12 @@ import React, {useState, useEffect} from 'react';
 //util
 import { Link, useHistory } from 'react-router-dom';
 import { useCategoryState } from '../../context/category.context';
-import { getPricePerProduct, getSaleStatus } from '../../utils/product';
+import { getSaleStatus } from '../../utils/product';
 import { toCurrencyString } from '../../utils/unit';
 
 export default function Product({product, category, reset, micro}) {
   const history = useHistory();
   const {tagColorMap} = useCategoryState();
-
-  const priceInfo = getPricePerProduct(product);
 
   const saleStatus = getSaleStatus(product, product.reservationData, product.stockCnt, product.reservationData?.reservationStockCnt)
 
@@ -122,24 +120,10 @@ export default function Product({product, category, reset, micro}) {
       }
 
       <div className="product__price">
-        {
-          priceInfo?.origin ?
-          <>
-            <span className="sale">
-              <span className="product__price__num">{toCurrencyString(priceInfo.discount)}</span>
-              <span className="product__price__unit">원</span>
-            </span>
-            <span className="original">
-              <span className={`product__price__num ${micro && 'micro'}`}>{toCurrencyString(priceInfo.origin)}</span>
-              <span className={`product__price__unit ${micro && 'micro'}`}>원</span>
-            </span>
-          </>
-          :
           <span className="sale">
-            <span className="product__price__num">{toCurrencyString(priceInfo.discount)}</span>
+            <span className="product__price__num">{toCurrencyString(product.salePrice)}</span>
             <span className="product__price__unit">원</span>
           </span>
-        }
       </div>
     </div>
   );
