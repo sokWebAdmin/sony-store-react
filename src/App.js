@@ -107,6 +107,7 @@ import { getAgent } from './utils/detectAgent';
 import TermsUse from './pages/app/terms/Use';
 import TermsLicense from './pages/app/terms/License';
 import TermsPrivacy from './pages/app/terms/Privacy';
+import CustomPopup from './components/common/customPopup/CustomPopup';
 
 const App = (props) => {
   const agent = getAgent();
@@ -226,6 +227,7 @@ const App = (props) => {
             <a href="#container"><span>본문 바로가기</span></a>
           </div>
           {/* 헤더 */}
+          <CustomPopup location={location} />
           <Header />
           <Switch>
             {/* 메인 */}

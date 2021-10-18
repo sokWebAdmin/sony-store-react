@@ -35,9 +35,14 @@ export const getEventByProductNo = (query) => {
   if (query?.params) {
     return request('display/events/products', 'get', query.params);
   }
-  return request(`display/events/products/${query.pathParams.productNo}`)
+  return request(`display/events/products/${query.pathParams.productNo}`);
 }
 
 export const getDisplaySectionsSectionNo = ({ pathParams, params }) => {
-  return request(`display/sections/${pathParams.sectionNo}`, 'get', params)
-}
+  return request(`display/sections/${pathParams.sectionNo}`, 'get', params);
+};
+
+export const getDisplayPopups = () => request('display/popups', 'get');
+
+export const getDisplayPopupsPopupNos = popupNos => request('display/popups',
+  'get', { popupNos });
