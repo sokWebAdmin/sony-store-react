@@ -4,15 +4,16 @@ import { Link, useHistory } from 'react-router-dom';
 import { getCartCount, postCart, postOrderSheets } from '../../api/order';
 import gc from '../../storage/guestCart';
 import GlobalContext from '../../context/global.context';
-import { getProductOptions, getProductsOptions } from '../../api/product';
+import { getProductOptions } from '../../api/product';
 import qs from 'qs';
-import { useAlert } from '../../hooks';
+import { useAlert, useMediaQuery } from '../../hooks';
 import Notification from '../products/Notification';
 import Alert from '../common/Alert';
 import HsValidator from '../cart/HsValidator';
 import { unescape } from 'lodash';
 import { getSaleStatus } from '../../utils/product';
 import { setCartCount, useHeaderDispatch } from '../../context/header.context';
+import styled from 'styled-components';
 
 const ERROR_CODE_MAPPING_ROUTE = {
   O8001: {
@@ -25,10 +26,11 @@ const forGradeTags = ['liveon', 'refurbish', 'employee'];
 
 const filterProductsByGrade = (event, isGrade) => event?.section.flatMap(({ products }) => products)?.filter(({ hsCode }) => isGrade === !!hsCode);
 
-const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
+const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage = false }) => {
   const { isLogin } = useContext(GlobalContext);
   const headerDispatch = useHeaderDispatch();
   const history = useHistory();
+  const onlyMo = useMediaQuery('(max-width: 640px)');
 
   const isMemberGrade = useMemo(() => {
     const splitPathname = history.location.pathname.split('/');
@@ -106,8 +108,8 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
       if (result?.code) {
         ERROR_CODE_MAPPING_ROUTE[result.code]?.msg
           ? openAlert(ERROR_CODE_MAPPING_ROUTE[result.code]?.msg, () => () =>
-              history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route)),
-            )
+            history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route)),
+          )
           : openAlert(result?.message);
       } else {
         history.push({
@@ -182,108 +184,137 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
   const hsValidator = createRef(null);
   const hsValidation = async validation => await hsValidator.current.validation(validation);
 
+  const sectionMap = (product) => {
+    const isSoldOut = ['SOLDOUT', 'READY'].includes(saleStatus(product));
+    return (
+      <div className="product" key={product.productNo}>
+        {product.immediateDiscountAmt + product.additionDiscountAmt > 0 && (
+          <span className="badge_txt">
+                    {toCurrencyString(product.immediateDiscountAmt + product.additionDiscountAmt)}
+            <span className="unit">원</span> OFF
+                  </span>
+        )}
+        {product.stickerLabels.length > 0 && (
+          <span className={`badge_state state_${product.stickerLabels[0].substring(0, 1).toLowerCase()}`}>
+                    {product.stickerLabels[0].substring(0, 1)}
+            <span className="txt">급</span>
+                  </span>
+        )}
+        <div className="product_pic">
+          <Link className="product_link" to={`/product-view/${product.productNo}`}>
+            <img src={product.imageUrls[0]} alt={product.productName} />
+          </Link>
+          {isSoldOut && (
+            <div className="sold_out">
+              <span>SOLD OUT</span>
+            </div>
+          )}
+        </div>
+        <div className="product_name">
+          <Link to={`/product-view/${product.productNo}`} className="product_name_title">
+            {unescape(product.productName)}
+          </Link>
+          <p className="product_name_desc">{product.productNameEn}</p>
+          <div className="product_name_price">
+            {product.salePrice !==
+            product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt ? (
+              <>
+                <div className="original">
+                  {toCurrencyString(product.salePrice)} <span className="unit">원</span>
+                </div>
+                <div className="sale">
+                  {toCurrencyString(
+                    product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt,
+                  )}{' '}
+                  <span className="unit">원</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="sale">
+                  {toCurrencyString(
+                    product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt,
+                  )}{' '}
+                  <span className="unit">원</span>
+                </div>
+              </>
+            )}
+          </div>
+          <div className="product_btn_wrap">
+            {!isSoldOut && gift && (
+              <button
+                type="button"
+                className="button button_secondary button-s"
+                onClick={() => giftProduct(product.productNo)}
+              >
+                <i className="ico gift"></i>선물
+              </button>
+            )}
+            <button
+              type="button"
+              className="button button_positive button-s"
+              onClick={() => goCart(product.productNo, product.hsCode)}
+              disabled={isSoldOut}
+            >
+              {isSoldOut ? '일시품절' : '바로 구매'}
+            </button>
+            <HsValidator ref={hsValidator} />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // 판매상태
-  const saleStatus = p => getSaleStatus({saleStatusType: p.saleStatusType}, p.reservationData, p.stockCnt, p.reservationData?.reservationStockCnt);
+  const saleStatus = p => getSaleStatus({ saleStatusType: p.saleStatusType }, p.reservationData, p.stockCnt, p.reservationData?.reservationStockCnt);
   return (
     <>
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       {giftVisible && <Notification setNotificationVisible={setGiftVisible} type="gift" />}
-      <div className="event_prd_list">
-        {section.length > 0 ? (
-          section.map((product) => {
-            const isSoldOut = ['SOLDOUT', 'READY'].includes(saleStatus(product));
-            return (
-              <div className="product" key={product.productNo}>
-                {product.immediateDiscountAmt + product.additionDiscountAmt > 0 && (
-                  <span className="badge_txt">
-                    {toCurrencyString(product.immediateDiscountAmt + product.additionDiscountAmt)}
-                    <span className="unit">원</span> OFF
-                  </span>
-                )}
-                {product.stickerLabels.length > 0 && (
-                  <span className={`badge_state state_${product.stickerLabels[0].substring(0, 1).toLowerCase()}`}>
-                    {product.stickerLabels[0].substring(0, 1)}
-                    <span className="txt">급</span>
-                  </span>
-                )}
-                <div className="product_pic">
-                  <Link className="product_link" to={`/product-view/${product.productNo}`}>
-                    <img src={product.imageUrls[0]} alt={product.productName} />
-                  </Link>
-                  {isSoldOut && (
-                    <div className="sold_out">
-                      <span>SOLD OUT</span>
-                    </div>
-                  )}
-                </div>
-                <div className="product_name">
-                  <Link to={`/product-view/${product.productNo}`} className="product_name_title">
-                    {unescape(product.productName)}
-                  </Link>
-                  <p className="product_name_desc">{product.productNameEn}</p>
-                  <div className="product_name_price">
-                    {product.salePrice !==
-                    product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt ? (
-                      <>
-                        <div className="original">
-                          {toCurrencyString(product.salePrice)} <span className="unit">원</span>
-                        </div>
-                        <div className="sale">
-                          {toCurrencyString(
-                            product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt,
-                          )}{' '}
-                          <span className="unit">원</span>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="sale">
-                          {toCurrencyString(
-                            product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt,
-                          )}{' '}
-                          <span className="unit">원</span>
-                        </div>
-                      </>
-                    )}
+      {sectionImage ?
+        event.section.map(({ imageUrl, products }, index) => {
+          return (
+            <>
+              <SectionImage onlyMo={onlyMo}>
+                <img src={imageUrl} alt="" style={{ width: '100%' }} />
+              </SectionImage>
+              <div className="event_tablist type1">
+                <div className="employee_prd">
+                  <div className="event_prd_list">
+                    {products.length > 0 ? products.map(sectionMap) : null}
                   </div>
-                  <div className="product_btn_wrap">
-                    {!isSoldOut && gift && (
-                      <button
-                        type="button"
-                        className="button button_secondary button-s"
-                        onClick={() => giftProduct(product.productNo)}
-                      >
-                        <i className="ico gift"></i>선물
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      className="button button_positive button-s"
-                      onClick={() => goCart(product.productNo, product.hsCode)}
-                      disabled={isSoldOut}
-                    >
-                      { isSoldOut ? '일시품절' : '바로 구매'}
-                    </button>
-                    <HsValidator ref={hsValidator} />
-                  </div>
+                  {index === event.section.length - 1 && <div className="button_wrap">
+                    <Link to="/event/list" className="button button_positive">
+                      목록
+                    </Link>
+                  </div>}
                 </div>
               </div>
-            );
-          })
-        ) : (
-          null
-          // <div className="no_data">
-          //   <span className="ico_no_data">등록된 상품이 없습니다.</span>
-          // </div>
-        )}
-      </div>
-      <div className="button_wrap">
-        <Link to="/event/list" className="button button_positive">
-          목록
-        </Link>
-      </div>
+            </>
+          );
+        }) :
+        <div className="event_tablist type1">
+          <div className="employee_prd">
+            <div className="event_prd_list">
+              {section.length > 0 ? section.map(sectionMap) : null}
+            </div>
+            <div className="button_wrap">
+              <Link to="/event/list" className="button button_positive">
+                목록
+              </Link>
+            </div>
+          </div>
+        </div>
+      }
     </>
   );
 };
+
+const SectionImage = styled.div`
+  position: relative; 
+  max-width: ${({ onlyMo }) => onlyMo ? '760px' : '1200px'}; 
+  margin: 0 auto; 
+  padding-top: 80px;
+`;
 
 export default EventProducts;
