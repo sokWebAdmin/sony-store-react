@@ -233,6 +233,9 @@ export default function OrderDetail() {
     const orderCancelMap = {
       profile: () => postProfileClaimOrderCancelByOrderNo(request),
       guest: () => postGuestClaimOrderCancelByOrderNo(request),
+      // 옵션 주문들 상태가 상품준비중, 배송준비중일 땐 복수부분취소 API로 전체 취소한다.
+      profile: () => postProfileClaimOrderCancelByOrderNo(request),
+      guest: () => postGuestClaimOrderCancelByOrderNo(request),
     };
 
     return orderCancelMap[isLogin ? 'profile' : 'guest']().then((res) => {
