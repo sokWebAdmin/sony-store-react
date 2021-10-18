@@ -25,7 +25,7 @@ import "../../assets/scss/product.scss"
 //util
 import {useWindowSize} from '../../utils/utils';
 import { getInfoLinks, mapContents } from '../../const/productView';
-import { getColorChipValues, getMainSliderStyle } from '../../utils/product';
+import { getColorChipValues, getMainSliderStyle, getSaleStatus } from '../../utils/product';
 
 
 import MainImage from '../../components/products/MainImage';
@@ -57,7 +57,7 @@ export default function ProductView({ match }) {
   
   //data
   const [selectedOptionNo, setSelectedOptionNo] = useState(0);
-  const [productData, setProductData] = useState();
+  const [productData, setProductData] = useState(null);
   const [productOptions, setProductOptions] = useState({
     flatOptions: [],
     hasColor: false,
@@ -69,6 +69,7 @@ export default function ProductView({ match }) {
   const [productEvents, setProductEvents] = useState([]);
   const [wish, setWish] = useState(false);
   const [naverPayBtnKey, setNaverPayBtnKey] = useState(null);
+  const [saleStatus, setSaleStatus] = useState('');
 
   const {
     openAlert,
@@ -144,7 +145,6 @@ export default function ProductView({ match }) {
                          .value();
 
     const hasColor = flatOptions?.length > 0;
-      
     setProductOptions({
       flatOptions,
       hasColor,
@@ -238,7 +238,7 @@ export default function ProductView({ match }) {
   }, [fetchRelatedProducts, fetchEvent, productNo, productData?.categories]);
 
   const reset = () => {
-    setProductData();
+    setProductData(null);
     setProductOptions({
       flatOptions: [],
       hasColor: false,
@@ -268,8 +268,6 @@ export default function ProductView({ match }) {
   }, [selectedOptionNo, productGroup, productData?.baseInfo?.imageUrls]);
 
   //
-  const showProductDetail = useMemo(() => (headerHeight > 0 || size.height < 1280) && productData, [headerHeight, size.height, productData] )
-  
   const getLinkInnerWidth = () => {
     const width = size.width - 48;
     const $lis = document.querySelectorAll('.link_inner >li');
@@ -301,6 +299,34 @@ export default function ProductView({ match }) {
   }, [productData?.baseInfo?.productName]);
 
   const hasEvents = useMemo(() => productEvents?.length > 0, [productEvents]);
+
+  const mapOptionData = ({ saleType, stockCnt, reservationStockCnt }, reservationData) => {
+    return {
+      status: { saleStatusType: saleType === 'SOLD_OUT' || saleType === 'SOLDOUT' ? 'SOLDOUT' : 'ONSALE' },
+      reservationData,
+      stockCnt,
+      reservationStockCnt,
+    }
+  };
+
+  useEffect(() => {
+    if (!productData) return;
+    
+    const { status, reservationData, stock, groupManagementCode } = productData;
+    if (!groupManagementCode) {
+      setSaleStatus(getSaleStatus(status, reservationData, stock.stockCnt, reservationData?.reservationStockCnt))
+    } else {
+      if (productOptions.flatOptions.length > 1) {
+        const optionStatus = productOptions.flatOptions.map( o => mapOptionData(o, reservationData)).map(({ status, reservationData, stockCnt, reservationStockCnt }) => getSaleStatus(status, reservationData, stockCnt, reservationStockCnt));
+        setSaleStatus(_.uniq(optionStatus).length === 1 ? optionStatus[0] : '');
+      }
+    }
+  }, [productData, productOptions.flatOptions]);
+
+  useEffect(() => {
+
+  }, []);
+
     return (
       <>        
         <SEOHelmet title={ getTitle } />
@@ -325,6 +351,7 @@ export default function ProductView({ match }) {
                 wish={wish}
                 setWish={setWish}
                 naverPayBtnKey={naverPayBtnKey}
+                saleStatus={saleStatus}
               />
             </div>
             <RelatedProducts

@@ -19,22 +19,20 @@ export default function TobContent({
   productGroup,
   wish,
   setWish,
-  naverPayBtnKey
+  naverPayBtnKey,
+  saleStatus
 }) {
   const size = useWindowSize();
   const isMobileSize = size.width <= 1280;
   const { tagColorMap } = useCategoryState();
-  const { baseInfo, price, deliveryFee, status, reservationData, limitations, stock } = productData;
+  const { baseInfo, price, deliveryFee, status, limitations } = productData;
   const { productName, productNameEn, promotionText, stickerLabels } = baseInfo;
   const [selectedOption, setSelectedOption] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCnt, setTotalCnt] = useState(0);
   const [optionVisible, setOptionVisible] = useState(false);
 
-  const saleStatus = getSaleStatus(status, reservationData, stock.saleCnt, reservationData?.reservationStockCnt);
-
-  const isSoldOut = status.soldout ||
-    ['READY_RESERVE', 'SOLDOUT', 'READY'].includes(saleStatus);
+  const isSoldOut = useMemo(() => ['READY_RESERVE', 'SOLDOUT', 'READY'].includes(saleStatus), [status?.soldout, saleStatus]);
 
   const priceInfo = getPricePerProduct(price);
 
@@ -42,7 +40,7 @@ export default function TobContent({
     [productData]);
   return (
     <form>
-      <div className={`product_view_about ${status.soldout && 'soldout'}`}>
+      <div className={`product_view_about ${isSoldOut && 'soldout'}`}>
         <div className="cont">
           {
             stickerLabels.length > 0 &&
