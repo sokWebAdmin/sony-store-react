@@ -282,14 +282,17 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
 
   const handleClick = (e, type) => {
     e.preventDefault();
+    if (isSoldOut) return;
     switch(type) {
       case 'gift':
+        if (isBackOrdered) return;
         gift();
         break;
       case 'order':
         order();
         break;
       case 'cart':
+        if (isBackOrdered) return;
         cart();
         break;
       case 'wish':
@@ -341,6 +344,9 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     });
     };
   }, [selectedOption]);
+
+  const isSoldOut = useMemo(() => saleStatus === 'SOLDOUT', [saleStatus]);
+  const isBackOrdered = useMemo(() => saleStatus === 'READY', [saleStatus]);
 
   return (
     <>
