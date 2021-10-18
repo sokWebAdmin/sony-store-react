@@ -182,7 +182,7 @@ export default function SearchResult({match}) {
         keyword,
         pageNumber,
         pageSize: PAGE_SIZE.NOTICE,
-        direction: noticeNewest ? 'ASC' : 'DESC',
+        direction: !noticeNewest ? 'ASC' : 'DESC',
         // searchType: 'title',
       }
       try {
