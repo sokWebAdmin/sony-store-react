@@ -7,8 +7,8 @@ import { postCart } from '../../../api/order';
 import Notification from '../../products/Notification';
 import { useAlert } from '../../../hooks';
 import ViewMore from '../../common/ViewMore';
-import { isMobile } from 'react-device-detect';
-import { Link, useHistory } from 'react-router-dom';
+import { isTablet } from 'react-device-detect';
+import { useHistory } from 'react-router-dom';
 
 const WishList = ({ wishList, wishCount, more, rerender }) => {
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
@@ -144,11 +144,7 @@ const WishList = ({ wishList, wishCount, more, rerender }) => {
                 <div className="like_prd_inner">
                   <Products list={wishList} check={check} checkedProductNos={checkedProductNos} />
                 </div>
-                <ViewMore
-                  totalCount={wishCount}
-                  viewMore={more}
-                  pageSize={isMobile ? 9 : 10}
-                />
+                <ViewMore totalCount={wishCount} viewMore={more} pageSize={isTablet ? 9 : 8} />
               </div>
             ) : (
               <div className="no_data on">
@@ -179,10 +175,18 @@ const Products = ({ list, check, checkedProductNos }) => {
                 onChange={() => check(item.productNo)}
               />
             </div>
-            <div className="img" onClick={() => history.push(`/product-view/${item.productNo}`)} style={{cursor: 'pointer'}}>
+            <div
+              className="img"
+              onClick={() => history.push(`/product-view/${item.productNo}`)}
+              style={{ cursor: 'pointer' }}
+            >
               <img src={item.listImageUrls[0]} alt={item.productName} />
             </div>
-            <div className="prd_info" onClick={() => history.push(`/product-view/${item.productNo}`)} style={{cursor: 'pointer'}}>
+            <div
+              className="prd_info"
+              onClick={() => history.push(`/product-view/${item.productNo}`)}
+              style={{ cursor: 'pointer' }}
+            >
               <p className="tit">{item.productName}</p>
               <p className="txt">{item.productNameEn}</p>
               <p className="prd_price">
