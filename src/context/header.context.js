@@ -2,20 +2,26 @@ import { createContext, useContext, useReducer } from 'react';
 
 const initialState = {
   isSiderbarOpen: false,
+  cartCount: 0,
 };
 
 function headerReducer(state, action) {
   switch (action.type) {
     case 'OPEN_SIDE_BAR':
       return {
+        ...state,
         isSiderbarOpen: true,
       };
-
     case 'CLOSE_SIDE_BAR':
       return {
+        ...state,
         isSiderbarOpen: false,
       };
-
+    case 'SET_CART_COUNT':
+      return {
+        ...state,
+        cartCount: action.cartCount,
+      };
     default:
       throw new Error('INVALID_HEADER_ACTION_TYPE');
   }
@@ -53,4 +59,8 @@ export function openSideBar(dispatch) {
 
 export function closeSideBar(dispatch) {
   dispatch({ type: 'CLOSE_SIDE_BAR' });
+}
+
+export function setCartCount(dispatch, cartCount) {
+  dispatch({ type: 'SET_CART_COUNT', cartCount });
 }
