@@ -20,7 +20,6 @@ export default function Event({ events }) {
       <div className="exhibitions_inner swiper-container item_list">
         <Swiper 
           className="swiper-wrapper"
-          slidesPerView={2}
           navigation={{
             prevEl: prevRef.current,
             nextEl: nextRef.current,
@@ -33,6 +32,20 @@ export default function Event({ events }) {
                 swiper.navigation.update();
               },
             }}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 0,
+            },
+            641: {
+              slidesPerView: 2,
+              spaceBetween: 16,
+            },
+            1281: {
+              slidesPerView: 2,
+              spaceBetween: 24,
+            },
+          }}
           >
             {
               events?.map(({ eventNo, pcImageUrl, mobileimageUrl, startYmdt, endYmdt, label, displayPeriodType }) => (
