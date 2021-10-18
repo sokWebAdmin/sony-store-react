@@ -25,7 +25,7 @@ const SPEC = {
  * @displayTypes : PC, MOBILE_WEB, MOBILE_APP
  * @pageTypes : MAIN, CATEGORY, EVENT, PRODUCT
  */
-const CustomPopup = ({ location }) => {
+const CustomPopup = ({ location, data }) => {
   const [popups, setPopups] = useState([]);
 
   const isSupportEnvironment = () => {
@@ -38,11 +38,7 @@ const CustomPopup = ({ location }) => {
   };
 
   const init = () => {
-    fetchPopupNos().
-      then(nos => nos.toString()).
-      then(fetchPopups).
-      then(getValidPopups).
-      then(setPopups);
+    setPopups(getValidPopups(data));
   };
 
   useEffect(() => isSupportEnvironment() && init(), [location]);
