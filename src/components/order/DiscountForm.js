@@ -35,6 +35,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
   const [noCoupon, setNoCoupon] = useState(false);
 
   useEffect(() => {
+    console.log('accumulationConfig:',accumulationConfig)
     if (!useCouponVisible) {
       document.body.style.overflow = 'visible';
     }
@@ -193,9 +194,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                  ? { color: '#e70000' }
                  : { color: 'inherit' }}>* 멤버십 마일리지는
               최소 {toCurrencyString(
-                accumulationConfig.accumulationUseMinPrice)}점 {paymentInfo?.cartAmt &&
-              <span>, 최대 {toCurrencyString(paymentInfo.cartAmt)}</span>
-              } 사용 가능합니다.</p>}
+                accumulationConfig.accumulationUseMinPrice)}점 부터 사용 가능합니다.</p>}
           </div>
         </div>
         }
