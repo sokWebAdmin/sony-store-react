@@ -19,7 +19,12 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //api
 import { getProfileOrderByOrderNo, getGuestOrderByOrderNo } from '../../api/order';
-import { postProfileClaimOrderCancelByOrderNo, postGuestClaimOrderCancelByOrderNo } from '../../api/claim';
+import {
+  postProfileClaimOrderCancelByOrderNo,
+  postGuestClaimOrderCancelByOrderNo,
+  postProfileCancelByOrderOptions,
+  postGuestCancelByOrderOptions,
+} from '../../api/claim';
 
 //css
 import '../../assets/scss/contents.scss';
@@ -175,6 +180,7 @@ export default function OrderDetail() {
         orderCnt: orderOption.orderCnt,
         buyPrice: orderOption.price.buyPrice,
         buyAmt: orderOption.price.buyAmt,
+        orderStatusType: orderOption.orderStatusType,
       }));
   };
 
@@ -218,6 +224,14 @@ export default function OrderDetail() {
   };
 
   const _cancelOrder = (bankAccountInfo = null) => {
+    const isAllSameOrerSatatus = orderProducts.every(
+      (orderProduct, _, orderProducts) => orderProducts[0].orderStatusType === orderProduct.orderStatusType,
+    );
+    if (!isAllSameOrerSatatus) {
+      alert('주문상태가 다른 상품이 있습니다. 소니 고객센터로 연락바랍니다.');
+      return;
+    }
+
     const request = {
       path: { orderNo: query.get('orderNo') },
       requestBody: {
@@ -230,12 +244,29 @@ export default function OrderDetail() {
       },
     };
 
+    // 옵션 주문들 상태가 상품준비중, 배송준비중 이전 상태일 땐 전체취소 API로 전체 취소한다.
     const orderCancelMap = {
       profile: () => postProfileClaimOrderCancelByOrderNo(request),
       guest: () => postGuestClaimOrderCancelByOrderNo(request),
     };
 
-    return orderCancelMap[isLogin ? 'profile' : 'guest']().then((res) => {
+    // 옵션 주문들 상태가 상품준비중, 배송준비중일 땐 복수부분취소 API로 전체 취소한다.
+    const orderOptionCancelMap = {
+      profile: () => postProfileCancelByOrderOptions(request),
+      guest: () => postGuestCancelByOrderOptions(request),
+    };
+
+    const isDeliveryPrepare = ['PRODUCT_PREPARE', 'DELIVERY_PREPARE'].includes(orderProducts[0].orderStatusType);
+    const postCancel = isDeliveryPrepare ? orderOptionCancelMap : orderCancelMap;
+
+    if (isDeliveryPrepare) {
+      request.requestBody.claimedProductOptions = orderProducts.map(({ orderOptionNo, orderCnt }) => ({
+        orderProductOptionNo: orderOptionNo,
+        productCnt: orderCnt,
+      }));
+    }
+
+    return postCancel[isLogin ? 'profile' : 'guest']().then((res) => {
       if (res.data.status === 404 || res.data.status === 400) {
         openAlert(res.data.message);
         return;

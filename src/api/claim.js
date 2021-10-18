@@ -15,3 +15,9 @@ export const postProfileClaimOrderCancelByOrderNo = ({ path: { orderNo }, reques
 
 export const postGuestClaimOrderCancelByOrderNo = ({ path: { orderNo }, requestBody }) =>
   request(`guest/orders/${orderNo}/claims/cancel`, 'post', null, requestBody);
+
+export const postProfileCancelByOrderOptions = ({ requestBody }) =>
+  request(`profile/claims/cancel`, 'post', null, requestBody);
+
+export const postGuestCancelByOrderOptions = ({ requestBody }) =>
+  request(`guest/claims/cancel`, 'post', null, requestBody);
