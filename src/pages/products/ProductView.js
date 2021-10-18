@@ -147,8 +147,10 @@ export default function ProductView({ match }) {
                          .value();
 
     const hasColor = flatOptions?.length > 0;
+    const sortedFlatOptions = sortOptionsByProductNo(flatOptions, productNo);
+    
     setProductOptions(() => ({
-      flatOptions: sortOptionsByProductNo(flatOptions, productNo),
+      flatOptions: sortedFlatOptions,
       hasColor,
     }));
   }

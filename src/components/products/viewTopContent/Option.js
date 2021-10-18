@@ -40,7 +40,6 @@ export default function Option({
                       );
 
     const disabledLabel = getDisabledLabel(reserved, o);
-    console.log(o);
     return {
       ...o,
       disabled: !!disabledLabel,
