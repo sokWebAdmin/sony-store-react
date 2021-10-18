@@ -72,9 +72,17 @@ const CustomPopup = ({ location }) => {
   }
 
   function getValidPopups (popups) {
-    return popups.filter(popup => popup.type === 'LAYER').
-      filter(popup => popup.displayTypes.includes(getDisplayType())).
-      filter(popup => popup.pageTypes.includes(currentPage));
+    return popups.
+      filter(popup => popup.type === 'LAYER'). // layer 여부
+      filter(popup => popup.displayTypes.includes(
+        getDisplayType())). // 노출 환경(pc or mob) 일치 여부
+      filter(popup => popup.pageTypes.includes(currentPage)). // 페이지 일치 여부
+      filter(popup => validTodayNotShow(popup.popupNo)); // 오늘 하루 보지 않음 여부
+  }
+
+  function validTodayNotShow (popupNo) {
+    const period = todayNotShow.get(popupNo);
+    return !period || period < Date.now();
   }
 
   return (

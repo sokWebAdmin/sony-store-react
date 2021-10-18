@@ -44,7 +44,10 @@ const LayerPopup = ({ popup, todayNotShow }) => {
             <div className="today_not_opened check">
               <input type="checkbox" className="inp_check"
                      id={popup.popupNo + '_close'} />
-              <label onClick={() => todayNotShow(popup.popupNo)}
+              <label onClick={() => {
+                todayNotShow.set(popup.popupNo);
+                setShow(false);
+              }}
                      for={popup.popupNo + '_close'}>오늘하루 그만보기</label>
             </div>
           </div>
