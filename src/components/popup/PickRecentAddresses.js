@@ -4,14 +4,14 @@ import LayerPopup from '../common/LayerPopup';
 
 const PickRecentAddresses = ({ shipping, setShipping, recentAddresses, close }) => {
 
-  const [pickAddressNo, setPickAddressNo] = useState(null);
+  const [pickAddressNo, setPickAddressNo] = useState(shipping.addressNo);
 
   const pickAddress = useMemo(
     () => recentAddresses.find(({ addressNo }) => addressNo === pickAddressNo),
     [pickAddressNo, recentAddresses]);
 
   useEffect(() => {
-    if (!recentAddresses.length) {
+    if (!recentAddresses.length || shipping?.addressNo) {
       return;
     }
 
