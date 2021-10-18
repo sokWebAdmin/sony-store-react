@@ -1,0 +1,16 @@
+.custom_popup_layer {
+  .custom_popup_layer--container {
+    padding: 0;
+  }
+
+  .custom_popup_layer--delete {
+    top: 10px;
+    right: 10px;
+
+    span {
+      &:before, &:after {
+        background-color: #fff;
+      }
+    }
+  }
+}
