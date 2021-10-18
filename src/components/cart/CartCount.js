@@ -3,7 +3,7 @@ import gc from '../../storage/guestCart.js';
 import GlobalContext from '../../context/global.context';
 import { getCartCount } from '../../api/order';
 
-const CartCount = ({ isOpened }) => {
+const CartCount = ({ isOpened, className = '' }) => {
   const { isLogin } = useContext(GlobalContext);
   const items = gc.items;
 
@@ -29,8 +29,8 @@ const CartCount = ({ isOpened }) => {
   }
 
   return (
-    <span>
-      {count}
+    <span className={className}>
+      {cartCount}
     </span>
   );
 };
