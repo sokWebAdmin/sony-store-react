@@ -3,17 +3,17 @@ import React, {useState, useEffect} from 'react';
 
 //util
 import { Link, useHistory } from 'react-router-dom';
+import { getProductsOptions } from '../../api/product';
 import { useCategoryState } from '../../context/category.context';
-import { getSaleStatus } from '../../utils/product';
+import { getSaleStatus, getSaleStatusForOption } from '../../utils/product';
 import { toCurrencyString } from '../../utils/unit';
 
 export default function Product({product, category, reset, micro}) {
   const history = useHistory();
   const {tagColorMap} = useCategoryState();
 
-  // const saleStatus = getSaleStatus(product, product.reservationData, product.stockCnt, product.reservationData?.reservationStockCnt)
-
   const [groupProducts, setGroupProducts] = useState([]);
+  const [options, setOptions] = useState([]);
   const [colorIndex, setColorIndex] = useState(0);
 
   useEffect(() => {
@@ -21,6 +21,7 @@ export default function Product({product, category, reset, micro}) {
   }, [category]);
 
   useEffect(() => {
+    if (!product) return;
     _initGroupProducts();
   }, [product]);
 
@@ -36,10 +37,7 @@ export default function Product({product, category, reset, micro}) {
         imageUrl: gp.mainImageUrl,
         colorLabel,
         colorCode,
-        // saleType: '',
-        // stockCnt: 0,
-        // reservationStockCnt: 0,
-        // reservationData: product.reservationData,
+        productNo: gp.productNo,
       };
     }).filter(gp => !!gp.colorLabel && !!gp.colorCode) || [];
 
@@ -56,26 +54,29 @@ export default function Product({product, category, reset, micro}) {
     }
 
     setGroupProducts(() => newGroupProducts);
+    const productNos = newGroupProducts.map(({ productNo }) => productNo).filter(Boolean);
+    productNos.length > 0 && fetchProductGroupOptions(newGroupProducts.map(({ productNo }) => productNo));
+  };
+
+  const fetchProductGroupOptions = async (productNos) => {
+    const { data } = await getProductsOptions({ productNos });
+    setOptions(() => data.optionInfos.flatMap(({ options }) => options));
   };
 
   const [saleStatus, setSaleStatus] = useState('');
   useEffect(() => {
-    // @TODO 상품관리코드는 옵션들 상태에 따라 판매상태를 노출해야하기 때문에 api 수정이 필요.
-    // 현재 문의 중 @bomee.yoon
-    // if (!product) return;
     const { saleStatusType, reservationData, stockCnt, groupManagementCode } = product;
 
-    // if (!groupManagementCode) {
+    if (!groupManagementCode) {
       setSaleStatus(getSaleStatus({ saleStatusType }, reservationData, stockCnt, reservationData?.reservationStockCnt))
-    // } else {
-    //   if (groupProducts?.length > 0) {
-    //     console.log('groupProducts : ', groupProducts);
-    //   }
-    // }
+    } else {
+      if (options?.length > 1) {
+        setSaleStatus(getSaleStatusForOption(options, product?.reservationData))
+      }
+    }
 
-  // }, [product, groupProducts])
-  }, [product])
-
+  }, [product, options])
+  
   return (
     <div className="product" onClick={ e => {
       e.preventDefault();
