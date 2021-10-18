@@ -6,10 +6,10 @@ import CountBox from "../../common/CountBox";
 import { wonComma } from "../../../utils/utils";
 
 const getDisabledLabel = (reserved, o) => {
-  if (o.forcedSoldOut) return '일시품절';
-  if (reserved && o.reservationStockCnt === 0 && o.saleType !=='SOLD_OUT') return '일시품절';
-  if (reserved && o.reservationStockCnt === 0 && o.saleType ==='SOLD_OUT') return '품절';
-  if (o.saleType === 'SOLD_OUT') return '품절';
+  if (o.reservationStockCnt > 0) return '';
+  if (o.stockCnt > 0) return '';
+  if (o.saleType === 'SOLDOUT') return '품절';
+  if (o.stockCnt === 0 || o.reservationStockCnt === 0) return '일시품절';
   return '';
 };
 
@@ -40,7 +40,7 @@ export default function Option({
                       );
 
     const disabledLabel = getDisabledLabel(reserved, o);
-    
+    console.log(o);
     return {
       ...o,
       disabled: !!disabledLabel,
