@@ -25,16 +25,18 @@ import {
   putCart,
   postGuestCart,
   deleteCart,
-  postOrderSheets,
+  postOrderSheets, getCartCount,
 } from '../../api/order';
 
 // module
 import gc from '../../storage/guestCart.js';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import { setCartCount, useHeaderDispatch } from '../../context/header.context';
 
 const Cart = ({ location }) => {
   const { isLogin } = useContext(GlobalContext);
+  const headerDispatch = useHeaderDispatch();
   const history = useHistory();
 
   const savingGuestCart = useMemo(() => {
@@ -62,7 +64,7 @@ const Cart = ({ location }) => {
   useEffect(() => {
     const isUpdate = products.some(({ update }) => update);
     isUpdate && updateCart();
-    setCheckedIndexes(allProductIndexes)
+    setCheckedIndexes(allProductIndexes);
   }, [products]);
 
   const productCount = useMemo(() => products.reduce((sum, product) => (sum += product.orderCnt), 0), [products]);
@@ -87,16 +89,22 @@ const Cart = ({ location }) => {
     }
 
     if (isLogin) {
-      fetchCart().
-        then(mapData).
-        catch(console.error).
-        finally(() => setWait(false));
-    }
-    else {
+      fetchCart()
+        .then((data) => {
+          mapData(data);
+          getCartCount().then(({ data: { count } }) => setCartCount(headerDispatch, count));
+        })
+        .catch(console.error)
+        .finally(() => setWait(false));
+    } else {
       gc.fetch();
       const body = getGuestCartRequest(gc.items);
       fetchGuestCart(body)
-        .then(mapData)
+        .then((data) => {
+          mapData(data);
+          gc.fetch();
+          setCartCount(headerDispatch, gc.items.length);
+        })
         .catch(console.error)
         .finally(() => setWait(false));
     }
@@ -153,18 +161,17 @@ const Cart = ({ location }) => {
 
   useEffect(init, []);
 
-  async function fetchCart () {
+  async function fetchCart() {
     try {
       const { data } = await getCart();
       return data;
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err);
     }
     return null;
   }
 
-  function postGuestCartToMemberCart (items) {
+  function postGuestCartToMemberCart(items) {
     const result = items.map(
       ({ productNo, optionNo, orderCnt, optionInputs }) => ({
         productNo,
@@ -175,17 +182,16 @@ const Cart = ({ location }) => {
     return postMemberCart(result);
   }
 
-  async function postMemberCart (req) {
+  async function postMemberCart(req) {
     const { status } = await postCart(req);
     return status === 200;
   }
 
-  async function fetchGuestCart (gcItems) {
+  async function fetchGuestCart(gcItems) {
     try {
       const { data } = await postGuestCart(gcItems); // post & get cart data
       return data;
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err);
     }
     return null;
@@ -195,15 +201,12 @@ const Cart = ({ location }) => {
     setWait(true);
     if (isLogin) {
       updateMemberCart().then(() => setWait(false)).catch(handlePutCartError);
-    }
-    else {
-      updateGuestCart().
-        then(() => setWait(false)).
-        catch(() => window.location.reload());
+    } else {
+      updateGuestCart().then(() => setWait(false)).catch(() => window.location.reload());
     }
   }
 
-  function handlePutCartError ({ code }) {
+  function handlePutCartError({ code }) {
     if (!code) {
       window.location.reload();
     }
@@ -218,7 +221,7 @@ const Cart = ({ location }) => {
     window.location.reload();
   }
 
-  async function updateMemberCart () {
+  async function updateMemberCart() {
     try {
       const res = await putCart(putProducts);
       if (res.status === 400) {
@@ -226,8 +229,7 @@ const Cart = ({ location }) => {
       }
       const data = await fetchCart();
       mapData(data);
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err);
     }
     return null;

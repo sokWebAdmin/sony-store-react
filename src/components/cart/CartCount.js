@@ -1,11 +1,15 @@
-import { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import gc from '../../storage/guestCart.js';
 import GlobalContext from '../../context/global.context';
 import { getCartCount } from '../../api/order';
+import { setCartCount, useHeaderDispatch, useHeaderState } from '../../context/header.context';
+import { useLocation } from 'react-router-dom';
 
-const CartCount = ({ isOpened }) => {
+const CartCount = ({ isOpened, className = '' }) => {
+  const location = useLocation();
   const { isLogin } = useContext(GlobalContext);
-  const items = gc.items;
+  const { cartCount } = useHeaderState();
+  const headerDispatch = useHeaderDispatch();
 
   const init = () => {
     if (isLogin) {
@@ -13,24 +17,23 @@ const CartCount = ({ isOpened }) => {
     }
     else {
       gc.fetch();
-      setCount(items.length);
+      setCartCount(headerDispatch, gc.items.length);
     }
   };
 
-  const [count, setCount] = useState(0);
   useEffect(() => {
-    if (!isOpened && isLogin) {
+    if (!isOpened) {
       init();
     }
-  }, [items, isLogin, isOpened]);
+  }, [isOpened, location]);
 
   function fetchCount () {
-    return getCartCount().then(({ data: { count } }) => setCount(count));
+    return getCartCount().then(({ data: { count } }) => setCartCount(headerDispatch, count));
   }
 
   return (
-    <span>
-      {count}
+    <span className={className}>
+      {cartCount}
     </span>
   );
 };

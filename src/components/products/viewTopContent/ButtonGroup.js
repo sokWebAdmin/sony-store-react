@@ -2,7 +2,7 @@ import qs from 'qs';
 import React, { useContext, useState, createRef, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from "../../../context/global.context";
-import { getCart, postCart, postOrderSheets } from "../../../api/order";
+import { getCart, getCartCount, postCart, postOrderSheets } from '../../../api/order';
 import { postProfileLikeProducts } from "../../../api/product";
 import Alert from '../../common/Alert';
 import Notification from '../Notification';
@@ -11,6 +11,7 @@ import gc from '../../../storage/guestCart';
 import HsValidator from '../../cart/HsValidator';
 import _ from 'lodash';
 import orderPayment from '../../order/orderPayment';
+import { setCartCount, useHeaderDispatch } from '../../../context/header.context';
 
 const getOrderSheetNo = async (productNo, selectedOption) => {
   try {
@@ -96,6 +97,7 @@ const naverPayErrorHandle = (error, history) => {
 
 export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, hsCode, isMobileSize, setOptionVisible, optionVisible, limitaions, naverPayBtnKey }) {
   const history = useHistory();
+  const headerDispatch = useHeaderDispatch();
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const { isLogin } = useContext(GlobalContext);
   const [giftVisible, setGiftVisible] = useState(false);
@@ -187,18 +189,18 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   };
 
   const _getCartRequest = async (productNo, selectedOption) => {
-    
     const products = getCartRequest(productNo, selectedOption);
 
     try {
       if (isLogin) {
-        
         const result = await postCart(products);
         result?.error && result?.message && openAlert(result.message);
+        getCartCount().then(({ data: { count } }) => setCartCount(headerDispatch, count));
       } else {
-        
         gc.set(products.map(product => ({ ...product, hsCode }))); // TODO.
                                                                    // 확인필요. @jk
+        gc.fetch();
+        setCartCount(headerDispatch, gc.items.length);
       }
       
       setCartVisible(true);

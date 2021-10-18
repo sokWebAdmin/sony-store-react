@@ -126,6 +126,7 @@ export default function Header(location) {
               history.push('/cart');
             }}>
               <img src={cart} alt="장바구니" />
+              <CartCount isOpened={isSiderbarOpen} className="badge" />
             </a>
             <button
               type="button"

@@ -1500,6 +1500,33 @@ body::-webkit-scrollbar {
   }
 }
 
+.btn__cart {
+  position:relative;
+}
+.btn__cart .badge {
+  display:inline-block;
+  position: absolute;
+  top:20px;
+  left:20px;
+  width: 20px;
+  height: 20px;
+  font-size: 11px;
+  line-height: 2;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #5865f5;
+}
+
+.btn__cart .badge:empty {
+  display: none;
+}
+
+@media screen and (max-width: 1280px) {
+  .btn__cart .badge {
+    display: none;
+  }
+}
+
 .header+div {
   padding-top: 80px
 }

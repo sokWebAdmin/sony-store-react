@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, createRef, useMemo } from 'react';
 import { toCurrencyString } from '../../utils/unit';
 import { Link, useHistory } from 'react-router-dom';
-import { postCart, postOrderSheets } from '../../api/order';
+import { getCartCount, postCart, postOrderSheets } from '../../api/order';
 import gc from '../../storage/guestCart';
 import GlobalContext from '../../context/global.context';
 import { getProductOptions, getProductsOptions } from '../../api/product';
@@ -12,6 +12,7 @@ import Alert from '../common/Alert';
 import HsValidator from '../cart/HsValidator';
 import { unescape } from 'lodash';
 import { getSaleStatus } from '../../utils/product';
+import { setCartCount, useHeaderDispatch } from '../../context/header.context';
 
 const ERROR_CODE_MAPPING_ROUTE = {
   O8001: {
@@ -26,7 +27,9 @@ const filterProductsByGrade = (event, isGrade) => event?.section.flatMap(({ prod
 
 const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
   const { isLogin } = useContext(GlobalContext);
+  const headerDispatch = useHeaderDispatch();
   const history = useHistory();
+
   const isMemberGrade = useMemo(() => {
     const splitPathname = history.location.pathname.split('/');
     return forGradeTags.includes(splitPathname[splitPathname.length - 2]);
@@ -38,7 +41,6 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
   const [giftVisible, setGiftVisible] = useState(false);
 
   const goCart = async (productNo, hsCode) => {
-
     const succeed = await hsValidation(!!hsCode);
     if (!succeed) return;
 
@@ -55,9 +57,13 @@ const EventProducts = ({ event, filterLabel, grade, gift = false }) => {
 
     try {
       if (isLogin) {
-        await postCart(products);
+        const result = await postCart(products);
+        result?.error && result?.message && openAlert(result.message);
+        getCartCount().then(({ data: { count } }) => setCartCount(headerDispatch, count));
       } else {
         gc.set(products);
+        gc.fetch();
+        setCartCount(headerDispatch, gc.items.length);
       }
       history.push('/cart');
     } catch (e) {
