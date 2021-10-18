@@ -4,12 +4,6 @@ import { getAgent } from '../../../utils/detectAgent';
 
 import todayNotShow from './partials/todayNotShow';
 
-// api
-import {
-  getDisplayPopups,
-  getDisplayPopupsPopupNos,
-} from '../../../api/display';
-
 // components
 import LayerPopup from './partials/LayerPopup';
 
@@ -65,16 +59,6 @@ const CustomPopup = ({ location, data }) => {
       return 'MOBILE_APP'
     }
     return isMobile ? 'MOBILE_WEB' : 'PC';
-  }
-
-  function fetchPopupNos () {
-    const map = data => data.map(({ popupNo }) => popupNo);
-
-    return getDisplayPopups().then(({ data }) => data).then(map);
-  }
-
-  function fetchPopups (no) {
-    return getDisplayPopupsPopupNos(no).then(({ data }) => data);
   }
 
   function getValidPopups (popups) {
