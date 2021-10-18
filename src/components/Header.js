@@ -84,6 +84,10 @@ export default function Header(location) {
   }
 
   useEffect(() => {
+    hideBodyScroll(isSiderbarOpen);
+  }, [isSiderbarOpen]);
+
+  useEffect(() => {
     const $body = document.querySelector('body');
     $body.setAttribute('style', isSearchOpen ? 'overflow: hidden' : 'overflow: auto');
     !isSearchOpen && closeSubSlider();
@@ -128,7 +132,6 @@ export default function Header(location) {
               className="btn btn__mo btn__menu__open"
               onClick={() => {
                 openSideBar(headerDispatch);
-                hideBodyScroll(true);
               }}
             >
               <img src={menu} alt="메뉴 열기" />
@@ -138,7 +141,6 @@ export default function Header(location) {
               className="btn btn__mo btn__mo__hidden btn__menu__close"
               onClick={() => {
                 closeSideBar(headerDispatch);
-                hideBodyScroll(false);
               }}
             >
               <img src={close} alt="메뉴 닫기" />
