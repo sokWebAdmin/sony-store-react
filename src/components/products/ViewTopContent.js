@@ -41,7 +41,7 @@ export default function TobContent({
   return (
     <form>
       <div className={`product_view_about ${isSoldOut && 'soldout'}`}>
-        <div className="cont">
+        <div className="cont" style={{ marginTop: '0', padding: '0 30px 0 0'}}>
           {
             stickerLabels.length > 0 &&
             <span className={`flag ${tagColorMap[stickerLabels[0]]}`} style={{
