@@ -268,7 +268,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     }
   };
 
-  const wishHandler = async () => {
+  const wishHandler = () => {
     if (!isLogin) {
       setWishVisible(true);
       return;
