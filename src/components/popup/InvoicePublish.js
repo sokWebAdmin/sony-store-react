@@ -346,7 +346,7 @@ const InvoicePublish = ({ isView, basketid, close }) => {
               <button className="button button_positive button-m" onClick={() => setProcessDone(false)}>
                 신청정보 변경
               </button>
-              <button onClick={close} className="layer_close close" title="팝업창 닫기">
+              <button onClick={close} className="button button_negative button-m" title="팝업창 닫기">
                 <span>닫기</span>
               </button>
             </div>
