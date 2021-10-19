@@ -2,11 +2,10 @@ import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { handleChange } from '../../utils/state';
 
 const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
-
   const receiverName = useRef();
   const shippingInfoLaterInputContact = useRef();
 
-  const onChangeInput = event => {
+  const onChangeInput = (event) => {
     const el = event.target;
 
     if (el.value.trim()) {
@@ -19,13 +18,14 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
   const shippingStateDefaultValueInject = () => {
     const usedFieldKeys = ['receiverName', 'shippingInfoLaterInputContact'];
     const injectValue = null;
-    const injectObject = Object.keys(shipping).
-      filter(key => !usedFieldKeys.some(uKey => uKey === key)).
-      reduce((acc, key) => {
+    const injectObject = Object.keys(shipping)
+      .filter((key) => !usedFieldKeys.some((uKey) => uKey === key))
+      .reduce((acc, key) => {
         acc = { ...acc, ...{ [key]: injectValue } };
         return acc;
       }, {});
-    setShipping({ // async
+    setShipping({
+      // async
       ...shipping,
       ...injectObject,
       usesShippingInfoLaterInput: true,
@@ -35,7 +35,7 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
   useEffect(shippingStateDefaultValueInject, []);
 
   useImperativeHandle(ref, () => ({
-    fieldValidation () {
+    fieldValidation() {
       const refs = {
         receiverName,
         shippingInfoLaterInputContact,
@@ -51,7 +51,7 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
     },
   }));
 
-  function attachError (ref) {
+  function attachError(ref) {
     const el = ref.current;
     el.parentNode.classList.add('error');
     el.focus();
@@ -61,45 +61,57 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
     <>
       <div className="acc_form">
         <div className="acc_cell vat">
-          <label htmlFor="user_name3">수령인 이름<i
-            className="necessary"></i></label>
+          <label htmlFor="user_name3">
+            수령인 이름<i className="necessary"></i>
+          </label>
         </div>
         <div className="acc_cell">
           <div className="acc_group parent">
             <div className="acc_inp type2">
-              <input type="text" id="user_name3" className="inp"
-                     name="receiverName" value={shipping.receiverName}
-                     onChange={onChangeInput} ref={receiverName} />
+              <input
+                type="text"
+                id="user_name3"
+                className="inp"
+                name="receiverName"
+                value={shipping.receiverName}
+                onChange={onChangeInput}
+                ref={receiverName}
+              />
               <span className="focus_bg"></span>
-              <p className="error_txt"><span className="ico"></span>선물 받으실 분의
-                이름을
-                입력해 주세요.</p>
+              <p className="error_txt">
+                <span className="ico"></span>선물 받으실 분의 이름을 입력해 주세요.
+              </p>
             </div>
           </div>
         </div>
       </div>
       <div className="acc_form">
         <div className="acc_cell vat">
-          <label htmlFor="user_number3">휴대폰 번호<i
-            className="necessary"></i></label>
+          <label htmlFor="user_number3">
+            휴대폰 번호<i className="necessary"></i>
+          </label>
         </div>
         <div className="acc_cell">
           <div className="acc_group parent">
             <div className="acc_inp type2">
-              <input type="text" id="user_number3" className="inp"
-                     name="shippingInfoLaterInputContact"
-                     value={shipping.shippingInfoLaterInputContact}
-                     ref={shippingInfoLaterInputContact}
-                     onChange={onChangeInput} />
+              <input
+                type="text"
+                id="user_number3"
+                className="inp"
+                name="shippingInfoLaterInputContact"
+                value={shipping.shippingInfoLaterInputContact}
+                ref={shippingInfoLaterInputContact}
+                onChange={onChangeInput}
+              />
               <span className="focus_bg"></span>
-              <p className="error_txt"><span className="ico"></span>휴대폰 번호를 입력해
-                주세요.</p>
+              <p className="error_txt">
+                <span className="ico"></span>휴대폰 번호를 입력해 주세요.
+              </p>
             </div>
-
           </div>
           <ul className="list_dot">
-            <li>선물 받으실 분의 휴대폰 번호를 입력하시면, 받으실 분의 휴대폰 번호로 직접 배송<br />받으실 주소를 입력하실
-              수
+            <li>
+              선물 받으실 분의 휴대폰 번호를 입력하시면, 받으실 분의 휴대폰 번호로 직접 배송 받으실 주소를 입력하실 수
               있는 URL이 전송됩니다.
             </li>
             <li>선물 받으시는 분의 배송지 정보가 등록이 되면, 배송 조회는 MY PAGE에서 하실 수 있습니다.</li>
