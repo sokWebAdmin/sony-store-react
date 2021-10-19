@@ -112,7 +112,7 @@ const InvoicePublish = ({ isView, basketid, close }) => {
     <LayerPopup size={'m'} onClose={close} popContClassName={'scrollH'}>
       <p className="pop_tit">전자 세금계산서 신청</p>
       <div className="pop_cont_scroll tax_invoice2" style={{ height: '550px' }}>
-        {processDone ? (
+        {!processDone ? (
           <>
             <form onSubmit={submit}>
               <div className="form_zone">
