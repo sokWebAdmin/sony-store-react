@@ -1,21 +1,21 @@
 const validPageDisplayOption = (popup, currentPage) => {
-  if (!popup.pageTypes.includes(currentPage)) {
-    return false;
+  if (!popup?.pageInfos?.pageTypes) {
+    return true;
   }
 
-  if (!popup?.applyPageInfoValue) {
-    return true;
+  if (!popup.pageInfos.pageTypes.includes(currentPage)) {
+    return false;
   }
 
   switch (currentPage) {
     case 'MAIN': // 메인
       return true;
     case 'CATEGORY': // 카테고리
-      return validCategoryPage(popup.applyPageInfoValue);
+      return validCategoryPage(popup.pageInfos);
     case 'EVENT': // 기획전
-      return validEventPage(popup.applyPageInfoValue);
+      return validEventPage(popup.pageInfos);
     case 'PRODUCT': // 상품 상세
-      return validProductPage(popup.applyPageInfoValue);
+      return validProductPage(popup.pageInfos);
     default:
       return true;
   }
