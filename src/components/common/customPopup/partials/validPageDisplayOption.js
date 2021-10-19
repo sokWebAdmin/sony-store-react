@@ -34,9 +34,7 @@ function validCategoryPage (
 }
 
 function validEventPage ({ eventInfos }, eventNo) {
-  console.log(eventInfos);
-  console.log(eventNo);
-  return true;
+  return eventInfos.includes(eventNo);
 }
 
 function validProductPage () {
