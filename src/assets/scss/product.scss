@@ -1378,7 +1378,7 @@
   }
 }
 
-.layer[class*="popup_"] {
+.layer[class*="popup_"]:not(.popup_refurbish) {
   text-align: center;
 
   .layer_wrap {
@@ -2341,7 +2341,7 @@
     }
   }
 
-  .layer[class*="popup_"] {
+  .layer[class*="popup_"]:not(.popup_refurbish) {
     text-align: center;
 
     .layer_wrap {
@@ -2377,7 +2377,7 @@
     }
   }
 
-  .layer[class*="popup_"] {
+  .layer[class*="popup_"]:not(.popup_refurbish) {
     .layer_wrap {
       .layer_container {
         padding: 24px;

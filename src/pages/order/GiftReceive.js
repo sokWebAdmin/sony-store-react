@@ -181,164 +181,170 @@ const GiftReceive = ({ location }) => {
   return (
     <>
       <SEOHelmet title={'소니스토어 선물하기'} />
-      <div className="contents orderPresent_container">
-        <div className="orderPresent_info">
-          <i className="present"><img src="../../images/order/ic_present.svg"
-                                      alt="선물상자 이미지" /></i>
-          <h2 className="orderPresent_tit">소니스토어 선물하기</h2>
-          <p className="orderPresent_dsc">선물 받으실 상품의 배송지 정보를 입력해 주세요!</p>
-        </div>
-        <div className="order_box__cont">
-          <div className="acc">
-            <div className="acc_item">
-              <div className="acc_head">
-                <a href="#" className="acc_btn" title="배송지 정보">
-                  <span className="acc_tit">배송지 정보</span>
-                </a>
-              </div>
-              <div className="acc_inner">
-                {latestShipping &&
-                <div className="acc_box">
-                  <p className="acc_dsc_top">표시는 필수입력 정보</p>
-                  <div className="acc_form">
-                    <div className="acc_cell">
-                      <label htmlFor="user_name">수령인 이름<i
-                        className="necessary"></i></label>
-                    </div>
-                    <div className="acc_cell">
-                      <div
-                        className="acc_group parent">
-                        {latestShipping.receiverName}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="acc_form">
-                    <div className="acc_cell">
-                      <label htmlFor="user_number">휴대폰 번호<i
-                        className="necessary"></i></label>
-                    </div>
-                    <div className="acc_cell">
-                      <div
-                        className="acc_group parent">
-                        {latestShipping.receiverContact1}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="acc_form">
-                    <div className="acc_cell vat">
-                      <label htmlFor="user_address">주소<i
-                        className="necessary" /></label>
-                    </div>
-                    <div className="acc_cell">
-                      <div
-                        className="acc_group parent">
-                        <div className="acc_inp type4">
-                          <input type="text"
-                                 className="inp dynamic_input"
-                                 id="user_address"
-                                 placeholder="주소를 입력하세요."
-                                 name="receiverZipCd"
-                                 ref={receiverZipCd}
-                                 value={latestShipping.receiverZipCd || ''}
-                                 onChange={handleShippingChange}
-                                 readOnly
-                          />
-                          <span className="focus_bg" />
-                          <div className="delivery_btn_box type1">
-                            <button
-                              onClick={() => {
-                                setFindAddressVisible(true);
-                                receiverZipCd.current.parentNode.classList.remove(
-                                  'error');
-                              }}
-                              className="button button_negative button-s"
-                              type="button">우편번호 검색
-                            </button>
-                            {findAddressVisible &&
-                            <FindAddress setVisible={setFindAddressVisible}
-                                         setAddress={bindReceiverAddress} />}
-                          </div>
-                          <p className="error_txt"><span
-                            className="ico" />배송 받으실 주소를 입력해 주세요.
-                          </p>
-                        </div>
-                      </div>
-                      <div className="acc_group parent">
-                        <div className="acc_inp type5">
-                          <input type="text" className="inp dynamic_input"
-                                 name="receiverAddress"
-                                 value={latestShipping.receiverAddress || ''}
-                                 onChange={handleShippingChange}
-                                 readOnly
-                          />
-                          <span className="focus_bg" />
-                        </div>
-                      </div>
-                      <div
-                        className="acc_group parent">
-                        <div className="acc_inp type5">
-                          <input type="text" className="inp"
-                                 placeholder="상세 주소를 입력하세요."
-                                 name="receiverDetailAddress"
-                                 ref={receiverDetailAddress}
-                                 value={latestShipping.receiverDetailAddress ||
-                                 ''}
-                                 onChange={handleShippingChange}
-                          />
-                          <span className="focus_bg" />
-                          <p className="error_txt"><span
-                            className="ico" />상세 주소를 입력해 주세요.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="acc_form">
-                    <div className="acc_cell vat">
-                      <label htmlFor="delivery_request">배송 요청 사항</label>
-                    </div>
-                    <div className="acc_cell">
-                      <div className="acc_group parent">
-                        <div className="acc_inp type3">
-                          <SelectBox
-                            defaultInfo={{
-                              type: 'dropdown',
-                              placeholder: '택배 기사님께 요청하실 내용을 선택하세요.',
-                            }}
-                            selectOptions={deliveryMemoFixedList}
-                            selectOption={
-                              ({ optionNo, label }) => optionNo !== 1
-                                ? handleShippingChangeParameter('deliveryMemo',
-                                  label)
-                                : handleShippingChangeParameter('deliveryMemo',
-                                  '')
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div className="acc_group parent">
-                        <div className="acc_inp type3">
-                          <input type="text" className="inp"
-                                 placeholder="배송 메모를 입력하세요."
-                                 name="deliveryMemo"
-                                 value={latestShipping.deliveryMemo || ''}
-                                 onChange={
-                                   handleShippingChange
-                                 }
-                          />
-                          <span className="focus_bg" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+      <div className="erro orderPresent">
+        <div className="orderPresent_container">
+          <div className="orderPresent_info">
+            <i className="present"><img src="../../images/order/ic_present.svg"
+                                        alt="선물상자 이미지" /></i>
+            <h2 className="orderPresent_tit">소니스토어 선물하기</h2>
+            <p className="orderPresent_dsc">선물 받으실 상품의 배송지 정보를 입력해 주세요!</p>
+          </div>
+          <div className="order_box__cont">
+            <div className="acc">
+              <div className="acc_item">
+                <div className="acc_head">
+                  <a href="#" className="acc_btn" title="배송지 정보">
+                    <span className="acc_tit">배송지 정보</span>
+                  </a>
                 </div>
-                }
+                <div className="acc_inner">
+                  {latestShipping &&
+                  <div className="acc_box">
+                    <p className="acc_dsc_top">표시는 필수입력 정보</p>
+                    <div className="acc_form">
+                      <div className="acc_cell">
+                        <label htmlFor="user_name">수령인 이름<i
+                          className="necessary"></i></label>
+                      </div>
+                      <div className="acc_cell">
+                        <div
+                          className="acc_group parent">
+                          {latestShipping.receiverName}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="acc_form">
+                      <div className="acc_cell">
+                        <label htmlFor="user_number">휴대폰 번호<i
+                          className="necessary"></i></label>
+                      </div>
+                      <div className="acc_cell">
+                        <div
+                          className="acc_group parent">
+                          {latestShipping.receiverContact1}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="acc_form">
+                      <div className="acc_cell vat">
+                        <label htmlFor="user_address">주소<i
+                          className="necessary" /></label>
+                      </div>
+                      <div className="acc_cell">
+                        <div
+                          className="acc_group parent">
+                          <div className="acc_inp type4">
+                            <input type="text"
+                                   className="inp dynamic_input"
+                                   id="user_address"
+                                   placeholder="주소를 입력하세요."
+                                   name="receiverZipCd"
+                                   ref={receiverZipCd}
+                                   value={latestShipping.receiverZipCd || ''}
+                                   onChange={handleShippingChange}
+                                   readOnly
+                            />
+                            <span className="focus_bg" />
+                            <div className="delivery_btn_box type1">
+                              <button
+                                onClick={() => {
+                                  setFindAddressVisible(true);
+                                  receiverZipCd.current.parentNode.classList.remove(
+                                    'error');
+                                }}
+                                className="button button_negative button-s"
+                                type="button">우편번호 검색
+                              </button>
+                              {findAddressVisible &&
+                              <FindAddress setVisible={setFindAddressVisible}
+                                           setAddress={bindReceiverAddress} />}
+                            </div>
+                            <p className="error_txt"><span
+                              className="ico" />배송 받으실 주소를 입력해 주세요.
+                            </p>
+                          </div>
+                        </div>
+                        <div className="acc_group parent">
+                          <div className="acc_inp type5">
+                            <input type="text" className="inp dynamic_input"
+                                   name="receiverAddress"
+                                   value={latestShipping.receiverAddress || ''}
+                                   onChange={handleShippingChange}
+                                   readOnly
+                            />
+                            <span className="focus_bg" />
+                          </div>
+                        </div>
+                        <div
+                          className="acc_group parent">
+                          <div className="acc_inp type5">
+                            <input type="text" className="inp"
+                                   placeholder="상세 주소를 입력하세요."
+                                   name="receiverDetailAddress"
+                                   ref={receiverDetailAddress}
+                                   value={latestShipping.receiverDetailAddress ||
+                                   ''}
+                                   onChange={handleShippingChange}
+                            />
+                            <span className="focus_bg" />
+                            <p className="error_txt"><span
+                              className="ico" />상세 주소를 입력해 주세요.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="acc_form">
+                      <div className="acc_cell vat">
+                        <label htmlFor="delivery_request">배송 요청 사항</label>
+                      </div>
+                      <div className="acc_cell">
+                        <div className="acc_group parent">
+                          <div className="acc_inp type3">
+                            <SelectBox
+                              defaultInfo={{
+                                type: 'dropdown',
+                                placeholder: '택배 기사님께 요청하실 내용을 선택하세요.',
+                              }}
+                              selectOptions={deliveryMemoFixedList}
+                              selectOption={
+                                ({ optionNo, label }) => optionNo !== 1
+                                  ? handleShippingChangeParameter('deliveryMemo',
+                                    label)
+                                  : handleShippingChangeParameter('deliveryMemo',
+                                    '')
+                              }
+                            />
+                          </div>
+                        </div>
+                        <div className="acc_group parent">
+                          <div className="acc_inp type3">
+                            <input type="text" className="inp"
+                                   placeholder="배송 메모를 입력하세요."
+                                   name="deliveryMemo"
+                                   value={latestShipping.deliveryMemo || ''}
+                                   onChange={
+                                     handleShippingChange
+                                   }
+                            />
+                            <span className="focus_bg" />
+                          </div>
+                        </div>
+                        <ul className="list_dot">
+                          <li>선물하기로 배송 받으시는 경우 상품의 배송조회는 주문하신 분만 조회가 가능합니다.</li>
+                          <li>소니스토어의 모든 상품은 무료 배송입니다.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  }
+                </div>
               </div>
             </div>
-          </div>
-          <div className="parent">
-            <button className="button button_positive button-full"
-                    type="button" onClick={submit}>입력 완료
-            </button>
+            <div className="parent">
+              <button className="button button_positive button-full"
+                      type="button" onClick={submit}>입력 완료
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -60,7 +60,6 @@ export default function Header(location) {
       setVisible(false);
       return;
     }
-    if (underPc) return;
     if (prevScrollY > window.scrollY || header.current.offsetHeight >
       window.scrollY) {
       setVisible(true);
@@ -77,15 +76,17 @@ export default function Header(location) {
   };
 
   const hideBodyScroll = (hide) => {
+    const body = document.querySelector('body');
     if (underPc) {
-      const body = document.querySelector('body');
       body.style.overflow = hide ? 'hidden' : 'auto';
+    } else {
+      body.style.overflow = 'auto';
     }
   }
 
   useEffect(() => {
     hideBodyScroll(isSiderbarOpen);
-  }, [isSiderbarOpen]);
+  }, [isSiderbarOpen, underPc]);
 
   useEffect(() => {
     const $body = document.querySelector('body');
