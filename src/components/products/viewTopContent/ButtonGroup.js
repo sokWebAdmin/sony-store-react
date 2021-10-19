@@ -275,6 +275,9 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     return true;
   }
 
+  const selectedOptionsProductNos = useMemo(
+    () => selectedOption.map(o => o.productNo), [selectedOption]);
+
   const wishHandler = () => {
     if (!isLogin) {
       setWishVisible(true);
@@ -285,12 +288,12 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       return;
     }
 
-    postWish().catch(console.error);
+    postWish(selectedOptionsProductNos);
   };
 
-  async function postWish () {
+  async function postWish (productNos) {
     try {
-      const requestBody = { productNos: [productNo] };
+      const requestBody = { productNos };
       const { data } = await postProfileLikeProducts(requestBody);
       setWish(data[0].result);
     }
