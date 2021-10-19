@@ -70,8 +70,6 @@ const CustomPopup = ({ match, location, data }) => {
   };
 
   function getValidPopups (popups) {
-    console.log();
-
     return popups.
       filter(popup => popup.type === 'LAYER'). // layer 여부
       filter(popup => popup.displayTypes.includes(
