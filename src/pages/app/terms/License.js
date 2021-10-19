@@ -1,6 +1,5 @@
 import React from 'react';
 import SEOHelmet from '../../../components/SEOHelmet';
-import { GoBack } from '../PushList';
 
 const TermsLicense = () => {
   return (
@@ -8,10 +7,6 @@ const TermsLicense = () => {
       <SEOHelmet title="오픈소스 라이센스" />
       <div className="wrapper">
         <div className="container" id="container">
-          <div className="app_head app_head_fixed">
-            <GoBack />
-            <h1 className="app_head_tit">오픈소스 라이센스</h1>
-          </div>
           <div className="app_layer app_layer_full">
             <div className="page">
               <h1 className="page__title">Apache License</h1>

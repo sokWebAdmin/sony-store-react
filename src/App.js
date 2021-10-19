@@ -377,7 +377,7 @@ const App = (props) => {
             <Route component={Error404} />
             {/* 푸터 */}
             </Switch>
-          <Footer />
+          {!window.location.href.includes('/app/terms/') && <Footer />}
         </div>
       ) : (
         <div>Server Loading...</div>
