@@ -257,7 +257,7 @@ const App = (props) => {
             <a href="#container"><span>본문 바로가기</span></a>
           </div>
           {/* 헤더 */}
-          {popups.length && <CustomPopup location={location} data={popups} />}
+          {popups.length > 0 && <CustomPopup location={location} data={popups} />}
           {!window.location.href.includes('/app/terms/') && <Header />}
           <Switch>
             {/* 메인 */}
