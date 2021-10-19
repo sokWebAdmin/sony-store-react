@@ -269,25 +269,38 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   };
 
   const wishHandler = async () => {
+    if (!isLogin) {
+      setWishVisible(true);
+      return;
+    }
+
+    alert('넌 모찌나간다');
+    return;
+
+    postWish().catch(console.error);
+  };
+
+  async function postWish () {
     try {
-      if (isLogin) {
-        const requestBody = { productNos: [productNo] };
-        const { data } = await postProfileLikeProducts(requestBody);
-        setWish(data[0].result);
-      } else {
-        setWishVisible(true);
-      }
-    } catch (e) {
+      const requestBody = { productNos: [productNo] };
+      const { data } = await postProfileLikeProducts(requestBody);
+      setWish(data[0].result);
+    }
+    catch (e) {
       e?.message && openAlert(e.message);
     }
-  };
+  }
 
   const handleClick = (e, type) => {
     e.preventDefault();
-    if (isSoldOut) return;
-    switch(type) {
+    if (isSoldOut) {
+      return;
+    }
+    switch (type) {
       case 'gift':
-        if (isBackOrdered) return;
+        if (isBackOrdered) {
+          return;
+        }
         gift();
         break;
       case 'order':
