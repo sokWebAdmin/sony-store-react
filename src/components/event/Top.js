@@ -10,6 +10,7 @@ import styled from 'styled-components';
 const EventTop = () => {
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
   const underPc = useMediaQuery('(max-width: 1280px)');
+  const onlyMo = useMediaQuery('(max-width: 640px)');
   const [banners, setBanners] = useState([]);
   const [bannersMo, setBannersMo] = useState([]);
 
@@ -34,12 +35,11 @@ const EventTop = () => {
           <img className="bg_img" src={banner.imageUrl} alt={banner.name} />
           <div className="desc_box">
             <p className="tit" style={{ color: banner.nameColor }} dangerouslySetInnerHTML={{ __html: title }} />
-            <p className="txt">{banner.description}</p>
+            <p className="txt" style={{ color: banner.nameColor }}>{banner.description}</p>
             <p
-              className="event_duration">{getStrDate(banner.displayStartYmdt)} ~ {getStrDate(banner.displayEndYmdt)}</p>
+              className="event_duration" style={{ color: banner.nameColor }}>{getStrDate(banner.displayStartYmdt)} ~ {getStrDate(banner.displayEndYmdt)}</p>
             <div className="btn_article">
-              {/*<Link to={banner.landingUrl} className="event_link" >자세히 보기</Link>*/}
-              <DetailLink to={banner.landingUrl} className="event_link" color={banner.nameColor}>자세히 보기</DetailLink>
+              <DetailLink to={banner.landingUrl} className="event_link" color={banner.nameColor} onlyMo={onlyMo}>자세히 보기</DetailLink>
             </div>
           </div>
         </div>
@@ -121,8 +121,8 @@ const EventTop = () => {
 const DetailLink = styled(Link)`
   color: ${({color}) => color};
   &:after {
-    border-top: 2px solid ${({color}) => color};
-    border-right: 2px solid ${({color}) => color};
+    border-top: ${({onlyMo}) => onlyMo ? 1 : 2}px solid ${({color}) => color};
+    border-right: ${({onlyMo}) => onlyMo ? 1 : 2}px solid ${({color}) => color};
   }
 `;
 

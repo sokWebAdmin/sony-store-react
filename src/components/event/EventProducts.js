@@ -216,29 +216,16 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
           </Link>
           <p className="product_name_desc">{product.productNameEn}</p>
           <div className="product_name_price">
-            {product.salePrice !==
-            product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt ? (
-              <>
-                <div className="original">
-                  {toCurrencyString(product.salePrice)} <span className="unit">원</span>
-                </div>
-                <div className="sale">
-                  {toCurrencyString(
-                    product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt,
-                  )}{' '}
-                  <span className="unit">원</span>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="sale">
-                  {toCurrencyString(
-                    product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt,
-                  )}{' '}
-                  <span className="unit">원</span>
-                </div>
-              </>
-            )}
+            <div className="original">
+              {product.salePrice !== product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt
+              && <>{ toCurrencyString(product.salePrice)} <span className="unit">원</span></>}
+            </div>
+            <div className="sale">
+              {toCurrencyString(
+                product.salePrice - product.immediateDiscountAmt - product.additionDiscountAmt,
+              )}{' '}
+              <span className="unit">원</span>
+            </div>
           </div>
           <div className="product_btn_wrap">
             {!isSoldOut && gift && (
