@@ -26,7 +26,7 @@ export default function EspProduct({product}) {
 
   const buy = () => {
     if (isLogin) {
-      history.push("/esp/list");
+      history.push(`/esp/list?productNo=${product.productNo}`);
     } else {
       setShowComfirm(true);
     }
@@ -36,10 +36,9 @@ export default function EspProduct({product}) {
     setShowComfirm(false);
 
     if (status === 'ok') {
-      history.push("/member/login");
       history.push({
         pathname: "/member/login",
-        state: {next: '/esp/list'}
+        state: {next: `/esp/list?productNo=${product.productNo}`}
       });
     }
   }
