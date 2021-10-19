@@ -25,12 +25,7 @@ const CustomPopup = ({ match, location, data }) => {
   const [popups, setPopups] = useState([]);
 
   const isSupportEnvironment = () => {
-    const withoutPredicates = [
-      () => getAgent().isApp === false,
-      () => SPEC.displayTypes.includes(getDisplayType()),
-    ];
-
-    return withoutPredicates.every(predicate => predicate());
+    return SPEC.displayTypes.includes(getDisplayType());
   };
 
   const init = () => {

@@ -167,7 +167,6 @@ const App = (props) => {
         }
         const { pageXOffset, pageYOffset } = window;
         if (x !== pageXOffset || y !== pageYOffset) {
-          console.log(x, y);
           window.scrollTo(x, y);
           syncScroll(x, y, attempt - 1);
         }
@@ -228,7 +227,6 @@ const App = (props) => {
 
   const [popups, setPopups] = useState([]);
   useEffect(() => {
-    console.log(popups.length);
     if (popups.length) {
       return;
     }
@@ -237,7 +235,6 @@ const App = (props) => {
       then(nos => nos.toString()).
       then(fetchPopups).
       then(res => {
-        console.log(res);
         setPopups(res);
       });
   }, [location]);
