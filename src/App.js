@@ -258,7 +258,7 @@ const App = (props) => {
           </div>
           {/* 헤더 */}
           {popups.length && <CustomPopup location={location} data={popups} />}
-          <Header />
+          {!window.location.href.includes('/app/terms/') && <Header />}
           <Switch>
             {/* 메인 */}
             <Route exact path="/" component={Main} />

@@ -1,4 +1,4 @@
-import { React ,useState, useEffect, useCallback, useMemo, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useContext } from 'react';
 import { getEventByProductNo } from '../../api/display';
 import _ from 'lodash';
 

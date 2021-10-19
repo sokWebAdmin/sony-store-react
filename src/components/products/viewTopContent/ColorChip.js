@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import _ from "lodash";
+import { useScroll } from '../../../hooks';
 
 // 컬러칩
 export default function ColorChip({ setSelectedOptionNo, productGroup, isSoldOut }) {
+  const { handleTop } = useScroll();
+
   const pg = _.chain(productGroup)
               .values()
               .flatten()
@@ -23,6 +26,7 @@ export default function ColorChip({ setSelectedOptionNo, productGroup, isSoldOut
     e.preventDefault();
     setColor(code);
     setSelectedOptionNo(no);
+    handleTop();
   };
 
   return (

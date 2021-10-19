@@ -125,7 +125,7 @@ export default function EspMain() {
                                         <tbody>
                                         <tr>
                                             <td className="basic">기본 품질<br className="m-br-block" /> 보증기간(1년)</td>
-                                            <td colSpan="2" className="extended">연장 서비스플랜 적용기간
+                                            <td colSpan="2" className="extended">연장 서비스 플랜 적용기간
                                                 <span>2년 ESP 구매 시<br className="m-br-block" /> 2년 무상수리</span>
                                                 <span>3년 ESP 구매 시<br className="m-br-block" /> 3년 무상수리</span>
                                             </td>
