@@ -97,14 +97,25 @@ const reservationStatusType = (statusType, date, cnt) => {
    }
 };
 
+const isEnded = reservationDate => {
+   if (reservationDate === null) return true;
+   if (reservationDate?.reservationEndYmdt) {
+      const rvEnd = (new Date(reservationDate.reservationEndYmdt)).getTime();
+      const now = (new Date()).getTime();
+      return rvEnd < now;
+   }
+   return false;
+}
+
 export const getSaleStatus = (status, reservationDate, stockCnt, reservationStockCnt) => {
    const { saleStatusType } = status;
 
-   if (reservationDate === null && stockCnt === 0) {
+   const isNotReserved = isEnded(reservationDate);
+   if (isNotReserved && stockCnt === 0) {
       return getNoneCountType(saleStatusType);
    };
 
-   if (reservationDate?.reservationStartYmdt) {
+   if (!isNotReserved && reservationDate?.reservationStartYmdt) {
       return reservationStatusType(saleStatusType, reservationDate, reservationStockCnt);
    }
 
