@@ -49,6 +49,10 @@ export default function TobContent({
               paddingRight: '5px',
             }}>{stickerLabels[0]}</span>
           }
+          {saleStatus === 'RESERVE' && <span className="badge__label badge__label__reserve">예약판매</span>}
+          {saleStatus === 'READY' && <span className={`badge__label badge__label__outofstock`}>일시품절</span>}
+          {saleStatus === 'SOLDOUT' && <span className={`badge__label badge__label__soldout`}>품절</span>}
+          {saleStatus === 'READY_RESERVE' && <span className={`badge__label badge__label__release`}>출시예정</span>}
           {/* {
             스티커 복수개 노출 시 주석 해제 후 윗 부분 삭제
             stickerLabels?.map((label, idx) => (
