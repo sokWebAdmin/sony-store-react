@@ -16,8 +16,8 @@ const Products = (props) => {
         productName: deliveryGroup.orderProducts[index].productName,
         optionText: getOptionText(orderProductOption.optionTitle, orderProductOption.optionInputs),
         orderCnt: orderProductOption.orderCnt,
-        amount: toCurrencyString(orderProductOption.price.standardAmt),
-        totalAmount: toCurrencyString(orderProductOption.price.standardAmt * orderProductOption.orderCnt),
+        amount: toCurrencyString(orderProductOption.price.salePrice),
+        totalAmount: toCurrencyString(orderProductOption.price.salePrice * orderProductOption.orderCnt),
       }));
   }
 
