@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useMemo,
+} from 'react';
 import { Switch, useLocation, Route, useHistory } from 'react-router-dom';
 import { throttle, debounce } from 'lodash';
 
@@ -108,6 +114,7 @@ import TermsUse from './pages/app/terms/Use';
 import TermsLicense from './pages/app/terms/License';
 import TermsPrivacy from './pages/app/terms/Privacy';
 import CustomPopup from './components/common/customPopup/CustomPopup';
+import { getDisplayPopups, getDisplayPopupsPopupNos } from './api/display';
 
 const App = (props) => {
   const agent = getAgent();
@@ -160,7 +167,6 @@ const App = (props) => {
         }
         const { pageXOffset, pageYOffset } = window;
         if (x !== pageXOffset || y !== pageYOffset) {
-          console.log(x, y);
           window.scrollTo(x, y);
           syncScroll(x, y, attempt - 1);
         }
@@ -219,15 +225,39 @@ const App = (props) => {
     initCategory(categoryDispatch, state.categories);
   }, [state?.categories]);
 
+  const [popups, setPopups] = useState([]);
+  useEffect(() => {
+    if (popups.length) {
+      return;
+    }
+
+    fetchPopupNos().
+      then(nos => nos.toString()).
+      then(fetchPopups).
+      then(res => {
+        setPopups(res);
+      });
+  }, [location]);
+
+  function fetchPopupNos () {
+    const map = data => data.map(({ popupNo }) => popupNo);
+
+    return getDisplayPopups().then(({ data }) => data).then(map);
+  }
+
+  function fetchPopups (no) {
+    return getDisplayPopupsPopupNos(no).then(({ data }) => data);
+  }
+
   return (
     <div className="App" onScroll={handleScroll}>
       {isStatus ? (
-        <div className="wrapper"  style={{ backgroundColor: 'white' }}>
+        <div className="wrapper" style={{ backgroundColor: 'white' }}>
           <div id="skipnav" className="skipnav">
             <a href="#container"><span>본문 바로가기</span></a>
           </div>
           {/* 헤더 */}
-          <CustomPopup location={location} />
+          {popups.length && <CustomPopup location={location} data={popups} />}
           <Header />
           <Switch>
             {/* 메인 */}
@@ -344,7 +374,7 @@ const App = (props) => {
             <Route component={Error404} />
             {/* 푸터 */}
             </Switch>
-          <Footer />
+          {!window.location.href.includes('/app/terms/') && <Footer />}
         </div>
       ) : (
         <div>Server Loading...</div>

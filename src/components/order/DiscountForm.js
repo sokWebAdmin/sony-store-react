@@ -149,7 +149,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
         </div>
       </div>
 
-      {fetchedLatestMileage && !minPriceLimitUnder && availablemileage !== undefined && (
+      {
         <div className="acc_form">
           <div className="acc_cell vat">
             <label htmlFor="mileage">멤버십 마일리지</label>
@@ -167,6 +167,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                   onBlur={checkValidPoint}
                   ref={pointInput}
                   value={inputSubPayAmt}
+                  disabled={minPriceLimitUnder && availablemileage === undefined}
                 />
                 <span className="unit">점</span>
                 <span className="focus_bg" />
@@ -184,6 +185,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                     }
                   }}
                   type="button"
+                  disabled={minPriceLimitUnder && availablemileage === undefined}
                 >
                   모두 사용
                 </button>
@@ -207,7 +209,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
             )}
           </div>
         </div>
-      )}
+      }
     </>
   );
 };

@@ -71,7 +71,7 @@ const OrderComplete = ({ location }) => {
       <SEOHelmet title={'주문 완료'} />
       <div className="contents order">
         <div className="container" id="container">
-          <div className="content order_page">
+          <div className="content order_page" style={{ padding: '0' }}>
             <div className="order_confirm_box">
               <i className="icon receipe" />
 

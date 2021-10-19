@@ -8,19 +8,26 @@ import '../../../assets/scss/contents.scss';
 import { postCart } from '../../../api/order';
 import EspAddCartComplete from './EspAddCartComplete';
 import { getProductOptions } from '../../../api/product';
+import qs from 'qs';
 
-export default function EspAddCart({ product, onClose }) {
+export default function EspAddCart({ product, onClose, history }) {
   const [showCompletePopup, setShowCompletePopup] = useState(false);
 
   const _addCart = async () => {
     let success = false;
-    const options = await _getProductOptions(product.mallProductNo);
+
+    const query = qs.parse(history.location.search, {
+      ignoreQueryPrefix: true,
+    });
+
+    const options = await _getProductOptions(query.productNo);
     if (options.length > 0) {
-      success = await _postCart(product.mallProductNo, options[0].optionNo, [
+      success = await _postCart(query.productNo, options[0].optionNo, [
         { inputLabel: 'serialNo', inputValue: product.serialno },
         { inputLabel: 'sonyProductNo', inputValue: product.modelcod },
       ]);
     }
+
     if (success) {
       setShowCompletePopup(true);
     }
