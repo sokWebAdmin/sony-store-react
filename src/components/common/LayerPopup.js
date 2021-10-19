@@ -1,7 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useWindowSize } from '../../utils/utils';
 
 const LayerPopup = ({ children, onClose, className, popContClassName = '', popContStyle = null, size = 'ms', show = true }) => {
+  const windowSize = useWindowSize();
+  const $wrap = useRef();
+
   const [container] = useState(() => {
     return document.createElement('div');
   });
@@ -24,12 +28,34 @@ const LayerPopup = ({ children, onClose, className, popContClassName = '', popCo
     }
   }, [container]);
 
+  // ux-common.js 내 popScrollChk 함수 참조
+  const _getPopupConstStyle = () => {
+    const style = !!popContStyle ? {...popContStyle} : {};
+
+    const scrollChild = children?.filter(child => child?.props?.className.includes('pop_cont_scroll'))[0];
+    let $scroll = scrollChild?.ref;
+
+    if (popContClassName?.includes('scrollH') && $wrap.current && $scroll.current) {
+      const _windowH = windowSize.height - 160;
+      const _fixH = Math.abs($wrap.current.offsetHeight - $scroll.current.offsetHeight);
+      let _changH = Math.abs(_windowH-_fixH);
+
+      if (_changH < 250) {
+        _changH = 250;
+      }
+
+      $scroll.current.style.height = `${_changH}px`;
+    }
+
+    return style;
+  }
+
   return createPortal(
     <>
       <div className="layer_mask" tabIndex="0" style={{ display: show ? 'block' : 'none', zIndex: 1000 }} />
-      <div className={`popup_wrap size_${size} ${className}`} style={{ display: show ? 'block' : 'none', zIndex: 1000 }}>
+      <div className={`popup_wrap size_${size} ${className}`} style={{ display: show ? 'block' : 'none', zIndex: 1000 }} ref={$wrap}>
         <div className="pop_inner">
-          <div className={`pop_cont ${popContClassName}`} style={popContStyle}>
+          <div className={`pop_cont ${popContClassName}`} style={_getPopupConstStyle()}>
             {children}
           </div>
           <button type="button" className="ico_x closed delete" title="팝업창 닫기" onClick={close}>

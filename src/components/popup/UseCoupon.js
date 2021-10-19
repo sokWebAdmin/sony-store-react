@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // components
 import LayerPopup from '../common/LayerPopup';
@@ -11,6 +11,8 @@ import { syncCoupon } from '../../api/sony/coupon.js';
 import { wonComma } from '../../utils/utils';
 
 const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDiscount, show, setReject }) => {
+  const $scroll = useRef();
+
   const close = () => setVisible(false);
 
   const [productCoupons, setProductCoupons] = useState({ productNo: null, items: [] });
@@ -86,7 +88,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   return (
     <LayerPopup className="find_address" size={'m'} popContClassName={'scrollH'} onClose={close} show={show}>
       <p className="pop_tit">쿠폰 조회 및 적용</p>
-      <div className="pop_cont_scroll" style={{ height: '651px' }}>
+      <div className="pop_cont_scroll" ref={$scroll}>
         <div className="chk_select_zone">
           <ul className="chk_select_inner">
             {products.map((product, i) => (

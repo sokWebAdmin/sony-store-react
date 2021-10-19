@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 // components
 import LayerPopup from '../../common/LayerPopup';
@@ -11,6 +11,8 @@ import { getProductOptions } from '../../../api/product';
 import qs from 'qs';
 
 export default function EspAddCart({ product, onClose, history }) {
+  const $scroll = useRef();
+
   const [showCompletePopup, setShowCompletePopup] = useState(false);
 
   const _addCart = async () => {
@@ -74,7 +76,7 @@ export default function EspAddCart({ product, onClose, history }) {
     <>
       <LayerPopup className="esp_pop" size={'m'} popContClassName={'scrollH'} onClose={onClose}>
         <p className="pop_tit">연장 서비스 플랜 이용약관</p>
-        <div className="pop_cont_scroll" style={{ height: '573.703px' }}>
+        <div className="pop_cont_scroll" ref={$scroll}>
           <p className="pop_txt txt_l">
             본 이용약관은 고객님께서 Sony(이하 본문의 "Sony"는 Sony Korea Corporation을 의미)로부터 주문하신 연장 서비스
             플랜(Extended Service Plan, 이하 "ESP")의 범위 및 조건이 명시되어 있습니다.
