@@ -64,7 +64,8 @@ const CustomPopup = ({ match, location, data }) => {
   }
 
   const currentRouteInfo = {
-    pathNo: location.pathname.split('/').find(v => Number(v * 1)) * 1 || null,
+    pathNo: location.pathname.split('/').find(v => v && !Number.isNaN(v * 1)) *
+      1 || null,
     categoryNos: useGetCategoryByKey('url', location.url),
   };
 
