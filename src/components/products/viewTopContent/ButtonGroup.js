@@ -245,16 +245,9 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       return;
     };
 
-    if (isMobileSize && !optionVisible) {
-      setOptionVisible(true);
+    if (!validateOption()) {
       return;
     }
-
-    
-    if (!canBuy) {
-      openAlert('옵션을 선택하세요.');
-      return;
-    };
 
     if (await hasLimitedProduct()) {
       openAlert(`구매 수량 제한 상품입니다. (제한 수량: ${maxBuyTimeCnt})`);
@@ -262,11 +255,25 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     }
 
     const succeed = await hsValidation(!!hsCode);
-    
+
     if (succeed) {
       _getCartRequest(productNo, selectedOption);
     }
   };
+
+  function validateOption () {
+    if (isMobileSize && !optionVisible) {
+      setOptionVisible(true);
+      return false;
+    }
+
+    if (!canBuy) {
+      openAlert('옵션을 선택하세요.');
+      return false;
+    }
+    ;
+    return true;
+  }
 
   const wishHandler = () => {
     if (!isLogin) {
@@ -274,8 +281,9 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       return;
     }
 
-    alert('넌 모찌나간다');
-    return;
+    if (!validateOption()) {
+      return;
+    }
 
     postWish().catch(console.error);
   };
@@ -292,6 +300,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   }
 
   const handleClick = (e, type) => {
+    // main
     e.preventDefault();
     if (isSoldOut) {
       return;
