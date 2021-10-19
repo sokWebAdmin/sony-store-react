@@ -81,8 +81,9 @@ const CustomPopup = ({ match, location, data }) => {
 
   return (
     <>
-      {popups.map(popup => <LayerPopup popup={popup} todayNotShow={todayNotShow}
-                                       key={popup.popupNo} />)}
+      {popups.map(
+        (popup, index) => <LayerPopup popup={popup} todayNotShow={todayNotShow}
+                                      key={popup.popupNo} index={index} />)}
     </>
   );
 };

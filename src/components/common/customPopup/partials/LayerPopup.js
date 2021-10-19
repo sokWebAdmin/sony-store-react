@@ -2,7 +2,9 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 
 import '../../../../assets/scss/partials/customPopup.scss';
 
-const LayerPopup = ({ popup, todayNotShow }) => {
+const Z_INDEX_START_AT = 990;
+
+const LayerPopup = ({ popup, todayNotShow, index }) => {
   const [show, setShow] = useState(true);
 
   const contentArea = useRef();
@@ -28,7 +30,7 @@ const LayerPopup = ({ popup, todayNotShow }) => {
     show && (
       <>
         <div className="layer_mask" tabIndex="0"
-             style={{ display: 'block' }} />
+             style={{ display: 'block', zIndex: Z_INDEX_START_AT + index }} />
         <div className='popup_wrap custom_popup_layer'
              style={{ display: 'block' }}>
           <div className="pop_inner">
