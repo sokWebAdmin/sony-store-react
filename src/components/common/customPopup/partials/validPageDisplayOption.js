@@ -30,7 +30,7 @@ function validCategoryPage (
   const displayCategoriesNos = displayCategoryInfos.map(
     info => info.displayCategoryNo);
   return displayCategoriesNos.some(
-    no => displayCategoriesNos.include(no));
+    no => categoryNos.include(no));
 }
 
 function validEventPage ({ eventInfos }, pathNo) {
