@@ -7,6 +7,7 @@ import todayNotShow from './partials/todayNotShow';
 // components
 import LayerPopup from './partials/LayerPopup';
 import validPageDisplayOption from './partials/validPageDisplayOption';
+import { useGetCategoryByKey } from '../../../context/category.context';
 
 const SPEC = {
   type: 'LAYER',
@@ -20,7 +21,7 @@ const SPEC = {
  * @displayTypes : PC, MOBILE_WEB, MOBILE_APP
  * @pageTypes : MAIN, CATEGORY, EVENT, PRODUCT
  */
-const CustomPopup = ({ location, data }) => {
+const CustomPopup = ({ match, location, data }) => {
   const [popups, setPopups] = useState([]);
 
   const isSupportEnvironment = () => {
@@ -57,10 +58,16 @@ const CustomPopup = ({ location, data }) => {
 
   function getDisplayType () {
     if (getAgent().isApp) {
-      return 'MOBILE_APP'
+      return 'MOBILE_APP';
     }
     return isMobile ? 'MOBILE_WEB' : 'PC';
   }
+
+  const currentRouteInfo = {
+    pathNo: location.pathname.split('/').find(v => v && !Number.isNaN(v * 1)) *
+      1 || null,
+    categoryNos: useGetCategoryByKey('url', location.url),
+  };
 
   function getValidPopups (popups) {
     return popups.
@@ -68,7 +75,7 @@ const CustomPopup = ({ location, data }) => {
       filter(popup => popup.displayTypes.includes(
         getDisplayType())). // 노출 환경(pc or mob) 일치 여부
       filter(popup => validPageDisplayOption(popup,
-        currentPage)). // 페이지 / 노출 세부 설정 일치 여부
+        currentPage, currentRouteInfo)). // 페이지 / 노출 세부 설정 일치 여부
       filter(popup => validTodayNotShow(popup.popupNo)); // 오늘 하루 보지 않음 여부
   }
 

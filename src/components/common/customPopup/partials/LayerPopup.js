@@ -48,7 +48,7 @@ const LayerPopup = ({ popup, todayNotShow }) => {
                 todayNotShow.set(popup.popupNo);
                 setShow(false);
               }}
-                     for={popup.popupNo + '_close'}>오늘하루 그만보기</label>
+                     htmlFor={popup.popupNo + '_close'}>오늘하루 그만보기</label>
             </div>
           </div>
         </div>
