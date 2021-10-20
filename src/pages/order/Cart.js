@@ -112,7 +112,6 @@ const Cart = ({ location }) => {
       fetchGuestCart(body)
         .then((data) => {
         mapData(data);
-        console.log(data);
         checkGuestCartMissingProduct(getMappedData(data.deliveryGroups),
           gc.items);
         gc.fetch();
