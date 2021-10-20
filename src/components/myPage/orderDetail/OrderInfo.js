@@ -14,8 +14,7 @@ export default function OrderInfo({ shippingAddress, ordererInfo }) {
           </dd>
           <dt className="order_term">배송지</dt>
           <dd className="order_desc">
-            {shippingAddress.receiverAddress}
-            {shippingAddress.receiverDetailAddress}
+            {`${shippingAddress.receiverAddress} ${shippingAddress.receiverDetailAddress}`}
           </dd>
           <dt className="order_term">배송 요청사항</dt>
           <dd className="order_desc">{shippingAddress.deliveryMemo ? shippingAddress.deliveryMemo : '없음'}</dd>
