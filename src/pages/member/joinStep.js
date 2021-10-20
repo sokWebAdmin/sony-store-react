@@ -279,6 +279,9 @@ export default function JoinStep() {
   }, [expireAt, time, authSent]);
 
   useEffect(() => {
+    if (!location.state?.agree) {
+      history.push('/member/join-agree');
+    }
     if (isLogin) {
       history.push('/');
       return;
@@ -315,7 +318,7 @@ export default function JoinStep() {
                 </div>
                 <div className="error_txt"><span className="ico" />이메일 아이디를 입력해 주세요.</div>
               </div>
-              <div className="rowgroup">
+              {/*<div className="rowgroup">*/}
                 <div className={`group ${isPassword === false && 'error'}`}>
                   <div className="inp_box password_box">
                     <label className="inp_desc" htmlFor="loginPw1">
@@ -323,7 +326,7 @@ export default function JoinStep() {
                              placeholder=" " autoComplete="off" value={password} onChange={(e) => {
                         setPassword(e.target.value);
                       }} />
-                      <span className="label">비밀번호<span>(대/소문자, 숫자, 특수문자 포함 3종 12자리 이상)</span></span>
+                      <span className="label">비밀번호<span>(대/소문자, 숫자, 특수문자 3종 포함 12~15자리 미만)</span></span>
                       <span className="focus_bg" />
                       <div className="eyes">
                         <button type="button" title="비밀번호 숨김" onClick={() => {
@@ -354,7 +357,7 @@ export default function JoinStep() {
                   <div className="error_txt"><span
                     className="ico" />{confirmWrongType == 1 ? '비밀번호를 재입력 해주세요.' : '비밀번호와 확인이 같지 않습니다.'}</div>
                 </div>
-              </div>
+              {/*</div>*/}
               <div className="rowgroup">
                 <div className={`group ${isName === false && 'error'}`}>
                   <div className="inp_box">

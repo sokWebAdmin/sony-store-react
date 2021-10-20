@@ -3498,7 +3498,7 @@
         display: block;
       }
 
-      @include only-mo {
+      @include under-pc {
         font-size: 12px;
 
         .block {
