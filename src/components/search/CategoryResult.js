@@ -43,7 +43,8 @@ export default function CategoryResult({ fetchCategory, categoryList, categoryCo
   const getNextUrl = no => _.chain(categoriesExtraDataMap).filter(({ categoryNo }) => categoryNo === no).map(({ url }) => url).head().value();
   const clickHandler = (e, categoryNo) => {
     e.preventDefault();
-    history.push(categoryNo === 81643 ? '/esp' : getNextUrl(categoryNo));
+    const esp = [81644, 81643, 81645];
+    history.push(esp.includes(categoryNo) ? '/esp' : getNextUrl(categoryNo));
 }
 
   return (
