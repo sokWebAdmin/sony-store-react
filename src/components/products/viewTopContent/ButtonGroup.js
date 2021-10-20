@@ -1,9 +1,9 @@
 import qs from 'qs';
 import React, { useContext, useState, createRef, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router';
-import GlobalContext from "../../../context/global.context";
+import GlobalContext from '../../../context/global.context';
 import { getCart, getCartCount, postCart, postOrderSheets } from '../../../api/order';
-import { postProfileLikeProducts } from "../../../api/product";
+import { postProfileLikeProducts } from '../../../api/product';
 import Alert from '../../common/Alert';
 import Notification from '../Notification';
 import { useAlert } from '../../../hooks';
@@ -20,30 +20,28 @@ const getOrderSheetNo = async (productNo, selectedOption) => {
       trackingKey: null,
       cartNos: null,
       channelType: null,
-      products: selectedOption.map(p => ({
+      products: selectedOption.map((p) => ({
         channelType: null,
         orderCnt: p.buyCnt,
         optionInputs: null,
         optionNo: p.optionNo,
-        productNo: p.productNo ?? productNo
-      }))
+        productNo: p.productNo ?? productNo,
+      })),
     });
     return data;
-  } catch(e) {
+  } catch (e) {
     console.error(e);
   }
 };
 
 const getCartRequest = (productNo, options) => {
-  return options.map(
-    ({ buyCnt, ...rest }) => ({
-      productNo,
-      orderCnt: buyCnt,
-      channelType: null,
-      optionInputs: null,
-      ...rest,
-    })
-  )
+  return options.map(({ buyCnt, ...rest }) => ({
+    productNo,
+    orderCnt: buyCnt,
+    channelType: null,
+    optionInputs: null,
+    ...rest,
+  }));
 };
 
 const ERROR_CODE_MAPPING_ROUTE = {
@@ -51,7 +49,6 @@ const ERROR_CODE_MAPPING_ROUTE = {
     msg: `회원만 구매 가능한 상품입니다.<br/>로그인해 주세요.`,
     route: '/member/login',
   },
-
 };
 
 const mergeWithOrderCnt = (accProduct, currProduct) => {
@@ -61,16 +58,17 @@ const mergeWithOrderCnt = (accProduct, currProduct) => {
     accProduct = {
       ...accProduct,
       ...currProduct,
-    }
-  };
+    };
+  }
   return accProduct;
 };
 
-const mapOrderCnt = (products, productNos) => _.chain(products)
-                                    .filter(o => productNos.includes(o.productNo))
-                                    .map(({ productNo, optionNo, orderCnt }) => ({ productNo, optionNo, orderCnt  }))
-                                    .reduce(mergeWithOrderCnt, {})
-                                    .value();
+const mapOrderCnt = (products, productNos) =>
+  _.chain(products)
+    .filter((o) => productNos.includes(o.productNo))
+    .map(({ productNo, optionNo, orderCnt }) => ({ productNo, optionNo, orderCnt }))
+    .reduce(mergeWithOrderCnt, {})
+    .value();
 
 const scrollHandle = () => {
   const $body = document.querySelector('body');
@@ -80,22 +78,36 @@ const scrollHandle = () => {
     },
     start() {
       $body.classList.remove('no_scroll');
-    }
-  }
+    },
+  };
 };
 
 const naverPayErrorHandle = (error, history) => {
   const ERROR_CODE = {
     NO_EXHIBITION: 'PPVE0019',
   };
-  
+
   if (error?.code === ERROR_CODE.NO_EXHIBITION) {
     history.push('/');
-    return
+    return;
   }
-}
+};
 
-export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, setWish, saleStatus, memberOnly, hsCode, isMobileSize, setOptionVisible, optionVisible, limitaions, naverPayBtnKey }) {
+export default function ButtonGroup({
+  selectedOption,
+  productNo,
+  canBuy,
+  wish,
+  setWish,
+  saleStatus,
+  memberOnly,
+  hsCode,
+  isMobileSize,
+  setOptionVisible,
+  optionVisible,
+  limitaions,
+  naverPayBtnKey,
+}) {
   const history = useHistory();
   const headerDispatch = useHeaderDispatch();
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
@@ -114,39 +126,35 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   }, [isMobileSize, optionVisible]);
 
   const nextUri = history.location.pathname;
-  const getHistoryInfo = pathname => ({
+  const getHistoryInfo = (pathname) => ({
     pathname,
     state: { next: nextUri },
   });
 
   const goToOrderPage = (result, pathname) => {
     if (result?.code) {
-        ERROR_CODE_MAPPING_ROUTE[result.code]?.msg 
-          ?
-            openAlert(
-              ERROR_CODE_MAPPING_ROUTE[result.code]?.msg, 
-              () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route))
-            )
-          :
-            openAlert(result?.message);
-      } else {
-        history.push({
-          pathname,
-          search: '?' + qs.stringify(result),
-        });
-      }
-  }
+      ERROR_CODE_MAPPING_ROUTE[result.code]?.msg
+        ? openAlert(ERROR_CODE_MAPPING_ROUTE[result.code]?.msg, () => () =>
+            history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route)),
+          )
+        : openAlert(result?.message);
+    } else {
+      history.push({
+        pathname,
+        search: '?' + qs.stringify(result),
+      });
+    }
+  };
 
   const fetchOrderSheetNo = async (no = productNo, option = selectedOption, pathname = '/order/sheet') => {
     try {
       const result = await getOrderSheetNo(no, option);
       goToOrderPage(result, pathname);
-
-    } catch(e) {
+    } catch (e) {
       e?.message && openAlert(e.message);
       console.log(e);
     }
-  }
+  };
 
   const order = (pathname = '/order/sheet', type) => {
     if (isMobileSize && !optionVisible) {
@@ -157,28 +165,27 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     if (!canBuy) {
       openAlert('옵션을 선택하세요.');
       return;
-    };
+    }
 
     if (memberOnly && !isLogin) {
       const GUEST_ERROR = 'O8001';
-      openAlert(
-        ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg, 
-        () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route))
+      openAlert(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg, () => () =>
+        history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
       );
       return;
-    };
+    }
 
     if (type === 'naverPay') {
       return;
-    };
+    }
 
     if (isLogin) {
       fetchOrderSheetNo(productNo, selectedOption, pathname);
       return;
-    };
+    }
 
     setOrderVisible(true);
-  }
+  };
 
   const gift = () => {
     if (isLogin) {
@@ -197,30 +204,28 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
         result?.error && result?.message && openAlert(result.message);
         getCartCount().then(({ data: { count } }) => setCartCount(headerDispatch, count));
       } else {
-        gc.set(products.map(product => ({ ...product, hsCode }))); // TODO.
-                                                                   // 확인필요. @jk
+        gc.set(products.map((product) => ({ ...product, hsCode }))); // TODO.
+        // 확인필요. @jk
         gc.fetch();
         setCartCount(headerDispatch, gc.items.length);
       }
-      
+
       setCartVisible(true);
-    } catch(e) {
+    } catch (e) {
       e?.message && openAlert(e.message);
       console.log(e);
     }
   };
 
-  const countProductsInCart = async productNos => {
-                                    
+  const countProductsInCart = async (productNos) => {
     if (isLogin) {
       const { data } = await getCart();
       return mapOrderCnt(
-              _.chain(data.deliveryGroups)
-              .flatMap(({ orderProducts }) => orderProducts)
-              .flatMap(({ orderProductOptions }) => orderProductOptions),
-              productNos
-            )
-              
+        _.chain(data.deliveryGroups)
+          .flatMap(({ orderProducts }) => orderProducts)
+          .flatMap(({ orderProductOptions }) => orderProductOptions),
+        productNos,
+      );
     } else {
       return mapOrderCnt(gc.items, productNos);
     }
@@ -229,21 +234,19 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
   const hasLimitedProduct = async () => {
     if (maxBuyTimeCnt > 0) {
       const counts = await countProductsInCart(selectedOption.flatMap(({ productNo }) => productNo));
-      return !_.every(counts, c => maxBuyTimeCnt - c.orderCnt > 0);
+      return !_.every(counts, (c) => maxBuyTimeCnt - c.orderCnt > 0);
     }
-    return false
-  }
+    return false;
+  };
 
   const cart = async () => {
     if (memberOnly && !isLogin) {
       const GUEST_ERROR = 'O8001';
-      openAlert(
-        ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg,
-        () => () => history.push(
-          getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
+      openAlert(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg, () => () =>
+        history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
       );
       return;
-    };
+    }
 
     if (!validateOption()) {
       return;
@@ -261,7 +264,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     }
   };
 
-  function validateOption () {
+  function validateOption() {
     if (isMobileSize && !optionVisible) {
       setOptionVisible(true);
       return false;
@@ -271,12 +274,10 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       openAlert('옵션을 선택하세요.');
       return false;
     }
-    ;
     return true;
   }
 
-  const selectedOptionsProductNos = useMemo(
-    () => selectedOption.map(o => o.productNo), [selectedOption]);
+  const selectedOptionsProductNos = useMemo(() => selectedOption.map((o) => o.productNo), [selectedOption]);
 
   const wishHandler = () => {
     if (!isLogin) {
@@ -291,13 +292,12 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     postWish(selectedOptionsProductNos);
   };
 
-  async function postWish (productNos) {
+  async function postWish(productNos) {
     try {
       const requestBody = { productNos };
       const { data } = await postProfileLikeProducts(requestBody);
       setWish(data[0].result);
-    }
-    catch (e) {
+    } catch (e) {
       e?.message && openAlert(e.message);
     }
   }
@@ -306,6 +306,7 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
     // main
     e.preventDefault();
     if (isSoldOut) {
+      openAlert('상품의 재고가 충분하지 않습니다.');
       return;
     }
     switch (type) {
@@ -331,27 +332,26 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       default:
         break;
     }
-  }
+  };
 
   // hsValidation
   const hsValidator = createRef(null);
-  const hsValidation = async validation => await hsValidator.current.validation(validation);
+  const hsValidation = async (validation) => await hsValidator.current.validation(validation);
 
   // naverPay
-  const naver =  window.naver;
+  const naver = window.naver;
   const naverPayOrder = () => {
     order('', 'naverPay');
 
-    const requestBody = selectedOption.map(o => ({
+    const requestBody = selectedOption.map((o) => ({
       productNo: o.productNo,
       optionNo: o.optionNo,
       additionalProductNo: 0,
       orderCnt: o.orderCnt,
     }));
-    
+
     orderPayment.naverPayOrder(requestBody, naverPayErrorHandle);
-    
-  }
+  };
   const naverPayWishHandler = () => orderPayment.naverPayWishList(productNo);
 
   const naverPayRef = useRef(null);
@@ -360,16 +360,16 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
       naverPayRef.current.innerHTML = '';
 
       naver.NaverPayButton.apply({
-      EMBED_ID: 'naverPay',
-      BUTTON_KEY: 'AAAA', //buttonKey,
-      TYPE: "A",
-      COLOR: 1,
-      COUNT: 2,
-      ENABLE: 'Y', // 'Y' / 'N'
-      BUY_BUTTON_HANDLER: naverPayOrder,
-      WISHLIST_BUTTON_HANDLER: naverPayWishHandler
-    });
-    };
+        EMBED_ID: 'naverPay',
+        BUTTON_KEY: 'AAAA', //buttonKey,
+        TYPE: 'A',
+        COLOR: 1,
+        COUNT: 2,
+        ENABLE: 'Y', // 'Y' / 'N'
+        BUY_BUTTON_HANDLER: naverPayOrder,
+        WISHLIST_BUTTON_HANDLER: naverPayWishHandler,
+      });
+    }
   }, [selectedOption]);
 
   const isSoldOut = useMemo(() => saleStatus === 'SOLDOUT', [saleStatus]);
@@ -381,71 +381,94 @@ export default function ButtonGroup ({ selectedOption, productNo, canBuy, wish, 
         <div className="result_btn_box">
           <ul>
             <li className="like">
-              <a href="#none" className={`btn_icon ${wish && 'on'}`}
-                 onClick={e => handleClick(e, 'wish')}>찜하기</a>
+              <a href="#none" className={`btn_icon ${wish && 'on'}`} onClick={(e) => handleClick(e, 'wish')}>
+                찜하기
+              </a>
             </li>
             <li className="cart">
-              <a
-                href="/cart"
-                className="btn_icon"
-                onClick={e => handleClick(e, 'cart')}
-              >장바구니</a>
+              <a href="/cart" className="btn_icon" onClick={(e) => handleClick(e, 'cart')}>
+                장바구니
+              </a>
               <HsValidator ref={hsValidator} />
             </li>
             <li className="gift">
-              <a 
-                href="/gift/sheet" 
-                className="btn_icon" 
-                onClick={ e => handleClick(e, 'gift') }
-              >선물</a>
+              <a href="/gift/sheet" className="btn_icon" onClick={(e) => handleClick(e, 'gift')}>
+                선물
+              </a>
             </li>
             <li className="final">
-              { saleStatus === '' && <a 
-                href="/order/sheet" 
-                onClick={ e => handleClick(e, 'order')} 
-                className="btn_style direct" 
-                style={{backgroundColor: '#000'}}
-              >바로 구매하기</a>}
-              {saleStatus === 'RESERVE' && <a onClick={ e => handleClick(e, 'reserve') } href="#none" className="btn_style reservation" style={{display: 'block', backgroundColor: '#5865F5'}}>예약판매</a>}
-              {saleStatus === 'READY_RESERVE' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#ff4e4e'}}>출시예정</a>}
-              {saleStatus === 'READY' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#888'}}>일시품절</a>}
-              {saleStatus === 'SOLDOUT' && <a href="#none" className="btn_style disabled" style={{display: 'block', backgroundColor: '#ddd'}}>품절</a>}
+              {saleStatus === '' && (
+                <a
+                  href="/order/sheet"
+                  onClick={(e) => handleClick(e, 'order')}
+                  className="btn_style direct"
+                  style={{ backgroundColor: '#000' }}
+                >
+                  바로 구매하기
+                </a>
+              )}
+              {saleStatus === 'RESERVE' && (
+                <a
+                  onClick={(e) => handleClick(e, 'reserve')}
+                  href="#none"
+                  className="btn_style reservation"
+                  style={{ display: 'block', backgroundColor: '#5865F5' }}
+                >
+                  예약판매
+                </a>
+              )}
+              {saleStatus === 'READY_RESERVE' && (
+                <a href="#none" className="btn_style disabled" style={{ display: 'block', backgroundColor: '#ff4e4e' }}>
+                  출시예정
+                </a>
+              )}
+              {saleStatus === 'READY' && (
+                <a href="#none" className="btn_style disabled" style={{ display: 'block', backgroundColor: '#888' }}>
+                  일시품절
+                </a>
+              )}
+              {saleStatus === 'SOLDOUT' && (
+                <a href="#none" className="btn_style disabled" style={{ display: 'block', backgroundColor: '#ddd' }}>
+                  품절
+                </a>
+              )}
             </li>
           </ul>
         </div>
       </div>
-      <a href="#none" onClick={ e => {
-        e.preventDefault();
-        setOptionVisible(false);
-      } } className="select_closed" title="선택 목록 닫기">닫기</a>
-      {
-        giftVisible 
-          && <Notification setNotificationVisible={setGiftVisible} type='gift' />
-      }
-      {
-        cartVisible
-          && <Notification setNotificationVisible={setCartVisible} type='cart' />
-      }
-      {
-        wishVisible
-          && <Notification setNotificationVisible={setWishVisible} unusableIcon={true} type='wish' />
-      }
-      {
-        orderVisible
-          && <Notification setNotificationVisible={setOrderVisible} type='order' unusableIcon={true} goOrder={fetchOrderSheetNo} popupType="popCont" />
-      }
-      {
-        alertVisible 
-          && <Alert onClose={closeModal}>{alertMessage}</Alert>
-      }
-      {
-        naverPayBtnKey && (
-          <div className="cont naver" style={{ marginTop: '24px', paddingTop: 0 }}>
-            <button ref={naverPayRef} style={{ width: '100%', display: 'flex', justifyContent: 'end' }} id="naverPay"></button>
-          </div>
-        )
-      }
+      <a
+        href="#none"
+        onClick={(e) => {
+          e.preventDefault();
+          setOptionVisible(false);
+        }}
+        className="select_closed"
+        title="선택 목록 닫기"
+      >
+        닫기
+      </a>
+      {giftVisible && <Notification setNotificationVisible={setGiftVisible} type="gift" />}
+      {cartVisible && <Notification setNotificationVisible={setCartVisible} type="cart" />}
+      {wishVisible && <Notification setNotificationVisible={setWishVisible} unusableIcon={true} type="wish" />}
+      {orderVisible && (
+        <Notification
+          setNotificationVisible={setOrderVisible}
+          type="order"
+          unusableIcon={true}
+          goOrder={fetchOrderSheetNo}
+          popupType="popCont"
+        />
+      )}
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+      {naverPayBtnKey && (
+        <div className="cont naver" style={{ marginTop: '24px', paddingTop: 0 }}>
+          <button
+            ref={naverPayRef}
+            style={{ width: '100%', display: 'flex', justifyContent: 'end' }}
+            id="naverPay"
+          ></button>
+        </div>
+      )}
     </>
-    
-  )
+  );
 }
