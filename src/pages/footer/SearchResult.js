@@ -78,6 +78,7 @@ export default function SearchResult({match}) {
     return {
       ...orderByQuery,
       'filter.keywords': keyword,
+      'filter.soldout': true,
       hasTotalCount: true,
       pageNumber,
       pageSize
