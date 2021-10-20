@@ -37,7 +37,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
     if (guestToken) Object.assign(headers, { guestToken });
   }
 
-  const exceptErrorUrls = ['authentications', 'cart/count'];
+  const exceptErrorUrls = ['authentications/sms', 'cart/count'];
   const goErrorCodes = ['AE001', 'PRDT0001'];
 
   return await axios({
