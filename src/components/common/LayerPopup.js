@@ -31,7 +31,6 @@ const LayerPopup = ({ children, onClose, className, popContClassName = '', popCo
   // ux-common.js 내 popScrollChk 함수 참조
   const _getPopupConstStyle = () => {
     const style = !!popContStyle ? {...popContStyle} : {};
-
     const scrollChild = children?.filter(child => child?.props?.className.includes('pop_cont_scroll'))[0];
     let $scroll = scrollChild?.ref;
 
