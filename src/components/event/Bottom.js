@@ -4,7 +4,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { getUrlParam } from '../../utils/location';
 import moment from 'moment';
 import LayerPopup from '../common/LayerPopup';
-import { useAlert } from '../../hooks';
+import { useAlert, useClickOutside } from '../../hooks';
 import Alert from '../common/Alert';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
@@ -55,7 +55,10 @@ const EventBottom = () => {
   const [swiperTab, setSwiperTab] = useState(null);
   const [showLabel, setShowLabel] = useState('전체');
   const [sortSelect, setSortSelect] = useState(false);
-  
+
+  const sortRef = useRef(null);
+
+  useClickOutside(sortRef, () => setSortSelect(false));
 
   const fetchDisplayEvents = async () => {
     const keyword = tags[tabState];
@@ -310,7 +313,7 @@ const EventBottom = () => {
             <div className="event_list">
               <div className="category_head">
                 <p className="tit">{showLabel}</p>
-                <div className={`itemsort ${sortSelect ? 'itemsort--open' : ''}`} aria-label="기획전 전체 정렬">
+                <div className={`itemsort ${sortSelect ? 'itemsort--open' : ''}`} aria-label="기획전 전체 정렬" ref={sortRef}>
                   <button className="itemsort__button" onClick={() => setSortSelect(!sortSelect)}>
                     <span className="itemsort__button__label sr-only">정렬기준:</span>
                     <span className="itemsort__button__selected">{newest ? '최신순' : '오래된 순'}</span>

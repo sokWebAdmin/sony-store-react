@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useClickOutside } from '../../hooks';
 
 const grades = ['전체', 'A급', 'B급', 'C급'];
 
 const GradeSelect = ({ tabState, grade, setGrade }) => {
   const [sortSelect, setSortSelect] = useState(false);
 
+  const selectRef = useRef(null);
+
+  useClickOutside(selectRef, () => setSortSelect(false));
+
   return (
     <div className="section_top">
       <h2 className="title">{tabState}</h2>
-      <div className={`itemsort ${sortSelect ? 'itemsort--open' : ''}`} aria-label="상품 정렬">
+      <div className={`itemsort ${sortSelect ? 'itemsort--open' : ''}`} aria-label="상품 정렬" ref={selectRef}>
         <button className="itemsort__button" onClick={() => setSortSelect(!sortSelect)}>
           <span className="itemsort__button__label sr-only">정렬기준:</span>
           <span className="itemsort__button__selected">{grade}</span>
