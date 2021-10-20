@@ -15,6 +15,7 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
     const { data } = await postProductsGroupManagementCode({
       groupManagementCodes,
       saleStatus: 'ALL_CONDITIONS',
+      isSoldOut: true,
     });
 
     const groupByCode = _.chain(data)
