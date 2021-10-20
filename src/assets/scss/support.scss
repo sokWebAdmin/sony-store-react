@@ -2312,3 +2312,27 @@
     }
   }
 }
+
+.way_box .storeMap.open+.way_box_transp.mo {
+  margin-top: 48px
+}
+
+.storeMap {
+  display: none;
+  width: 100%;
+  height: 800px
+}
+
+@media screen and (max-width: 1280px) {
+  .storeMap {
+    margin-top: 40px;
+    height: 560px
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .storeMap {
+    margin-top: 48px;
+    height: 400px
+  }
+}
