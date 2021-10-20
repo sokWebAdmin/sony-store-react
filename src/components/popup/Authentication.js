@@ -11,7 +11,7 @@ import Alert from '../common/Alert';
 import { putDormancy } from '../../api/member';
 import { useHistory } from 'react-router-dom';
 
-export default function Authentication({ title, setVisible, usage="RELEASE_DORMANT", authType="" }) {
+export default function Authentication({ title, setVisible, setMyFormName, usage = 'RELEASE_DORMANT', authType = '' }) {
   const history = useHistory();
   const initMemberInfo = { mobileNo: '', memberName: '' };
   const [memberInfo, setMemberInfo] = useState(initMemberInfo);
@@ -101,6 +101,7 @@ export default function Authentication({ title, setVisible, usage="RELEASE_DORMA
     if (response.status === 200) {
       setAuthCheck(true);
       openAlert('인증되었습니다.');
+      setMyFormName(name);
     } else {
       openAlert(response.data.message);
     }
