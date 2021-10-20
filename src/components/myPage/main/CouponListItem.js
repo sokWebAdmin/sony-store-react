@@ -14,7 +14,8 @@ const CouponListItem = ({ couponIssueNo, couponName, discountRate, minSalePrice,
             No. <span className="num">{couponIssueNo}</span>
           </span>
           <p className="tit">
-            {couponName} <span className="percentage">{discountRate}%</span> 할인
+            <span dangerouslySetInnerHTML={{ __html: couponName }} />
+            <span className="percentage">{discountRate}%</span> 할인
           </p>
           <p className="cut_txt">{toCurrencyString(minSalePrice)}원 이상 구매 시 </p>
         </div>
