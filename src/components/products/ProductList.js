@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { unescape } from 'lodash';
 
 //util
@@ -7,6 +7,7 @@ import Product from './Product';
 import Banner from './Banner';
 import { getProductSearch, postProductsGroupManagementCode } from '../../api/product';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useClickOutside } from '../../hooks';
 
 const orderList = [
   {
@@ -38,6 +39,10 @@ export default function ProductList({category}) {
   const [orderOpen, setOrderOpen] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const productsRef = useRef(null);
+
+  useClickOutside(productsRef, () => setOrderOpen(false));
 
   useEffect(() => {
     setTotalCount(0);
@@ -152,9 +157,9 @@ export default function ProductList({category}) {
         <span className="list__info__name">제품</span>
         <span className="list__info__num">({totalCount})</span>
       </h2>
-      <div className={`itemsort ${orderOpen ? "itemsort--open" : ""}`} aria-label="상품 정렬">
+      <div className={`itemsort ${orderOpen ? "itemsort--open" : ""}`} aria-label="상품 정렬" ref={productsRef}>
         <button className="itemsort__button" onClick={e => {
-          setOrderOpen(true);
+          setOrderOpen(!orderOpen);
           e.preventDefault();
         }}>
           <span className="itemsort__button__label sr-only">정렬기준:</span>
