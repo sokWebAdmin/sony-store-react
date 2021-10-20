@@ -84,10 +84,10 @@ export default function Footer() {
                   </div>
                 </div>
                 <select defaultValue="default" ref={selectRef} onChange={e => {
-                  window.open(e.target.value, '_blank');
+                  let popup = window.open('about:blank', '_blank');
+                  popup.location = e.target.value;
                   selectRef.current.value='default';
                 }} className={`footer__family__link footer__mo ${moActive && 'footer__family__link--active'}`}>
-                  <option value="default" disabled hidden style={{display: 'none'}}>Sony Family</option>
                   <optgroup label="Sony Family" >
                     {
                       SONY_FAMILY.map(({ url, name }) => <option value={url} key={`footer-option-family-${name}`}>{ name }</option>)
