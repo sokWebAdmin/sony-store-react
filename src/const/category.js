@@ -305,7 +305,7 @@ const gnbCategories = [
       },
       {
         label: '정품등록 안내',
-        href: 'https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa',
+        href: 'https://www.sony.co.kr/scs/handler/Index-Start?asa=Sa',
       },
       {
         label: '제품 지원',
@@ -343,7 +343,7 @@ const categoriesLinkMap = {
   speaker: 'https://www.sony.co.kr/electronics/wireless-speakers-docks/t/wireless-speakers',
   homeaudio: 'https://www.sony.co.kr/electronics/audio-systems/t/audio-components',
   recorder: 'https://www.sony.co.kr/electronics/walkman-digital-music-players/t/walkman',
-  lens: 'https://www.sony.co.kr/electronics/interchangeable-lens-camera-products/t/interchangeable-lens-cameras'
-}
+  lens: 'https://www.sony.co.kr/electronics/interchangeable-lens-camera-products/t/interchangeable-lens-cameras',
+};
 
 export { tagColorMap, categoriesExtraDataMap, espCategoryNo, gnbCategories, categoriesLinkMap };
