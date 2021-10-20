@@ -114,7 +114,6 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
                     </div>
                     <div className="info_cell prd_info">
                       <p className="prd_tit">{product.productName}</p>
-                      <p className="prd_desc">{product.mainOption}</p>
                     </div>
                     <div className="info_cell prd_price">
                       <p className="prd_tit">
