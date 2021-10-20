@@ -12,6 +12,7 @@ const selector = {
 
 const validator = {
   isDuplicated(selectedOptions, selectedNo) {
+    console.log(selectedOptions, selectedNo);
     return selectedOptions.some((option) => option.optionNo === selectedNo);
   },
 };
@@ -77,10 +78,13 @@ export default function SelectBox({
       if (validator.isDuplicated(selectedValue.options, option.optionNo)) {
         alert('이미 선택된 옵션입니다.');
       } else {
-        setSelectedValue(({ options }) => ({
-          label: option.label,
-          options: [option],
-        }));
+        setSelectedValue(({ options }) => {
+          const _options = options.length === 0 ? [option] : options.concat(option);
+          return {
+            label: option.label,
+            options: _options,
+          }
+        });
         selectOption(option);
       }
       onToggle(false);
