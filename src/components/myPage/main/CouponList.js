@@ -18,9 +18,10 @@ const CouponList = () => {
     const res = await getCoupons({
       query: { pageNumber, pageSize, usable: true },
     });
-    setCoupons(res.data.items);
 
+    setCoupons(renameCoupons(res.data.items));
     showLoadMoreBtn(res.data.items);
+
     nextPage.current = 2;
   };
 
@@ -34,7 +35,7 @@ const CouponList = () => {
       params: { pageNumber, pageSize, usable: true },
     });
     showLoadMoreBtn(res.data.items);
-    setCoupons([...coupons, ...res.data.items]);
+    setCoupons([...coupons, ...renameCoupons(res.data.items)]);
     nextPage.current += 1;
   };
 
@@ -59,6 +60,23 @@ const CouponList = () => {
 
   const hasCoupons = (coupons) => {
     return coupons.length > 0;
+  };
+
+  // '/'이 들어간 쿠폰명들은 개행처리한다.
+  const renameCoupons = (conponResponseItems) => {
+    return conponResponseItems.map((coupon) => {
+      const newCouponName = coupon.couponName.split('/').reduce((acc, splitName, index, splitNames) => {
+        if (index === splitNames.length - 1) {
+          acc += `${splitName}`;
+        } else {
+          acc += `${splitName}<br />`;
+        }
+
+        return acc;
+      }, '');
+
+      return { ...coupon, couponName: newCouponName };
+    });
   };
 
   return (

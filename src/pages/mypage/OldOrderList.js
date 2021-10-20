@@ -15,26 +15,6 @@ import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 
 export default function OldOrderList() {
-  //FIXME: 개발후 삭제
-  const mockData = [
-    {
-      orderid: '20210727-2V3743',
-      createdate: '2021-07-27 17:06:13',
-      customernr: '2780336',
-      totalprice: 1800,
-      status: '01',
-      seqno: 'HDR-AZ1/W',
-    },
-    {
-      orderid: '20210720-203G03',
-      createdate: '2021-07-20 12:02:46',
-      customernr: '2780336',
-      totalprice: 1500,
-      status: '07',
-      seqno: 'A5000L/B',
-    },
-  ];
-
   const [searchPeriod, setSearchPeriod] = useState({
     startDate: new Date(addMonth(new Date(), -3)),
     endDate: new Date(),
@@ -42,7 +22,6 @@ export default function OldOrderList() {
   const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(false);
   const nextPage = useRef(2);
 
-  // const [oldOrderProducts, setOldOrderProducts] = useState([...mockData]);
   const [oldOrderProducts, setOldOrderProducts] = useState([]);
 
   useEffect(() => {
