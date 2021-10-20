@@ -43,7 +43,7 @@ export default function SearchResult({match}) {
   const dispatch = useBoardDispatch();
 
   const [tabState, setTabState] = useState("ALL");
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState(initalKeyword);
   const [orderBy, setOrderBy] = useState('MD_RECOMMEND');
   const [newest, setNewest] = useState(true);
   const [noticeNewest, setNoticeNewest] = useState(true);
