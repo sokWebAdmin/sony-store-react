@@ -1,15 +1,20 @@
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
 import { COORDINATE, MAP_CLIENT_ID } from '../../const/support';
+import { useWindowSize } from '../../utils/utils';
 
 function NaverMapAPI() {
   const navermaps = window.naver.maps;
+
+  const size = useWindowSize();
+  const isMobile = size <= 640;
   const storeMapStyle = {
     width: '100%',
-    height: '90vh',
+    height: isMobile ? '400px' : '560px',
     background: '#ddd',
     display: 'block',
-    marginTop: '48px'
+    marginTop: isMobile ? '48px' : '40px'
   };
+  
   return (
     <NaverMap
       mapDivId={'maps-getting-started-uncontrolled'}
@@ -17,9 +22,10 @@ function NaverMapAPI() {
       defaultCenter={ COORDINATE }
       defaultZoom={13}
       zoom={13}
+      zoomControl={true}
       scaleControl={false}
       logoControl={false}
-      zoomControl={true}
+      mapDataControl={false}
       mapTypeControl={true}
       mapTypeControlOptions={{
         style: window.naver.maps.MapTypeControlStyle.BUTTON,
