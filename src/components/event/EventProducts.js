@@ -22,7 +22,7 @@ const ERROR_CODE_MAPPING_ROUTE = {
   },
 };
 
-const forGradeTags = ['liveon', 'refurbish', 'employee'];
+const forGradeTags = ['liveon', 'refurbish', 'employee', 'asc'];
 
 const filterProductsByGrade = (event, isGrade) => event?.section.flatMap(({ products }) => products)?.filter(({ hsCode }) => isGrade === !!hsCode);
 
@@ -143,6 +143,8 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
     }
   };
 
+  const getStickerLabel = (product) => product.stickerLabels.find(label => label.includes('급'));
+
   useEffect(() => {
     if (!filterLabel || filterLabel === '전체') {
       setSection(filterProductsByGrade(event, isMemberGrade));
@@ -194,9 +196,9 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
             <span className="unit">원</span> OFF
                   </span>
         )}
-        {product.stickerLabels.length > 0 && (
-          <span className={`badge_state state_${product.stickerLabels[0].substring(0, 1).toLowerCase()}`}>
-                    {product.stickerLabels[0].substring(0, 1)}
+        {getStickerLabel(product) && (
+          <span className={`badge_state state_${getStickerLabel(product).substring(0, 1).toLowerCase()}`}>
+                    {getStickerLabel(product).substring(0, 1)}
             <span className="txt">급</span>
                   </span>
         )}
@@ -301,7 +303,7 @@ const SectionImage = styled.div`
   position: relative; 
   max-width: ${({ onlyMo }) => onlyMo ? '760px' : '1200px'}; 
   margin: 0 auto; 
-  padding-top: 80px;
+  padding-top: 40px;
 `;
 
 export default EventProducts;
