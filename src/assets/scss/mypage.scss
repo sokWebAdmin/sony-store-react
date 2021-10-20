@@ -3657,3 +3657,11 @@
     min-width: 48%;
   }
 }
+
+.member_info {
+.name_desc {
+  @include only-pc{
+    padding-left: 27px;
+  }
+}
+}
