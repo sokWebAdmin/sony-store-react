@@ -57,6 +57,13 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
     el.focus();
   }
 
+  const handleEnter = (event) => {
+    if (event.key.toLowerCase() === 'enter') {
+      shippingInfoLaterInputContact.current.focus();
+      event.preventDefault();
+    }
+  };
+
   return (
     <>
       <div className="acc_form">
@@ -75,6 +82,7 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
                 name="receiverName"
                 value={shipping.receiverName}
                 onChange={onChangeInput}
+                onKeyDown={handleEnter}
                 ref={receiverName}
               />
               <span className="focus_bg"></span>
