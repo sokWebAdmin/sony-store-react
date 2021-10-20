@@ -1,7 +1,7 @@
 import React from 'react';
 import { toCurrencyString } from '../../../utils/unit';
 
-const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes, deleteItem }) => {
+const ProductList = ({ products, setProducts, setBeforeCountProducts, checkedIndexes, setCheckedIndexes, deleteItem }) => {
   const onCheck = (event, index) => {
     const { checked } = event.currentTarget;
 
@@ -9,7 +9,8 @@ const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes,
       const newCheckedIndexes = [...checkedIndexes, index];
 
       setCheckedIndexes(newCheckedIndexes);
-    } else {
+    }
+    else {
       const newCheckedIndexes = checkedIndexes.filter((v) => v !== index);
 
       setCheckedIndexes(newCheckedIndexes);
@@ -18,6 +19,15 @@ const ProductList = ({ products, setProducts, checkedIndexes, setCheckedIndexes,
 
   const changeQuantity = (productIndex, value) => {
     const newProducts = [...products];
+    setBeforeCountProducts(JSON.parse(JSON.stringify(newProducts))); // 비회원
+    // 장바구니에서
+    // 재고 소진등
+    // 문제로 해당
+    // 상품이
+    // 장바구니에서
+    // 사라지는 문제
+    // 보정하기
+    // 위함..
 
     newProducts[productIndex].orderCnt += value;
     newProducts[productIndex].update = true;

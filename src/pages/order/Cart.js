@@ -51,6 +51,16 @@ const Cart = ({ location }) => {
   // state
   const [wait, setWait] = useState(false);
   const [products, setProducts] = useState([]);
+  const [beforeCountProducts, setBeforeCountProducts] = useState([]); // 비회원
+                                                                      // 장바구니에서
+                                                                      // 재고 소진등
+                                                                      // 문제로 해당
+                                                                      // 상품이
+                                                                      // 장바구니에서
+                                                                      // 사라지는
+                                                                      // 문제
+                                                                      // 보정하기
+                                                                      // 위한 데이터
   const putProducts = useMemo(
     () =>
       products.map((product) => ({
@@ -101,14 +111,24 @@ const Cart = ({ location }) => {
       const body = getGuestCartRequest(gc.items);
       fetchGuestCart(body)
         .then((data) => {
-          mapData(data);
-          gc.fetch();
-          setCartCount(headerDispatch, gc.items.length);
-        })
-        .catch(console.error)
-        .finally(() => setWait(false));
+        mapData(data);
+        checkGuestCartMissingProduct(getMappedData(data.deliveryGroups),
+          gc.items);
+        gc.fetch();
+        setCartCount(headerDispatch, gc.items.length);
+      }).catch(console.error).finally(() => setWait(false));
     }
   };
+
+  function checkGuestCartMissingProduct (
+    availableProducts, guestCartStorageItems) {
+    if (guestCartStorageItems.length > availableProducts.length) {
+      console.log(availableProducts);
+      alert('구매 불가한 상품이 포함되어있어 제거 되었습니다.');
+      gcUpdate(availableProducts);
+      location.reload();
+    }
+  }
 
   const goOrder = async () => {
     try {
@@ -117,7 +137,8 @@ const Cart = ({ location }) => {
         deleteGuestCart(checkedIndexes);
       }
       history.push(`/order/sheet?orderSheetNo=${orderSheetNo}`);
-    } catch (err) {
+    }
+    catch (err) {
       console.error(err);
     }
   };
@@ -236,10 +257,17 @@ const Cart = ({ location }) => {
   }
 
   async function updateGuestCart() {
-    gcUpdate();
+    gcUpdate(products);
 
     try {
       const data = await fetchGuestCart(gc.items);
+      const newProducts = getMappedData(data.deliveryGroups);
+      if (beforeCountProducts.length !== newProducts.length) {
+        alert('상품의 재고가 충분치 않습니다.');
+        gcUpdate(beforeCountProducts);
+        window.location.reload();
+        return;
+      }
       mapData(data);
     } catch (err) {
       console.error(err);
@@ -281,10 +309,7 @@ const Cart = ({ location }) => {
     init();
   }
 
-  function gcUpdate() {
-    if (!products.length) {
-      throw new Error('products state is empty array');
-    }
+  function gcUpdate (products) {
     const data = getGuestCartRequest(products);
     gc.cover(data);
   }
@@ -300,15 +325,23 @@ const Cart = ({ location }) => {
     }));
   }
 
-  function mapData(responseData) {
-    const { deliveryGroups, price } = responseData;
-
-    if (!deliveryGroups?.length) {
+  function mapData (responseData) {
+    if (!responseData?.deliveryGroups?.length) {
       reset();
       return;
     }
+    const result = getMappedData(responseData.deliveryGroups);
+    const { price } = responseData;
+    setProducts(result);
+    setAmount(price);
+  }
 
-    const result = deliveryGroups.flatMap((delivery) =>
+  function getMappedData (deliveryGroups) {
+    if (!deliveryGroups?.length) {
+      return [];
+    }
+
+    return deliveryGroups.flatMap((delivery) =>
       delivery.orderProducts.flatMap((productGroup) =>
         productGroup.orderProductOptions.flatMap((product) => {
           // debug pores
@@ -329,12 +362,9 @@ const Cart = ({ location }) => {
         }),
       ),
     );
-
-    setProducts(result);
-    setAmount(price);
   }
 
-  function reset() {
+  function reset () {
     setProducts([]);
     setAmount(null);
   }
@@ -363,6 +393,7 @@ const Cart = ({ location }) => {
                     <ProductList
                       products={products}
                       setProducts={setProducts}
+                      setBeforeCountProducts={setBeforeCountProducts}
                       deleteItem={deleteItem}
                       checkedIndexes={checkedIndexes}
                       setCheckedIndexes={setCheckedIndexes}
