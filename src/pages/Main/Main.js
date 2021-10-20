@@ -626,13 +626,15 @@ export default function Main() {
               </h2>
               <ul className="main__help__lists">
                 <li className="main__help__list notice">
-                  <Link to="/notice">FAQ & 공지사항</Link>
+                  <Link to="/faq">FAQ & 공지사항</Link>
                 </li>
                 <li className="main__help__list location">
                   <Link to="/store-info">매장안내</Link>
                 </li>
                 <li className="main__help__list customer">
-                  <a href="javascript:void(0)" onClick={onClickServiceCenter}>고객센터</a>
+                  <a href="javascript:void(0)" onClick={onClickServiceCenter}>
+                    고객센터
+                  </a>
                 </li>
                 <li className="main__help__list service">
                   <a href="https://www.sony.co.kr/electronics/support" target="_blank">
