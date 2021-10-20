@@ -84,6 +84,7 @@ export default function ProductList({category}) {
         pageSize: 12,
         hasOptionValues: true,
         'filter.saleStatus': 'ALL_CONDITIONS',
+        'filter.soldout': true,
         ...orderList[currentOrder.index].query,
       });
 
