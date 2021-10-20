@@ -33,7 +33,6 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   const validation = (products) => products.some(({ productCoupons }) => !!productCoupons.length) || reject();
 
   const reject = () => {
-    alert('사용 가능한 쿠폰이 없습니다.');
     setReject(true);
   };
 
