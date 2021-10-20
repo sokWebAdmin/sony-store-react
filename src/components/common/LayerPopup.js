@@ -43,7 +43,7 @@ const LayerPopup = ({ children, onClose, className, popContClassName = '', popCo
     }
 
     const scrollChild = tempChildren?.filter(child => child?.props?.className?.includes('pop_cont_scroll'))[0];
-    let $scroll = scrollChild?.ref;
+    let $scroll = scrollChild?.ref || {};
 
     if (popContClassName?.includes('scrollH') && $wrap.current && $scroll.current) {
       const _windowH = windowSize.height - 160;
