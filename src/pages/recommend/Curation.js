@@ -29,7 +29,7 @@ export default function Curation() {
 
   const iframePart = () => {
     return {
-      __html: `<iframe src="${url}" width="960px" height="1269px"></iframe>`,
+      __html: `<iframe src="${url}" width="100%" height="1269px"></iframe>`,
     };
   };
 
