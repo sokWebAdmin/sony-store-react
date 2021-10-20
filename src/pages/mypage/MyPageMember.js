@@ -294,6 +294,10 @@ export default function MyPageMember() {
     if (myForm.gender === '2') return '여';
   }, [myForm])
 
+  const setMyFormName = (name) => {
+    setMyForm({ ...myForm, firstname: name });
+  };
+
     return (
     <>
       <SEOHelmet title={"마이페이지 : 회원 정보 수정"} />
@@ -347,6 +351,7 @@ export default function MyPageMember() {
                                 && <Authentication 
                                       title="개명 회원 본인 확인" 
                                       setVisible={setRenameVisible} 
+                                      setMyFormName={setMyFormName}
                                       usage="JOIN"
                                       authType="Rename" 
                                     />
