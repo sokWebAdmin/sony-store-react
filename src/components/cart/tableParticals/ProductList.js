@@ -19,15 +19,15 @@ const ProductList = ({ products, setProducts, setBeforeCountProducts, checkedInd
 
   const changeQuantity = (productIndex, value) => {
     const newProducts = [...products];
-    setBeforeCountProducts(JSON.parse(JSON.stringify(newProducts))); // 비회
-                                                                    // 장바구니에서
-                                                                    // 재고 소진등
-                                                                    // 문제로 해당
-                                                                    // 상품이
-                                                                    // 장바구니에서
-                                                                    // 사라지는 문제
-                                                                    // 보정하기
-                                                                    // 위함..
+    setBeforeCountProducts(JSON.parse(JSON.stringify(newProducts))); // 비회원
+    // 장바구니에서
+    // 재고 소진등
+    // 문제로 해당
+    // 상품이
+    // 장바구니에서
+    // 사라지는 문제
+    // 보정하기
+    // 위함..
 
     newProducts[productIndex].orderCnt += value;
     newProducts[productIndex].update = true;
