@@ -12,7 +12,6 @@ const selector = {
 
 const validator = {
   isDuplicated(selectedOptions, selectedNo) {
-    console.log(selectedOptions, selectedNo);
     return selectedOptions.some((option) => option.optionNo === selectedNo);
   },
 };
