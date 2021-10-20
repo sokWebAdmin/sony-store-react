@@ -119,7 +119,7 @@ export default function TobContent({
           />
           
           {/* 총 상품금액 */}
-          <div className="result_list">
+          <div className={`result_list ${selectedOption?.length > 0 && 'on'}`}>
             <div className="result_chk_box">
               <p className="tit">총 상품금액 <span className="s_txt">(총 <span className="count">{totalCnt > 0 ? totalCnt : "-"}</span>개)</span></p>
               <p className="result_price"><span className="num">{totalPrice > 0 ? wonComma(totalPrice) : "-"}</span> 원</p>
