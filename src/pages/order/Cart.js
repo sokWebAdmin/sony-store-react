@@ -111,14 +111,25 @@ const Cart = ({ location }) => {
       const body = getGuestCartRequest(gc.items);
       fetchGuestCart(body)
         .then((data) => {
-          mapData(data);
-          gc.fetch();
-          setCartCount(headerDispatch, gc.items.length);
-        })
-        .catch(console.error)
-        .finally(() => setWait(false));
+        mapData(data);
+        console.log(data);
+        checkGuestCartMissingProduct(getMappedData(data.deliveryGroups),
+          gc.items);
+        gc.fetch();
+        setCartCount(headerDispatch, gc.items.length);
+      }).catch(console.error).finally(() => setWait(false));
     }
   };
+
+  function checkGuestCartMissingProduct (
+    availableProducts, guestCartStorageItems) {
+    if (guestCartStorageItems.length > availableProducts.length) {
+      console.log(availableProducts);
+      alert('구매 불가한 상품이 포함되어있어 제거 되었습니다.');
+      gcUpdate(availableProducts);
+      location.reload();
+    }
+  }
 
   const goOrder = async () => {
     try {
@@ -127,7 +138,8 @@ const Cart = ({ location }) => {
         deleteGuestCart(checkedIndexes);
       }
       history.push(`/order/sheet?orderSheetNo=${orderSheetNo}`);
-    } catch (err) {
+    }
+    catch (err) {
       console.error(err);
     }
   };
@@ -299,9 +311,6 @@ const Cart = ({ location }) => {
   }
 
   function gcUpdate (products) {
-    if (!products.length) {
-      throw new Error('products state is empty array');
-    }
     const data = getGuestCartRequest(products);
     gc.cover(data);
   }
