@@ -29,10 +29,20 @@ const LayerPopup = ({ children, onClose, className, popContClassName = '', popCo
   }, [container]);
 
   // ux-common.js 내 popScrollChk 함수 참조
+  // - scrollChild 의 경우, LayerPopup 바로 하위에 pop_cont_scroll 가 있는 경우로 체크
   const _getPopupConstStyle = () => {
     const style = !!popContStyle ? {...popContStyle} : {};
 
-    const scrollChild = children?.filter(child => child?.props?.className.includes('pop_cont_scroll'))[0];
+    let tempChildren = [];
+    if (children) {
+      if (Array.isArray(children)) {
+        tempChildren = [...children];
+      } else {
+        tempChildren = [children];
+      }
+    }
+
+    const scrollChild = tempChildren?.filter(child => child?.props?.className?.includes('pop_cont_scroll'))[0];
     let $scroll = scrollChild?.ref;
 
     if (popContClassName?.includes('scrollH') && $wrap.current && $scroll.current) {
