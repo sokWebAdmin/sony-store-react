@@ -1037,6 +1037,9 @@
           @include only-mo{
             margin-left:24px;
           }
+          @include only-tab{
+            margin-left:24px;
+          }
           &__inner {
             position: absolute;
             bottom: 40px;
