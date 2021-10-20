@@ -68,8 +68,9 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   };
 
   const getCouponDisplayName = (couponName, couponDiscountAmt) => {
-    console.log(`${wonComma(couponDiscountAmt)}원 할인 (${couponName})`);
-    return `${wonComma(couponDiscountAmt)}원 할인 (${couponName})`;
+    console.log(`${couponDiscountAmt}원 할인 (${couponName})`);
+    debugger;
+    return `${couponDiscountAmt}원 할인 (${couponName})`;
   };
 
   function mapProducts(products) {
@@ -141,6 +142,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
                 (item) => {
                   const a = getCouponDisplayName(item?.couponName, item?.couponDiscountAmt);
                   console.log(item, a, 1);
+                  debugger;
                   return {
                     optionNo: item.couponIssueNo,
                     label: item.displayCouponName,
