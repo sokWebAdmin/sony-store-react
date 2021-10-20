@@ -1682,6 +1682,12 @@
         &:after {
           content: '하기';
         }
+        &:disabled{
+          border-color:#ddd;
+          &:after{
+            content:"";
+          }
+        }
       }
       .ico {
         display: inline-block;
