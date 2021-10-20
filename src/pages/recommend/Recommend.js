@@ -17,8 +17,9 @@ import { useWindowSize } from '../../utils/utils';
 import { useHistory } from 'react-router-dom';
 
 //lib
+import { TweenMax } from 'TweenMax'
 import { Controller, Scene } from 'react-scrollmagic';
-import { Tween, Timeline } from 'react-gsap';
+import { Tween } from 'react-gsap';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay } from 'swiper/core';
 
@@ -92,6 +93,13 @@ export default function Recommend({ match }) {
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay]);
 
   const onScroll = () => {
+    // window.addEventListener(
+    //   'wheel',
+    //   function (e) {
+    //     e.preventDefault();
+    //   },
+    //   { passive: false },
+    // );
     const movingStart = trigger2.current.offsetTop;
     Array(3)
       .fill(null)
@@ -104,10 +112,17 @@ export default function Recommend({ match }) {
       });
 
     const scrollScreen = (top, index) => {
+      const controller = new Controller();
+
       if (index === 0) {
         document.body.style.position = 'static';
       }
-      window.scrollTo({
+
+      controller.scrollTo(function () {
+        TweenMax.to(window, 0.5, { scrollTo: { y: top } });
+      });
+
+      controller.scrollTo({
         top,
         left: 0,
         behavior: 'smooth',
@@ -127,76 +142,86 @@ export default function Recommend({ match }) {
                 {slideBanners && (
                   <div className="reco_kv">
                     <div className={`reco_kv_inner ${isFinished === true && 'end'}`}>
-                      <Scene triggerElement=".trigger-1" duration={size.height * 0.5}>
-                        {(progress) => (
-                          <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
-                            <div
-                              id="reco_kv_img-1"
-                              className={`reco_kv_img reco_kv_img-1 ${progress === 1 ? 'end' : ''}`}
-                            >
-                              <img
-                                src={slideBanners[0]?.banners[0]?.imageUrl}
-                                alt={slideBanners[0]?.banners[0]?.name}
-                              />
-                            </div>
-                          </Tween>
-                        )}
-                      </Scene>
-                      <Scene triggerElement=".trigger-2" duration={size.height * 0.4}>
-                        {(progress) => (
-                          <Tween duration={1} totalProgress={progress} to={{ y: '300%' }} paused>
-                            <div
-                              id="reco_kv_img-2"
-                              className={`reco_kv_img reco_kv_img-2 ${progress > 0 ? 'end' : ''}`}
-                              ref={trigger2}
-                            >
-                              <img
-                                src={slideBanners[1]?.banners[0]?.imageUrl}
-                                alt={slideBanners[1]?.banners[0]?.name}
-                              />
-                            </div>
-                          </Tween>
-                        )}
-                      </Scene>
-                      <Scene triggerElement=".trigger-3" duration={size.height * 0.5}>
-                        {(progress) => (
-                          <Tween duration={1} totalProgress={progress} paused>
-                            <div
-                              id="reco_kv_img-3"
-                              className={`reco_kv_img reco_kv_img-3 ${progress > 0 ? 'end' : ''}`}
-                            >
-                              <img
-                                src={slideBanners[2]?.banners[0]?.imageUrl}
-                                alt={slideBanners[2]?.banners[0]?.name}
-                              />
-                            </div>
-                          </Tween>
-                        )}
-                      </Scene>
-                      <Scene triggerElement=".trigger-4" duration={size.height * 0.5}>
-                        {(progress) => (
-                          <Tween duration={1}>
-                            <div className={`reco_kv_copy ${progress > 0 ? 'end' : ''}`}>
-                              <h1
-                                className="reco_kv_title"
-                                dangerouslySetInnerHTML={{ __html: splitStr(slideBanners[2]?.banners[0]?.name) }}
-                              />
-                              <p
-                                className="reco_kv_desc"
-                                dangerouslySetInnerHTML={{
-                                  __html: splitStr(slideBanners[2]?.banners[0]?.description),
-                                }}
-                              />
-                            </div>
-                          </Tween>
-                        )}
-                      </Scene>
-                      <Scene triggerElement=".trigger-end">
-                        {(progress) => {
-                          setFinished(true);
-                          return <></>;
-                        }}
-                      </Scene>
+                      <Controller>
+                        <Scene triggerElement=".trigger-1" duration={size.height * 1.6}>
+                          {(progress) => (
+                            <Tween duration={2} delay={2} totalProgress={progress} to={{ y: '300%' }} paused>
+                              <div
+                                id="reco_kv_img-1"
+                                className={`reco_kv_img reco_kv_img-1 ${progress === 1 ? 'end' : ''}`}
+                              >
+                                <img
+                                  src={slideBanners[0]?.banners[0]?.imageUrl}
+                                  alt={slideBanners[0]?.banners[0]?.name}
+                                />
+                              </div>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </Controller>
+                      <Controller>
+                        <Scene triggerElement=".trigger-2" duration={size.height * 1.6}>
+                          {(progress) => (
+                            <Tween duration={2} delay={2} totalProgress={progress} to={{ y: '300%' }} paused>
+                              <div
+                                id="reco_kv_img-2"
+                                className={`reco_kv_img reco_kv_img-2 ${progress > 0 ? 'end' : ''}`}
+                                ref={trigger2}
+                              >
+                                <img
+                                  src={slideBanners[1]?.banners[0]?.imageUrl}
+                                  alt={slideBanners[1]?.banners[0]?.name}
+                                />
+                              </div>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </Controller>
+                      <Controller>
+                        <Scene triggerElement=".trigger-3" duration={size.height * 1.6} delay={3}>
+                          {(progress) => (
+                            <Tween duration="2" delay="2" totalProgress={progress} paused>
+                              <div
+                                id="reco_kv_img-3"
+                                className={`reco_kv_img reco_kv_img-3 ${progress > 0 ? 'end' : ''}`}
+                              >
+                                <img
+                                  src={slideBanners[2]?.banners[0]?.imageUrl}
+                                  alt={slideBanners[2]?.banners[0]?.name}
+                                />
+                              </div>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </Controller>
+                      <Controller>
+                        <Scene triggerElement=".trigger-4" duration={size.height * 1.6}>
+                          {(progress) => (
+                            <Tween totalProgress={progress} paused>
+                              <div className={`reco_kv_copy ${progress > 0 ? 'end' : ''}`}>
+                                <h1
+                                  className="reco_kv_title"
+                                  dangerouslySetInnerHTML={{ __html: splitStr(slideBanners[2]?.banners[0]?.name) }}
+                                />
+                                <p
+                                  className="reco_kv_desc"
+                                  dangerouslySetInnerHTML={{
+                                    __html: splitStr(slideBanners[2]?.banners[0]?.description),
+                                  }}
+                                />
+                              </div>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </Controller>
+                      <Controller>
+                        <Scene triggerElement=".trigger-end">
+                          {(progress) => {
+                            setFinished(true);
+                            return <></>;
+                          }}
+                        </Scene>
+                      </Controller>
                     </div>
 
                     <div className="trigger trigger-1" />
