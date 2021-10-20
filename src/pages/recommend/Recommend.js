@@ -17,7 +17,6 @@ import { useWindowSize } from '../../utils/utils';
 import { useHistory } from 'react-router-dom';
 
 //lib
-import { TweenMax } from 'TweenMax'
 import { Controller, Scene } from 'react-scrollmagic';
 import { Tween } from 'react-gsap';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -93,13 +92,6 @@ export default function Recommend({ match }) {
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay]);
 
   const onScroll = () => {
-    // window.addEventListener(
-    //   'wheel',
-    //   function (e) {
-    //     e.preventDefault();
-    //   },
-    //   { passive: false },
-    // );
     const movingStart = trigger2.current.offsetTop;
     Array(3)
       .fill(null)
@@ -112,17 +104,15 @@ export default function Recommend({ match }) {
       });
 
     const scrollScreen = (top, index) => {
-      const controller = new Controller();
-
       if (index === 0) {
         document.body.style.position = 'static';
       }
+      //
+      // controller.scrollTo(function () {
+      //   TweenMax.to(window, 0.5, { scrollTo: { y: top } });
+      // });
 
-      controller.scrollTo(function () {
-        TweenMax.to(window, 0.5, { scrollTo: { y: top } });
-      });
-
-      controller.scrollTo({
+      window.scrollTo({
         top,
         left: 0,
         behavior: 'smooth',
