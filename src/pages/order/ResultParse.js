@@ -19,51 +19,32 @@ const ResultParse = ({ location }) => {
   const message = useMemo(() => getUrlParam('message'), [location]);
 
   const handleStatus = () => {
-    result === 'SUCCESS'
-      ? handleSuccessResult().catch(console.error)
-      : handleFailResult();
+    result === 'SUCCESS' ? handleSuccessResult().catch(console.error) : handleFailResult();
   };
 
   useEffect(handleStatus, [location]);
 
-  async function handleSuccessResult () {
-    const orderType = await orderTypeReferee();
+  async function handleSuccessResult() {
+    const orderTypeR = await orderTypeReferee();
 
-    if (orderType === 'DEPOSIT_WAIT') {
-      history.push(`/order/complete${location.search + '&status=DEPOSIT_WAIT'}`);  // 입금 대기
-      return;
-    }
-
-    if (orderType === 'GIFT') {
-      history.push(
-        `/order/complete${location.search} + '&status=PAY_DONE&orderType=GIFT`);
-      return;
-    }
-
-    history.push(
-      `/order/complete${location.search} + '&status=PAY_DONE&orderType=DEFAULT`);
+    history.push(`/order/complete${location.search} + '&status=${orderTypeR.status}&orderType=${orderTypeR.orderType}`);
   }
 
-  async function orderTypeReferee () {
+  async function orderTypeReferee() {
     if (!isLogin) {
       setGuestToken(getUrlParam('guestToken'));
     }
-    const { data } = isLogin ? await getProfileOrderByOrderNo({ path: { orderNo } }) : await getGuestOrderByOrderNo({ path: { orderNo } });
-    const isDepositWait = data.defaultOrderStatusType === 'DEPOSIT_WAIT';
-    if (isDepositWait) {
-      return 'DEPOSIT_WAIT';
-    }
+    const { data } = isLogin
+      ? await getProfileOrderByOrderNo({ path: { orderNo } })
+      : await getGuestOrderByOrderNo({ path: { orderNo } });
+    
+      const isDepositWait = data.defaultOrderStatusType === 'DEPOSIT_WAIT';
+    const isGift = data.shippingAddress?.receiverZipCd === '-' || !data?.shippingAddress?.receiverZipCd;
 
-    const isGift = data.shippingAddress?.receiverZipCd === '-' ||
-      !data?.shippingAddress?.receiverZipCd;
-    if (isGift) {
-      return 'GIFT';
-    }
-    console.log(data);
-
+    return { status: isDepositWait ? 'DEPOSIT_WAIT' : 'PAY_DONE', orderType: isGift ? 'GIFT' : 'DEFAULT' };
   }
 
-  function handleFailResult () {
+  function handleFailResult() {
     const isCancel = message.includes('V801'); // 취소 코드. 다른 사유 있을경우 추가
 
     if (isCancel) {
