@@ -279,6 +279,9 @@ export default function JoinStep() {
   }, [expireAt, time, authSent]);
 
   useEffect(() => {
+    if (!location.state?.agree) {
+      history.push('/member/join-agree');
+    }
     if (isLogin) {
       history.push('/');
       return;

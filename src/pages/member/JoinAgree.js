@@ -37,6 +37,7 @@ const JoinAgree = () => {
       history.push({
         pathname: '/member/joinStep',
         search: getUrlParam('sns') === 'true' ? `?sns=true&sms=${checkList[4]}&email=${checkList[5]}` : `?sms=${checkList[4]}&email=${checkList[5]}`,
+        state: { agree: true },
       });
     } else {
       openAlert('이용약관에 동의해주세요.');
