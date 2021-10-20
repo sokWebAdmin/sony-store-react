@@ -250,7 +250,6 @@ export default function SearchResult({match}) {
               count={count}
             />
             {
-              // @TODO 키워드 엉망으로 검색해도 api response 에 응답 값이 존재함. 이 부분 api 확인요청하기
               count.ALL === 0 ?
                 <SearchResultNone />
                 :
@@ -259,7 +258,7 @@ export default function SearchResult({match}) {
                   {
                     (isAll || tabState === 'PRODUCT') 
                       && 
-                      <ProductResult 
+                      <ProductResult
                         productList={productList} 
                         productCount={productCount} 
                         orderBy={orderBy} 
