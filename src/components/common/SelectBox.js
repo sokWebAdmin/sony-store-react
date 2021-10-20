@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useToggle } from '../../hooks';
+import React, { useCallback, useEffect, useMemo, useState, createRef } from 'react';
+import { useClickOutside, useToggle } from '../../hooks';
 import BoxSelector from './selectbox/Box';
 import DropdownSelector from './selectbox/Dropdown';
 import DropdownHighlightSelector from './selectbox/DropdownHighlight';
@@ -60,6 +60,9 @@ export default function SelectBox({
   const [isOpened, onToggle] = useToggle(false);
   const [selectedValue, setSelectedValue] = useState({ ...initialSelectedState });
 
+  const selectBoxRef = createRef(null);
+  useClickOutside(selectBoxRef, () => onToggle(false));
+
   const onToggleHandler = useCallback(
     (event) => {
       event.preventDefault();
@@ -114,7 +117,7 @@ export default function SelectBox({
   useEffect(() => {}, []);
 
   return (
-    <>
+    <div ref={selectBoxRef}>
       {React.createElement(selector[defaultInfo.type], {
         selectOptions,
         display: isOpened ? 'block' : 'none',
@@ -125,7 +128,7 @@ export default function SelectBox({
         onClickHandler,
         open,
       })}
-    </>
+    </div>
   );
 }
 

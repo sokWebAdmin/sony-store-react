@@ -8,7 +8,7 @@ import { wonComma } from "../../../utils/utils";
 const getDisabledLabel = (reserved, o) => {
   if (o.reservationStockCnt > 0) return '';
   if (o.stockCnt > 0) return '';
-  if (o.saleType === 'SOLDOUT') return '품절';
+  if (o.saleType === 'SOLDOUT') return '일시품절';
   if (o.stockCnt === 0 || o.reservationStockCnt === 0) return '일시품절';
   return '';
 };

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 
 //util
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import categoryLeft from '../../assets/images/category/btn_category_left.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } from 'swiper/core';
@@ -12,6 +12,7 @@ import { useWindowSize } from '../../utils/utils';
 
 export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
   const history = useHistory();
+  const location = useLocation();
   const categoryLabel = useMemo(() => {
     const path = category.url.split('/');
     return path[path.length - 1];
@@ -84,7 +85,9 @@ export default function CategoryHeader({category, changeCurrentCategoryByNo}) {
   return (
     <div ref={categoryHeaderRef} className={ category?.depth > 1 ? 'category__header category__header__sub' : 'category__header '} style={{backgroundImage: `url(${backgroundImage})`}}>
       {category?.parent && <a href="#" className="category__header__back" onClick={e => {
-        history.goBack();
+        const currLocation = location.pathname.split('/');
+        currLocation.splice(-1);
+        history.push(currLocation.join('/'))
         e.preventDefault();
       }}>{category.parent.label}</a>}
 
