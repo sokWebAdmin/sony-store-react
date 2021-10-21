@@ -99,7 +99,7 @@ export default function Login ({ location }) {
         onChangeGlobal({ isLogin: true });
         // await fetchProfile(profileDispatch);
 
-        if (saveEmail === true) {
+        if (saveEmail) {
           Cookies.set('sony_email', email);
         } else {
           Cookies.remove('sony_email');
