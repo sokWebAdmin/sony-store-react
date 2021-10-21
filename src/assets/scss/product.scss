@@ -1373,7 +1373,7 @@
   }
 }
 
-.layer[class*="popup_"]:not(.popup_refurbish) {
+.layer[class*="popup_"]:not(.popup_refurbish):not(.popup_empolyee) {
   text-align: center;
 
   .layer_wrap {
@@ -2273,7 +2273,7 @@
     }
   }
 
-  .layer[class*="popup_"]:not(.popup_refurbish) {
+  .layer[class*="popup_"]:not(.popup_refurbish):not(.popup_empolyee) {
     text-align: center;
 
     .layer_wrap {
@@ -2309,7 +2309,7 @@
     }
   }
 
-  .layer[class*="popup_"]:not(.popup_refurbish) {
+  .layer[class*="popup_"]:not(.popup_refurbish):not(.popup_empolyee) {
     .layer_wrap {
       .layer_container {
         padding: 24px;
