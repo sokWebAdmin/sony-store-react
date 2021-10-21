@@ -1,5 +1,4 @@
-
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 //util
 import { Link, useHistory } from 'react-router-dom';
@@ -8,9 +7,9 @@ import { useCategoryState } from '../../context/category.context';
 import { getSaleStatus, getSaleStatusForOption } from '../../utils/product';
 import { toCurrencyString } from '../../utils/unit';
 
-export default function Product({product, category, reset, micro}) {
+export default function Product({ product, category, reset, micro }) {
   const history = useHistory();
-  const {tagColorMap} = useCategoryState();
+  const { tagColorMap } = useCategoryState();
 
   const [groupProducts, setGroupProducts] = useState([]);
   const [options, setOptions] = useState([]);
@@ -26,20 +25,23 @@ export default function Product({product, category, reset, micro}) {
   }, [product]);
 
   const _initGroupProducts = () => {
-    const newGroupProducts = product.groupManagementMappingProducts?.map(gp => {
-      // TODO gp 안에 옵션 정보 포함되어 있어야 함
+    const newGroupProducts =
+      product.groupManagementMappingProducts
+        ?.map((gp) => {
+          // TODO gp 안에 옵션 정보 포함되어 있어야 함
 
-      const optionValue = gp?.options?.[0]?.value || '';
-      const colorLabel = optionValue.split('_')[0] || '';
-      const colorCode = optionValue.split('_')[1] || '';
+          const optionValue = gp?.options?.[0]?.value || '';
+          const colorLabel = optionValue.split('_')[0] || '';
+          const colorCode = optionValue.split('_')[1] || '';
 
-      return {
-        imageUrl: gp.mainImageUrl,
-        colorLabel,
-        colorCode,
-        productNo: gp.productNo,
-      };
-    }).filter(gp => !!gp.colorLabel && !!gp.colorCode) || [];
+          return {
+            imageUrl: gp.mainImageUrl,
+            colorLabel,
+            colorCode,
+            productNo: gp.productNo,
+          };
+        })
+        .filter((gp) => !!gp.colorLabel && !!gp.colorCode) || [];
 
     if (newGroupProducts.length === 0) {
       const optionValue = product.optionValues?.[0]?.optionValue || '';
@@ -68,67 +70,77 @@ export default function Product({product, category, reset, micro}) {
     const { saleStatusType, reservationData, stockCnt, groupManagementCode } = product;
 
     if (!groupManagementCode) {
-      setSaleStatus(getSaleStatus({ saleStatusType }, reservationData, stockCnt, reservationData?.reservationStockCnt))
+      setSaleStatus(getSaleStatus({ saleStatusType }, reservationData, stockCnt, reservationData?.reservationStockCnt));
     } else {
       if (options?.length > 1) {
-        setSaleStatus(getSaleStatusForOption(options, product?.reservationData))
+        setSaleStatus(getSaleStatusForOption(options, product?.reservationData));
       }
     }
+  }, [product, options]);
 
-  }, [product, options])
-  
   return (
-    <div className="product" onClick={ e => {
-      e.preventDefault();
-      history.push(`/product-view/${product.productNo}`);
-    }}>
-      { product?.stickerLabels?.length > 0 && tagColorMap[product.stickerLabels[0]] &&
-        <span className="badge__text" style={{ color: tagColorMap[product.stickerLabels[0]] }}>{product.stickerLabels[0]}</span>
-      }
+    <div
+      className="product"
+      onClick={(e) => {
+        e.preventDefault();
+        history.push(`/product-view/${product.productNo}`);
+      }}
+    >
+      {product?.stickerLabels?.length > 0 && tagColorMap[product.stickerLabels[0]] && (
+        <span className="badge__text" style={{ color: tagColorMap[product.stickerLabels[0]] }}>
+          {product.stickerLabels[0]}
+        </span>
+      )}
 
-      <div className="product__pic" style={ micro ? { height: 'auto', paddingBottom: '100%' } : null}>
-        <Link onClick={(e) => {
-          e.preventDefault();
-          reset?.();
-        }} to={`/product-view/${product.productNo}`} className="product__pic__link" >
-          {
-            groupProducts.map((gp, index) => {
-              return (
-                <img
-                  src={gp.imageUrl}
-                  alt={product.productNameEn}
-                  className={`product__pic__img ${colorIndex === index && "product__pic__img--visible"}`}
-                  key={`product-list-image-${index}`} 
-                  />
-              )
-            })
-          }
+      <div className="product__pic" style={micro ? { height: 'auto', paddingBottom: '100%' } : null}>
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            reset?.();
+          }}
+          to={`/product-view/${product.productNo}`}
+          className="product__pic__link"
+        >
+          {groupProducts.map((gp, index) => {
+            return (
+              <img
+                src={gp.imageUrl}
+                alt={product.productNameEn}
+                className={`product__pic__img ${colorIndex === index && 'product__pic__img--visible'}`}
+                key={`product-list-image-${index}`}
+              />
+            );
+          })}
         </Link>
       </div>
 
-      {groupProducts.filter(gp => !!gp.colorLabel && !!gp.colorCode).length > 0 ?
-      <div className="colorchip">
-        <span className="sr-only">전체 색상</span>
-        {
-          groupProducts.filter(gp => !!gp.colorLabel && !!gp.colorCode).map((gp, index) => {
-            return (
-              <span className={`colorchip__item ${colorIndex === index && "colorchip__item--active"}`}
-                    key={`product-colorchip-${index}`}
-                    onMouseEnter={() => {
-                setColorIndex(index);
-              }}>
-                <span className="colorchip__item__label" style={{backgroundColor: `${
-                  gp.colorLabel === '블랙' ? '#000000' : gp.colorCode
-                }`}}>
-                  <span className="sr-only">{gp.colorLabel}</span>
+      {groupProducts.filter((gp) => !!gp.colorLabel && !!gp.colorCode).length > 0 ? (
+        <div className="colorchip">
+          <span className="sr-only">전체 색상</span>
+          {groupProducts
+            .filter((gp) => !!gp.colorLabel && !!gp.colorCode)
+            .map((gp, index) => {
+              return (
+                <span
+                  className={`colorchip__item ${colorIndex === index && 'colorchip__item--active'}`}
+                  key={`product-colorchip-${index}`}
+                  onMouseEnter={() => {
+                    setColorIndex(index);
+                  }}
+                >
+                  <span
+                    className="colorchip__item__label"
+                    style={{ backgroundColor: `${gp.colorLabel === '블랙' ? '#000000' : gp.colorCode}` }}
+                  >
+                    <span className="sr-only">{gp.colorLabel}</span>
+                  </span>
                 </span>
-              </span>
-            )
-          })
-        }
-      </div> :
-      <div className="colorchip"></div>
-      }
+              );
+            })}
+        </div>
+      ) : (
+        <div className="colorchip"></div>
+      )}
 
       <Link onClick={reset} to={`/product-view/${product.productNo}`} className="product__title">
         <strong className="product__title__name">{product.productName}</strong>
@@ -138,15 +150,17 @@ export default function Product({product, category, reset, micro}) {
         {saleStatus === 'READY_RESERVE' && <span className={`badge__label badge__label__release`}>출시예정</span>}
       </Link>
 
-      { product.productNameEn &&
-      <Link to={`/product-view/${product.productNo}`} className="product__info">{product.productNameEn}</Link>
-      }
+      {product.productNameEn && (
+        <Link to={`/product-view/${product.productNo}`} className="product__info">
+          {product.productNameEn}
+        </Link>
+      )}
 
       <div className="product__price">
-          <span className="sale" style={{ display: 'flex', alignItems: 'center' }}>
-            <span className="product__price__num">{toCurrencyString(product.salePrice)}</span>
-            <span className="product__price__unit">원</span>
-          </span>
+        <span className="sale" style={{ display: 'flex', alignItems: 'center' }}>
+          <span className="product__price__num">{toCurrencyString(product.salePrice)}</span>
+          <span className="product__price__unit">원</span>
+        </span>
       </div>
     </div>
   );
@@ -155,7 +169,4 @@ export default function Product({product, category, reset, micro}) {
 Product.defaultProps = {
   reset: () => null,
   micro: false,
-}
-
-
-                                    
+};
