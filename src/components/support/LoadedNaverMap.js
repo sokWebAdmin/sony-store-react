@@ -18,7 +18,7 @@ function NaverMapAPI() {
 
   useEffect(() => {
     const _size = new navermaps.Size('100%', isMobile ? '400px' : '560px');
-    navermaps.setSize(_size);
+    window.naver.maps.setSize(_size);
   }, [size]);
 
   return (
