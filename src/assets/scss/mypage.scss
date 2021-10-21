@@ -755,6 +755,22 @@
   }
 
   .ico_box_link {
+    @media screen and (min-width: 641px) {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+      align-items: stretch;
+      -ms-flex-line-pack: stretch;
+      align-content: stretch;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+    }
+  }
+
+  .ico_box_link {
     margin-top: 40px;
 
     &:after {
@@ -3659,9 +3675,26 @@
 }
 
 .member_info {
-.name_desc {
-  @include only-pc{
-    padding-left: 27px;
+  .name_desc {
+    @include only-pc {
+      padding-left: 27px;
+    }
   }
 }
+
+.ico_box_link .box_link_inner .txt_box {
+  @media screen and (min-width: 641px) {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 100%;
+    padding-right: 10px;
+  }
 }
