@@ -1,16 +1,16 @@
-import _ from "lodash";
-import React from "react";
-import { categoriesExtraDataMap } from "../../const/category";
-import { PAGE_SIZE } from "../../const/search";
-import ViewMore from "../common/ViewMore";
-import { useHistory } from "react-router";
+import _ from 'lodash';
+import React from 'react';
+import { categoriesExtraDataMap } from '../../const/category';
+import { PAGE_SIZE } from '../../const/search';
+import ViewMore from '../common/ViewMore';
+import { useHistory } from 'react-router';
 
-const getCategoryNo = category => {
+const getCategoryNo = (category) => {
   return _.chain(category)
-          .pickBy((_, k) => k.includes('CategoryNo'))
-          .filter(v => Boolean(v))
-          .last()
-          .value()
+    .pickBy((_, k) => k.includes('CategoryNo'))
+    .filter((v) => Boolean(v))
+    .last()
+    .value();
 };
 
 const getLabelHtml = (label, keyword) => {
@@ -23,53 +23,58 @@ const getLabelHtml = (label, keyword) => {
 };
 const getCategoryLabel = (category, keyword) => {
   return _.chain(category)
-          .pickBy((_, k) => k.includes('Label'))
-          .filter(v => Boolean(v))
-          .map(v => getLabelHtml(v, keyword))
-          .value()
-          .join('')
+    .pickBy((_, k) => k.includes('Label'))
+    .filter((v) => Boolean(v))
+    .map((v) => getLabelHtml(v, keyword))
+    .value()
+    .join('');
 };
 
 const convertCategory = (category, keyword) => {
   return {
     categoryNo: getCategoryNo(category),
-    label: getCategoryLabel(category, keyword)
-  }
-}
+    label: getCategoryLabel(category, keyword),
+  };
+};
 
 export default function CategoryResult({ fetchCategory, categoryList, categoryCount, keyword }) {
   const history = useHistory();
 
-  const getNextUrl = no => _.chain(categoriesExtraDataMap).filter(({ categoryNo }) => categoryNo === no).map(({ url }) => url).head().value();
+  const getNextUrl = (no) =>
+    _.chain(categoriesExtraDataMap)
+      .filter(({ categoryNo }) => categoryNo === no)
+      .map(({ url }) => url)
+      .head()
+      .value();
   const clickHandler = (e, categoryNo) => {
     e.preventDefault();
     const esp = [81644, 81643, 81645];
     history.push(esp.includes(categoryNo) ? '/esp' : getNextUrl(categoryNo));
-}
+  };
 
   return (
     <>
       <div className="section_top">
-        <h2 className="title">카테고리<span>({categoryCount})</span></h2>
+        <h2 className="title">
+          카테고리<span>({categoryCount})</span>
+        </h2>
       </div>
       <div className="result_list on">
         <ul className="category">
-          {
-            categoryList
-              .map(category => convertCategory(category, keyword))
-              .map(({ categoryNo, label }) => (
-                <li key={ categoryNo }>
-                  <a href="#none" onClick={ e => clickHandler(e, categoryNo) } dangerouslySetInnerHTML={{__html: label}} />
-                </li>
-            ))
-          }
+          {categoryList
+            .map((category) => convertCategory(category, keyword))
+            .map(({ categoryNo, label }) => (
+              <li key={categoryNo}>
+                <a
+                  href="#none"
+                  onClick={(e) => clickHandler(e, categoryNo)}
+                  dangerouslySetInnerHTML={{ __html: label }}
+                />
+              </li>
+            ))}
         </ul>
       </div>
-      <ViewMore 
-        totalCount={categoryCount}
-        viewMore={fetchCategory}
-        pageSize={PAGE_SIZE.CATEGORY}
-      />
+      <ViewMore totalCount={categoryCount} viewMore={fetchCategory} pageSize={PAGE_SIZE.CATEGORY} />
     </>
-  )
+  );
 }

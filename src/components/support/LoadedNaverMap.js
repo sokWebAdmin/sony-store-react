@@ -12,14 +12,14 @@ function NaverMapAPI() {
     height: isMobile ? '400px' : '560px',
     background: '#ddd',
     display: 'block',
-    marginTop: isMobile ? '48px' : '40px'
+    marginTop: isMobile ? '48px' : '40px',
   };
-  
+
   return (
     <NaverMap
       mapDivId={'maps-getting-started-uncontrolled'}
       style={storeMapStyle}
-      defaultCenter={ COORDINATE }
+      defaultCenter={COORDINATE}
       defaultZoom={13}
       zoom={13}
       zoomControl={true}
@@ -32,13 +32,13 @@ function NaverMapAPI() {
         position: window.naver.maps.Position.TOP_RIGHT,
       }}
     >
-      <Marker 
+      <Marker
         mapDivId={'maps-getting-started-uncontrolled'}
         key={1}
         position={new navermaps.LatLng(COORDINATE)}
         icon={{
           url: '../../images/support/naver_map_marker.svg',
-          size: new navermaps.Size(50, 67)
+          size: new navermaps.Size(50, 67),
         }}
       />
     </NaverMap>
@@ -47,10 +47,8 @@ function NaverMapAPI() {
 
 export default function LoadedNaverMap() {
   return (
-    <RenderAfterNavermapsLoaded
-      ncpClientId={ MAP_CLIENT_ID }
-    >
+    <RenderAfterNavermapsLoaded ncpClientId={MAP_CLIENT_ID}>
       <NaverMapAPI />
     </RenderAfterNavermapsLoaded>
-  )
+  );
 }

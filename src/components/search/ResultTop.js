@@ -1,5 +1,5 @@
-import { React, useRef, useState, useEffect } from "react";
-import { useHistory } from "react-router";
+import { React, useRef, useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 
 export default function ResultTop({ handleSearch, allCount, initalKeyword }) {
   const history = useHistory();
@@ -8,37 +8,29 @@ export default function ResultTop({ handleSearch, allCount, initalKeyword }) {
 
   const clickHandler = (event, k = keyword) => {
     event?.preventDefault();
-    
-    history.replace(`/search-result/${k}`)
+
+    history.replace(`/search-result/${k}`);
     handleSearch(k);
     searchKeyword.current = k;
-  }
+  };
 
   const handleKeywordChange = ({ target }) => setKeyword(target.value);
 
   useEffect(() => {
-    if(keyword === initalKeyword) return;
+    if (keyword === initalKeyword) return;
     searchKeyword.current = initalKeyword;
     setKeyword(initalKeyword);
-  }, [initalKeyword])
-  
+  }, [initalKeyword]);
+
   return (
     <div className="searchResult">
       <div className="searchResult__form">
         <form onSubmit={clickHandler}>
           <label htmlFor="search-input">검색결과</label>
-          <input 
-            type="text" 
-            id="search-input" 
-            className="input-txt"  
-            onChange={handleKeywordChange}
-            value={ keyword }
-          />
-          <button 
-            type="button" 
-            className="btn_search" 
-            title="검색" 
-            onClick={clickHandler}>검색</button>
+          <input type="text" id="search-input" className="input-txt" onChange={handleKeywordChange} value={keyword} />
+          <button type="button" className="btn_search" title="검색" onClick={clickHandler}>
+            검색
+          </button>
         </form>
       </div>
       <div className="result-message">
@@ -47,5 +39,5 @@ export default function ResultTop({ handleSearch, allCount, initalKeyword }) {
         </p>
       </div>
     </div>
-  )
+  );
 }

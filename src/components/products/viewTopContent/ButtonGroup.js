@@ -134,8 +134,9 @@ export default function ButtonGroup({
   const goToOrderPage = (result, pathname) => {
     if (result?.code) {
       ERROR_CODE_MAPPING_ROUTE[result.code]?.msg
-        ? openAlert(ERROR_CODE_MAPPING_ROUTE[result.code]?.msg, () => () =>
-            history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route)),
+        ? openAlert(
+            ERROR_CODE_MAPPING_ROUTE[result.code]?.msg,
+            () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route)),
           )
         : openAlert(result?.message);
     } else {
@@ -169,8 +170,9 @@ export default function ButtonGroup({
 
     if (memberOnly && !isLogin) {
       const GUEST_ERROR = 'O8001';
-      openAlert(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg, () => () =>
-        history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
+      openAlert(
+        ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg,
+        () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
       );
       return;
     }
@@ -242,8 +244,9 @@ export default function ButtonGroup({
   const cart = async () => {
     if (memberOnly && !isLogin) {
       const GUEST_ERROR = 'O8001';
-      openAlert(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg, () => () =>
-        history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
+      openAlert(
+        ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg,
+        () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
       );
       return;
     }
