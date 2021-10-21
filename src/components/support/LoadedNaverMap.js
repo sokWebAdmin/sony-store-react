@@ -16,10 +16,21 @@ function NaverMapAPI() {
     marginTop: isMobile ? '48px' : '40px',
   };
 
-  // useEffect(() => {
-  //   const _size = new navermaps.Size('100%', isMobile ? '400px' : '560px');
-  //   window.naver.maps.setSize(_size);
-  // }, [size]);
+  console.log(navermaps);
+  console.log(window.naver.maps);
+
+  // const resize = () => {
+  //   navermaps.Size(window.innerWidth, isMobile ? 400 : 560);
+  // };
+
+  // window.addEventListener('DOMContentLoaded', () => {
+  //   resize();
+  //   window.addEventListener('resize', resize);
+  // });
+
+  useEffect(() => {
+    navermaps.Size(window.innerWidth, isMobile ? 400 : 560);
+  }, [size]);
 
   return (
     <NaverMap
