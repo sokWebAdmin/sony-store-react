@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
 import { COORDINATE, MAP_CLIENT_ID } from '../../const/support';
 import { useWindowSize } from '../../utils/utils';
@@ -7,21 +7,23 @@ function NaverMapAPI() {
   const navermaps = window.naver.maps;
 
   const size = useWindowSize();
-  const isMobile = size <= 640;
-  const storeMapStyle = {
-    width: '100%',
-    height: isMobile ? '400px' : '560px',
-    background: '#ddd',
-    display: 'block',
-    marginTop: isMobile ? '48px' : '40px',
-  };
+  const isMobile = size.width <= 640;
 
-  console.log(navermaps.Map);
+  const storeMapStyle = useMemo(
+    () => ({
+      width: '100%',
+      height: isMobile ? '400px' : '560px',
+      background: '#ddd',
+      display: 'block',
+      marginTop: isMobile ? '48px' : '40px',
+    }),
+    [isMobile],
+  );
 
-  // useEffect(() => {
-  //   const _size = new navermaps.Size(size.width, isMobile ? 400 : 560);
-  //   navermaps.Map.setSize(_size);
-  // }, [size]);
+  useEffect(() => {
+    new navermaps.Size(size.width, isMobile ? 400 : 560);
+    //   navermaps.Map.setSize(_size);
+  }, [isMobile]);
 
   return (
     <NaverMap
