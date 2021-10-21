@@ -374,7 +374,7 @@ const App = (props) => {
 
             <Route component={Error404} />
             </Switch>
-          {agent.isApp && ['android', 'ios'].some(agent.device) &&
+          {agent.isApp && ['android', 'ios'].some(v => v === agent.device) &&
           <AppBar agent={agent} />}
           {!window.location.href.includes('/app/terms/') && <Footer />}
         </div>
