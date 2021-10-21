@@ -25,7 +25,7 @@ import OpenLogin from '../../components/member/OpenLogin';
 import { postGuestOrdersOrderNo } from '../../api/order';
 import { getAgent } from '../../utils/detectAgent';
 
-export default function Login ({ location }) {
+export default function Login({ location }) {
   const agent = getAgent();
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
@@ -107,14 +107,12 @@ export default function Login ({ location }) {
         if (agent.isApp) {
           history.push(`sonyapp://autoLoginYn?value=${autoLogin ? 'Y' : 'N'}`);
         }
-        
+
         if (!!history.location.state?.next) {
           history.push(history.location.state.next);
-        }
-        else {
+        } else {
           console.log(nextLocation);
-          nextLocation === 'cart' ? history.push(
-            `/${nextLocation}?savingGuestCart=true`) : history.push('/');
+          nextLocation === 'cart' ? history.push(`/${nextLocation}?savingGuestCart=true`) : history.push('/');
         }
       }
     }
@@ -196,7 +194,8 @@ export default function Login ({ location }) {
                       placeholder=" "
                       value={email}
                       onChange={(e) => {
-                        setEmail(e.target.value);
+                        const value = e.target.value.trim();
+                        setEmail(value);
                       }}
                     />
                     <span className="label">
@@ -220,7 +219,9 @@ export default function Login ({ location }) {
                       placeholder=" "
                       value={pw}
                       onChange={(e) => {
-                        setPw(e.target.value);
+                        const value = e.target.value.trim();
+                        debugger;
+                        setPw(value);
                       }}
                       onKeyPress={(event) => {
                         if (event.code === 'Enter' || event.code === 'NumpadEnter') {
@@ -261,25 +262,29 @@ export default function Login ({ location }) {
                 </button>
               </div>
               <div className="find_box">
-                {!agent.isApp ? <div className="check">
-                  <input
-                    type="checkbox"
-                    className="inp_check"
-                    id="chk01"
-                    checked={saveEmail}
-                    onChange={(e) => setSaveEmail(e.target.checked)}
-                  />
-                  <label htmlFor="chk01">이메일 아이디 저장</label>
-                </div> : <div className="check">
-                  <input
-                    type="checkbox"
-                    className="inp_check"
-                    id="chk01"
-                    checked={autoLogin}
-                    onChange={(e) => setAutoLogin(e.target.checked)}
-                  />
-                  <label htmlFor="chk01">자동로그인</label>
-                </div>}
+                {!agent.isApp ? (
+                  <div className="check">
+                    <input
+                      type="checkbox"
+                      className="inp_check"
+                      id="chk01"
+                      checked={saveEmail}
+                      onChange={(e) => setSaveEmail(e.target.checked)}
+                    />
+                    <label htmlFor="chk01">이메일 아이디 저장</label>
+                  </div>
+                ) : (
+                  <div className="check">
+                    <input
+                      type="checkbox"
+                      className="inp_check"
+                      id="chk01"
+                      checked={autoLogin}
+                      onChange={(e) => setAutoLogin(e.target.checked)}
+                    />
+                    <label htmlFor="chk01">자동로그인</label>
+                  </div>
+                )}
                 <ul className="user_menu">
                   <li>
                     <a
@@ -303,9 +308,13 @@ export default function Login ({ location }) {
                   </li>
                 </ul>
               </div>
-              {autoLogin && <div className="app_txt">
-                자동 로그인을 사용할 경우<br />타인에게 고객의 정보가 노출될 위험이 있습니다.
-              </div>}
+              {autoLogin && (
+                <div className="app_txt">
+                  자동 로그인을 사용할 경우
+                  <br />
+                  타인에게 고객의 정보가 노출될 위험이 있습니다.
+                </div>
+              )}
               <div className="txt_or">
                 <span className="txt">또는</span>
                 <span className="bar" />
@@ -324,7 +333,7 @@ export default function Login ({ location }) {
                       className="inp"
                       placeholder=" "
                       value={orderNo}
-                      onChange={(e) => setOrderNo(e.target.value)}
+                      onChange={(e) => setOrderNo(e.target.value.trim())}
                     />
                     <span className="label">주문번호</span>
                     <span className="focus_bg" />
@@ -344,7 +353,7 @@ export default function Login ({ location }) {
                       className="inp"
                       placeholder=" "
                       value={orderPw}
-                      onChange={(e) => setOrderPw(e.target.value)}
+                      onChange={(e) => setOrderPw(e.target.value.trim())}
                       onKeyPress={(event) => {
                         if (event.code === 'Enter' || event.code === 'NumpadEnter') {
                           nonMemberLogin();
