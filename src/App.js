@@ -240,6 +240,43 @@ const App = (props) => {
       });
   }, [location]);
 
+  const isAppBarEnabled = useMemo(() => {
+    const rejectPathNames = [
+      '/product-view',
+      '/cart',
+      '/order/sheet',
+      '/gift/sheet',
+      '/order/complete'];
+    return agent.isApp && ['android', 'ios'].some(v => v === agent.device) &&
+      !rejectPathNames.some(path => location.pathname.includes(path));
+  }, [location]);
+
+  const [y, setY] = useState(window.scrollY);
+
+  const [scrollAction, setScrollAction] = useState('up');
+
+  const handleNavigation = useCallback(
+    throttle(e => {
+      const window = e.currentTarget;
+      if (y > window.scrollY) {
+        setScrollAction('up');
+      }
+      else if (y < window.scrollY) {
+        setScrollAction('down');
+      }
+      setY(window.scrollY);
+    }, [y]),
+  );
+
+  useEffect(() => {
+    setY(window.scrollY);
+    window.addEventListener('scroll', handleNavigation);
+
+    return () => {
+      window.removeEventListener('scroll', handleNavigation);
+    };
+  }, [handleNavigation]);
+
   function fetchPopupNos () {
     const map = data => data.map(({ popupNo }) => popupNo);
 
@@ -373,10 +410,13 @@ const App = (props) => {
             <Route exact path="/error-server" component={ErrorServer} />
 
             <Route component={Error404} />
-            </Switch>
-          {agent.isApp && ['android', 'ios'].some(v => v === agent.device) &&
-          <AppBar agent={agent} />}
-          {!window.location.href.includes('/app/terms/') && <Footer />}
+          </Switch>
+          {
+            isAppBarEnabled &&
+            <AppBar agent={agent} scrollAction={scrollAction} />}
+          {!window.location.href.includes('/app/terms/') &&
+          <Footer isAppBarEnabled={isAppBarEnabled}
+                  scrollAction={scrollAction} />}
         </div>
       ) : (
         <div>Server Loading...</div>

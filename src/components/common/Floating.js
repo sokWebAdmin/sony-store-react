@@ -34,16 +34,16 @@ const chat = () => {
   $form.submit();
 }
 
-export default function Floating () {
+export default function Floating ({ scrollAction }) {
   const history = useHistory();
 
   const info = useMallState();
   const TEL = info?.mall?.serviceCenter.phoneNo;
   const message = getMessage(TEL);
-  
+
   const windowWidth = window.innerWidth;
   const isMobile = useMemo(() => windowWidth <= MOBILE_WIDTH, [windowWidth]);
-  
+
   const { isLogin } = useContext(GlobalContext);
   const [ active, toggle ] = useToggle(false);
   const {
@@ -106,27 +106,61 @@ export default function Floating () {
     const currScrollY = window.scrollY;
     if (prevScrollY === currScrollY) return;
 
-    sidebarRef.current && $footer && handleSidebarReachend($footer, sidebarRef.current, currScrollY);
+    sidebarRef.current && $footer &&
+    handleSidebarReachend($footer, sidebarRef.current, currScrollY);
   };
 
   useEffect(() => {
     handleSidebar();
     return () => {
       handleSidebar();
+    };
+  });
+
+  const scrollStyle = useMemo(() => {
+    if (reachend) {
+      toggle(false);
+      return {
+        position: 'absolute',
+        top: '24px',
+        bottom: 'auto',
+      };
     }
-  })
-  
+
+    if (scrollAction === 'down') {
+      return {
+        position: 'fixed',
+        bottom: '24px',
+      };
+    }
+
+    if (scrollAction === 'up') {
+      return {
+        position: 'fixed',
+        bottom: '88px',
+      };
+    }
+
+  }, [reachend, scrollAction]);
 
   return (
-    <nav ref={sidebarRef} className={`sidebar ${ reachend && 'sidebar--reachend' } ${scrollY >= 250 && 'sidebar--visible'} ${active && 'sidebar--active'}`}>
+    <nav ref={sidebarRef} className={`sidebar ${active && 'sidebar--active'}`}
+         style={scrollStyle}>
       <div className="sidebar__inner">
-        <a href="#none" onClick={ e => handleClick(e, 'kakao') } className="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
-        <a href={isMobile ? `tel:${TEL}` : '#none'} onClick={ e=> handleClick(e, 'cs') } className="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
-        <a href="#header" onClick={ e => handleClick(e, 'top') } className="sidebar__btn top"><span>페이지 상단</span></a>
+        <a href="#none" onClick={e => handleClick(e, 'kakao')}
+           className="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+        <a href={isMobile ? `tel:${TEL}` : '#none'}
+           onClick={e => handleClick(e, 'cs')}
+           className="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
+        <a href="#header" onClick={e => handleClick(e, 'top')}
+           className="sidebar__btn top"><span>페이지 상단</span></a>
       </div>
-      <button onClick={ () => active ? toggle(false) : toggle() } className="sidebar__btn sidebar__btn__toggle" type="button"><img src="../../images/common/ic_sidebar1.svg" alt="메뉴토글" /></button>
-      { alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert> }
-      { confirmVisible && <Confirm onClose={closeConfirm}>{message.confirm}</Confirm> }
+      <button onClick={() => active ? toggle(false) : toggle()}
+              className="sidebar__btn sidebar__btn__toggle" type="button"><img
+        src="../../images/common/ic_sidebar1.svg" alt="메뉴토글" /></button>
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+      {confirmVisible &&
+      <Confirm onClose={closeConfirm}>{message.confirm}</Confirm>}
     </nav>
   )
 }
