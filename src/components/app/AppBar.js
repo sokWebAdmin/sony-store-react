@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
@@ -19,18 +19,35 @@ import cart from '../../assets/images/app/btn_cart.svg';
 import shipping from '../../assets/images/app/btn_shipping.svg';
 import my from '../../assets/images/app/btn_my.svg';
 
-const AppBar = ({ agent }) => (
-  <div className="appnavbar" style={{ zIndex: 998 }}>
-    <div className="appnavbar_inner">
-      {agent.device === 'ios' && <GoBackButton />}
-      <HomeButton />
-      <MenuButton />
-      <CartButton />
-      <OrderListButton />
-      <MyPageButton />
+const AppBar = ({ agent, scrollAction }) => {
+  const scrollStyle = useMemo(() => {
+    if (scrollAction === 'down') {
+      return {
+        transform: 'translateY(100%)',
+      };
+    }
+
+    if (scrollAction === 'up') {
+      return {
+        transform: 'translateY(0)',
+      };
+    }
+
+  }, [scrollAction]);
+
+  return (
+    <div className="appnavbar" style={{ ...scrollStyle, zIndex: 998 }}>
+      <div className="appnavbar_inner">
+        {agent.device === 'ios' && <GoBackButton />}
+        <HomeButton />
+        <MenuButton />
+        <CartButton />
+        <OrderListButton />
+        <MyPageButton />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 /**
  * buttons
