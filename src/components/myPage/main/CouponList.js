@@ -151,7 +151,9 @@ const CouponList = () => {
           >
             <div className="txt_box">
               <p className="tit">정품등록 관리</p>
-              <p className="txt">소니 제품 구매 후 정품등록하고 쿠폰을 받으세요!</p>
+              <p className="txt" style={{ paddingRight: '20px' }}>
+                소니 제품 구매 후 정품등록하고 쿠폰을 받으세요!
+              </p>
             </div>
           </a>
         </div>
