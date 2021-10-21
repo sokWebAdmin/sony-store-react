@@ -19,21 +19,21 @@ import cart from '../../assets/images/app/btn_cart.svg';
 import shipping from '../../assets/images/app/btn_shipping.svg';
 import my from '../../assets/images/app/btn_my.svg';
 
-const AppBar = ({ agent, scrollAction }) => {
+const AppBar = ({ agent, scrollAction, y }) => {
   const scrollStyle = useMemo(() => {
+    if (scrollAction === 'up' || y <= 50) {
+      return {
+        transform: 'translateY(0)',
+      };
+    }
+
     if (scrollAction === 'down') {
       return {
         transform: 'translateY(100%)',
       };
     }
 
-    if (scrollAction === 'up') {
-      return {
-        transform: 'translateY(0)',
-      };
-    }
-
-  }, [scrollAction]);
+  }, [y, scrollAction]);
 
   return (
     <div className="appnavbar" style={{ ...scrollStyle, zIndex: 998 }}>

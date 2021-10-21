@@ -246,7 +246,9 @@ const App = (props) => {
       '/cart',
       '/order/sheet',
       '/gift/sheet',
-      '/order/complete'];
+      '/order/complete',
+      '/app/terms',
+    ];
     return agent.isApp && ['android', 'ios'].some(v => v === agent.device) &&
       !rejectPathNames.some(path => location.pathname.includes(path));
   }, [location]);
@@ -413,7 +415,7 @@ const App = (props) => {
           </Switch>
           {
             isAppBarEnabled &&
-            <AppBar agent={agent} scrollAction={scrollAction} />}
+            <AppBar agent={agent} scrollAction={scrollAction} y={y} />}
           {!window.location.href.includes('/app/terms/') &&
           <Footer isAppBarEnabled={isAppBarEnabled}
                   scrollAction={scrollAction} />}
