@@ -3674,14 +3674,6 @@
   }
 }
 
-.member_info {
-  .name_desc {
-    @include only-pc {
-      padding-left: 27px;
-    }
-  }
-}
-
 .ico_box_link .box_link_inner .txt_box {
   @media screen and (min-width: 641px) {
     display: -webkit-box;
