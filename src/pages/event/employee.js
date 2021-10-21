@@ -109,7 +109,7 @@ export default function Employee() {
                       </ol>
                     </li>
                     <li>
-                      <h5 className="Fh5_tit">4. 시판 구입 시 주의사항</h5>
+                      <h5 className="Fh5_tit">4. 사판 구입 시 주의사항</h5>
                       <ol>
                         <li>1) 반품<br/>
                           - 제품을 구매하기 전에 반드시 구매하고자 하는 제품인지를 확인하고 제품을 신청하여야 하며 구입이후 제품의 중요한 결함이 없는 경우 반품이 불가능 합니다.<br/>
