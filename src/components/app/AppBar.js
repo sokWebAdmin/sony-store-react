@@ -12,6 +12,7 @@ import {
 import arrow from '../../assets/images/app/btn_arrow.svg';
 import home from '../../assets/images/app/btn_home.svg';
 import menu from '../../assets/images/app/btn_menu.svg';
+import cart from '../../assets/images/app/btn_cart.svg';
 
 const AppBar = ({ agent }) => {
   const init = () => {
@@ -29,6 +30,7 @@ const AppBar = ({ agent }) => {
           <GoBackButton />
           <HomeButton />
           <MenuButton />
+          <CartButton />
         </>
         }
         {
@@ -36,14 +38,10 @@ const AppBar = ({ agent }) => {
           <>
             <GoBackButton />
             <HomeButton />
+            <CartButton />
           </>
         }
 
-
-        {/*<a href="#" className="appnavbar_btn android"><img*/}
-        {/*  src="/dist/images/app/btn_menu.svg" alt="메뉴" /></a>*/}
-        {/*<a href="#" className="appnavbar_btn"><img*/}
-        {/*  src="/dist/images/app/btn_cart.svg" alt="장바구니" /></a>*/}
         {/*<a href="#" className="appnavbar_btn"><img*/}
         {/*  src="/dist/images/app/btn_shipping.svg" alt="주문/배송" /></a>*/}
         {/*<a href="#" className="appnavbar_btn"><img*/}
@@ -67,7 +65,7 @@ const GoBackButton = () => {
   };
 
   return (
-    <Link href="#" onClick={goBack} className="appnavbar_btn">
+    <Link to="#goBack" onClick={goBack} className="appnavbar_btn">
       <img src={arrow} alt="뒤로 가기" />
     </Link>
   );
@@ -89,10 +87,16 @@ const MenuButton = () => {
     isSiderbarOpen ? closeSideBar(headerDispatch) : openSideBar(headerDispatch);
 
   return (
-    <a href="#menu" onClick={toggle} className="appnavbar_btn">
+    <a href="#header" onClick={toggle} className="appnavbar_btn">
       <img src={menu} alt="메뉴" />
     </a>
   );
 };
+
+const CartButton = () => (
+  <Link to="/cart" className="appnavbar_btn">
+    <img src={cart} alt="장바구니" />
+  </Link>
+);
 
 export default AppBar;
