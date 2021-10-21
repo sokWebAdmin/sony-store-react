@@ -374,7 +374,7 @@ const App = (props) => {
 
             <Route component={Error404} />
             </Switch>
-          {agent.isApp && <AppBar />}
+          {agent.isApp && <AppBar agent={agent} />}
           {!window.location.href.includes('/app/terms/') && <Footer />}
         </div>
       ) : (
