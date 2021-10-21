@@ -16,21 +16,12 @@ function NaverMapAPI() {
     marginTop: isMobile ? '48px' : '40px',
   };
 
-  // const getMapSize = () => {
+  console.log(navermaps.Map);
+
+  // useEffect(() => {
   //   const _size = new navermaps.Size(size.width, isMobile ? 400 : 560);
-  //   return _size;
-  // };
-
-  // const resize = () => {
-  //   navermaps.Size(window.innerWidth, isMobile ? 400 : 560);
-  // };
-
-  // document.addEventListener('resize', () => map.)
-
-  useEffect(() => {
-    const _size = new navermaps.Size(size.width, isMobile ? 400 : 560);
-    navermaps.Map.setSize(_size);
-  }, [size]);
+  //   navermaps.Map.setSize(_size);
+  // }, [size]);
 
   return (
     <NaverMap
