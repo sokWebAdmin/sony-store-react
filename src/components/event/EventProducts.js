@@ -42,37 +42,6 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [giftVisible, setGiftVisible] = useState(false);
 
-  const goCart = async (productNo, hsCode) => {
-    const succeed = await hsValidation(!!hsCode);
-    if (!succeed) return;
-
-    const { data } = await getProductOptions(productNo);
-    const products = [data.flatOptions[0]].map((option) => {
-      return {
-        productNo,
-        orderCnt: 1,
-        channelType: null,
-        optionInputs: null,
-        ...option,
-      };
-    });
-
-    try {
-      if (isLogin) {
-        const result = await postCart(products);
-        result?.error && result?.message && openAlert(result.message);
-        getCartCount().then(({ data: { count } }) => setCartCount(headerDispatch, count));
-      } else {
-        gc.set(products);
-        gc.fetch();
-        setCartCount(headerDispatch, gc.items.length);
-      }
-      history.push('/cart');
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   const getOrderSheetNo = async (productNo, selectedOption) => {
     try {
       const { data } = await postOrderSheets({
@@ -102,7 +71,6 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
   const _getOrderSheetNo = async (productNo, pathname) => {
     try {
       const { data } = await getProductOptions(productNo);
-
       const result = await getOrderSheetNo(productNo, [{ ...data.flatOptions[0], buyCnt: 1, productNo }]);
 
       if (result?.code) {
@@ -142,6 +110,15 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
       setGiftVisible(true);
     }
   };
+
+  const goOrder = async (productNo, hsCode) => {
+    if (!isLogin) return;
+
+    const succeed = await hsValidation(!!hsCode);
+    if (!succeed) return;
+
+    order(productNo);
+  }
 
   const getStickerLabel = (product) => product.stickerLabels.find(label => label.includes('급'));
 
@@ -242,7 +219,7 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
             <button
               type="button"
               className="button button_positive button-s"
-              onClick={() => goCart(product.productNo, product.hsCode)}
+              onClick={() => goOrder(product.productNo, product.hsCode)}
               disabled={isSoldOut}
             >
               {isSoldOut ? '일시품절' : '바로 구매'}
