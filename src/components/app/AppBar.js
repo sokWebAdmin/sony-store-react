@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
@@ -8,48 +8,29 @@ import {
   closeSideBar,
 } from '../../context/header.context';
 
+// style
+import '../../assets/scss/partials/appBar.scss';
+
 // images
 import arrow from '../../assets/images/app/btn_arrow.svg';
 import home from '../../assets/images/app/btn_home.svg';
 import menu from '../../assets/images/app/btn_menu.svg';
 import cart from '../../assets/images/app/btn_cart.svg';
+import shipping from '../../assets/images/app/btn_shipping.svg';
+import my from '../../assets/images/app/btn_my.svg';
 
-const AppBar = ({ agent }) => {
-  const init = () => {
-    console.log(agent);
-  };
-
-  useEffect(init, []);
-
-  return (
-    <div className="appnavbar" style={{ zIndex: 998 }}>
-      <div className="appnavbar_inner">
-        {agent.device === 'android' &&
-        <>
-          {/* test */}
-          <GoBackButton />
-          <HomeButton />
-          <MenuButton />
-          <CartButton />
-        </>
-        }
-        {
-          agent.device === 'ios' &&
-          <>
-            <GoBackButton />
-            <HomeButton />
-            <CartButton />
-          </>
-        }
-
-        {/*<a href="#" className="appnavbar_btn"><img*/}
-        {/*  src="/dist/images/app/btn_shipping.svg" alt="주문/배송" /></a>*/}
-        {/*<a href="#" className="appnavbar_btn"><img*/}
-        {/*  src="/dist/images/app/btn_my.svg" alt="마이메뉴" /></a>*/}
-      </div>
+const AppBar = ({ agent }) => (
+  <div className="appnavbar" style={{ zIndex: 998 }}>
+    <div className="appnavbar_inner">
+      {agent.device === 'ios' && <GoBackButton />}
+      <HomeButton />
+      <MenuButton />
+      <CartButton />
+      <OrderListButton />
+      <MyPageButton />
     </div>
-  );
-};
+  </div>
+);
 
 /**
  * buttons
@@ -98,5 +79,21 @@ const CartButton = () => (
     <img src={cart} alt="장바구니" />
   </Link>
 );
+
+const OrderListButton = () => {
+  return (
+    <Link to="/my-page/order-list" className="appnavbar_btn">
+      <img src={shipping} alt="주문/배송" />
+    </Link>
+  );
+};
+
+const MyPageButton = () => {
+  return (
+    <Link to="/my-page" className="appnavbar_btn">
+      <img src={my} alt="마이메뉴" />
+    </Link>
+  );
+};
 
 export default AppBar;
