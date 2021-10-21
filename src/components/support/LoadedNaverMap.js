@@ -16,10 +16,10 @@ function NaverMapAPI() {
     marginTop: isMobile ? '48px' : '40px',
   };
 
-  useEffect(() => {
-    const _size = new navermaps.Size('100%', isMobile ? '400px' : '560px');
-    window.naver.maps.setSize(_size);
-  }, [size]);
+  // useEffect(() => {
+  //   const _size = new navermaps.Size('100%', isMobile ? '400px' : '560px');
+  //   window.naver.maps.setSize(_size);
+  // }, [size]);
 
   return (
     <NaverMap
