@@ -201,13 +201,9 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
             {accumulationConfig?.accumulationUseMinPrice > 0 && (
               <p
                 className="membership_info"
-                style={accumulationUseMinPriceWarn
-                  ? { color: '#e70000' }
-                  : { color: 'inherit' }}
+                style={accumulationUseMinPriceWarn ? { color: '#e70000' } : { color: 'inherit' }}
               >
-                * 멤버십 마일리지는 최소 {toCurrencyString(
-                accumulationConfig.accumulationUseMinPrice)}마일리지 부터 사용
-                가능합니다.
+                * 멤버십 마일리지는 최소 5,000점 부터 사용 가능합니다.
               </p>
             )}
           </div>
