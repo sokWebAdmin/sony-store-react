@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
 import { COORDINATE, MAP_CLIENT_ID } from '../../const/support';
 import { useWindowSize } from '../../utils/utils';
@@ -14,6 +15,11 @@ function NaverMapAPI() {
     display: 'block',
     marginTop: isMobile ? '48px' : '40px',
   };
+
+  useEffect(() => {
+    const _size = new navermaps.Size('100%', isMobile ? '400px' : '560px');
+    navermaps.setSize(_size);
+  }, [size]);
 
   return (
     <NaverMap
