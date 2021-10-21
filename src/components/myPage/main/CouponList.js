@@ -41,7 +41,7 @@ const CouponList = () => {
 
   // 다음 페이지가 없는 경우 loadmore 버튼 숨김
   const showLoadMoreBtn = (newCoupons) => {
-    if (newCoupons.length < 0) {
+    if (newCoupons.length < 10) {
       setLoadMoreBtnVisible(false);
       return;
     }
