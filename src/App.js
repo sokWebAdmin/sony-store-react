@@ -240,6 +240,16 @@ const App = (props) => {
       });
   }, [location]);
 
+  const isAppBarDisabledPage = useMemo(() => {
+    const rejectPathNames = [
+      '/product-view',
+      '/cart',
+      '/order/sheet',
+      '/gift/sheet',
+      '/order/complete'];
+    return !rejectPathNames.some(path => location.pathname.includes(path));
+  }, [location]);
+
   function fetchPopupNos () {
     const map = data => data.map(({ popupNo }) => popupNo);
 
@@ -375,6 +385,7 @@ const App = (props) => {
             <Route component={Error404} />
             </Switch>
           {agent.isApp && ['android', 'ios'].some(v => v === agent.device) &&
+          isAppBarDisabledPage &&
           <AppBar agent={agent} />}
           {!window.location.href.includes('/app/terms/') && <Footer />}
         </div>
