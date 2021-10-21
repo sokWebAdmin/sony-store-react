@@ -115,6 +115,7 @@ import TermsLicense from './pages/app/terms/License';
 import TermsPrivacy from './pages/app/terms/Privacy';
 import CustomPopup from './components/common/customPopup/CustomPopup';
 import { getDisplayPopups, getDisplayPopupsPopupNos } from './api/display';
+import AppBar from './components/app/AppBar';
 
 const App = (props) => {
   const agent = getAgent();
@@ -372,8 +373,8 @@ const App = (props) => {
             <Route exact path="/error-server" component={ErrorServer} />
 
             <Route component={Error404} />
-            {/* 푸터 */}
             </Switch>
+          {agent.isApp && <AppBar />}
           {!window.location.href.includes('/app/terms/') && <Footer />}
         </div>
       ) : (
