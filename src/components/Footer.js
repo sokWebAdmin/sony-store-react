@@ -145,7 +145,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   </optgroup>
                 </select>
               </div>
-              <a href="www.sony.com/" className="footer__family__global"
+              <a href={window.anchorProtocol + 'www.sony.com/'}
+                 className="footer__family__global"
                  target="_blank" rel="noreferrer">
                 Sony Global
               </a>
@@ -157,7 +158,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                 이용약관
               </Link>
               <a
-                href="www.sony.co.kr/handler/ProductInfo-Start?PageName=jsp/footer/CF_policy.jsp"
+                href={window.anchorProtocol +
+                'www.sony.co.kr/handler/ProductInfo-Start?PageName=jsp/footer/CF_policy.jsp'}
                 target="_blank"
                 rel="noreferrer"
                 className="footer__legal__link privacy"
@@ -185,7 +187,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                 <br /> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.
                 <a
                   className="escrow"
-                  href="mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat"
+                  href={window.anchorProtocol +
+                  'mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat'}
                   style={{
                     backgroundImage: 'url(image.inicis.com/mkt/certmark/escrow/escrow_43x43_gray.png)',
                   }}
