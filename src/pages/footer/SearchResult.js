@@ -50,9 +50,7 @@ export default function SearchResult({ match }) {
 
   useEffect(() => {
     const word = _.chain(history.location.pathname).split('search-result/').last().value();
-    console.log(word, 'word');
-    if (!word) return;
-    handleSearch(word);
+    word && handleSearch(word);
   }, [history.location.pathname]);
 
   const [productList, setProductList] = useState([]);
