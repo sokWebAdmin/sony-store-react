@@ -119,9 +119,11 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   defaultValue="default"
                   ref={selectRef}
                   onChange={(e) => {
-                    let popup = window.open('about:blank', '_blank');
-                    selectRef.current.value = 'default';
+                    let popup = null;
+                    popup = window.open('about:blank', 'Sony Family');
+                    popup.focus();
                     popup.location.href = e.target.value;
+                    // selectRef.current.value = 'default';
                   }}
                   className={`footer__family__link footer__mo ${moActive && 'footer__family__link--active'}`}
                 >
