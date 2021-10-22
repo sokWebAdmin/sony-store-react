@@ -21,7 +21,6 @@ const tabs = [
 ];
 
 const Benefit = (props) => {
-
   const [tabState, setTabState] = useState(props.location?.state?.type || 'mileage');
   useEffect(() => setTabState(props.location?.state?.type || 'mileage'), [props.location?.state?.type]);
 
@@ -60,7 +59,8 @@ const Benefit = (props) => {
                     <div className="mileage_info_inner">
                       <strong className="mileage_info_inner_tit">마일리지 안내</strong>
                       <p className="mileage_info_inner_txt">
-                        소니스토어에서 제품 구매 시 결제금액의 <em>최대 4%</em>(멤버십 회원:2%)가
+                        소니스토어에서 제품 구매 시 결제금액의 <em>최대 4%</em>
+                        {`(멤버십 회원:2%)가 `}
                         <span className="br">
                           적립되며, 적립된 마일리지는 적립 시점으로부터 <em>1년간</em> 사용 가능합니다.
                         </span>
@@ -209,7 +209,8 @@ const Benefit = (props) => {
                         <span className="emp">7일 이후</span>에 적립 확인 가능합니다.
                       </p>
                       <p>
-                        소니스토어 압구정에서 구매 시에는 <span className="emp">구매 익일</span>적립 확인 가능합니다.
+                        소니스토어 압구정에서 구매 시에는 <span className="emp">구매 익일</span>
+                        {` 적립`} 확인 가능합니다.
                       </p>
                       <p>
                         마일리지 유효기간은 <strong>적립 시점으로부터 1년 후</strong> 소멸됩니다.{' '}
