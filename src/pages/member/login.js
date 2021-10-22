@@ -105,10 +105,7 @@ export default function Login({ location }) {
           Cookies.remove('sony_email');
         }
         if (agent.isApp) {
-          let popup = null;
-          popup = window.open('about:blank');
-          popup.focus();
-          popup.location.href = `sonyapp://autoLoginYn?value=${autoLogin ? 'Y' : 'N'}`
+          window.location.href = `sonyapp://autoLoginYn?value=${autoLogin ? 'Y' : 'N'}`;
         }
 
         if (!!history.location.state?.next) {
@@ -223,7 +220,6 @@ export default function Login({ location }) {
                       value={pw}
                       onChange={(e) => {
                         const value = e.target.value.trim();
-                        debugger;
                         setPw(value);
                       }}
                       onKeyPress={(event) => {
