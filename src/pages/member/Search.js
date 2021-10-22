@@ -170,7 +170,7 @@ export default function Search() {
           <div className="login">
             <h2 className="login__title">아이디 · 비밀번호 찾기</h2>
             <p className="login__desc">
-              아이디·비밀번호가 기억나지 않으신가요?{' '}
+              아이디·비밀번호가 기억나지 않으신가요? <br />
               <span>등록하신 정보로 아이디와 비밀번호를 찾으실 수 있습니다.</span>
             </p>
             <div className="login__search_box">
