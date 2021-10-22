@@ -37,7 +37,7 @@ import { useHistory } from 'react-router';
 
 export default function SearchResult({ match }) {
   const history = useHistory();
-  const initalKeyword = match.params.keyword;
+  const initalKeyword = decodeURIComponent(match.params.keyword);
 
   const { config } = useBoardState();
   const dispatch = useBoardDispatch();
@@ -49,9 +49,8 @@ export default function SearchResult({ match }) {
   const [noticeNewest, setNoticeNewest] = useState(true);
 
   useEffect(() => {
-    const word = _.chain(history.location.pathname).split('/').last().value();
-    if (!word) return;
-    handleSearch(word);
+    const word = _.chain(history.location.pathname).split('search-result/').last().value();
+    word && handleSearch(word);
   }, [history.location.pathname]);
 
   const [productList, setProductList] = useState([]);

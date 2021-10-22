@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { Switch, useLocation, Route, useHistory } from 'react-router-dom';
 import { throttle, debounce } from 'lodash';
 
@@ -232,25 +226,21 @@ const App = (props) => {
       return;
     }
 
-    fetchPopupNos().
-      then(nos => nos.toString()).
-      then(fetchPopups).
-      then(res => {
+    fetchPopupNos()
+      .then((nos) => nos.toString())
+      .then(fetchPopups)
+      .then((res) => {
         setPopups(res);
       });
   }, [location]);
 
   const isAppBarEnabled = useMemo(() => {
-    const rejectPathNames = [
-      '/product-view',
-      '/cart',
-      '/order/sheet',
-      '/gift/sheet',
-      '/order/complete',
-      '/app/terms',
-    ];
-    return agent.isApp && ['android', 'ios'].some(v => v === agent.device) &&
-      !rejectPathNames.some(path => location.pathname.includes(path));
+    const rejectPathNames = ['/product-view', '/cart', '/order/sheet', '/gift/sheet', '/order/complete', '/app/terms'];
+    return (
+      agent.isApp &&
+      ['android', 'ios'].some((v) => v === agent.device) &&
+      !rejectPathNames.some((path) => location.pathname.includes(path))
+    );
   }, [location]);
 
   const [y, setY] = useState(window.scrollY);
@@ -258,16 +248,18 @@ const App = (props) => {
   const [scrollAction, setScrollAction] = useState('up');
 
   const handleNavigation = useCallback(
-    throttle(e => {
-      const window = e.currentTarget;
-      if (y > window.scrollY) {
-        setScrollAction('up');
-      }
-      else if (y < window.scrollY) {
-        setScrollAction('down');
-      }
-      setY(window.scrollY);
-    }, [y]),
+    throttle(
+      (e) => {
+        const window = e.currentTarget;
+        if (y > window.scrollY) {
+          setScrollAction('up');
+        } else if (y < window.scrollY) {
+          setScrollAction('down');
+        }
+        setY(window.scrollY);
+      },
+      [y],
+    ),
   );
 
   useEffect(() => {
@@ -279,13 +271,15 @@ const App = (props) => {
     };
   }, [handleNavigation]);
 
-  function fetchPopupNos () {
-    const map = data => data.map(({ popupNo }) => popupNo);
+  function fetchPopupNos() {
+    const map = (data) => data.map(({ popupNo }) => popupNo);
 
-    return getDisplayPopups().then(({ data }) => data).then(map);
+    return getDisplayPopups()
+      .then(({ data }) => data)
+      .then(map);
   }
 
-  function fetchPopups (no) {
+  function fetchPopups(no) {
     return getDisplayPopupsPopupNos(no).then(({ data }) => data);
   }
 
@@ -294,7 +288,9 @@ const App = (props) => {
       {isStatus ? (
         <div className="wrapper" style={{ backgroundColor: 'white' }}>
           <div id="skipnav" className="skipnav">
-            <a href="#container"><span>본문 바로가기</span></a>
+            <a href="#container">
+              <span>본문 바로가기</span>
+            </a>
           </div>
           {/* 헤더 */}
           {popups.length > 0 && <CustomPopup location={location} data={popups} />}
@@ -332,12 +328,10 @@ const App = (props) => {
             <Route exact path="/my-page/old-order-list" component={OldOrderList} />
             <Route exact path="/my-page/rename" component={Rename} />
             <Route exact path="/my-page/withdraw" component={Withdraw} />
-            <Route exact path="/my-page/withdraw-complete"
-                   component={WithdrawComplete} />
+            <Route exact path="/my-page/withdraw-complete" component={WithdrawComplete} />
 
             {/* 상품 상세페이지 */}
-            <Route exact path="/product-view/:productNo"
-                   component={ProductView} />
+            <Route exact path="/product-view/:productNo" component={ProductView} />
 
             {/* 주문 */}
             <Route exact path="/order/agree" component={OrderAgree} />
@@ -354,10 +348,8 @@ const App = (props) => {
 
             {/* 이벤트  */}
             <Route exact path="/event/list" component={eventList} />
-            <Route exact path="/event/only/:eventNo"
-                   component={EventDetail} />
-            <Route exact path="/event/detail/:eventNo"
-                   component={EventDetail} />
+            <Route exact path="/event/only/:eventNo" component={EventDetail} />
+            <Route exact path="/event/detail/:eventNo" component={EventDetail} />
             <Route exact path="/event/expired" component={Expired} />
             {/*<Route exact path="/event/benefit-zone"*/}
             {/*       component={BenefitZone} />/!*현재 데이터 없음*!/*/}
@@ -378,17 +370,13 @@ const App = (props) => {
             <Route exact path="/member/joinStep" component={joinStep} />
             <Route exact path="/member/login" component={login} />
             <Route exact path="/member/search" component={Search} />
-            <Route exact path="/member/inactiveAccounts"
-                   component={InactiveAccounts} />
-            <Route exact path="/member/activeAccounts"
-                   component={ActiveAccounts} />
-            <Route exact path="/member/lockedAccounts"
-                   component={LockedAccounts} />
+            <Route exact path="/member/inactiveAccounts" component={InactiveAccounts} />
+            <Route exact path="/member/activeAccounts" component={ActiveAccounts} />
+            <Route exact path="/member/lockedAccounts" component={LockedAccounts} />
             <Route exact path="/callback" component={Callback} />
 
             {/* app */}
-            {
-              agent.isApp &&
+            {agent.isApp && (
               <>
                 <Route exact path="/app/push-list" component={PushList} />
                 <Route exact path="/app/landing" component={AppLanding} />
@@ -396,11 +384,10 @@ const App = (props) => {
                 <Route exact path="/app/terms/privacy" component={TermsPrivacy} />
                 <Route exact path="/app/terms/license" component={TermsLicense} />
               </>
-            }
+            )}
 
             {/* 검색 결과  */}
-            <Route exact path="/search-result/:keyword"
-                   component={SearchResult} />
+            <Route path="/search-result/:keyword" component={SearchResult} />
 
             {/* Footer  */}
             <Route exact path="/footer/policy" component={Policy} />
@@ -413,12 +400,10 @@ const App = (props) => {
 
             <Route component={Error404} />
           </Switch>
-          {
-            isAppBarEnabled &&
-            <AppBar agent={agent} scrollAction={scrollAction} y={y} />}
-          {!window.location.href.includes('/app/terms/') &&
-          <Footer isAppBarEnabled={isAppBarEnabled}
-                  scrollAction={scrollAction} />}
+          {isAppBarEnabled && <AppBar agent={agent} scrollAction={scrollAction} y={y} />}
+          {!window.location.href.includes('/app/terms/') && (
+            <Footer isAppBarEnabled={isAppBarEnabled} scrollAction={scrollAction} />
+          )}
         </div>
       ) : (
         <div>Server Loading...</div>
