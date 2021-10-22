@@ -14,7 +14,6 @@ const PushList = () => {
 
   const fetchPushList = async (pageIdx = 1) => {
     const { data } = await getPushs({fromDate: '100', rowsPerPage: 10, pageIdx});
-    console.log(data);
     setPushData({items: pushData.items.concat(data.body), totalCount: data.paginationInfo.totalCount});
   }
 

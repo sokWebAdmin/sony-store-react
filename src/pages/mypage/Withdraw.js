@@ -85,7 +85,6 @@ export default function Withdraw() {
       withdrawreason: withdrawReason.optionNo,
       password,
     });
-    console.log(checkWithdraw);
     if (checkWithdraw.data.errorCode === '0000') {
       removeAccessToken();
       onChangeGlobal({ isLogin: false });

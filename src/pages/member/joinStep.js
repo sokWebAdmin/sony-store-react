@@ -288,10 +288,8 @@ export default function JoinStep() {
     }
     const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
     const redirectedToken = getItem(KEY.OPENID_TOKEN);
-    console.log(redirectedToken, redirectedProvider);
     if (redirectedProvider && redirectedToken) {
       setEmail(profile.email);
-      console.log(profile.email);
     }
   }, []);
 
