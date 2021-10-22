@@ -18,11 +18,6 @@ export default function ErrorServer() {
         <SEOHelmet title={"서버 점검중입니다"} />
 
         <div className="error">
-           {/* <div className="error__header">
-               <h1 className="error_logo">
-               <a href="http://sony.co.kr"><img src={errorLogo} alt="SONY" /></a>
-               </h1>
-           </div> */}
             <div class="error__container">
             <div class="error_content">
                 <i class="icon"><img src={errorLogo} alt="" /></i>

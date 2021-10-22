@@ -637,7 +637,7 @@ export default function Main() {
                   </a>
                 </li>
                 <li className="main__help__list service">
-                  <a href="https://www.sony.co.kr/electronics/support" target="_blank">
+                  <a href={window.anchorProtocol + "www.sony.co.kr/electronics/support"} target="_blank">
                     제품지원
                   </a>
                 </li>

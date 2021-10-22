@@ -99,7 +99,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                     <ul className="optgroup">
                       {SONY_FAMILY.map(({ url, name }) => (
                         <li className="option" key={`footer-ul-family-${name}`}>
-                          <a href={url} target="_blank" rel="noreferrer" onClick={() => setPcActive(false)}>
+                          <a href={window.anchorProtocol + url.replace('https://', '')} target="_blank" rel="noreferrer" onClick={() => setPcActive(false)}>
                             {name}
                           </a>
                         </li>
@@ -109,7 +109,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                     <ul className="optgroup">
                       {SONY_COMPANY.map(({ url, name }) => (
                         <li className="option" key={`footer-ul-company-${name}`}>
-                          <a href={url} target="_blank" rel="noreferrer" onClick={() => setPcActive(false)}>
+                          <a href={window.anchorProtocol + url.replace('https://', '')} target="_blank" rel="noreferrer" onClick={() => setPcActive(false)}>
                             {name}
                           </a>
                         </li>

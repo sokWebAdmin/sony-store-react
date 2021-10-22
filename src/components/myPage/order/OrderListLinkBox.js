@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 export default function OrderListLinkBox() {
   return (
     <div className="ico_box_link">
-      <a href="https://www.sony.co.kr/electronics/support" className="box_link_inner ico_type3" target="_blank">
+      <a href={window.anchorProtocol + "www.sony.co.kr/electronics/support"} className="box_link_inner ico_type3" target="_blank">
         <div className="txt_box">
           <p className="tit">고객지원 센터</p>
           <p className="txt">제품 서비스 및 보증기간을 확인하세요!</p>

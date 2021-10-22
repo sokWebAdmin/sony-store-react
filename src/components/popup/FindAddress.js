@@ -195,7 +195,7 @@ function NoResult () {
         </p>
         <p>지번주소(동/읍/면), 도로명, 건물명(아파트)을 확인해주세요.</p>
         <p>일부 신축건물, 신도시의 경우 일시적으로 검색이 되지 않을 수 있습니다.</p>
-        <p>도로명 주소를 모르실 경우 <a href="https://www.juso.go.kr"
+        <p>도로명 주소를 모르실 경우 <a href={window.anchorProtocol + "www.juso.go.kr"}
                              target="_blank">www.juso.go.kr</a> 에서 확인
           가능합니다.</p>
         <p>동명으로 검색시 법정동명으로 검색하셔야 합니다.</p>

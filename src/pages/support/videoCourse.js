@@ -36,7 +36,7 @@ export default function videoCourse() {
                   <li className="lists">
                     <div className="video_thumb">
                       <a
-                        href="https://www.youtube.com/embed/V_VgQhpS5MA"
+                        href={window.anchorProtocol + "www.youtube.com/embed/V_VgQhpS5MA"}
                         className="video_thumb_btn"
                         data-video-url="https://www.youtube.com/embed/V_VgQhpS5MA"
                         target="_blank"
@@ -56,7 +56,7 @@ export default function videoCourse() {
                   <li className="lists">
                     <div className="video_thumb">
                       <a
-                        href="https://www.youtube.com/embed/64y3hTkGV5A"
+                        href={window.anchorProtocol + "www.youtube.com/embed/64y3hTkGV5A"}
                         className="video_thumb_btn"
                         data-video-url="https://www.youtube.com/embed/64y3hTkGV5A"
                         target="_blank"
@@ -76,7 +76,7 @@ export default function videoCourse() {
                   <li className="lists">
                     <div className="video_thumb">
                       <a
-                        href="https://www.youtube.com/embed/GCHITgvg-8w"
+                        href={window.anchorProtocol + "www.youtube.com/embed/GCHITgvg-8w"}
                         className="video_thumb_btn"
                         data-video-url="https://www.youtube.com/embed/GCHITgvg-8w"
                         target="_blank"
@@ -101,7 +101,7 @@ export default function videoCourse() {
             <p className="tit">더 많은 동영상 강좌를 지금 만나보세요!</p>
             <div className="ico_box_link">
               <a
-                href="https://www.sony.co.kr/scs/handler/Common-PageView?pageName=/jsp/scs/lecture/playlist.jsp"
+                href={window.anchorProtocol + "www.sony.co.kr/scs/handler/Common-PageView?pageName=/jsp/scs/lecture/playlist.jsp"}
                 className="box_link_inner ico_course1"
                 target="_blank"
                 rel="noreferrer"
@@ -113,7 +113,7 @@ export default function videoCourse() {
                 </div>
               </a>
               <a
-                href="https://www.youtube.com/channel/UC_NlkiLtoPVHWuByWvF64Fw"
+                href={window.anchorProtocol + "www.youtube.com/channel/UC_NlkiLtoPVHWuByWvF64Fw"}
                 target="_blank"
                 title="새 창 열림"
                 rel="noreferrer"
