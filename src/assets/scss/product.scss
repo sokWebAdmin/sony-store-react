@@ -2491,3 +2491,13 @@
 
   }
 }
+.result_list{
+  .category{
+    .categoryList{
+      @include only-mo{
+      margin-left: 0 !important;
+      }
+    }
+  }
+}
+

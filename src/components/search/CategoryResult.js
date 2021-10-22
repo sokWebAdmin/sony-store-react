@@ -4,6 +4,7 @@ import { categoriesExtraDataMap } from '../../const/category';
 import { PAGE_SIZE } from '../../const/search';
 import ViewMore from '../common/ViewMore';
 import { useHistory } from 'react-router';
+import '../../assets/scss/product.scss';
 
 const getCategoryNo = (category) => {
   return _.chain(category)
@@ -16,10 +17,10 @@ const getCategoryNo = (category) => {
 const getLabelHtml = (label, keyword) => {
   if (label.includes(keyword)) {
     const [p, n] = label.split(keyword);
-    return `<span class="keword">${p}${keyword}${n}</span>`;
+    return `<span class="keword categoryList">${p}${keyword}${n}</span>`;
   }
 
-  return `<span>${label}</span>`;
+  return `<span class="categoryList">${label}</span>`;
 };
 const getCategoryLabel = (category, keyword) => {
   return _.chain(category)
