@@ -25,12 +25,16 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
       .groupBy('groupManagementCode')
       .value();
 
-    setProducts(
-      _.map(productList, (p) => ({
+    setProducts(() => {
+      let products = _.map(productList, (p) => ({
         ...p,
         groupManagementMappingProducts: _.head(groupByCode[p.groupManagementCode])?.groupManagementMappingProducts,
-      })),
-    );
+      }));
+      if (orderBy === 'OLD_PRODUCT') {
+        products.reverse();
+      }
+      return products;
+    });
   };
 
   const codes = _.chain(productList)
@@ -56,7 +60,13 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
           >
             <span className="itemsort__button__label sr-only">정렬기준:</span>
             <span className="itemsort__button__selected">
-              {orderBy === 'MD_RECOMMEND' ? '최신순' : orderBy === 'LOW_PRICE' ? '낮은 가격순' : '높은 가격순'}
+              {orderBy === 'RECENT_PRODUCT'
+                ? '최신순'
+                : orderBy === 'LOW_PRICE'
+                ? '낮은 가격순'
+                : orderBy === 'LOW_PRICE'
+                ? '낮은 가격순'
+                : '오래된 순'}
             </span>
           </button>
           <div className="itemsort__drawer">
