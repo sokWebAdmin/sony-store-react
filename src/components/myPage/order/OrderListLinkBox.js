@@ -12,7 +12,7 @@ export default function OrderListLinkBox() {
         <div className="txt_box">
           <p className="tit">2021년 10월 이전 주문 내역</p>
           <p className="txt" style={{ paddingRight: '20px' }}>
-            >이전 소니스토어에서 구매하신 내역을 확인하세요!
+            이전 소니스토어에서 구매하신 내역을 확인하세요!
           </p>
         </div>
       </Link>
