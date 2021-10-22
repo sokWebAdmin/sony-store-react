@@ -124,12 +124,21 @@ const App = (props) => {
   const categoryDispatch = useCategoryDispatch();
 
   useEffect(() => {
-    if (state?.mall) return;
+    window['anchorProtocol'] = agent.isApp ? 'openbrowser://' : 'https://';
+  }, [agent]);
+
+  useEffect(() => {
+    if (state?.mall) {
+      return;
+    }
     fetchMallInfo(dispatch);
   }, [dispatch, state?.mall]);
 
   const getMallInfo = async () => {
-    if (window.location.pathname === '/callback' || window.location.pathname === '/member/joinStep') return;
+    if (window.location.pathname === '/callback' || window.location.pathname ===
+      '/member/joinStep') {
+      return;
+    }
     if (isLogin) {
       if (!profile) {
         const response = await getProfile();
@@ -226,16 +235,24 @@ const App = (props) => {
       return;
     }
 
-    fetchPopupNos()
-      .then((nos) => nos.toString())
-      .then(fetchPopups)
-      .then((res) => {
+    fetchPopupNos().
+      then((nos) => nos.toString()).
+      then(fetchPopups).
+      then((res) => {
         setPopups(res);
       });
   }, [location]);
 
+  Array();
+
   const isAppBarEnabled = useMemo(() => {
-    const rejectPathNames = ['/product-view', '/cart', '/order/sheet', '/gift/sheet', '/order/complete', '/app/terms'];
+    const rejectPathNames = [
+      '/product-view',
+      '/cart',
+      '/order/sheet',
+      '/gift/sheet',
+      '/order/complete',
+      '/app/terms'];
     return (
       agent.isApp &&
       ['android', 'ios'].some((v) => v === agent.device) &&
