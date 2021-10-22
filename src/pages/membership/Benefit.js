@@ -457,8 +457,8 @@ const Benefit = (props) => {
                               <li className="lists">
                                 <strong className="lists_tit">발급대상</strong>
                                 <p className="lists_txt">
-                                  카오디오/디지털카메라/카메라 바디(별매렌즈)/캠코더/
-                                  워크맨(MP3플레이어)/헤드폰/이어폰/스피커/홈오디오 등
+                                  카오디오/디지털카메라/카메라
+                                  바디(별매렌즈)/캠코더/워크맨(MP3플레이어)/헤드폰/이어폰/스피커/홈오디오 등
                                 </p>
                               </li>
                               <li className="lists">
