@@ -105,7 +105,7 @@ export default function Login({ location }) {
           Cookies.remove('sony_email');
         }
         if (agent.isApp) {
-          window.location.href = `sonyapp://autoLoginYn?value=${autoLogin ? 'Y' : 'N'}`;
+          window.location = `sonyapp://autoLoginYn?value=${autoLogin ? 'Y' : 'N'}`;
         }
 
         if (!!history.location.state?.next) {
