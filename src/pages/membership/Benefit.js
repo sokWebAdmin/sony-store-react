@@ -413,7 +413,7 @@ const Benefit = (props) => {
                                 첫 구매 감사 <span className="percentage">5%</span> 할인
                               </p>
                               <p className="cut_tit">
-                                소니스토어 온라인 회원으로서 첫 구매에 대한
+                                소니스토어 온라인 회원으로서 첫 구매에 대한{' '}
                                 <br className="mo_none" />
                                 배송완료 후 발급
                               </p>
