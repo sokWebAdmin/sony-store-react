@@ -110,7 +110,6 @@ import TermsPrivacy from './pages/app/terms/Privacy';
 import CustomPopup from './components/common/customPopup/CustomPopup';
 import { getDisplayPopups, getDisplayPopupsPopupNos } from './api/display';
 import AppBar from './components/app/AppBar';
-import SEOHelmet from './components/SEOHelmet';
 
 const App = (props) => {
   const agent = getAgent();
@@ -303,9 +302,6 @@ const App = (props) => {
 
   return (
     <div className="App" onScroll={handleScroll}>
-      <SEOHelmet title={'소니 스토어'}>
-        <meta http-equiv="Cache-Control" content="No-Cache" />
-      </SEOHelmet>
       {isStatus ? (
         <div className="wrapper" style={{ backgroundColor: 'white' }}>
           <div id="skipnav" className="skipnav">
