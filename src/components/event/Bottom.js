@@ -127,10 +127,12 @@ const EventBottom = () => {
   };
 
   useEffect(() => {
+    if (!swiperTab) return;
+
     setNewest(true);
     fetchDisplayEvents();
-    swiperTab?.slideTo(Object.keys(tags).findIndex(t => t === tabState));
-  }, [tabState]);
+    swiperTab?.slideTo(Object.keys(tags).findIndex((t) => t === tabState));
+  }, [tabState, swiperTab]);
 
   useEffect(() => {
     events.length && sortEvents();
@@ -313,7 +315,11 @@ const EventBottom = () => {
             <div className="event_list">
               <div className="category_head">
                 <p className="tit">{showLabel}</p>
-                <div className={`itemsort ${sortSelect ? 'itemsort--open' : ''}`} aria-label="기획전 전체 정렬" ref={sortRef}>
+                <div
+                  className={`itemsort ${sortSelect ? 'itemsort--open' : ''}`}
+                  aria-label="기획전 전체 정렬"
+                  ref={sortRef}
+                >
                   <button className="itemsort__button" onClick={() => setSortSelect(!sortSelect)}>
                     <span className="itemsort__button__label sr-only">정렬기준:</span>
                     <span className="itemsort__button__selected">{newest ? '최신순' : '오래된 순'}</span>
