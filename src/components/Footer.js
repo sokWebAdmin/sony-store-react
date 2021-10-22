@@ -48,7 +48,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
               <h3 className="footer__social__title">FOLLOW US</h3>
               <div className="footer__social__links">
                 <a
-                  href="https://www.facebook.com/sonykorea"
+                  href={window.anchorProtocol + 'www.facebook.com/sonykorea'}
                   target="_blank"
                   rel="noreferrer"
                   className="footer__social__link"
@@ -56,7 +56,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   <img src={facebook} alt="facebook" />
                 </a>
                 <a
-                  href="https://www.instagram.com/sonykorea"
+                  href={window.anchorProtocol + 'www.instagram.com/sonykorea'}
                   target="_blank"
                   rel="noreferrer"
                   className="footer__social__link"
@@ -64,7 +64,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   <img src={instagram} alt="instagram" />
                 </a>
                 <a
-                  href="https://www.youtube.com/user/sonystyleblog"
+                  href={window.anchorProtocol +
+                  'www.youtube.com/user/sonystyleblog'}
                   target="_blank"
                   rel="noreferrer"
                   className="footer__social__link"
@@ -72,7 +73,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   <img src={youtube} alt="youtube" />
                 </a>
                 <a
-                  href="https://stylezineblog.com/?intcmp=Main_Blog"
+                  href={window.anchorProtocol +
+                  'stylezineblog.com/?intcmp=Main_Blog'}
                   target="_blank"
                   rel="noreferrer"
                   className="footer__social__link"
@@ -143,7 +145,9 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   </optgroup>
                 </select>
               </div>
-              <a href="https://www.sony.com/" className="footer__family__global" target="_blank" rel="noreferrer">
+              <a href={window.anchorProtocol + 'www.sony.com/'}
+                 className="footer__family__global"
+                 target="_blank" rel="noreferrer">
                 Sony Global
               </a>
             </div>
@@ -154,7 +158,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                 이용약관
               </Link>
               <a
-                href="https://www.sony.co.kr/handler/ProductInfo-Start?PageName=jsp/footer/CF_policy.jsp"
+                href={window.anchorProtocol +
+                'www.sony.co.kr/handler/ProductInfo-Start?PageName=jsp/footer/CF_policy.jsp'}
                 target="_blank"
                 rel="noreferrer"
                 className="footer__legal__link privacy"
@@ -182,7 +187,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                 <br /> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.
                 <a
                   className="escrow"
-                  href="https://mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat"
+                  href={window.anchorProtocol +
+                  'mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat'}
                   style={{
                     backgroundImage: 'url(https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_gray.png)',
                   }}
