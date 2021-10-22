@@ -127,7 +127,11 @@ export default function MyPageMember() {
   const [remobileVisible, setRemobileVisible] = useState(false);
   const [needsResend, setNeedsResend] = useState(false);
   const [remobileReset, setRemobileReset] = useState(false);
-  const handleRemobileResult = (result) => !result && setMyForm((prev) => ({ ...prev, mobile: '' }));
+  const [authForMobile, setAuthForMobile] = useState(false);
+  const handleRemobileResult = (result) => {
+    setAuthForMobile(result);
+    !result && setMyForm((prev) => ({ ...prev, mobile: '' }));
+  };
   const remobile = () => {
     if (validateMobile(myForm.mobile, openAlert)) {
       setRemobileVisible(true);
@@ -136,6 +140,7 @@ export default function MyPageMember() {
   };
   const resend = () => {
     setRemobileReset(true);
+    setAuthForMobile(false);
   };
 
   // 수신 동의
@@ -235,7 +240,10 @@ export default function MyPageMember() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    if (!authForMobile) {
+      openAlert('휴대폰 인증을 완료해주세요.');
+      return;
+    }
     const request = validate({
       ...myForm,
       sms: active.sms ? 'Y' : 'N',
