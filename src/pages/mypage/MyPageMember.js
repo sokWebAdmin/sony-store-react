@@ -370,6 +370,7 @@ export default function MyPageMember() {
                             <Authentication
                               title="개명 회원 본인 확인"
                               setVisible={setRenameVisible}
+                              setAuthForMobile={setAuthForMobile}
                               setMyFormName={setMyFormName}
                               usage="JOIN"
                               authType="Rename"
