@@ -104,7 +104,12 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
   const [sameAsOrderer, setSameAsOrderer] = useState(false);
 
   useEffect(() => {
-    sameAsOrderer && Object.entries(ordererMap).forEach(([key, value]) => handleShippingChangeParameter(key, value));
+    if (sameAsOrderer) {
+      Object.entries(ordererMap).forEach(([key, value]) => handleShippingChangeParameter(key, value));
+    } else {
+      handleShippingChangeParameter('receiverName', '');
+      handleShippingChangeParameter('receiverContact1', '');
+    }
   }, [sameAsOrderer]);
 
   useImperativeHandle(ref, () => ({
