@@ -19,7 +19,7 @@ const OrderFail = ({ location }) => {
       <SEOHelmet title={'주문 실패'} />
       <div className="contents order">
         <div className="container" id="container">
-          <div className="content order_page">
+          <div className="content order_page" style={{ padding: '0' }}>
             <div className="order_confirm_box">
               <i className="icon receipe" />
               <h2 className="order_confirm_box__tit">주문 실패</h2>

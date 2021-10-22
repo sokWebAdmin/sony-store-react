@@ -106,7 +106,6 @@ export default function Login({ location }) {
         }
         if (agent.isApp) {
           window.location = `sonyapp://autoLoginYn?value=${autoLogin ? 'Y' : 'N'}`;
-          return;
         }
 
         if (!!history.location.state?.next) {
