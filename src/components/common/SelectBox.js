@@ -82,7 +82,7 @@ export default function SelectBox({
           return {
             label: option.label,
             options: _options,
-          }
+          };
         });
         selectOption(option);
       }

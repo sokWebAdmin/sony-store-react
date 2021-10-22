@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
-import ViewMore from "../../../../components/common/ViewMore";
-import { fetchBoards, useBoardDispatch, useBoardState } from "../../../../context/board.context"
-import NoticeItem from "./NoticeItem";
+import { useEffect, useMemo, useState } from 'react';
+import ViewMore from '../../../../components/common/ViewMore';
+import { fetchBoards, useBoardDispatch, useBoardState } from '../../../../context/board.context';
+import NoticeItem from './NoticeItem';
 
 const getReqeust = (boardNo, params = {}) => {
   const defaultParams = {
@@ -9,7 +9,7 @@ const getReqeust = (boardNo, params = {}) => {
     hasTotalCount: true,
     pageNumber: 1,
     pageSize: 10,
-  }
+  };
   return {
     pathParams: {
       boardNo,
@@ -17,9 +17,9 @@ const getReqeust = (boardNo, params = {}) => {
     params: {
       ...defaultParams,
       ...params,
-    }
-  }
-}
+    },
+  };
+};
 
 export default function NoticeContent() {
   const dispatch = useBoardDispatch();
@@ -27,7 +27,7 @@ export default function NoticeContent() {
   const boardNo = useMemo(() => config?.notice.boardNo, [config.notice.boardNo]);
   const [isInit, setIsInit] = useState(false);
 
-  useEffect(() => setIsInit(true), [])
+  useEffect(() => setIsInit(true), []);
 
   useEffect(() => {
     if (boardNo > 0) {
@@ -36,7 +36,7 @@ export default function NoticeContent() {
     }
   }, [dispatch, boardNo, isInit]);
 
-  const viewMore = pageNumber => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }), 'notice')
+  const viewMore = (pageNumber) => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }), 'notice');
 
   return (
     <div className="faq_notice_inner">
@@ -55,13 +55,9 @@ export default function NoticeContent() {
         </div> */}
         <div className="col_table_wrap">
           <NoticeItem />
-          <ViewMore 
-            totalCount={noticeBoard.totalCount}
-            viewMore={viewMore}
-            pageSize={10}
-          />
+          <ViewMore totalCount={noticeBoard.totalCount} viewMore={viewMore} pageSize={10} />
         </div>
       </div>
     </div>
-  )
-} 
+  );
+}

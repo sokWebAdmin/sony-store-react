@@ -1,7 +1,7 @@
 import { React, useEffect, useMemo, useState } from 'react';
 import ViewMore from '../../../../components/common/ViewMore';
 
-import { useBoardState, useBoardDispatch, fetchBoards } from "../../../../context/board.context";
+import { useBoardState, useBoardDispatch, fetchBoards } from '../../../../context/board.context';
 import FaqCategories from './FaqCategories';
 import FaqItem from './FaqItem';
 
@@ -11,7 +11,7 @@ const getReqeust = (boardNo, params = {}) => {
     hasTotalCount: true,
     pageNumber: 1,
     pageSize: 10,
-  }
+  };
   return {
     pathParams: {
       boardNo,
@@ -19,9 +19,9 @@ const getReqeust = (boardNo, params = {}) => {
     params: {
       ...defaultParams,
       ...params,
-    }
-  }
-}
+    },
+  };
+};
 
 export default function FaqContent() {
   const dispatch = useBoardDispatch();
@@ -29,17 +29,15 @@ export default function FaqContent() {
 
   const boardNo = useMemo(() => config.faq?.boardNo, [config.faq?.boardNo]);
 
-  const [ resetViewMore, setResetViewMore ] = useState(false);
+  const [resetViewMore, setResetViewMore] = useState(false);
 
   useEffect(() => {
-    
     if (currentCategoryNo > 0) {
-      const request = getReqeust(boardNo, { categoryNo: currentCategoryNo })
+      const request = getReqeust(boardNo, { categoryNo: currentCategoryNo });
       fetchBoards(dispatch, request);
       setResetViewMore(true);
-      return
+      return;
     }
-
   }, [dispatch, boardNo, currentCategoryNo]);
 
   useEffect(() => {
@@ -50,7 +48,7 @@ export default function FaqContent() {
     }
   }, [isAll, boardNo]);
 
-  const viewMore = pageNumber => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }));
+  const viewMore = (pageNumber) => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }));
 
   return (
     <div className="faq_notice_inner">
@@ -58,14 +56,9 @@ export default function FaqContent() {
         <FaqCategories />
         <div className="category_list">
           <FaqItem />
-          <ViewMore 
-            totalCount={faqBoard.totalCount}
-            viewMore={viewMore}
-            pageSize={10}
-            reset={resetViewMore}
-          />
+          <ViewMore totalCount={faqBoard.totalCount} viewMore={viewMore} pageSize={10} reset={resetViewMore} />
         </div>
       </div>
     </div>
-  )
-} 
+  );
+}

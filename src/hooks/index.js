@@ -4,8 +4,8 @@ import { useLocation } from 'react-router-dom';
 export const useToggle = (initial) => {
   const [toggleValue, setToggleValue] = useState(initial);
 
-  const toggle = useCallback(newValue => {
-    setToggleValue((prevState) => newValue !== undefined ? newValue : !prevState);
+  const toggle = useCallback((newValue) => {
+    setToggleValue((prevState) => (newValue !== undefined ? newValue : !prevState));
   }, []);
 
   return [toggleValue, toggle];
@@ -42,7 +42,7 @@ export const useAlert = (initial) => {
 
 export const useQuery = () => new URLSearchParams(useLocation().search);
 
-export default function useDebounce (value, delay) {
+export default function useDebounce(value, delay) {
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -78,14 +78,14 @@ export const useMediaQuery = (query) => {
   const [matches, setMatches] = useState(mediaMatch.matches);
 
   useEffect(() => {
-    const handler = e => setMatches(e.matches);
+    const handler = (e) => setMatches(e.matches);
     mediaMatch.addEventListener('change', handler);
     return () => mediaMatch.addEventListener('change', handler);
   });
   return matches;
 };
 
-export function usePrevious (value) {
+export function usePrevious(value) {
   const ref = useRef();
   useEffect(() => {
     ref.current = value;
@@ -99,36 +99,36 @@ export const useScroll = () => {
   const handleTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
-    })
-  }
+      behavior: 'smooth',
+    });
+  };
 
   useEffect(() => {
     const watch = () => window.addEventListener('scroll', handleScroll);
     requestAnimationFrame(watch);
     watch();
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
+      window.removeEventListener('scroll', handleScroll);
+    };
   });
 
   return {
     scrollY,
-    handleTop
-  }
+    handleTop,
+  };
 };
 
 export const useClickOutside = (ref, callback) => {
-  const handleClick = e => {
+  const handleClick = (e) => {
     if (ref.current && !ref.current.contains(e.target)) {
-      callback()
+      callback();
     }
   };
 
   useEffect(() => {
     document.addEventListener('click', handleClick);
     return () => {
-      document.removeEventListener('click', handleClick)
-    }
-  })
-}
+      document.removeEventListener('click', handleClick);
+    };
+  });
+};

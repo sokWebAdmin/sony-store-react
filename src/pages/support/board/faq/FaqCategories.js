@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller  } from 'swiper/core';
+import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay, Controller } from 'swiper/core';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useBoardDispatch, useBoardState } from "../../../../context/board.context";
-import { useWindowSize } from "../../../../utils/utils";
+import { useBoardDispatch, useBoardState } from '../../../../context/board.context';
+import { useWindowSize } from '../../../../utils/utils';
 
 export default function FaqCategories() {
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
@@ -20,7 +20,7 @@ export default function FaqCategories() {
 
     dispatch({
       type: 'SELECT_CATEGORY',
-      data: { categoryNo }
+      data: { categoryNo },
     });
 
     swiperTab?.slideTo(idx);
@@ -29,15 +29,14 @@ export default function FaqCategories() {
   useEffect(() => {
     dispatch({
       type: 'SELECT_CATEGORY',
-      data: { categoryNo: 0 }
+      data: { categoryNo: 0 },
     });
   }, [history.location.pathname]);
 
   return (
     <div className="category_center">
       <div className="category_slide_tab swiper-container">
-      {
-        size.width < 1199 ?
+        {size.width < 1199 ? (
           <Swiper
             className="swiper-wrapper"
             slidesPerView="auto"
@@ -49,50 +48,44 @@ export default function FaqCategories() {
               1281: {
                 touchRatio: 0,
                 centeredSlides: false,
-              }
+              },
             }}
             onSwiper={setSwiperTab}
           >
-          {
-            config.faq.categories.map(({
-                                         categoryNo,
-                                         label
-                                       }, idx) => {
+            {config.faq.categories.map(({ categoryNo, label }, idx) => {
               return (
                 <SwiperSlide
                   key={categoryNo}
                   className={`swiper-slide ${categoryNo === currentCategoryNo ? 'on' : ''}`}
                   data-view-category={categoryNo}
-                  onClick={ event => onClickCategory(event, categoryNo, idx) }
+                  onClick={(event) => onClickCategory(event, categoryNo, idx)}
                 >
-                  <a href={ `#${label}` } className="btn"><span>{ label }</span></a>
+                  <a href={`#${label}`} className="btn">
+                    <span>{label}</span>
+                  </a>
                 </SwiperSlide>
-              )
-            })
-          }
-        </Swiper>
-        :
-        <ul className="swiper-wrapper">
-          {
-            config.faq.categories.map(({
-                                         categoryNo,
-                                         label
-                                       }) => {
+              );
+            })}
+          </Swiper>
+        ) : (
+          <ul className="swiper-wrapper">
+            {config.faq.categories.map(({ categoryNo, label }) => {
               return (
                 <li
                   key={categoryNo}
                   className={`swiper-slide ${categoryNo === currentCategoryNo ? 'on' : ''}`}
                   data-view-category={categoryNo}
-                  onClick={ event => onClickCategory(event, categoryNo) }
+                  onClick={(event) => onClickCategory(event, categoryNo)}
                 >
-                  <a href={ `#${label}` } className="btn"><span>{ label }</span></a>
+                  <a href={`#${label}`} className="btn">
+                    <span>{label}</span>
+                  </a>
                 </li>
-              )
-            })
-          }
-        </ul>
-      }
+              );
+            })}
+          </ul>
+        )}
       </div>
     </div>
-  )
-}  
+  );
+}

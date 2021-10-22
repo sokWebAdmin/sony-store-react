@@ -6,8 +6,8 @@ import SEOHelmet from '../../../components/SEOHelmet';
 //api
 
 //css
-import "../../../assets/scss/contents.scss";
-import "../../../assets/scss/support.scss";
+import '../../../assets/scss/contents.scss';
+import '../../../assets/scss/support.scss';
 
 //context
 import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../../context/board.context';
@@ -25,17 +25,19 @@ export default function Faq() {
     fetchBoardConfig(dispatch, config.faq?.boardNo);
   }, [dispatch, config.faq?.boardNo]);
 
-
   return (
     <>
-      <SEOHelmet title={"고객 서비스: FAQ"} />
+      <SEOHelmet title={'고객 서비스: FAQ'} />
       <div className="contents support">
         <div className="container full">
           <div className="content">
             <div className="faq_notice_head">
               <div className="common_head first_tit">
                 <h1 className="common_head_name">FAQ &amp; 공지사항</h1>
-                <p className="common_head_txt">소니스토어에 많이 물어보시는 질문과<br className="pc_none" /> 새로운 소식을 만나보세요.</p>
+                <p className="common_head_txt">
+                  소니스토어에 많이 물어보시는 질문과
+                  <br className="pc_none" /> 새로운 소식을 만나보세요.
+                </p>
               </div>
               <Tabs />
             </div>
@@ -45,4 +47,4 @@ export default function Faq() {
       </div>
     </>
   );
-} 
+}

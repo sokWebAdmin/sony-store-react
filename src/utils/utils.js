@@ -33,7 +33,6 @@ export function useWindowSize() {
   return windowSize;
 }
 
-
 export function wonComma(price) {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
@@ -47,11 +46,11 @@ export function emptyCheck(value) {
 }
 
 export const timeFormat = (time) => {
-  const m = Math.floor(time / 60).toString()
-  let s = (time % 60).toString()
-  if (s.length === 1) s = `0${s}`
-  return `${m}:${s}`
-}
+  const m = Math.floor(time / 60).toString();
+  let s = (time % 60).toString();
+  if (s.length === 1) s = `0${s}`;
+  return `${m}:${s}`;
+};
 
 /**
  * n자리 랜덤 문자열 생성기
@@ -61,17 +60,20 @@ export const timeFormat = (time) => {
  */
 export const generateRandomString = (maxLength = 6) => {
   const availableChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  return Array.from(Array(maxLength).keys()).reduce(prev => {
+  return Array.from(Array(maxLength).keys()).reduce((prev) => {
     return prev + availableChar.charAt(Math.floor(Math.random() * availableChar.length));
   }, '');
-}
+};
 
 /**
  * 전화번호에 '-' 삽입
- * 
- * @param {string} phoneNo 
- * @returns {string} ex) 010-0000-0000 
+ *
+ * @param {string} phoneNo
+ * @returns {string} ex) 010-0000-0000
  */
-export const addHyphenToPhoneNo = phoneNo => {
-  return phoneNo.replace(/[^0-9]/g, '').replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-")
-}
+export const addHyphenToPhoneNo = (phoneNo) => {
+  return phoneNo
+    .replace(/[^0-9]/g, '')
+    .replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/, '$1-$2-$3')
+    .replace('--', '-');
+};

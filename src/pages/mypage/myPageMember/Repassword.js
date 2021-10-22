@@ -140,8 +140,9 @@ export default function Repassword({ setVisible }) {
     if (!isValid() || !(await isChanged())) return;
 
     // fetchProfile(profileDispatch);
-    openAlert(`비밀번호를 정상적으로 변경하였습니다. <br />소니스토어 메인 화면으로 이동합니다.`, () => () =>
-      history.push('/'),
+    openAlert(
+      `비밀번호를 정상적으로 변경하였습니다. <br />소니스토어 메인 화면으로 이동합니다.`,
+      () => () => history.push('/'),
     );
     // history.push('/');
   };
