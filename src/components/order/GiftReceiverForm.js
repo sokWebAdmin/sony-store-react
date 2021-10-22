@@ -10,8 +10,23 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
 
     if (el.value.trim()) {
       el.parentNode.querySelector('.error_txt').style.display = 'none';
+    } else {
+      el.parentNode.querySelector('.error_txt').style.display = 'block';
     }
     handleChange(event)(setShipping);
+  };
+
+  const onChangeContact = (event) => {
+    const value = event.target.value.toString();
+    const phoneNo = value.replace(/[^0-9]/g, '');
+
+    if (phoneNo.trim()) {
+      event.target.parentNode.querySelector('.error_txt').style.display = 'none';
+    } else {
+      event.target.parentNode.querySelector('.error_txt').style.display = 'block';
+    }
+
+    setShipping({ ...shipping, shippingInfoLaterInputContact: phoneNo });
   };
 
   // 선물하기시 shipping member value 을 injectValue 으로 채움. BE 요청
@@ -109,7 +124,7 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
                 name="shippingInfoLaterInputContact"
                 value={shipping.shippingInfoLaterInputContact}
                 ref={shippingInfoLaterInputContact}
-                onChange={onChangeInput}
+                onChange={onChangeContact}
               />
               <span className="focus_bg"></span>
               <p className="error_txt">
