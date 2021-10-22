@@ -190,7 +190,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   href={window.anchorProtocol +
                   'mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat'}
                   style={{
-                    backgroundImage: 'url(image.inicis.com/mkt/certmark/escrow/escrow_43x43_gray.png)',
+                    backgroundImage: 'url(https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_gray.png)',
                   }}
                   target="_blank"
                   rel="noreferrer"
