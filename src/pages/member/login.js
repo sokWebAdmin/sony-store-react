@@ -11,7 +11,7 @@ import { getProfile } from '../../api/member';
 import '../../assets/scss/contents.scss';
 
 //utils
-import { emptyCheck } from '../../utils/utils';
+import { emptyCheck, encodeString } from '../../utils/utils';
 import { useHistory } from 'react-router-dom';
 
 //lib
@@ -105,7 +105,9 @@ export default function Login({ location }) {
           Cookies.remove('sony_email');
         }
         if (agent.isApp) {
-          window.location = `sonyapp://autoLoginYn?value=${autoLogin ? 'Y' : 'N'}`;
+          const value = autoLogin ? 'Y' : 'N';
+          const customerId = agent.device === 'android' ? encodeString(email) : email;
+          window.location = `sonyapp://autoLoginYn?value=${value}&customerid=${customerId}`;
         }
 
         if (!!history.location.state?.next) {
