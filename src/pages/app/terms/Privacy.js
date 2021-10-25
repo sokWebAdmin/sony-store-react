@@ -141,10 +141,10 @@ const TermsPrivacy = () => {
                     </li>
                     <li>
                       <strong className="foot_cont--title2">2) 수집방법</strong>
-                      <p>- 회사 사이트를 통한 수집 :<span className="block">소니스토어 사이트: <a href="http://store.sony.co.kr"
+                      <p>- 회사 사이트를 통한 수집 :<span className="block">소니스토어 사이트: <a href={window.anchorProtocol + "store.sony.co.kr"}
                                                                                 target="_blank" title="새창열림"
                                                                                 className="link_move">store.sony.co.kr</a>,</span><span
-                        className="block">소니고객지원사이트: <a href="http://www.sony.co.kr/scs" target="_blank" title="새창열림"
+                        className="block">소니고객지원사이트: <a href={window.anchorProtocol + 'www.sony.co.kr/scs'} target="_blank" title="새창열림"
                                                         className="link_move">www.sony.co.kr/scs</a>,</span><span
                         className="block">소니서비스센터, 소니고객지원센터</span></p>
                     </li>
@@ -428,7 +428,7 @@ const TermsPrivacy = () => {
                 </div>
                 <div className="caution_box">
                   <strong className="caution_box--date">직전변경일 : 2020년 8월 31일 / <span>최종변경일 : 2021년 3월 2일</span></strong>
-                  <a href="https://www.sony.co.kr/handler/ProductInfo-Start?PageName=jsp/footer/CF_policyTransfer.jsp"
+                  <a href={window.anchorProtocol + "www.sony.co.kr/handler/ProductInfo-Start?PageName=jsp/footer/CF_policyTransfer.jsp"}
                      target="_blank" title="새창열림" className="btn_go_ar position03"><span>이전 소니코리아 개인정보처리방침 보기</span></a>
                 </div>
               </div>

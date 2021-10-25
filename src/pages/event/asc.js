@@ -100,7 +100,7 @@ export default function Refurbish() {
                           있습니다. 일요일, 공휴일은 배송되지 않습니다.</li>
                         <li className="mt">7) 제품 보증기간<br/>
                           등급 판매를 통해서 구입하신 B, C등급품의 경우 구입일로부터 1년간 무상보증수리를 받으실 수가 있으나, SCS 고객지원사이트(<a
-                          href="http://scs.sony.co.kr" target="_blank" title="새창열림">http://scs.sony.co.kr</a>) 또는 제품
+                          href={window.anchorProtocol + 'scs.sony.co.kr'} target="_blank" title="새창열림">http://scs.sony.co.kr</a>) 또는 제품
                           박스 내에 동봉되어 있는 보증연장신청서를 통한 보증연장신청 및 이쿠폰 발행은 적용되지 않습니다. 단, A급 제품의 경우 보증연장신청은 할 수 있으나 이 쿠폰은 발행되지
                           않습니다.
                         </li>

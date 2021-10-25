@@ -26,7 +26,7 @@ export default function InsurePop({ setPop }) {
               <p>보상대상 : 미배송/반품, 환불거부/쇼핑몰부도</p>
               <div className="btn_box">
                 <a
-                  href="https://mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810"
+                  href={window.anchorProtocol + "mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810"}
                   target="_blank"
                   title="새창열림"
                   rel="noreferrer"

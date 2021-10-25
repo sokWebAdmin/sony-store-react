@@ -350,7 +350,7 @@ const Benefit = (props) => {
                           </li>
                         </ul>
                         <a
-                          href="https://www.sony.co.kr/scs/handler/Service-Media"
+                          href={window.anchorProtocol + "www.sony.co.kr/scs/handler/Service-Media"}
                           target="_blank"
                           rel="noreferrer"
                           className="prmm_dtl_link"
@@ -383,7 +383,7 @@ const Benefit = (props) => {
                           </li>
                         </ul>
                         <a
-                          href="https://www.sony.co.kr/scs/handler/SCSWarranty-ESPOrderConfirm"
+                          href={window.anchorProtocol + "www.sony.co.kr/scs/handler/SCSWarranty-ESPOrderConfirm"}
                           className="prmm_dtl_link"
                           target="_blank"
                           rel="noreferrer"

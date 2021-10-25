@@ -359,7 +359,7 @@ export default function ProductView({ match }) {
                 <ul className="link_inner" style={{ width: getLinkInnerWidth() }}>
                   {getInfoLinks().map(({ name, href, imgUrl, label }) => (
                     <li key={name}>
-                      <a href={href} className="link_btn" rel="noreferrer" target="_blank" title="새 창 열림">
+                      <a href={window.anchorProtocol + href.replace('https://', '')} className="link_btn" rel="noreferrer" target="_blank" title="새 창 열림">
                         <i className="ico">
                           <img src={imgUrl} alt={name} />
                         </i>

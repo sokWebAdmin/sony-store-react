@@ -49,7 +49,7 @@ export default function StoreGuide() {
               <p className="box_desc">(일요일, 공휴일 휴무)</p>
             </SwiperSlide>
             <SwiperSlide className="swiper-slide box search">
-              <a href="https://www.sony.co.kr/scs/handler/Service-AsCenter" target="_blank" rel="noreferrer">
+              <a href={window.anchorProtocol + "www.sony.co.kr/scs/handler/Service-AsCenter"} target="_blank" rel="noreferrer">
                 <i className="icon"></i>
                 <p className="box_desc">AS 센터 찾기</p>
               </a>
@@ -87,7 +87,7 @@ export default function StoreGuide() {
               <p className="box_desc">(일요일, 공휴일 휴무)</p>
             </div>
             <div className="swiper-slide box search">
-              <a href="https://www.sony.co.kr/scs/handler/Service-AsCenter" target="_blank" rel="noreferrer">
+              <a href={window.anchorProtocol + "www.sony.co.kr/scs/handler/Service-AsCenter"} target="_blank" rel="noreferrer">
                 <i className="icon"></i>
                 <p className="box_desc">AS 센터 찾기</p>
               </a>

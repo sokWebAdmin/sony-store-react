@@ -14,7 +14,7 @@ const TermsLicense = () => {
             <div className="terms">
               <div className="foot_box">
                 <p>Version 2.0, January 2004</p>
-                <a href="//www.apache.org/licenses/" target="_blank"
+                <a href={window.anchorProtocol + "//www.apache.org/licenses/"} target="_blank"
                    className="link_opensourcelicense">http://www.apache.org/licenses/</a>
                 <p>TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION</p>
 
@@ -179,7 +179,7 @@ const TermsLicense = () => {
                   <p>Licensed under the Apache License, Version 2.0 (the "License");<br />you may not use this file
                     except
                     in compliance with the License.<br />You may obtain a copy of the License at</p>
-                  <p><a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank"
+                  <p><a href={window.anchorProtocol + 'www.apache.org/licenses/LICENSE-2.0'} target="_blank"
                         className="link_opensourcelicense">http://www.apache.org/licenses/LICENSE-2.0</a></p>
                   <p>Unless required by applicable law or agreed to in writing, software distributed under the License
                     is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
