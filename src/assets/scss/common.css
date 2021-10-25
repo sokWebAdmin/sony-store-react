@@ -329,7 +329,7 @@ button {
   color: transparent
 }
 
-.clear,
+.clear::after,
 .footer__family::after,
 .footer__social::after,
 .footer__legal__links::after,
@@ -416,13 +416,14 @@ body {
   line-height: 1.4;
   letter-spacing: -0.025em;
   word-break: keep-all;
-  color: #666;
-  /*-ms-overflow-style: none;*/
+  color: #666
 }
 
 body::-webkit-scrollbar {
-  width: 0;  /* Remove scrollbar space */
-  background: transparent;  /* Optional: just make scrollbar invisible */
+  width: 0;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
 }
 
 .wrapper {
@@ -452,7 +453,7 @@ body::-webkit-scrollbar {
 
 .header--visible {
   -webkit-transform: translateY(0);
-  transform: translateY(0);
+  transform: translateY(0)
 }
 
 .header--invisible {
@@ -1500,30 +1501,31 @@ body::-webkit-scrollbar {
   }
 }
 
-.btn__cart {
-  position:relative;
+.header .btn__cart {
+  position: relative
 }
-.btn__cart .badge {
-  display:inline-block;
+
+.header .btn__cart .badge {
+  display: inline-block;
   position: absolute;
-  top:20px;
-  left:20px;
+  top: 20px;
+  left: 20px;
   width: 20px;
   height: 20px;
   font-size: 11px;
   line-height: 2;
   text-align: center;
   border-radius: 50%;
-  background-color: #5865f5;
+  background-color: #5865f5
 }
 
-.btn__cart .badge:empty {
-  display: none;
+.header .btn__cart .badge:empty {
+  display: none
 }
 
 @media screen and (max-width: 1280px) {
-  .btn__cart .badge {
-    display: none;
+  .header .btn__cart .badge {
+    display: none
   }
 }
 
@@ -2054,9 +2056,9 @@ body::-webkit-scrollbar {
     background-size: 20px
   }
 
-  /* .app .header .appmenu__push a {
+  .app .header .appmenu__push a {
     background-image: url("../images/common/ic_app_push.svg")
-  } */
+  }
 
   .app .header .appmenu ul {
     display: -webkit-box;
@@ -2831,7 +2833,7 @@ body::-webkit-scrollbar {
 }
 
 .sidebar__btn.top {
-  padding: 20px
+  position: relative
 }
 
 .sidebar__btn.top span {
@@ -2887,12 +2889,10 @@ body::-webkit-scrollbar {
     width: 48px
   }
 
-  .sidebar__btn.top {
-    padding: 12px 16px
-  }
-
   .sidebar__btn.top span {
-    padding: 8px
+    width: 18px;
+    height: 11px;
+    background-size: 18px 11px
   }
 }
 
@@ -2929,12 +2929,8 @@ body::-webkit-scrollbar {
     width: calc(29.7142857143px + 2.8571428571vw)
   }
 
-  .sidebar__btn.top {
-    padding: calc(2.8571428571px + 1.4285714286vw) calc(11.4285714286px + 0.7142857143vw)
-  }
-
   .sidebar__btn.top span {
-    padding: calc(3.4285714286px + 0.7142857143vw)
+    padding: 8px
   }
 }
 
@@ -5751,6 +5747,8 @@ body::-webkit-scrollbar {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
   position: relative
 }
 
@@ -5771,6 +5769,10 @@ body::-webkit-scrollbar {
 }
 
 .coupon_list .coupon_box:first-child {
+  margin-left: 0
+}
+
+.coupon_list .coupon_box:nth-child(odd) {
   margin-left: 0
 }
 
@@ -5917,7 +5919,8 @@ body::-webkit-scrollbar {
 }
 
 .coupon_list .coupon_desc .lists_txt {
-  line-height: 22px
+  line-height: 22px;
+  word-break: break-all
 }
 
 @media screen and (max-width: 1280px) {
