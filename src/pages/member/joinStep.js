@@ -92,8 +92,8 @@ export default function JoinStep() {
     const provider = getItem(KEY.OPENID_PROVIDER);
 
     if (!provider || getUrlParam('sns') !== 'true') return null;
-    return provider.split('_')[1].substring(0, 1).toUpperCase();
-  }
+    return provider.substring(0, 1).toUpperCase();
+  };
 
   const onChangeGender = (e) => setGender(e.target.value);
   const _registerApi = async () => {
@@ -289,7 +289,7 @@ export default function JoinStep() {
     const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
     const redirectedToken = getItem(KEY.OPENID_TOKEN);
     if (redirectedProvider && redirectedToken) {
-      setEmail(profile.email);
+      setEmail(location.state.email);
     }
   }, []);
 
@@ -307,6 +307,7 @@ export default function JoinStep() {
                 <div className="inp_box">
                   <label className="inp_desc" htmlFor="loginName">
                     <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off"
+                           readOnly={location.state.email}
                            value={email} onChange={(e) => {
                       setEmail(e.target.value);
                     }} />
@@ -316,7 +317,7 @@ export default function JoinStep() {
                 </div>
                 <div className="error_txt"><span className="ico" />이메일 아이디를 입력해 주세요.</div>
               </div>
-              {/*<div className="rowgroup">*/}
+              {!location.state?.email && <>
                 <div className={`group ${isPassword === false && 'error'}`}>
                   <div className="inp_box password_box">
                     <label className="inp_desc" htmlFor="loginPw1">
@@ -355,7 +356,7 @@ export default function JoinStep() {
                   <div className="error_txt"><span
                     className="ico" />{confirmWrongType == 1 ? '비밀번호를 재입력 해주세요.' : '비밀번호와 확인이 같지 않습니다.'}</div>
                 </div>
-              {/*</div>*/}
+              </>}
               <div className="rowgroup">
                 <div className={`group ${isName === false && 'error'}`}>
                   <div className="inp_box">
