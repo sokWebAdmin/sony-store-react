@@ -19,3 +19,7 @@ export const modifyMy = bodyRequest => {
 export const getPushs = (query) => {
   return request('IF_CUS_0008.do', 'get', query)
 }
+
+export const getOpenIdProfile = (data) => {
+  return request('IF_CUS_0010.do', 'post', null, data);
+}
