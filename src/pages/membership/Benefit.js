@@ -351,6 +351,7 @@ const Benefit = (props) => {
                         </ul>
                         <a
                           href={window.anchorProtocol + "www.sony.co.kr/scs/handler/Service-Media"}
+                          onClick={window.openBrowser}
                           target="_blank"
                           rel="noreferrer"
                           className="prmm_dtl_link"
@@ -384,6 +385,7 @@ const Benefit = (props) => {
                         </ul>
                         <a
                           href={window.anchorProtocol + "www.sony.co.kr/scs/handler/SCSWarranty-ESPOrderConfirm"}
+                          onClick={window.openBrowser}
                           className="prmm_dtl_link"
                           target="_blank"
                           rel="noreferrer"

@@ -219,6 +219,7 @@ const EventBottom = () => {
               <li className="lists">
                 <a
                   href={window.anchorProtocol + `www.facebook.com/sharer/sharer.php?u=${getLink()}`}
+                  onClick={window.openBrowser}
                   className="share_btn facebook"
                   target="_blank"
                 >
@@ -228,6 +229,7 @@ const EventBottom = () => {
               <li className="lists">
                 <a
                   href={window.anchorProtocol + `twitter.com/intent/tweet?url=${getLink()}`}
+                  onClick={window.openBrowser}
                   className="share_btn twitter"
                   target="_blank"
                 >
@@ -237,6 +239,7 @@ const EventBottom = () => {
               <li className="lists">
                 <a
                   href={window.anchorProtocol + `social-plugins.line.me/lineit/share?url=${encodeURIComponent(getLink())}`}
+                  onClick={window.openBrowser}
                   className="share_btn line"
                   target="_blank"
                 >
@@ -246,6 +249,7 @@ const EventBottom = () => {
               <li className="lists">
                 <a
                   href={window.anchorProtocol + `band.us/plugin/share?body=${label}&route=${getLink()}`}
+                  onClick={window.openBrowser}
                   className="share_btn band"
                   target="_blank"
                 >

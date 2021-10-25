@@ -127,6 +127,7 @@ const App = (props) => {
   const categoryDispatch = useCategoryDispatch();
 
   useEffect(() => {
+    window['anchorProtocol'] = 'https://'
     window['openBrowser'] = curry(openBrowser)(agent)
   }, [agent]);
 

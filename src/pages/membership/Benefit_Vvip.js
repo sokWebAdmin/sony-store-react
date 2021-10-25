@@ -258,7 +258,7 @@ const Benefit = () => {
                           <li className="prmm_dtl_prctn">영상변환 서비스는 고객님께서 소장하고 계시는 비디오 테이프를 <strong className="primary-color">USB 메모리 또는 DVD 디스크</strong>로 변환하여 드리는 서비스입니다.</li>
                           <li className="prmm_dtl_prctn">변환 가능한 테이프는 <strong className="primary-color">6mm, 8mm 또는 VHS 테이프</strong>이며, 가까운 서비스 센터로 비디오 테이프를 가지고 방문하시면 변환 서비스를 받으실 수 있습니다.</li>
                         </ul>
-                        <a href={window.anchorProtocol + "www.sony.co.kr/scs/handler/Service-Media"} className="prmm_dtl_link">자세히 보기</a>
+                        <a href={window.anchorProtocol + "www.sony.co.kr/scs/handler/Service-Media"} onClick={window.openBrowser} className="prmm_dtl_link">자세히 보기</a>
                       </li>
                       <li className="prmm_dtl_list">
                         <div className="prmm_dtl_pic"><img src='../../images/membership/premium4.jpg' alt="연장 서비스 플랜" className="prmm_dtl_img" /></div>
@@ -269,7 +269,7 @@ const Benefit = () => {
                           <li className="prmm_dtl_prctn">연장 서비스 플랜 적용은 <strong className="primary-color">상품 구매일로부터 7일 이후</strong> 자동 적용됩니다.</li>
                           <li className="prmm_dtl_prctn">연장 서비스 플랜 상품은 <strong className="primary-color">무형 상품</strong>으로 별도 배송되지 않습니다.</li>
                         </ul>
-                        <a href={window.anchorProtocol + "www.sony.co.kr/scs/handler/SCSWarranty-ESPOrderConfirm"} className="prmm_dtl_link">자세히 보기</a>
+                        <a href={window.anchorProtocol + "www.sony.co.kr/scs/handler/SCSWarranty-ESPOrderConfirm"} onClick={window.openBrowser} className="prmm_dtl_link">자세히 보기</a>
                       </li>
                     </ul>
                   </div>

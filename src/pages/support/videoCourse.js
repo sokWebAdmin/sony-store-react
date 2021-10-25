@@ -37,6 +37,7 @@ export default function videoCourse() {
                     <div className="video_thumb">
                       <a
                         href={window.anchorProtocol + "www.youtube.com/embed/V_VgQhpS5MA"}
+                        onClick={window.openBrowser}
                         className="video_thumb_btn"
                         data-video-url="https://www.youtube.com/embed/V_VgQhpS5MA"
                         target="_blank"
@@ -57,6 +58,7 @@ export default function videoCourse() {
                     <div className="video_thumb">
                       <a
                         href={window.anchorProtocol + "www.youtube.com/embed/64y3hTkGV5A"}
+                        onClick={window.openBrowser}
                         className="video_thumb_btn"
                         data-video-url="https://www.youtube.com/embed/64y3hTkGV5A"
                         target="_blank"
@@ -77,6 +79,7 @@ export default function videoCourse() {
                     <div className="video_thumb">
                       <a
                         href={window.anchorProtocol + "www.youtube.com/embed/GCHITgvg-8w"}
+                        onClick={window.openBrowser}
                         className="video_thumb_btn"
                         data-video-url="https://www.youtube.com/embed/GCHITgvg-8w"
                         target="_blank"
@@ -102,6 +105,7 @@ export default function videoCourse() {
             <div className="ico_box_link">
               <a
                 href={window.anchorProtocol + "www.sony.co.kr/scs/handler/Common-PageView?pageName=/jsp/scs/lecture/playlist.jsp"}
+                onClick={window.openBrowser}
                 className="box_link_inner ico_course1"
                 target="_blank"
                 rel="noreferrer"
@@ -114,6 +118,7 @@ export default function videoCourse() {
               </a>
               <a
                 href={window.anchorProtocol + "www.youtube.com/channel/UC_NlkiLtoPVHWuByWvF64Fw"}
+                onClick={window.openBrowser}
                 target="_blank"
                 title="새 창 열림"
                 rel="noreferrer"

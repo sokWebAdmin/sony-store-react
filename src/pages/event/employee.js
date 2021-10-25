@@ -99,7 +99,7 @@ export default function Employee() {
                           있습니다. 일요일, 공휴일은 배송되지 않습니다.</li>
                         <li className="mt">7) 제품 보증기간<br/>
                           사내 판매를 통해서 구입하신 B, C등급품의 경우 A급 제품과 동일한 기준으로 보증기간이 산정 됩니다. [SCS 고객지원사이트(<a
-                          href={window.anchorProtocol + 'scs.sony.co.kr'} target="_blank" title="새창열림">http://scs.sony.co.kr</a>) 참조]
+                          href={window.anchorProtocol + 'scs.sony.co.kr'} onClick={window.openBrowser} target="_blank" title="새창열림">http://scs.sony.co.kr</a>) 참조]
                           단, B,C 등급 제품의 경우 이쿠폰 발행은 적용되지 않으며, 연장 서비스 플랜 구매가 불가합니다.
                           A급 제품의 경우 연장 서비스 플랜 구매는 가능하며, 이쿠폰은 발행되지 않습니다.
                         </li>
