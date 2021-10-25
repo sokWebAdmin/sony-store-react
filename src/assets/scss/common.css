@@ -2843,7 +2843,7 @@ body::-webkit-scrollbar {
   left: 50%;
   width: 22px;
   height: 13px;
-  background: url("/dist/images/common/ic_floating_arrow.svg") no-repeat 0 0;
+  background: url("../images/common/ic_floating_arrow.svg") no-repeat 0 0;
   background-size: 22px 13px;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -2896,7 +2896,7 @@ body::-webkit-scrollbar {
   .sidebar__btn.top span {
     width: 28px;
     height: 28px;
-    background: url("/dist/images/common/ic_floating_arrow_mo.svg")
+    background: url("../images/common/ic_floating_arrow_mo.svg")
   }
 }
 
