@@ -2838,12 +2838,16 @@ body::-webkit-scrollbar {
 
 .sidebar__btn.top span {
   display: inline-block;
-  padding: 10px;
-  font-size: 0;
-  -webkit-transform: rotate(225deg);
-  transform: rotate(225deg);
-  border: solid #fff;
-  border-width: 0 2px 2px 0
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 13px;
+  background: url("/dist/images/common/ic_floating_arrow.svg") no-repeat 0 0;
+  background-size: 22px 13px;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-indent: -9999px
 }
 
 @media screen and (min-width: 1921px) {
@@ -2890,9 +2894,9 @@ body::-webkit-scrollbar {
   }
 
   .sidebar__btn.top span {
-    width: 18px;
-    height: 11px;
-    background-size: 18px 11px
+    width: 28px;
+    height: 28px;
+    background: url("/dist/images/common/ic_floating_arrow_mo.svg")
   }
 }
 
