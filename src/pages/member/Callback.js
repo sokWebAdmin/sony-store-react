@@ -57,7 +57,9 @@ const Callback = () => {
       shopOauthCallback?.(openIdProfile.errorCode, openIdProfile.body);
       window.close();
     } else {
-      openAlert(openIdProfile.errorMessage, window.close);
+      openAlert(openIdProfile.errorMessage, () => () => {
+        console.log(openIdProfile);
+      });
     }
   };
 
