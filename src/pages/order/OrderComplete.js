@@ -97,7 +97,7 @@ const OrderComplete = ({ location }) => {
 
               {status === 'DEPOSIT_WAIT' && (
                 <p className="order_confirm_box__dsc" style={{ fontWeight: 700 }}>
-                  주문이 정상적으로 접수 되었습니다. 감사합니다.
+                  주문이 정상적으로 접수 되었습니다.
                 </p>
               )}
 
