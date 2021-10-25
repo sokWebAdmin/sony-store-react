@@ -3,7 +3,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import Alert from '../../components/common/Alert';
 
 import { useToggle } from '../../hooks';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { getUrlParam } from '../../utils/location';
 
 const labels = [
@@ -17,6 +17,7 @@ const labels = [
 
 const JoinAgree = () => {
   const history = useHistory();
+  const location = useLocation();
   const [checkAll, setCheckAll] = useToggle(false);
   const [checkList, setCheckList] = useState(labels.map(() => false));
   const [alertVisible, setAlertVisible] = useState(false);
@@ -37,7 +38,10 @@ const JoinAgree = () => {
       history.push({
         pathname: '/member/joinStep',
         search: getUrlParam('sns') === 'true' ? `?sns=true&sms=${checkList[4]}&email=${checkList[5]}` : `?sms=${checkList[4]}&email=${checkList[5]}`,
-        state: { agree: true },
+        state: {
+          agree: true,
+          email: location.state.email,
+        },
       });
     } else {
       openAlert('이용약관에 동의해주세요.');
