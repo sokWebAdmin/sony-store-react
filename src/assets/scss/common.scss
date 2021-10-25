@@ -2574,7 +2574,7 @@ body {
         .layer_content {
           margin: 20px 0 40px 0;
           height: auto;
-          max-height: 560px;
+          max-height: calc(100vh - 200px);
           -webkit-overflow-scrolling: touch;
 
           .foot_cont {
@@ -2623,6 +2623,7 @@ body {
         }
 
         .layer_close {
+          display: inline-block;
           position: fixed;
           top: 0;
           right: 0;

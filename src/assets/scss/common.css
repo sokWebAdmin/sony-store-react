@@ -2310,6 +2310,7 @@ body::-webkit-scrollbar {
 }
 
 .layer .layer_wrap .layer_close {
+  display: inline-block;
   position: absolute;
   top: 43px;
   right: 40px
@@ -2498,7 +2499,7 @@ body::-webkit-scrollbar {
   .layer.agree_layer .layer_container .layer_content {
     margin: 20px 0 40px 0;
     height: auto;
-    max-height: 560px;
+    max-height: calc(100vh - 200px);
     -webkit-overflow-scrolling: touch
   }
 
