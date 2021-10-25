@@ -111,6 +111,9 @@ import CustomPopup from './components/common/customPopup/CustomPopup';
 import { getDisplayPopups, getDisplayPopupsPopupNos } from './api/display';
 import AppBar from './components/app/AppBar';
 
+import { openBrowser } from './utils/openBrowser.js'
+import{ curry } from 'lodash'
+
 const App = (props) => {
   const agent = getAgent();
   const history = useHistory();
@@ -124,7 +127,7 @@ const App = (props) => {
   const categoryDispatch = useCategoryDispatch();
 
   useEffect(() => {
-    window['anchorProtocol'] = agent.isApp ? 'openbrowser://' : 'https://';
+    window['openBrowser'] = curry(openBrowser)(agent)
   }, [agent]);
 
   useEffect(() => {

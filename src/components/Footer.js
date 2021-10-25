@@ -76,7 +76,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
               <h3 className="footer__social__title">FOLLOW US</h3>
               <div className="footer__social__links">
                 <a
-                  href={window.anchorProtocol + 'www.facebook.com/sonykorea'}
+                  href={'https://www.facebook.com/sonykorea'}
+                  onClick={window.openBrowser}
                   target="_blank"
                   rel="noreferrer"
                   className="footer__social__link"
@@ -84,7 +85,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   <img src={facebook} alt="facebook" />
                 </a>
                 <a
-                  href={window.anchorProtocol + 'www.instagram.com/sonykorea'}
+                  href={'https://www.instagram.com/sonykorea'}
+                  onClick={window.openBrowser}
                   target="_blank"
                   rel="noreferrer"
                   className="footer__social__link"
@@ -92,8 +94,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   <img src={instagram} alt="instagram" />
                 </a>
                 <a
-                  href={window.anchorProtocol +
-                  'www.youtube.com/user/sonystyleblog'}
+                  href={'https://www.youtube.com/user/sonystyleblog'}
+                  onClick={window.openBrowser}
                   target="_blank"
                   rel="noreferrer"
                   className="footer__social__link"
@@ -101,8 +103,8 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   <img src={youtube} alt="youtube" />
                 </a>
                 <a
-                  href={window.anchorProtocol +
-                  'stylezineblog.com/?intcmp=Main_Blog'}
+                  href={'https://stylezineblog.com/?intcmp=Main_Blog'}
+                  onClick={window.openBrowser}
                   target="_blank"
                   rel="noreferrer"
                   className="footer__social__link"
