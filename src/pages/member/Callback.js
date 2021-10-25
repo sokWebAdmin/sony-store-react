@@ -52,12 +52,9 @@ const Callback = () => {
     });
     console.log(openIdProfile);
 
-    if (openIdProfile.errorCode === '0000') {
-      const response = await getMemberInfo({
-        type: '40',
-        email: openIdProfile.body.customerid,
-      });
-      shopOauthCallback?.(response.data.errorCode, response.data.body);
+    const accessCode = ['0000', '3000', '3001', '3002'];
+    if (accessCode.includes(openIdProfile.errorCode)) {
+      shopOauthCallback?.(openIdProfile.errorCode, openIdProfile.body);
       window.close();
     } else {
       openAlert(openIdProfile.errorMessage, window.close);
