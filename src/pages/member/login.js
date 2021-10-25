@@ -106,8 +106,7 @@ export default function Login({ location }) {
         }
         if (agent.isApp) {
           const value = autoLogin ? 'Y' : 'N';
-          const customerId = agent.device === 'android' ? encodeString(email) : email;
-          window.location = `sonyapp://autoLoginYn?value=${value}&customerid=${customerId}`;
+          window.location = `sonyapp://autoLoginYn?value=${value}&customerid=${email}`;
         }
 
         if (!!history.location.state?.next) {
