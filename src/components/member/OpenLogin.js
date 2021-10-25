@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useMallState } from '../../context/mall.context';
 import { getItem, KEY, removeAccessToken, setAccessToken, setItem } from '../../utils/token';
 import { encodeString, generateRandomString } from '../../utils/utils';
-import { getOauthLoginUrl } from '../../api/member';
+import { getOauthLoginUrl, getProfile } from '../../api/member';
 import Alert from '../common/Alert';
 import { useHistory } from 'react-router-dom';
 import GlobalContext from '../../context/global.context';
@@ -78,35 +78,44 @@ const OpenLogin = ({ title, message, customCallback }) => {
     window.shopOauthCallback = null;
 
     console.log(profileResult);
-    if (errorCode === '2000') {
+    if (errorCode === '0000') { // 성공
       history.push({
         pathname: '/member/join-agree?sns=true',
         state: {
           email: profileResult.customerid,
         }
       });
-    } else if (errorCode === '0000') {
+    } else if (errorCode === '3000') {
       const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
       const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
-      const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
 
-      if (code === '3003') { // 계정 잠금
-        history.push('/member/lockedAccounts');
-      } else if (response?.data?.dormantMemberResponse) { // 휴먼 계정
-        const { accessToken, expireIn } = response.data;
-        setAccessToken(accessToken, expireIn);
-        history.push('/member/inactiveAccounts');
-      } else {
-        const { accessToken, expireIn } = response.data;
-        setAccessToken(accessToken, expireIn);
-        onChangeGlobal({ isLogin: true });
-        openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
-        // await fetchProfile(profileDispatch);
+      if (response.status !== 200) {
+        openAlert('간편 인증에 실패하였습니다.');
+        return;
       }
+
+      const { accessToken, expireIn } = response.data;
+      setAccessToken(accessToken, expireIn);
+      onChangeGlobal({ isLogin: true });
+      const profile = await getProfile();
+      const data = { type: '30', customerid: profile.data.memberId };
+      setProfile(profileDispatch, profile.data);
+      await fetchMyProfile(profileDispatch, data);
+      openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
+    } else if (errorCode === '3001' || errorCode === '3002') {
+      const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
+      const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
+
+      if (response.status !== 200) {
+        openAlert('간편 인증에 실패하였습니다.');
+        return;
+      }
+      const { accessToken, expireIn } = response.data;
+      setAccessToken(accessToken, expireIn);
+      history.push('/member/inactiveAccounts');
     } else {
       openAlert('간편 인증에 실패하였습니다.');
     }
-
   };
 
   return (
