@@ -41,16 +41,24 @@ const convertCategory = (category, keyword) => {
 export default function CategoryResult({ fetchCategory, categoryList, categoryCount, keyword }) {
   const history = useHistory();
 
-  const getNextUrl = (no) =>
-    _.chain(categoriesExtraDataMap)
+  const getNextUrl = (no) => {
+    const esp = [81644, 81643, 81645];
+    if (esp.includes(no)) return '/esp';
+
+    return _.chain(categoriesExtraDataMap)
       .filter(({ categoryNo }) => categoryNo === no)
       .map(({ url }) => url)
       .head()
       .value();
+  };
+
   const clickHandler = (e, categoryNo) => {
     e.preventDefault();
-    const esp = [81644, 81643, 81645];
-    history.push(esp.includes(categoryNo) ? '/esp' : getNextUrl(categoryNo));
+
+    history.push({
+      pathname: getNextUrl(categoryNo),
+      state: { categoryNo },
+    });
   };
 
   return (
@@ -75,7 +83,9 @@ export default function CategoryResult({ fetchCategory, categoryList, categoryCo
             ))}
         </ul>
       </div>
-      <ViewMore totalCount={categoryCount} viewMore={fetchCategory} pageSize={PAGE_SIZE.CATEGORY} />
+      {categoryCount >= 10 && (
+        <ViewMore totalCount={categoryCount} viewMore={fetchCategory} pageSize={PAGE_SIZE.CATEGORY} />
+      )}
     </>
   );
 }

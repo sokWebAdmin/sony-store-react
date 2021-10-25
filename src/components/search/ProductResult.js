@@ -95,11 +95,13 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
       <div className="product__list product__list--lite">
         {products && products.map((item, itemIndex) => <Product key={itemIndex} product={item} />)}
       </div>
-      <ViewMore
-        totalCount={productCount}
-        viewMore={(pageNumber) => searchProduct(keyword, orderBy, pageNumber)}
-        pageSize={PAGE_SIZE.PRODUCT}
-      />
+      {productCount >= 9 && (
+        <ViewMore
+          totalCount={productCount}
+          viewMore={(pageNumber) => searchProduct(keyword, orderBy, pageNumber)}
+          pageSize={PAGE_SIZE.PRODUCT}
+        />
+      )}
     </>
   );
 }

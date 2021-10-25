@@ -52,11 +52,13 @@ export default function NoticeResult({
           ))}
         </ul>
       </div>
-      <ViewMore
-        totalCount={noticeCount}
-        viewMore={(pageNumber) => searchNotice(keyword, config.notice.boardNo, noticeNewest, pageNumber)}
-        pageSize={PAGE_SIZE.NOTICE}
-      />
+      {noticeCount >= 10 && (
+        <ViewMore
+          totalCount={noticeCount}
+          viewMore={(pageNumber) => searchNotice(keyword, config.notice.boardNo, noticeNewest, pageNumber)}
+          pageSize={PAGE_SIZE.NOTICE}
+        />
+      )}
     </>
   );
 }

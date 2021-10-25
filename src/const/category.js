@@ -33,12 +33,14 @@ if (process.env.NODE_ENV === 'development') {
   // 카메라 > 렌즈교환식카메라 > 카메라
   categoriesExtraDataMap.push({
     categoryNo: 60863,
-    url: '/products/camera/lens/camera',
+    url: '/products/camera/lens',
+    tab: 'camera',
   });
   // 카메라 > 렌즈교환식카메라 > 렌즈
   categoriesExtraDataMap.push({
     categoryNo: 60864,
-    url: '/products/camera/lens/lens',
+    url: '/products/camera/lens',
+    tab: 'lens',
   });
   // 카메라 > 컴팩트카메라
   categoriesExtraDataMap.push({
@@ -67,12 +69,14 @@ if (process.env.NODE_ENV === 'development') {
   // 비디오 카메라 > 캠코더 > 4K 핸디캠
   categoriesExtraDataMap.push({
     categoryNo: 60869,
-    url: '/products/videocamera/camcoder/4k-handy',
+    url: '/products/videocamera/camcoder',
+    tab: '4k-handy',
   });
   // 비디오 카메라 > 캠코더 > HD 핸디캠
   categoriesExtraDataMap.push({
     categoryNo: 60870,
-    url: '/products/videocamera/camcoder/hd-handy',
+    url: '/products/videocamera/camcoder',
+    tab: 'hd-handy',
   });
   // 비디오 카메라 > 액션캠
   categoriesExtraDataMap.push({
@@ -96,21 +100,25 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 81641,
     url: '/products/audio/headphone',
+    tab: 'headphone',
   });
   // 오디오 > 헤드폰/이어폰 > 무선 이어폰
   categoriesExtraDataMap.push({
     categoryNo: 60876,
-    url: '/products/audio/headphone/wireless',
+    url: '/products/audio/headphone',
+    tab: 'wireless',
   });
   // 오디오 > 헤드폰/이어폰 > 유선 이어폰
   categoriesExtraDataMap.push({
     categoryNo: 60877,
-    url: '/products/audio/headphone/wired',
+    url: '/products/audio/headphone',
+    tab: 'wired',
   });
   // 오디오 > 헤드폰/이어폰 > 헤드폰 엠프
   categoriesExtraDataMap.push({
     categoryNo: 60878,
-    url: '/products/audio/headphone/amp',
+    url: '/products/audio/headphone',
+    tab: 'amp',
   });
   // 오디오 > 스피커
   categoriesExtraDataMap.push({
@@ -120,12 +128,14 @@ if (process.env.NODE_ENV === 'development') {
   // 오디오 > 스피커 > 무선 스피커
   categoriesExtraDataMap.push({
     categoryNo: 60879,
-    url: '/products/audio/speaker/wireless',
+    url: '/products/audio/speaker',
+    tab: 'wireless',
   });
   // 오디오 > 스피커 > 카오디오
   categoriesExtraDataMap.push({
     categoryNo: 60880,
-    url: '/products/audio/speaker/car',
+    url: '/products/audio/speaker',
+    tab: 'car',
   });
   // 오디오 > 홈오디오
   categoriesExtraDataMap.push({
@@ -140,12 +150,14 @@ if (process.env.NODE_ENV === 'development') {
   // 오디오 > 워크맨/녹음기 > MP3플레이어
   categoriesExtraDataMap.push({
     categoryNo: 60881,
-    url: '/products/audio/recorder/mp3',
+    url: '/products/audio/recorder',
+    tab: 'mp3',
   });
   // 오디오 > 워크맨/녹음기 > 녹음기
   categoriesExtraDataMap.push({
     categoryNo: 60882,
-    url: '/products/audio/recorder/recorder',
+    url: '/products/audio/recorder',
+    tab: 'recorder',
   });
 
   // 액세서리
@@ -163,52 +175,62 @@ if (process.env.NODE_ENV === 'development') {
   // 액세서리 > 카메라 액세서리 > 메모리카드/SSD
   categoriesExtraDataMap.push({
     categoryNo: 60886,
-    url: '/products/accessory/camera/memory',
+    url: '/products/accessory/camera',
+    tab: 'memory',
   });
   // 액세서리 > 카메라 액세서리 > 배터리,충전기/어댑터
   categoriesExtraDataMap.push({
     categoryNo: 60887,
-    url: '/products/accessory/camera/battery',
+    url: '/products/accessory/camera',
+    tab: 'battery',
   });
   // 액세서리 > 카메라 액세서리 > 세로 그립
   categoriesExtraDataMap.push({
     categoryNo: 60888,
-    url: '/products/accessory/camera/vertical-grip',
+    url: '/products/accessory/camera',
+    tab: 'vertical-grip',
   });
   // 액세서리 > 카메라 액세서리 > 플래시/조명
   categoriesExtraDataMap.push({
     categoryNo: 60889,
-    url: '/products/accessory/camera/flash',
+    url: '/products/accessory/camera',
+    tab: 'flash',
   });
   // 액세서리 > 카메라 액세서리 > 마이크
   categoriesExtraDataMap.push({
     categoryNo: 60890,
-    url: '/products/accessory/camera/mic',
+    url: '/products/accessory/camera',
+    tab: 'mic',
   });
   // 액세서리 > 카메라 액세서리 > 뷰파인더/모니터
   categoriesExtraDataMap.push({
     categoryNo: 60891,
-    url: '/products/accessory/camera/view-finder',
+    url: '/products/accessory/camera',
+    tab: 'view-finder',
   });
   // 액세서리 > 카메라 액세서리 > 삼각대/리모콘
   categoriesExtraDataMap.push({
     categoryNo: 60892,
-    url: '/products/accessory/camera/tripod',
+    url: '/products/accessory/camera',
+    tab: 'tripod',
   });
   // 액세서리 > 카메라 액세서리 > 케이스/커버/스트랩
   categoriesExtraDataMap.push({
     categoryNo: 60894,
-    url: '/products/accessory/camera/case',
+    url: '/products/accessory/camera',
+    tab: 'case',
   });
   // 액세서리 > 카메라 액세서리 > 기타
   categoriesExtraDataMap.push({
     categoryNo: 60895,
-    url: '/products/accessory/camera/etc',
+    url: '/products/accessory/camera',
+    tab: 'etc',
   });
   // 액세서리 > 카메라 액세서리 > 액세서리 키트
   categoriesExtraDataMap.push({
     categoryNo: 60899,
-    url: '/products/accessory/camera/kit',
+    url: '/products/accessory/camera',
+    tab: 'kit',
   });
   // 액세서리 > 오디오 액세서리
   categoriesExtraDataMap.push({
