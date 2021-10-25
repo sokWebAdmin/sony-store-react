@@ -50,7 +50,7 @@ function SiteMapSubCategory({ children, parentLabel }) {
     {
       children && children.map((c, idx) => (
         <li key={ `${c.label}${idx}` }>
-          {c.route ? <Link to={ c.route }>{ c.label }</Link> : <a href={window.anchorProtocol + c.href.replace('https://', '')} target="_blank" rel="noreferrer">{c.label}</a>}
+          {c.route ? <Link to={ c.route }>{ c.label }</Link> : <a href={window.anchorProtocol + c.href.replace('https://', '')} onClick={window.openBrowser} target="_blank" rel="noreferrer">{c.label}</a>}
           { parentLabel === '제품' && <ProductCategory label={c.label}/> }
         </li>
       ))

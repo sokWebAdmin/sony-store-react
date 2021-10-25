@@ -27,6 +27,7 @@ export default function InsurePop({ setPop }) {
               <div className="btn_box">
                 <a
                   href={window.anchorProtocol + "mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810"}
+                  onClick={window.openBrowser}
                   target="_blank"
                   title="새창열림"
                   rel="noreferrer"

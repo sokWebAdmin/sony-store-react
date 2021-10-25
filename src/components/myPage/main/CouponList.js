@@ -145,6 +145,7 @@ const CouponList = () => {
           </Link>
           <a
             href={window.anchorProtocol + "www.sony.co.kr/scs/handler/SCSWarranty-Start"}
+            onClick={window.openBrowser}
             target="_blank"
             title="새 창 열림"
             className="box_link_inner ico_type2"

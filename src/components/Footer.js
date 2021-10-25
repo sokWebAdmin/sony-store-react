@@ -129,7 +129,10 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                     <ul className="optgroup">
                       {SONY_FAMILY.map(({ url, name }) => (
                         <li className="option" key={`footer-ul-family-${name}`}>
-                          <a href={window.anchorProtocol + url.replace('https://', '')} target="_blank" rel="noreferrer" onClick={() => setPcActive(false)}>
+                          <a href={window.anchorProtocol + url.replace('https://', '')} target="_blank" rel="noreferrer" onClick={() => {
+                            setPcActive(false)
+                            window.openBrowser()
+                          }}>
                             {name}
                           </a>
                         </li>
@@ -139,7 +142,10 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                     <ul className="optgroup">
                       {SONY_COMPANY.map(({ url, name }) => (
                         <li className="option" key={`footer-ul-company-${name}`}>
-                          <a href={window.anchorProtocol + url.replace('https://', '')} target="_blank" rel="noreferrer" onClick={() => setPcActive(false)}>
+                          <a href={window.anchorProtocol + url.replace('https://', '')} target="_blank" rel="noreferrer" onClick={() => {
+                            setPcActive(false)
+                            window.openBrowser()
+                          }}>
                             {name}
                           </a>
                         </li>
@@ -174,6 +180,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                 </select>
               </div>
               <a href={window.anchorProtocol + 'www.sony.com/'}
+                 onClick={window.openBrowser}
                  className="footer__family__global"
                  target="_blank" rel="noreferrer">
                 Sony Global
@@ -188,6 +195,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
               <a
                 href={window.anchorProtocol +
                 'www.sony.co.kr/handler/ProductInfo-Start?PageName=jsp/footer/CF_policy.jsp'}
+                onClick={window.openBrowser}
                 target="_blank"
                 rel="noreferrer"
                 className="footer__legal__link privacy"
@@ -217,6 +225,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   className="escrow"
                   href={window.anchorProtocol +
                   'mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat'}
+                  onClick={window.openBrowser}
                   style={{
                     backgroundImage: 'url(https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_gray.png)',
                   }}
