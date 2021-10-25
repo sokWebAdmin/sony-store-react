@@ -2924,15 +2924,11 @@ body {
 
       span {
         display: inline-block;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 22px;
-        height: 13px;
-        background: url('../images/common/ic_floating_arrow.svg') no-repeat 0 0;
-        background-size: 22px 13px;
-        transform: translate(-50%, -50%);
-        text-indent: -9999px;
+        padding: 10px;
+        font-size: 0;
+        transform: rotate(225deg);
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
       }
     }
   }
@@ -3036,10 +3032,10 @@ body {
       }
 
       &.top {
+        padding: between-mo(12px, 8px) between-mo(16px, 14px);
+
         span {
-          width: 28px;
-          height: 28px;
-          background: url('../images/common/ic_floating_arrow_mo.svg');
+          padding: between-mo(8px, 6px);
         }
       }
     }
