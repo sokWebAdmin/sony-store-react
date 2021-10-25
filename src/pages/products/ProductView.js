@@ -332,7 +332,7 @@ export default function ProductView({ match }) {
   return (
     <>
       <SEOHelmet title={getTitle} />
-      <div className="contents product">
+      <div className="contents product" style={{ padding: 0 }}>
         {productData && (
           <div className="product_view_wrap" style={{ backgroundColor: '#fff' }}>
             <div className="product_view_main">
