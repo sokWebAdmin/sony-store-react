@@ -81,6 +81,13 @@ export default function CategoryHeader({ category, changeCurrentCategoryByNo }) 
     firstDepthCategoryHandler();
   }, [size?.width, history?.location.pathname]);
 
+  useEffect(() => {
+    const no = history?.location.state?.categoryNo;
+    if (Number(no) > 0) {
+      setCurrentCategoryNo(no);
+    }
+  }, [history?.location.state?.categoryNo]);
+
   return (
     <div
       ref={categoryHeaderRef}

@@ -42,7 +42,7 @@ export default function EventResult({ fetchEvent, eventList, eventCount, newest,
           </li>
         ))}
       </ul>
-      <ViewMore totalCount={eventCount} viewMore={fetchEvent} pageSize={PAGE_SIZE.EVENT} />
+      {eventCount >= 10 && <ViewMore totalCount={eventCount} viewMore={fetchEvent} pageSize={PAGE_SIZE.EVENT} />}
     </>
   );
 }
