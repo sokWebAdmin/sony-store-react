@@ -22,14 +22,12 @@ const JoinAgree = () => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
-  const handleCheckClick = (index) => {
-    setCheckList((checks) => checks.map((c, i) => (i === index ? !c : c)));
-    const isAllChecked = checkList.every((x) => x);
-    if (isAllChecked) {
-      setCheckAll();
-      checkbox();
-    }
-  };
+  const handleCheckClick = (index) =>
+    setCheckList(checks => checks.map((c, i) => (i === index ? !c : c)));
+
+  useEffect(() =>
+    setCheckAll(checkList.every((x) => x))
+  , [checkList])
 
   const validateAgree = () => {
     const requireAgree = Array.from(Array(4).keys()).every(index => checkList[index]);
@@ -65,17 +63,10 @@ const JoinAgree = () => {
     document.querySelector(`.${agreeName}`).style.display = "none"
   }
 
-  const checkbox = useCallback(() => {
-    if (checkAll) {
-      setCheckList(labels.map(() => true));
-    } else {
-      setCheckList(labels.map(() => false));
-    }
-  }, [checkAll]);
-
-  useEffect(() => {
-    checkbox();
-  }, [checkbox]);
+  const handleCheckAll = () => {
+    setCheckAll(!checkAll)
+    setCheckList(labels.map(_ => !checkAll))
+  }
 
   return (
     <>
@@ -93,7 +84,7 @@ const JoinAgree = () => {
                 <div className="switchbtn">
                   <label className="switch">
                     <input type="checkbox" name="all" className="check_all" checked={checkAll}
-                           onChange={() => setCheckAll()} />
+                           onChange={handleCheckAll} />
                     <span className="toggle" />
                   </label>
                 </div>
@@ -124,7 +115,7 @@ const JoinAgree = () => {
             <div className="layer_title">
               <h1>소니스토어 쇼핑몰 이용약관 동의</h1>
             </div>
-            <div className="layer_content">
+            <div className="layer_content ">
               <div className="scroll_inner">
                 <div className="foot_cont">
                   <h4 className="Fh4_tit">제1장 총칙</h4>
