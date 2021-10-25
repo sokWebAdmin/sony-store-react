@@ -4,6 +4,7 @@ import { categoriesExtraDataMap } from '../../const/category';
 import { PAGE_SIZE } from '../../const/search';
 import ViewMore from '../common/ViewMore';
 import { useHistory } from 'react-router';
+import '../../assets/scss/product.scss';
 
 const getCategoryNo = (category) => {
   return _.chain(category)
@@ -16,10 +17,10 @@ const getCategoryNo = (category) => {
 const getLabelHtml = (label, keyword) => {
   if (label.includes(keyword)) {
     const [p, n] = label.split(keyword);
-    return `<span class="keword">${p}${keyword}${n}</span>`;
+    return `<span class="keword categoryList">${p}${keyword}${n}</span>`;
   }
 
-  return `<span>${label}</span>`;
+  return `<span class="categoryList">${label}</span>`;
 };
 const getCategoryLabel = (category, keyword) => {
   return _.chain(category)
@@ -40,16 +41,24 @@ const convertCategory = (category, keyword) => {
 export default function CategoryResult({ fetchCategory, categoryList, categoryCount, keyword }) {
   const history = useHistory();
 
-  const getNextUrl = (no) =>
-    _.chain(categoriesExtraDataMap)
+  const getNextUrl = (no) => {
+    const esp = [81644, 81643, 81645];
+    if (esp.includes(no)) return '/esp';
+
+    return _.chain(categoriesExtraDataMap)
       .filter(({ categoryNo }) => categoryNo === no)
       .map(({ url }) => url)
       .head()
       .value();
+  };
+
   const clickHandler = (e, categoryNo) => {
     e.preventDefault();
-    const esp = [81644, 81643, 81645];
-    history.push(esp.includes(categoryNo) ? '/esp' : getNextUrl(categoryNo));
+
+    history.push({
+      pathname: getNextUrl(categoryNo),
+      state: { categoryNo },
+    });
   };
 
   return (
@@ -74,7 +83,9 @@ export default function CategoryResult({ fetchCategory, categoryList, categoryCo
             ))}
         </ul>
       </div>
-      <ViewMore totalCount={categoryCount} viewMore={fetchCategory} pageSize={PAGE_SIZE.CATEGORY} />
+      {categoryCount >= 10 && (
+        <ViewMore totalCount={categoryCount} viewMore={fetchCategory} pageSize={PAGE_SIZE.CATEGORY} />
+      )}
     </>
   );
 }

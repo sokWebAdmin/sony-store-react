@@ -127,6 +127,9 @@ export default function Product({ product, category, reset, micro }) {
                   onMouseEnter={() => {
                     setColorIndex(index);
                   }}
+                  onTouchStart={() => {
+                    setColorIndex(index);
+                  }}
                 >
                   <span
                     className="colorchip__item__label"

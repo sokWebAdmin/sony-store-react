@@ -89,6 +89,8 @@ export default function MyPageMain() {
     return my?.totalExpireMileage || 0;
   }, [my]);
 
+  const memberName = useMemo(() => my?.firstName, [my]);
+
   return (
     <>
       <SEOHelmet title={'마이페이지 메인'} />
@@ -99,6 +101,7 @@ export default function MyPageMain() {
             <MemberSummary
               tabChange={setViewContent}
               profile={profile}
+              memberName={memberName}
               availablemileage={availablemileage}
               wishCount={wishCount}
             />

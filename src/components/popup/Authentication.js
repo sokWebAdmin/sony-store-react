@@ -11,7 +11,14 @@ import Alert from '../common/Alert';
 import { putDormancy } from '../../api/member';
 import { useHistory } from 'react-router-dom';
 
-export default function Authentication({ title, setVisible, setMyFormName, usage = 'RELEASE_DORMANT', authType = '' }) {
+export default function Authentication({
+  title,
+  setVisible,
+  setMyFormName,
+  setAuthForMobile,
+  usage = 'RELEASE_DORMANT',
+  authType = '',
+}) {
   const history = useHistory();
   const initMemberInfo = { mobileNo: '', memberName: '' };
   const [memberInfo, setMemberInfo] = useState(initMemberInfo);
@@ -100,6 +107,7 @@ export default function Authentication({ title, setVisible, setMyFormName, usage
     const response = await verifySMS(phoneNum, code, usage, name);
     if (response.status === 200) {
       setAuthCheck(true);
+      setAuthForMobile(true)
       openAlert('인증되었습니다.');
       setMyFormName(name);
     } else {
@@ -317,7 +325,11 @@ export default function Authentication({ title, setVisible, setMyFormName, usage
         </form>
       </div>
       <div className="btn_article">
-        <button className="button button_positive button-m closed" onClick={!authType ? onClickAuthentication : closePopup} type="button">
+        <button
+          className="button button_positive button-m closed"
+          onClick={!authType ? onClickAuthentication : closePopup}
+          type="button"
+        >
           확인
         </button>
       </div>

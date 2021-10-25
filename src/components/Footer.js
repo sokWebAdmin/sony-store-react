@@ -32,6 +32,34 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
 
   const selectRef = useRef(null);
 
+
+  let browser = window;
+// child window.
+  let popup = null;
+// interval
+  let timer = null;
+
+// This function is what the name says.
+// it checks whether the popup still open or not
+  function watcher () {
+    // if popup is null then let's clean the intervals.
+    if (popup === null) {
+      clearInterval(timer);
+      timer = null;
+      // if popup is not null and it is not closed, then let's set the focus on it... maybe...
+    } else if (popup !== null && !popup.closed) {
+      popup.focus();
+      // if popup is closed, then let's clean errthing.
+    } else if (popup !== null && popup.closed) {
+      clearInterval(timer);
+      browser.focus();
+      // the onCloseEventHandler it notifies that the child has been closed.
+      browser.onClose("child was closed");
+      timer = null;
+      popup = null;
+    }
+  }
+
   return (
     <>
       <footer
@@ -121,14 +149,12 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   defaultValue="default"
                   ref={selectRef}
                   onChange={(e) => {
-                    let popup = null;
-                    popup = window.open('about:blank', 'Sony Family');
-                    popup.focus();
-                    popup.location.href = e.target.value;
-                    // selectRef.current.value = 'default';
+                    window.open(e.target.value);
+                    selectRef.current.value=e.target.value;
                   }}
                   className={`footer__family__link footer__mo ${moActive && 'footer__family__link--active'}`}
                 >
+                  {/*<option value="default" disabled hidden style={{visibility: 'hidden'}}>Sony Family</option>*/}
                   <optgroup label="Sony Family">
                     {SONY_FAMILY.map(({ url, name }) => (
                       <option value={url} key={`footer-option-family-${name}`}>

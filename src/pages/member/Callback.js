@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { isMobile } from "react-device-detect";
+import { isMobile } from 'react-device-detect';
 import { getUrlParam } from '../../utils/location';
 import { getItem, KEY, removeAccessToken, setAccessToken } from '../../utils/token';
 import Alert from '../../components/common/Alert';
@@ -13,11 +13,12 @@ import {
 import GlobalContext from '../../context/global.context';
 import { getOauthOpenId } from '../../api/auth';
 import { getProfile } from '../../api/member';
+import { getMemberInfo, getOpenIdProfile } from '../../api/sony/member';
 
 const Callback = () => {
-  const {onChangeGlobal} = useContext(GlobalContext);
+  const { onChangeGlobal } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
-  const {profile} = useProfileState();
+  const { profile } = useProfileState();
   const { shopOauthCallback } = window.opener;
   // alert
   const [alertVisible, setAlertVisible] = useState(false);
@@ -28,50 +29,44 @@ const Callback = () => {
     setAlertVisible(true);
     setAlertMessage(message);
     setAlertCloseFun(onClose);
-  }
+  };
   const closeModal = () => {
     setAlertVisible(false);
     alertCloseFunc?.();
-  }
+  };
 
   const processAuthCallback = async () => {
-    const redirectUri = encodeURI(`${window.location.origin}/callback`);
     const code = getUrlParam('code');
-    const redirectedToken = getItem(KEY.OPENID_TOKEN);
+    const state = getItem(KEY.OPENID_TOKEN);
     const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
 
-    if (!code || !redirectedToken || !redirectedProvider) {
-      openAlert('인증 정보가 만료되었습니다.')
+    if (!code || !state || !redirectedProvider) {
+      openAlert('인증 정보가 만료되었습니다.');
       return;
     }
 
-    const openIdTokenResult = await getOauthOpenId({
+    const { data: openIdProfile } = await getOpenIdProfile({
       code,
-      redirectUri,
-      provider: redirectedProvider,
-      state: redirectedToken,
-      platformType: isMobile ? 'MOBILE_WEB' : 'PC',
+      state,
+      servicesite: { snsinfo: redirectedProvider.substring(0, 1).toUpperCase() },
     });
-    console.log(openIdTokenResult);
-    setAccessToken(openIdTokenResult.data.accessToken, openIdTokenResult.data.expireIn);
+    console.log(openIdProfile);
 
-    if (openIdTokenResult.status === 200) {
-      const response = await getProfile();
-      console.log(response);
-      setProfile(profileDispatch, response.data);
-      shopOauthCallback?.(response.data);
+    if (openIdProfile.errorCode === '0000') {
+      const response = await getMemberInfo({
+        type: '40',
+        email: openIdProfile.body.customerid,
+      });
+      shopOauthCallback?.(response.data.errorCode, response.data.body);
+      window.close();
     } else {
-      removeAccessToken();
-      onChangeGlobal({isLogin: false})
-      resetProfile(profileDispatch);
-      shopOauthCallback?.();
+      openAlert(openIdProfile.errorMessage, window.close);
     }
-    window.close();
-  }
+  };
 
   useEffect(() => {
     processAuthCallback();
-  }, [])
+  }, []);
 
   return (
     <>

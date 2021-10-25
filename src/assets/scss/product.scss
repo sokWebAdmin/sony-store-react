@@ -1649,6 +1649,9 @@
   .result_list {
     display: none;
     margin: 0 24px;
+    @include only-mo{
+      margin: 0;
+    }
 
     &.on {
       display: block;
@@ -2488,3 +2491,13 @@
 
   }
 }
+.result_list{
+  .category{
+    .categoryList{
+      @include only-mo{
+      margin-left: 0 !important;
+      }
+    }
+  }
+}
+

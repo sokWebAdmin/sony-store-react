@@ -352,7 +352,7 @@ export default function MyPageMember() {
                             </div>
                             <p
                               className="name_desc"
-                              style={{ top: '60px', left: '0', fontSize: '12px', transform: 'none' }}
+                              style={{ top: '60px', left: '0', fontSize: '12px', transform: 'none', width: '600px' }}
                             >
                               ※ 개명(이름 변경)한 경우 ‘이름 변경’ 버튼을 눌러주세요.
                             </p>
@@ -370,6 +370,7 @@ export default function MyPageMember() {
                             <Authentication
                               title="개명 회원 본인 확인"
                               setVisible={setRenameVisible}
+                              setAuthForMobile={setAuthForMobile}
                               setMyFormName={setMyFormName}
                               usage="JOIN"
                               authType="Rename"
