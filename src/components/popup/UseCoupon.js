@@ -20,9 +20,10 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   const [useProductCouponProductNo, setUseProductCouponProductNo] = useState(0);
   const [useProductCouponNo, setUseProductCouponNo] = useState(0);
 
-  const created = async () => {
+  const init = async () => {
+    console.log('init')
+    window['viewProducts'] = () => console.log(products)
     const originProducts = await fetchCoupons();
-
     validation(originProducts);
 
     if (products) {
@@ -30,7 +31,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
     }
   };
 
-  const validation = (products) => products.some(({ productCoupons }) => !!productCoupons.length) || reject();
+  const validation = (products) => products.every(({ productCoupons }) => !!productCoupons.length) || reject();
 
   const reject = () => {
     setReject(true);
@@ -39,7 +40,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   const fetchCoupons = async () => {
     await syncCoupon();
     const { data } = await getOrderSheetCoupon({ orderSheetNo });
-    await setProducts(mapProducts([...data.products]));
+    setProducts(mapProducts([...data.products]));
     return [...data.products];
   };
 
@@ -49,7 +50,6 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
       productNo: FIRST_PRODUCT.productNo,
       items: FIRST_PRODUCT.productCoupons,
     });
-    console.log(FIRST_PRODUCT.productCoupons, 1);
   };
 
   const submit = () => {
@@ -73,17 +73,18 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   };
 
   function mapProducts(products) {
-    return products.map(({ productNo, productName, mainOption, buyAmt, totalOrderCnt }) => ({
+    return products.map(({ productNo, productName, mainOption, buyAmt, totalOrderCnt, productCoupons }) => ({
       productNo,
       productName,
       imageUrl: orderProducts.find((products) => products.id === productNo)?.imageUrl ?? '',
       mainOption,
       amount: toCurrencyString(buyAmt),
       totalOrderCnt,
+      hasProductCoupon: !!productCoupons?.length
     }));
   }
 
-  useEffect(created, []);
+  useEffect(init, [show]);
 
   return (
     <LayerPopup className="find_address" size={'m'} popContClassName={'scrollH'} onClose={close} show={show}>
@@ -91,10 +92,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
       <div className="pop_cont_scroll" ref={$scroll}>
         <div className="chk_select_zone">
           <ul className="chk_select_inner">
-            {products.filter(({ productCoupons }) => {
-              console.log(productCoupons)
-              return productCoupons?.length
-            }).map((product, i) => (
+            {products.filter(({ hasProductCoupon }) => hasProductCoupon).map((product, i) => (
               <li className="chk_select_list" key={product.productNo}>
                 <div className="chk_select_item table label_click">
                   <div className="radio_box radio_only chk_select">
@@ -133,7 +131,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
           </ul>
         </div>
         <div className="coupon_info">
-          {productCoupons.items.length > 0 && products.some(({ productCoupons }) => productCoupons?.length) ? (
+          {productCoupons.items.length > 0 && products.some(({ hasProductCoupon }) => hasProductCoupon) ? (
             <SelectBox
               defaultInfo={{
                 type: 'dropdownHighlight',
