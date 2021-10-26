@@ -130,7 +130,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
           </ul>
         </div>
         <div className="coupon_info">
-          {productCoupons.items.length > 0 ? (
+          {productCoupons.items.length > 0 && products.some(({ invalidProductCoupons }) => invalidProductCoupons?.length) ? (
             <SelectBox
               defaultInfo={{
                 type: 'dropdownHighlight',
