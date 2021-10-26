@@ -91,7 +91,10 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
       <div className="pop_cont_scroll" ref={$scroll}>
         <div className="chk_select_zone">
           <ul className="chk_select_inner">
-            {products.filter(({ invalidProductCoupons }) => invalidProductCoupons?.length).map((product, i) => (
+            {products.filter(({ productCoupons }) => {
+              console.log(productCoupons)
+              return productCoupons?.length
+            }).map((product, i) => (
               <li className="chk_select_list" key={product.productNo}>
                 <div className="chk_select_item table label_click">
                   <div className="radio_box radio_only chk_select">
@@ -130,7 +133,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
           </ul>
         </div>
         <div className="coupon_info">
-          {productCoupons.items.length > 0 && products.some(({ invalidProductCoupons }) => invalidProductCoupons?.length) ? (
+          {productCoupons.items.length > 0 && products.some(({ productCoupons }) => productCoupons?.length) ? (
             <SelectBox
               defaultInfo={{
                 type: 'dropdownHighlight',
