@@ -134,8 +134,9 @@ export default function ButtonGroup({
   const goToOrderPage = (result, pathname) => {
     if (result?.code) {
       ERROR_CODE_MAPPING_ROUTE[result.code]?.msg
-        ? openAlert(ERROR_CODE_MAPPING_ROUTE[result.code]?.msg, () => () =>
-            history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route)),
+        ? openAlert(
+            ERROR_CODE_MAPPING_ROUTE[result.code]?.msg,
+            () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route)),
           )
         : openAlert(result?.message);
     } else {
@@ -169,8 +170,9 @@ export default function ButtonGroup({
 
     if (memberOnly && !isLogin) {
       const GUEST_ERROR = 'O8001';
-      openAlert(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg, () => () =>
-        history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
+      openAlert(
+        ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg,
+        () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
       );
       return;
     }
@@ -242,8 +244,9 @@ export default function ButtonGroup({
   const cart = async () => {
     if (memberOnly && !isLogin) {
       const GUEST_ERROR = 'O8001';
-      openAlert(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg, () => () =>
-        history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
+      openAlert(
+        ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.msg,
+        () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[GUEST_ERROR]?.route)),
       );
       return;
     }
@@ -364,7 +367,7 @@ export default function ButtonGroup({
 
       naver.NaverPayButton.apply({
         EMBED_ID: 'naverPay',
-        BUTTON_KEY: 'AAAA', //buttonKey,
+        BUTTON_KEY: 'AAAA', // @TODO 발급받은 buttonKey를 추가해주세요
         TYPE: 'A',
         COLOR: 1,
         COUNT: 2,
@@ -463,6 +466,8 @@ export default function ButtonGroup({
         />
       )}
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+      {/* 
+      @TODO 네이버페이 버튼 키 추가 후, 주석 풀기
       {naverPayBtnKey && (
         <div className="cont naver" style={{ marginTop: '24px', paddingTop: 0 }}>
           <button
@@ -471,7 +476,8 @@ export default function ButtonGroup({
             id="naverPay"
           ></button>
         </div>
-      )}
+      )} 
+      */}
     </>
   );
 }
