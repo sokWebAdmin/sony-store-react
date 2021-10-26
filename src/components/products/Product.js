@@ -62,7 +62,7 @@ export default function Product({ product, category, reset, micro }) {
 
   const fetchProductGroupOptions = async (productNos) => {
     const { data } = await getProductsOptions({ productNos });
-    setOptions(() => data.optionInfos.flatMap(({ options }) => options));
+    data?.optionInfos && setOptions(() => data.optionInfos.flatMap(({ options }) => options));
   };
 
   const [saleStatus, setSaleStatus] = useState('');
