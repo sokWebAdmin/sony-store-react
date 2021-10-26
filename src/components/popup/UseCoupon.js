@@ -21,8 +21,6 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   const [useProductCouponNo, setUseProductCouponNo] = useState(0);
 
   const init = async () => {
-    console.log('init')
-    window['viewProducts'] = () => console.log(products)
     const originProducts = await fetchCoupons();
     validation(originProducts);
 

@@ -121,11 +121,6 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                 className="button button_negative button-s popup_comm_btn"
                 data-popup-name="coupon_inquiry"
                 onClick={() => {
-                  if (noCoupon) {
-                    alert('사용 가능한 쿠폰이 없습니다.');
-                    return;
-                  }
-
                   !useCouponLoaded && setUseCouponLoaded(true);
                   setUseCouponVisible(true);
                 }}
