@@ -59,8 +59,9 @@ export default function ProductView({ match }) {
   // SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 
   useEffect(() => {
-    const header = document.getElementsByClassName('header').clientHeight;
-    setHeaderHeight(header);
+    const $header = document.querySelector('header');
+    $header.style.position = 'fixed';
+    setHeaderHeight($header.clientHeight);
   }, []);
 
   //data
@@ -332,7 +333,7 @@ export default function ProductView({ match }) {
   return (
     <>
       <SEOHelmet title={getTitle} />
-      <div className="contents product" style={{ padding: 0 }}>
+      <div className="contents product">
         {productData && (
           <div className="product_view_wrap" style={{ backgroundColor: '#fff' }}>
             <div className="product_view_main">
@@ -359,7 +360,14 @@ export default function ProductView({ match }) {
                 <ul className="link_inner" style={{ width: getLinkInnerWidth() }}>
                   {getInfoLinks().map(({ name, href, imgUrl, label }) => (
                     <li key={name}>
-                      <a href={window.anchorProtocol + href.replace('https://', '')} onClick={window.openBrowser} className="link_btn" rel="noreferrer" target="_blank" title="새 창 열림">
+                      <a
+                        href={window.anchorProtocol + href.replace('https://', '')}
+                        onClick={window.openBrowser}
+                        className="link_btn"
+                        rel="noreferrer"
+                        target="_blank"
+                        title="새 창 열림"
+                      >
                         <i className="ico">
                           <img src={imgUrl} alt={name} />
                         </i>
