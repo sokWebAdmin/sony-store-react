@@ -1,24 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { isMobile } from 'react-device-detect';
+import React, { useEffect, useState } from 'react';
 import { getUrlParam } from '../../utils/location';
-import { getItem, KEY, removeAccessToken, setAccessToken } from '../../utils/token';
+import { getItem, KEY } from '../../utils/token';
 import Alert from '../../components/common/Alert';
-import {
-  fetchProfile,
-  resetProfile,
-  setProfile,
-  useProfileState,
-  useProileDispatch,
-} from '../../context/profile.context';
-import GlobalContext from '../../context/global.context';
-import { getOauthOpenId } from '../../api/auth';
-import { getProfile } from '../../api/member';
-import { getMemberInfo, getOpenIdProfile } from '../../api/sony/member';
+import { getOpenIdProfile } from '../../api/sony/member';
 
 const Callback = () => {
-  const { onChangeGlobal } = useContext(GlobalContext);
-  const profileDispatch = useProileDispatch();
-  const { profile } = useProfileState();
   const { shopOauthCallback } = window.opener;
   // alert
   const [alertVisible, setAlertVisible] = useState(false);
