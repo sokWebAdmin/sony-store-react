@@ -111,8 +111,7 @@ import CustomPopup from './components/common/customPopup/CustomPopup';
 import { getDisplayPopups, getDisplayPopupsPopupNos } from './api/display';
 import AppBar from './components/app/AppBar';
 
-import { openBrowser } from './utils/openBrowser.js';
-
+import { openBrowser, openWindow } from './utils/openBrowser.js';
 
 const App = (props) => {
   const agent = getAgent();
@@ -129,6 +128,7 @@ const App = (props) => {
   useEffect(() => {
     window['anchorProtocol'] = 'https://';
     window['openBrowser'] = curry(openBrowser)(agent);
+    window['openWindow'] = curry(openWindow)(agent);
   }, [agent]);
 
   useEffect(() => {
@@ -238,12 +238,9 @@ const App = (props) => {
       return;
     }
 
-    fetchPopupNos()
-      .then((nos) => nos.toString())
-      .then(fetchPopups)
-      .then((res) => {
-        setPopups(res);
-      });
+    fetchPopupNos().then((nos) => nos.toString()).then(fetchPopups).then((res) => {
+      setPopups(res);
+    });
   }, [location]);
 
   Array();
