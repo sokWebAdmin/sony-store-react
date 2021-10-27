@@ -14,22 +14,6 @@ import { useBoardState } from '../../../../context/board.context';
 import { Link } from 'react-router-dom';
 import Tabs from '../Tabs';
 
-const fetchNotice = async (boardNo, articleNo, setNotice) => {
-  if (!(boardNo > 0)) return;
-
-  const response = await getBoardByArticleId({
-    pathParams: {
-      boardNo,
-      articleNo,
-    },
-  });
-
-  setNotice((prevState) => ({
-    ...prevState,
-    ...response.data,
-  }));
-};
-
 export default function NoticeDetail({ match, history }) {
   const { config } = useBoardState();
   const [notice, setNotice] = useState({});
@@ -41,6 +25,25 @@ export default function NoticeDetail({ match, history }) {
     const boardNo = config.notice.boardNo;
     fetchNotice(boardNo, articleNo, setNotice);
   }, [config.notice.boardNo, articleNo]);
+
+  const fetchNotice = async (boardNo, articleNo, setNotice) => {
+    if (!(boardNo > 0)) {
+      history.push('/404');
+      return;
+    }
+
+    const response = await getBoardByArticleId({
+      pathParams: {
+        boardNo,
+        articleNo,
+      },
+    });
+
+    setNotice((prevState) => ({
+      ...prevState,
+      ...response.data,
+    }));
+  };
 
   return (
     <>
