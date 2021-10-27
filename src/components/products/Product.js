@@ -127,6 +127,7 @@ export default function Product({ product, category, reset, micro }) {
                   onMouseEnter={() => {
                     setColorIndex(index);
                   }}
+                  onClick={(e) => e.stopPropagation()}
                   onTouchStart={() => {
                     setColorIndex(index);
                   }}
