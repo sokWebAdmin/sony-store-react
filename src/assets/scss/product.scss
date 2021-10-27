@@ -1571,7 +1571,7 @@
   }
 
   // devstore
-  .contents.product+.footer {
+  .contents.product + .footer {
     .sidebar {
       &--visible {
         transform: translateY(-87px);
@@ -1672,133 +1672,134 @@
     margin: 0 auto;
     width: calc(100% - 48px);
 
-    @include only-mo{
+    @include only-mo {
       width: 100%;
-    &.search {
-      @include only-mo {
-        margin: 0;
-        width: 100%;
+      &.search {
+        @include only-mo {
+          margin: 0;
+          width: 100%;
+        }
+      }
+
+      &.on {
+        display: block;
       }
     }
 
-    &.on {
-      display: block;
-    }
-  }
-
-  .result_btn_box {
-    margin-top: 0;
-    padding: 16px 24px;
-  }
-
-  .product_cont {
-    padding: 0 24px;
-
-    &.full {
-      padding: 0;
+    .result_btn_box {
+      margin-top: 0;
+      padding: 16px 24px;
     }
 
-    &.recommend {
-      padding: 0;
+    .product_cont {
+      padding: 0 24px;
 
-      .slide_box {
-        margin-top: 0;
+      &.full {
+        padding: 0;
+      }
+
+      &.recommend {
+        padding: 0;
+
+        .slide_box {
+          margin-top: 0;
+        }
       }
     }
-  }
 
-  .relation_link {
-    position: relative;
-    padding: 5px 24px;
+    .relation_link {
+      position: relative;
+      padding: 5px 24px;
 
-    &.scroll {
-      padding-right: 0;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
+      &.scroll {
+        padding-right: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
 
-    .link_inner {
-      .link_txt {
-        vertical-align: top;
+      .link_inner {
+        .link_txt {
+          vertical-align: top;
+        }
       }
     }
-  }
-
-  .select_closed {
-    position: absolute;
-    top: 16px;
-    left: 50%;
-    width: 34px;
-    height: 10px;
-    background: url('../images/product/direct_open_arrow.png') no-repeat 0 0;
-    transform: translateX(-50%);
-    text-indent: -9999px;
-  }
-
-  .prd_select_wrap.view {
-    padding-top: 50px;
 
     .select_closed {
-      display: block;
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      width: 34px;
+      height: 10px;
+      background: url('../images/product/direct_open_arrow.png') no-repeat 0 0;
+      transform: translateX(-50%);
+      text-indent: -9999px;
     }
 
-    .select_zone {
-      display: block;
+    .prd_select_wrap.view {
+      padding-top: 50px;
 
-      .select_inner {
-        position: relative;
-        top: 0;
+      .select_closed {
+        display: block;
+      }
+
+      .select_zone {
+        display: block;
+
+        .select_inner {
+          position: relative;
+          top: 0;
+        }
       }
     }
-  }
 
-  .tab_ui_inner {
-    margin: 16px 0 120px;
-  }
+    .tab_ui_inner {
+      margin: 16px 0 120px;
+    }
 
-  .detail_box+.btn_article {
-    margin-top: 16px;
-    padding: 16px 0;
+    .detail_box + .btn_article {
+      margin-top: 16px;
+      padding: 16px 0;
 
-    .btn__event__more {
-      font-size: 14px;
+      .btn__event__more {
+        font-size: 14px;
 
-      &:after {
-        margin-left: 8px;
-        font-size: 18px;
+        &:after {
+          margin-left: 8px;
+          font-size: 18px;
+        }
       }
     }
-  }
 
-  .cut_img_align {
-    .text_box {
+    .cut_img_align {
+      .text_box {
+        .tit {
+          font-size: 32px;
+          line-height: 43px;
+        }
+
+        .txt {
+          margin-top: 20px;
+          font-size: 15px;
+          line-height: 23px;
+        }
+      }
+    }
+
+    .tit_top_box {
+      .head_tit {
+        padding: 50px 0 30px;
+      }
+
       .tit {
         font-size: 32px;
         line-height: 43px;
       }
 
       .txt {
-        margin-top: 20px;
+        margin-top: 10px;
         font-size: 15px;
         line-height: 23px;
       }
-    }
-  }
-
-  .tit_top_box {
-    .head_tit {
-      padding: 50px 0 30px;
-    }
-
-    .tit {
-      font-size: 32px;
-      line-height: 43px;
-    }
-
-    .txt {
-      margin-top: 10px;
-      font-size: 15px;
-      line-height: 23px;
     }
   }
 }
