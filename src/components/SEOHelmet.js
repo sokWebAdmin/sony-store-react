@@ -1,10 +1,12 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 
-const SEOHelmet = (props) => {
-    return (
+const SEOHelmet = ({ title, children }) => (
+  <>
     <Helmet>
-        <title>{props.title}</title>
+      <title>{title}</title>
+      {children}
     </Helmet>
-    )
-}
-export default SEOHelmet
+  </>
+);
+
+export default SEOHelmet;

@@ -1,0 +1,25 @@
+.banner_icon {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 32px;
+  width: 64px;
+  height: 64px;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  content: "";
+
+  @media screen and (max-width: 1280px) {
+    left: 24px;
+    width: 32px;
+    height: 32px;
+  }
+}
+.banner_text {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -0.6px;
+  color: #222;
+  float: left;
+  margin: 3% 10.9% 3% 11%;
+}

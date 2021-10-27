@@ -18,14 +18,17 @@ $(() => {
   const sidebarTop = document.querySelector(".sidebar__btn.top");
   const footer = document.querySelector(".footer");
   const memberPcLink = document.querySelector(".btn__desktop.btn__mypage");
+  const appnavbar = document.querySelector(".appnavbar");
 
   window.addEventListener("load", init);
   window.addEventListener("resize", checkWidth);
-  gnb.addEventListener("mouseleave", hideGnb);
-  btnOpenGnb.addEventListener("click", showGnbMo);
-  btnHideGnb.addEventListener("click", hideGnbMo);
-  btnShowSearch.addEventListener("click", showSearch);
-  btnHideSearch.addEventListener("click", hideSearch);
+  if (gnb) {
+    gnb.addEventListener("mouseleave", hideGnb);
+    btnOpenGnb.addEventListener("click", showGnbMo);
+    btnHideGnb.addEventListener("click", hideGnbMo);
+    btnShowSearch.addEventListener("click", showSearch);
+    btnHideSearch.addEventListener("click", hideSearch);
+  }
 
   for (let i = 0; i < gnbLink1.length; i++) {
     gnbLink1[i].addEventListener("mouseover", showGnb);
@@ -120,46 +123,51 @@ $(() => {
   }
 
   // pc login tooltip
-  memberPcLink.addEventListener("click", e => {
-    e.preventDefault();
+  if (memberPcLink) {
+    memberPcLink.addEventListener("click", e => {
+      e.preventDefault();
 
-    const elem = document.querySelector(".header .member");
-    const active = "member--visible";
-    const outsideClick = e => {
-      if (!elem.contains(e.target) && !memberPcLink.contains(e.target)) {
-        $(elem).removeClass(active);
-        body.removeEventListener("click", outsideClick);
+      const elem = document.querySelector(".header .member");
+      const active = "member--visible";
+      const outsideClick = e => {
+        if (!elem.contains(e.target) && !memberPcLink.contains(e.target)) {
+          $(elem).removeClass(active);
+          body.removeEventListener("click", outsideClick);
+        };
       };
-    };
 
-    if (elem.classList.contains(active)) {
-      elem.classList.remove(active);
-      body.removeEventListener("click", outsideClick);
-    } else {
-      elem.classList.add(active);
-      body.addEventListener("click", outsideClick);
-    }
-  });
+      if (elem.classList.contains(active)) {
+        elem.classList.remove(active);
+        body.removeEventListener("click", outsideClick);
+      } else {
+        elem.classList.add(active);
+        body.addEventListener("click", outsideClick);
+      }
+    });
+  };
 
   // footer - family site on desktop
-  document.querySelector(".footer__family__link__trigger").addEventListener("click", e => {
-    const link = e.target.closest(".footer__family__link");
-    const active = "footer__family__link--active";
-    const outsideClick = e => {
-      console.log(!link.contains(e.target))
-      if (!link.contains(e.target)) {
-        $(link).removeClass(active);
-        body.removeEventListener("click", outsideClick);
+  const footerFamLink = document.querySelector(".footer__family__link__trigger");
+  if (footerFamLink) {
+    footerFamLink.addEventListener("click", e => {
+      const link = e.target.closest(".footer__family__link");
+      const active = "footer__family__link--active";
+      const outsideClick = e => {
+        console.log(!link.contains(e.target))
+        if (!link.contains(e.target)) {
+          $(link).removeClass(active);
+          body.removeEventListener("click", outsideClick);
+        };
       };
-    };
 
-    if (link.classList.contains(active)) {
-      link.classList.remove(active);
-    } else {
-      link.classList.add(active);
-      body.addEventListener("click", outsideClick);
-    };
-  });
+      if (link.classList.contains(active)) {
+        link.classList.remove(active);
+      } else {
+        link.classList.add(active);
+        body.addEventListener("click", outsideClick);
+      };
+    });
+  }
 
   // sort
   const itemsort = $(".itemsort");
@@ -188,7 +196,7 @@ $(() => {
 
         const parent = $(this).parent(sortList);
         const activeClass2 = "itemsort__item--active";
-        
+
         sortList.removeClass(activeClass2);
         parent.addClass(activeClass2);
         sortSelected.text($(this).text());
@@ -202,58 +210,87 @@ $(() => {
         };
       }
     });
-  }  
-  
+  }
+
   // floating menu
   let prevScrollY = window.scrollY;
 
   const scrollAction = () => {
-    let winHeight = window.innerHeight;
-    let start = 300;
-    let end = footer.offsetTop - winHeight + sidebar.offsetHeight + parseInt(getComputedStyle(sidebar).right) * 2;
-
     if (prevScrollY !== window.scrollY) {
-      if (prevScrollY > window.scrollY) {
-        // scroll up
-        if (prevScrollY !== 0) {
-          header.classList.add("header--fixed");
+
+      // header
+      if (header) {
+        let headerHeight = header.offsetHeight
+
+        if (prevScrollY > window.scrollY) {
+          if (prevScrollY !== 0 ) {
+            header.classList.add("header--visible");
+            header.classList.remove("header--invisible");
+          } else {
+            header.classList.remove("header--visible");
+            header.classList.remove("header--invisible");
+          };
         } else {
-          header.classList.remove("header--fixed");
-        };
-      } else {
-        // scroll down
-        header.classList.remove("header--fixed");
+          if (window.scrollY <= headerHeight) {
+            header.classList.add("header--visible");
+            header.classList.remove("header--invisible");
+          } else {
+            header.classList.remove("header--visible");
+            header.classList.add("header--invisible");
+          }
+        }
       }
-      
-      prevScrollY = window.scrollY;
+
+      // appnavbar
+      if (appnavbar) {
+        if (prevScrollY > window.scrollY) {
+          if (prevScrollY !== 0) {
+            appnavbar.classList.remove("appnavbar--invisible");
+          } else {
+            appnavbar.classList.add("appnavbar--invisible");
+          };
+        } else {
+          appnavbar.classList.add("appnavbar--invisible");
+        }
+      }
+
       // sidebar
-      prevScrollY >= start ? sidebar.classList.add("sidebar--visible") : sidebar.classList.remove("sidebar--visible");
-      prevScrollY >= end ? sidebar.classList.add("sidebar--reachend") : sidebar.classList.remove("sidebar--reachend");
+      if (sidebar) {
+        let winHeight = window.innerHeight;
+        let start = 300;
+        let end = footer.offsetTop - winHeight + sidebar.offsetHeight + parseInt(getComputedStyle(sidebar).right) * 2;
+
+        prevScrollY = window.scrollY;
+        prevScrollY >= start ? sidebar.classList.add("sidebar--visible") : sidebar.classList.remove("sidebar--visible");
+        prevScrollY >= end ? sidebar.classList.add("sidebar--reachend") : sidebar.classList.remove("sidebar--reachend");
+      }
     };
 
   };
 
-  sidebarToggle.addEventListener("click", () => {
-    sidebar.classList.toggle("sidebar--active");
-  });
-  sidebarTop.addEventListener("click", () => {
-    let speed = 200;
-    let maxSpeed = 700;
-    let scrollY = window.scrollY;
-
-    if (scrollY > 1000) {
-      scrollY > 5000 ? speed = maxSpeed : speed + scrollY * 0.1;
-    };
-    $("html, body").stop().animate({scrollTop: 0}, speed, "swing", () => {
-      sidebar.classList.remove("sidebar--active");
+  if (sidebar) {
+    sidebarToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("sidebar--active");
     });
-  });
+    sidebarTop.addEventListener("click", () => {
+      let speed = 200;
+      let maxSpeed = 700;
+      let scrollY = window.scrollY;
 
-  if (window.innerHeight >= document.body.offsetHeight) {
-    sidebar.classList.add("sidebar--visible");
-    observer.observe(body, observerConfig);
-  } else {
-    window.addEventListener('scroll', toFit(scrollAction, {}), {passive: true});
+      if (scrollY > 1000) {
+        scrollY > 5000 ? speed = maxSpeed : speed + scrollY * 0.1;
+      };
+      $("html, body").stop().animate({scrollTop: 0}, speed, "swing", () => {
+        sidebar.classList.remove("sidebar--active");
+      });
+    });
+
+    if (window.innerHeight >= document.body.offsetHeight) {
+      sidebar.classList.add("sidebar--visible");
+      observer.observe(body, observerConfig);
+    } else {
+      window.addEventListener('scroll', toFit(scrollAction, {}), {passive: true});
+    };
   };
 
   // tab on/off
@@ -272,7 +309,7 @@ $(() => {
         let $tabWrapper = $(tab).find('>ul'),
             _arrowAdd ='<div class="swiper-button-next"></div><div class="swiper-button-prev"></div>';
             _totalW = 0;
-        
+
         if($(tab).data("scroll-view") > 0) _scrollView.pc = $(tab).data("scroll-view");
         $(tab).data("tab-scroll-view") > 0 ? _scrollView.tb = $(tab).data("tab-scroll-view") : _scrollView.tb = _scrollView.pc ;
         if($(tab).data("mo-scroll-view") > 0) _scrollView.mo = $(tab).data("mo-scroll-view");
@@ -305,7 +342,7 @@ $(() => {
               })
               $(tab).find('.swiper-wrapper').css("width", _totalW);
             },
-            resize: swiper => { 
+            resize: swiper => {
               swiper.slides.forEach(e => {
                 swiper.slides.forEach(e => {
                   let _slideW = parseInt($(e).attr("style").split("width: ").join(''));
@@ -322,7 +359,7 @@ $(() => {
         let $thisTab = $(this).closest('li'),
             _tabIndex = $thisTab.index(),
             $tabInfo = $(tab).siblings('.tab_ui_info').find('.tab_ui_inner').eq(_tabIndex);
-        
+
         if($thisTab.hasClass("on") == false){
           $thisTab.addClass("on").siblings().removeClass("on");
           $tabInfo.addClass("view").siblings().removeClass("view");
@@ -331,7 +368,7 @@ $(() => {
       });
     }
   }
-  // 아코디언 
+  // 아코디언
   const accordionUiList = (e) =>{
     let $thisAcc = $('.acc_ui_zone');
     for(let accNum = 0; accNum < $thisAcc.length ; accNum++){ // acc_ui_zone 개별 제어
@@ -377,7 +414,7 @@ $(() => {
       });
     }
   }
-  // selectbox  
+  // selectbox
   const selectUiBox = (e) => {
     let $selectBox = $('.select_ui_zone');
     for(let _selectNum = 0; _selectNum < $selectBox.length ; _selectNum++){ // select 개별 제어
@@ -401,7 +438,7 @@ $(() => {
             $thisSelect.siblings().find('.select_inner').hide();
             $selectList.slideDown(200);
           }
-          optSelect($thisSelect);     
+          optSelect($thisSelect);
           selectClosed($thisSelect); // 다른 영역 클릭 시 닫기
         }
         return false;
@@ -462,7 +499,7 @@ $(() => {
         let $thisWrap = $(this).parent(),
             $inputCount = $thisWrap.find('.count'),
             _count = $inputCount.val();
-    
+
         if($(this).hasClass("minus")){ // 감소
           _count--;
           countChk(_count);
@@ -500,7 +537,7 @@ $(() => {
   }
 
   labelClick();      // 리스트 label 클릭 관련
-  tabUiClick();      // 탭 
+  tabUiClick();      // 탭
   accordionUiList(); // 아코디언
   selectUiBox();     // select
   prdCount();        // countBox 수량
@@ -549,7 +586,7 @@ let observerConfig = {
 };
 
 // 공통 팝업 type : 딤드 클릭시 닫기, 높이 조절 : 컨텐츠 스크롤 바 생성
-function popupCommon(thisPop, thisSelect){ 
+function popupCommon(thisPop, thisSelect){
   let $popWrap = $('.'+thisPop),
       $closeBtn = $popWrap.find('.closed'),
       _windowH = $(window).outerHeight(),
@@ -562,7 +599,7 @@ function popupCommon(thisPop, thisSelect){
   $(".layer_mask, ."+thisPop).attr("tabIndex",0);
   $popWrap.focus();
   $("body,html").css({"overflow":"hidden"});
-  
+
   if(_popBaseH > _windowH-160 && $contScroll.length > 0){ // scroll이 필요한 팝업 체크
     _contScrollH = $contScroll.outerHeight(true);
     popScrollChk();
@@ -691,6 +728,36 @@ var common = function(common) {
     btnFunc1.addEventListener("click", func1);
   }
 
+  // 2021-09-09 confirm 스타일 팝업 생성 & 확인 시 레이어 팝업 오픈
+  common.makeConfirm2 = function(name, msg, layername) {
+    const inner = `
+      <div class='layer alert_layer alert_pop2 ${name}' style='display: block;'>
+        <div class='layer_wrap'>
+          <div class='layer_container'>
+            <div class='layer_content'>
+              <p class='alert_text'>${msg}</p>
+              <div class='btn_box'>
+                <button type='button' class='close btn btn_default btn_remove'>취소</button>
+                <button type='button' class='btn btn_dark btn_func1' onclick='popupCommon("${layername}", $("body")); document.querySelector(".${name}").remove();'>확인</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const fragment = document.createRange().createContextualFragment(inner);
+
+    document.body.appendChild(fragment);
+    function removeConfirm() {
+      document.querySelector("." + name ).remove();
+    }
+
+    const btnRemove = document.querySelector("." + name + " .btn_remove");
+
+    btnRemove.addEventListener("click", removeConfirm);
+  }
+
   return common;
 } (common || {});
 
@@ -711,9 +778,50 @@ function copyTxt (val){
   document.body.removeChild(copy);
   alert('복사가 완료되었습니다.');
 }
-// 기획전 이벤트 배너
+// 기획전 이벤트 배너 210908 s : 기획전 수정
 function fullSliderBanner(){
-  let $exhibitionsSlider = $('.exhibitions_slider');
+  let $exhibitionsSlider = $('.exhibitions_inner');
+
+  // 개별 선택
+  for(let _slideNum = 0; _slideNum < $exhibitionsSlider.length; _slideNum++){
+    slideFunc($exhibitionsSlider[_slideNum]);
+  }
+  function slideFunc(_obj){
+    let _sliderSize = $(_obj).find('.swiper-slide').length;
+    console.log(_sliderSize);
+    console.log($(_obj))
+    if(_sliderSize > 1){ // 2개 이상 부터 swiper 사용.
+      $(_obj).removeClass("swiper_none");
+      swiperIni($(_obj))
+    }
+  }
+  function swiperIni(_thisObj){
+    let $thisWrap = _thisObj;
+
+    let eventSwiper = new Swiper($thisWrap[0], {
+      slidesPerView: 2,
+      spaceBetween : 24,
+      navigation : {
+        nextEl : '.swiper-button-next',
+        prevEl : '.swiper-button-prev',
+      },
+      breakpoints: {
+        320: {
+          slidesPerView: 1,
+          spaceBetween : 0,
+        },
+        641: {
+          slidesPerView: 2,
+          spaceBetween : 16,
+        },
+        1281: {
+          slidesPerView: 2,
+          spaceBetween : 24,
+        },
+      }
+    });
+  }
+  /*
   let exhibitionsSwiper = new Swiper($exhibitionsSlider[0], {
     slidesPerView: 1,
     loop: true,
@@ -743,4 +851,6 @@ function fullSliderBanner(){
       },
     }
   });
+  */
 }
+/* 210908 e : 기획전 수정 */

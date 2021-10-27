@@ -1,723 +1,404 @@
-
-import { React ,useState, useEffect, useContext, useRef } from 'react';
+import { React, useState, useEffect, useContext, useRef, useCallback } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import { sampleApi } from "../../api/sample";
 
 //css
-import "../../assets/scss/contents.scss"
-import "../../assets/scss/recommend.scss"
-
+import '../../assets/scss/contents.scss';
+import '../../assets/scss/recommend.scss';
+import arrow from '../../assets/images/common/arrow_recommend.png';
 //context
 import GlobalContext from '../../context/global.context';
 
 //utils
-import {useWindowSize} from '../../utils/utils'
-import { useHistory } from "react-router-dom";
+import { useWindowSize } from '../../utils/utils';
+import { useHistory } from 'react-router-dom';
 
 //lib
 import { Controller, Scene } from 'react-scrollmagic';
-import { Tween, Timeline } from 'react-gsap';
+import { Tween } from 'react-gsap';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Scrollbar, Autoplay } from 'swiper/core';
-
 
 //lib-css
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
-import "swiper/swiper.scss"
+import 'swiper/swiper.scss';
+import { Link } from 'react-router-dom';
+import { loadBanner } from '../../api/display';
+import { changeDateFormat, getDay, getStrHM } from '../../utils/dateFormat';
 
-export default function Recommend({match}) {
+export default function Recommend({ match }) {
   const history = useHistory();
 
   const size = useWindowSize();
-
+  const [slideBanners, setSlideBanners] = useState([]);
+  const [recommendTopBanners, setRecommendTopBanners] = useState([]);
+  const [recommendBottomBanners, setRecommendBottomBanners] = useState([]);
+  const [middleBanners, setMiddleBanners] = useState([]);
+  const [eventBanners, setEventBanners] = useState([]);
   const [isFinished, setFinished] = useState(false);
+
+  const getBanners = useCallback(async () => {
+    try {
+      //배너 코드 객체로 관리하기
+      //응답이 순서를 보징하지 않음
+      const { data } = await loadBanner('013,015,016,017');
+      const slideBanners = data.find(({ code }) => code === '013')?.accounts || [];
+      const recommendBanners = data.find(({ code }) => code === '015')?.accounts || [];
+      const middleBanners = data.find(({ code }) => code === '016')?.accounts || [];
+      const eventBanners = data.find(({ code }) => code === '017')?.accounts || [];
+
+      if (recommendBanners.length > 4) {
+        setRecommendTopBanners(recommendBanners.splice(0, 4));
+        setRecommendBottomBanners(recommendBanners);
+      } else {
+        setRecommendTopBanners(recommendBanners);
+      }
+      setMiddleBanners(middleBanners);
+      setSlideBanners(slideBanners);
+      setEventBanners(eventBanners);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  const getDate = (data) => {
+    const date = data.split(' ')[0];
+    return `${changeDateFormat(date, 'YYYY.MM.DD')}`;
+  };
+
+  const splitStr = (str) => {
+    if (!str) return;
+    const strList = str.split('/');
+    return strList?.reduce((acc, string, index) => {
+      acc += index + 1 !== strList.length ? `${string}<br />` : string;
+      return acc;
+    }, '');
+  };
+  const trigger2 = useRef();
+  useEffect(() => {
+    document.body.style.position = 'fixed';
+  }, []);
+
+  useEffect(() => {
+    getBanners();
+    onScroll();
+  }, [getBanners]);
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay]);
 
+  const onScroll = () => {
+    const movingStart = trigger2.current.offsetTop;
+    Array(3)
+      .fill(null)
+      .forEach((_, index) => {
+        const scrollTo = movingStart * (index + 1);
+        const setTime = (time) => {
+          setTimeout(() => scrollScreen(scrollTo, index), 800 * time);
+        };
+        setTime(index + 1);
+      });
 
-    return(
-        <>
-                <Controller>
+    const scrollScreen = (top, index) => {
+      if (index === 0) {
+        document.body.style.position = 'static';
+      }
+      //
+      // controller.scrollTo(function () {
+      //   TweenMax.to(window, 0.5, { scrollTo: { y: top } });
+      // });
 
+      window.scrollTo({
+        top,
+        left: 0,
+        behavior: 'smooth',
+      });
+    };
+  };
+
+  return (
+    <>
+      <SEOHelmet title={'스토어 추천제품 : 추천제품'} />
+      <Controller>
         <div className="contents recommend">
-        <div className="container">
-  <div className="content">
-    <div className="reco">
-      {/* kv */}
-      <div className="reco_kv">
-        <div className={`reco_kv_inner ${isFinished == true && "end"}`}>
-          <Scene
-            triggerElement=".trigger-1"
-            duration={size.height * 0.4}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                to={{y: "300%"}}
-                paused
-              >
-                <div id="reco_kv_img-1" className={`reco_kv_img reco_kv_img-1 ${progress ==1  ? "end" : ""}`}><img src="/images/recommend/kv1.jpg" alt="분위기 잡는 사진 1" /></div>
-           </Tween>
-              )}
-          </Scene>
-          
-          <Scene
-            triggerElement=".trigger-2"
-            duration={size.height * 0.4}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                to={{y: "300%"}}
-                paused
-              >
-                <div id="reco_kv_img-2" className={`reco_kv_img reco_kv_img-2 ${progress > 0 ? "end" : ""}`}><img src="/images/recommend/kv2.jpg" alt="분위기 잡는 사진 2" /></div>
-           </Tween>
-              )}
-          </Scene>
+          <div className="container">
+            <div className="content">
+              <div className="reco">
+                {/* kv */}
+                {slideBanners && (
+                  <div className="reco_kv">
+                    <div className={`reco_kv_inner ${isFinished === true && 'end'}`}>
+                      <Controller>
+                        <Scene triggerElement=".trigger-1" duration={size.height * 1.6}>
+                          {(progress) => (
+                            <Tween duration={2} delay={2} totalProgress={progress} to={{ y: '300%' }} paused>
+                              <div
+                                id="reco_kv_img-1"
+                                className={`reco_kv_img reco_kv_img-1 ${progress === 1 ? 'end' : ''}`}
+                              >
+                                <img
+                                  src={slideBanners[0]?.banners[0]?.imageUrl}
+                                  alt={slideBanners[0]?.banners[0]?.name}
+                                />
+                              </div>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </Controller>
+                      <Controller>
+                        <Scene triggerElement=".trigger-2" duration={size.height * 1.6}>
+                          {(progress) => (
+                            <Tween duration={2} delay={2} totalProgress={progress} to={{ y: '300%' }} paused>
+                              <div
+                                id="reco_kv_img-2"
+                                className={`reco_kv_img reco_kv_img-2 ${progress > 0 ? 'end' : ''}`}
+                                ref={trigger2}
+                              >
+                                <img
+                                  src={slideBanners[1]?.banners[0]?.imageUrl}
+                                  alt={slideBanners[1]?.banners[0]?.name}
+                                />
+                              </div>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </Controller>
+                      <Controller>
+                        <Scene triggerElement=".trigger-3" duration={size.height * 1.6} delay={3}>
+                          {(progress) => (
+                            <Tween duration="2" delay="2" totalProgress={progress} paused>
+                              <div
+                                id="reco_kv_img-3"
+                                className={`reco_kv_img reco_kv_img-3 ${progress > 0 ? 'end' : ''}`}
+                              >
+                                <img
+                                  src={slideBanners[2]?.banners[0]?.imageUrl}
+                                  alt={slideBanners[2]?.banners[0]?.name}
+                                />
+                              </div>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </Controller>
+                      <Controller>
+                        <Scene triggerElement=".trigger-4" duration={size.height * 1.6}>
+                          {(progress) => (
+                            <Tween totalProgress={progress} paused>
+                              <div className={`reco_kv_copy ${progress > 0 ? 'end' : ''}`}>
+                                <h1
+                                  className="reco_kv_title"
+                                  dangerouslySetInnerHTML={{ __html: splitStr(slideBanners[2]?.banners[0]?.name) }}
+                                />
+                                <p
+                                  className="reco_kv_desc"
+                                  dangerouslySetInnerHTML={{
+                                    __html: splitStr(slideBanners[2]?.banners[0]?.description),
+                                  }}
+                                />
+                              </div>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </Controller>
+                      <Controller>
+                        <Scene triggerElement=".trigger-end">
+                          {(progress) => {
+                            setFinished(true);
+                            return <></>;
+                          }}
+                        </Scene>
+                      </Controller>
+                    </div>
 
-          <Scene
-            triggerElement=".trigger-3"
-            duration={size.height * 0.5}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                // to={{y: "300%"}}
-                paused
-              >
-                <div id="reco_kv_img-3" className={`reco_kv_img reco_kv_img-3 ${progress > 0 ? "end" : ""}`}><img src="/images/recommend/kv3.jpg" alt="분위기 잡는 사진 3" /></div>
-           </Tween>
-              )}
-          </Scene>
+                    <div className="trigger trigger-1" />
+                    <div className="trigger trigger-2" />
+                    <div className="trigger trigger-3" />
+                    <div className="trigger trigger-4" />
+                    <div className="trigger trigger-end" />
+                  </div>
+                )}
+                {/* //kv */}
+                {/* flex */}
+                <div className="reco_items">
+                  {recommendTopBanners?.map((bannerInfo, index) => (
+                    <div className="reco_item" key={index}>
+                      <div className="reco_item_inner">
+                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                          {(progress) => (
+                            <Tween duration={1} totalProgress={progress} paused>
+                              <Link
+                                to={bannerInfo.banners[0].landingUrl}
+                                target={bannerInfo?.banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                                className={`reco_prod ${progress === 1 && 'end'}`}
+                              >
+                                <img
+                                  src={bannerInfo.banners[0].imageUrl}
+                                  alt={bannerInfo.banners[0].name}
+                                  className="reco_prod_img"
+                                />
+                              </Link>
+                            </Tween>
+                          )}
+                        </Scene>
 
+                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                          {(progress) => (
+                            <Tween duration={1} totalProgress={progress} paused>
+                              <h2 className={`reco_title ${progress === 1 && 'end'}`}>{bannerInfo.banners[0].name}</h2>
+                            </Tween>
+                          )}
+                        </Scene>
 
-          <Scene
-            triggerElement=".trigger-4"
-            duration={size.height * 0.5}
-            >
-               {(progress) => (
-              <Tween        
-                duration={1}
-              >
-                <div className={`reco_kv_copy ${progress > 0 ? "end" : ""}`}>
-                  <h1 className="reco_kv_title">Sony Store<br />Products</h1>
-                  <p className="reco_kv_desc">당신의 삶을 특별하게 해줄 스마트한 <br />소니 스토어 추천 제품을 살펴보세요.</p>
+                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                          {(progress) => (
+                            <Tween duration={1} totalProgress={progress} paused>
+                              <p className={`reco_desc ${progress === 1 && 'end'}`}>
+                                {bannerInfo.banners[0].description}
+                              </p>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </div>
+                    </div>
+                  ))}
+
+                  <div
+                    className="reco_banner"
+                    style={{
+                      backgroundImage: `url(${middleBanners[0]?.banners[0]?.imageUrl})`,
+                      backgroundSize: '100%',
+                    }}
+                  >
+                    <Scene duration={size.height * 0.5} triggerHook={0.75}>
+                      {(progress) => (
+                        <Tween duration={1}>
+                          <div className={`reco_banner_img ${progress > 0 ? 'end' : ''}`}>
+                            <img
+                              src={middleBanners[0]?.banners[1]?.imageUrl}
+                              alt={middleBanners[0]?.banners[1]?.name}
+                            />
+                          </div>
+                        </Tween>
+                      )}
+                    </Scene>
+                  </div>
+
+                  {recommendBottomBanners.map((bannerInfo, index) => (
+                    <div className="reco_item" key={index}>
+                      <div className="reco_item_inner">
+                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                          {(progress) => (
+                            <Tween duration={1} totalProgress={progress} paused>
+                              <Link
+                                to={bannerInfo.banners[0].landingUrl}
+                                target={bannerInfo?.banners[0].browerTargetType === 'CURRENT' ? '_self' : '_blank'}
+                                className={`reco_prod ${progress === 1 && 'end'}`}
+                              >
+                                <img
+                                  src={bannerInfo.banners[0].imageUrl}
+                                  alt={bannerInfo.banners[0].name}
+                                  className="reco_prod_img"
+                                />
+                              </Link>
+                            </Tween>
+                          )}
+                        </Scene>
+
+                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                          {(progress) => (
+                            <Tween duration={1} totalProgress={progress} paused>
+                              <h2 className={`reco_title ${progress === 1 && 'end'}`}>{bannerInfo.banners[0].name}</h2>
+                            </Tween>
+                          )}
+                        </Scene>
+
+                        <Scene triggerElement=".reco_item_inner" duration={size.height * 0.5} triggerHook={0.75}>
+                          {(progress) => (
+                            <Tween duration={1} totalProgress={progress} paused>
+                              <p className={`reco_desc ${progress === 1 && 'end'}`}>
+                                {bannerInfo.banners[0].description}
+                              </p>
+                            </Tween>
+                          )}
+                        </Scene>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-           </Tween>
-               )}
-          </Scene>
-
-          <Scene
-            triggerElement=".trigger-end"
-            >
-             {(progress) => {
-               setFinished(true)
-               return <></>
-             }}
-          </Scene>
-        </div>
-
-        <div className="trigger trigger-1" />
-        <div className="trigger trigger-2" />
-        <div className="trigger trigger-3" />
-        <div className="trigger trigger-4" />
-        <div className="trigger trigger-end" />
-      
-      </div>
-      {/* //kv */}
-      {/* flex */}
-      <div className="reco_items">
-        <div className="reco_item">
-          <div className="reco_item_inner">
-            
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
-              <img src="/images/recommend/img1.jpg" alt="PS-LX310BT" className="reco_prod_img" />
-            </a>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <h2 className={`reco_title ${progress == 1 && "end"}`}>PS-LX310BT</h2>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <p className={`reco_desc ${progress == 1 && "end"}`}>간편하게 즐기는 바이닐 사운드</p>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#이벤트</a>
-            </div>
-           </Tween>
-              )}
-          </Scene>
-          </div>
-        </div>
-
-
-        
-        <div className="reco_item">
-          <div className="reco_item_inner">
-            
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
-              <img src="/images/recommend/img2.jpg" alt="WH-1000XM4/L" className="reco_prod_img" />
-            </a>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <h2 className={`reco_title ${progress == 1 && "end"}`}>WH-1000XM4/L</h2>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <p className={`reco_desc ${progress == 1 && "end"}`}>몰입을 넘어 소통까지</p>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#벗지 않는 헤드폰</a>
-            </div>
-           </Tween>
-              )}
-          </Scene>
-          </div>
-        </div>
- 
-        <div className="reco_item">
-          <div className="reco_item_inner">
-            
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
-                <img src="/images/recommend/img3.jpg" alt="WH-1000XM4/W" className="reco_prod_img" />
-            </a>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <h2 className={`reco_title ${progress == 1 && "end"}`}>WH-1000XM4/L</h2>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <p className={`reco_desc ${progress == 1 && "end"}`}>몰입을 넘어 소통까지</p>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#벗지 않는 헤드폰</a>
-            </div>
-           </Tween>
-              )}
-          </Scene>
-          </div>
-        </div>
-
-
-        <div className="reco_item">
-          <div className="reco_item_inner">
-            
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
-                <img src="/images/recommend/img4.jpg" alt="SRS-RA3000H" className="reco_prod_img" />
-            </a>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <h2 className={`reco_title ${progress == 1 && "end"}`}>SRS-RA3000H</h2>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <p className={`reco_desc ${progress == 1 && "end"}`}>어떤 공간이든 스며든다, 디퓨저 사운드 스피커</p>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#인테리어</a>
-            </div>
-           </Tween>
-              )}
-          </Scene>
-          </div>
-        </div>
-
-        <div className="reco_banner" style={{backgroundImage: 'url(/images/recommend/banner_bg.png)'}}>
-        <Scene
-            triggerElement=".trigger-banner_img"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-              >
-                 <div className={`reco_banner_img ${progress > 0 ? "end" : ""}`}>
-                  <img src="/images/recommend/banner_item.png" alt="WF-1000XM4/S,Sony Earphones,Silver" />
+                {/* //flex */}
+                {/* 기획전 슬라이드 */}
+                <div className="exhibitions_zone">
+                  <p className="title">진행중인 기획전</p>
+                  <div className="exhibitions_inner swiper-container swiper_none">
+                    <Swiper
+                      className="swiper-wrapper"
+                      navigation={{
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                      }}
+                      observer={true}
+                      resizeObserver={true}
+                      slidesPerView={2}
+                      spaceBetween={24}
+                      breakpoints={{
+                        320: {
+                          slidesPerView: 1,
+                          spaceBetween: 0,
+                        },
+                        641: {
+                          slidesPerView: 2,
+                          spaceBetween: 16,
+                        },
+                        1281: {
+                          slidesPerView: 2,
+                          spaceBetween: 24,
+                        },
+                      }}
+                    >
+                      {eventBanners.map((bannerInfo, index) => (
+                        <SwiperSlide className="swiper-slide" key={index}>
+                          <div className="slide_item">
+                            <Link to={bannerInfo.banners[0].landingUrl} className="item">
+                              <div className="img">
+                                <img src={bannerInfo.banners[0].imageUrl} alt="" />
+                              </div>
+                              <div className="event_desc">
+                                <p
+                                  className="tit"
+                                  dangerouslySetInnerHTML={{ __html: splitStr(bannerInfo?.banners[0]?.name) }}
+                                />
+                                <p className="event_duration">{`${getDate(
+                                  bannerInfo?.banners[0]?.displayStartYmdt,
+                                )} ~ ${
+                                  bannerInfo?.banners[0]?.displayPeriodType === 'PERIOD'
+                                    ? getDate(bannerInfo?.banners[0]?.displayEndYmdt)
+                                    : '재고 소진 시'
+                                }`}</p>
+                              </div>
+                            </Link>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                    <div className="arrow_btn">
+                      <a className="arrow swiper-button-prev">
+                        <img src={arrow} alt="이전" />
+                      </a>
+                      <a className="arrow swiper-button-next">
+                        <img src={arrow} alt="다음" />
+                      </a>
+                    </div>
+                  </div>
                 </div>
-           </Tween>
-               )}
-        </Scene>
-        </div>
-
-
-        <div className="reco_item">
-          <div className="reco_item_inner">
-            
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
-                <img src="/images/recommend/img5.jpg" alt="WF-1000XM4/S" className="reco_prod_img" />
-            </a>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <h2 className={`reco_title ${progress == 1 && "end"}`}>WF-1000XM4/S</h2>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <p className={`reco_desc ${progress == 1 && "end"}`}>새로운 차원의 몰입을 경험하다</p>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#노이즈캔슬링</a>
-            </div>
-           </Tween>
-              )}
-          </Scene>
-          </div>
-        </div>
-
-        <div className="reco_item">
-          <div className="reco_item_inner">
-            
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
-                <img src="/images/recommend/img6.jpg" alt="WF-1000XM4/B" className="reco_prod_img" />
-            </a>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <h2 className={`reco_title ${progress == 1 && "end"}`}>WF-1000XM4/S</h2>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <p className={`reco_desc ${progress == 1 && "end"}`}>새로운 차원의 몰입을 경험하다</p>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#노이즈캔슬링</a>
-            </div>
-           </Tween>
-              )}
-          </Scene>
-          </div>
-        </div>
-
-        <div className="reco_item">
-          <div className="reco_item_inner">
-            
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-                <a  onClick={()=>{history.push('/product-view/1')}} className={`reco_prod ${progress == 1 && "end"}`}>
-                <img src="/images/recommend/img7.jpg" alt="WH-1000XM4/W" className="reco_prod_img" />
-            </a>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <h2 className={`reco_title ${progress == 1 && "end"}`}>WH-1000XM4/L</h2>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <p className={`reco_desc ${progress == 1 && "end"}`}>몰입을 넘어 소통까지</p>
-           </Tween>
-              )}
-          </Scene>
-
-          <Scene
-            triggerElement="reco_item_inner"
-            duration={size.height * 0.5}
-            triggerHook={0.75}
-            >
-              {(progress) => (
-              <Tween        
-                duration={1}
-                totalProgress={progress}
-                paused
-              >
-            <div className={`reco_hashes ${progress == 1 && "end"}`}>
-              <a  onClick={()=>{history.push('/product-view/1')}} className="reco_hash">#벗지 않는 헤드폰</a>
-            </div>
-           </Tween>
-              )}
-          </Scene>
-          </div>
-        </div>
-
-      </div>
-      {/* //flex */}
-      {/* 기획전 슬라이드 */}
-      <div className="exhibitions_slider swiper-container">
-      <Swiper className="swiper-wrapper"
-       navigation = {{
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      }}
-      >
-          <SwiperSlide className="swiper-slide">
-          <div class="exhibitions_box" style={{background:`url('/images/product/banner_thumb_01.png') no-repeat center top`}}>
-              <img className="bg_img" src="/images/product/banner_thumb_01.png" alt="" />
-              <div className="txt_box">
-                <span className="tag" style={{color: '#5865f5'}}>기획전</span>
-                <p className="tit">원핸드 컴팩트 풀프레임<br />G 렌즈 예약판매</p>
               </div>
             </div>
-          </SwiperSlide>
-          <SwiperSlide className="swiper-slide">
-          <div class="exhibitions_box" style={{background:`url('/images/product/banner_thumb_01.png') no-repeat center top`}}>
-              <div className="txt_box">
-                <span className="tag" style={{color: '#5865f5'}}>기획전</span>
-                <p className="tit">원핸드 컴팩트 풀프레임<br />G 렌즈 예약판매</p>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide className="swiper-slide">
-          <div class="exhibitions_box" style={{background:`url('/images/product/banner_thumb_01.png') no-repeat center top`}}>
-              <div className="txt_box">
-                <span className="tag" style={{color: '#5865f5'}}>기획전</span>
-                <p className="tit">원핸드 컴팩트 풀프레임<br />G 렌즈 예약판매</p>
-              </div>
-            </div>
-          </SwiperSlide>
-          </Swiper>
-        <div className="arrow_btn">
-          <a className="arrow swiper-button-prev"><img src="/images/common/arrow_19_34.png" alt="이전" /></a>
-          <a className="arrow swiper-button-next"><img src="/images/common/arrow_19_34.png" alt="다음" /></a>
+          </div>
         </div>
-        <div className="swiper-pagination" />
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</Controller>
-
-        </>
-    )
+      </Controller>
+    </>
+  );
 }

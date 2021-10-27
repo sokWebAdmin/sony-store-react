@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko" class="app mobile">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msapplication-TileImage" content="../images/favicon_144x144.png">
+<title>PUSH 알림 메시지함</title>
+<link rel="shortcut icon" href="../images/favicon_144x144.png">
+<link rel="stylesheet" href="../css/app.css">
+<script src="../lib/js/jquery-3.6.0.min.js"></script>
+<script src="../js/ux-common.js"></script>
+</head>
+<body>
+<div class="wrapper">
+  <div class="container" id="container">
+    <div class="app_head">
+      <a href="#" class="back_btn">뒤로 가기</a>
+      <h1 class="app_head_tit">PUSH 알림 메시지함</h1>
+    </div>
+    <div class="app_guide">
+      <ul class="list_dot">
+        <li>최근 14일간의 메시지 입니다.</li>
+        <li>과거 내용이므로 현재와 상이할 수 있습니다.</li>
+        <li>운영정책에 따라 예고 없이 삭제 될 수 있습니다.</li>
+      </ul>
+    </div>
+    <!-- 없는 경우 -->
+    <div class="app_push_inner" style="display:none;"><!-- display: none block; -->
+      <p class="ico_box_tit">
+        <i class="ico_none_list"></i>
+        <strong class="ico_tit">조회 내역이 존재하지 않습니다.</strong>
+      </p>
+    </div>
+    <!-- 있는 경우 -->
+    <div class="app_push_inner" ><!-- display: none block; -->
+      <ul class="app_push_list">
+        <li class="lists">
+          <span class="category">공지</span>
+          <strong class="tit">추석 연휴 소니스토어 압구정 휴무 안내</strong>
+          <span class="duration">21.04.08 ~ 21.05.31</span>
+        </li>
+        <li class="lists">
+          <span class="category">이벤트</span>
+          <strong class="tit">8월 14일은 뮤직데이 뮤직데이기념 SALE 위크</strong>
+          <span class="duration">21.04.08 ~ 21.05.31</span>
+        </li>
+        <li class="lists">
+          <span class="category">이벤트</span>
+          <strong class="tit">메가스터디와 함께하는 주간완전학습 플래너 증정 이벤트</strong>
+          <span class="duration">21.04.08 ~ 21.05.31</span>
+        </li>
+      </ul>
+      <div class="btn_article comm_more line"><!-- 목록이 없을 경우 숨김 처리 -->
+        <a href="#" class="more_btn" title="기획전 더보기">더보기</a>
+      </div>
+    </div>
+  </div>
+  <div class="appnavbar">
+    <div class="appnavbar_inner">
+      <a href="#" class="appnavbar_btn ios"><img src="../images/app/btn_arrow.svg" alt="뒤로 가기"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_home.svg" alt="홈"></a>
+      <a href="#" class="appnavbar_btn android"><img src="../images/app/btn_menu.svg" alt="메뉴"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_cart.svg" alt="장바구니"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_shipping.svg" alt="주문/배송"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_my.svg" alt="마이메뉴"></a>
+    </div>
+  </div>  <footer class="footer">
+    <nav class="sidebar">
+      <div class="sidebar__inner">
+        <a href="../html/mypage/myPageMain.html" class="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
+        <a href="#" class="sidebar__btn sidebar__btn__link customer"><span>고객 센터</span></a>
+        <a href="#header" class="sidebar__btn top"><span>페이지 상단</span></a>
+      </div>
+      <button class="sidebar__btn sidebar__btn__toggle" type="button"><img src="../images/common/ic_sidebar1.svg" alt="메뉴토글"></button>
+    </nav>
+    <div class="footer__inner">
+      <div class="footer__social__wrap">
+        <div class="footer__social">
+          <h3 class="footer__social__title">FOLLOW US</h2>
+          <div class="footer__social__links">
+            <a href="#" class="footer__social__link"><img src="../images/common/ic_facebook.svg" alt="facebook"></a>
+            <a href="#" class="footer__social__link"><img src="../images/common/ic_instagram.svg" alt="instagram"></a>
+            <a href="#" class="footer__social__link"><img src="../images/common/ic_youtube.svg" alt="youtube"></a>
+            <a href="#" class="footer__social__link"><img src="../images/common/ic_blog.svg" alt="blog"></a>
+          </div>
+        </div>
+        <div class="footer__family">
+          <div class="footer__family__links">
+            <div class="footer__family__link footer__pc">
+              <button type="button" class="footer__family__link__trigger" aria-label="소니코리아 계열사 목록 펼침">Sony Family</button>
+              <div class="footer__family__link__inner">
+                <h4 class="optgroup__label">Sony Family</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니코리아 고객지원</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 알파 α</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송/업무용 솔루션</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 방송 업무용 솔루션 고객지원</a></li>
+                </ul>
+                <h4 class="optgroup__label">Family Company</h4>
+                <ul class="optgroup">
+                  <li class="option"><a href="#" target="_blank">소니 인터렉티브 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 뮤직 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 ATV 뮤직 퍼블리싱 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 엔터테인먼트 코리아</a></li>
+                  <li class="option"><a href="#" target="_blank">소니 픽쳐스 텔레비전 코리아</a></li>
+                </ul>
+              </div>
+            </div>
+            <select class="footer__family__link footer__mo">
+              <optgroup label="Sony Family">
+                <option>소니코리아</option>
+                <option>소니코리아 고객지원</option>
+                <option>소니 알파 α</option>
+                <option>소니 방송/업무용 솔루션</option>
+                <option>소니 방송 업무용 솔루션 고객지원</option>
+              </optgroup>
+              <optgroup label="Family Company">
+                <option>소니 인터렉티브 엔터테인먼트 코리아</option>
+                <option>소니 뮤직 엔터테인먼트 코리아</option>
+                <option>소니 ATV 뮤직 퍼블리싱 코리아</option>
+                <option>소니 픽쳐스 엔터테인먼트 코리아</option>
+                <option>소니 픽쳐스 텔레비전 코리아</option>
+              </optgroup>
+            </select>
+          </div>
+          <a href="https://www.sony.com/" class="footer__family__global" target="_blank">Sony Global</a>
+        </div>
+      </div>
+      <div class="footer__legal">
+        <div class="footer__legal__links">
+          <a href="../html/footer/terms.html" class="footer__legal__link">이용약관</a>
+          <a href="../html/footer/policy.html" class="footer__legal__link privacy">개인정보처리방침</a>
+          <a href="javascript:openModal('modal__customer__insurance');" class="footer__legal__link" data-modal-target="modal__customer__insurance">소비자 피해 보상보험</a>
+          <a href="../html/footer/siteMap.html" class="footer__legal__link">사이트맵</a>
+        </div>
+        <div class="footer__legal__warning">
+          <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
+          <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a class="escrow" href="https://mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat" target="_blank">클릭하시면 이니시스 결제시스템의 유효성을 확인하실 수 있습니다.</a></p>
+        </div>
+      </div>
+      <address class="address">
+        <span>사업장주소 : 서울특별시 영등포구 국제금융로 10 원아이에프씨 24F</span>
+        <span>사업자 등록번호 : 106-81-23810 통신판매번호 2012-서울영등포-1038 소니코리아㈜</span>
+        <span>대표이사 : Okura Kikuo</span>
+        <span>개인정보관리책임자 : Okura Kikuo</span>
+        <span>TEL : 소니코리아 고객센터 1588-0911</span>
+        <span>E-MAIL : <a href="mailto:cshelp@sony.co.kr">cshelp@sony.co.kr</a></span>
+        <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
+      </address>
+    </div>
+  </footer>
+  
+  <!-- 소비자피해보상 보험 팝업 -->
+  <div class="layer modal__customer__insurance">
+    <div class="layer_wrap">
+      <div class="layer_container">
+        <div class="layer_title">
+          <h1>소비자피해보상보험</h1>
+        </div>
+        <div class="layer_content">
+          <div class="consumer_logo">
+            <img src="../images/img_consumerlogo.png">
+          </div>
+          <p>고객님은 안전거래를 위해 현금 결제 시 저희 쇼핑몰이 가입한 구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.</p>
+          <p>보상대상 : 미배송&#47;반품, 환불거부&#47;쇼핑몰부도</p>
+          <div class="btn_box">
+            <a href="https://mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810" target="_blank" title="새창열림">서비스 가입 사실 확인하기</a>
+          </div>
+        </div>
+        <button href="#" class="layer_close close" title="팝업창 닫기">
+          <span>팝업창 닫기</span>
+      </button>
+      </div>
+    </div>
+  </div>
+  <!--// 소비자피해보상 보험 팝업 -->
+  
+  <script>
+       //팝업 열기
+      function openModal(modalname) {
+          $("." + modalname).fadeIn(300);
+          $("body,html").css({"overflow":"hidden"});
+          return false;
+      }
+      // 팝업 닫기
+      $(document).ready(function(){
+        $layer = $(".layer");
+  
+        $('.close').click(function() {
+            $layer.fadeOut(300);
+            $('body,html').css({"overflow":"visible"});
+        });
+      });
+  </script></div>
+
+</body>
+</html>

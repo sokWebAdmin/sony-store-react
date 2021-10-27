@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56">
+    <defs>
+        <style>
+            .cls-2,.cls-3{fill:none}.cls-3{stroke:#222;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="ic_delivery" transform="translate(-2585.943 -3534.35)">
+        <g id="_2" data-name="2" transform="translate(1348.414 2502.086)">
+            <g id="그룹_6820" data-name="그룹 6820" transform="translate(-2.471)">
+                <path id="사각형_1985" data-name="사각형 1985" class="cls-2" transform="translate(1262 1062.264)" d="M0 0h32v13H0z"/>
+                <path id="패스_2245" data-name="패스 2245" class="cls-3" d="M1263 1070.672v-22.606h-9.02L1242 1065v8.505h6.638" transform="translate(0 1)"/>
+                <g id="타원_12011" data-name="타원 12011" transform="translate(1263 1063.264)">
+                    <path id="패스_2246" data-name="패스 2246" class="cls-3" d="M1284.529 1073.264h5v-11h-30v11h13" transform="translate(-1259.529 -1062.264)"/>
+                    <circle id="타원_12019" data-name="타원 12019" class="cls-3" cx="6" cy="6" r="6" transform="translate(13 5)"/>
+                </g>
+                <g id="타원_12011-2" data-name="타원 12011" transform="translate(1249.529 1068.264)">
+                    <circle id="타원_12020" data-name="타원 12020" class="cls-3" cx="6" cy="6" r="6"/>
+                </g>
+                <g id="사각형_1965" data-name="사각형 1965" transform="translate(1262 1040.264)">
+                    <path id="사각형_1986" data-name="사각형 1986" class="cls-2" d="M0 0h32v23H0z"/>
+                    <path id="사각형_1987" data-name="사각형 1987" transform="translate(1 1)" style="stroke:#5865f5;stroke-width:2px;fill:none" d="M0 0h30v22H0z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

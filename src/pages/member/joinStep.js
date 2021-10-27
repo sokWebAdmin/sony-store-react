@@ -1,31 +1,43 @@
-import { React, useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
 //api
-import {registerApi} from '../../api/sony/member';
-import {sendSMS, verifySMS} from '../../api/util';
+import { registerApi } from '../../api/sony/member';
+import { loginApi, sendSMS, verifySMS } from '../../api/auth';
 
 //css
-import "../../assets/scss/contents.scss"
+import '../../assets/scss/contents.scss';
 
 //utils
-import { emptyCheck, tokenValidation } from '../../utils/utils';
-import { useHistory } from "react-router-dom";
+import { emptyCheck, timeFormat } from '../../utils/utils';
+import { useHistory, useLocation } from 'react-router-dom';
+import { getUrlParam } from '../../utils/location';
 
 //context
 import GlobalContext from '../../context/global.context';
-
+import Alert from '../../components/common/Alert';
+import { getItem, KEY, setAccessToken } from '../../utils/token';
+import {
+  fetchMyProfile,
+  fetchProfile,
+  setProfile,
+  useProfileState,
+  useProileDispatch,
+} from '../../context/profile.context';
+import { getProfile } from '../../api/member';
 
 export default function JoinStep() {
-  const {shopByToken} = useContext(GlobalContext)
+  const { onChangeGlobal, isLogin } = useContext(GlobalContext);
+  const profileDispatch = useProileDispatch();
+  const { profile } = useProfileState();
 
   const history = useHistory();
+  const location = useLocation();
 
   const [isPwVisible, setPwVisible] = useState(false);
   const [isConfirmVisible, setConfirmVisible] = useState(false);
-
 
   //state
   const [email, setEmail] = useState('');
@@ -33,6 +45,7 @@ export default function JoinStep() {
   const [confirm, setConfirm] = useState('');
   const [name, setName] = useState('');
   const [birthday, setBirthday] = useState('');
+  const [gender, setGender] = useState('2');
   const [phone, setPhone] = useState('');
   const [authSent, setAuthSent] = useState(false);
   const [authCode, setAuthCode] = useState('');
@@ -57,15 +70,38 @@ export default function JoinStep() {
   const [authWrongType, setAuthWrongType] = useState('');
 
   //timer
-  const [time, setTime] = useState(179)
+  const [time, setTime] = useState(179);
   const [expireAt, setExpireAt] = useState('');
 
-  const _registerApi = async() =>{
+  // alert
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertCloseFunc, setAlertCloseFun] = useState(null);
+
+  const openAlert = (message, onClose) => {
+    setAlertVisible(true);
+    setAlertMessage(message);
+    setAlertCloseFun(onClose);
+  };
+  const closeModal = () => {
+    setAlertVisible(false);
+    alertCloseFunc?.();
+  };
+
+  const getSnsInfo = () => {
+    const provider = getItem(KEY.OPENID_PROVIDER);
+
+    if (!provider || getUrlParam('sns') !== 'true') return null;
+    return provider.substring(0, 1).toUpperCase();
+  };
+
+  const onChangeGender = (e) => setGender(e.target.value);
+  const _registerApi = async () => {
     //이메일
-    if(emptyCheck(email.trim())){
+    if (emptyCheck(email.trim())) {
       setIsEmail(false);
       return;
-    } else{
+    } else {
       //email check 
       if (email.match(/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/g)) {
         setIsEmail(true);
@@ -74,16 +110,24 @@ export default function JoinStep() {
         return;
       }
     }
-    
+
     //비밀번호
-    if(emptyCheck(password.trim())){
+    if (emptyCheck(password.trim())) {
       setPwWrongType(1);
       setIsPassword(false);
       return;
-    }else{
-      if(password.match(/^[a-zA-Z0-9]{8,20}$/)){
+    } else {
+      const patternNumber = /[0-9]/g;
+      const patternEnglish = /[a-zA-Z]/g;
+      const patternSpecial = /[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]/g;
+
+      const checkNumber = patternNumber.test(password) ? 1 : 0;
+      const checkEnglish = patternEnglish.test(password) ? 1 : 0;
+      const checkSpecial = patternSpecial.test(password) ? 1 : 0;
+      const checkSum = checkNumber + checkEnglish + checkSpecial;
+      if (checkSum === 3 && password.length >= 12) {
         setIsPassword(true);
-      } else{
+      } else {
         setPwWrongType(2);
         setIsPassword(false);
         return;
@@ -91,37 +135,36 @@ export default function JoinStep() {
     }
 
     //비밀번호 확인
-    if(emptyCheck(confirm.trim())){
+    if (emptyCheck(confirm.trim())) {
       setConfirmWrongType(1);
       setIsConfirm(false);
       return;
-    }else{
-      if(password.trim() == confirm.trim()){
+    } else {
+      if (password.trim() == confirm.trim()) {
         setIsConfirm(true);
-      }else{
+      } else {
         setConfirmWrongType(2);
-        setIsConfirm(false); 
-      }      
+        setIsConfirm(false);
+      }
     }
 
     //이름
-    if(emptyCheck(name.trim())){
+    if (emptyCheck(name.trim())) {
       setIsName(false);
       return;
-    }
-    else{
+    } else {
       setIsName(true);
     }
 
     //생년월일
-    if(emptyCheck(birthday.trim())){
+    if (emptyCheck(birthday.trim())) {
       setBirthdayWrongType(1);
       setIsBirthday(false);
       return;
-    }else{
-      if(birthday.match(/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/)){
+    } else {
+      if (birthday.match(/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/)) {
         setIsBirthday(true);
-      } else{
+      } else {
         setBirthdayWrongType(2);
         setIsBirthday(false);
         return;
@@ -129,14 +172,14 @@ export default function JoinStep() {
     }
 
     //휴대폰 번호
-    if(emptyCheck(phone)){
+    if (emptyCheck(phone)) {
       setPhoneWrongType(1);
       setIsPhone(false);
       return;
-    }else{
-      if(phone.match(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g)){
+    } else {
+      if (phone.match(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g)) {
         setIsPhone(true);
-      } else{
+      } else {
         setPhoneWrongType(2);
         setIsPhone(false);
         return;
@@ -144,257 +187,325 @@ export default function JoinStep() {
     }
 
     //authCheck
-    if(authCheck !== true) {
-      alert("휴대폰 인증을 해주세요.");
+    if (authCheck !== true) {
+      openAlert('휴대폰 인증을 해주세요.');
       return;
     }
 
     //final
     const data = {
-      customerid : email,
-      custcategory: "01",
-      gender: "1",
+      customerid: email,
+      custcategory: '01',
+      gender,
       firstname: name,
-      mobile: phone.replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-"),
+      mobile: phone.replace(/[^0-9]/g, '').replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/, '$1-$2-$3').replace('--', '-'),
       birthday: birthday,
       email: email,
-      viasite: "SonyStyle",
-      sms:"N",
-      mobileflag: "N",
-      servicesite: {mallid:"SonyStyle", news:"N", snsinfo:""},
-      password : password,
-    }
+      viasite: 'SonyStyle',
+      sms: getUrlParam('sms') === 'true' ? 'Y' : 'N',
+      mobileflag: 'N',
+      servicesite: {
+        news: getUrlParam('email') === 'true' ? 'Y' : 'N',
+        snsinfo: getSnsInfo() ?? null,
+      },
+      password: password,
+    };
 
     const response = await registerApi(data);
-    console.log(JSON.stringify(data).trim())
-    if(response.status == 200){
-      console.log(response.data)
-      if(response.data.errorCode == "0000"){
+    if (response.status === 200) {
+      if (response.data.errorCode === '0000') {
         //성공
-        alert("회원가입이 완료되었습니다.")
-        history.push("/member/login")
-      } else{
-        alert(response.data.errorMessage)
-        return;
+        openAlert('회원가입이 완료되었습니다.', async () => {
+          const response = await loginApi(email, password);
+          console.log(response);
+          if (response.status === 200) {
+            const { accessToken, expireIn } = response.data;
+            setAccessToken(accessToken, expireIn);
+            onChangeGlobal({ isLogin: true });
+            const profile = await getProfile();
+            const data = { type: '30', customerid: profile.data.memberId };
+            setProfile(profileDispatch, profile.data);
+            await fetchMyProfile(profileDispatch, data);
+            history.replace('/');
+          } else {
+            history.push('/member/login');
+          }
+        });
+      } else {
+        openAlert(response.data.errorMessage);
       }
     }
-  }
+  };
 
-  const _sendSMS = async(phoneNum) => {
-    const response = await sendSMS(phoneNum, "JOIN");
-    /**
-     * temp
-     */
-    if(response.status == 200){
-      console.log(response)
+  const _sendSMS = async (phoneNum) => {
+    const response = await sendSMS(phoneNum, 'JOIN');
+    if (response.status === 200) {
       //발송성공
       setAuthSent(true);
-    } else{
-      alert(response.data.message);
+    } else {
+      openAlert(response.data.message);
     }
-  }
+  };
 
-  const _verifySMS = async(phoneNum, code) => {
-    const response = await verifySMS(phoneNum, code, "JOIN");
-    if(response.status == 200){
+  const _verifySMS = async (phoneNum, code) => {
+    const response = await verifySMS(phoneNum, code, 'JOIN');
+    if (response.status === 200) {
       //인증성공
       setAuthCheck(true);
-      } else{
-      alert(response.data.message);
+      openAlert('인증되었습니다.');
+    } else {
+      openAlert(response.data.message);
     }
-  }
-
-  useEffect(()=>{
-    if(phone.match(/^\d{2,3}\d{3,4}\d{4}$/)){
-      setAuthAvailable(true);
-    } else{
-      setAuthAvailable(false);
-    }
-  },[phone])
+  };
 
   useEffect(() => {
-    if(authSent === true){
+    if (phone.match(/^\d{2,3}\d{3,4}\d{4}$/)) {
+      setAuthAvailable(true);
+    } else {
+      setAuthAvailable(false);
+    }
+  }, [phone]);
+
+  useEffect(() => {
+    if (authSent === true) {
       if (time > 0) {
         const Counter = setInterval(() => {
-          const gap = Math.floor((new Date(expireAt).getTime() - new Date().getTime()) / 1000)
-          setTime(gap)
-        }, 1000)
-        return () => clearInterval(Counter)
+          const gap = Math.floor((new Date(expireAt).getTime() - new Date().getTime()) / 1000);
+          setTime(gap);
+        }, 1000);
+        return () => clearInterval(Counter);
       }
     }
-  }, [expireAt, time, authSent])
+  }, [expireAt, time, authSent]);
 
-  //componentDidMount
-  useEffect(()=>{
-    //로그인 상태인 경우, 메인화면으로 자동 이동처리
-    console.log(shopByToken)
-    if(shopByToken !== undefined && shopByToken !== ''){
-      //valid check
-      if(tokenValidation(shopByToken)){
-        history.push("/")
-      }
+  useEffect(() => {
+    if (!location.state?.agree) {
+      history.push('/member/join-agree');
     }
-  },[shopByToken])
+    if (isLogin) {
+      history.push('/');
+      return;
+    }
+    const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
+    const redirectedToken = getItem(KEY.OPENID_TOKEN);
+    if (redirectedProvider && redirectedToken) {
+      setEmail(location.state.email);
+    }
+  }, []);
 
-
-  const timeFormat = (time) => {
-    const m = Math.floor(time / 60).toString()
-    let s = (time % 60).toString()
-    if (s.length === 1) s = `0${s}`
-    return `${m}:${s}`
-  }
-
-    return (
-        <>
-        <SEOHelmet title={"소니코리아 회원가입"} />
-        <div className="contents">
-          <div className="container" id="container">
-            <div className="login join_step">
-              <h2 className="login__title">회원가입</h2>
-              <p className="login__desc">소니코리아 통합 웹회원 정책 상 공식적으로 <strong>만 14세 미만의 경우 회원가입이 불가합니다.</strong></p>
-              <div className="join_inp_box">
-                <div className={`group ${isEmail === false && "error"}`}>
+  return (
+    <>
+      <SEOHelmet title={'소니코리아 회원가입'} />
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
+      <div className="contents">
+        <div className="container" id="container">
+          <div className="login join_step">
+            <h2 className="login__title">회원가입</h2>
+            <p className="login__desc">소니코리아 통합 웹회원 정책 상 공식적으로 <strong>만 14세 미만의 경우 회원가입이 불가합니다.</strong></p>
+            <div className="join_inp_box">
+              <div className={`group ${isEmail === false && 'error'}`}>
+                <div className="inp_box">
+                  <label className="inp_desc" htmlFor="loginName">
+                    <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off"
+                           readOnly={location.state.email}
+                           value={email} onChange={(e) => {
+                      setEmail(e.target.value);
+                    }} />
+                    <span className="label">이메일 아이디<span>(예 : sony@sony.co.kr)</span></span>
+                    <span className="focus_bg" />
+                  </label>
+                </div>
+                <div className="error_txt"><span className="ico" />이메일 아이디를 입력해 주세요.</div>
+              </div>
+              {!location.state?.email && <>
+                <div className={`group ${isPassword === false && 'error'}`}>
+                  <div className="inp_box password_box">
+                    <label className="inp_desc" htmlFor="loginPw1">
+                      <input type={`${isPwVisible === true ? 'text' : 'password'}`} id="loginPw1" className="inp"
+                             placeholder=" " autoComplete="off" value={password} onChange={(e) => {
+                        setPassword(e.target.value);
+                      }} />
+                      <span className="label">비밀번호<span>(대/소문자, 숫자, 특수문자 3종 포함 12~15자리 미만)</span></span>
+                      <span className="focus_bg" />
+                      <div className="eyes">
+                        <button type="button" title="비밀번호 숨김" onClick={() => {
+                          setPwVisible(!isPwVisible);
+                        }}><i className={isPwVisible ? 'ico_eyes_open' : 'ico ico_eyes'} /></button>
+                      </div>
+                    </label>
+                  </div>
+                  <div className="error_txt"><span
+                    className="ico" />{pwWrongType == 1 ? '비밀번호를 입력해 주세요.' : '비밀번호 형식이 맞지 않습니다.'}</div>
+                </div>
+                <div className={`group ${isConfirm === false && 'error'}`}>
+                  <div className="inp_box password_box">
+                    <label className="inp_desc" htmlFor="loginPw2">
+                      <input type={`${isConfirmVisible === true ? 'text' : 'password'}`} id="loginPw2" className="inp"
+                             placeholder=" " autoComplete="off" value={confirm} onChange={(e) => {
+                        setConfirm(e.target.value);
+                      }} />
+                      <span className="label">비밀번호 확인</span>
+                      <span className="focus_bg" />
+                      <div className="eyes">
+                        <button type="button" title="비밀번호 숨김" onClick={() => {
+                          setConfirmVisible(!isConfirmVisible);
+                        }}><i className={isConfirmVisible ? 'ico_eyes_open' : 'ico ico_eyes'} /></button>
+                      </div>
+                    </label>
+                  </div>
+                  <div className="error_txt"><span
+                    className="ico" />{confirmWrongType == 1 ? '비밀번호를 재입력 해주세요.' : '비밀번호와 확인이 같지 않습니다.'}</div>
+                </div>
+              </>}
+              <div className="rowgroup">
+                <div className={`group ${isName === false && 'error'}`}>
                   <div className="inp_box">
-                    <label className="inp_desc" htmlFor="loginName">
-                      <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off" tabIndex={1} value={email} onChange={(e)=>{ setEmail(e.target.value) }} />
-                      <span className="label">이메일 아이디<span>(예 : sony@sony.co.kr)</span></span>
+                    <label className="inp_desc" htmlFor="username">
+                      <input type="text" id="username" className="inp" placeholder=" " autoComplete="off"
+                             value={name}
+                             onChange={(e) => {
+                               const value = e.target.value.toString();
+                               const name = value.replace(/[^a-zA-Zㄱ-힣]/g, '');
+                               setName(name);
+                             }} />
+                      <span className="label">이름<span>(띄어쓰기 없이 입력하세요.)</span></span>
                       <span className="focus_bg" />
                     </label>
                   </div>
-                  <div className="error_txt"><span className="ico" />이메일 아이디를 입력해 주세요.</div>
+                  <div className="error_txt"><span className="ico" />이름을 입력해 주세요.</div>
                 </div>
-                <div className="rowgroup">
-                  <div className={`group ${isPassword === false && "error"}`}>
-                    <div className="inp_box password_box">
-                      <label className="inp_desc" htmlFor="loginPw1">
-                        <input type={`${isPwVisible === true ? "text" : "password"}`} id="loginPw1" className="inp" placeholder=" " autoComplete="off" tabIndex={2} value={password} onChange={(e)=>{ setPassword(e.target.value) }} />
-                        <span className="label">비밀번호<span>(영문/숫자 조합 10~15자리 미만)</span></span>
-                        <span className="focus_bg" />
-                        <div className="eyes"><button type="button" title="비밀번호 숨김" onClick={()=>{
-                          setPwVisible(!isPwVisible);
-                        }}><i className="ico ico_eyes" /></button></div>
-                      </label>
-                    </div>
-                    <div className="error_txt"><span className="ico" />{pwWrongType == 1 ? "비밀번호를 입력해 주세요." : "비밀번호 형식이 맞지 않습니다."}</div>
-                  </div>
-                  <div className={`group ${isConfirm === false && "error"}`}>
-                    <div className="inp_box password_box">
-                      <label className="inp_desc" htmlFor="loginPw2">
-                        <input type={`${isConfirmVisible === true ? "text" : "password"}`} id="loginPw2" className="inp" placeholder=" " autoComplete="off" tabIndex={3} value={confirm} onChange={(e)=>{ setConfirm(e.target.value) }} />
-                        <span className="label">비밀번호 확인</span>
-                        <span className="focus_bg" />
-                        <div className="eyes"><button type="button" title="비밀번호 숨김" onClick={()=>{
-                          setConfirmVisible(!isConfirmVisible);
-                        }}><i className="ico ico_eyes" /></button></div>
-                      </label>
-                    </div>
-                    <div className="error_txt"><span className="ico" />{confirmWrongType == 1 ? "비밀번호를 재입력 해주세요." : "비밀번호와 확인이 같지 않습니다."}</div>
-                  </div>
-                </div>
-                <div className="rowgroup">
-                  <div className={`group ${isName === false && "error"}`}>
-                    <div className="inp_box">
-                      <label className="inp_desc" htmlFor="username">
-                        <input type="text" id="username" className="inp" placeholder=" " autoComplete="off" tabIndex={4} value={name} onChange={(e)=>{ setName(e.target.value) }} />
-                        <span className="label">이름<span>(띄어쓰기 없이 입력하세요.)</span></span>
-                        <span className="focus_bg" />
-                      </label>
-                    </div>
-                    <div className="error_txt"><span className="ico" />이름을 입력해 주세요.</div>
-                  </div>
-                  <div className={`group ${isBirthday === false && "error"}`}>
-                    <div className="inp_box">
-                      <label className="inp_desc" htmlFor="userbirth">
-                        <input type="text" id="userbirth" className="inp" placeholder=" " value={birthday} onChange={(e)=>{ setBirthday(e.target.value) }} />
-                        <span className="label">생년월일<span>(예 : 20210307)</span></span>
-                        <span className="focus_bg" />
-                      </label>
-                    </div>
-                    <div className="error_txt"><span className="ico" />{birthdayWrongType == 1 ? "생년월일을 입력해주세요." : "생년월일 형식이 맞지 않습니다."}</div>
-                  </div>
-                </div>
-                <div className={`group btn_type ${isPhone === false && "error"}`}>
+                <div className={`group ${isBirthday === false && 'error'}`}>
                   <div className="inp_box">
-                    <label className="inp_desc" htmlFor="phonenumber">
-                      <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off" tabIndex={5} value={phone} onChange={(e)=>{ setPhone(e.target.value) }} readOnly={authSent ? true : false}  />
-                      <span className="label">휴대폰 번호<span>(-없이 입력하세요.)</span></span>
+                    <label className="inp_desc" htmlFor="userbirth">
+                      <input type="text" id="userbirth" className="inp" placeholder=" " value={birthday}
+                             onChange={(e) => {
+                               const value = e.target.value.toString();
+                               const birthday = value.replace(/[^0-9]/g, '');
+                               setBirthday(birthday);
+                             }} />
+                      <span className="label">생년월일<span>(예 : 20210307)</span></span>
+                      <span className="focus_bg" />
+                    </label>
+                  </div>
+                  <div className="error_txt"><span
+                    className="ico" />{birthdayWrongType == 1 ? '생년월일을 입력해주세요.' : '생년월일 형식이 맞지 않습니다.'}</div>
+                </div>
+              </div>
+              <div className="gender">
+                <div className="gender_inner">
+                  <strong className="gender_tit">성별</strong>
+                  <div className="gender_radio">
+                    <div className="radio_box">
+                      <input type="radio" className="inp_radio" id="tab1" name="genderradio" value="2"
+                             checked={gender === '2'} onChange={onChangeGender} />
+                      <label htmlFor="tab1" className="contentType">여성</label>
+                    </div>
+                    <div className="radio_box">
+                      <input type="radio" className="inp_radio" id="tab2" name="genderradio" value="1"
+                             checked={gender === '1'} onChange={onChangeGender} />
+                      <label htmlFor="tab2" className="contentType">남성</label>
+                    </div>
+                  </div>
+                </div>
+                <div className="error_txt"><span className="ico"></span>성별을 선택해 주세요.</div>
+              </div>
+              <div className={`group btn_type ${isPhone === false && 'error'}`}>
+                <div className="inp_box">
+                  <label className="inp_desc" htmlFor="phonenumber">
+                    <input type="text" id="phonenumber" className="inp" placeholder=" " autoComplete="off"
+                           value={phone}
+                           onChange={(e) => {
+                             const value = e.target.value.toString();
+                             const phoneNo = value.replace(/[^0-9]/g, '');
+                             setPhone(phoneNo);
+                           }} readOnly={authSent ? true : false} />
+                    <span className="label">휴대폰 번호<span>(-없이 입력하세요.)</span></span>
+                    <span className="focus_bg" />
+                  </label>
+                  <div className="btn_box">
+                    {(authSent && authCheck == false) ?
+                      <button type="button" className={`btn btn_default`} onClick={() => {
+                        if (authAvailable === true) {
+                          //유효기간 설정
+                          let now = new Date().getTime();
+                          const target = new Date(now + (3 * 60000));
+                          setTime(179);
+                          setExpireAt(target);
+
+                          //인증번호 발송
+                          _sendSMS(phone);
+
+                        }
+                      }}>재전송</button>
+                      :
+                      <button type="button"
+                              className={`btn ${(authAvailable == true && authCheck == false) ? 'btn_primary' : 'btn_disable'}`}
+                              onClick={() => {
+                                if (authAvailable === true) {
+                                  //유효기간 설정
+                                  let now = new Date().getTime();
+                                  const target = new Date(now + (3 * 60000));
+                                  setTime(179);
+                                  setExpireAt(target);
+
+                                  //인증번호 발송
+                                  _sendSMS(phone);
+                                }
+                              }}>인증번호</button>
+                    }
+                  </div>
+                </div>
+                <div className="error_txt"><span
+                  className="ico" />{phoneWrongType == 1 ? '휴대폰 번호를 입력해주세요.' : '휴대폰 번호 형식이 맞지 않습니다.'}</div>
+              </div>
+              {
+                authSent === true &&
+                <div className="group btn_type">
+                  <div className="inp_box">
+                    <label className="inp_desc" htmlFor="certifynumber">
+                      <input type="text" id="certifynumber" className="inp" placeholder=" " autoComplete="off"
+                             value={authCode} onChange={(e) => {
+                        setAuthCode(e.target.value);
+                      }} readOnly={authCheck ? true : false} />
+                      <span className="label">인증번호</span>
+                      {authCheck === false &&
+                      <span className="timer" id="timer">{timeFormat(time)}</span>
+                      }
                       <span className="focus_bg" />
                     </label>
                     <div className="btn_box">
-                      { (authSent && authCheck == false) ? 
-                        <button type="button" className={`btn btn_default`} onClick={()=>{
-                          if(authAvailable === true) {
-                            //유효기간 설정 
-                            let now = new Date().getTime();
-                            const target = new Date(now + (3*60000));
-                            setTime(179);
-                            setExpireAt(target);
-
-                            //인증번호 발송 
-                            _sendSMS(phone)
-                            
-                          }
-                        }}>재전송</button>
-                        :
-                        <button type="button" className={`btn ${(authAvailable == true && authCheck == false) ? "btn_primary" : "btn_disable"}`} onClick={()=>{
-                          if(authAvailable === true) {
-                            //유효기간 설정 
-                            let now = new Date().getTime();
-                            const target = new Date(now + (3*60000));
-                            setTime(179);
-                            setExpireAt(target);
-
-                            //인증번호 발송 
-                            _sendSMS(phone)
-                          }
-                        }}>인증번호</button>
-                      }
+                      <button type="button" className={`btn ${authCheck !== true ? 'btn_primary' : 'btn_disable'}`}
+                              onClick={() => {
+                                if (authCheck !== true) {
+                                  if (time == 0) {
+                                    openAlert('인증시간이 만료되었습니다. 재전송 후 인증해주세요.');
+                                  } else {
+                                    if (authCode === '') {
+                                      openAlert('인증번호를 입력해주세요.');
+                                      return;
+                                    }
+                                    _verifySMS(phone, authCode, 'JOIN');
+                                  }
+                                }
+                              }}>인증
+                      </button>
                     </div>
                   </div>
-                  <div className="error_txt"><span className="ico" />{phoneWrongType == 1 ? "휴대폰 번호를 입력해주세요." : "휴대폰 번호 형식이 맞지 않습니다."}</div>
+                  <div className="certify_txt">※ 입력하신 번호로 인증번호가 전송되었습니다.</div>
                 </div>
-                {
-                  authSent === true &&
-                    <div className="group btn_type">
-                      <div className="inp_box">
-                        <label className="inp_desc" htmlFor="certifynumber">
-                          <input type="text" id="certifynumber" className="inp" placeholder=" " autoComplete="off" tabIndex={6} value={authCode} onChange={(e)=>{ setAuthCode(e.target.value) }} readOnly={authCheck ? true : false} />
-                          <span className="label">인증번호</span>
-                          {authCheck === false &&
-                            <span className="timer" id="timer">{timeFormat(time)}</span>
-                          }
-                          <span className="focus_bg" />
-                        </label>
-                        <div className="btn_box">
-                          <button type="button" className={`btn ${authCheck !== true ? "btn_primary" : "btn_disable"}`} onClick={()=>{
-                            if(authCheck !== true){
-                              if(time == 0){
-                                alert("인증시간이 만료되었습니다. 재전송 후 인증해주세요.");
-                              } else{
-                                if(authCode === ''){
-                                  alert('인증번호를 입력해주세요.');
-                                  return;
-                                }
-                                _verifySMS(phone, authCode, "JOIN");
-                              }
-                            }
-                          }}>인증</button>
-                        </div>
-                      </div>
-                      <div className="certify_txt">※ 입력하신 번호로 인증번호가 전송되었습니다.</div>
-                    </div>
-                }
-                
+              }
 
-                <div className="btn_box full">
-                  <button type="button" className="btn btn_dark" onClick={()=>{
-                      _registerApi();
-                  }}>가입 완료</button>
-                </div>
+
+              <div className="btn_box full">
+                <button type="button" className="btn btn_dark" onClick={async () => {
+                  await _registerApi();
+                }}>가입 완료
+                </button>
               </div>
             </div>
           </div>
         </div>
-        </>
-    );
+      </div>
+    </>
+  );
 }

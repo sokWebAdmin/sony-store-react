@@ -1,204 +1,118 @@
-import React, {useState} from "react";
-import { useHistory } from "react-router";
+import React, { useRef, useState } from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+
+import { useHeaderDispatch, closeSideBar } from '../context/header.context';
+import { useCategoryState } from '../context/category.context';
+import { getAgent } from '../utils/detectAgent.js';
+
+import '../assets/scss/partials/appMenu.scss';
+import { useMediaQuery } from '../hooks';
 
 export default function Gnb() {
-    const history = useHistory();
+  const agent = getAgent(); // test code
+  const underPc = useMediaQuery('(max-width: 1280px)');
 
-    const [hovering, setHovering] = useState(false); 
+  const history = useHistory();
+  const headerDispatch = useHeaderDispatch();
 
-    const [subMenu1, setSubMenu1] = useState(false); 
-    const [subMenu2, setSubMenu2] = useState(false); 
-    const [subMenu3, setSubMenu3] = useState(false); 
-    const [subMenu4, setSubMenu4] = useState(false); 
-    const [subMenu5, setSubMenu5] = useState(false); 
+  const [hovering, setHovering] = useState(false);
 
+  const [activeIndex, setActiveIndex] = useState(-1);
 
-    const [mSubMenu, setMSubMenu] = useState(''); 
-  
-    const mouseOver = (onoff) => {
-        if(onoff){
-            setHovering(true);
-        } else{
-            setHovering(false);
-        }
+  const [activeMIndex, setActiveMIndex] = useState(-1);
+
+  const routePushAndClose = (gcc) => {
+    if (gcc?.href) {
+      closeSideBar(headerDispatch);
+      window.open(gcc.href);
     }
 
-    return (
-        <>
-            <nav className={`gnb ${hovering ? "gnb--active" : ""}`}>
-                <ul className="gnb__menu" 
-                    onMouseOver={()=>{
-                        mouseOver(true)
-                    }}
-                    onMouseLeave={()=>{
-                        mouseOver(false)
-                    }}
+    if (gcc?.route) {
+      history.push(gcc.route);
+      closeSideBar(headerDispatch);
+    }
+  };
+
+  const { gnbCategories } = useCategoryState();
+  const gnbRef = useRef();
+
+  return (
+    <>
+      <nav className={`gnb ${hovering ? 'gnb--active' : ''}`} ref={gnbRef}>
+        <ul
+          className="gnb__menu"
+          onMouseOver={() => {
+            setHovering(true);
+          }}
+          onMouseLeave={() => {
+            setHovering(false);
+          }}
+        >
+          {gnbCategories.map((gc, index) => {
+            return (
+              <li
+                key={`gnb-menu-${index}`}
+                className={`${activeIndex === index
+                  ? 'active'
+                  : ''} ${activeMIndex === index ? 'mo--active' : ''}`}
+                onMouseOver={() => {
+                  setActiveIndex(index);
+                }}
+                onMouseLeave={() => {
+                  setActiveIndex(-1);
+                }}
+              >
+                <a
+                  href="#none"
+                  onClick={(e) => {
+                    setActiveMIndex(index);
+                    e.preventDefault();
+                    if (activeMIndex === index || !underPc) {
+                      routePushAndClose(gc);
+                    }
+                  }}
                 >
-                    <li className={`${subMenu1 ? "active" : ""} ${mSubMenu == 1 ? "mo--active" : ""}`}
-                        onMouseOver={()=>{
-                            setSubMenu1(true)
-                        }}
-                        onMouseLeave={()=>{
-                            setSubMenu1(false)
-                        }}
-                    >
-                    <a  onClick={()=>{
-                        setMSubMenu(1)
-                    }}>스토어 추천 제품</a>
-                    <ul className="gnb__menu__secondary">
-                        <li>
-                        <a  onClick={()=>{history.push('/recommend')}}>추천 제품</a>
-                        </li>
-                    </ul>
-                    </li>
-                    
-                    <li className={`${subMenu2 ? "active" : ""} ${mSubMenu == 2 ? "mo--active" : ""}`}
-                        onMouseOver={()=>{
-                            setSubMenu2(true)
-                        }}
-                        onMouseLeave={()=>{
-                            setSubMenu2(false)
-                        }}
-                        onClick={()=>{
-                            setMSubMenu(2)
-                        }}
+                  {gc.label}
+                </a>
+                <ul className="gnb__menu__secondary">
+                  {gc.children.map((gcc, gccIndex) => {
+                    return (
+                      <li key={`gnb-menu-${index}-${gccIndex}`}>
+                        <a
+                          href="#none"
+                          onClick={(e) => {
+                            gnbRef.current.classList.remove('gnb--active');
+                            routePushAndClose(gcc);
+                            e.preventDefault();
+                          }}
                         >
-                    <a >제품</a>
-                    <ul className="gnb__menu__secondary">
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/products/camera")
-                        }}>카메라</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/products/videocamera")
-                        }}>비디오카메라</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/products/audio")
-                        }}>오디오</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/products/accessory")
-                        }}>액세서리</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/products/playstation")
-                        }}>PlayStation®</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/products/test")
-                        }}>test</a>
-                        </li>
-                    </ul>
-                    </li>
-
-                    <li className={`${subMenu3 ? "active" : ""} ${mSubMenu == 3 ? "mo--active" : ""}`} onMouseOver={()=>{
-                            setSubMenu3(true)
-                        }}
-                        onMouseLeave={()=>{
-                            setSubMenu3(false)
-                        }}
-                        onClick={()=>{
-                            setMSubMenu(3)
-                        }}
-                        >
-                    <a  onClick={()=>{history.push('/event/list')}}>기획전</a>
-                    <ul className="gnb__menu__secondary">
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/event/list")
-                        }}>소니스토어 단독</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/event/refurbish")
-                        }}>혜택존</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/event/list")
-                        }}>예약판매</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/event/refined")
-                        }}>정품 등록 이벤트</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/event/live-on")
-                        }}>LIVE ON</a>
-                        </li>
-                    </ul>
-                    </li>
-
-                    <li className={`${subMenu4 ? "active" : ""} ${mSubMenu == 4 ? "mo--active" : ""}`} onMouseOver={()=>{
-                            setSubMenu4(true)
-                        }}
-                        onMouseLeave={()=>{
-                            setSubMenu4(false)
-                        }}
-                        onClick={()=>{
-                            setMSubMenu(4)
-                        }}
-                        >
-                    <a >멤버십</a>
-                    <ul className="gnb__menu__secondary">
-                        <li>
-                        <a >등급&amp;혜택 안내</a>
-                        </li>
-                    </ul>
-                    </li>
-                    
-                    <li className={`${subMenu5 ? "active" : ""} ${mSubMenu == 5 ? "mo--active" : ""}`} onMouseOver={()=>{
-                            setSubMenu5(true)
-                        }}
-                        onMouseLeave={()=>{
-                            setSubMenu5(false)
-                        }}
-                        onClick={()=>{
-                            setMSubMenu(5)
-                        }}
-                        >
-                    <a >고객 서비스</a>
-                    <ul className="gnb__menu__secondary">
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/faq")
-                        }}>공지사항</a>
-                        <a  onClick={()=>{history.push('/faq')}}>FAQ&amp;공지사항</a>
-                        </li>
-                        <li>
-                        <a href="https://www.sony.co.kr/scs/handler/Index-Start?asa&#x3D;Sa">정품등록 안내</a>
-                        </li>
-                        <li>
-                        <a href="https://www.sony.co.kr/electronics/support">제품 지원</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/purchase-consulting")
-                        }}>구매 상담</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/store-info")
-                        }}>직영점 안내</a>
-                        </li>
-                        <li>
-                        <a  onClick={()=>{
-                            history.push("/video-course")
-                        }}>동영상 강좌</a>
-                        </li>
-                    </ul>
-                    </li>
+                          {gcc.label}
+                        </a>
+                      </li>
+                    );
+                  })}
                 </ul>
-                </nav>
-        </>
-    );
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      {agent.isApp &&
+      <div className="appmenu" style={{ display: 'block' }}>
+        <ul>
+          <li className="appmenu__qr"><a href="sonyapp://closemall/qr">QR스캔</a>
+          </li>
+          <li className="appmenu__setting"><a href="sonyapp://setting">설정</a>
+          </li>
+          <li className="appmenu__push"><a href='/app/push-list' onClick={e => {
+            e.preventDefault();
+            history.push('/app/push-list');
+            closeSideBar(headerDispatch);
+          }}>PUSH 알림 메시지함</a></li>
+        </ul>
+      </div>
+      }
+    </>
+  );
 }

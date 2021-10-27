@@ -80,8 +80,8 @@ const hasJsxRuntime = (() => {
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function (webpackEnv) {
-  const isEnvDevelopment = webpackEnv === 'development';
-  const isEnvProduction = webpackEnv === 'production';
+  const isEnvLocal = webpackEnv === 'local';
+  const isEnvProduction = webpackEnv !== 'local';
 
   // Variable used for enabling profiling in Production
   // passed into alias object. Uses a flag if passed into the build command
@@ -99,7 +99,7 @@ module.exports = function (webpackEnv) {
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
-      isEnvDevelopment && require.resolve('style-loader'),
+      isEnvLocal && require.resolve('style-loader'),
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
         // css is located in `static/css`, use '../../' to locate index.html folder
@@ -137,19 +137,19 @@ module.exports = function (webpackEnv) {
           sourceMap: true,
         },
       },
-      {                
-        loader: require.resolve("sass-loader"),                
-        options: {         
-          sourceMap: true                
-        }              
-      },      
+      {
+        loader: require.resolve("sass-loader"),
+        options: {
+          sourceMap: true
+        }
+      },
     ].filter(Boolean);
     if (preProcessor) {
       loaders.push(
         {
           loader: require.resolve('resolve-url-loader'),
           options: {
-            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvLocal,
             root: paths.appSrc,
           },
         },
@@ -165,18 +165,18 @@ module.exports = function (webpackEnv) {
   };
 
   return {
-    mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
+    mode: isEnvProduction ? 'production' : isEnvLocal && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
     devtool: isEnvProduction
       ? shouldUseSourceMap
         ? 'source-map'
         : false
-      : isEnvDevelopment && 'cheap-module-source-map',
+      : 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry:
-      isEnvDevelopment && !shouldUseReactRefresh
+      isEnvLocal && !shouldUseReactRefresh
         ? [
             // Include an alternative client for WebpackDevServer. A client's job is to
             // connect to WebpackDevServer by a socket and get notified about changes.
@@ -204,18 +204,14 @@ module.exports = function (webpackEnv) {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
       // Add /* filename */ comments to generated require()s in the output.
-      pathinfo: isEnvDevelopment,
+      pathinfo: isEnvLocal,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
-      filename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].js'
-        : isEnvDevelopment && 'static/js/bundle.js',
+      filename: 'static/js/bundle.js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
-      chunkFilename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].chunk.js'
-        : isEnvDevelopment && 'static/js/[name].chunk.js',
+      chunkFilename: 'static/js/[name].chunk.js',
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
@@ -226,7 +222,7 @@ module.exports = function (webpackEnv) {
             path
               .relative(paths.appSrc, info.absoluteResourcePath)
               .replace(/\\/g, '/')
-        : isEnvDevelopment &&
+        : isEnvLocal &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
       // Prevents conflicts when multiple webpack runtimes (from different apps)
       // are used on the same page.
@@ -302,16 +298,16 @@ module.exports = function (webpackEnv) {
       // Automatically split vendor and commons
       // https://twitter.com/wSokra/status/969633336732905474
       // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-      splitChunks: {
-        chunks: 'all',
-        name: isEnvDevelopment,
-      },
+      // splitChunks: {
+      //   chunks: 'all',
+      //   name: isEnvLocal,
+      // },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
       // https://github.com/facebook/create-react-app/issues/5358
-      runtimeChunk: {
-        name: entrypoint => `runtime-${entrypoint.name}`,
-      },
+      // runtimeChunk: {
+      //   name: entrypoint => `runtime-${entrypoint.name}`,
+      // },
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
@@ -413,7 +409,7 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                 ],
-                
+
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -426,7 +422,7 @@ module.exports = function (webpackEnv) {
                       },
                     },
                   ],
-                  isEnvDevelopment &&
+                  isEnvLocal &&
                     shouldUseReactRefresh &&
                     require.resolve('react-refresh/babel'),
                 ].filter(Boolean),
@@ -458,7 +454,7 @@ module.exports = function (webpackEnv) {
                 cacheDirectory: true,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
-                
+
                 // Babel sourcemaps are needed for debugging into node_modules
                 // code.  Without the options below, debuggers like VSCode
                 // show incorrect code and set breakpoints on the wrong lines.
@@ -480,7 +476,7 @@ module.exports = function (webpackEnv) {
                 importLoaders: 1,
                 sourceMap: isEnvProduction
                   ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                  : isEnvLocal,
               }),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -496,7 +492,7 @@ module.exports = function (webpackEnv) {
                 importLoaders: 1,
                 sourceMap: isEnvProduction
                   ? shouldUseSourceMap
-                  : isEnvDevelopment,
+                  : isEnvLocal,
                 modules: {
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
@@ -513,7 +509,7 @@ module.exports = function (webpackEnv) {
                   importLoaders: 3,
                   sourceMap: isEnvProduction
                     ? shouldUseSourceMap
-                    : isEnvDevelopment,
+                    : isEnvLocal,
                 },
                 'sass-loader'
               ),
@@ -532,7 +528,7 @@ module.exports = function (webpackEnv) {
                   importLoaders: 3,
                   sourceMap: isEnvProduction
                     ? shouldUseSourceMap
-                    : isEnvDevelopment,
+                    : isEnvLocal,
                   modules: {
                     getLocalIdent: getCSSModuleLocalIdent,
                   },
@@ -540,7 +536,7 @@ module.exports = function (webpackEnv) {
                 'sass-loader'
               ),
             },
-            
+
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
@@ -612,10 +608,10 @@ module.exports = function (webpackEnv) {
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin(env.stringified),
       // This is necessary to emit hot updates (CSS and Fast Refresh):
-      isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+      isEnvLocal && new webpack.HotModuleReplacementPlugin(),
       // Experimental hot reloading for React .
       // https://github.com/facebook/react/tree/master/packages/react-refresh
-      isEnvDevelopment &&
+      isEnvLocal &&
         shouldUseReactRefresh &&
         new ReactRefreshWebpackPlugin({
           overlay: {
@@ -631,12 +627,12 @@ module.exports = function (webpackEnv) {
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.
       // See https://github.com/facebook/create-react-app/issues/240
-      isEnvDevelopment && new CaseSensitivePathsPlugin(),
+      isEnvLocal && new CaseSensitivePathsPlugin(),
       // If you require a missing module and then `npm install` it, you still have
       // to restart the development server for webpack to discover it. This plugin
       // makes the discovery automatic so you don't have to restart.
       // See https://github.com/facebook/create-react-app/issues/186
-      isEnvDevelopment &&
+      isEnvLocal &&
         new WatchMissingNodeModulesPlugin(paths.appNodeModules),
       isEnvProduction &&
         new MiniCssExtractPlugin({
@@ -694,7 +690,7 @@ module.exports = function (webpackEnv) {
           typescript: resolve.sync('typescript', {
             basedir: paths.appNodeModules,
           }),
-          async: isEnvDevelopment,
+          async: isEnvLocal,
           checkSyntacticErrors: true,
           resolveModuleNameModule: process.versions.pnp
             ? `${__dirname}/pnpTs.js`
@@ -725,7 +721,7 @@ module.exports = function (webpackEnv) {
           extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
           formatter: require.resolve('react-dev-utils/eslintFormatter'),
           eslintPath: require.resolve('eslint'),
-          failOnError: !(isEnvDevelopment && emitErrorsAsWarnings),
+          failOnError: !(isEnvLocal && emitErrorsAsWarnings),
           context: paths.appSrc,
           cache: true,
           cacheLocation: path.resolve(

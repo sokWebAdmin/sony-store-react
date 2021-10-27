@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="app">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -150,6 +150,7 @@
           <ul>
             <li class="appmenu__qr"><a href="#">QR스캔</a></li>
             <li class="appmenu__setting"><a href="#">설정</a></li>
+            <li class="appmenu__push"><a href="../html/app/pushList.html">PUSH 알림 메시지함</a></li>
           </ul>
         </div>
       </div>
@@ -499,7 +500,16 @@
 
     </div>
   </div>
-  <footer class="footer">
+  <div class="appnavbar">
+    <div class="appnavbar_inner">
+      <a href="#" class="appnavbar_btn ios"><img src="../images/app/btn_arrow.svg" alt="뒤로 가기"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_home.svg" alt="홈"></a>
+      <a href="#" class="appnavbar_btn android"><img src="../images/app/btn_menu.svg" alt="메뉴"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_cart.svg" alt="장바구니"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_shipping.svg" alt="주문/배송"></a>
+      <a href="#" class="appnavbar_btn"><img src="../images/app/btn_my.svg" alt="마이메뉴"></a>
+    </div>
+  </div>  <footer class="footer">
     <nav class="sidebar">
       <div class="sidebar__inner">
         <a href="../html/mypage/myPageMain.html" class="sidebar__btn sidebar__btn__link kakao"><span>카톡 상담</span></a>
@@ -571,7 +581,7 @@
         </div>
         <div class="footer__legal__warning">
           <p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
-          <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a href="#" class="escrow">에스크로결제</a></p>
+          <p>고객님의 안정한 거래를 위해 현금 등의 거래를 통한 결제를 하실 경우,<br> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.<a class="escrow" href="https://mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat" target="_blank">클릭하시면 이니시스 결제시스템의 유효성을 확인하실 수 있습니다.</a></p>
         </div>
       </div>
       <address class="address">
@@ -605,8 +615,8 @@
         </div>
         <button href="#" class="layer_close close" title="팝업창 닫기">
           <span>팝업창 닫기</span>
-      </button>        
-      </div>    
+      </button>
+      </div>
     </div>
   </div>
   <!--// 소비자피해보상 보험 팝업 -->
@@ -615,7 +625,7 @@
        //팝업 열기
       function openModal(modalname) {
           $("." + modalname).fadeIn(300);
-          $("body,html").css({"overflow":"hidden"});        
+          $("body,html").css({"overflow":"hidden"});
           return false;
       }
       // 팝업 닫기

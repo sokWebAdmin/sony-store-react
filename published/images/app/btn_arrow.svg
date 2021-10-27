@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+    <path d="m0 0 9 9 9-9" transform="rotate(90 4.501 7.501)" style="stroke-width:2px;stroke:#000;fill:none"/>
+    <g data-name="사각형 1589" style="fill:#222;stroke:#000">
+        <path style="stroke:none" d="M0 0h18v1.636H0z" transform="translate(3 11.182)"/>
+        <path style="fill:none" d="M.5.5h17v.636H.5z" transform="translate(3 11.182)"/>
+    </g>
+</svg>

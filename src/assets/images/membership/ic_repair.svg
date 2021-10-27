@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke:#222;stroke-miterlimit:10;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="Repair_Icon" transform="translate(-729 -517)">
+        <g id="그룹_6671" data-name="그룹 6671" transform="translate(-324 -200)">
+            <path id="패스_2121" data-name="패스 2121" class="cls-2" d="m1093 729-8.114-5L1055 743" transform="translate(0 -1)"/>
+            <path id="패스_2122" data-name="패스 2122" class="cls-2" d="M1096 774h-35v-37" transform="translate(0 1)"/>
+            <g id="사각형_1843" data-name="사각형 1843" class="cls-2">
+                <path style="stroke:none" d="M0 0h16v16H0z" transform="rotate(-180 546.5 381.5)"/>
+                <path style="fill:none" d="M1 1h14v14H1z" transform="rotate(-180 546.5 381.5)"/>
+            </g>
+            <path id="패스_2123" data-name="패스 2123" d="M1114.59 739c0-8-4.59-9-4.59-9v7a4.1 4.1 0 0 1-3.064 3.9 5.71 5.71 0 0 1-3.872 0A4.1 4.1 0 0 1 1100 737v-7s-4.59 1-4.59 9c0 0-.41 4 5.59 8v27a4 4 0 0 0 8 0v-27c6-4 5.59-8 5.59-8z" transform="translate(0 -3)" style="stroke:#5865f5;stroke-miterlimit:10;stroke-width:2px;fill:none"/>
+            <path id="패스_2124" data-name="패스 2124" class="cls-2" d="M1073 732v-7h-8v12" transform="translate(0 -1)"/>
+        </g>
+    </g>
+</svg>

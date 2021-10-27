@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+    <defs>
+        <style>
+            .cls-2{fill:#222}.cls-3{fill:#5865f5}
+        </style>
+    </defs>
+    <g id="ic_orderlist" transform="translate(106.933 -140.836)">
+        <path id="area-4" transform="translate(-106.933 140.836)" style="fill:none" d="M0 0h64v64H0z"/>
+        <g id="패스_654" data-name="패스 654">
+            <path id="패스_1470" data-name="패스 1470" class="cls-2" d="M-55.934 181.836h-2v-28h-7v-2h9z"/>
+        </g>
+        <g id="패스_655" data-name="패스 655">
+            <path id="패스_1471" data-name="패스 1471" class="cls-2" d="M-67.934 197.836h-26v-46h9v2h-7v42h24z"/>
+        </g>
+        <g id="사각형_717" data-name="사각형 717">
+            <path id="패스_1472" data-name="패스 1472" class="cls-2" d="M-68.934 157.836h-12a5.006 5.006 0 0 1-5-5v-5h22v5a5.006 5.006 0 0 1-5 5zm-15-8v3a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-3z"/>
+        </g>
+        <g id="선_124" data-name="선 124">
+            <path id="사각형_1320" data-name="사각형 1320" class="cls-2" transform="translate(-78.934 163.836)" d="M0 0h16v2H0z"/>
+        </g>
+        <g id="선_125" data-name="선 125">
+            <path id="사각형_1321" data-name="사각형 1321" class="cls-2" transform="translate(-78.934 171.836)" d="M0 0h16v2H0z"/>
+        </g>
+        <g id="그룹_6673" data-name="그룹 6673">
+            <path id="패스_1998" data-name="패스 1998" class="cls-3" d="M-64.934 193.918a7.049 7.049 0 0 1-7.041-7.041 7.05 7.05 0 0 1 7.041-7.041 7.049 7.049 0 0 1 7.041 7.041 7.048 7.048 0 0 1-7.041 7.041zm0-12.082a5.048 5.048 0 0 0-5.041 5.041 5.047 5.047 0 0 0 5.041 5.041 5.046 5.046 0 0 0 5.041-5.041 5.047 5.047 0 0 0-5.041-5.041z"/>
+        </g>
+        <g id="그룹_6674" data-name="그룹 6674">
+            <path id="사각형_1848" data-name="사각형 1848" class="cls-3" transform="rotate(-45 200.971 170.22)" d="M0 0h2v7.764H0z"/>
+        </g>
+        <g id="그룹_6675" data-name="그룹 6675">
+            <path id="패스_1999" data-name="패스 1999" class="cls-2" d="m-85.738 167.61-2.815-2.815 1.414-1.414 1.4 1.4 3.013-3.013 1.414 1.414z"/>
+        </g>
+        <g id="그룹_6676" data-name="그룹 6676">
+            <path id="패스_2000" data-name="패스 2000" class="cls-2" d="m-85.738 175.79-2.815-2.815 1.414-1.414 1.4 1.4 3.013-3.013 1.414 1.414z"/>
+        </g>
+        <g id="선_125-2" data-name="선 125">
+            <path id="사각형_1321-2" data-name="사각형 1321" class="cls-2" transform="translate(-78.934 180.156)" d="M0 0h6.781v2H0z"/>
+        </g>
+        <g id="그룹_6677" data-name="그룹 6677">
+            <path id="패스_2001" data-name="패스 2001" class="cls-2" d="m-85.738 184.11-2.815-2.815 1.414-1.414 1.4 1.4 3.013-3.013 1.414 1.414z"/>
+        </g>
+    </g>
+</svg>

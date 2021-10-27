@@ -1,7 +1,4 @@
 import moment, { Moment, MomentInput, unitOfTime } from 'moment'; // eslint-disable-line
-import { StartAndEndYmdHm } from '@/types';
-import { OptionData } from '@/helpers/type';
-import { DEFAULT_TIME_RANGE } from '@/components/common/datepicker/dateRange';
 
 export const getUnitDigitStr = (num) => {
   return num < 10 ? `0${num}` : `${num}`;
@@ -9,7 +6,7 @@ export const getUnitDigitStr = (num) => {
 
 export function changeDateFormat(time, format) {
   if (typeof time === 'string' && time === '') {
-    return moment().format(format);
+    return moment().language('ko').format(format);
   }
   return moment(time).format(format);
 }
@@ -58,16 +55,21 @@ export function getStrYMDHM(date) {
   return moment(date).format('YYYY-MM-DD HH:mm');
 }
 
-export function addDay(date) {
-  return moment(date)
-    .add(days, 'days')
-    .format('YYYY-MM-DD');
+export function getStrHM(date) {
+  return moment(date).format('HH:mm');
+}
+
+export function addDay(date, days) {
+  return moment(date).add(days, 'days').format('YYYY-MM-DD');
 }
 
 export function addMonth(date, months) {
-  return moment(date)
-    .add(months, 'months')
-    .format('YYYY-MM-DD');
+  return moment(date).add(months, 'months').format('YYYY-MM-DD');
+}
+
+export function getDay(date) {
+  const week = ['일', '월', '화', '수', '목', '금', '토', '일'];
+  return week[moment(date).day()];
 }
 
 export function getSelectYears(endWord, isPast = true, length = 3) {
@@ -153,9 +155,7 @@ export function drawRemainingDurationTime(remaining) {
  * @param periodYear 기준 년도 default: 3
  */
 export function overPeriodYear(comparisonTarget, periodYear = 3) {
-  const startDate = moment()
-    .startOf('month')
-    .add(-1, 'month');
+  const startDate = moment().startOf('month').add(-1, 'month');
   return startDate.diff(comparisonTarget, 'years', true) > periodYear;
 }
 
@@ -204,7 +204,23 @@ export function parseYmdDateFormat(ymd) {
 }
 
 export function addDay4YMDHMSS(date, days) {
-  return moment(date)
-    .add(days, 'days')
-    .format('YYYY-MM-DD HH:mm:ss');
+  return moment(date).add(days, 'days').format('YYYY-MM-DD HH:mm:ss');
+}
+
+/**
+ *
+ * @param {string} date
+ * @returns {string} 2021. 09. 15
+ */
+export function formatDateWithDot(date) {
+  return getStrDate(date).replaceAll('-', '. ');
+}
+
+export function toLocalDateStr(date) {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 }
