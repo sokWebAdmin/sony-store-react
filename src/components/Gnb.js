@@ -25,7 +25,7 @@ export default function Gnb() {
   const routePushAndClose = (gcc) => {
     if (gcc?.href) {
       closeSideBar(headerDispatch);
-      window.open(gcc.href);
+      window.openWindow(gcc.href);
     }
 
     if (gcc?.route) {

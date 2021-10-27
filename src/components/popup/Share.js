@@ -35,7 +35,7 @@ export default function Share({ link, label, setShareVisible }) {
         shareKakaoStoryButton(link, label);
         break;
       default:
-        window.open(link, '_blank');
+        window.openWindow(link, '_blank');
         break;
     }
   }

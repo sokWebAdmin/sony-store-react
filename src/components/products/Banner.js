@@ -40,7 +40,7 @@ export default function Banner({ category }) {
 
   const moveLink = () => {
     if (!!banner?.landingUrl) {
-      window.open(banner.landingUrl, banner.browerTargetType === 'CURRENT' ? '_self' : '_blank');
+      window.openWindow(banner.landingUrl, banner.browerTargetType === 'CURRENT' ? '_self' : '_blank');
     }
   };
 

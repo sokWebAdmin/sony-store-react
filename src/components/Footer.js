@@ -165,7 +165,7 @@ export default function Footer({ isAppBarEnabled, scrollAction }) {
                   defaultValue="default"
                   ref={selectRef}
                   onChange={(e) => {
-                    window.open(e.target.value);
+                    window.openWindow(e.target.value);
                     selectRef.current.value = e.target.value;
                   }}
                   className={`footer__family__link footer__mo ${moActive && 'footer__family__link--active'}`}

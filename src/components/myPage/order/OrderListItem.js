@@ -79,7 +79,7 @@ export default function OrderListItem({
   const onClickRefundAccount = () => setRefundAccountVisible(true);
 
   const openFindDeliveryPopup = () => {
-    window.open(delivery.retrieveInvoiceUrl);
+    window.openWindow(delivery.retrieveInvoiceUrl);
   };
 
   const onClickOrderCancel = (payType) => {
