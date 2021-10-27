@@ -933,6 +933,8 @@
 
     .item {
       position: relative;
+      height: 100%;
+      padding-bottom: 36px;
 
       .check.check_only {
         position: absolute;
@@ -962,7 +964,9 @@
       }
 
       .prd_price {
-        margin-top: 14px;
+        position:absolute;
+        bottom:0;
+        left:0;
         font-size: 14px;
         font-weight: 700;
         color: #222;
