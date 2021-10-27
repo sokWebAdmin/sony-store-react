@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext, useCallback, useMemo } from 're
 import { Switch, useLocation, Route, useHistory } from 'react-router-dom';
 import { throttle, debounce } from 'lodash';
 
+console.log('is devstore')
+
 //Component
 import Header from './components/Header';
 import Footer from './components/Footer';
