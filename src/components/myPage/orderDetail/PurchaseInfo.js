@@ -10,7 +10,7 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos }) {
   };
 
   const openCredicardReceipt = (receiptInfoUrl) => {
-    window.open(receiptInfoUrl);
+    window.openWindow(receiptInfoUrl);
   };
 
   return (

@@ -87,7 +87,7 @@ export default function EspList({history}) {
   }
 
   const _openGenuineRegisterSite = () => {
-    window.open("https://www.sony.co.kr/scs/handler/SCSWarranty-Start", "_blank");
+    window.openWindow("https://www.sony.co.kr/scs/handler/SCSWarranty-Start", "_blank");
   }
 
   const _closePopup = () => {

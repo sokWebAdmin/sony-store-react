@@ -37,7 +37,7 @@ export default function OrderSummary({ orderInfo }) {
   };
 
   const openFindDeliveryPopup = () => {
-    window.open(orderInfo.retrieveInvoiceUrl);
+    window.openWindow(orderInfo.retrieveInvoiceUrl);
   };
 
   return (

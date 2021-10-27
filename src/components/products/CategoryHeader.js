@@ -42,11 +42,11 @@ export default function CategoryHeader({ category, changeCurrentCategoryByNo }) 
 
   const openLink = ({ isAvailableMoveProductCompare, isAvailableMoveAccessoryCompatibility, e }) => {
     if (isAvailableMoveProductCompare) {
-      window.open(categoriesLinkMap[categoryLabel], '_blank');
+      window.openWindow(categoriesLinkMap[categoryLabel], '_blank');
     }
 
     if (isAvailableMoveAccessoryCompatibility) {
-      window.open('https://support.d-imaging.sony.co.jp/www/cscs/accessories/top.php?area=ap&lang=ko', '_blank');
+      window.openWindow('https://support.d-imaging.sony.co.jp/www/cscs/accessories/top.php?area=ap&lang=ko', '_blank');
     }
 
     e.preventDefault();

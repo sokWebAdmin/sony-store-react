@@ -48,7 +48,7 @@ const PushList = () => {
             <ul className="app_push_list">
               {pushData.items.map((item) => {
                 return (
-                  <li className="lists" onClick={() => window.open(item.linkUrl, '_blank')}>
+                  <li className="lists" onClick={() => window.openWindow(item.linkUrl, '_blank')}>
                     <span className="category"></span>
                     <strong className="tit">{item.title}</strong>
                     <span className="duration">{item.text}</span>

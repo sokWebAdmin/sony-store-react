@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useMallState } from '../../context/mall.context';
-import { getItem, KEY, removeAccessToken, setAccessToken, setItem } from '../../utils/token';
-import { encodeString, generateRandomString } from '../../utils/utils';
-import { getOauthLoginUrl, getProfile } from '../../api/member';
+import { getItem, KEY, setAccessToken, setItem } from '../../utils/token';
+import { generateRandomString } from '../../utils/utils';
+import { getProfile } from '../../api/member';
 import Alert from '../common/Alert';
 import { useHistory } from 'react-router-dom';
 import GlobalContext from '../../context/global.context';
-import { fetchMyProfile, resetProfile, setProfile, useProileDispatch } from '../../context/profile.context';
+import { fetchMyProfile, setProfile, useProileDispatch } from '../../context/profile.context';
 import { loginApi } from '../../api/auth';
-import Cookies from 'js-cookie';
 
 const label = {
   naver: '네이버',
@@ -27,7 +26,6 @@ const OPEN_URL = {
 };
 
 const OpenLogin = ({ title, message, customCallback }) => {
-  let popup = null;
   const history = useHistory();
   const { openIdJoinConfig } = useMallState();
   const { onChangeGlobal } = useContext(GlobalContext);
@@ -55,9 +53,6 @@ const OpenLogin = ({ title, message, customCallback }) => {
 
   const openIdLogin = async (type) => {
     const provider = type.substring(0, 1).toUpperCase();
-    popup = null;
-    popup = window.open('about:blank', '간편 로그인', 'width=420px,height=550px,scrollbars=yes');
-    popup.focus();
     const clientId = CLIENT_ID[type];
     const state = generateRandomString();
     const redirectUri = encodeURI(`${window.location.origin}/callback`);
@@ -66,7 +61,7 @@ const OpenLogin = ({ title, message, customCallback }) => {
     setItem(KEY.OPENID_TOKEN, state, 30 * 60 * 1000);
 
     const loginUrl = OPEN_URL[type].replace('{clientId}', clientId).replace('{redirectUri}', redirectUri).replace('{state}', state);
-    popup.location.href = loginUrl;
+    window.openWindow(loginUrl, '간편 로그인', 'width=420px,height=550px,scrollbars=yes');
     openLoginPopup();
   };
 
