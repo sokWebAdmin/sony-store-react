@@ -17,7 +17,7 @@ export const SONY_FAMILY = [
   },
   {
     url: 'https://pro.sony/ko_KR/support-services',
-    name: '소니 방송 업무용 솔루션 고객지원',
+    name: '소니 방송/업무용 솔루션 고객지원',
   },
 ];
 
@@ -27,7 +27,7 @@ export const SONY_COMPANY = [
     name: '소니 인터렉티브 엔터테인먼트 코리아',
   },
   {
-    url: 'https://www.sonymusic.co.kr/artist/sony-music-korea/',
+    url: 'https://www.sonymusic.co.kr',
     name: '소니 뮤직 엔터테인먼트 코리아',
   },
   {
