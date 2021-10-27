@@ -1672,6 +1672,13 @@
     margin: 0 auto;
     width: calc(100% - 48px);
 
+    &.search {
+      @include only-mo {
+        margin: 0;
+        width: 100%;
+      }
+    }
+
     &.on {
       display: block;
     }
@@ -2562,6 +2569,8 @@
       @include only-mo {
         margin-left: 0 !important;
       }
+
+      display: inline-block !important;
     }
   }
 }
