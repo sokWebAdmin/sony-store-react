@@ -1,20 +1,30 @@
-# SonyStore Front(React)
-Final 공유용 버전
+# SonyStore Front - React
 
-## local start
+## local 개발 환경 실행
+
+하기와 같은 커맨드를 입력합니다.
+
+### React App
 
 ```zsh
-yarn install && yarn start
+yarn && yarn start
 ```
 
-## published directory start
-npx 커맨드로 다음과 같이 실행가능. 
+### Markup 확인
 
-``` zsh
-npm run markup
+```
+yarn markup
 ```
 
-## Dev guide
+## build
+
+```
+yarn build
+```
+
+상기 명령어를 입력하면 root 디렉토리 하위에 dist 디렉토리가 생성됩니다.
+
+dist 하위 자산과 함께 index.html 을 web server 를 통해 서빙하시면 됩니다. 
 
 ### Alert
 
