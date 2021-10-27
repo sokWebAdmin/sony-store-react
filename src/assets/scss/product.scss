@@ -1672,6 +1672,10 @@
     margin: 0 auto;
     width: calc(100% - 48px);
 
+    @include only-mo{
+      width: 100%;
+    }
+
     &.on {
       display: block;
     }
