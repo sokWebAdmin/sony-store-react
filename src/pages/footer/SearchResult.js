@@ -44,7 +44,7 @@ export default function SearchResult({ match }) {
 
   const [tabState, setTabState] = useState('ALL');
   const [keyword, setKeyword] = useState(initalKeyword);
-  const [orderBy, setOrderBy] = useState('MD_RECOMMEND');
+  const [orderBy, setOrderBy] = useState('RECENT_PRODUCT');
   const [newest, setNewest] = useState(true);
   const [noticeNewest, setNoticeNewest] = useState(true);
 
