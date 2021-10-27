@@ -59,6 +59,11 @@ const request = async (url, method, query = {}, requestBody = null) => {
       window.location.replace('/');
     }
     if (method === 'get') {
+      if (response.data.code === 'EVEC0001') {
+        alert('이미 종료된 이벤트 이거나 잘못된 이벤트 입니다.');
+        window.location.replace('/');
+      }
+
       if (response.status === 404 || goErrorCodes.includes(response.data.code)) {
         window.location.replace('/404');
       } else if (response.status === 500) {
