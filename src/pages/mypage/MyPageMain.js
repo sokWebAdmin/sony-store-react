@@ -89,7 +89,7 @@ export default function MyPageMain() {
     return my?.totalExpireMileage || 0;
   }, [my]);
 
-  const memberName = useMemo(() => my?.firstName, [my]);
+  const memberName = useMemo(() => my?.firstname ?? profile?.memberName, [my]);
 
   return (
     <>
