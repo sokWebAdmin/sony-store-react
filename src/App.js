@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext, useCallback, useMemo } from 're
 import { Switch, useLocation, Route, useHistory } from 'react-router-dom';
 import { throttle, debounce } from 'lodash';
 
-console.log('is devstore')
-
 //Component
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -116,7 +114,7 @@ import AppBar from './components/app/AppBar';
 import { openBrowser } from './utils/openBrowser.js'
 import{ curry } from 'lodash'
 
-console.log('is devstore')
+console.log('is devstore');
 
 const App = (props) => {
   const agent = getAgent();
