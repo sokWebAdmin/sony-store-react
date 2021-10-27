@@ -37,6 +37,21 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
     });
   };
 
+  const getOrderByLabel = () => {
+    switch (orderBy) {
+      case 'RECENT_PRODUCT':
+        return '최신순';
+      case 'LOW_PRICE':
+        return '낮은 가격순';
+      case 'DISCOUNTED_PRICE':
+        return '높은 가격순';
+      case 'OLD_PRODUCT':
+        return '오래된 순';
+      default:
+        throw new Error('Unknown orderBy type');
+    }
+  };
+
   const codes = _.chain(productList)
     .flatMap(({ groupManagementCode }) => groupManagementCode)
     .compact()
@@ -59,15 +74,7 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
             }}
           >
             <span className="itemsort__button__label sr-only">정렬기준:</span>
-            <span className="itemsort__button__selected">
-              {orderBy === 'RECENT_PRODUCT'
-                ? '최신순'
-                : orderBy === 'LOW_PRICE'
-                ? '낮은 가격순'
-                : orderBy === 'LOW_PRICE'
-                ? '낮은 가격순'
-                : '오래된 순'}
-            </span>
+            <span className="itemsort__button__selected">{getOrderByLabel()}</span>
           </button>
           <div className="itemsort__drawer">
             <ul className="itemsort__items">
@@ -82,6 +89,7 @@ export default function ProductResult({ productList, orderBy, setOrderBy, produc
                     onClick={(e) => {
                       e.preventDefault();
                       setOrderBy(order.orderBy);
+                      setMobileOrderOpen(!mobileOrderOpen);
                     }}
                   >
                     {order.label}
