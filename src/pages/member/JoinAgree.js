@@ -38,7 +38,7 @@ const JoinAgree = () => {
         search: getUrlParam('sns') === 'true' ? `?sns=true&sms=${checkList[4]}&email=${checkList[5]}` : `?sms=${checkList[4]}&email=${checkList[5]}`,
         state: {
           agree: true,
-          email: location.state.email,
+          email: location.state?.email,
         },
       });
     } else {

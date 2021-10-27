@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext, createRef, useMemo, Fragment } from 'react';
 import { toCurrencyString } from '../../utils/unit';
 import { Link, useHistory } from 'react-router-dom';
-import { getCartCount, postCart, postOrderSheets } from '../../api/order';
-import gc from '../../storage/guestCart';
+import { postOrderSheets } from '../../api/order';
 import GlobalContext from '../../context/global.context';
 import { getProductOptions } from '../../api/product';
 import qs from 'qs';
@@ -12,7 +11,7 @@ import Alert from '../common/Alert';
 import HsValidator from '../cart/HsValidator';
 import { unescape } from 'lodash';
 import { getSaleStatus } from '../../utils/product';
-import { setCartCount, useHeaderDispatch } from '../../context/header.context';
+import { useHeaderDispatch } from '../../context/header.context';
 import styled from 'styled-components';
 
 const ERROR_CODE_MAPPING_ROUTE = {
@@ -38,7 +37,6 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
   }, [history.location.pathname]);
 
   const [section, setSection] = useState(filterProductsByGrade(event, isMemberGrade));
-  // const [optionInfos, setOptionInfos] = useState(null);
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [giftVisible, setGiftVisible] = useState(false);
 
@@ -147,17 +145,6 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
     );
     newGradeSection && setSection(newGradeSection);
   }, [grade, filterLabel]);
-
-  // const fetchOptions = async (productNos) => {
-  //   const { data: { optionInfos } } = await getProductsOptions({ productNos });
-  //   setOptionInfos(optionInfos);
-  //   console.log(optionInfos);
-  // }
-  //
-  // useEffect(() => {
-  //   console.log(section.map(({productNo}) => productNo));
-  //   fetchOptions(section.map(({productNo}) => productNo));
-  // }, [section]);
 
   // hsValidation
   const hsValidator = createRef(null);

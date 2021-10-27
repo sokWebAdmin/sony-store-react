@@ -17,7 +17,7 @@ import { SONY_COMPANY, SONY_FAMILY } from '../const/footer';
 
 const MOBILE_WIDTH = 640;
 
-export default function Footer ({ isAppBarEnabled, scrollAction }) {
+export default function Footer({ isAppBarEnabled, scrollAction }) {
   const windowWidth = window.innerWidth;
   const isMobile = useMemo(() => windowWidth <= MOBILE_WIDTH, [windowWidth]);
 
@@ -32,16 +32,15 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
 
   const selectRef = useRef(null);
 
-
   let browser = window;
-// child window.
+  // child window.
   let popup = null;
-// interval
+  // interval
   let timer = null;
 
-// This function is what the name says.
-// it checks whether the popup still open or not
-  function watcher () {
+  // This function is what the name says.
+  // it checks whether the popup still open or not
+  function watcher() {
     // if popup is null then let's clean the intervals.
     if (popup === null) {
       clearInterval(timer);
@@ -54,7 +53,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
       clearInterval(timer);
       browser.focus();
       // the onCloseEventHandler it notifies that the child has been closed.
-      browser.onClose("child was closed");
+      browser.onClose('child was closed');
       timer = null;
       popup = null;
     }
@@ -68,8 +67,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
           paddingBottom: '64px',
         }}
       >
-        <Floating isAppBarEnabled={isAppBarEnabled}
-                  scrollAction={scrollAction} />
+        <Floating isAppBarEnabled={isAppBarEnabled} scrollAction={scrollAction} />
         <div className="footer__inner">
           <div className="footer__social__wrap">
             <div className="footer__social">
@@ -129,10 +127,15 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                     <ul className="optgroup">
                       {SONY_FAMILY.map(({ url, name }) => (
                         <li className="option" key={`footer-ul-family-${name}`}>
-                          <a href={window.anchorProtocol + url.replace('https://', '')} target="_blank" rel="noreferrer" onClick={() => {
-                            setPcActive(false)
-                            window.openBrowser()
-                          }}>
+                          <a
+                            href={window.anchorProtocol + url.replace('https://', '')}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={() => {
+                              setPcActive(false);
+                              window.openBrowser();
+                            }}
+                          >
                             {name}
                           </a>
                         </li>
@@ -142,10 +145,15 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                     <ul className="optgroup">
                       {SONY_COMPANY.map(({ url, name }) => (
                         <li className="option" key={`footer-ul-company-${name}`}>
-                          <a href={window.anchorProtocol + url.replace('https://', '')} target="_blank" rel="noreferrer" onClick={() => {
-                            setPcActive(false)
-                            window.openBrowser()
-                          }}>
+                          <a
+                            href={window.anchorProtocol + url.replace('https://', '')}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={() => {
+                              setPcActive(false);
+                              window.openBrowser();
+                            }}
+                          >
                             {name}
                           </a>
                         </li>
@@ -158,7 +166,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   ref={selectRef}
                   onChange={(e) => {
                     window.open(e.target.value);
-                    selectRef.current.value=e.target.value;
+                    selectRef.current.value = e.target.value;
                   }}
                   className={`footer__family__link footer__mo ${moActive && 'footer__family__link--active'}`}
                 >
@@ -179,10 +187,13 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                   </optgroup>
                 </select>
               </div>
-              <a href={window.anchorProtocol + 'www.sony.com/'}
-                 onClick={window.openBrowser}
-                 className="footer__family__global"
-                 target="_blank" rel="noreferrer">
+              <a
+                href={window.anchorProtocol + 'www.sony.com/'}
+                onClick={window.openBrowser}
+                className="footer__family__global"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Sony Global
               </a>
             </div>
@@ -193,8 +204,9 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                 이용약관
               </Link>
               <a
-                href={window.anchorProtocol +
-                'www.sony.co.kr/handler/ProductInfo-Start?PageName=jsp/footer/CF_policy.jsp'}
+                href={
+                  window.anchorProtocol + 'www.sony.co.kr/handler/ProductInfo-Start?PageName=jsp/footer/CF_policy.jsp'
+                }
                 onClick={window.openBrowser}
                 target="_blank"
                 rel="noreferrer"
@@ -223,8 +235,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
                 <br /> KG이니시스의 구매 안전서비스(채무지급보증)를 이용하실 수 있습니다.
                 <a
                   className="escrow"
-                  href={window.anchorProtocol +
-                  'mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat'}
+                  href={window.anchorProtocol + 'mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat'}
                   onClick={window.openBrowser}
                   style={{
                     backgroundImage: 'url(https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_gray.png)',
@@ -255,7 +266,7 @@ export default function Footer ({ isAppBarEnabled, scrollAction }) {
             <span>Copyright © Sony Korea Corporation. All rights reserved.</span>
           </address>
         </div>
-        <script type="text/javascript" src="//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js"></script>
+        <script type="text/javascript" src="https://image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js"></script>
       </footer>
 
       {isPop === true && <InsurePop setPop={setPop} />}

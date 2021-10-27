@@ -2,9 +2,9 @@ import axios from 'axios';
 import { isMobile } from 'react-device-detect';
 import { getAccessToken, getGuestToken, removeAccessToken } from '../utils/token';
 
-const SERVER = process.env.REACT_APP_API_URL;
-const version = '1.0';
-const clientId = 'MzuMctQTZBXWmdTlujFy3Q==';
+const SERVER = process.env.REACT_APP_SHOP_API_URL;
+const version = process.env.REACT_APP_SHOP_API_VERSION;
+const clientId = process.env.REACT_APP_SHOP_API_CLIENT_ID;
 //SonyStore ALPHA
 const platform = isMobile ? 'MOBILE_WEB' : 'PC';
 const credentialLevelUrl = {
@@ -59,6 +59,11 @@ const request = async (url, method, query = {}, requestBody = null) => {
       window.location.replace('/');
     }
     if (method === 'get') {
+      if (response.data.code === 'EVEC0001') {
+        alert('이미 종료된 이벤트 이거나 잘못된 이벤트 입니다.');
+        window.location.replace('/');
+      }
+
       if (response.status === 404 || goErrorCodes.includes(response.data.code)) {
         window.location.replace('/404');
       } else if (response.status === 500) {

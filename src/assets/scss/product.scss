@@ -1674,6 +1674,11 @@
 
     @include only-mo{
       width: 100%;
+    &.search {
+      @include only-mo {
+        margin: 0;
+        width: 100%;
+      }
     }
 
     &.on {
@@ -2566,6 +2571,8 @@
       @include only-mo {
         margin-left: 0 !important;
       }
+
+      display: inline-block !important;
     }
   }
 }

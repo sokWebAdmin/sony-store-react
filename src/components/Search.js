@@ -69,7 +69,8 @@ export default function Search({ setSearchOpen }) {
   const searchHandler = (e, keyword) => {
     e?.preventDefault();
     if (keyword) {
-      history.replace(`/search-result/${encodeURIComponent(keyword)}`);
+      console.log(keyword)
+      history.replace(`/search-result/${encodeURIComponent(keyword.replace('/','&#47'))}`);
       setSearchOpen(false);
     } else {
       openAlert('검색어를 입력해주세요.');

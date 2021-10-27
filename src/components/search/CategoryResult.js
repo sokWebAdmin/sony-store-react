@@ -68,7 +68,7 @@ export default function CategoryResult({ fetchCategory, categoryList, categoryCo
           카테고리<span>({categoryCount})</span>
         </h2>
       </div>
-      <div className="result_list on">
+      <div className="result_list on search">
         <ul className="category">
           {categoryList
             .map((category) => convertCategory(category, keyword))
