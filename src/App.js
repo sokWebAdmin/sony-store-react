@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { Switch, useLocation, Route, useHistory } from 'react-router-dom';
-import { throttle, debounce } from 'lodash';
-
-console.log('is devstore')
+import { throttle, debounce, curry } from 'lodash';
 
 //Component
 import Header from './components/Header';
@@ -113,10 +111,7 @@ import CustomPopup from './components/common/customPopup/CustomPopup';
 import { getDisplayPopups, getDisplayPopupsPopupNos } from './api/display';
 import AppBar from './components/app/AppBar';
 
-import { openBrowser } from './utils/openBrowser.js'
-import{ curry } from 'lodash'
-
-console.log('is devstore')
+import { openBrowser } from './utils/openBrowser.js';
 
 const App = (props) => {
   const agent = getAgent();
@@ -131,8 +126,8 @@ const App = (props) => {
   const categoryDispatch = useCategoryDispatch();
 
   useEffect(() => {
-    window['anchorProtocol'] = 'https://'
-    window['openBrowser'] = curry(openBrowser)(agent)
+    window['anchorProtocol'] = 'https://';
+    window['openBrowser'] = curry(openBrowser)(agent);
   }, [agent]);
 
   useEffect(() => {
@@ -143,8 +138,7 @@ const App = (props) => {
   }, [dispatch, state?.mall]);
 
   const getMallInfo = async () => {
-    if (window.location.pathname === '/callback' || window.location.pathname ===
-      '/member/joinStep') {
+    if (window.location.pathname === '/callback' || window.location.pathname === '/member/joinStep') {
       return;
     }
     if (isLogin) {
@@ -243,10 +237,10 @@ const App = (props) => {
       return;
     }
 
-    fetchPopupNos().
-      then((nos) => nos.toString()).
-      then(fetchPopups).
-      then((res) => {
+    fetchPopupNos()
+      .then((nos) => nos.toString())
+      .then(fetchPopups)
+      .then((res) => {
         setPopups(res);
       });
   }, [location]);
@@ -254,13 +248,7 @@ const App = (props) => {
   Array();
 
   const isAppBarEnabled = useMemo(() => {
-    const rejectPathNames = [
-      '/product-view',
-      '/cart',
-      '/order/sheet',
-      '/gift/sheet',
-      '/order/complete',
-      '/app/terms'];
+    const rejectPathNames = ['/product-view', '/cart', '/order/sheet', '/gift/sheet', '/order/complete', '/app/terms'];
     return (
       agent.isApp &&
       ['android', 'ios'].some((v) => v === agent.device) &&
