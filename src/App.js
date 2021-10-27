@@ -114,6 +114,8 @@ import AppBar from './components/app/AppBar';
 import { openBrowser } from './utils/openBrowser.js'
 import{ curry } from 'lodash'
 
+console.log('is devstore')
+
 const App = (props) => {
   const agent = getAgent();
   const history = useHistory();

@@ -3,7 +3,7 @@ import { getAccessToken } from '../../utils/token';
 import { getAgent } from '../../utils/detectAgent';
 
 const SERVER = process.env.REACT_APP_SONY_API_URL;
-const Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb255IGFwaSB0b2tlbiIsImlzcyI6InN0b3JlLnNvbnkuY28ua3IiLCJpYXQiOjE2MjYwNTMxODAsIm5iZiI6MTYyNjA1MzEyMCwiZXhwIjozMzE2MjA1MzE4MH0.jCyxY2T4QqeDiIAIqqUcB835LpcFPnEyPU9lUhA_28c';
+const Authorization = process.env.REACT_APP_SONY_API_AUTHORIZATION;
 
 // API request 모듈
 const request = async (url, method, query = {}, requestBody = null) => {

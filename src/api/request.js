@@ -2,9 +2,9 @@ import axios from 'axios';
 import { isMobile } from 'react-device-detect';
 import { getAccessToken, getGuestToken, removeAccessToken } from '../utils/token';
 
-const SERVER = process.env.REACT_APP_API_URL;
-const version = '1.0';
-const clientId = 'MzuMctQTZBXWmdTlujFy3Q==';
+const SERVER = process.env.REACT_APP_SHOP_API_URL;
+const version = process.env.REACT_APP_SHOP_API_VERSION;
+const clientId = process.env.REACT_APP_SHOP_API_CLIENT_ID;
 //SonyStore ALPHA
 const platform = isMobile ? 'MOBILE_WEB' : 'PC';
 const credentialLevelUrl = {
