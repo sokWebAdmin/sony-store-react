@@ -19,7 +19,12 @@ import cart from '../../assets/images/app/btn_cart.svg';
 import shipping from '../../assets/images/app/btn_shipping.svg';
 import my from '../../assets/images/app/btn_my.svg';
 
-const AppBar = ({ agent, scrollAction, y }) => {
+const AppBar = ({ location, agent, scrollAction, y }) => {
+  const scrollExceptions = useMemo(() => {
+    console.log(location)
+  },[location])
+
+
   const scrollStyle = useMemo(() => {
     if (scrollAction === 'up' || y <= 50) {
       return {
@@ -28,6 +33,7 @@ const AppBar = ({ agent, scrollAction, y }) => {
     }
 
     if (scrollAction === 'down') {
+      console.log(scrollExceptions)
       return {
         transform: 'translateY(100%)',
       };
