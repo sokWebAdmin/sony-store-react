@@ -17,7 +17,7 @@ export const openBrowser = (agent, event) => {
   agent.device === 'ios' ? openIos(href) : openAndroid(href);
 };
 
-export const openWindow = (agent, url, target, features) => {
+export const openWindow = (agent, url, target = '', features = '') => {
   if (!agent.isApp) {
     window.open(url, target, features);
     return;
