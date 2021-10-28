@@ -104,7 +104,7 @@ export default function Main() {
       const { data } = await loadBanner(
         `${kvPc},${kvMo},${recommend},${eventMain},${academyPc},${academyMo},${eventBgPc},${eventBgMo}`,
       );
-      debugger;
+
       const moBanners = data.find(({ code }) => code === kvMo)?.accounts || [];
       getSlideBannerNames(moBanners);
       setSlideMoBanners(moBanners);
@@ -158,7 +158,7 @@ export default function Main() {
         params,
       };
       const { data } = await getDisplaySectionsSectionNo(recommendedRequest);
-      debugger;
+
       setRecommendedSections(data[0].products);
       const eventResponse = await getDisplaySectionsSectionNo(eventRequest);
       setEventSections(eventResponse.data[0]);
