@@ -85,6 +85,7 @@ export default function EspList({history}) {
       console.error(e);
 
       // const testResponse = {"errorCode":"0000","errorMessage":"성공","responseTime":"2021-10-19 15:52:52","paginationInfo":{"rowsPerPage":10,"pageIdx":1,"totalCount":26},"body":[{"modelcod":"80814680","serialno":"1135699","lastdate":"2021-10-12 17:32:27","slipReceiveDate":"2021-10-12 17:32:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W810","purSgtPsbYn":"Y","mallProductNo":"102007713"},{"modelcod":"80814680","serialno":"1121679","lastdate":"2021-10-12 17:32:28","slipReceiveDate":"2021-10-12 17:32:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W810","purSgtPsbYn":"Y","mallProductNo":"102007713"},{"modelcod":"80814680","serialno":"1122550","lastdate":"2021-10-12 17:32:29","slipReceiveDate":"2021-10-12 17:32:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W810","purSgtPsbYn":"Y","mallProductNo":"102007713"},{"modelcod":"80814680","serialno":"1122536","lastdate":"2021-10-12 17:32:30","slipReceiveDate":"2021-10-12 17:32:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W810","purSgtPsbYn":"Y","mallProductNo":"102007713"},{"modelcod":"80815580","serialno":"4741026","lastdate":"2021-10-12 17:33:59","slipReceiveDate":"2021-10-12 17:33:59","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-HX400V","purSgtPsbYn":"Y","mallProductNo":"102007710"},{"modelcod":"80815580","serialno":"4741131","lastdate":"2021-10-12 17:33:59","slipReceiveDate":"2021-10-12 17:33:59","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-HX400V","purSgtPsbYn":"Y","mallProductNo":"102007710"},{"modelcod":"80815580","serialno":"4741206","lastdate":"2021-10-12 17:33:59","slipReceiveDate":"2021-10-12 17:33:59","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-HX400V","purSgtPsbYn":"Y","mallProductNo":"102007710"},{"modelcod":"80815580","serialno":"4741218","lastdate":"2021-10-12 17:33:59","slipReceiveDate":"2021-10-12 17:33:59","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-HX400V","purSgtPsbYn":"Y","mallProductNo":"102007710"},{"modelcod":"80815381","serialno":"4993898","lastdate":"2021-10-12 17:39:28","slipReceiveDate":"2021-10-12 17:39:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W830","purSgtPsbYn":"Y","mallProductNo":"102007711"},{"modelcod":"80815381","serialno":"4993752","lastdate":"2021-10-12 17:39:28","slipReceiveDate":"2021-10-12 17:39:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W830","purSgtPsbYn":"Y","mallProductNo":"102007711"}]};
+      // testResponse.body = testResponse.body.map((t, i) => ({...t, purSgtPsbYn: i % 3 === 0 ? 'Y' : i % 3 === 1 ? 'E' : 'N'}));
       // result.totalCount = testResponse?.paginationInfo?.totalCount || totalCount;
       // result.list = testResponse?.body || [];
     }
@@ -166,10 +167,18 @@ export default function EspList({history}) {
                                 <div className="col_table_cell">
                                   {
                                     product.purSgtPsbYn === 'Y' &&
-                                    <button className="button button_secondary button-s popup_comm_btn" type="button" onClick={() => {
+                                    <button className="button button_primary button-s popup_comm_btn" type="button" onClick={() => {
                                       setTargetProduct(product);
                                     }}>구매 신청
                                     </button>
+                                  }
+                                  {
+                                    product.purSgtPsbYn === 'E' &&
+                                    <button className="button button_secondary button-s popup_comm_btn" type="button" disabled>선택불가</button>
+                                  }
+                                  {
+                                    product.purSgtPsbYn === 'N' &&
+                                    <button className="button button_secondary button-s popup_comm_btn" type="button" disabled>구매불가</button>
                                   }
                                 </div>
                               </div>
