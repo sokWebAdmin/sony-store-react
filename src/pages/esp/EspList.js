@@ -201,6 +201,9 @@ export default function EspList({history}) {
                     <ul className="list_dot">
                       <li>고객님의 아이디로 정품등록 되어진 모델에 대한 정보입니다.</li>
                       <li>연장 서비스 플랜을 구매하실 수 있는 경우 &lt;구매신청&gt;버튼이 노출되며, 클릭하시면 장바구니 페이지로 이동합니다.</li>
+                      <li><em className="color">구매불가 : ESP 상품을 구매할 수 있는 정품등록 제품이 없습니다.</em></li>
+                      <li><em className="color">선택불가 : 정품등록하신 제품과 구매하신 ESP 상품이 매칭되지 않습니다.</em></li>
+                      <li className="bar">자세한 사항은 고객센터를 통해 문의 부탁 드립니다.</li>
                     </ul>
                   </div>
                 </div>
