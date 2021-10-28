@@ -98,8 +98,8 @@ export default function SearchResult({ match }) {
     try {
       const { data } = await getDisplayEvents(keyword);
 
-      setInitialEventList(data);
-      setEventCount(data.length || 0);
+      setInitialEventList(data.filter(({tag}) => tag));
+      setEventCount(data.filter(({tag}) => tag).length || 0);
       fetchEvent(1, data);
     } catch (e) {
       console.error(e);

@@ -84,7 +84,7 @@ const EventBottom = () => {
       return dateL > dateR ? 1 : -1;
     };
     const sortData = sortNewest ? [...data].sort(sortByLatestCreationDate) : [...data].sort(sortByOldestCreationDate);
-    setEvents(sortData);
+    setEvents(sortData.filter(({ tag }) => tag));
   };
 
   const onClickEventDetail = (eventNo, tagName, event) => {
