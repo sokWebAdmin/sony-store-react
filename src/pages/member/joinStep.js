@@ -111,40 +111,42 @@ export default function JoinStep() {
       }
     }
 
-    //비밀번호
-    if (emptyCheck(password.trim())) {
-      setPwWrongType(1);
-      setIsPassword(false);
-      return;
-    } else {
-      const patternNumber = /[0-9]/g;
-      const patternEnglish = /[a-zA-Z]/g;
-      const patternSpecial = /[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]/g;
-
-      const checkNumber = patternNumber.test(password) ? 1 : 0;
-      const checkEnglish = patternEnglish.test(password) ? 1 : 0;
-      const checkSpecial = patternSpecial.test(password) ? 1 : 0;
-      const checkSum = checkNumber + checkEnglish + checkSpecial;
-      if (checkSum === 3 && password.length >= 12) {
-        setIsPassword(true);
-      } else {
-        setPwWrongType(2);
+    if (!location.state?.email) {
+      //비밀번호
+      if (emptyCheck(password.trim())) {
+        setPwWrongType(1);
         setIsPassword(false);
         return;
-      }
-    }
-
-    //비밀번호 확인
-    if (emptyCheck(confirm.trim())) {
-      setConfirmWrongType(1);
-      setIsConfirm(false);
-      return;
-    } else {
-      if (password.trim() == confirm.trim()) {
-        setIsConfirm(true);
       } else {
-        setConfirmWrongType(2);
+        const patternNumber = /[0-9]/g;
+        const patternEnglish = /[a-zA-Z]/g;
+        const patternSpecial = /[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]/g;
+
+        const checkNumber = patternNumber.test(password) ? 1 : 0;
+        const checkEnglish = patternEnglish.test(password) ? 1 : 0;
+        const checkSpecial = patternSpecial.test(password) ? 1 : 0;
+        const checkSum = checkNumber + checkEnglish + checkSpecial;
+        if (checkSum === 3 && password.length >= 12) {
+          setIsPassword(true);
+        } else {
+          setPwWrongType(2);
+          setIsPassword(false);
+          return;
+        }
+      }
+
+      //비밀번호 확인
+      if (emptyCheck(confirm.trim())) {
+        setConfirmWrongType(1);
         setIsConfirm(false);
+        return;
+      } else {
+        if (password.trim() == confirm.trim()) {
+          setIsConfirm(true);
+        } else {
+          setConfirmWrongType(2);
+          setIsConfirm(false);
+        }
       }
     }
 
