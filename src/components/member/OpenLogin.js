@@ -96,7 +96,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
         openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
       }
     } else if (errorCode === '3012') { // 계정 없음
-      if (type === 'join') {
+      if (type === 'login') {
         history.push({
           pathname: '/member/join-agree',
           search: '?sns=true',
