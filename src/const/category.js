@@ -11,8 +11,96 @@ const tagColorMap = {
   C급: '#E70000',
 };
 
+const CATEGORY = {
+  development: {
+    esp: 81643,
+    camera: 60859,
+    lens: 60860,
+    compact: 60862,
+    videocamera: 60865,
+    cinema: 60866,
+    camcoder: 60867,
+    handicam: 60869,
+    hdhandicam: 60870,
+    actioncam: 60868,
+    audio: 60871,
+    headphone: 60872,
+    wireless: 60876,
+    wire: 60877,
+    amp: 60878,
+    headphonehardware: 81641,
+    speaker: 60873,
+    wirelessspeaker: 60879,
+    caraudio: 60880,
+    homeaudio: 60874,
+    workman: 60875,
+    mp3: 60881,
+    recorder: 60882,
+    accessory: 60883,
+    cameraaccessory: 60884,
+    memorycard: 60886,
+    battery: 60887,
+    grip: 60888,
+    flash: 60889,
+    mic: 60890,
+    finder: 60891,
+    tripod: 60892,
+    case: 60894,
+    etc: 60895,
+    kit: 60899,
+    audioaccessory: 60885,
+    playstation: 60896,
+    playstationgame :60898,
+    playstationhardware: 60897
+  },
+  production: {
+    esp: 232809,
+    camera: 232766,
+    lens: 232763,
+    compact: 232769,
+    videocamera: 232770,
+    cinema: 232771,
+    camcoder: 232772,
+    handicam: 232773,
+    hdhandicam: 232775,
+    actioncam: 232776,
+    audio: 232778,
+    headphone: 232779,
+    wireless: 232780,
+    wire: 232781,
+    amp: 232782,
+    headphonehardware: 232909,
+    speaker: 232784,
+    wirelessspeaker: 232788,
+    caraudio: 232789,
+    homeaudio: 232783,
+    workman: 232785,
+    mp3: 232786,
+    recorder: 232787,
+    accessory: 232790,
+    cameraaccessory: 232791,
+    memorycard: 232792,
+    battery: 232793,
+    grip: 232794,
+    flash: 232795,
+    mic: 232796,
+    finder: 232797,
+    tripod: 232798,
+    case: 232799,
+    etc: 232800,
+    kit: 232801,
+    audioaccessory: 232802,
+    playstation: 232804,
+    playstationgame :232806,
+    playstationhardware: 232805
+  },
+  get no() {
+    return this[process.env.NODE_ENV];
+  }
+}
+
 const categoriesExtraDataMap = [];
-let espCategoryNo = 81643;
+let espCategoryNo = CATEGORY.no.esp;
 
 // TODO real 인 경우에 대한 하드코딩 데이터 필요
 // TODO bannerSectionCodes 데이터 확인해야함 (최상위 부모 (카메라 같은) 카테고리만 bannerSectionCodes 를 가짐)
@@ -22,7 +110,8 @@ const { camera, videoCamera, audio, acc } = bannerCode.category;
 if (process.env.NODE_ENV === 'development') {
   // 카메라
   categoriesExtraDataMap.push({
-    categoryNo: 60859,
+    // categoryNo: 60859,
+    categoryNo: CATEGORY.no.camera,
     url: '/products/camera',
     bannerSectionCodes: camera,
     isAvailableMoveESP: true,
@@ -30,30 +119,30 @@ if (process.env.NODE_ENV === 'development') {
   });
   // 카메라 > 렌즈교환식카메라
   categoriesExtraDataMap.push({
-    categoryNo: 60860,
+    categoryNo: CATEGORY.no.lens,
     url: '/products/camera/lens',
   });
   // 카메라 > 렌즈교환식카메라 > 카메라
   categoriesExtraDataMap.push({
-    categoryNo: 60863,
+    categoryNo: CATEGORY.no.lens,
     url: '/products/camera/lens',
     tab: 'camera',
   });
   // 카메라 > 렌즈교환식카메라 > 렌즈
   categoriesExtraDataMap.push({
-    categoryNo: 60864,
+    categoryNo: CATEGORY.no.lens,
     url: '/products/camera/lens',
     tab: 'lens',
   });
   // 카메라 > 컴팩트카메라
   categoriesExtraDataMap.push({
-    categoryNo: 60862,
+    categoryNo: CATEGORY.no.compact,
     url: '/products/camera/compact',
   });
 
   // 비디오 카메라
   categoriesExtraDataMap.push({
-    categoryNo: 60865,
+    categoryNo: CATEGORY.no.videocamera,
     url: '/products/videocamera',
     bannerSectionCodes: videoCamera,
     isAvailableMoveESP: true,
@@ -61,211 +150,211 @@ if (process.env.NODE_ENV === 'development') {
   });
   // 비디오 카메라 > 시네마라인카메라
   categoriesExtraDataMap.push({
-    categoryNo: 60866,
+    categoryNo: CATEGORY.no.cinema,
     url: '/products/videocamera/cinema',
   });
   // 비디오 카메라 > 캠코더
   categoriesExtraDataMap.push({
-    categoryNo: 60867,
+    categoryNo: CATEGORY.no.camcoder,
     url: '/products/videocamera/camcoder',
   });
   // 비디오 카메라 > 캠코더 > 4K 핸디캠
   categoriesExtraDataMap.push({
-    categoryNo: 60869,
+    categoryNo: CATEGORY.no.handicam,
     url: '/products/videocamera/camcoder',
     tab: '4k-handy',
   });
   // 비디오 카메라 > 캠코더 > HD 핸디캠
   categoriesExtraDataMap.push({
-    categoryNo: 60870,
+    categoryNo: CATEGORY.no.hdhandicam,
     url: '/products/videocamera/camcoder',
     tab: 'hd-handy',
   });
   // 비디오 카메라 > 액션캠
   categoriesExtraDataMap.push({
-    categoryNo: 60868,
+    categoryNo: CATEGORY.no.actioncam,
     url: '/products/videocamera/action',
   });
 
   // 오디오
   categoriesExtraDataMap.push({
-    categoryNo: 60871,
+    categoryNo: CATEGORY.no.audio,
     url: '/products/audio',
     bannerSectionCodes: audio,
     isAvailableMoveProductCompare: true,
   });
   // 오디오 > 헤드폰/이어폰
   categoriesExtraDataMap.push({
-    categoryNo: 60872,
+    categoryNo: CATEGORY.no.headphone,
     url: '/products/audio/headphone',
   });
   // 오디오 > 헤드폰/이어폰 > 헤드폰
   categoriesExtraDataMap.push({
-    categoryNo: 81641,
+    categoryNo: CATEGORY.no.headphonehardware,
     url: '/products/audio/headphone',
     tab: 'headphone',
   });
   // 오디오 > 헤드폰/이어폰 > 무선 이어폰
   categoriesExtraDataMap.push({
-    categoryNo: 60876,
+    categoryNo: CATEGORY.no.wireless,
     url: '/products/audio/headphone',
     tab: 'wireless',
   });
   // 오디오 > 헤드폰/이어폰 > 유선 이어폰
   categoriesExtraDataMap.push({
-    categoryNo: 60877,
+    categoryNo: CATEGORY.no.wire,
     url: '/products/audio/headphone',
     tab: 'wired',
   });
   // 오디오 > 헤드폰/이어폰 > 헤드폰 엠프
   categoriesExtraDataMap.push({
-    categoryNo: 60878,
+    categoryNo: CATEGORY.no.amp,
     url: '/products/audio/headphone',
     tab: 'amp',
   });
   // 오디오 > 스피커
   categoriesExtraDataMap.push({
-    categoryNo: 60873,
+    categoryNo: CATEGORY.no.speaker,
     url: '/products/audio/speaker',
   });
   // 오디오 > 스피커 > 무선 스피커
   categoriesExtraDataMap.push({
-    categoryNo: 60879,
+    categoryNo: CATEGORY.no.wirelessspeaker,
     url: '/products/audio/speaker',
     tab: 'wireless',
   });
   // 오디오 > 스피커 > 카오디오
   categoriesExtraDataMap.push({
-    categoryNo: 60880,
+    categoryNo: CATEGORY.no.caraudio,
     url: '/products/audio/speaker',
     tab: 'car',
   });
   // 오디오 > 홈오디오
   categoriesExtraDataMap.push({
-    categoryNo: 60874,
+    categoryNo: CATEGORY.no.homeaudio,
     url: '/products/audio/homeaudio',
   });
   // 오디오 > 워크맨/녹음기
   categoriesExtraDataMap.push({
-    categoryNo: 60875,
+    categoryNo: CATEGORY.no.workman,
     url: '/products/audio/recorder',
   });
   // 오디오 > 워크맨/녹음기 > MP3플레이어
   categoriesExtraDataMap.push({
-    categoryNo: 60881,
+    categoryNo: CATEGORY.no.mp3,
     url: '/products/audio/recorder',
     tab: 'mp3',
   });
   // 오디오 > 워크맨/녹음기 > 녹음기
   categoriesExtraDataMap.push({
-    categoryNo: 60882,
+    categoryNo: CATEGORY.no.recorder,
     url: '/products/audio/recorder',
     tab: 'recorder',
   });
 
   // 액세서리
   categoriesExtraDataMap.push({
-    categoryNo: 60883,
+    categoryNo: CATEGORY.no.accessory,
     url: '/products/accessory',
     bannerSectionCodes: acc,
     isAvailableMoveAccessoryCompatibility: true,
   });
   // 액세서리 > 카메라 액세서리
   categoriesExtraDataMap.push({
-    categoryNo: 60884,
+    categoryNo: CATEGORY.no.cameraaccessory,
     url: '/products/accessory/camera',
   });
   // 액세서리 > 카메라 액세서리 > 메모리카드/SSD
   categoriesExtraDataMap.push({
-    categoryNo: 60886,
+    categoryNo: CATEGORY.no.memorycard,
     url: '/products/accessory/camera',
     tab: 'memory',
   });
   // 액세서리 > 카메라 액세서리 > 배터리,충전기/어댑터
   categoriesExtraDataMap.push({
-    categoryNo: 60887,
+    categoryNo: CATEGORY.no.battery,
     url: '/products/accessory/camera',
     tab: 'battery',
   });
   // 액세서리 > 카메라 액세서리 > 세로 그립
   categoriesExtraDataMap.push({
-    categoryNo: 60888,
+    categoryNo: CATEGORY.no.grip,
     url: '/products/accessory/camera',
     tab: 'vertical-grip',
   });
   // 액세서리 > 카메라 액세서리 > 플래시/조명
   categoriesExtraDataMap.push({
-    categoryNo: 60889,
+    categoryNo: CATEGORY.no.flash,
     url: '/products/accessory/camera',
     tab: 'flash',
   });
   // 액세서리 > 카메라 액세서리 > 마이크
   categoriesExtraDataMap.push({
-    categoryNo: 60890,
+    categoryNo: CATEGORY.no.mic,
     url: '/products/accessory/camera',
     tab: 'mic',
   });
   // 액세서리 > 카메라 액세서리 > 뷰파인더/모니터
   categoriesExtraDataMap.push({
-    categoryNo: 60891,
+    categoryNo: CATEGORY.no.finder,
     url: '/products/accessory/camera',
     tab: 'view-finder',
   });
   // 액세서리 > 카메라 액세서리 > 삼각대/리모콘
   categoriesExtraDataMap.push({
-    categoryNo: 60892,
+    categoryNo: CATEGORY.no.tripod,
     url: '/products/accessory/camera',
     tab: 'tripod',
   });
   // 액세서리 > 카메라 액세서리 > 케이스/커버/스트랩
   categoriesExtraDataMap.push({
-    categoryNo: 60894,
+    categoryNo: CATEGORY.no.case,
     url: '/products/accessory/camera',
     tab: 'case',
   });
   // 액세서리 > 카메라 액세서리 > 기타
   categoriesExtraDataMap.push({
-    categoryNo: 60895,
+    categoryNo: CATEGORY.no.etc,
     url: '/products/accessory/camera',
     tab: 'etc',
   });
   // 액세서리 > 카메라 액세서리 > 액세서리 키트
   categoriesExtraDataMap.push({
-    categoryNo: 60899,
+    categoryNo: CATEGORY.no.kit,
     url: '/products/accessory/camera',
     tab: 'kit',
   });
   // 액세서리 > 오디오 액세서리
   categoriesExtraDataMap.push({
-    categoryNo: 60885,
+    categoryNo: CATEGORY.no.audioaccessory,
     url: '/products/accessory/audio',
   });
 
   // PlayStation
   categoriesExtraDataMap.push({
-    categoryNo: 60896,
+    categoryNo: CATEGORY.no.playstation,
     url: '/products/playstation',
   });
   // PlayStation > PlayStation
   categoriesExtraDataMap.push({
-    categoryNo: 60897,
+    categoryNo: CATEGORY.no.playstationhardware,
     url: '/products/playstation/playstation',
   });
   // PlayStation > 게임 타이틀 및 주변기기
   categoriesExtraDataMap.push({
-    categoryNo: 60898,
+    categoryNo: CATEGORY.no.playstationgame,
     url: '/products/playstation/title',
   });
 
-  espCategoryNo = 81643;
+  espCategoryNo = CATEGORY.no.esp;
 } else {
   categoriesExtraDataMap.push({
-    categoryNo: 60859,
+    categoryNo: CATEGORY.no.camera,
     url: '/products/camera',
     bannerSectionCodes: '000',
   });
 
-  espCategoryNo = 81643;
+  espCategoryNo = CATEGORY.no.esp;
 }
 
 // GNB 카테고리
