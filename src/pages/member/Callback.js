@@ -36,12 +36,13 @@ const Callback = () => {
       state,
       servicesite: { snsinfo: redirectedProvider.substring(0, 1).toUpperCase() },
     });
-    const accessCode = ['0000', '3000', '3001', '3002'];
+    const accessCode = ['0000', '3000', '3001', '3002', '3012'];
     if (accessCode.includes(openIdProfile.errorCode)) {
       shopOauthCallback?.(openIdProfile.errorCode, openIdProfile.body);
       window.close();
     } else {
       openAlert(openIdProfile.errorMessage, () => () => {
+        window.close();
       });
     }
   };
