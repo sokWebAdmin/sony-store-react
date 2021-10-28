@@ -1,6 +1,4 @@
 $(function(){
-  console.log("ux-main.js loaded")
-
   const evWrap = document.querySelector(".event__wrapper");
   const breakpoint1 = 1280;
   const breakpoint2 = 640;

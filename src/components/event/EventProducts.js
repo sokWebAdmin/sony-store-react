@@ -85,7 +85,6 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
       }
     } catch (e) {
       e?.message && openAlert(e.message);
-      console.log(e);
     }
   };
 

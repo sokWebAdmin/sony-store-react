@@ -217,7 +217,6 @@ export default function JoinStep() {
         //성공
         openAlert('회원가입이 완료되었습니다.', async () => {
           const response = await loginApi(email, password);
-          console.log(response);
           if (response.status === 200) {
             const { accessToken, expireIn } = response.data;
             setAccessToken(accessToken, expireIn);

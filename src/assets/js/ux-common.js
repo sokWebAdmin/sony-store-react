@@ -1,6 +1,4 @@
 $(() => {
-  console.log("ux-common.js loaded");
-
   // elems.
   const breakpoint = 1280;
   const html = document.querySelector("html");
@@ -153,7 +151,6 @@ $(() => {
       const link = e.target.closest(".footer__family__link");
       const active = "footer__family__link--active";
       const outsideClick = e => {
-        console.log(!link.contains(e.target))
         if (!link.contains(e.target)) {
           $(link).removeClass(active);
           body.removeEventListener("click", outsideClick);
@@ -788,8 +785,6 @@ function fullSliderBanner(){
   }
   function slideFunc(_obj){
     let _sliderSize = $(_obj).find('.swiper-slide').length;
-    console.log(_sliderSize);
-    console.log($(_obj))
     if(_sliderSize > 1){ // 2개 이상 부터 swiper 사용.
       $(_obj).removeClass("swiper_none");
       swiperIni($(_obj))

@@ -123,7 +123,6 @@ const Cart = ({ location }) => {
   function checkGuestCartMissingProduct (
     availableProducts, guestCartStorageItems) {
     if (guestCartStorageItems.length > availableProducts.length) {
-      console.log(availableProducts);
       alert('구매 불가한 상품이 포함되어있어 제거 되었습니다.');
       gcUpdate(availableProducts);
       location.reload();

@@ -113,8 +113,6 @@ import AppBar from './components/app/AppBar';
 
 import { openBrowser, openWindow } from './utils/openBrowser.js';
 
-console.log('hello real')
-
 const App = (props) => {
   const agent = getAgent();
   const history = useHistory();

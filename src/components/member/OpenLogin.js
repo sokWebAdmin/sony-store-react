@@ -72,7 +72,6 @@ const OpenLogin = ({ title, message, customCallback }) => {
   const _openIdAuthCallback = async (errorCode, profileResult = null) => {
     window.shopOauthCallback = null;
 
-    console.log(profileResult);
     if (errorCode === '0000') { // 성공
       history.push({
         pathname: '/member/join-agree?sns=true',

@@ -7,8 +7,6 @@ export const setWithExpire = (
   data,
   expire = 1000 * 60 * 60 * 24, // default: 1Day
 ) => {
-  console.log(expire);
-
   const unix = Date.now() + expire;
 
   set(name, data);

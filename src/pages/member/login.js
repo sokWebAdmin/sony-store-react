@@ -112,7 +112,6 @@ export default function Login({ location }) {
         if (!!history.location.state?.next) {
           history.push(history.location.state.next);
         } else {
-          console.log(nextLocation);
           nextLocation === 'cart' ? history.push(`/${nextLocation}?savingGuestCart=true`) : history.push('/');
         }
       }
