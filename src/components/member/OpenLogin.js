@@ -31,7 +31,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   const { onChangeGlobal } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
 
-  const openIdData = openIdJoinConfig?.providers.sort((a) => a === 'naver' ? -1 : 1).map(provider => ({
+  const openIdData = ['naver', 'kakao', 'facebook'].sort((a) => a === 'naver' ? -1 : 1).map(provider => ({
     provider,
     label: label[provider],
   }));
@@ -61,7 +61,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     setItem(KEY.OPENID_TOKEN, state, 30 * 60 * 1000);
 
     const loginUrl = OPEN_URL[type].replace('{clientId}', clientId).replace('{redirectUri}', redirectUri).replace('{state}', state);
-    window.openWindow(loginUrl, '간편 로그인', 'width=420px,height=550px,scrollbars=yes');
+    window.openWindow(loginUrl, '간편 로그인', 'width=420px,height=550px,scrollbars=yes', 'verification');
     openLoginPopup();
   };
 
@@ -96,7 +96,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
         openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
       }
     } else if (errorCode === '3012') { // 계정 없음
-      if (type === 'join') {
+      if (type === 'login') {
         history.push({
           pathname: '/member/join-agree',
           search: '?sns=true',
