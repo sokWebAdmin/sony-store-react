@@ -319,7 +319,7 @@ export default function Login({ location }) {
                 <span className="txt">또는</span>
                 <span className="bar" />
               </div>
-              <OpenLogin />
+              <OpenLogin type="login" />
             </div>
 
             {/* 비회원 로그인 */}

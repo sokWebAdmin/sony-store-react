@@ -25,7 +25,7 @@ const OPEN_URL = {
   kakao: process.env.REACT_APP_KAKAO_OPEN_URL,
 };
 
-const OpenLogin = ({ title, message, customCallback }) => {
+const OpenLogin = ({ type, title, message, customCallback }) => {
   const history = useHistory();
   const { openIdJoinConfig } = useMallState();
   const { onChangeGlobal } = useContext(GlobalContext);
@@ -73,30 +73,46 @@ const OpenLogin = ({ title, message, customCallback }) => {
     window.shopOauthCallback = null;
 
     console.log(profileResult);
-    if (errorCode === '0000') { // 성공
-      history.push({
-        pathname: '/member/join-agree?sns=true',
-        state: {
-          email: profileResult.customerid,
+    if (errorCode === '0000') { // 계정 있음
+      if (type === 'join') {
+        const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
+        const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
+
+        if (response.status !== 200) {
+          openAlert('간편 인증에 실패하였습니다.');
+          return;
         }
-      });
-    } else if (errorCode === '3000') {
-      const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
-      const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
 
-      if (response.status !== 200) {
-        openAlert('간편 인증에 실패하였습니다.');
-        return;
+        const { accessToken, expireIn } = response.data;
+        setAccessToken(accessToken, expireIn);
+        onChangeGlobal({ isLogin: true });
+        const profile = await getProfile();
+        const data = { type: '30', customerid: profile.data.memberId };
+        setProfile(profileDispatch, profile.data);
+        await fetchMyProfile(profileDispatch, data);
+
+        openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
+      } else {
+        openAlert('이미 가입된 계정이 있습니다.');
       }
-
-      const { accessToken, expireIn } = response.data;
-      setAccessToken(accessToken, expireIn);
-      onChangeGlobal({ isLogin: true });
-      const profile = await getProfile();
-      const data = { type: '30', customerid: profile.data.memberId };
-      setProfile(profileDispatch, profile.data);
-      await fetchMyProfile(profileDispatch, data);
-      openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
+    } else if (errorCode === '3012') { // 계정 없음
+      if (type === 'join') {
+        history.push({
+          pathname: '/member/join-agree?sns=true',
+          state: {
+            email: profileResult.customerid,
+          }
+        });
+      } else {
+        openAlert('해당 SNS 계정으로 가입되어 있지 않습니다.', () => {
+          history.push({
+            pathname: '/member/join-agree?sns=true',
+            state: {
+              email: profileResult.customerid,
+            }
+          });
+        });
+      }
     } else if (errorCode === '3001' || errorCode === '3002') {
       const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
       const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
