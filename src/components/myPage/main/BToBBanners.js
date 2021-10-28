@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 import { loadBanner } from '../../../api/display';
 
 import '../../../assets/scss/partials/myPageBanner.scss';
+import { bannerCode } from '../../../bannerCode';
 
 const BToBBanners = () => {
   const [banners, setBanners] = useState([]);
 
   const init = useCallback(async () => {
-    mapData(await fetchBanner('018'));
-    mapData(await fetchBanner('025'));
-    mapData(await fetchBanner('026'));
-    mapData(await fetchBanner('019'));
+    const { asc, employee, refined } = bannerCode.myPage;
+    mapData(await fetchBanner(employee));
+    mapData(await fetchBanner(refined));
+    mapData(await fetchBanner(asc));
   }, []);
 
   useEffect(init, []);
