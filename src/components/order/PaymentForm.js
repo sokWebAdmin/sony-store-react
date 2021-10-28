@@ -43,7 +43,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
               }
             </div>
             <div className="tabResult">
-              {payment.payType !== 'VIRTUAL_ACCOUNT' && <div
+              {payment.payType !== 'ESCROW_VIRTUAL_ACCOUNT' && <div
                 className="result_cont radio_tab1 on">
                 <strong className="info_tit">신용카드 무이자 할부
                   유의사항</strong>
@@ -57,7 +57,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                   </li>
                 </ul>
               </div>}
-              {payment.payType === 'VIRTUAL_ACCOUNT' &&
+              {payment.payType === 'ESCROW_VIRTUAL_ACCOUNT' &&
               <div className="result_cont radio_tab2 on">
                 <div className="bg_recipe_box">
                   <strong className="info_tit2">전자 세금
