@@ -316,9 +316,13 @@ export default function OrderDetail() {
         <div className="container my">
           <div className="content">
             <div className="common_head">
-              <Link to="/my-page/order-list" className="common_head_back">
-                주문/배송내역
-              </Link>
+              {isLogin ?
+                <Link to="/my-page/order-list" className="common_head_back">
+                  주문/배송내역
+                </Link>
+                :
+                <a className="common_head_back">주문/배송내역</a>
+              }
               <h1 className="common_head_name">주문 상세 조회</h1>
             </div>
             {!isClaimStart(orderInfo.defaultOrderStatusType) && (
