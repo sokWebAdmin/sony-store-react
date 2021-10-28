@@ -260,6 +260,8 @@ const App = (props) => {
     throttle(
       (e) => {
         const window = e.currentTarget;
+        if (!window?.scrollY) return;
+
         if (y > window.scrollY) {
           setScrollAction('up');
         } else if (y < window.scrollY) {
@@ -409,9 +411,9 @@ const App = (props) => {
 
             <Route component={Error404} />
           </Switch>
-          {isAppBarEnabled && <AppBar agent={agent} location={location} scrollAction={scrollAction} y={y} />}
+          {isAppBarEnabled && <AppBar agent={agent}scrollAction={scrollAction} y={y} />}
           {!window.location.href.includes('/app/terms/') && (
-            <Footer isAppBarEnabled={isAppBarEnabled} scrollAction={scrollAction} />
+            <Footer isAppBarEnabled={isAppBarEnabled} scrollAction={scrollAction} location={location} />
           )}
         </div>
       ) : (

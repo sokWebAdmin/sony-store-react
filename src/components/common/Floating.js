@@ -34,8 +34,10 @@ const chat = () => {
   $form.submit();
 };
 
-export default function Floating({ scrollAction }) {
+export default function Floating({ location, scrollAction }) {
   const history = useHistory();
+
+  const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'),[location])
 
   const info = useMallState();
   const TEL = info?.mall?.serviceCenter.phoneNo;
@@ -118,14 +120,14 @@ export default function Floating({ scrollAction }) {
       };
     }
 
-    if (scrollAction === 'down') {
+    if (scrollAction === 'down' && !scrollBottomException) {
       return {
         position: 'fixed',
         bottom: '24px',
       };
     }
 
-    if (scrollAction === 'up') {
+    if (scrollAction === 'up' || scrollBottomException) {
       return {
         position: 'fixed',
         bottom: '88px',
