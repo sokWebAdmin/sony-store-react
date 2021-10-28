@@ -260,6 +260,8 @@ const App = (props) => {
     throttle(
       (e) => {
         const window = e.currentTarget;
+        if (!window?.scrollY) return;
+
         if (y > window.scrollY) {
           setScrollAction('up');
         } else if (y < window.scrollY) {
