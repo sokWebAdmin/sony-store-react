@@ -611,13 +611,13 @@ export default function Main() {
                       자세히 보기
                     </a>
                   ) : (
-                    <Link
+                    <a
                       className="main__banner__link"
-                      to={academyMoBanners.banners[0]?.landingUrl}
+                      href={academyMoBanners.banners[0]?.landingUrl}
                       target={academyMoBanners?.banners[0]?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
                     >
                       자세히 보기
-                    </Link>
+                    </a>
                   )}
                 </div>
               </div>
