@@ -17,12 +17,13 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/swiper.scss';
 import { getEventByEventNo } from '../../api/display';
 import SEOHelmet from '../../components/SEOHelmet';
+import { bannerCode } from '../../bannerCode';
 
 export default function Curation() {
   const [url, setUrl] = useState('');
-
+  const { curation } = bannerCode;
   const getEvent = useCallback(async () => {
-    const response = await getEventByEventNo(467);
+    const response = await getEventByEventNo(curation);
     if (response.status === 400) return;
     setUrl(response.data.url);
   }, []);
