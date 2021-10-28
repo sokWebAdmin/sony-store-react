@@ -199,7 +199,7 @@ const OrderSheet = ({ location }) => {
         setRecentAddresses(orderSheetAddress.recentAddresses.slice(0, 5));
       }
       catch (err) {
-        console.log(err);
+        console.error(err);
       }
     },
   }), []);

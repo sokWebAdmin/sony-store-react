@@ -1,11 +1,9 @@
 const openIos = url => {
   const encodedParam = fixedEncodeURIComponent('||' + url);
-  console.log('ios push : ', url);
   window.location = 'sonyapp://openbrowser' + encodedParam;
 };
 
 const openAndroid = url => {
-  console.log('android push : ', url);
   window.location = 'sonyapp://openbrowser||' + url;
 };
 

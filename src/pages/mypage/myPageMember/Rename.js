@@ -29,17 +29,17 @@ export default function Rename() {
   const mobileConfirm = (status) => {
     setConfirmVisible(false);
     if (status === 'ok') {
-      console.log('@todo 모바일 인증화면 필요함');
+      // console.log('@todo 모바일 인증화면 필요함');
     } else if (status === 'cancel') {
-      console.log('취소');
+      // console.log('취소');
     }
   };
   const ipinConfirm = (status) => {
     setConfirmVisible(false);
     if (status === 'ok') {
-      console.log('@todo 아이핀 인증화면 필요함');
+      // console.log('@todo 아이핀 인증화면 필요함');
     } else if (status === 'cancel') {
-      console.log('취소');
+      // console.log('취소');
     }
   };
 
