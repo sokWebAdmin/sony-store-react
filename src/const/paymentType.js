@@ -6,7 +6,7 @@ const paymentType = {
   },
   virtualAccount: {
     pgType: 'INICIS',
-    payType: 'VIRTUAL_ACCOUNT',
+    payType: 'ESCROW_VIRTUAL_ACCOUNT',
     label: '가상계좌',
   },
   nPay: {

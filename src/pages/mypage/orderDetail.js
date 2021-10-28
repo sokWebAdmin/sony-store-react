@@ -70,7 +70,7 @@ export default function OrderDetail() {
 
   const [payInfo, setPayInfo] = useState({
     // 결제 정보
-    payType: '', // 가상계좌 VIRTUAL_ACCOUNT, 신용카드 CREDIT_CARD
+    payType: '', // 가상계좌 ESCROW_VIRTUAL_ACCOUNT, 신용카드 CREDIT_CARD
     cardInfo: null, // 가상계좌일 때 NUll
     bankInfo: null, // 신용카드일 때 Null
   });
@@ -214,7 +214,7 @@ export default function OrderDetail() {
 
     if (status === 'ok') {
       if (confirm.name === 'cancel-confirm') {
-        if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+        if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
           setRefundAccountVisible(() => true);
         } else {
           _cancelOrder();
@@ -274,18 +274,18 @@ export default function OrderDetail() {
 
       let message =
         '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
-      if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+      if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
         message += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.';
       }
 
       openAlert(message, () => {
-        if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+        if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
           return async () => {
             const { data } = await _getOrderByOrderNo();
             const { claimStatusType, claimNo } =
               data.orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0];
 
-            if (!!claimNo && payInfo.payType === 'VIRTUAL_ACCOUNT') {
+            if (!!claimNo && payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
               setClaimInfo(() => ({ claimStatusType, claimNo }));
               setRefundAccountVisible(() => false);
               window.location.reload();
