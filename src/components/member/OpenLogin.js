@@ -75,6 +75,8 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     console.log(profileResult);
     if (errorCode === '0000') { // 계정 있음
       if (type === 'join') {
+        openAlert('이미 가입된 계정이 있습니다.');
+      } else {
         const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
         const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
 
@@ -92,8 +94,6 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
         await fetchMyProfile(profileDispatch, data);
 
         openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
-      } else {
-        openAlert('이미 가입된 계정이 있습니다.');
       }
     } else if (errorCode === '3012') { // 계정 없음
       if (type === 'join') {
