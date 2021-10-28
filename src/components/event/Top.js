@@ -6,6 +6,7 @@ import { getStrDate } from '../../utils/dateFormat';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from '../../hooks';
 import styled from 'styled-components';
+import { bannerCode } from '../../bannerCode';
 
 const EventTop = () => {
   SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
@@ -15,8 +16,9 @@ const EventTop = () => {
   const [bannersMo, setBannersMo] = useState([]);
 
   const fetchBanners = async () => {
-    const { data } = await loadBanner('006');
-    const response = await loadBanner('007');
+    const { pc, mo } = bannerCode.event;
+    const { data } = await loadBanner(pc);
+    const response = await loadBanner(mo);
     setBanners(breakLineDescription(data[0].accounts[0].banners));
     setBannersMo(breakLineDescription(response.data[0].accounts[0].banners));
   };

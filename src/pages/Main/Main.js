@@ -19,13 +19,13 @@ import '../../assets/scss/main.scss';
 
 //utils
 import { useWindowSize, wonComma } from '../../utils/utils';
-import { breakPoint, breakPointTablet } from '../../utils/constants';
+import { breakPoint } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
 
 import { getDisplaySectionsSectionNo, loadBanner } from '../../api/display';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
-import LayerPopup from '../../components/common/LayerPopup';
+import { bannerCode } from '../../bannerCode';
 
 export default function Main() {
   const history = useHistory();
@@ -100,29 +100,33 @@ export default function Main() {
   //1. 배너 노출 api
   const getBanners = useCallback(async () => {
     try {
-      const { data } = await loadBanner('000,001,002,003,004,005,028,029');
-      const moBanners = data.find(({ code }) => code === '001')?.accounts || [];
+      const { kvPc, kvMo, recommend, eventMain, eventBgPc, eventBgMo, academyMo, academyPc } = bannerCode.main;
+      const { data } = await loadBanner(
+        `${kvPc},${kvMo},${recommend},${eventMain},${academyPc},${academyMo},${eventBgPc},${eventBgMo}`,
+      );
+      debugger;
+      const moBanners = data.find(({ code }) => code === kvMo)?.accounts || [];
       getSlideBannerNames(moBanners);
       setSlideMoBanners(moBanners);
-      const eventBanners = data.find(({ code }) => code === '003')?.accounts || [];
+      const eventBanners = data.find(({ code }) => code === eventMain)?.accounts || [];
       setEventBanners(eventBanners);
-      const academyPcBanners = data.find(({ code }) => code === '004')?.accounts[0] || {};
+      const academyPcBanners = data.find(({ code }) => code === academyPc)?.accounts[0] || {};
       getAcademyBannerNames(academyPcBanners);
       setAcademyPcBanners(academyPcBanners);
-      const academyMoBanners = data.find(({ code }) => code === '005')?.accounts[0] || {};
+      const academyMoBanners = data.find(({ code }) => code === academyMo)?.accounts[0] || {};
       getAcademyBannerNames(academyMoBanners);
       setAcademyMoBanners(academyMoBanners);
 
-      const slidePcBanners = data.find(({ code }) => code === '000')?.accounts || [];
+      const slidePcBanners = data.find(({ code }) => code === kvPc)?.accounts || [];
       getSlideBannerNames(slidePcBanners);
       setSlidePcBanners(slidePcBanners);
-      const recommendedBanners = data.find(({ code }) => code === '002')?.accounts || [];
+      const recommendedBanners = data.find(({ code }) => code === recommend)?.accounts || [];
       getRecommendedBannerNames(recommendedBanners);
       setRecommendedBanners(recommendedBanners);
 
-      const eventBgPcBanners = data.find(({ code }) => code === '028')?.accounts[0] || [];
+      const eventBgPcBanners = data.find(({ code }) => code === eventBgPc)?.accounts[0] || [];
       setEventBgPcBanners(eventBgPcBanners);
-      const eventBgMoBanners = data.find(({ code }) => code === '029')?.accounts[0] || [];
+      const eventBgMoBanners = data.find(({ code }) => code === eventBgMo)?.accounts[0] || [];
       setEventBgMoBanners(eventBgMoBanners);
     } catch (e) {
       console.error(e);
@@ -132,6 +136,8 @@ export default function Main() {
   //2. 섹션 조회
   const getSections = useCallback(async () => {
     // 5742: 추천상품 5833:이벤트
+    const { recommend, event } = bannerCode.product;
+
     try {
       const params = {
         by: 'ADMIN_SETTING',
@@ -141,17 +147,18 @@ export default function Main() {
       };
       const recommendedRequest = {
         pathParams: {
-          sectionNo: 5742,
+          sectionNo: recommend,
         },
         params,
       };
       const eventRequest = {
         pathParams: {
-          sectionNo: 5833,
+          sectionNo: event,
         },
         params,
       };
       const { data } = await getDisplaySectionsSectionNo(recommendedRequest);
+      debugger;
       setRecommendedSections(data[0].products);
       const eventResponse = await getDisplaySectionsSectionNo(eventRequest);
       setEventSections(eventResponse.data[0]);
@@ -637,7 +644,11 @@ export default function Main() {
                   </a>
                 </li>
                 <li className="main__help__list service">
-                  <a href={window.anchorProtocol + "www.sony.co.kr/electronics/support"} onClick={window.openBrowser} target="_blank">
+                  <a
+                    href={window.anchorProtocol + 'www.sony.co.kr/electronics/support'}
+                    onClick={window.openBrowser}
+                    target="_blank"
+                  >
                     제품지원
                   </a>
                 </li>

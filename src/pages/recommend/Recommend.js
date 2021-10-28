@@ -30,6 +30,7 @@ import 'swiper/swiper.scss';
 import { Link } from 'react-router-dom';
 import { loadBanner } from '../../api/display';
 import { changeDateFormat, getDay, getStrHM } from '../../utils/dateFormat';
+import { bannerCode } from '../../bannerCode';
 
 export default function Recommend({ match }) {
   const history = useHistory();
@@ -46,11 +47,12 @@ export default function Recommend({ match }) {
     try {
       //배너 코드 객체로 관리하기
       //응답이 순서를 보징하지 않음
-      const { data } = await loadBanner('013,015,016,017');
-      const slideBanners = data.find(({ code }) => code === '013')?.accounts || [];
-      const recommendBanners = data.find(({ code }) => code === '015')?.accounts || [];
-      const middleBanners = data.find(({ code }) => code === '016')?.accounts || [];
-      const eventBanners = data.find(({ code }) => code === '017')?.accounts || [];
+      const { kvPc, kvMo, recommend, bg, event } = bannerCode.recommend;
+      const { data } = await loadBanner(`${kvPc},${kvMo},${recommend},${bg},${event}`);
+      const slideBanners = data.find(({ code }) => code === kvPc)?.accounts || [];
+      const recommendBanners = data.find(({ code }) => code === recommend)?.accounts || [];
+      const middleBanners = data.find(({ code }) => code === bg)?.accounts || [];
+      const eventBanners = data.find(({ code }) => code === event)?.accounts || [];
 
       if (recommendBanners.length > 4) {
         setRecommendTopBanners(recommendBanners.splice(0, 4));

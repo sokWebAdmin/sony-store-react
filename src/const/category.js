@@ -1,4 +1,5 @@
 import { getEventByEventNo } from '../api/display';
+import { bannerCode } from '../bannerCode';
 
 const tagColorMap = {
   NEW: '#FF4E00',
@@ -16,12 +17,14 @@ let espCategoryNo = 81643;
 // TODO real 인 경우에 대한 하드코딩 데이터 필요
 // TODO bannerSectionCodes 데이터 확인해야함 (최상위 부모 (카메라 같은) 카테고리만 bannerSectionCodes 를 가짐)
 // NOTE 검색(카테고리)에서 categoriesExtraDataMap 의 url 을 사용하고 있음
+const { camera, videoCamera, audio, acc } = bannerCode.category;
+
 if (process.env.NODE_ENV === 'development') {
   // 카메라
   categoriesExtraDataMap.push({
     categoryNo: 60859,
     url: '/products/camera',
-    bannerSectionCodes: '020',
+    bannerSectionCodes: camera,
     isAvailableMoveESP: true,
     isAvailableMoveProductCompare: true,
   });
@@ -52,7 +55,7 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 60865,
     url: '/products/videocamera',
-    bannerSectionCodes: '021',
+    bannerSectionCodes: videoCamera,
     isAvailableMoveESP: true,
     isAvailableMoveProductCompare: true,
   });
@@ -88,7 +91,7 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 60871,
     url: '/products/audio',
-    bannerSectionCodes: '022',
+    bannerSectionCodes: audio,
     isAvailableMoveProductCompare: true,
   });
   // 오디오 > 헤드폰/이어폰
@@ -164,7 +167,7 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 60883,
     url: '/products/accessory',
-    bannerSectionCodes: '023',
+    bannerSectionCodes: acc,
     isAvailableMoveAccessoryCompatibility: true,
   });
   // 액세서리 > 카메라 액세서리
@@ -242,7 +245,6 @@ if (process.env.NODE_ENV === 'development') {
   categoriesExtraDataMap.push({
     categoryNo: 60896,
     url: '/products/playstation',
-    bannerSectionCodes: '024',
   });
   // PlayStation > PlayStation
   categoriesExtraDataMap.push({
