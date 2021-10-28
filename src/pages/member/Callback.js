@@ -48,7 +48,11 @@ const Callback = () => {
       }
     } else {
       openAlert(openIdProfile.errorMessage, () => () => {
-        window.close();
+        if (!agent.isApp) {
+          window.close();
+        } else {
+          window.openWindow(`javascript:void(0)`, '', '', 'verification_close|');
+        }
       });
     }
   };
