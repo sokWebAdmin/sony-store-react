@@ -13,6 +13,10 @@ const code = {
     event: {
       pc: '006',
       mo: '007',
+      refined: '455',
+      asc: '464',
+      employee: '456',
+      liveOn: '452',
     },
     recommend: {
       kvPc: '013',
@@ -40,6 +44,7 @@ const code = {
       event: '5833',
       recommend: '5742',
     },
+    curation: '467',
   },
   production: {
     main: {
@@ -55,6 +60,10 @@ const code = {
     event: {
       pc: '020',
       mo: '021',
+      refined: '1180',
+      asc: '1179',
+      employee: '1178',
+      liveOn: '1182',
     },
     recommend: {
       kvPc: '008',
@@ -82,6 +91,7 @@ const code = {
       event: '90112',
       recommend: '90111',
     },
+    curation: '1194',
   },
 };
 

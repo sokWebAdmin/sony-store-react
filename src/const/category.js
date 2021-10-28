@@ -352,7 +352,9 @@ const gnbCategories = [
 ];
 
 (async () => {
-  const res = await getEventByEventNo('467');
+  const { curation } = bannerCode;
+
+  const res = await getEventByEventNo(curation);
   if (res?.data?.tag !== '비노출') {
     gnbCategories[0].children.push({ label: '선물 제안', route: '/curation' });
   }
