@@ -107,7 +107,7 @@ let espCategoryNo = CATEGORY.no.esp;
 // NOTE 검색(카테고리)에서 categoriesExtraDataMap 의 url 을 사용하고 있음
 const { camera, videoCamera, audio, acc } = bannerCode.category;
 
-if (process.env.NODE_ENV === 'development') {
+if (['development', 'production'].includes(process.env.NODE_ENV)) {
   // 카메라
   categoriesExtraDataMap.push({
     // categoryNo: 60859,
