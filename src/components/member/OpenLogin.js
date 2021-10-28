@@ -98,7 +98,8 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     } else if (errorCode === '3012') { // 계정 없음
       if (type === 'join') {
         history.push({
-          pathname: '/member/join-agree?sns=true',
+          pathname: '/member/join-agree',
+          search: '?sns=true',
           state: {
             email: profileResult.customerid,
           }
@@ -106,7 +107,8 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
       } else {
         openAlert('해당 SNS 계정으로 가입되어 있지 않습니다.', () => {
           history.push({
-            pathname: '/member/join-agree?sns=true',
+            pathname: '/member/join-agree',
+            search: '?sns=true',
             state: {
               email: profileResult.customerid,
             }
