@@ -1,10 +1,10 @@
-const openIos = url => {
+const openIos = (url, schemaName = 'openbrowser') => {
   const encodedParam = fixedEncodeURIComponent('||' + url);
-  window.location = 'sonyapp://openbrowser' + encodedParam;
+  window.location = `sonyapp://${schemaName}${encodedParam}`;
 };
 
-const openAndroid = url => {
-  window.location = 'sonyapp://openbrowser||' + url;
+const openAndroid = (url, schemaName = 'openbrowser') => {
+  window.location = `sonyapp://${schemaName}||${url}`;
 };
 
 export const openBrowser = (agent, event) => {
@@ -15,12 +15,12 @@ export const openBrowser = (agent, event) => {
   agent.device === 'ios' ? openIos(href) : openAndroid(href);
 };
 
-export const openWindow = (agent, url, target = '', features = '') => {
+export const openWindow = (agent, url, target = '', features = '', schemaName = 'openbrowser') => {
   if (!agent.isApp) {
     window.open(url, target, features);
     return;
   }
-  agent.device === 'ios' ? openIos(url) : openAndroid(url);
+  agent.device === 'ios' ? openIos(url, schemaName) : openAndroid(url, schemaName);
 };
 
 function fixedEncodeURIComponent(str) {

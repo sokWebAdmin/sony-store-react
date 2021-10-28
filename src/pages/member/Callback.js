@@ -3,6 +3,7 @@ import { getUrlParam } from '../../utils/location';
 import { getItem, KEY } from '../../utils/token';
 import Alert from '../../components/common/Alert';
 import { getOpenIdProfile } from '../../api/sony/member';
+import { getAgent } from '../../utils/detectAgent';
 
 const Callback = () => {
   const { shopOauthCallback } = window.opener;
@@ -22,6 +23,7 @@ const Callback = () => {
   };
 
   const processAuthCallback = async () => {
+    const agent = getAgent();
     const code = getUrlParam('code');
     const state = getItem(KEY.OPENID_TOKEN);
     const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
@@ -39,7 +41,11 @@ const Callback = () => {
     const accessCode = ['0000', '3000', '3001', '3002', '3012'];
     if (accessCode.includes(openIdProfile.errorCode)) {
       shopOauthCallback?.(openIdProfile.errorCode, openIdProfile.body);
-      window.close();
+      if (!agent.isApp) {
+        window.close();
+      } else {
+        window.openWindow('javascript:afterFlow()', '', '', 'verification_close');
+      }
     } else {
       openAlert(openIdProfile.errorMessage, () => () => {
         window.close();
