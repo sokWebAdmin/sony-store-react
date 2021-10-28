@@ -17,7 +17,7 @@ import { SONY_COMPANY, SONY_FAMILY } from '../const/footer';
 
 const MOBILE_WIDTH = 640;
 
-export default function Footer({ isAppBarEnabled, scrollAction }) {
+export default function Footer({ location, isAppBarEnabled, scrollAction }) {
   const windowWidth = window.innerWidth;
   const isMobile = useMemo(() => windowWidth <= MOBILE_WIDTH, [windowWidth]);
 
@@ -67,7 +67,7 @@ export default function Footer({ isAppBarEnabled, scrollAction }) {
           paddingBottom: '64px',
         }}
       >
-        <Floating isAppBarEnabled={isAppBarEnabled} scrollAction={scrollAction} />
+        <Floating isAppBarEnabled={isAppBarEnabled} scrollAction={scrollAction} location={location} />
         <div className="footer__inner">
           <div className="footer__social__wrap">
             <div className="footer__social">
