@@ -22,6 +22,7 @@ import GlobalContext from '../../context/global.context';
 import { getRegisteredProduct } from '../../api/sony/product';
 import { useProfileState } from '../../context/profile.context';
 import EspAddCart from '../../components/popup/esp/EspAddCart';
+import qs from 'qs';
 
 // TODO 연동 테스트 해야함
 
@@ -60,9 +61,14 @@ export default function EspList({history}) {
   },[pageIndex, profile]);
 
   const _getRegisteredProduct = async () => {
+    const query = qs.parse(history.location.search, {
+      ignoreQueryPrefix: true,
+    });
+
     const result = {list: [], totalCount: 0};
     const requsetBody = {
       customerid: profile?.memberId || '',
+      espProductid: query?.productNo || '',
       rowsPerPage: 10,
       pageIdx: pageIndex
     };
