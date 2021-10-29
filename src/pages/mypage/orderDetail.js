@@ -299,6 +299,14 @@ export default function OrderDetail() {
   };
 
   const onOrderCancel = () => {
+    const orderStatus = orderProducts[0]?.orderStatusType;
+
+    if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' && orderStatus !== 'DEPOSIT_WAIT') {
+      openAlert('해당 주문의 취소/반품은 소니 고객센터에 문의해주세요')
+      return;
+    }
+
+
     setConfirm({
       ...confirm,
       visible: true,
