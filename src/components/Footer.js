@@ -18,6 +18,20 @@ import { SONY_COMPANY, SONY_FAMILY } from '../const/footer';
 const MOBILE_WIDTH = 640;
 
 export default function Footer({ location, isAppBarEnabled, scrollAction }) {
+
+  const footerStyle = useMemo(() => {
+    return location.pathname.includes('/order/sheet')
+      ? {
+        zIndex: 100,
+        paddingBottom: '64px',
+      }
+      : {
+        zIndex: 900,
+        paddingBottom: '64px'
+      }
+  }, [location])
+
+
   const windowWidth = window.innerWidth;
   const isMobile = useMemo(() => windowWidth <= MOBILE_WIDTH, [windowWidth]);
 
@@ -63,9 +77,7 @@ export default function Footer({ location, isAppBarEnabled, scrollAction }) {
     <>
       <footer
         className="footer"
-        style={{
-          paddingBottom: '64px',
-        }}
+        style={footerStyle}
       >
         <Floating isAppBarEnabled={isAppBarEnabled} scrollAction={scrollAction} location={location} />
         <div className="footer__inner">
