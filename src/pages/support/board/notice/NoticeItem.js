@@ -4,8 +4,6 @@ import { useBoardState } from '../../../../context/board.context';
 export default function NoticeItem() {
   const { noticeBoard } = useBoardState();
 
-  const length = noticeBoard.items.length;
-
   return (
     <div className="col_table">
       <div className="col_table_head">
