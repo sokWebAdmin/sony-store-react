@@ -44,14 +44,14 @@ const Callback = () => {
       if (!agent.isApp) {
         window.close();
       } else {
-        window.openWindow(`javascript:window.opener.shopOauthCallback(${openIdProfile.errorCode}, ${openIdProfile.body})`, '', '', 'verification_close|');
+        window.openWindow(`javascript:window.opener.shopOauthCallback(${openIdProfile.errorCode}, ${openIdProfile.body})`, '', '', 'verification_close');
       }
     } else {
       openAlert(openIdProfile.errorMessage, () => () => {
         if (!agent.isApp) {
           window.close();
         } else {
-          window.openWindow(`javascript:void(0)`, '', '', 'verification_close|');
+          window.openWindow(`javascript:void(0)`, '', '', 'verification_close');
         }
       });
     }
