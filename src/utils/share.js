@@ -5,12 +5,13 @@ export const shareKakaoButton = (link, label) => {
       kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
     }
     kakao.Link.sendDefault({
-      objectType: 'text',
-      text: label,
+      objectType: 'feed',
+      title: label,
       link: {
         mobileWebUrl: link,
         webUrl: link,
       },
+      installTalk: true,
     });
   }
 };
@@ -21,7 +22,7 @@ export const shareKakaoStoryButton = (link, label) => {
     if (!kakao.isInitialized()) {
       kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
     }
-    kakao.Story.share({
+    kakao.Story.open({
       text: label,
       url: link,
     });
