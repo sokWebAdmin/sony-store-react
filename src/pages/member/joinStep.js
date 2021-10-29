@@ -290,7 +290,7 @@ export default function JoinStep() {
     const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
     const redirectedToken = getItem(KEY.OPENID_TOKEN);
     if (redirectedProvider && redirectedToken) {
-      setEmail(location.state.email);
+      setEmail(location.state?.email);
     }
   }, []);
 
@@ -308,7 +308,7 @@ export default function JoinStep() {
                 <div className="inp_box">
                   <label className="inp_desc" htmlFor="loginName">
                     <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off"
-                           readOnly={location.state.email}
+                           readOnly={location.state?.email}
                            value={email} onChange={(e) => {
                       setEmail(e.target.value);
                     }} />
