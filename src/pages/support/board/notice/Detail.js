@@ -1,4 +1,5 @@
 import { React, useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 //SEO
 import SEOHelmet from '../../../../components/SEOHelmet';
@@ -13,8 +14,10 @@ import { getBoardByArticleId } from '../../../../api/manage';
 import { useBoardState } from '../../../../context/board.context';
 import { Link } from 'react-router-dom';
 import Tabs from '../Tabs';
+import { parse } from 'qs'
 
 export default function NoticeDetail({ match, history }) {
+  const location = useLocation()
   const { config } = useBoardState();
   const [notice, setNotice] = useState({});
   const articleNo = useMemo(() => Number(match.params.articleNo), [match.params.articleNo]);
@@ -22,7 +25,7 @@ export default function NoticeDetail({ match, history }) {
   const { registerYmdt, title, content, viewCnt } = notice;
 
   useEffect(() => {
-    const boardNo = config.notice.boardNo;
+    const boardNo = parse(location.search.replace('?', ''))?.boardNo * 1 ?? config.notice.boardNo;
     fetchNotice(boardNo, articleNo, setNotice);
   }, [config.notice.boardNo, articleNo]);
 

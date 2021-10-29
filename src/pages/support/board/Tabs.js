@@ -14,11 +14,11 @@ export default function Tabs() {
 
   const tabs = [
     {
-      name: faq?.name,
+      name: faq?.name ?? 'FAQ',
       label: 'faq',
     },
     {
-      name: notice?.name,
+      name: notice?.name ?? '공지사항',
       label: 'notice',
     },
   ];

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useBoardState } from '../../../../context/board.context';
 
-export default function NoticeItem() {
+export default function NoticeItem({ boardNo }) {
   const { noticeBoard } = useBoardState();
 
   return (
@@ -28,7 +28,7 @@ export default function NoticeItem() {
               <div className="col_table_cell divide">
                 <div className="divide_table">
                   <div className="table_cell notice_tit tal">
-                    <Link to={`/notice/${articleNo}`} className="txt link_btn">
+                    <Link to={`/notice/${articleNo}?boardNo=${boardNo}`} className="txt link_btn">
                       {title}
                     </Link>
                   </div>

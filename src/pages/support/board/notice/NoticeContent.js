@@ -54,7 +54,7 @@ export default function NoticeContent() {
           </div>
         </div> */}
         <div className="col_table_wrap">
-          <NoticeItem />
+          <NoticeItem boardNo={boardNo} />
           <ViewMore totalCount={noticeBoard.totalCount} viewMore={viewMore} pageSize={10} />
         </div>
       </div>
