@@ -4,6 +4,7 @@ const openIos = (url, schemaName = 'openbrowser') => {
 };
 
 const openAndroid = (url, schemaName = 'openbrowser') => {
+  console.log(`sonyapp://${schemaName}||${url}`);
   window.location = `sonyapp://${schemaName}||${url}`;
 };
 

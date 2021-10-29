@@ -4,7 +4,8 @@ export const KEY = {
   ACCESS_TOKEN: 'accessToken',
   GUEST_TOKEN: 'guestToken',
   OPENID_PROVIDER: 'oauthProvider',
-  OPENID_TOKEN: 'oauthToken'
+  OPENID_TOKEN: 'oauthToken',
+  APP_OAUTH_CALLBACK: 'appOauthCallback',
 }
 
 export const setItem = (name, value, expire = 60 * 5 * 1000) => {

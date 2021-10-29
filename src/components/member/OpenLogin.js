@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import GlobalContext from '../../context/global.context';
 import { fetchMyProfile, setProfile, useProileDispatch } from '../../context/profile.context';
 import { loginApi } from '../../api/auth';
+import { getAgent } from '../../utils/detectAgent';
 
 const label = {
   naver: '네이버',
@@ -66,7 +67,12 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   };
 
   const openLoginPopup = () => {
-    window.shopOauthCallback = customCallback || _openIdAuthCallback;
+    const agent = getAgent();
+    const callback = customCallback || _openIdAuthCallback;
+    window.shopOauthCallback = callback;
+    if (agent.isApp) {
+      setItem(KEY.APP_OAUTH_CALLBACK, JSON.stringify(customCallback || _openIdAuthCallback));
+    }
   };
 
   const _openIdAuthCallback = async (errorCode, profileResult = null) => {
