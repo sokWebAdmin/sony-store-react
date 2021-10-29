@@ -39,7 +39,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   };
 
   const fetchCoupons = async () => {
-    // await syncCoupon();
+    await syncCoupon();
     const { data } = await getOrderSheetCoupon({ orderSheetNo });
     setProducts(mapProducts([...data.products]));
     return [...data.products];

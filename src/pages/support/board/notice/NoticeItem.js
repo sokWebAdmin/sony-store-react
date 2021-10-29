@@ -25,7 +25,7 @@ export default function NoticeItem() {
           return (
             <div key={articleNo} className="col_table_row" data-article-no={articleNo}>
               <div className="col_table_cell notice_num">
-                <p className="txt">{length - index}</p>
+                <p className="txt">{noticeBoard.totalCount - index}</p>
               </div>
               <div className="col_table_cell divide">
                 <div className="divide_table">
