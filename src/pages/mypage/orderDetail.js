@@ -186,6 +186,12 @@ export default function OrderDetail() {
 
   const showOrderCancel = (orderStatusType, claimStatusType) => {
     // 주문아이템에 orderStatusType과 claimStatusType 둘 다 있음.
+
+    // 가상계좌 - 에스크로 결제시에는 배송중 상태에서도 취소가 보여야한다해서.. 이해가 안가는 부분
+    if (orderStatusType === 'DELIVERY_ING' && payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
+      return true;
+    }
+
     // claimStatusType이 존재하면 클레임 중이니 주문 취소 버튼 hidden 처리
     if (claimStatusType) {
       return false;
