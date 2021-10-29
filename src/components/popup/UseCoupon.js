@@ -10,6 +10,9 @@ import { toCurrencyString } from '../../utils/unit.js';
 import { syncCoupon } from '../../api/sony/coupon.js';
 import { wonComma } from '../../utils/utils';
 
+// style
+import '../../assets/scss/partials/useCoupon.scss'
+
 const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDiscount, show, setReject }) => {
   const $scroll = useRef();
 
@@ -36,7 +39,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   };
 
   const fetchCoupons = async () => {
-    await syncCoupon();
+    // await syncCoupon();
     const { data } = await getOrderSheetCoupon({ orderSheetNo });
     setProducts(mapProducts([...data.products]));
     return [...data.products];
@@ -85,9 +88,9 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   useEffect(init, [show]);
 
   return (
-    <LayerPopup className="find_address" size={'m'} popContClassName={'scrollH'} onClose={close} show={show}>
+    <LayerPopup className="find_address" size={'m'} onClose={close} show={show}>
       <p className="pop_tit">쿠폰 조회 및 적용</p>
-      <div className="pop_cont_scroll" ref={$scroll}>
+      <div className="pop_cont_scroll scroll_fix" ref={$scroll}>
         <div className="chk_select_zone">
           <ul className="chk_select_inner">
             {products.filter(({ hasProductCoupon }) => hasProductCoupon).map((product, i) => (
