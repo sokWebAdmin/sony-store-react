@@ -56,7 +56,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
         alert('토큰이 만료되었습니다.');
       }
       removeAccessToken();
-      window.location.replace('/');
+      window.location.replace('/member/login');
     }
     if (method === 'get') {
       if (response.data.code === 'EVEC0001') {
