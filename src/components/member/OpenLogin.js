@@ -71,7 +71,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     const callback = customCallback || _openIdAuthCallback;
     window.shopOauthCallback = callback;
     if (agent.isApp) {
-      setItem(KEY.APP_OAUTH_CALLBACK, JSON.stringify(customCallback || _openIdAuthCallback));
+      setItem(KEY.APP_OAUTH_CALLBACK, callback.toString());
     }
   };
 

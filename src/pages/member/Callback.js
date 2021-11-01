@@ -30,7 +30,8 @@ const Callback = () => {
     const code = getUrlParam('code');
     const state = getItem(KEY.OPENID_TOKEN);
     const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
-    const callback = JSON.parse(getItem(KEY.APP_OAUTH_CALLBACK));
+    // eslint-disable-next-line no-eval
+    const callback = eval(`(${getItem(KEY.APP_OAUTH_CALLBACK)})`);
 
     if (!code || !state || !redirectedProvider) {
       openAlert('인증 정보가 만료되었습니다.');
@@ -51,8 +52,8 @@ const Callback = () => {
         window.close();
       } else {
         alert('callback 있다!' + shopOauthCallback);
-        // window.openWindow(`javascript:${callback(openIdProfile.errorCode, openIdProfile.body)}`, '', '', 'verification_close');
-        window.openWindow(`javascript:window.opener.shopOauthCallback(${openIdProfile.errorCode}, ${openIdProfile.body})`, '', '', 'verification_close');
+        window.openWindow(`javascript:${callback(openIdProfile.errorCode, openIdProfile.body)}`, '', '', 'verification_close');
+        // window.openWindow(`javascript:window.opener.shopOauthCallback(${openIdProfile.errorCode}, ${openIdProfile.body})`, '', '', 'verification_close');
       }
     } else {
       openAlert(openIdProfile.errorMessage, () => () => {
