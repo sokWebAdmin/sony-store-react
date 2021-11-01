@@ -30,8 +30,6 @@ const Callback = () => {
     const code = getUrlParam('code');
     const state = getItem(KEY.OPENID_TOKEN);
     const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
-    // eslint-disable-next-line no-eval
-    const callback = eval(`(${getItem(KEY.APP_OAUTH_CALLBACK)})`);
 
     if (!code || !state || !redirectedProvider) {
       openAlert('인증 정보가 만료되었습니다.');
@@ -44,15 +42,14 @@ const Callback = () => {
       servicesite: { snsinfo: redirectedProvider.substring(0, 1).toUpperCase() },
     });
     alert('test alert' + openIdProfile?.errorCode);
-    setItem('openIdProfileTestValue', openIdProfile);
     const accessCode = ['0000', '3000', '3001', '3002', '3012'];
     if (accessCode.includes(openIdProfile.errorCode)) {
       if (!agent.isApp) {
         shopOauthCallback?.(openIdProfile.errorCode, openIdProfile.body);
         window.close();
       } else {
-        alert('callback 있다!' + shopOauthCallback);
-        window.openWindow(`javascript:${callback(openIdProfile.errorCode, openIdProfile.body)}`, '', '', 'verification_close');
+        setItem('openIdProfile', openIdProfile);
+        window.openWindow(`javascript:window.location.replace(${getItem('currentPath') + '?callback=true'})`, '', '', 'verification_close');
         // window.openWindow(`javascript:window.opener.shopOauthCallback(${openIdProfile.errorCode}, ${openIdProfile.body})`, '', '', 'verification_close');
       }
     } else {

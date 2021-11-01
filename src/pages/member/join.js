@@ -12,6 +12,7 @@ import '../../assets/scss/contents.scss';
 //context
 import GlobalContext from '../../context/global.context';
 import OpenLogin from '../../components/member/OpenLogin';
+import { setItem } from '../../utils/token';
 
 export default function Join() {
   const {isLogin} = useContext(GlobalContext)
@@ -24,6 +25,7 @@ export default function Join() {
     if (isLogin) {
       history.push('/');
     }
+    setItem('currentPath', window.location.pathname);
   }, []);
 
   return (
