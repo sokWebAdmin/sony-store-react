@@ -18,7 +18,7 @@ const label = {
 const CLIENT_ID = {
   naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
   facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
-  kakao: process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY,
+  kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
 };
 const OPEN_URL = {
   naver: process.env.REACT_APP_NAVER_OPEN_URL,
