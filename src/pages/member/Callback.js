@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { getUrlParam } from '../../utils/location';
-import { getItem, KEY, setItem } from '../../utils/token';
+import { getItem, KEY, setAccessToken, setItem } from '../../utils/token';
 import Alert from '../../components/common/Alert';
 import { getOpenIdProfile } from '../../api/sony/member';
 import { getAgent } from '../../utils/detectAgent';
+import { loginApi } from '../../api/auth';
+import { getProfile } from '../../api/member';
+import { fetchMyProfile, setProfile } from '../../context/profile.context';
 
 const Callback = () => {
   // alert
@@ -47,8 +50,9 @@ const Callback = () => {
         shopOauthCallback?.(openIdProfile.errorCode, openIdProfile.body);
         window.close();
       } else {
+        alert('callback 있다!' + shopOauthCallback);
         // window.openWindow(`javascript:${callback(openIdProfile.errorCode, openIdProfile.body)}`, '', '', 'verification_close');
-        window.openWindow(`javascript:_openIdAuthCallback(${openIdProfile.errorCode}, ${openIdProfile.body})`, '', '', 'verification_close');
+        window.openWindow(`javascript:window.opener.shopOauthCallback(${openIdProfile.errorCode}, ${openIdProfile.body})`, '', '', 'verification_close');
       }
     } else {
       openAlert(openIdProfile.errorMessage, () => () => {

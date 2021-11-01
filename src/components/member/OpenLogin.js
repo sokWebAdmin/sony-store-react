@@ -79,6 +79,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     window.shopOauthCallback = null;
 
     console.log(profileResult);
+    alert('i am callback ' + errorCode);
     if (errorCode === '0000') { // 계정 있음
       if (type === 'join') {
         openAlert('이미 가입된 계정이 있습니다.');
