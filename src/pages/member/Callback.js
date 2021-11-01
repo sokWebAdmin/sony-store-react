@@ -49,7 +49,7 @@ const Callback = () => {
         window.close();
       } else {
         setItem('openIdProfile', openIdProfile);
-        window.openWindow(`javascript:window.location.replace(${getItem('currentPath')})`, '', '', 'verification_close');
+        window.openWindow(`javascript:window.location.replace(${getItem('currentPath') + '?callback=true'})`, '', '', 'verification_close');
         // window.openWindow(`javascript:window.opener.shopOauthCallback(${openIdProfile.errorCode}, ${openIdProfile.body})`, '', '', 'verification_close');
       }
     } else {

@@ -9,6 +9,7 @@ import GlobalContext from '../../context/global.context';
 import { fetchMyProfile, setProfile, useProileDispatch } from '../../context/profile.context';
 import { loginApi } from '../../api/auth';
 import { getAgent } from '../../utils/detectAgent';
+import { getUrlParam } from '../../utils/location';
 
 const label = {
   naver: '네이버',
@@ -53,13 +54,13 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   };
 
   useEffect(() => {
-    alert(getAgent().isApp);
-    if (getAgent().isApp) {
+    alert(getAgent().isApp + ',' + getUrlParam('callback') === 'true');
+    if (getAgent().isApp && getUrlParam('callback') === 'true') {
       const openIdProfile = getItem('openIdProfile');
       alert(openIdProfile?.errorCode);
       openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
     }
-  }, []);
+  }, [history]);
 
   const openIdLogin = async (type) => {
     const provider = type.substring(0, 1).toUpperCase();
