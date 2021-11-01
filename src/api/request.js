@@ -59,7 +59,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
       window.location.replace('/member/login');
     }
     if (method === 'get') {
-      if (response.data.code === 'EVEC0001') {
+      if (response.data.code === 'EVEC0001' && url.includes('display/events/')) {
         alert('이미 종료된 이벤트 이거나 잘못된 이벤트 입니다.');
         window.location.replace('/');
       }
