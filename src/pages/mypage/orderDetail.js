@@ -220,7 +220,7 @@ export default function OrderDetail() {
 
     if (status === 'ok') {
       if (confirm.name === 'cancel-confirm') {
-        if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
+        if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' && orderInfo?.defaultOrderStatusType !== 'DEPOSIT_WAIT') {
           setRefundAccountVisible(() => true);
         } else {
           _cancelOrder();
@@ -307,7 +307,7 @@ export default function OrderDetail() {
   const onOrderCancel = () => {
     const orderStatus = orderProducts[0]?.orderStatusType;
 
-    if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' && orderStatus !== 'DEPOSIT_WAIT') {
+    if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' && !['DEPOSIT_WAIT', 'PAY_DONE'].includes(orderStatus)) {
       openAlert('해당 주문의 취소/반품은 소니 고객센터에 문의해주세요')
       return;
     }
