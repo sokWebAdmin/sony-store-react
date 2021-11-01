@@ -60,7 +60,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
       alert(openIdProfile?.errorCode);
       openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
     }
-  }, [history]);
+  }, [history.location.search, history.location]);
 
   const openIdLogin = async (type) => {
     const provider = type.substring(0, 1).toUpperCase();
