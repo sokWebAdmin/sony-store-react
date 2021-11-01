@@ -50,8 +50,8 @@ const CATEGORY = {
     kit: 60899,
     audioaccessory: 60885,
     playstation: 60896,
-    playstationgame :60898,
-    playstationhardware: 60897
+    playstationgame: 60898,
+    playstationhardware: 60897,
   },
   production: {
     esp: 232809,
@@ -91,13 +91,13 @@ const CATEGORY = {
     kit: 232801,
     audioaccessory: 232802,
     playstation: 232804,
-    playstationgame :232806,
-    playstationhardware: 232805
+    playstationgame: 232806,
+    playstationhardware: 232805,
   },
   get no() {
     return this[process.env.NODE_ENV];
-  }
-}
+  },
+};
 
 const categoriesExtraDataMap = [];
 let espCategoryNo = CATEGORY.no.esp;
@@ -444,7 +444,7 @@ const gnbCategories = [
   const { curation } = bannerCode;
 
   const res = await getEventByEventNo(curation);
-  if (res?.data?.tag !== '비노출') {
+  if (res?.data?.tag !== '비노출' || res.status !== 400) {
     gnbCategories[0].children.push({ label: '선물 제안', route: '/curation' });
   }
 })();

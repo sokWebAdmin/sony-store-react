@@ -91,7 +91,7 @@ const code = {
       event: '90112',
       recommend: '90111',
     },
-    curation: '1194',
+    curation: '1196',
   },
 };
 
