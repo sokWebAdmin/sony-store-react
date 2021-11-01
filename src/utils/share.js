@@ -5,13 +5,12 @@ export const shareKakaoButton = (link, label) => {
       kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
     }
     kakao.Link.sendDefault({
-      objectType: 'feed',
+      objectType: 'text',
       title: label,
       link: {
         mobileWebUrl: link,
         webUrl: link,
       },
-      installTalk: true,
     });
   }
 };
