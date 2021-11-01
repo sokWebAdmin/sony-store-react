@@ -54,7 +54,6 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   };
 
   useEffect(() => {
-    alert(getAgent().isApp + ',' + getUrlParam('callback') === 'true');
     if (getAgent().isApp && getUrlParam('callback') === 'true') {
       const openIdProfile = getItem('openIdProfile');
       alert(openIdProfile?.errorCode);
