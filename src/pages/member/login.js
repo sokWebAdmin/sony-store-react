@@ -19,7 +19,7 @@ import Cookies from 'js-cookie';
 
 //context
 import GlobalContext from '../../context/global.context';
-import { setAccessToken, setGuestToken } from '../../utils/token';
+import { setAccessToken, setGuestToken, setItem } from '../../utils/token';
 import { fetchProfile, useProileDispatch } from '../../context/profile.context';
 import OpenLogin from '../../components/member/OpenLogin';
 import { postGuestOrdersOrderNo } from '../../api/order';
@@ -151,6 +151,7 @@ export default function Login({ location }) {
     if (isLogin) {
       history.push('/');
     }
+    setItem('currentPath', window.location.pathname);
   }, []);
 
   return (

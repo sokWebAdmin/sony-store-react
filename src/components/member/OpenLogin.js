@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useMallState } from '../../context/mall.context';
-import { getItem, KEY, setAccessToken, setItem } from '../../utils/token';
+import { getItem, KEY, removeItem, setAccessToken, setItem } from '../../utils/token';
 import { generateRandomString } from '../../utils/utils';
 import { getProfile } from '../../api/member';
 import Alert from '../common/Alert';
@@ -52,6 +52,13 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     alertCloseFunc?.();
   };
 
+  useEffect(() => {
+    if (getAgent().isApp) {
+      const openIdProfile = getItem('openIdProfile');
+      openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
+    }
+  }, []);
+
   const openIdLogin = async (type) => {
     const provider = type.substring(0, 1).toUpperCase();
     const clientId = CLIENT_ID[type];
@@ -67,18 +74,14 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   };
 
   const openLoginPopup = () => {
-    const agent = getAgent();
-    const callback = customCallback || _openIdAuthCallback;
-    window.shopOauthCallback = callback;
-    if (agent.isApp) {
-      setItem(KEY.APP_OAUTH_CALLBACK, callback.toString());
-    }
+    window.shopOauthCallback = customCallback || _openIdAuthCallback;
   };
 
   const _openIdAuthCallback = async (errorCode, profileResult = null) => {
     window.shopOauthCallback = null;
+    removeItem('currentPath');
+    removeItem('openIdProfile');
 
-    console.log(profileResult);
     alert('i am callback ' + errorCode);
     if (errorCode === '0000') { // 계정 있음
       if (type === 'join') {
