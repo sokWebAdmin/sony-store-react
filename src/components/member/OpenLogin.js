@@ -53,8 +53,10 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   };
 
   useEffect(() => {
+    alert(getAgent().isApp);
     if (getAgent().isApp) {
       const openIdProfile = getItem('openIdProfile');
+      alert(openIdProfile?.errorCode);
       openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
     }
   }, []);
