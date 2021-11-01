@@ -39,14 +39,16 @@ const Callback = () => {
       state,
       servicesite: { snsinfo: redirectedProvider.substring(0, 1).toUpperCase() },
     });
+    alert('test alert' + openIdProfile?.errorCode);
     setItem('openIdProfileTestValue', openIdProfile);
     const accessCode = ['0000', '3000', '3001', '3002', '3012'];
     if (accessCode.includes(openIdProfile.errorCode)) {
-      shopOauthCallback?.(openIdProfile.errorCode, openIdProfile.body);
       if (!agent.isApp) {
+        shopOauthCallback?.(openIdProfile.errorCode, openIdProfile.body);
         window.close();
       } else {
-        window.openWindow(`javascript:${callback(openIdProfile.errorCode, openIdProfile.body)}`, '', '', 'verification_close');
+        // window.openWindow(`javascript:${callback(openIdProfile.errorCode, openIdProfile.body)}`, '', '', 'verification_close');
+        window.openWindow(`javascript:_openIdAuthCallback(${openIdProfile.errorCode}, ${openIdProfile.body})`, '', '', 'verification_close');
       }
     } else {
       openAlert(openIdProfile.errorMessage, () => () => {

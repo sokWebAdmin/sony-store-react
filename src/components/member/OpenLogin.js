@@ -61,9 +61,9 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     setItem(KEY.OPENID_PROVIDER, provider, 30 * 60 * 1000);
     setItem(KEY.OPENID_TOKEN, state, 30 * 60 * 1000);
 
+    openLoginPopup();
     const loginUrl = OPEN_URL[type].replace('{clientId}', clientId).replace('{redirectUri}', redirectUri).replace('{state}', state);
     window.openWindow(loginUrl, '간편 로그인', 'width=420px,height=550px,scrollbars=yes', 'verification');
-    openLoginPopup();
   };
 
   const openLoginPopup = () => {
