@@ -99,7 +99,7 @@ export default function Terms() {
                       <>
                         <p>※ 본 약관은 시행일자 : {toLocalDateStr(activeTerms?.enforcementDate)}부터 적용됩니다.</p>
                         <strong className="caution_box--date">
-                          직전변경일 : {toLocalDateStr(prevTerms?.enforcementDate)}
+                          직전변경일 : {toLocalDateStr(prevTerms?.enforcementDate || prevEnforcementDate)}
                         </strong>
                       </>
                     )}
