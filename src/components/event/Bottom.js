@@ -31,9 +31,9 @@ const tags = {
   refurbish: '리퍼비시몰',
 };
 const _scrollView = {
-  pc: 5,
-  tb: 3,
-  mo: 2,
+  pc: 10,
+  tb: 10,
+  mo: 10,
 };
 
 const EventBottom = () => {

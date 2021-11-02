@@ -37,10 +37,11 @@ export const useTerms = (termsTypes) => {
     const filtered = histories.filter(({ enforcementDate }) => isSameOrAfter('', getStrDate(enforcementDate)));
     if (filtered.length > 1) {
       fetchTermsByTermsNo(filtered[1].termsNo, setPrevTerms);
+      setPrevEnforcementDate(() => filtered[2]?.enforcementDate || '2018-04-16');
     }
-    if (filtered.length > 2) {
-      setPrevEnforcementDate(filtered[2].enforcementDate);
-    }
+    // if (filtered.length > 2) {
+    //   setPrevEnforcementDate(filtered[2].enforcementDate);
+    // }
   };
 
   const fetchTermsHistory = async () => {
