@@ -33,10 +33,12 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   const { onChangeGlobal } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
 
-  const openIdData = ['naver', 'kakao', 'facebook'].sort((a) => a === 'naver' ? -1 : 1).map(provider => ({
-    provider,
-    label: label[provider],
-  }));
+  const openIdData = ['naver', 'kakao', 'facebook']
+    .sort((a) => (a === 'naver' ? -1 : 1))
+    .map((provider) => ({
+      provider,
+      label: label[provider],
+    }));
 
   // alert
   const [alertVisible, setAlertVisible] = useState(false);
@@ -54,7 +56,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   };
 
   useEffect(() => {
-    alert(getAgent().isApp + ',' + getUrlParam('callback') === 'true');
+    // alert(getAgent().isApp + ',' + getUrlParam('callback') === 'true');
     if (getAgent().isApp && getUrlParam('callback') === 'true') {
       const openIdProfile = getItem('openIdProfile');
       alert(openIdProfile?.errorCode);
@@ -72,7 +74,10 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     setItem(KEY.OPENID_TOKEN, state, 30 * 60 * 1000);
 
     openLoginPopup();
-    const loginUrl = OPEN_URL[type].replace('{clientId}', clientId).replace('{redirectUri}', redirectUri).replace('{state}', state);
+    const loginUrl = OPEN_URL[type]
+      .replace('{clientId}', clientId)
+      .replace('{redirectUri}', redirectUri)
+      .replace('{state}', state);
     window.openWindow(loginUrl, '간편 로그인', 'width=420px,height=550px,scrollbars=yes', 'verification');
   };
 
@@ -86,7 +91,8 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     removeItem('openIdProfile');
 
     alert('i am callback ' + errorCode);
-    if (errorCode === '0000') { // 계정 있음
+    if (errorCode === '0000') {
+      // 계정 있음
       if (type === 'join') {
         openAlert('이미 가입된 계정이 있습니다.');
       } else {
@@ -108,14 +114,15 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
 
         openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
       }
-    } else if (errorCode === '3012') { // 계정 없음
+    } else if (errorCode === '3012') {
+      // 계정 없음
       if (type === 'login') {
         history.push({
           pathname: '/member/join-agree',
           search: '?sns=true',
           state: {
             email: profileResult.customerid,
-          }
+          },
         });
       } else {
         openAlert('해당 SNS 계정으로 가입되어 있지 않습니다.', () => {
@@ -124,7 +131,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
             search: '?sns=true',
             state: {
               email: profileResult.customerid,
-            }
+            },
           });
         });
       }
@@ -147,23 +154,31 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   return (
     <>
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
-      {openIdJoinConfig && <div className="sns_login_box">
-        {title ? (<div className="txt_lft">
-          <strong className="sns_title">{message}</strong>
-          <p>{title}</p>
-        </div>) : (<>
-          <strong className="sns_title" dangerouslySetInnerHTML={{ __html: message }} />
-        </>)}
-        <ul className="sns_list">
-          {openIdData.map(({ provider, label }) => {
-            return (
-              <li className={provider} key={provider}>
-                <a href="javascript:void(0)" onClick={() => openIdLogin(provider)}>{label}</a>
-              </li>
-            );
-          })}
-        </ul>
-      </div>}
+      {openIdJoinConfig && (
+        <div className="sns_login_box">
+          {title ? (
+            <div className="txt_lft">
+              <strong className="sns_title">{message}</strong>
+              <p>{title}</p>
+            </div>
+          ) : (
+            <>
+              <strong className="sns_title" dangerouslySetInnerHTML={{ __html: message }} />
+            </>
+          )}
+          <ul className="sns_list">
+            {openIdData.map(({ provider, label }) => {
+              return (
+                <li className={provider} key={provider}>
+                  <a href="javascript:void(0)" onClick={() => openIdLogin(provider)}>
+                    {label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </>
   );
 };
