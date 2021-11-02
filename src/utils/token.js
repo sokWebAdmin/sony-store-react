@@ -6,7 +6,7 @@ export const KEY = {
   OPENID_PROVIDER: 'oauthProvider',
   OPENID_TOKEN: 'oauthToken',
   APP_OAUTH_CALLBACK: 'appOauthCallback',
-}
+};
 
 export const setItem = (name, value, expire = 60 * 5 * 1000) => {
   const data = JSON.stringify(value);
@@ -31,6 +31,7 @@ export const getItem = (name, checkExpire = true) => {
     if (checkExpire) {
       const expireUnixTime = window.localStorage.getItem(name + EXPIRATION_KEY);
       const expire = !!expireUnixTime && expireUnixTime < Date.now();
+      console.log(expire, expireUnixTime, expireUnixTime, Date.now(), 2);
       return expire ? null : JSON.parse(window.localStorage.getItem(name));
     }
     return JSON.parse(window.localStorage.getItem(name));
@@ -49,15 +50,15 @@ export const removeItem = (name) => {
     console.error('removeStorage: Error removing key [' + name + '] from localStorage: ' + JSON.stringify(err));
     return false;
   }
-}
+};
 
 export const setAccessToken = (accessToken, expireSeconds) => {
   setItem(KEY.ACCESS_TOKEN, accessToken, expireSeconds * 1000);
-}
+};
 
 export const getAccessToken = () => {
   return getItem(KEY.ACCESS_TOKEN) ?? '';
-}
+};
 
 export const removeAccessToken = () => {
   removeItem(KEY.ACCESS_TOKEN);
