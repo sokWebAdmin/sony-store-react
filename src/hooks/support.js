@@ -57,8 +57,10 @@ export const useTerms = (termsTypes) => {
 
   const handleHistory = (e) => {
     e.preventDefault();
-    prevEnforcementDate === '2018-04-16' &&
+    if (prevEnforcementDate === '2018-04-16') {
       window.openWindow('https://store.sony.co.kr/handler/Common-PageView?pageName=jsp/footer/CF-termsTransfer.jsp ');
+      return;
+    }
     setHistoryVisible((prev) => !prev);
     document.querySelector('.contents').scrollIntoView();
   };
