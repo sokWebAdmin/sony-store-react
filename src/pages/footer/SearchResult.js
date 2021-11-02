@@ -79,6 +79,7 @@ export default function SearchResult({ match }) {
       hasTotalCount: true,
       pageNumber,
       pageSize,
+      hasOptionValues: true,
     };
   }, []);
 
