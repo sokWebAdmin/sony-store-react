@@ -73,7 +73,6 @@ export default function Search({ setSearchOpen }) {
   const searchHandler = (e, keyword) => {
     e?.preventDefault();
     if (keyword) {
-      console.log(keyword);
       history.replace(`/search-result/${encodeURIComponent(keyword.replace('/', '&#47'))}`);
       setSearchOpen(false);
     } else {

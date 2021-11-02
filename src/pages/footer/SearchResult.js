@@ -37,7 +37,7 @@ import { useHistory } from 'react-router';
 
 export default function SearchResult({ match }) {
   const history = useHistory();
-  const initalKeyword = decodeURIComponent(match.params.keyword);
+  const initalKeyword = decodeURIComponent(match.params.keyword).replace('&#47', '/');
 
   const { config } = useBoardState();
   const dispatch = useBoardDispatch();
@@ -98,8 +98,8 @@ export default function SearchResult({ match }) {
     try {
       const { data } = await getDisplayEvents(keyword);
 
-      setInitialEventList(data.filter(({tag}) => tag));
-      setEventCount(data.filter(({tag}) => tag).length || 0);
+      setInitialEventList(data.filter(({ tag }) => tag));
+      setEventCount(data.filter(({ tag }) => tag).length || 0);
       fetchEvent(1, data);
     } catch (e) {
       console.error(e);
@@ -177,12 +177,12 @@ export default function SearchResult({ match }) {
 
   const handleSearch = (newKeyword) => {
     if (keyword === newKeyword) return;
-
+    const mapNewKeyword = newKeyword.replace('/', '&#47');
     setKeyword(newKeyword);
-    searchProduct(newKeyword);
-    searchNotice(newKeyword, config.notice.boardNo);
-    searchEvent(newKeyword);
-    searchCategory(newKeyword);
+    searchProduct(mapNewKeyword);
+    searchNotice(mapNewKeyword, config.notice.boardNo);
+    searchEvent(mapNewKeyword);
+    searchCategory(mapNewKeyword);
   };
 
   const isAll = useMemo(() => tabState === 'ALL', [tabState]);

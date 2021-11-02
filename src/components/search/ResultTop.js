@@ -8,9 +8,9 @@ export default function ResultTop({ handleSearch, allCount, initalKeyword }) {
 
   const clickHandler = (event, k = keyword) => {
     event?.preventDefault();
-
-    history.replace(`/search-result/${k}`);
-    handleSearch(k);
+    const mapKeyword = encodeURIComponent(k.replace('/', '&#47'));
+    history.push(`/search-result/${mapKeyword}`);
+    handleSearch(mapKeyword);
     searchKeyword.current = k;
   };
 
