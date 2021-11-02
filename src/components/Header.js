@@ -21,10 +21,12 @@ import { useHeaderDispatch, useHeaderState, openSideBar, closeSideBar } from '..
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { removeAccessToken } from '../utils/token';
 import { resetProfile, useProfileState, useProileDispatch } from '../context/profile.context';
-import { useClickOutside, useMediaQuery, useScroll } from '../hooks';
+import { useAlert, useClickOutside, useMediaQuery, useScroll } from '../hooks';
 import { getAgent } from '../utils/detectAgent';
+import Alert from './common/Alert';
 
 export default function Header(location) {
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const history = useHistory();
   const currLocation = useLocation();
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
@@ -105,6 +107,7 @@ export default function Header(location) {
           isSiderbarOpen ? 'header--active' : ''
         } ${isSearchOpen ? 'header--search' : ''}`}
       >
+        {alertVisible && <Alert onClose={() => closeModal()}>{alertMessage}</Alert>}
         <div className="header__wrapper">
           <h1 className="header__logo">
             <Link to="/">
@@ -167,7 +170,15 @@ export default function Header(location) {
               <>
                 <div ref={sideRef} className={`member ${isInfoOpen && 'member--visible'}`}>
                   <div className="member__inner">
-                    <Link to="/member/login" onClick={closeSubSlider} className="member__msg member__msg__login">
+                    <Link
+                      to="/member/login"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        openAlert('로그인이 필요합니다.', () => history.push('/member/login'));
+                        closeSubSlider();
+                      }}
+                      className="member__msg member__msg__login"
+                    >
                       로그인이
                       <br />
                       필요합니다
@@ -190,7 +201,14 @@ export default function Header(location) {
                           </Link>
                         </li>
                         <li className="member__menu__order">
-                          <Link to={isLogin ? '/my-page/order-list' : '/member/login'} onClick={closeSubSlider}>
+                          <Link
+                            to={isLogin ? '/my-page/order-list' : '/member/login'}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              openAlert('로그인이 필요합니다.', () => history.push('/member/login'));
+                              closeSubSlider();
+                            }}
+                          >
                             주문/배송 조회
                           </Link>
                         </li>
@@ -226,7 +244,15 @@ export default function Header(location) {
                           </Link>
                         </li>
                         <li className="member__menu__order">
-                          <Link to={isLogin ? '/my-page/order-list' : '/member/login'} onClick={closeSubSlider}>
+                          <Link
+                            onClick={() => {
+                              openAlert('로그인 이동');
+                              closeSubSlider();
+                              debugger;
+
+                              // history.push('/member/login');
+                            }}
+                          >
                             주문/배송 조회
                           </Link>
                         </li>
