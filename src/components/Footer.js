@@ -20,7 +20,7 @@ const MOBILE_WIDTH = 640;
 export default function Footer({ location, isAppBarEnabled, scrollAction }) {
 
   const footerStyle = useMemo(() => {
-    return location.pathname.includes('/order/sheet')
+    return location.pathname.includes('/order/sheet') || location.pathname.includes('/product-view')
       ? {
         zIndex: 100,
         paddingBottom: '64px',
