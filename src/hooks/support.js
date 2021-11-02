@@ -24,10 +24,19 @@ export const useTerms = (termsTypes) => {
     }
   };
 
-  const fetchTermsByTermsNo = async (termsNo, setTerms) => {
+  const fetchTermsByTermsNo = async (termsNo, setTerms, isActive) => {
     try {
       const { data } = await getTermsByTermNo({ termsNo });
-      setTerms(data);
+      setTerms(() => {
+        return !isActive
+          ? {
+              ...data,
+              enforcementDate: '2018년 4월 16일',
+            }
+          : {
+              data,
+            };
+      });
     } catch (e) {
       console.error(e);
     }
@@ -36,7 +45,7 @@ export const useTerms = (termsTypes) => {
   const setTermsNo = (histories) => {
     const filtered = histories.filter(({ enforcementDate }) => isSameOrAfter('', getStrDate(enforcementDate)));
     if (filtered.length > 1) {
-      fetchTermsByTermsNo(filtered[1].termsNo, setPrevTerms);
+      fetchTermsByTermsNo(filtered[1].termsNo, setPrevTerms, true);
     }
     if (filtered.length > 2) {
       setPrevEnforcementDate(filtered[2].enforcementDate);
