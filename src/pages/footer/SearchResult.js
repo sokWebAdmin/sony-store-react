@@ -29,7 +29,7 @@ import NoticeResult from '../../components/search/NoticeResult';
 import Tab from '../../components/search/Tab';
 import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../context/board.context';
 import { getBoards } from '../../api/manage';
-import { getCategoryListByKeyword, getDisplayEvents } from '../../api/display';
+import { getCategoryListByKeyword, getDisplayEventsByTitle } from '../../api/display';
 import { orderList, PAGE_SIZE } from '../../const/search';
 import moment from 'moment';
 import SearchResultNone from './SearchResultNone';
@@ -97,7 +97,7 @@ export default function SearchResult({ match }) {
 
   const searchEvent = useCallback(async (keyword) => {
     try {
-      const { data } = await getDisplayEvents(keyword);
+      const { data } = await getDisplayEventsByTitle(keyword);
 
       setInitialEventList(data.filter(({ tag }) => tag));
       setEventCount(data.filter(({ tag }) => tag).length || 0);
