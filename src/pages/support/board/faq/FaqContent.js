@@ -48,7 +48,10 @@ export default function FaqContent() {
     }
   }, [isAll, boardNo]);
 
-  const viewMore = (pageNumber) => fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }));
+  const viewMore = (pageNumber) => {
+    setResetViewMore(false);
+    return fetchBoards(dispatch, getReqeust(boardNo, { pageNumber }));
+  };
 
   return (
     <div className="faq_notice_inner">
