@@ -11,6 +11,7 @@ import SwiperCore, { Navigation } from 'swiper/core';
 import { shareKakaoButton, shareKakaoStoryButton } from '../../utils/share';
 import '../../assets/scss/event.scss';
 import { getStrDate } from '../../utils/dateFormat';
+import { bannerCode } from '../../bannerCode';
 
 const initTabs = [
   { key: 'all', label: '전체' },
@@ -61,9 +62,11 @@ const EventBottom = () => {
   useClickOutside(sortRef, () => setSortSelect(false));
 
   const fetchDisplayEvents = async () => {
+    const { curation } = bannerCode;
     const keyword = tags[tabState];
     const { data } = await getDisplayEvents(keyword);
-    sortEvents(data, true);
+    const eventData = data.filter(({ eventNo }) => eventNo !== curation);
+    sortEvents(eventData, true);
   };
 
   const modifyTabs = (tabData = tabs) => {
@@ -238,7 +241,9 @@ const EventBottom = () => {
               </li>
               <li className="lists">
                 <a
-                  href={window.anchorProtocol + `social-plugins.line.me/lineit/share?url=${encodeURIComponent(getLink())}`}
+                  href={
+                    window.anchorProtocol + `social-plugins.line.me/lineit/share?url=${encodeURIComponent(getLink())}`
+                  }
                   onClick={window.openBrowser}
                   className="share_btn line"
                   target="_blank"
