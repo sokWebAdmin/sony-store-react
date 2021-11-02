@@ -55,7 +55,7 @@ const CATEGORY = {
   },
   production: {
     esp: 232809,
-    camera: 232766,
+    camera: 232762,
     lens: 232763,
     compact: 232769,
     videocamera: 232770,
