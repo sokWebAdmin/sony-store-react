@@ -29,7 +29,7 @@ import NoticeResult from '../../components/search/NoticeResult';
 import Tab from '../../components/search/Tab';
 import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../context/board.context';
 import { getBoards } from '../../api/manage';
-import { getCategoryListByKeyword, getDisplayEvents } from '../../api/display';
+import { getCategoryListByKeyword, getDisplayEventsByTitle } from '../../api/display';
 import { orderList, PAGE_SIZE } from '../../const/search';
 import moment from 'moment';
 import SearchResultNone from './SearchResultNone';
@@ -37,7 +37,7 @@ import { useHistory } from 'react-router';
 
 export default function SearchResult({ match }) {
   const history = useHistory();
-  const initalKeyword = decodeURIComponent(match.params.keyword);
+  const initalKeyword = decodeURIComponent(match.params.keyword).replace('&#47', '/');
 
   const { config } = useBoardState();
   const dispatch = useBoardDispatch();
@@ -79,6 +79,7 @@ export default function SearchResult({ match }) {
       hasTotalCount: true,
       pageNumber,
       pageSize,
+      hasOptionValues: true,
     };
   }, []);
 
@@ -96,10 +97,10 @@ export default function SearchResult({ match }) {
 
   const searchEvent = useCallback(async (keyword) => {
     try {
-      const { data } = await getDisplayEvents(keyword);
+      const { data } = await getDisplayEventsByTitle(keyword);
 
-      setInitialEventList(data.filter(({tag}) => tag));
-      setEventCount(data.filter(({tag}) => tag).length || 0);
+      setInitialEventList(data.filter(({ tag }) => tag));
+      setEventCount(data.filter(({ tag }) => tag).length || 0);
       fetchEvent(1, data);
     } catch (e) {
       console.error(e);
@@ -177,12 +178,12 @@ export default function SearchResult({ match }) {
 
   const handleSearch = (newKeyword) => {
     if (keyword === newKeyword) return;
-
+    const mapNewKeyword = newKeyword.replace('/', '&#47');
     setKeyword(newKeyword);
-    searchProduct(newKeyword);
-    searchNotice(newKeyword, config.notice.boardNo);
-    searchEvent(newKeyword);
-    searchCategory(newKeyword);
+    searchProduct(mapNewKeyword);
+    searchNotice(mapNewKeyword, config.notice.boardNo);
+    searchEvent(mapNewKeyword);
+    searchCategory(mapNewKeyword);
   };
 
   const isAll = useMemo(() => tabState === 'ALL', [tabState]);
