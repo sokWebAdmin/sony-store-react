@@ -41,7 +41,6 @@ const Callback = () => {
       state,
       servicesite: { snsinfo: redirectedProvider.substring(0, 1).toUpperCase() },
     });
-    alert('test alert' + openIdProfile?.errorCode);
     const accessCode = ['0000', '3000', '3001', '3002', '3012'];
     if (accessCode.includes(openIdProfile.errorCode)) {
       if (!agent.isApp) {
@@ -50,7 +49,6 @@ const Callback = () => {
       } else {
         setItem('openIdProfile', openIdProfile);
         window.openWindow(`javascript:window.location.replace('${getItem('currentPath') + '?callback=true'}')`, '', '', 'verification_close');
-        // window.openWindow(`javascript:window.opener.shopOauthCallback(${openIdProfile.errorCode}, ${openIdProfile.body})`, '', '', 'verification_close');
       }
     } else {
       openAlert(openIdProfile.errorMessage, () => () => {

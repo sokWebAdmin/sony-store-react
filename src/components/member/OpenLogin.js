@@ -58,7 +58,6 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   useEffect(() => {
     if (getAgent().isApp && getUrlParam('callback') === 'true') {
       const openIdProfile = getItem('openIdProfile');
-      alert(openIdProfile?.errorCode);
       openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
     }
   }, [history.location.search, history.location]);
@@ -88,7 +87,6 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     removeItem('currentPath');
     removeItem('openIdProfile');
 
-    alert('i am callback ' + errorCode);
     if (errorCode === '0000') {
       // 계정 있음
       if (type === 'join') {
