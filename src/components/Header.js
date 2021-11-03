@@ -50,6 +50,7 @@ export default function Header(location) {
   useEffect(() => {
     const menuOpen = history.location.state?.menuOpen;
     menuOpen && openSideBar(headerDispatch);
+    console.log(menuOpen, headerDispatch, agent.isApp, currLocation.pathname, 1);
     if (agent.isApp && currLocation.pathname.includes('/app/terms/')) {
       setVisible(false);
     }
