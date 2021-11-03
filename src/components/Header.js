@@ -66,6 +66,7 @@ export default function Header(location) {
       setVisible(true);
     } else {
       setVisible(false);
+      closeSubSlider();
     }
 
     setPrevScrollY(window.scrollY);
@@ -75,19 +76,6 @@ export default function Header(location) {
     setInfoOpen(false);
     closeSideBar(headerDispatch);
   };
-
-  const hideBodyScroll = (hide) => {
-    const body = document.querySelector('body');
-    if (underPc) {
-      body.style.overflow = hide ? 'hidden' : 'auto';
-    } else {
-      body.style.overflow = 'auto';
-    }
-  };
-
-  useEffect(() => {
-    hideBodyScroll(isSiderbarOpen);
-  }, [isSiderbarOpen, underPc]);
 
   useEffect(() => {
     const $body = document.querySelector('body');
