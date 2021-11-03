@@ -15,7 +15,10 @@ const Expired = () => {
   const fetchInitDisplayEvents = async (pageNumber = 1, keyword = '') => {
     const query = keyword ? { keyword: keyword.trim(), pageNumber } : { pageNumber };
     const { data } = await getDisplayCloseEvents({ ...query, hasTotalCount: true });
-    setEvents(data);
+    pageNumber === 1 ? setEvents(data) : setEvents({
+      items: events.items.concat(data.items),
+      totalCount: data.totalCount
+    });
   };
 
   useEffect(() => {

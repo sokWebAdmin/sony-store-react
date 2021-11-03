@@ -20,6 +20,8 @@ const PickRecentAddresses = ({ shipping, setShipping, recentAddresses, close }) 
 
   const submit = () => {
     if (!pickAddress) {
+
+      if (recentAddresses.length < 1) close();
       return;
     }
 

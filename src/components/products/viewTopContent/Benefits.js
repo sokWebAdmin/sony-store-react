@@ -20,7 +20,7 @@ export default function Benefits({ price }) {
       {!nonProfit && (
         <ul className="membership_rating">
           {mallInfo?.mall?.grades
-            .filter(({ reserveBenefit }) => reserveBenefit.reserveRate > 0)
+            .filter(({ reserveBenefit, used }) => reserveBenefit.reserveRate > 0 && used === true)
             .map((g, idx) => {
               const UPPERCASE = g.label.toUpperCase();
               const LOWERCASE = g.label.toLowerCase();

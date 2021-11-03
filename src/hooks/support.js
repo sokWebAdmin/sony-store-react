@@ -38,6 +38,8 @@ export const useTerms = (termsTypes) => {
     if (filtered.length > 1) {
       fetchTermsByTermsNo(filtered[1].termsNo, setPrevTerms);
       setPrevEnforcementDate(() => filtered[2]?.enforcementDate || '2018-04-16');
+    } else {
+      setPrevEnforcementDate(() => '2018-04-16');
     }
     // if (filtered.length > 2) {
     //   setPrevEnforcementDate(filtered[2].enforcementDate);
@@ -55,6 +57,10 @@ export const useTerms = (termsTypes) => {
 
   const handleHistory = (e) => {
     e.preventDefault();
+    if (prevEnforcementDate === '2018-04-16') {
+      window.openWindow('https://store.sony.co.kr/handler/Common-PageView?pageName=jsp/footer/CF-termsTransfer.jsp ');
+      return;
+    }
     setHistoryVisible((prev) => !prev);
     document.querySelector('.contents').scrollIntoView();
   };
