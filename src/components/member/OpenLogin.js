@@ -60,6 +60,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
       const openIdProfile = getItem('openIdProfile');
       openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
     }
+    console.log(type);
   }, [history.location.search, history.location]);
 
   const openIdLogin = async (type) => {
@@ -113,24 +114,15 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     } else if (errorCode === '3012') {
       // 계정 없음
       if (type === 'login') {
-        history.push({
-          pathname: '/member/join-agree',
-          search: '?sns=true',
-          state: {
-            email: profileResult.customerid,
-          },
-        });
-      } else {
-        openAlert('해당 SNS 계정으로 가입되어 있지 않습니다.', () => {
-          history.push({
-            pathname: '/member/join-agree',
-            search: '?sns=true',
-            state: {
-              email: profileResult.customerid,
-            },
-          });
-        });
+        alert('해당 SNS 계정으로 가입되어 있지 않습니다.');
       }
+      history.push({
+        pathname: '/member/join-agree',
+        search: '?sns=true',
+        state: {
+          email: profileResult.customerid,
+        },
+      });
     } else if (errorCode === '3001' || errorCode === '3002') {
       const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
       console.log(KEY.OPENID_PROVIDER, getItem, 1);
