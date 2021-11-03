@@ -12,11 +12,13 @@ import UseCoupon from '../popup/UseCoupon';
 import { onKeyboardEventOnlyDigit } from '../../utils/listener';
 import { setObjectState } from '../../utils/state';
 import { debounce } from 'lodash';
-import useDebounce from '../../hooks';
+import useDebounce, { useAlert } from '../../hooks';
+import Alert from '../common/Alert';
 
 // 배송지 정보
 const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderProducts }) => {
   const { accumulationConfig } = useMallState();
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
 
   // subPayAmt: number , coupons: nested object
   const { subPayAmt } = discount;
@@ -89,7 +91,15 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
     [accumulationConfig, inputSubPayAmt],
   );
 
-  const checkValidPoint = () => accumulationUseMinPriceWarn && setInputSubPayAmt(0);
+  const checkValidPoint = () => {
+    if (!paymentInfo.isAvailableAccumulation) {
+      openAlert('마일리지 사용 불가 제품입니다.', () => {
+        setInputSubPayAmt(0);
+      });
+      return;
+    }
+    accumulationUseMinPriceWarn && setInputSubPayAmt(0);
+  };
 
   const toCurrency = (event) => {
     const amount = event.target.value.replaceAll(',', '') * 1;
@@ -100,6 +110,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
 
   return (
     <>
+      {alertVisible && <Alert onClose={() => closeModal()}>{alertMessage}</Alert>}
       <div className="acc_form">
         <div className="acc_cell vat">
           <label htmlFor="coupon">쿠폰</label>
