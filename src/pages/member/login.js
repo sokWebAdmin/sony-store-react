@@ -83,7 +83,7 @@ export default function Login({ location }) {
       const response = await loginApi(email, password, autoLogin || null);
       const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
 
-      if (code === '3000') {
+      if (code === '3000' || code === '9999') {
         alert('아이디/비밀번호를 확인해주세요.');
         //계정 잠금
       } else if (code === '3003') {
