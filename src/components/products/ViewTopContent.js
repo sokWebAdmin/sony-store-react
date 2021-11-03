@@ -21,6 +21,7 @@ export default function TobContent({
   setWish,
   naverPayBtnKey,
   saleStatus,
+  isMapping,
 }) {
   const size = useWindowSize();
   const isMobileSize = size.width <= 1280;
@@ -98,6 +99,7 @@ export default function TobContent({
         {/* prd_select_wrap */}
         <div className={`cont prd_select_wrap ${isMobileSize && optionVisible && 'view'}`}>
           <Option
+            isMapping={isMapping}
             productName={productName}
             options={options}
             hasColor={hasColor}
