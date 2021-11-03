@@ -83,7 +83,7 @@ export default function Login({ location }) {
       const response = await loginApi(email, password, autoLogin || null);
       const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
 
-      if (code === '3000' || code === '9999') {
+      if (code === '3000') {
         alert('아이디/비밀번호를 확인해주세요.');
         //계정 잠금
       } else if (code === '3003') {
@@ -93,7 +93,7 @@ export default function Login({ location }) {
         const { accessToken, expireIn } = response.data;
         setAccessToken(accessToken, expireIn);
         history.push('/member/inactiveAccounts');
-      } else {
+      } else if (response.data.status === 200) {
         const { accessToken, expireIn } = response.data;
         setAccessToken(accessToken, expireIn);
         onChangeGlobal({ isLogin: true });
@@ -114,6 +114,9 @@ export default function Login({ location }) {
         } else {
           nextLocation === 'cart' ? history.push(`/${nextLocation}?savingGuestCart=true`) : history.push('/');
         }
+      } else {
+        const errorMessage = response.data?.message ? JSON.parse(response.data.message).errorMessage : '';
+        alert(errorMessage);
       }
     }
   };
