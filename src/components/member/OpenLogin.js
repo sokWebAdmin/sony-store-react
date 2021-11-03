@@ -134,7 +134,6 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
       }
     } else if (errorCode === '3001' || errorCode === '3002') {
       const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
-      console.log(KEY.OPENID_PROVIDER, getItem, 1);
 
       const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
 
