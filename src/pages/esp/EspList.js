@@ -77,7 +77,7 @@ export default function EspList({history}) {
     try {
       const { data } = await getProductDetail(query.productNo);
 
-      if (data?.stockCnt?.stockCnt > 0) {
+      if (data?.stock?.stockCnt > 0) {
         return true;
       }
     }
