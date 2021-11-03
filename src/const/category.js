@@ -16,6 +16,8 @@ const CATEGORY = {
     esp: 81643,
     camera: 60859,
     lens: 60860,
+    lenscamera: 60860,
+    lenslens: 60860,
     compact: 60862,
     videocamera: 60865,
     cinema: 60866,
@@ -57,6 +59,8 @@ const CATEGORY = {
     esp: 232809,
     camera: 232762,
     lens: 232763,
+    lenscamera: 232766,
+    lenslens: 232767,
     compact: 232769,
     videocamera: 232770,
     cinema: 232771,
@@ -124,13 +128,13 @@ if (['development', 'production'].includes(process.env.NODE_ENV)) {
   });
   // 카메라 > 렌즈교환식카메라 > 카메라
   categoriesExtraDataMap.push({
-    categoryNo: CATEGORY.no.lens,
+    categoryNo: CATEGORY.no.lenscamera,
     url: '/products/camera/lens',
     tab: 'camera',
   });
   // 카메라 > 렌즈교환식카메라 > 렌즈
   categoriesExtraDataMap.push({
-    categoryNo: CATEGORY.no.lens,
+    categoryNo: CATEGORY.no.lenslens,
     url: '/products/camera/lens',
     tab: 'lens',
   });
