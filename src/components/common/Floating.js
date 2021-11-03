@@ -37,7 +37,7 @@ const chat = () => {
 export default function Floating({ location, scrollAction }) {
   const history = useHistory();
 
-  const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'),[location])
+  const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'), [location]);
 
   const info = useMallState();
   const TEL = info?.mall?.serviceCenter.phoneNo;
@@ -130,13 +130,13 @@ export default function Floating({ location, scrollAction }) {
     if (scrollAction === 'up' || scrollBottomException) {
       return {
         position: 'fixed',
-        bottom: '88px',
+        bottom: '24px',
       };
     }
   }, [reachend, scrollAction]);
 
   return (
-    <nav ref={sidebarRef} className={`sidebar ${active && 'sidebar--active'}`} style={scrollStyle}>
+    <nav ref={sidebarRef} className={`sidebar ${active && 'sidebar--active'} sidebar--visible`} style={scrollStyle}>
       <div className="sidebar__inner">
         <a href="#none" onClick={(e) => handleClick(e, 'kakao')} className="sidebar__btn sidebar__btn__link kakao">
           <span>카톡 상담</span>

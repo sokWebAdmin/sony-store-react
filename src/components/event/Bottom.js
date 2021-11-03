@@ -301,7 +301,11 @@ const EventBottom = () => {
             {tabs &&
               tabs.map(({ key, label }) => {
                 return (
-                  <SwiperSlide key={`tab_${key}`} className={`tabs swiper-slide ${tabState === key ? 'on' : ''}`}>
+                  <SwiperSlide
+                    key={`tab_${key}`}
+                    className={`tabs swiper-slide ${tabState === key ? 'on' : ''}`}
+                    style={{ flexGrow: 1 }}
+                  >
                     <Link
                       to={`/event/list?tab=${key}`}
                       onClick={() => {
