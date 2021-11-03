@@ -36,7 +36,7 @@ const chat = () => {
 
 export default function Floating({ location, scrollAction }) {
   const history = useHistory();
-
+  const isSheet = useMemo(() => ['order/sheet', 'gift/sheet'].some((p) => location.pathname.includes(p)), [location]);
   const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'), [location]);
 
   const info = useMallState();
@@ -122,6 +122,13 @@ export default function Floating({ location, scrollAction }) {
     }
 
     sidebarRef?.current?.classList.add('sidebar--visible');
+
+    if (isSheet) {
+      return {
+        position: 'fixed',
+        bottom: '60px',
+      };
+    }
 
     if (scrollAction === 'down' && !scrollBottomException) {
       return {
