@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { isMobile } from 'react-device-detect';
 import { getAccessToken, getGuestToken, removeAccessToken } from '../utils/token';
+import { getAgent } from '../utils/detectAgent';
 
 const SERVER = process.env.REACT_APP_SHOP_API_URL;
 const version = process.env.REACT_APP_SHOP_API_VERSION;
@@ -39,6 +40,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
 
   const exceptErrorUrls = ['authentications/sms', 'cart/count'];
   const goErrorCodes = ['AE001', 'PRDT0001'];
+  const agent = getAgent();
 
   return await axios({
     method,
@@ -48,7 +50,9 @@ const request = async (url, method, query = {}, requestBody = null) => {
     validateStatus: (status) => status,
   }).then((response) => {
     if (response.status === 401 && !exceptErrorUrls.includes(url)) {
-      if (response?.data?.message) {
+      if (agent.isApp && window.location.pathname.includes('my-page')) {
+        alert('로그인이 필요합니다.');
+      } else if (response?.data?.message) {
         window.location.pathname.includes('my-page')
           ? alert('로그인 상태가 만료되었습니다. 다시 로그인해주세요.')
           : alert(response?.data?.message);
