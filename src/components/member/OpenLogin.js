@@ -62,12 +62,11 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   }, [history.location.search, history.location]);
 
   const openIdLogin = async (type) => {
-    const provider = type.substring(0, 1).toUpperCase();
     const clientId = CLIENT_ID[type];
     const state = generateRandomString();
     const redirectUri = encodeURI(`${window.location.origin}/callback`);
 
-    setItem(KEY.OPENID_PROVIDER, provider, 30 * 60 * 1000);
+    setItem(KEY.OPENID_PROVIDER, type, 30 * 60 * 1000);
     setItem(KEY.OPENID_TOKEN, state, 30 * 60 * 1000);
 
     openLoginPopup();
