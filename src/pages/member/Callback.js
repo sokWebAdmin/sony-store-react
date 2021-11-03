@@ -32,7 +32,9 @@ const Callback = () => {
     const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
 
     if (!code || !state || !redirectedProvider) {
-      openAlert('인증 정보가 만료되었습니다.');
+      openAlert('인증 정보가 만료되었습니다.', () => () => {
+        window.openWindow(`javascript:void(0)`, '', '', 'verification_close');
+      });
       return;
     }
 
