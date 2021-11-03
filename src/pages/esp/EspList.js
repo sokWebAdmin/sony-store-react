@@ -23,8 +23,7 @@ import { getRegisteredProduct } from '../../api/sony/product';
 import { useProfileState } from '../../context/profile.context';
 import EspAddCart from '../../components/popup/esp/EspAddCart';
 import qs from 'qs';
-
-// TODO 연동 테스트 해야함
+import { getProductDetail } from '../../api/product';
 
 export default function EspList({history}) {
 
@@ -48,6 +47,12 @@ export default function EspList({history}) {
       return;
     }
 
+    const isExist = await _isExistProduct();
+    if (!isExist) {
+      history.replace('/');
+      return;
+    }
+
     const result = await _getRegisteredProduct();
 
     setInitial(true);
@@ -59,6 +64,29 @@ export default function EspList({history}) {
       setProducts([...products, ...result.list]);
     }
   },[pageIndex, profile]);
+
+  const _isExistProduct = async () => {
+    const query = qs.parse(history.location.search, {
+      ignoreQueryPrefix: true,
+    });
+
+    if (!query?.productNo) {
+      return false;
+    }
+
+    try {
+      const { data } = await getProductDetail(query.productNo);
+
+      if (data?.stockCnt?.stockCnt > 0) {
+        return true;
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
+
+    return false;
+  }
 
   const _getRegisteredProduct = async () => {
     const query = qs.parse(history.location.search, {

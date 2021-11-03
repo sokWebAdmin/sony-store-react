@@ -25,6 +25,11 @@ export default function EspProduct({product}) {
   }
 
   const buy = () => {
+    if (!product?.stockCnt) {
+      alert("재고가 부족합니다.");
+      return;
+    }
+
     if (isLogin) {
       history.push(`/esp/list?productNo=${product.productNo}`);
     } else {
