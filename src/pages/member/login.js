@@ -93,7 +93,7 @@ export default function Login({ location }) {
         const { accessToken, expireIn } = response.data;
         setAccessToken(accessToken, expireIn);
         history.push('/member/inactiveAccounts');
-      } else if (response.data.status === 200) {
+      } else if (response.status === 200) {
         const { accessToken, expireIn } = response.data;
         setAccessToken(accessToken, expireIn);
         onChangeGlobal({ isLogin: true });
