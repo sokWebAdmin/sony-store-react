@@ -113,12 +113,15 @@ export default function Floating({ location, scrollAction }) {
   const scrollStyle = useMemo(() => {
     if (reachend) {
       toggle(false);
+      sidebarRef?.current?.classList.remove('sidebar--visible');
       return {
         position: 'absolute',
         top: '24px',
         bottom: 'auto',
       };
     }
+
+    sidebarRef?.current?.classList.add('sidebar--visible');
 
     if (scrollAction === 'down' && !scrollBottomException) {
       return {
