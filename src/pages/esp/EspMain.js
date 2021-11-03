@@ -79,6 +79,7 @@ export default function EspMain() {
                     pageNumber: pageNumber,
                     pageSize: 15,
                     hasOptionValues: true,
+                    'filter.soldout': true,
                 });
 
                 if (status !== 200) {
