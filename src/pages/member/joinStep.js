@@ -229,7 +229,8 @@ export default function JoinStep() {
             await fetchMyProfile(profileDispatch, data);
             history.replace('/');
           } else {
-            history.push('/member/login');
+            alert('로그인 실패하였습니다.');
+            window.location.replace('/member/login');
           }
         });
       } else {
