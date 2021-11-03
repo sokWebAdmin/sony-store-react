@@ -145,9 +145,6 @@ const Cart = ({ location }) => {
   const goOrder = async () => {
     try {
       const orderSheetNo = await getOrderSheetNo(checkedProducts); // string
-      if (!isLogin) {
-        deleteGuestCart(checkedIndexes);
-      }
       history.push(`/order/sheet?orderSheetNo=${orderSheetNo}`);
     }
     catch (err) {

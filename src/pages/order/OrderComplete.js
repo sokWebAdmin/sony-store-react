@@ -10,6 +10,7 @@ import SEOHelmet from '../../components/SEOHelmet';
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 import { getUrlParam } from '../../utils/location';
+import gc from '../../storage/guestCart';
 
 const OrderComplete = ({ location }) => {
   const history = useHistory();
@@ -63,6 +64,11 @@ const OrderComplete = ({ location }) => {
     if (!orderNo) {
       alert('잘못된 접근입니다.');
       history.push('/');
+      return;
+    }
+
+    if (!isLogin) {
+      gc.cover([])
     }
   }, [location]);
 
