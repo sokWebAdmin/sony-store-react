@@ -244,15 +244,7 @@ export default function Header(location) {
                           </Link>
                         </li>
                         <li className="member__menu__order">
-                          <Link
-                            onClick={() => {
-                              openAlert('로그인 이동');
-                              closeSubSlider();
-                              debugger;
-
-                              // history.push('/member/login');
-                            }}
-                          >
+                          <Link to={isLogin ? '/my-page/order-list' : '/member/login'} onClick={closeSubSlider}>
                             주문/배송 조회
                           </Link>
                         </li>
