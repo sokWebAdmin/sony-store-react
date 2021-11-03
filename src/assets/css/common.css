@@ -519,10 +519,6 @@ body {
   height: 100%
 }
 
-.header .member {
-  display: none
-}
-
 .header .search {
   display: none;
   position: absolute;
