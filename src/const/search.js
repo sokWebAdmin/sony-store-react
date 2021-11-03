@@ -35,3 +35,16 @@ export const PAGE_SIZE = {
   CATEGORY: 10,
   NOTICE: 10,
 };
+
+export const RECOMMEND_SECTION = {
+  development: {
+    sectionNo: 5963,
+  },
+  production: {
+    sectionNo: 90113,
+  },
+
+  get no() {
+    return this[process.env.NODE_ENV]?.sectionNo;
+  },
+};
