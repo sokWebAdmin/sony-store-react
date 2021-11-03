@@ -31,7 +31,6 @@ export const getItem = (name, checkExpire = true) => {
     if (checkExpire) {
       const expireUnixTime = window.localStorage.getItem(name + EXPIRATION_KEY);
       const expire = !!expireUnixTime && expireUnixTime < Date.now();
-      console.log(expire, expireUnixTime, expireUnixTime, Date.now(), 2);
       return expire ? null : JSON.parse(window.localStorage.getItem(name));
     }
     return JSON.parse(window.localStorage.getItem(name));
