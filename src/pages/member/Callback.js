@@ -50,6 +50,7 @@ const Callback = () => {
         setItem('openIdProfile', openIdProfile);
         window.openWindow(`javascript:window.location.replace('${getItem('currentPath') + '?callback=true'}')`, '', '', 'verification_close');
       }
+      window.close();
     } else {
       openAlert(openIdProfile.errorMessage, () => () => {
         if (!agent.isApp) {
