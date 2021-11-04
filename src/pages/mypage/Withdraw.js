@@ -22,7 +22,7 @@ import { getProfileOrdersSummaryStatus } from '../../api/order';
 import LayerPopup from '../../components/common/LayerPopup';
 import { loginApi } from '../../api/auth';
 import { toCurrencyString } from '../../utils/unit';
-import { getItem, KEY, removeAccessToken, setItem } from '../../utils/token';
+import { getItem, KEY, removeAccessToken, removeItem, setItem } from '../../utils/token';
 import GlobalContext from '../../context/global.context';
 
 const CLIENT_ID = {
@@ -109,7 +109,9 @@ export default function Withdraw() {
 
     if (errorCode === '0000') {
       setVerifyOpenId(true);
-      if (!withdrawReason) {
+      const openIdReason = setItem('withdrawReason');
+      removeItem('openIdReason');
+      if (!openIdReason) {
         openAlert('탈퇴사유를 선택해주세요.');
         return;
       }
@@ -121,6 +123,7 @@ export default function Withdraw() {
 
   useEffect(() => {
     setItem('currentPath', window.location.pathname);
+    setItem('withdrawReason', withdrawReason.optionNo);
   }, []);
 
   return (
