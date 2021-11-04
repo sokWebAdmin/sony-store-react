@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 //util
 import { Link, useHistory } from 'react-router-dom';
 import { getProductsOptions } from '../../api/product';
-import { useCategoryState } from '../../context/category.context';
+import { getCategoryByKey, useCategoryState } from '../../context/category.context';
 import { getSaleStatus, getSaleStatusForOption } from '../../utils/product';
 import { toCurrencyString } from '../../utils/unit';
 
@@ -14,6 +14,8 @@ export default function Product({ product, category, reset, micro }) {
   const [groupProducts, setGroupProducts] = useState([]);
   const [options, setOptions] = useState([]);
   const [colorIndex, setColorIndex] = useState(0);
+
+  const { espCategory } = useCategoryState();
 
   useEffect(() => {
     setColorIndex(0);
@@ -78,12 +80,22 @@ export default function Product({ product, category, reset, micro }) {
     }
   }, [product, options]);
 
+  const _move = product => {
+    const isEspCategory = !!getCategoryByKey([espCategory], 'categoryNo', Number(product.displayCategoryNos));
+    if (isEspCategory) {
+      history.push('/esp');
+    }
+    else {
+      history.push(`/product-view/${product.productNo}`);
+    }
+  }
+
   return (
     <div
       className="product"
       onClick={(e) => {
         e.preventDefault();
-        history.push(`/product-view/${product.productNo}`);
+        _move(product);
       }}
     >
       {product?.stickerLabels?.length > 0 && tagColorMap[product.stickerLabels[0]] && (
