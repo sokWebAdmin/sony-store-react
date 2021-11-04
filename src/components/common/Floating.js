@@ -40,6 +40,7 @@ export default function Floating({ location, scrollAction }) {
   const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'), [location]);
   const giftPage = useMemo(() => location.pathname.includes('/order/gift'), [location]);
   const orderPage = useMemo(() => location.pathname.includes('/order/sheet'), [location]);
+  const cartPage = useMemo(() => location.pathname.includes('/cart'), [location]);
 
   const info = useMallState();
   const TEL = info?.mall?.serviceCenter.phoneNo;
@@ -113,7 +114,7 @@ export default function Floating({ location, scrollAction }) {
   });
 
   const scrollStyle = useMemo(() => {
-    if (orderPage || giftPage) {
+    if (orderPage || giftPage || cartPage || (window.scrollY === 0 && scrollBottomException)) {
       return {
         position: 'fixed',
         bottom: '-9999px',
@@ -130,7 +131,6 @@ export default function Floating({ location, scrollAction }) {
     }
 
     sidebarRef?.current?.classList.add('sidebar--visible');
-
     if (scrollAction === 'down' && !scrollBottomException) {
       return {
         position: 'fixed',
