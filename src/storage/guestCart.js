@@ -23,9 +23,4 @@ const gc = {
   },
 };
 
-if (process.env.NODE_ENV === 'development') {
-  // test code...
-  window['gc'] = gc;
-}
-
 export default gc;

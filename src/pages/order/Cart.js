@@ -102,6 +102,12 @@ const Cart = ({ location }) => {
       fetchCart()
         .then((data) => {
           mapData(data);
+          if (data?.invalidProducts?.length) {
+            removeMemberCartMissingProduct(data.invalidProducts).then(() => {
+              alert('구매 불가한 상품이 포함되어있어 제거 되었습니다.')
+            }).then(() => window.location.reload())
+            return;
+          }
           getCartCount().then(({ data: { count } }) => setCartCount(headerDispatch, count));
         })
         .catch(console.error)
@@ -120,6 +126,13 @@ const Cart = ({ location }) => {
     }
   };
 
+  function removeMemberCartMissingProduct(invalidProducts) {
+    const invalidCartNos = invalidProducts.flatMap(p => p.orderProductOptions).map(({ cartNo }) => cartNo)
+    return deleteCart({
+      cartNo: invalidCartNos.join(',')
+    })
+  }
+
   function checkGuestCartMissingProduct (
     availableProducts, guestCartStorageItems) {
     if (guestCartStorageItems.length > availableProducts.length) {
@@ -132,9 +145,6 @@ const Cart = ({ location }) => {
   const goOrder = async () => {
     try {
       const orderSheetNo = await getOrderSheetNo(checkedProducts); // string
-      if (!isLogin) {
-        deleteGuestCart(checkedIndexes);
-      }
       history.push(`/order/sheet?orderSheetNo=${orderSheetNo}`);
     }
     catch (err) {
