@@ -27,6 +27,7 @@ export default function Option({
   saleStatus,
   optionVisible,
   isMobileSize,
+  isMapping,
 }) {
   const reserved = saleStatus === 'RESERVE';
 
@@ -42,6 +43,7 @@ export default function Option({
         disabledLabel,
         label: colorChipInfo?.label,
         background: colorChipInfo?.background,
+        buyPrice: isMapping ? Math.abs(o.buyPrice) + Math.abs(o.addPrice) : o.buyPrice,
       };
     },
     [colorByOptionNo, hasColor, productName],
