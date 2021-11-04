@@ -109,8 +109,6 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
   };
 
   const goOrder = async (productNo, hsCode) => {
-    if (!isLogin) return;
-
     const succeed = await hsValidation(!!hsCode);
     if (!succeed) return;
 
