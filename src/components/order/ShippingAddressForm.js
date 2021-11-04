@@ -37,6 +37,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
   const [specifyDelivery, setSpecifyDelivery] = useState(false); // bool
   const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(new Date()); // Date
   const [deliveryMemoVisible, setDeliveryMemoVisible] = useState(false); // Date
+  const [deliveryMemo, setDeliveryMemo] = useState(''); // Date
   // object
 
   useEffect(
@@ -94,6 +95,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
 
     if (name === 'deliveryMemo') {
       handleShippingChangeParameter('deliveryMemo', event.target.value);
+      setDeliveryMemo(event.target.value);
     }
   };
 
@@ -329,9 +331,12 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
                 }}
                 selectOptions={deliveryMemoFixedList}
                 selectOption={({ optionNo, label }) => {
-                  optionNo !== 1
-                    ? handleShippingChangeParameter('deliveryMemo', label)
-                    : handleShippingChangeParameter('deliveryMemo', '');
+                  if (optionNo !== 1) {
+                    handleShippingChangeParameter('deliveryMemo', label);
+                    setDeliveryMemo('');
+                  } else {
+                    handleShippingChangeParameter('deliveryMemo', '');
+                  }
                   optionNo === 8 ? setDeliveryMemoVisible(true) : setDeliveryMemoVisible(false);
                 }}
               />
@@ -343,6 +348,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
                 type="text"
                 className="inp"
                 placeholder="배송 메모를 입력하세요."
+                value={deliveryMemo}
                 name="deliveryMemo"
                 onChange={handleShippingChange}
                 disabled={deliveryMemoVisible !== true}

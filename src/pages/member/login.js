@@ -93,7 +93,7 @@ export default function Login({ location }) {
         const { accessToken, expireIn } = response.data;
         setAccessToken(accessToken, expireIn);
         history.push('/member/inactiveAccounts');
-      } else {
+      } else if (response.status === 200) {
         const { accessToken, expireIn } = response.data;
         setAccessToken(accessToken, expireIn);
         onChangeGlobal({ isLogin: true });
@@ -114,6 +114,9 @@ export default function Login({ location }) {
         } else {
           nextLocation === 'cart' ? history.push(`/${nextLocation}?savingGuestCart=true`) : history.push('/');
         }
+      } else {
+        const errorMessage = response.data?.message ? JSON.parse(response.data.message).errorMessage : '';
+        alert(errorMessage);
       }
     }
   };
