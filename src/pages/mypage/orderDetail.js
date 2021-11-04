@@ -30,6 +30,7 @@ import {
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 import RefundAccount from '../order/RefundAccount';
+import OrderConfirm from '../../components/order/OrderConfirm';
 
 export default function OrderDetail() {
   const query = useQuery();
@@ -41,6 +42,9 @@ export default function OrderDetail() {
     defaultOrderStatusType: '', // order의 가장 첫번째 옵션주문의 주문상태(api 동일)
     claimStatusTypeLabel: '', // 클레임 상태 라벨(기획 누락으로 샵바이 API에서 던져주는 claimStatusTypeLabel 사용)
   });
+
+  const [pgOrderNo, setPgOrderNo] = useState(null)
+
   const [claimInfo, setClaimInfo] = useState({
     claimStatusType: '',
     claimNo: '',
@@ -97,6 +101,7 @@ export default function OrderDetail() {
   const setStates = (res) => {
     const {
       orderNo,
+      pgOrderNo,
       orderYmdt,
       defaultOrderStatusType,
       orderer: { ordererName, ordererContact1 },
@@ -162,6 +167,8 @@ export default function OrderDetail() {
       bankInfo,
     });
 
+    pgOrderNo && setPgOrderNo(pgOrderNo)
+
     setReceiptInfos(receiptInfos);
   };
 
@@ -183,6 +190,8 @@ export default function OrderDetail() {
         orderStatusType: orderOption.orderStatusType,
       }));
   };
+
+  const showOrderConfirm = orderStatusType => 'DELIVERY_DONE' === orderStatusType
 
   const showOrderCancel = (orderStatusType, claimStatusType) => {
     // 주문아이템에 orderStatusType과 claimStatusType 둘 다 있음.
@@ -358,6 +367,9 @@ export default function OrderDetail() {
             <OrderInfo ordererInfo={ordererInfo} shippingAddress={shippingAddress} />
             <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
+
+              {showOrderConfirm(orderInfo.defaultOrderStatusType) && <OrderConfirm tid={pgOrderNo} />}
+
               {showOrderCancel(orderInfo.defaultOrderStatusType, claimInfo.claimStatusType) && (
                 <button type="button" className="button button_negative" onClick={onOrderCancel}>
                   주문 취소
