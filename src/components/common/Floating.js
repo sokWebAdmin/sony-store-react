@@ -38,6 +38,7 @@ export default function Floating({ location, scrollAction }) {
   const history = useHistory();
 
   const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'), [location]);
+  const giftPage = useMemo(() => location.pathname.includes('/order/gift'), [location]);
   const orderPage = useMemo(() => location.pathname.includes('/order/sheet'), [location]);
 
   const info = useMallState();
@@ -129,6 +130,13 @@ export default function Floating({ location, scrollAction }) {
     }
 
     sidebarRef?.current?.classList.add('sidebar--visible');
+
+    if (giftPage) {
+      return {
+        position: 'fixed',
+        bottom: '60px',
+      };
+    }
 
     if (scrollAction === 'down' && !scrollBottomException) {
       return {
