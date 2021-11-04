@@ -27,6 +27,7 @@ import {
   useProileDispatch,
 } from '../../context/profile.context';
 import { getProfile } from '../../api/member';
+import { getAgent } from '../../utils/detectAgent';
 
 const CLIENT_ID = {
   naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
@@ -234,6 +235,11 @@ export default function JoinStep() {
             const data = { type: '30', customerid: profile.data.memberId };
             setProfile(profileDispatch, profile.data);
             await fetchMyProfile(profileDispatch, data);
+
+            const agent = getAgent();
+            if (agent.isApp) {
+              window.location = `sonyapp://autoLoginYn?value=N&customerid=${profile.data.memberId}`;
+            }
             history.replace('/');
           } else {
             const errorMessage = response.data?.message ? JSON.parse(response.data.message).errorMessage : '';
