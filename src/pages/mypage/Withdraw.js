@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useState, useMemo, useContext, useEffect } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -22,7 +22,7 @@ import { getProfileOrdersSummaryStatus } from '../../api/order';
 import LayerPopup from '../../components/common/LayerPopup';
 import { loginApi } from '../../api/auth';
 import { toCurrencyString } from '../../utils/unit';
-import { getItem, KEY, removeAccessToken } from '../../utils/token';
+import { getItem, KEY, removeAccessToken, setItem } from '../../utils/token';
 import GlobalContext from '../../context/global.context';
 
 const CLIENT_ID = {
@@ -118,6 +118,10 @@ export default function Withdraw() {
       setVerifyOpenId(false);
     }
   }
+
+  useEffect(() => {
+    setItem('currentPath', window.location.pathname);
+  }, []);
 
   return (
     <>
