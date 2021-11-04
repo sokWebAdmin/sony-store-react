@@ -42,6 +42,7 @@ export default function SearchResult({ match }) {
   const { config } = useBoardState();
   const dispatch = useBoardDispatch();
 
+  const [reset, setReset] = useState(false);
   const [tabState, setTabState] = useState('ALL');
   const [keyword, setKeyword] = useState(initalKeyword);
   const [orderBy, setOrderBy] = useState('RECENT_PRODUCT');
@@ -184,6 +185,7 @@ export default function SearchResult({ match }) {
     searchNotice(mapNewKeyword, config.notice.boardNo);
     searchEvent(mapNewKeyword);
     searchCategory(mapNewKeyword);
+    setReset(false);
   };
 
   const isAll = useMemo(() => tabState === 'ALL', [tabState]);
@@ -222,8 +224,13 @@ export default function SearchResult({ match }) {
         <div className="container">
           <div className="content no_margin">
             {/* 검색 영역 페이지에 no_margin 클래스 추가 */}
-            <ResultTop handleSearch={handleSearch} allCount={count.ALL} initalKeyword={initalKeyword} />
-            <Tab tabState={tabState} setTabState={setTabState} count={count} />
+            <ResultTop
+              handleSearch={handleSearch}
+              allCount={count.ALL}
+              initalKeyword={initalKeyword}
+              setReset={setReset}
+            />
+            <Tab tabState={tabState} setTabState={setTabState} count={count} setReset={setReset} />
             {count.ALL === 0 ? (
               <SearchResultNone />
             ) : (
