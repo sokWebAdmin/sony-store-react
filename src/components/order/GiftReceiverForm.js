@@ -58,7 +58,7 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
 
       const invalidPhoneNo = !shipping.shippingInfoLaterInputContact.match(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g);
       if (invalidPhoneNo) {
-        alert('휴대폰 번호를 확인하여주세요.')
+        alert('휴대폰 번호 양식을 확인하여주세요.')
         shippingInfoLaterInputContact.current?.focus()
         return false;
       }
