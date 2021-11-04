@@ -28,6 +28,12 @@ import {
 } from '../../context/profile.context';
 import { getProfile } from '../../api/member';
 
+const CLIENT_ID = {
+  naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
+  facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
+  kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
+};
+
 export default function JoinStep() {
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
@@ -218,7 +224,8 @@ export default function JoinStep() {
       if (response.data.errorCode === '0000') {
         //성공
         openAlert('회원가입이 완료되었습니다.', async () => {
-          const response = await loginApi(email, password);
+          const provider = getItem(KEY.OPENID_PROVIDER);
+          const response = await loginApi(email, !provider || getUrlParam('sns') !== 'true' ? password : CLIENT_ID[provider]);
           if (response.status === 200) {
             const { accessToken, expireIn } = response.data;
             setAccessToken(accessToken, expireIn);
@@ -229,7 +236,8 @@ export default function JoinStep() {
             await fetchMyProfile(profileDispatch, data);
             history.replace('/');
           } else {
-            alert('로그인 실패하였습니다.');
+            const errorMessage = response.data?.message ? JSON.parse(response.data.message).errorMessage : '';
+            alert(errorMessage);
             window.location.replace('/member/login');
           }
         });
