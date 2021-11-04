@@ -36,8 +36,9 @@ const chat = () => {
 
 export default function Floating({ location, scrollAction }) {
   const history = useHistory();
-
+  const isSheet = useMemo(() => ['order/sheet', 'gift/sheet'].some((p) => location.pathname.includes(p)), [location]);
   const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'), [location]);
+  const orderPage = useMemo(() => location.pathname.includes('/order/sheet'), [location]);
 
   const info = useMallState();
   const TEL = info?.mall?.serviceCenter.phoneNo;
@@ -111,6 +112,12 @@ export default function Floating({ location, scrollAction }) {
   });
 
   const scrollStyle = useMemo(() => {
+    if (orderPage) {
+      return {
+        position: 'fixed',
+        bottom: '-9999px',
+      };
+    }
     if (reachend) {
       toggle(false);
       sidebarRef?.current?.classList.remove('sidebar--visible');
@@ -123,10 +130,17 @@ export default function Floating({ location, scrollAction }) {
 
     sidebarRef?.current?.classList.add('sidebar--visible');
 
+    if (isSheet) {
+      return {
+        position: 'fixed',
+        bottom: '60px',
+      };
+    }
+
     if (scrollAction === 'down' && !scrollBottomException) {
       return {
         position: 'fixed',
-        bottom: '24px',
+        bottom: '-100px',
       };
     }
 

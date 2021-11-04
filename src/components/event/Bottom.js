@@ -34,7 +34,7 @@ const tags = {
 const _scrollView = {
   pc: 10,
   tb: 10,
-  mo: 10,
+  mo: 3,
 };
 
 const EventBottom = () => {

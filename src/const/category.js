@@ -99,7 +99,7 @@ const CATEGORY = {
     playstationhardware: 232805,
   },
   get no() {
-    return this[process.env.NODE_ENV];
+    return this.production
   },
 };
 
@@ -131,12 +131,14 @@ if (['development', 'production'].includes(process.env.NODE_ENV)) {
     categoryNo: CATEGORY.no.lenscamera,
     url: '/products/camera/lens',
     tab: 'camera',
+    depth: 2
   });
   // 카메라 > 렌즈교환식카메라 > 렌즈
   categoriesExtraDataMap.push({
     categoryNo: CATEGORY.no.lenslens,
     url: '/products/camera/lens',
     tab: 'lens',
+    depth: 2
   });
   // 카메라 > 컴팩트카메라
   categoriesExtraDataMap.push({
