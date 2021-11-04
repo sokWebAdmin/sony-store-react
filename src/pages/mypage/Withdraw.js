@@ -86,7 +86,7 @@ export default function Withdraw() {
     const checkWithdraw = await withdrawalMember({
       customerid: profile?.memberId ?? profile?.email,
       withdrawreason: withdrawReason.optionNo,
-      password: provider && verifyOpenId ? CLIENT_ID[provider] : password,
+      password: provider && verifyOpenId ? '' : password,
     });
     if (checkWithdraw.data.errorCode === '0000') {
       removeAccessToken();
