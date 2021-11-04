@@ -38,6 +38,7 @@ export default function Floating({ location, scrollAction }) {
   const history = useHistory();
 
   const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'), [location]);
+  const orderPage = useMemo(() => location.pathname.includes('/order/sheet'), [location]);
 
   const info = useMallState();
   const TEL = info?.mall?.serviceCenter.phoneNo;
@@ -111,6 +112,12 @@ export default function Floating({ location, scrollAction }) {
   });
 
   const scrollStyle = useMemo(() => {
+    if (orderPage && isMobile) {
+      return {
+        position: 'fixed',
+        bottom: '-9999px',
+      };
+    }
     if (reachend) {
       toggle(false);
       sidebarRef?.current?.classList.remove('sidebar--visible');
@@ -126,7 +133,7 @@ export default function Floating({ location, scrollAction }) {
     if (scrollAction === 'down' && !scrollBottomException) {
       return {
         position: 'fixed',
-        bottom: '24px',
+        bottom: '-100px',
       };
     }
 
