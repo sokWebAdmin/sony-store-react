@@ -52,7 +52,6 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
     });
   };
 
-
   const submit = () => {
     setDiscount({
       ...discount,
