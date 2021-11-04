@@ -36,6 +36,7 @@ export default function Withdraw() {
   const [isPwVisible, setPwVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [withdrawReason, setWithdrawReason] = useState(null);
+  const [verifyOpenId, setVerifyOpenId] = useState(false);
 
   const availablemileage = useMemo(() => {
     return my?.availablemileage ?? 0;
@@ -92,6 +93,17 @@ export default function Withdraw() {
       history.push('/my-page/withdraw-complete');
     } else {
       openAlert(checkWithdraw.data.errorMessage);
+    }
+  }
+
+  const withdrawCallback = (errorCode, body) => {
+    window.shopOauthCallback = null;
+
+    if (errorCode === '0000') {
+      setVerifyOpenId(true);
+      openConfirm();
+    } else {
+      setVerifyOpenId(false);
     }
   }
 
@@ -166,8 +178,12 @@ export default function Withdraw() {
                     </ul>
                   </div>
                   <div className="sns_certify">
-                    <OpenLogin message="SNS 계정으로 회원 인증"
-                               title="SNS 계정으로 가입하신 회원님은 비밀번호 입력 대신 SNS 계정을 인증해 주셔야 탈퇴가 가능합니다." />
+                    <OpenLogin
+                      message="SNS 계정으로 회원 인증"
+                      title="SNS 계정으로 가입하신 회원님은 비밀번호 입력 대신 SNS 계정을 인증해 주셔야 탈퇴가 가능합니다."
+                      type="withdraw"
+                      customCallback={withdrawCallback}
+                    />
                   </div>
                 </div>
               </form>

@@ -58,9 +58,12 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   useEffect(() => {
     if (getAgent().isApp && getUrlParam('callback') === 'true') {
       const openIdProfile = getItem('openIdProfile');
-      openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
+      if (type === 'withdraw' || type === 'modify') {
+        openIdProfile && customCallback(openIdProfile.errorCode, openIdProfile.body);
+      } else {
+        openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
+      }
     }
-    console.log(type);
   }, [history.location.search, history.location]);
 
   const openIdLogin = async (type) => {
