@@ -9,6 +9,9 @@ import categoryRight from '../../assets/images/category/btn_category_right.svg';
 import { categoriesLinkMap } from '../../const/category';
 import { useWindowSize } from '../../utils/utils';
 
+// style
+import '../../assets/scss/partials/categoryTabMenu.scss'
+
 export default function CategoryHeader({ category, changeCurrentCategoryByNo }) {
   const history = useHistory();
   const location = useLocation();
