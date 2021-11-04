@@ -109,6 +109,10 @@ export default function Withdraw() {
 
     if (errorCode === '0000') {
       setVerifyOpenId(true);
+      if (!withdrawReason) {
+        openAlert('탈퇴사유를 선택해주세요.');
+        return;
+      }
       openConfirm();
     } else {
       setVerifyOpenId(false);
