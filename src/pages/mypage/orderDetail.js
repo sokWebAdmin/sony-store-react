@@ -191,6 +191,8 @@ export default function OrderDetail() {
       }));
   };
 
+  const showOrderConfirm = orderStatusType => 'DELIVERY_DONE' === orderStatusType
+
   const showOrderCancel = (orderStatusType, claimStatusType) => {
     // 주문아이템에 orderStatusType과 claimStatusType 둘 다 있음.
 
@@ -366,7 +368,7 @@ export default function OrderDetail() {
             <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
 
-              <OrderConfirm tid={pgOrderNo} />
+              {showOrderConfirm(orderInfo.defaultOrderStatusType) && <OrderConfirm tid={pgOrderNo} />}
 
               {showOrderCancel(orderInfo.defaultOrderStatusType, claimInfo.claimStatusType) && (
                 <button type="button" className="button button_negative" onClick={onOrderCancel}>
