@@ -24,6 +24,7 @@ import { loginApi } from '../../api/auth';
 import { toCurrencyString } from '../../utils/unit';
 import { getItem, KEY, removeAccessToken, removeItem, setItem } from '../../utils/token';
 import GlobalContext from '../../context/global.context';
+import { getAgent } from '../../utils/detectAgent';
 
 const CLIENT_ID = {
   naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
@@ -109,7 +110,9 @@ export default function Withdraw() {
 
     if (errorCode === '0000') {
       setVerifyOpenId(true);
-      const openIdReason = setItem('withdrawReason');
+      const agent = getAgent();
+      const openIdReason = agent.isApp ? setItem('withdrawReason') : withdrawReason;
+      setWithdrawReason(openIdReason);
       removeItem('openIdReason');
       if (!openIdReason) {
         openAlert('탈퇴사유를 선택해주세요.');
