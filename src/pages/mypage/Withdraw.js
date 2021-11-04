@@ -22,8 +22,14 @@ import { getProfileOrdersSummaryStatus } from '../../api/order';
 import LayerPopup from '../../components/common/LayerPopup';
 import { loginApi } from '../../api/auth';
 import { toCurrencyString } from '../../utils/unit';
-import { removeAccessToken } from '../../utils/token';
+import { getItem, KEY, removeAccessToken } from '../../utils/token';
 import GlobalContext from '../../context/global.context';
+
+const CLIENT_ID = {
+  naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
+  facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
+  kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
+};
 
 export default function Withdraw() {
   const history = useHistory();
@@ -71,32 +77,34 @@ export default function Withdraw() {
       openAlert('비밀번호를 입력해주세요.');
       return;
     }
-    const checkPassword = await loginApi(profile.memberId, password);
-    if (checkPassword.status !== 200) {
-      openAlert('비밀번호가 올바르지 않습니다.');
-      return;
-    }
 
     openConfirm();
   }
 
   const onClickWithdraw = async () => {
+    const provider = getItem(KEY.OPENID_PROVIDER);
     const checkWithdraw = await withdrawalMember({
       customerid: profile?.memberId ?? profile?.email,
       withdrawreason: withdrawReason.optionNo,
-      password,
+      password: provider && verifyOpenId ? CLIENT_ID[provider] : password,
     });
     if (checkWithdraw.data.errorCode === '0000') {
       removeAccessToken();
       onChangeGlobal({ isLogin: false });
       resetProfile(profileDispatch);
       history.push('/my-page/withdraw-complete');
+    } else if (checkWithdraw.data.errorCode === '3008') {
+      openAlert('회원탈퇴 시 입력한 사용자 정보가 다릅니다.');
+    } else if (checkWithdraw.data.errorCode === '3400') {
+      openAlert('인증에 실패하였습니다.');
+    } else if (checkWithdraw.data.errorCode === '9999') {
+      openAlert('비정상적인 오류가 발생하였습니다.');
     } else {
       openAlert(checkWithdraw.data.errorMessage);
     }
   }
 
-  const withdrawCallback = (errorCode, body) => {
+  const withdrawCallback = (errorCode) => {
     window.shopOauthCallback = null;
 
     if (errorCode === '0000') {
