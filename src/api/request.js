@@ -64,8 +64,8 @@ const request = async (url, method, query = {}, requestBody = null) => {
     }
     if (method === 'get') {
       const eventDetail = ['/event/only/', '/event/detail/', '/event/asc/', '/event/refined/', '/event/live-on/', '/event/refurbish/', '/event/employee/'];
-      console.log(response.data.code === 'EVEC0001')
-      console.log(url.includes('display/events/'))
+      console.log(response.data.code)
+      console.log(url)
       if (
         response.data.code === 'EVEC0001'
         && url.includes('display/events/')
