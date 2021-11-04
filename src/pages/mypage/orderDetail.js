@@ -368,7 +368,8 @@ export default function OrderDetail() {
             <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
 
-              {showOrderConfirm(orderInfo.defaultOrderStatusType) && <OrderConfirm tid={pgOrderNo} />}
+              {/* 에스크로 '구매확정' 버튼. 재사용시 구매확정 이 잘되는지, 구매확정 시 returnUrl 등 테스트 필요 */}
+              {/* showOrderConfirm(orderInfo.defaultOrderStatusType) && <OrderConfirm tid={pgOrderNo} /> */}
 
               {showOrderCancel(orderInfo.defaultOrderStatusType, claimInfo.claimStatusType) && (
                 <button type="button" className="button button_negative" onClick={onOrderCancel}>
