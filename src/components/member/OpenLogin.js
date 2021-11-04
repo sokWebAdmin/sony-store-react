@@ -95,8 +95,13 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
       } else {
         const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
         const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
+        const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
 
         if (response.status !== 200) {
+          if (code === '3003') {
+            history.push('/member/lockedAccounts');
+            return;
+          }
           openAlert('간편 인증에 실패하였습니다.');
           return;
         }
