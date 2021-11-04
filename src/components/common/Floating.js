@@ -131,14 +131,14 @@ export default function Floating({ location, scrollAction }) {
     }
 
     sidebarRef?.current?.classList.add('sidebar--visible');
-    if (scrollAction === 'down') {
+    if (scrollAction === 'down' && !scrollBottomException) {
       return {
         position: 'fixed',
         bottom: '24px',
       };
     }
 
-    if (scrollAction === 'up') {
+    if (scrollAction === 'up' || scrollBottomException) {
       return {
         position: 'fixed',
         bottom: '-100px',
