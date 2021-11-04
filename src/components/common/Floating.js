@@ -131,17 +131,17 @@ export default function Floating({ location, scrollAction }) {
     }
 
     sidebarRef?.current?.classList.add('sidebar--visible');
-    if (scrollAction === 'down' && !scrollBottomException) {
-      return {
-        position: 'fixed',
-        bottom: '-100px',
-      };
-    }
-
-    if (scrollAction === 'up' || scrollBottomException) {
+    if (scrollAction === 'down') {
       return {
         position: 'fixed',
         bottom: '24px',
+      };
+    }
+
+    if (scrollAction === 'up') {
+      return {
+        position: 'fixed',
+        bottom: '-100px',
       };
     }
   }, [reachend, scrollAction, location]);
