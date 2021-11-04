@@ -42,6 +42,7 @@ export default function SearchResult({ match }) {
   const { config } = useBoardState();
   const dispatch = useBoardDispatch();
 
+  const [reset, setReset] = useState(false);
   const [tabState, setTabState] = useState('ALL');
   const [keyword, setKeyword] = useState(initalKeyword);
   const [orderBy, setOrderBy] = useState('RECENT_PRODUCT');
@@ -99,8 +100,8 @@ export default function SearchResult({ match }) {
     try {
       const { data } = await getDisplayEventsByTitle(keyword);
 
-      setInitialEventList(data.filter(({ tag }) => tag));
-      setEventCount(data.filter(({ tag }) => tag).length || 0);
+      setInitialEventList(() => data.filter(({ tag }) => tag));
+      setEventCount(() => data.filter(({ tag }) => tag).length || 0);
       fetchEvent(1, data);
     } catch (e) {
       console.error(e);
@@ -109,7 +110,7 @@ export default function SearchResult({ match }) {
 
   const fetchEvent = (pageNumber, data, pageSize = PAGE_SIZE.EVENT) => {
     if (pageNumber === 1) {
-      setEventList(data.slice(0, pageSize));
+      setEventList(() => data.slice(0, pageSize));
     } else {
       const start = (pageNumber - 1) * pageSize;
       const end = start + pageSize;
@@ -129,12 +130,12 @@ export default function SearchResult({ match }) {
       return dateL > dateR ? 1 : -1;
     };
     const sortData = newest ? [...data].sort(sortByLatestCreationDate) : [...data].sort(sortByOldestCreationDate);
-    setEventList(sortData);
+    setEventList(() => sortData);
   };
 
   const fetchCategory = (pageNumber, data, pageSize = PAGE_SIZE.CATEGORY) => {
     if (pageNumber === 1) {
-      setCategoryList(data.slice(0, pageSize));
+      setCategoryList(() => data.slice(0, pageSize));
     } else {
       const start = (pageNumber - 1) * pageSize;
       const end = start + pageSize;
@@ -145,7 +146,7 @@ export default function SearchResult({ match }) {
   const searchCategory = useCallback(async (keyword) => {
     try {
       const { data } = await getCategoryListByKeyword(keyword);
-      setInitialCategoryList(data.flatCategories);
+      setInitialCategoryList(() => data.flatCategories);
       // setCategoryList(data.flatCategories);
       setCategoryCount(data.flatCategories.length || 0);
       fetchCategory(1, data.flatCategories);
@@ -184,6 +185,7 @@ export default function SearchResult({ match }) {
     searchNotice(mapNewKeyword, config.notice.boardNo);
     searchEvent(mapNewKeyword);
     searchCategory(mapNewKeyword);
+    setReset(false);
   };
 
   const isAll = useMemo(() => tabState === 'ALL', [tabState]);
@@ -222,8 +224,13 @@ export default function SearchResult({ match }) {
         <div className="container">
           <div className="content no_margin">
             {/* 검색 영역 페이지에 no_margin 클래스 추가 */}
-            <ResultTop handleSearch={handleSearch} allCount={count.ALL} initalKeyword={initalKeyword} />
-            <Tab tabState={tabState} setTabState={setTabState} count={count} />
+            <ResultTop
+              handleSearch={handleSearch}
+              allCount={count.ALL}
+              initalKeyword={initalKeyword}
+              setReset={setReset}
+            />
+            <Tab tabState={tabState} setTabState={setTabState} count={count} setReset={setReset} />
             {count.ALL === 0 ? (
               <SearchResultNone />
             ) : (

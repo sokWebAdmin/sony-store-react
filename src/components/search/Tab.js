@@ -12,7 +12,7 @@ import { TAB_MAP } from '../../const/search';
 
 const tabs = Object.keys(TAB_MAP);
 
-export default function Tab({ tabState, setTabState, count }) {
+export default function Tab({ tabState, setTabState, count, setReset }) {
   const [swiperTab, setSwiperTab] = useState(null);
   SwiperCore.use([Navigation]);
 
@@ -43,6 +43,7 @@ export default function Tab({ tabState, setTabState, count }) {
                   event.preventDefault();
                   setTabState(tab);
                   swiperTab?.slideTo(idx);
+                  setReset(true);
                 }}
               >
                 {TAB_MAP[tab]}
