@@ -5,9 +5,8 @@ import SEOHelmet from '../../components/SEOHelmet';
 
 //api
 
-
 //css
-import "../../assets/scss/contents.scss"
+import '../../assets/scss/contents.scss';
 import { getCategoryByKey, useCategoryState } from '../../context/category.context';
 import { Link } from 'react-router-dom';
 
@@ -20,77 +19,78 @@ const mapClassName = {
 };
 
 function ProductCategory({ label }) {
-  
   const { gnbCategories, categories } = useCategoryState();
   const productCategories = _.chain(gnbCategories)
-                             .filter(({ label }) => label === '제품')
-                             .flatMap(({ children }) => children)
-                             .map(c => getCategoryByKey(categories, 'url', c.route))
-                             .groupBy(c => c.label)
-                             .value();
-  
-  const getSubCategory = label => _.first(productCategories[label])?.children;
+    .filter(({ label }) => label === '제품')
+    .flatMap(({ children }) => children)
+    .map((c) => getCategoryByKey(categories, 'url', c.route))
+    .groupBy((c) => c.label)
+    .value();
+
+  const getSubCategory = (label) => _.first(productCategories[label])?.children;
 
   return (
     <ul className="product_box">
-      {
-        getSubCategory(label).map(({ categoryNo, label, url }) => (
-          <li key={categoryNo}>
-            <Link to={ url }>{ label }</Link>
-          </li>
-        ))
-      }
+      {getSubCategory(label).map(({ categoryNo, label, url }) => (
+        <li key={categoryNo}>
+          <Link to={url}>{label}</Link>
+        </li>
+      ))}
     </ul>
-  )
+  );
 }
 
 function SiteMapSubCategory({ children, parentLabel }) {
   return (
     <>
-    {
-      children && children.map((c, idx) => (
-        <li key={ `${c.label}${idx}` }>
-          {c.route ? <Link to={ c.route }>{ c.label }</Link> : <a href={window.anchorProtocol + c.href.replace('https://', '')} onClick={window.openBrowser} target="_blank" rel="noreferrer">{c.label}</a>}
-          { parentLabel === '제품' && <ProductCategory label={c.label}/> }
-        </li>
-      ))
-    }
+      {children &&
+        children.map((c, idx) => (
+          <li key={`${c.label}${idx}`}>
+            {c.route ? (
+              <Link to={c.route}>{c.label}</Link>
+            ) : (
+              <a
+                href={window.anchorProtocol + c.href.replace('https://', '')}
+                onClick={window.openBrowser}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {c.label}
+              </a>
+            )}
+            {parentLabel === '제품' && <ProductCategory label={c.label} />}
+          </li>
+        ))}
     </>
-  )
+  );
 }
 
 export default function SiteMap() {
   const { gnbCategories } = useCategoryState();
-  
+
   return (
     <>
-      <SEOHelmet title={"소니스토어 사이트맵"} />
+      <SEOHelmet title={'소니스토어 사이트맵'} />
       <div className="contents">
         <div className="container">
           <div className="content">
             <div className="page">
               <h1 className="page__title">사이트맵</h1>
             </div>
-            
+
             <div className="sitemap">
-              {
-                gnbCategories.map(({ label, children }, idx) => (
-                  <div 
-                    key={ `${label}${idx}` } 
-                    className={`sitemap__grid ${mapClassName[label]}`}
-                  >
-                    <h2 className="title">{ label }</h2>
-                    <ul>
-                      {
-                        <SiteMapSubCategory 
-                          children={children}
-                          parentLabel={label}
-                        />
-                      }
-                    </ul>
-                  </div>
-                ))
-              }
+              {gnbCategories.map(({ label, children }, idx) => (
+                <div key={`${label}${idx}`} className={`sitemap__grid ${mapClassName[label]}`}>
+                  {label === '기획전' ? (
+                    <h2 className="title">
+                      <Link to={'/event/list?tab=all'}>{label}</Link>
+                    </h2>
+                  ) : (
+                    <h2 className="title">{label}</h2>
+                  )}
+                  <ul>{<SiteMapSubCategory children={children} parentLabel={label} />}</ul>
+                </div>
+              ))}
             </div>
           </div>
         </div>
