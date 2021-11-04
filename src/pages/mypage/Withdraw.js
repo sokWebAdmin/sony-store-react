@@ -111,7 +111,7 @@ export default function Withdraw() {
     if (errorCode === '0000') {
       setVerifyOpenId(true);
       const agent = getAgent();
-      const openIdReason = agent.isApp ? setItem('withdrawReason') : withdrawReason;
+      const openIdReason = agent.isApp ? getItem('withdrawReason') : withdrawReason;
       setWithdrawReason(openIdReason);
       removeItem('openIdReason');
       if (!openIdReason) {
