@@ -113,7 +113,7 @@ export default function Floating({ location, scrollAction }) {
   });
 
   const scrollStyle = useMemo(() => {
-    if (orderPage) {
+    if (orderPage || giftPage) {
       return {
         position: 'fixed',
         bottom: '-9999px',
@@ -131,13 +131,6 @@ export default function Floating({ location, scrollAction }) {
 
     sidebarRef?.current?.classList.add('sidebar--visible');
 
-    if (giftPage) {
-      return {
-        position: 'fixed',
-        bottom: '60px',
-      };
-    }
-
     if (scrollAction === 'down' && !scrollBottomException) {
       return {
         position: 'fixed',
@@ -151,7 +144,7 @@ export default function Floating({ location, scrollAction }) {
         bottom: '24px',
       };
     }
-  }, [reachend, scrollAction]);
+  }, [reachend, scrollAction, location]);
 
   return (
     <nav ref={sidebarRef} className={`sidebar ${active && 'sidebar--active'} sidebar--visible`} style={scrollStyle}>
