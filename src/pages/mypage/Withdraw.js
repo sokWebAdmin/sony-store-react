@@ -126,7 +126,6 @@ export default function Withdraw() {
 
   useEffect(() => {
     setItem('currentPath', window.location.pathname);
-    setItem('withdrawReason', withdrawReason.optionNo);
   }, []);
 
   return (
@@ -183,7 +182,10 @@ export default function Withdraw() {
                         placeholder: '탈퇴사유를 선택해주세요.',
                       }}
                       selectOptions={withdrawalReasons}
-                      selectOption={option => setWithdrawReason(option)}
+                      selectOption={option => {
+                        setWithdrawReason(option);
+                        setItem('withdrawReason', option);
+                      }}
                     />
                   </div>
                   <div className="btn_article">
