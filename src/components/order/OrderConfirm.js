@@ -22,7 +22,7 @@ const OrderConfirm = ({ tid }) => {
   return (
     <>
       <button type="button" className="button button_positive" onClick={submit}>
-        테스트용 구매확정 버튼
+        구매확정
       </button>
       <form id="sendOrderConfirm" style={{ position: 'absolute'}} method="POST">
         <input type="hidden" name="version" value="1.0" />
@@ -33,7 +33,7 @@ const OrderConfirm = ({ tid }) => {
         <input type="hidden" name="mKey" value={env.mKey} />
         <input type="hidden" name="acceptmethod" value="escrow_buyd(co)" />
         <input type="hidden" name="returnUrl"
-               value={window.location.href} /> {/* wtf */}
+               value={window.location.href} /> {/* what is this */}
         <input type="hidden" name="closeUrl"
                value="javascript:alert('브라우저를 새로고침 해주세요.')" />
       </form>
