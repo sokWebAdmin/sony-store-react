@@ -112,7 +112,7 @@ export default function Floating({ location, scrollAction }) {
   });
 
   const scrollStyle = useMemo(() => {
-    if (orderPage && isMobile) {
+    if (orderPage) {
       return {
         position: 'fixed',
         bottom: '-9999px',
