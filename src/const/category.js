@@ -11,6 +11,8 @@ const tagColorMap = {
   C급: '#E70000',
 };
 
+console.log(process.env.NODE_ENV)
+
 const CATEGORY = {
   development: {
     esp: 81643,
