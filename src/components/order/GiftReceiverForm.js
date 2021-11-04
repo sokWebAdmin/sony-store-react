@@ -56,6 +56,14 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
         shippingInfoLaterInputContact,
       };
 
+      const invalidPhoneNo = !shipping.shippingInfoLaterInputContact.match(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g);
+      if (invalidPhoneNo) {
+        alert('휴대폰 번호를 확인하여주세요.')
+        shippingInfoLaterInputContact.current?.focus()
+        return false;
+      }
+
+
       const emptyRef = Object.entries(refs).find(([k]) => !shipping[k])?.[1];
       if (!emptyRef) {
         return true;
