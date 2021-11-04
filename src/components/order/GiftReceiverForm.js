@@ -94,6 +94,7 @@ const GiftReceiverForm = forwardRef(({ shipping, setShipping }, ref) => {
                 type="text"
                 id="user_name3"
                 className="inp"
+                maxLength="50"
                 name="receiverName"
                 value={shipping.receiverName}
                 onChange={onChangeInput}
