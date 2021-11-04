@@ -117,7 +117,13 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
         setProfile(profileDispatch, profile.data);
         await fetchMyProfile(profileDispatch, data);
 
-        openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
+        openAlert('로그인이 완료 되었습니다.', () => {
+          const agent = getAgent();
+          if (agent.isApp) {
+            window.location = `sonyapp://autoLoginYn?value=N&customerid=${profileResult.customerid}`;
+          }
+          history.push('/');
+        });
       }
     } else if (errorCode === '3012') {
       // 계정 없음
