@@ -659,7 +659,7 @@ export default function MyPageMember() {
                       <div className="tit_inner">
                         <p className="tit">
                           이벤트/프로모션 알림
-                          <br className="mo_none" /> 알림
+                          <br className="mo_none" /> 알림 수신
                         </p>
                       </div>
                       <div className="info_inner">
