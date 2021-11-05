@@ -16,7 +16,7 @@ export default function Benefits({ price, accumulationUseYn }) {
   return (
     <div className="cont line">
       <p className="tit">
-        {useAcc && nonProfit ? '본 상품은 적립금이 적립되지 않는 상품입니다.' : '회원별 마일리지 적립혜택 '}
+        {nonProfit ? '본 상품은 적립금이 적립되지 않는 상품입니다.' : '회원별 마일리지 적립혜택 '}
         <span className="icon_question">!</span>
       </p>
       {!nonProfit && (
@@ -33,10 +33,11 @@ export default function Benefits({ price, accumulationUseYn }) {
                   <span className="mark">{UPPERCASE.includes('VIP') ? UPPERCASE.split('IP')[0] : UPPERCASE}</span>
                   <div className="save_info">
                     <span className="percentage">
-                      {UPPERCASE} {_profit}%
+                      {UPPERCASE} {g.reserveBenefit.reserveRate}%
                     </span>
                     <p className="mileage">
-                      <span className="num">{wonComma(discount * (_profit / 100))}</span> {unit}
+                      <span className="num">{wonComma(discount * (g.reserveBenefit.reserveRate / 100))}</span> {unit}
+                      {/* <span className="num">{wonComma(discount * (_profit / 100))}</span> {unit} */}
                     </p>
                   </div>
                 </li>
