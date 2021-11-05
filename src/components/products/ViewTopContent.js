@@ -91,7 +91,7 @@ export default function TobContent({
           </div>
         </div>
 
-        <Benefits price={price} accumulationUseYn={accumulationUseYn} />
+        <Benefits price={price} accumulationUseYn={productData?.baseInfo?.accumulationUseYn} />
 
         {hasColor && (
           <ColorChip isSoldOut={isSoldOut} setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />
