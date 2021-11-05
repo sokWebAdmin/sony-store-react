@@ -109,7 +109,8 @@ const EventBottom = () => {
     const key = Object.keys(tags).find((key) => tagName.includes(tags[key]));
 
     if (event.url !== '') {
-      return `${origin ? document.location.origin : ''}/${event.url}/${eventNo}`;
+      const customUrl = event.url.includes('event/live-on') ? `event/live-on` : `${event.url}`;
+      return `${origin ? document.location.origin : ''}/${customUrl}/${eventNo}`;
     }
     if (key === 'all') {
       return `${origin ? document.location.origin : ''}/event/detail/${eventNo}`;
