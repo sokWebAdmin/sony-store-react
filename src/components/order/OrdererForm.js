@@ -82,6 +82,7 @@ const OrdererForm = forwardRef((prop, ref) => {
                 onChange={handleOrdererChange}
                 ref={ordererName}
                 onKeyDown={handleEnter}
+                maxLength={20}
               />
               <span className="focus_bg" />
               <p className="error_txt">
