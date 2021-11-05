@@ -1,12 +1,11 @@
 @media (max-width: 640px) {
   .category__header__sub .category__header__menu .swiper-wrapper {
     .swiper-slide {
-      flex: 1;
-      width: auto;
+      width: 33.33333%;
 
       a {
         display: flex;
-        width: inherit;
+        width: 100%;
         justify-content: center;
         align-items: center;
       }
