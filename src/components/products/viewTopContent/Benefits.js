@@ -10,6 +10,7 @@ export default function Benefits({ price }) {
 
   const unit = mallInfo?.accumulationUnit;
   const nonProfit = price.accumulationRate === 0;
+  const hasSpecialProfit = price.accumulationRate > 0;
 
   return (
     <div className="cont line">
@@ -24,16 +25,17 @@ export default function Benefits({ price }) {
             .map((g, idx) => {
               const UPPERCASE = g.label.toUpperCase();
               const LOWERCASE = g.label.toLowerCase();
+              const _profit = hasSpecialProfit ? price.accumulationRate : g.reserveBenefit.reserveRate;
               return (
                 <li key={`${g.label}${idx}`} className={g.label === 'Membership' ? 'family' : LOWERCASE}>
                   {/* class 별 등급 색상 지정 vvip / vip / family */}
                   <span className="mark">{UPPERCASE.includes('VIP') ? UPPERCASE.split('IP')[0] : UPPERCASE}</span>
                   <div className="save_info">
                     <span className="percentage">
-                      {UPPERCASE} {g.reserveBenefit.reserveRate}%
+                      {UPPERCASE} {_profit}%
                     </span>
                     <p className="mileage">
-                      <span className="num">{wonComma(discount * (g.reserveBenefit.reserveRate / 100))}</span> {unit}
+                      <span className="num">{wonComma(discount * (_profit / 100))}</span> {unit}
                     </p>
                   </div>
                 </li>
