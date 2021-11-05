@@ -344,6 +344,7 @@ export default function ProductView({ match }) {
                 <MainImage imageUrls={imageUrls} selectedOptionNo={selectedOptionNo} />
               </div>
               <TobContent
+                accumulationUseYn={productData.baseInfo.accumulationUseYn}
                 isMapping={isMapping}
                 setSelectedOptionNo={setSelectedOptionNo}
                 productData={productData}
