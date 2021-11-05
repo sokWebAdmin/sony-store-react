@@ -14,7 +14,7 @@ const tagColorMap = {
 console.log(process.env.NODE_ENV)
 
 const CATEGORY = {
-  development: {
+  production: {
     esp: 81643,
     camera: 60859,
     lens: 60860,
@@ -57,7 +57,7 @@ const CATEGORY = {
     playstationgame: 60898,
     playstationhardware: 60897,
   },
-  production: {
+  development: {
     esp: 232809,
     camera: 232762,
     lens: 232763,
