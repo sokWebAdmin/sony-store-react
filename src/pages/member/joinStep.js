@@ -224,7 +224,7 @@ export default function JoinStep() {
     if (response.status === 200) {
       if (response.data.errorCode === '0000') {
         //성공
-        openAlert('회원가입이 완료되었습니다.', async () => {
+        openAlert('회원가입이 완료되었습니다.', () => async () => {
           const provider = getItem(KEY.OPENID_PROVIDER);
           const response = await loginApi(email, !provider || getUrlParam('sns') !== 'true' ? password : CLIENT_ID[provider]);
           if (response.status === 200) {
