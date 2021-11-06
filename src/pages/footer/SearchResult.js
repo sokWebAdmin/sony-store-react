@@ -99,10 +99,10 @@ export default function SearchResult({ match }) {
   const searchEvent = useCallback(async (keyword) => {
     try {
       const { data } = await getDisplayEventsByTitle(keyword);
-
-      setInitialEventList(data.filter(({ tag }) => tag));
-      setEventCount(data.filter(({ tag }) => tag).length || 0);
-      fetchEvent(1, data);
+      const filteredEvents = data.filter(({ tag }) => tag);
+      setInitialEventList(filteredEvents);
+      setEventCount(filteredEvents?.length || 0);
+      fetchEvent(1, filteredEvents);
     } catch (e) {
       console.error(e);
     }
