@@ -9,7 +9,7 @@ export default class SonyInHouseIpChecker {
       this.getIp(),
     ]).then(([groupNos, ip]) =>
       this.checkIp(groupNos, ip)
-    ).then(console.log).catch(() => new Error('잘못된 접근입니다.'));
+    ).catch(() => new Error('잘못된 접근입니다.'));
   }
 
   fetchMemberGroupNos = () =>
