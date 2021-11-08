@@ -11,11 +11,12 @@ import '../../assets/scss/event.scss';
 import { useMediaQuery } from '../../hooks';
 import { getEventByEventNo } from '../../api/display';
 import { getUrlParam } from '../../utils/location';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import EventProducts from '../../components/event/EventProducts';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
 import GradeSelect from '../../components/event/GradeSelect';
+import IpChecker from '../../components/event/SonyInHouseIpChecker';
 
 const _scrollView = {
   pc : 5,
@@ -24,6 +25,8 @@ const _scrollView = {
 };
 
 export default function Employee() {
+  const history = useHistory()
+
   SwiperCore.use([Navigation]);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -45,7 +48,17 @@ export default function Employee() {
   }
 
   useEffect(() => {
-    fetchDetailEvent();
+    new IpChecker().run().then(checked => {
+      if (!checked) {
+        alert('회사 내에서만 접속이 가능합니다.')
+        history.push('/')
+      }
+
+      fetchDetailEvent()
+    }).catch(() => {
+      alert('잘못된 접근입니다.')
+      history.push('/')
+    });
   }, []);
 
   return (
