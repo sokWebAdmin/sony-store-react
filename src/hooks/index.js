@@ -79,8 +79,9 @@ export const useMediaQuery = (query) => {
 
   useEffect(() => {
     const handler = (e) => setMatches(e.matches);
-    mediaMatch.addEventListener('change', handler);
-    return () => mediaMatch.addEventListener('change', handler);
+    const listener = mediaMatch?.addEventListener ?? null // safari 12 mediaMatch.addEventListener === undefined
+    if (listener) listener('change', handler);
+    return listener ? listener('change', handler) : () => {}
   });
   return matches;
 };
