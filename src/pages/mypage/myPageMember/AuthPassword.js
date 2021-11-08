@@ -131,11 +131,11 @@ export default function AuthPassword({ setVisible, authResult }) {
                     확인
                   </button>
                 </div>
-                <OpenLogin
-                  message="SNS 계정으로 회원 인증"
-                  title="가입하신 SNS 계정으로 회원 인증을 해주세요."
-                  customCallback={handleLogin}
-                />
+                {/*<OpenLogin*/}
+                {/*  message="SNS 계정으로 회원 인증"*/}
+                {/*  title="가입하신 SNS 계정으로 회원 인증을 해주세요."*/}
+                {/*  customCallback={handleLogin}*/}
+                {/*/>*/}
               </div>
               <div className="guide_list">
                 <ul className="list_dot">
