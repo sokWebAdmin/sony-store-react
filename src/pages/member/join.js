@@ -13,10 +13,8 @@ import '../../assets/scss/contents.scss';
 import GlobalContext from '../../context/global.context';
 import OpenLogin from '../../components/member/OpenLogin';
 import { setItem } from '../../utils/token';
-import { getAgent } from '../../utils/detectAgent';
 
 export default function Join() {
-  const agent = getAgent();
   const {isLogin} = useContext(GlobalContext)
 
   const history = useHistory();
@@ -51,7 +49,7 @@ export default function Join() {
               <span className="txt">또는</span>
               <span className="bar" />
             </div>
-            {!agent.isApp && <OpenLogin type="join" />}
+            <OpenLogin type="join" />
             <div className="caution_txt">
               <p>· 소니코리아 통합 웹회원 정책 상 공식적으로 <strong>만 14세 미만의 경우 회원가입이 불가합니다.</strong></p>
             </div>

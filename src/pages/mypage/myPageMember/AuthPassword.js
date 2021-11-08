@@ -8,10 +8,8 @@ import { useProfileState } from '../../../context/profile.context';
 import Alert from '../../../components/common/Alert';
 import '../../../assets/scss/contents.scss';
 import '../../../assets/scss/partials/popup/authPassword.scss';
-import { getAgent } from '../../../utils/detectAgent';
 
 export default function AuthPassword({ setVisible, authResult }) {
-  const agent = getAgent();
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const {
     profile: { memberId },
@@ -133,11 +131,11 @@ export default function AuthPassword({ setVisible, authResult }) {
                     확인
                   </button>
                 </div>
-                {!agent.isApp && <OpenLogin
+                <OpenLogin
                   message="SNS 계정으로 회원 인증"
                   title="가입하신 SNS 계정으로 회원 인증을 해주세요."
                   customCallback={handleLogin}
-                />}
+                />
               </div>
               <div className="guide_list">
                 <ul className="list_dot">

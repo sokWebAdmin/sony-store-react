@@ -33,7 +33,6 @@ const CLIENT_ID = {
 };
 
 export default function Withdraw() {
-  const agent = getAgent();
   const history = useHistory();
   const { onChangeGlobal } = useContext(GlobalContext);
   const { profile, my } = useProfileState();
@@ -202,14 +201,14 @@ export default function Withdraw() {
                       <li>고객님의 소중한 의견을 참고하여, 보다 나은 소니코리아가 될 수 있도록 하겠습니다.</li>
                     </ul>
                   </div>
-                  {!agent.isApp && <div className="sns_certify">
+                  <div className="sns_certify">
                     <OpenLogin
                       message="SNS 계정으로 회원 인증"
                       title="SNS 계정으로 가입하신 회원님은 비밀번호 입력 대신 SNS 계정을 인증해 주셔야 탈퇴가 가능합니다."
                       type="withdraw"
                       customCallback={withdrawCallback}
                     />
-                  </div>}
+                  </div>
                 </div>
               </form>
             </div>
