@@ -39,6 +39,8 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
   const [section, setSection] = useState(filterProductsByGrade(event, isMemberGrade));
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const [giftVisible, setGiftVisible] = useState(false);
+  const [orderVisible, setOrderVisible] = useState(false);
+  const [orderProductNo, setOrderProductNo] = useState(null);
 
   const getOrderSheetNo = async (productNo, selectedOption) => {
     try {
@@ -66,7 +68,7 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
     state: { next: history.location.pathname },
   });
 
-  const _getOrderSheetNo = async (productNo, pathname) => {
+  const _getOrderSheetNo = async (productNo = orderProductNo, pathname = '/order/sheet') => {
     try {
       const { data } = await getProductOptions(productNo);
       const result = await getOrderSheetNo(productNo, [{ ...data.flatOptions[0], buyCnt: 1, productNo }]);
@@ -85,7 +87,6 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
       }
     } catch (e) {
       e?.message && openAlert(e.message);
-      console.log(e);
     }
   };
 
@@ -110,12 +111,16 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
   };
 
   const goOrder = async (productNo, hsCode) => {
-    if (!isLogin) return;
-
     const succeed = await hsValidation(!!hsCode);
     if (!succeed) return;
 
-    order(productNo);
+    if (isLogin) {
+      _getOrderSheetNo(productNo);
+      return;
+    }
+
+    setOrderProductNo(productNo);
+    setOrderVisible(true);
   }
 
   const getStickerLabel = (product) => product.stickerLabels.find(label => label.includes('급'));
@@ -228,10 +233,20 @@ const EventProducts = ({ event, filterLabel, grade, gift = false, sectionImage =
 
   // 판매상태
   const saleStatus = p => getSaleStatus({ saleStatusType: p.saleStatusType }, p.reservationData, p.stockCnt, p.reservationData?.reservationStockCnt);
+
   return (
     <>
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       {giftVisible && <Notification setNotificationVisible={setGiftVisible} type="gift" />}
+      {orderVisible && (
+        <Notification
+          setNotificationVisible={setOrderVisible}
+          type="order"
+          unusableIcon={true}
+          goOrder={_getOrderSheetNo}
+          popupType="popCont"
+        />
+      )}
       {sectionImage ?
         event.section.map(({ imageUrl, products }, index) => {
           return (

@@ -36,7 +36,7 @@ export default function NoticeResult({
           <Newest newest={noticeNewest} setNewest={setNoticeNewest} />
         </div>
       </div>
-      <div className="result_list on">
+      <div className="result_list on search">
         <ul className="noti">
           {noticeList.map((notice) => (
             <li key={notice.articleNo}>

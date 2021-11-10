@@ -11,6 +11,7 @@ import SwiperCore, { Navigation } from 'swiper/core';
 import { shareKakaoButton, shareKakaoStoryButton } from '../../utils/share';
 import '../../assets/scss/event.scss';
 import { getStrDate } from '../../utils/dateFormat';
+import { bannerCode } from '../../bannerCode';
 
 const initTabs = [
   { key: 'all', label: '전체' },
@@ -31,9 +32,9 @@ const tags = {
   refurbish: '리퍼비시몰',
 };
 const _scrollView = {
-  pc: 5,
-  tb: 3,
-  mo: 2,
+  pc: 10,
+  tb: 10,
+  mo: 3,
 };
 
 const EventBottom = () => {
@@ -61,9 +62,11 @@ const EventBottom = () => {
   useClickOutside(sortRef, () => setSortSelect(false));
 
   const fetchDisplayEvents = async () => {
+    const { curation } = bannerCode;
     const keyword = tags[tabState];
     const { data } = await getDisplayEvents(keyword);
-    sortEvents(data, true);
+    const eventData = data.filter(({ eventNo }) => eventNo !== curation);
+    sortEvents(eventData, true);
   };
 
   const modifyTabs = (tabData = tabs) => {
@@ -84,7 +87,7 @@ const EventBottom = () => {
       return dateL > dateR ? 1 : -1;
     };
     const sortData = sortNewest ? [...data].sort(sortByLatestCreationDate) : [...data].sort(sortByOldestCreationDate);
-    setEvents(sortData);
+    setEvents(sortData.filter(({ tag }) => tag));
   };
 
   const onClickEventDetail = (eventNo, tagName, event) => {
@@ -106,7 +109,8 @@ const EventBottom = () => {
     const key = Object.keys(tags).find((key) => tagName.includes(tags[key]));
 
     if (event.url !== '') {
-      return `${origin ? document.location.origin : ''}/${event.url}/${eventNo}`;
+      const customUrl = event.url.includes('event/live-on') ? `event/live-on` : `${event.url}`;
+      return `${origin ? document.location.origin : ''}/${customUrl}/${eventNo}`;
     }
     if (key === 'all') {
       return `${origin ? document.location.origin : ''}/event/detail/${eventNo}`;
@@ -238,7 +242,9 @@ const EventBottom = () => {
               </li>
               <li className="lists">
                 <a
-                  href={window.anchorProtocol + `social-plugins.line.me/lineit/share?url=${encodeURIComponent(getLink())}`}
+                  href={
+                    window.anchorProtocol + `social-plugins.line.me/lineit/share?url=${encodeURIComponent(getLink())}`
+                  }
                   onClick={window.openBrowser}
                   className="share_btn line"
                   target="_blank"
@@ -296,7 +302,11 @@ const EventBottom = () => {
             {tabs &&
               tabs.map(({ key, label }) => {
                 return (
-                  <SwiperSlide key={`tab_${key}`} className={`tabs swiper-slide ${tabState === key ? 'on' : ''}`}>
+                  <SwiperSlide
+                    key={`tab_${key}`}
+                    className={`tabs swiper-slide ${tabState === key ? 'on' : ''}`}
+                    style={{ flexGrow: 1 }}
+                  >
                     <Link
                       to={`/event/list?tab=${key}`}
                       onClick={() => {

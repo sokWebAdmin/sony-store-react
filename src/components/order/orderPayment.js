@@ -4,6 +4,8 @@ import { getAgent } from '../../utils/detectAgent';
 
 const agent = getAgent();
 
+const clientId = process.env.REACT_APP_SHOP_API_CLIENT_ID;
+
 const orderPayment = {
   get NCPPay () { // NCPPay context
     return window.NCPPay;
@@ -17,7 +19,7 @@ const orderPayment = {
   },
   get config () {
     return {
-      clientId: 'MzuMctQTZBXWmdTlujFy3Q==',
+      clientId,
       accessToken: getAccessToken(),
       platform: this.platform,
       confirmUrl: `${window.location.origin}/order/parse`,

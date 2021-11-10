@@ -29,7 +29,7 @@ import NoticeResult from '../../components/search/NoticeResult';
 import Tab from '../../components/search/Tab';
 import { fetchBoardConfig, useBoardDispatch, useBoardState } from '../../context/board.context';
 import { getBoards } from '../../api/manage';
-import { getCategoryListByKeyword, getDisplayEvents } from '../../api/display';
+import { getCategoryListByKeyword, getDisplayEventsByTitle } from '../../api/display';
 import { orderList, PAGE_SIZE } from '../../const/search';
 import moment from 'moment';
 import SearchResultNone from './SearchResultNone';
@@ -37,14 +37,15 @@ import { useHistory } from 'react-router';
 
 export default function SearchResult({ match }) {
   const history = useHistory();
-  const initalKeyword = decodeURIComponent(match.params.keyword);
+  const initalKeyword = decodeURIComponent(match.params.keyword).replace('&#47', '/');
 
   const { config } = useBoardState();
   const dispatch = useBoardDispatch();
 
+  const [reset, setReset] = useState(false);
   const [tabState, setTabState] = useState('ALL');
   const [keyword, setKeyword] = useState(initalKeyword);
-  const [orderBy, setOrderBy] = useState('MD_RECOMMEND');
+  const [orderBy, setOrderBy] = useState('RECENT_PRODUCT');
   const [newest, setNewest] = useState(true);
   const [noticeNewest, setNoticeNewest] = useState(true);
 
@@ -79,6 +80,7 @@ export default function SearchResult({ match }) {
       hasTotalCount: true,
       pageNumber,
       pageSize,
+      hasOptionValues: true,
     };
   }, []);
 
@@ -87,7 +89,8 @@ export default function SearchResult({ match }) {
       const { data } = await getProductSearch(getProductQuery(keyword, orderBy, pageNumber));
       const ret = data.items.filter(({ hsCode }) => !hsCode);
       setProductList((prev) => (pageNumber > 1 ? prev.concat(ret) : ret));
-      setProductCount((prev) => (pageNumber > 1 ? prev + ret.length : ret.length || 0));
+      // setProductCount((prev) => (pageNumber > 1 ? prev + ret.length : ret.length || 0));
+      setProductCount(data.totalCount);
     } catch (e) {
       console.error(e);
     }
@@ -95,11 +98,11 @@ export default function SearchResult({ match }) {
 
   const searchEvent = useCallback(async (keyword) => {
     try {
-      const { data } = await getDisplayEvents(keyword);
-
-      setInitialEventList(data);
-      setEventCount(data.length || 0);
-      fetchEvent(1, data);
+      const { data } = await getDisplayEventsByTitle(keyword);
+      const filteredEvents = data.filter(({ tag }) => tag);
+      setInitialEventList(filteredEvents);
+      setEventCount(filteredEvents?.length || 0);
+      fetchEvent(1, filteredEvents);
     } catch (e) {
       console.error(e);
     }
@@ -176,12 +179,13 @@ export default function SearchResult({ match }) {
 
   const handleSearch = (newKeyword) => {
     if (keyword === newKeyword) return;
-
+    const mapNewKeyword = newKeyword.replace('/', '&#47');
     setKeyword(newKeyword);
-    searchProduct(newKeyword);
-    searchNotice(newKeyword, config.notice.boardNo);
-    searchEvent(newKeyword);
-    searchCategory(newKeyword);
+    searchProduct(mapNewKeyword);
+    searchNotice(mapNewKeyword, config.notice.boardNo);
+    searchEvent(mapNewKeyword);
+    searchCategory(mapNewKeyword);
+    setReset(false);
   };
 
   const isAll = useMemo(() => tabState === 'ALL', [tabState]);
@@ -220,8 +224,13 @@ export default function SearchResult({ match }) {
         <div className="container">
           <div className="content no_margin">
             {/* 검색 영역 페이지에 no_margin 클래스 추가 */}
-            <ResultTop handleSearch={handleSearch} allCount={count.ALL} initalKeyword={initalKeyword} />
-            <Tab tabState={tabState} setTabState={setTabState} count={count} />
+            <ResultTop
+              handleSearch={handleSearch}
+              allCount={count.ALL}
+              initalKeyword={initalKeyword}
+              setReset={setReset}
+            />
+            <Tab tabState={tabState} setTabState={setTabState} count={count} setReset={setReset} />
             {count.ALL === 0 ? (
               <SearchResultNone />
             ) : (

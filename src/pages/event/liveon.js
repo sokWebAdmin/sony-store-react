@@ -35,12 +35,12 @@ export default function Liveon() {
             <div className="event_video">
               <div className="event_video_bgbox">
                 <div className="event_video_inner">
-                  <span className="event_video_badge">{event.label}</span>
-                  <h1 className="event_video_title">SRS-XP500 <span className="block">런칭 라이브온</span></h1>
-                  <p className="event_video_desc">한 층 더 업그레이드 된 사운드와 조명으로 공간을 밝히는 스피커<br />지금 라이브온에서 만나보세요!</p>
+                  <span className="event_video_badge">LIVE ON</span>
+                  <h1 className="event_video_title">{event.label}</h1>
+                  <p className="event_video_desc">{event.promotionText}</p>
                   <div className="event_video_playbox">
                     <div className="video_container">
-                      <iframe src="https://www.youtube.com/embed/c0llCoHilCU" frameBorder={0} width="100%"
+                      <iframe src={event.top.pc.url.replace(/<[^>]*>?/gm, '')} frameBorder={0} width="100%"
                               height="100%" />
                     </div>
                   </div>

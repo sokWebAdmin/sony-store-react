@@ -395,7 +395,7 @@
 
     // 일시품절, 품절
     .product_price,
-    // .delivery_txt,
+      // .delivery_txt,
     .mileage {
       color: #bbb;
     }
@@ -1671,6 +1671,15 @@
     display: none;
     margin: 0 auto;
     width: calc(100% - 48px);
+    @include only-mo {
+      width: 100%;
+    }
+    &.search {
+      @include only-mo {
+        margin: 0;
+        width: 100%;
+      }
+    }
 
     &.on {
       display: block;
@@ -2562,6 +2571,8 @@
       @include only-mo {
         margin-left: 0 !important;
       }
+
+      display: inline-block !important;
     }
   }
 }

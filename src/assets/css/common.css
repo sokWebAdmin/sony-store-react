@@ -519,10 +519,6 @@ body {
   height: 100%
 }
 
-.header .member {
-  display: none
-}
-
 .header .search {
   display: none;
   position: absolute;
@@ -2804,12 +2800,6 @@ body {
 
 .sidebar__btn.top span {
   display: inline-block;
-  padding: 10px;
-  font-size: 0;
-  -webkit-transform: rotate(225deg);
-  transform: rotate(225deg);
-  border: solid #fff;
-  border-width: 0 2px 2px 0
 }
 
 @media screen and (min-width: 1921px) {
@@ -2857,10 +2847,6 @@ body {
 
   .sidebar__btn.top {
     padding: 12px 16px
-  }
-
-  .sidebar__btn.top span {
-    padding: 8px
   }
 }
 

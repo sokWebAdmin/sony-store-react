@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useState, useMemo, useContext, useEffect } from 'react';
 
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
@@ -22,8 +22,15 @@ import { getProfileOrdersSummaryStatus } from '../../api/order';
 import LayerPopup from '../../components/common/LayerPopup';
 import { loginApi } from '../../api/auth';
 import { toCurrencyString } from '../../utils/unit';
-import { removeAccessToken } from '../../utils/token';
+import { getItem, KEY, removeAccessToken, removeItem, setItem } from '../../utils/token';
 import GlobalContext from '../../context/global.context';
+import { getAgent } from '../../utils/detectAgent';
+
+const CLIENT_ID = {
+  naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
+  facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
+  kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
+};
 
 export default function Withdraw() {
   const history = useHistory();
@@ -36,6 +43,7 @@ export default function Withdraw() {
   const [isPwVisible, setPwVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [withdrawReason, setWithdrawReason] = useState(null);
+  const [verifyOpenId, setVerifyOpenId] = useState(false);
 
   const availablemileage = useMemo(() => {
     return my?.availablemileage ?? 0;
@@ -70,30 +78,55 @@ export default function Withdraw() {
       openAlert('비밀번호를 입력해주세요.');
       return;
     }
-    const checkPassword = await loginApi(profile.memberId, password);
-    if (checkPassword.status !== 200) {
-      openAlert('비밀번호가 올바르지 않습니다.');
-      return;
-    }
 
     openConfirm();
   }
 
   const onClickWithdraw = async () => {
+    const provider = getItem(KEY.OPENID_PROVIDER);
     const checkWithdraw = await withdrawalMember({
       customerid: profile?.memberId ?? profile?.email,
       withdrawreason: withdrawReason.optionNo,
-      password,
+      password: provider && verifyOpenId ? '' : password,
     });
     if (checkWithdraw.data.errorCode === '0000') {
       removeAccessToken();
       onChangeGlobal({ isLogin: false });
       resetProfile(profileDispatch);
       history.push('/my-page/withdraw-complete');
+    } else if (checkWithdraw.data.errorCode === '3008') {
+      openAlert('회원탈퇴 시 입력한 사용자 정보가 다릅니다.');
+    } else if (checkWithdraw.data.errorCode === '3400') {
+      openAlert('인증에 실패하였습니다.');
+    } else if (checkWithdraw.data.errorCode === '9999') {
+      openAlert('비정상적인 오류가 발생하였습니다.');
     } else {
       openAlert(checkWithdraw.data.errorMessage);
     }
   }
+
+  const withdrawCallback = (errorCode) => {
+    window.shopOauthCallback = null;
+
+    if (errorCode === '0000') {
+      setVerifyOpenId(true);
+      const agent = getAgent();
+      const openIdReason = agent.isApp ? getItem('withdrawReason') : withdrawReason;
+      setWithdrawReason(openIdReason);
+      removeItem('openIdReason');
+      if (!openIdReason) {
+        openAlert('탈퇴사유를 선택해주세요.');
+        return;
+      }
+      openConfirm();
+    } else {
+      setVerifyOpenId(false);
+    }
+  }
+
+  useEffect(() => {
+    setItem('currentPath', window.location.pathname);
+  }, []);
 
   return (
     <>
@@ -149,7 +182,10 @@ export default function Withdraw() {
                         placeholder: '탈퇴사유를 선택해주세요.',
                       }}
                       selectOptions={withdrawalReasons}
-                      selectOption={option => setWithdrawReason(option)}
+                      selectOption={option => {
+                        setWithdrawReason(option);
+                        setItem('withdrawReason', option);
+                      }}
                     />
                   </div>
                   <div className="btn_article">
@@ -166,8 +202,12 @@ export default function Withdraw() {
                     </ul>
                   </div>
                   <div className="sns_certify">
-                    <OpenLogin message="SNS 계정으로 회원 인증"
-                               title="SNS 계정으로 가입하신 회원님은 비밀번호 입력 대신 SNS 계정을 인증해 주셔야 탈퇴가 가능합니다." />
+                    <OpenLogin
+                      message="SNS 계정으로 회원 인증"
+                      title="SNS 계정으로 가입하신 회원님은 비밀번호 입력 대신 SNS 계정을 인증해 주셔야 탈퇴가 가능합니다."
+                      type="withdraw"
+                      customCallback={withdrawCallback}
+                    />
                   </div>
                 </div>
               </form>

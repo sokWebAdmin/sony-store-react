@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 
 // global context
 import { useMallState } from '../../context/mall.context';
@@ -12,11 +12,14 @@ import UseCoupon from '../popup/UseCoupon';
 import { onKeyboardEventOnlyDigit } from '../../utils/listener';
 import { setObjectState } from '../../utils/state';
 import { debounce } from 'lodash';
-import useDebounce from '../../hooks';
+import useDebounce, { useAlert } from '../../hooks';
+import Alert from '../common/Alert';
+import { getProductDetail } from '../../api/product';
 
 // 배송지 정보
-const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderProducts }) => {
+const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderProducts, deliveryGroups }) => {
   const { accumulationConfig } = useMallState();
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
 
   // subPayAmt: number , coupons: nested object
   const { subPayAmt } = discount;
@@ -27,7 +30,6 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
   const [useCouponLoaded, setUseCouponLoaded] = useState(false);
   const [useCouponVisible, setUseCouponVisible] = useState(false);
   const [noCoupon, setNoCoupon] = useState(false);
-
   useEffect(() => {
     if (!useCouponVisible) {
       document.body.style.overflow = 'visible';
@@ -39,6 +41,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
    */
   const [fetchedLatestMileage, setFetchedLatestMileage] = useState(false);
   const [inputSubPayAmt, setInputSubPayAmt] = useState('');
+  const [accumulationUse, setAccumulationUse] = useState(true);
   const { my, profile } = useProfileState();
   const profileDispatch = useProileDispatch();
 
@@ -46,6 +49,32 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
 
   useEffect(() => {
     fetchPoint();
+  }, []);
+  useEffect(() => {
+    getProductData();
+  }, [deliveryGroups]);
+
+  const getProductData = async () => {
+    const productNos = deliveryGroups[0]?.orderProducts.map(({ productNo }) => productNo);
+    await fetchProductData(productNos);
+  };
+
+  const fetchProductData = useCallback(async (productNos) => {
+    try {
+      const ret = await Promise.all(productNos.map((productNo) => getProductDetail(productNo)));
+      const products = ret.map(({ data }) => data);
+      let isAccumulationUse = true;
+      products.forEach(({ baseInfo }) => {
+        if (baseInfo?.accumulationUseYn === 'N') {
+          isAccumulationUse = false;
+        }
+      });
+      if (isAccumulationUse === false) {
+        setAccumulationUse(false);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
 
   const availablemileage = useMemo(() => {
@@ -89,7 +118,15 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
     [accumulationConfig, inputSubPayAmt],
   );
 
-  const checkValidPoint = () => accumulationUseMinPriceWarn && setInputSubPayAmt(0);
+  const checkValidPoint = () => {
+    if (!paymentInfo.isAvailableAccumulation) {
+      openAlert('마일리지 사용 불가 제품입니다.', () => {
+        setInputSubPayAmt(0);
+      });
+      return;
+    }
+    accumulationUseMinPriceWarn && setInputSubPayAmt(0);
+  };
 
   const toCurrency = (event) => {
     const amount = event.target.value.replaceAll(',', '') * 1;
@@ -100,6 +137,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
 
   return (
     <>
+      {alertVisible && <Alert onClose={() => closeModal()}>{alertMessage}</Alert>}
       <div className="acc_form">
         <div className="acc_cell vat">
           <label htmlFor="coupon">쿠폰</label>
@@ -162,7 +200,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
                   onBlur={checkValidPoint}
                   ref={pointInput}
                   value={inputSubPayAmt}
-                  disabled={minPriceLimitUnder && availablemileage === undefined}
+                  disabled={(minPriceLimitUnder && availablemileage === undefined) || accumulationUse === false}
                 />
                 <span className="unit">점</span>
                 <span className="focus_bg" />

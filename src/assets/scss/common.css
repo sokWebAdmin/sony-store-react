@@ -2887,11 +2887,11 @@ body {
     width: 48px
   }
 
-  .sidebar__btn.top span {
+  /* .sidebar__btn.top span {
     width: 28px;
     height: 28px;
     background: url("../images/common/ic_floating_arrow_mo.svg")
-  }
+  } */
 }
 
 @media screen and (max-width: 640px) {
@@ -2928,7 +2928,9 @@ body {
   }
 
   .sidebar__btn.top span {
-    padding: 8px
+    width: 28px;
+    height: 28px;
+    background: url("../images/common/ic_floating_arrow_mo.svg")
   }
 }
 

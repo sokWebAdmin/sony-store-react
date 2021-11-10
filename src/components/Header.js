@@ -21,10 +21,12 @@ import { useHeaderDispatch, useHeaderState, openSideBar, closeSideBar } from '..
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { removeAccessToken } from '../utils/token';
 import { resetProfile, useProfileState, useProileDispatch } from '../context/profile.context';
-import { useClickOutside, useMediaQuery, useScroll } from '../hooks';
+import { useAlert, useClickOutside, useMediaQuery, useScroll } from '../hooks';
 import { getAgent } from '../utils/detectAgent';
+import Alert from './common/Alert';
 
 export default function Header(location) {
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
   const history = useHistory();
   const currLocation = useLocation();
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
@@ -50,8 +52,6 @@ export default function Header(location) {
     menuOpen && openSideBar(headerDispatch);
     if (agent.isApp && currLocation.pathname.includes('/app/terms/')) {
       setVisible(false);
-    } else {
-      setVisible(true);
     }
   }, [location, currLocation]);
 
@@ -60,8 +60,7 @@ export default function Header(location) {
       setVisible(false);
       return;
     }
-    if (prevScrollY > window.scrollY || header.current.offsetHeight >
-      window.scrollY) {
+    if (prevScrollY > window.scrollY || header.current.offsetHeight > window.scrollY) {
       setVisible(true);
     } else {
       setVisible(false);
@@ -82,7 +81,7 @@ export default function Header(location) {
     } else {
       body.style.overflow = 'auto';
     }
-  }
+  };
 
   useEffect(() => {
     hideBodyScroll(isSiderbarOpen);
@@ -99,8 +98,14 @@ export default function Header(location) {
 
   return (
     <>
-      <header ref={header} id="header"
-              className={`header ${visible ? 'header--visible' : 'header--invisible'} ${isSiderbarOpen ? 'header--active' : ''} ${isSearchOpen ? 'header--search' : ''}`}>
+      <header
+        ref={header}
+        id="header"
+        className={`header ${visible ? 'header--visible' : 'header--invisible'} ${
+          isSiderbarOpen ? 'header--active' : ''
+        } ${isSearchOpen ? 'header--search' : ''}`}
+      >
+        {alertVisible && <Alert onClose={() => closeModal()}>{alertMessage}</Alert>}
         <div className="header__wrapper">
           <h1 className="header__logo">
             <Link to="/">
@@ -116,16 +121,24 @@ export default function Header(location) {
             >
               <img src={search} alt="검색창 열기" />
             </button>
-            <a href="#" className="btn btn__desktop btn__mypage" onClick={e => {
-              e.preventDefault();
-              setInfoOpen(!isInfoOpen);
-            }}>
+            <a
+              href="#"
+              className="btn btn__desktop btn__mypage"
+              onClick={(e) => {
+                e.preventDefault();
+                setInfoOpen(!isInfoOpen);
+              }}
+            >
               <img src={mypage} alt="마이페이지" />
             </a>
-            <a href="#" className="btn btn__cart" onClick={e => {
-              e.preventDefault();
-              history.push('/cart');
-            }}>
+            <a
+              href="#"
+              className="btn btn__cart"
+              onClick={(e) => {
+                e.preventDefault();
+                history.push('/cart');
+              }}
+            >
               <img src={cart} alt="장바구니" />
               <CartCount isOpened={isSiderbarOpen} className="badge" />
             </a>
@@ -184,8 +197,10 @@ export default function Header(location) {
                         </li>
                         <li className="member__menu__cart">
                           <Link to="/cart" onClick={closeSubSlider}>
-                            장바구니<span className="badge"><CartCount
-                            isOpened={isSiderbarOpen} /></span>
+                            장바구니
+                            <span className="badge">
+                              <CartCount isOpened={isSiderbarOpen} />
+                            </span>
                           </Link>
                         </li>
                       </ul>
@@ -218,9 +233,10 @@ export default function Header(location) {
                         </li>
                         <li className="member__menu__cart">
                           <Link to="/cart" onClick={closeSubSlider}>
-                            장바구니<span className="badge">
-                            <CartCount isOpened={isSiderbarOpen} />
-                          </span>
+                            장바구니
+                            <span className="badge">
+                              <CartCount isOpened={isSiderbarOpen} />
+                            </span>
                           </Link>
                         </li>
                       </ul>

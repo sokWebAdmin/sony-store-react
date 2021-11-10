@@ -1,14 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useMallState } from '../../context/mall.context';
-import { getItem, KEY, removeAccessToken, setAccessToken, setItem } from '../../utils/token';
-import { encodeString, generateRandomString } from '../../utils/utils';
-import { getOauthLoginUrl, getProfile } from '../../api/member';
+import { getItem, KEY, removeItem, setAccessToken, setItem } from '../../utils/token';
+import { generateRandomString } from '../../utils/utils';
+import { getProfile } from '../../api/member';
 import Alert from '../common/Alert';
 import { useHistory } from 'react-router-dom';
 import GlobalContext from '../../context/global.context';
-import { fetchMyProfile, resetProfile, setProfile, useProileDispatch } from '../../context/profile.context';
+import { fetchMyProfile, setProfile, useProileDispatch } from '../../context/profile.context';
 import { loginApi } from '../../api/auth';
-import Cookies from 'js-cookie';
+import { getAgent } from '../../utils/detectAgent';
+import { getUrlParam } from '../../utils/location';
 
 const label = {
   naver: '네이버',
@@ -18,7 +19,7 @@ const label = {
 const CLIENT_ID = {
   naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
   facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
-  kakao: process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY,
+  kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
 };
 const OPEN_URL = {
   naver: process.env.REACT_APP_NAVER_OPEN_URL,
@@ -26,17 +27,18 @@ const OPEN_URL = {
   kakao: process.env.REACT_APP_KAKAO_OPEN_URL,
 };
 
-const OpenLogin = ({ title, message, customCallback }) => {
-  let popup = null;
+const OpenLogin = ({ type, title, message, customCallback }) => {
   const history = useHistory();
   const { openIdJoinConfig } = useMallState();
   const { onChangeGlobal } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
 
-  const openIdData = openIdJoinConfig?.providers.sort((a) => a === 'naver' ? -1 : 1).map(provider => ({
-    provider,
-    label: label[provider],
-  }));
+  const openIdData = ['naver', 'kakao']
+    .sort((a) => (a === 'naver' ? -1 : 1))
+    .map((provider) => ({
+      provider,
+      label: label[provider],
+    }));
 
   // alert
   const [alertVisible, setAlertVisible] = useState(false);
@@ -53,21 +55,31 @@ const OpenLogin = ({ title, message, customCallback }) => {
     alertCloseFunc?.();
   };
 
+  useEffect(() => {
+    if (getAgent().isApp && getUrlParam('callback') === 'true') {
+      const openIdProfile = getItem('openIdProfile');
+      if (type === 'withdraw' || type === 'modify') {
+        openIdProfile && customCallback(openIdProfile.errorCode, openIdProfile.body);
+      } else {
+        openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
+      }
+    }
+  }, [history.location.search, history.location]);
+
   const openIdLogin = async (type) => {
-    const provider = type.substring(0, 1).toUpperCase();
-    popup = null;
-    popup = window.open('about:blank', '간편 로그인', 'width=420px,height=550px,scrollbars=yes');
-    popup.focus();
     const clientId = CLIENT_ID[type];
     const state = generateRandomString();
     const redirectUri = encodeURI(`${window.location.origin}/callback`);
 
-    setItem(KEY.OPENID_PROVIDER, provider, 30 * 60 * 1000);
+    setItem(KEY.OPENID_PROVIDER, type, 30 * 60 * 1000);
     setItem(KEY.OPENID_TOKEN, state, 30 * 60 * 1000);
 
-    const loginUrl = OPEN_URL[type].replace('{clientId}', clientId).replace('{redirectUri}', redirectUri).replace('{state}', state);
-    popup.location.href = loginUrl;
     openLoginPopup();
+    const loginUrl = OPEN_URL[type]
+      .replace('{clientId}', clientId)
+      .replace('{redirectUri}', redirectUri)
+      .replace('{state}', state);
+    window.openWindow(loginUrl, '간편 로그인', 'width=420px,height=550px,scrollbars=yes', 'verification');
   };
 
   const openLoginPopup = () => {
@@ -76,37 +88,75 @@ const OpenLogin = ({ title, message, customCallback }) => {
 
   const _openIdAuthCallback = async (errorCode, profileResult = null) => {
     window.shopOauthCallback = null;
+    removeItem('currentPath');
+    removeItem('openIdProfile');
 
-    console.log(profileResult);
-    if (errorCode === '0000') { // 성공
-      history.push({
-        pathname: '/member/join-agree?sns=true',
-        state: {
-          email: profileResult.customerid,
+    if (errorCode === '0000') {
+      // 계정 있음
+      if (type === 'join') {
+        openAlert('이미 가입된 계정이 있습니다.');
+      } else {
+        const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
+        const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
+        const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
+
+        if (response.status !== 200) {
+          if (code === '3003') {
+            history.push('/member/lockedAccounts');
+            return;
+          }
+          openAlert('간편 인증에 실패하였습니다.');
+          return;
         }
-      });
-    } else if (errorCode === '3000') {
-      const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
-      const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
 
-      if (response.status !== 200) {
-        openAlert('간편 인증에 실패하였습니다.');
-        return;
+        const { accessToken, expireIn } = response.data;
+        setAccessToken(accessToken, expireIn);
+        onChangeGlobal({ isLogin: true });
+        const profile = await getProfile();
+        const data = { type: '30', customerid: profile.data.memberId };
+        setProfile(profileDispatch, profile.data);
+        await fetchMyProfile(profileDispatch, data);
+
+        openAlert('로그인이 완료 되었습니다.', () => () => {
+          const agent = getAgent();
+          if (agent.isApp) {
+            window.location = `sonyapp://autoLoginYn?value=N&customerid=${profileResult.customerid}`;
+          }
+          history.push('/');
+        });
       }
-
-      const { accessToken, expireIn } = response.data;
-      setAccessToken(accessToken, expireIn);
-      onChangeGlobal({ isLogin: true });
-      const profile = await getProfile();
-      const data = { type: '30', customerid: profile.data.memberId };
-      setProfile(profileDispatch, profile.data);
-      await fetchMyProfile(profileDispatch, data);
-      openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
+    } else if (errorCode === '3012') {
+      // 계정 없음
+      if (type === 'join') {
+        history.push({
+          pathname: '/member/join-agree',
+          search: '?sns=true',
+          state: {
+            email: profileResult.customerid,
+          },
+        });
+      } else {
+        openAlert('해당 SNS 계정으로 가입되어 있지 않습니다.', () => () => {
+          history.push({
+            pathname: '/member/join-agree',
+            search: '?sns=true',
+            state: {
+              email: profileResult.customerid,
+            },
+          });
+        });
+      }
     } else if (errorCode === '3001' || errorCode === '3002') {
       const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
+
       const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
+      const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
 
       if (response.status !== 200) {
+        if (code === '3003') {
+          history.push('/member/lockedAccounts');
+          return;
+        }
         openAlert('간편 인증에 실패하였습니다.');
         return;
       }
@@ -121,23 +171,31 @@ const OpenLogin = ({ title, message, customCallback }) => {
   return (
     <>
       {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
-      {openIdJoinConfig && <div className="sns_login_box">
-        {title ? (<div className="txt_lft">
-          <strong className="sns_title">{message}</strong>
-          <p>{title}</p>
-        </div>) : (<>
-          <strong className="sns_title" dangerouslySetInnerHTML={{ __html: message }} />
-        </>)}
-        <ul className="sns_list">
-          {openIdData.map(({ provider, label }) => {
-            return (
-              <li className={provider} key={provider}>
-                <a href="javascript:void(0)" onClick={() => openIdLogin(provider)}>{label}</a>
-              </li>
-            );
-          })}
-        </ul>
-      </div>}
+      {openIdJoinConfig && (
+        <div className="sns_login_box">
+          {title ? (
+            <div className="txt_lft">
+              <strong className="sns_title">{message}</strong>
+              <p>{title}</p>
+            </div>
+          ) : (
+            <>
+              <strong className="sns_title" dangerouslySetInnerHTML={{ __html: message }} />
+            </>
+          )}
+          <ul className="sns_list">
+            {openIdData.map(({ provider, label }) => {
+              return (
+                <li className={provider} key={provider}>
+                  <a href="javascript:void(0)" onClick={() => openIdLogin(provider)}>
+                    {label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </>
   );
 };

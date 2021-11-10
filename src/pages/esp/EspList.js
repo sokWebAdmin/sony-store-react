@@ -22,8 +22,8 @@ import GlobalContext from '../../context/global.context';
 import { getRegisteredProduct } from '../../api/sony/product';
 import { useProfileState } from '../../context/profile.context';
 import EspAddCart from '../../components/popup/esp/EspAddCart';
-
-// TODO 연동 테스트 해야함
+import qs from 'qs';
+import { getProductDetail } from '../../api/product';
 
 export default function EspList({history}) {
 
@@ -47,6 +47,12 @@ export default function EspList({history}) {
       return;
     }
 
+    const isExist = await _isExistProduct();
+    if (!isExist) {
+      history.replace('/');
+      return;
+    }
+
     const result = await _getRegisteredProduct();
 
     setInitial(true);
@@ -59,10 +65,38 @@ export default function EspList({history}) {
     }
   },[pageIndex, profile]);
 
+  const _isExistProduct = async () => {
+    const query = qs.parse(history.location.search, {
+      ignoreQueryPrefix: true,
+    });
+
+    if (!query?.productNo) {
+      return false;
+    }
+
+    try {
+      const { data } = await getProductDetail(query.productNo);
+
+      if (data?.stock?.stockCnt > 0) {
+        return true;
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
+
+    return false;
+  }
+
   const _getRegisteredProduct = async () => {
+    const query = qs.parse(history.location.search, {
+      ignoreQueryPrefix: true,
+    });
+
     const result = {list: [], totalCount: 0};
     const requsetBody = {
       customerid: profile?.memberId || '',
+      espProductid: query?.productNo || '',
       rowsPerPage: 10,
       pageIdx: pageIndex
     };
@@ -79,6 +113,7 @@ export default function EspList({history}) {
       console.error(e);
 
       // const testResponse = {"errorCode":"0000","errorMessage":"성공","responseTime":"2021-10-19 15:52:52","paginationInfo":{"rowsPerPage":10,"pageIdx":1,"totalCount":26},"body":[{"modelcod":"80814680","serialno":"1135699","lastdate":"2021-10-12 17:32:27","slipReceiveDate":"2021-10-12 17:32:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W810","purSgtPsbYn":"Y","mallProductNo":"102007713"},{"modelcod":"80814680","serialno":"1121679","lastdate":"2021-10-12 17:32:28","slipReceiveDate":"2021-10-12 17:32:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W810","purSgtPsbYn":"Y","mallProductNo":"102007713"},{"modelcod":"80814680","serialno":"1122550","lastdate":"2021-10-12 17:32:29","slipReceiveDate":"2021-10-12 17:32:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W810","purSgtPsbYn":"Y","mallProductNo":"102007713"},{"modelcod":"80814680","serialno":"1122536","lastdate":"2021-10-12 17:32:30","slipReceiveDate":"2021-10-12 17:32:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W810","purSgtPsbYn":"Y","mallProductNo":"102007713"},{"modelcod":"80815580","serialno":"4741026","lastdate":"2021-10-12 17:33:59","slipReceiveDate":"2021-10-12 17:33:59","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-HX400V","purSgtPsbYn":"Y","mallProductNo":"102007710"},{"modelcod":"80815580","serialno":"4741131","lastdate":"2021-10-12 17:33:59","slipReceiveDate":"2021-10-12 17:33:59","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-HX400V","purSgtPsbYn":"Y","mallProductNo":"102007710"},{"modelcod":"80815580","serialno":"4741206","lastdate":"2021-10-12 17:33:59","slipReceiveDate":"2021-10-12 17:33:59","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-HX400V","purSgtPsbYn":"Y","mallProductNo":"102007710"},{"modelcod":"80815580","serialno":"4741218","lastdate":"2021-10-12 17:33:59","slipReceiveDate":"2021-10-12 17:33:59","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-HX400V","purSgtPsbYn":"Y","mallProductNo":"102007710"},{"modelcod":"80815381","serialno":"4993898","lastdate":"2021-10-12 17:39:28","slipReceiveDate":"2021-10-12 17:39:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W830","purSgtPsbYn":"Y","mallProductNo":"102007711"},{"modelcod":"80815381","serialno":"4993752","lastdate":"2021-10-12 17:39:28","slipReceiveDate":"2021-10-12 17:39:28","customernr":"2780336","customerid":"scs@test.com","modelname":"DSC-W830","purSgtPsbYn":"Y","mallProductNo":"102007711"}]};
+      // testResponse.body = testResponse.body.map((t, i) => ({...t, purSgtPsbYn: i % 3 === 0 ? 'Y' : i % 3 === 1 ? 'E' : 'N'}));
       // result.totalCount = testResponse?.paginationInfo?.totalCount || totalCount;
       // result.list = testResponse?.body || [];
     }
@@ -87,7 +122,7 @@ export default function EspList({history}) {
   }
 
   const _openGenuineRegisterSite = () => {
-    window.open("https://www.sony.co.kr/scs/handler/SCSWarranty-Start", "_blank");
+    window.openWindow("https://www.sony.co.kr/scs/handler/SCSWarranty-Start", "_blank");
   }
 
   const _closePopup = () => {
@@ -160,10 +195,18 @@ export default function EspList({history}) {
                                 <div className="col_table_cell">
                                   {
                                     product.purSgtPsbYn === 'Y' &&
-                                    <button className="button button_secondary button-s popup_comm_btn" type="button" onClick={() => {
+                                    <button className="button button_primary button-s popup_comm_btn" type="button" onClick={() => {
                                       setTargetProduct(product);
                                     }}>구매 신청
                                     </button>
+                                  }
+                                  {
+                                    product.purSgtPsbYn === 'E' &&
+                                    <button className="button button_secondary button-s popup_comm_btn" type="button" disabled>선택불가</button>
+                                  }
+                                  {
+                                    product.purSgtPsbYn === 'N' &&
+                                    <button className="button button_secondary button-s popup_comm_btn" type="button" disabled>구매불가</button>
                                   }
                                 </div>
                               </div>
@@ -186,6 +229,9 @@ export default function EspList({history}) {
                     <ul className="list_dot">
                       <li>고객님의 아이디로 정품등록 되어진 모델에 대한 정보입니다.</li>
                       <li>연장 서비스 플랜을 구매하실 수 있는 경우 &lt;구매신청&gt;버튼이 노출되며, 클릭하시면 장바구니 페이지로 이동합니다.</li>
+                      <li><em className="color">구매불가 : ESP 상품을 구매할 수 있는 정품등록 제품이 없습니다.</em></li>
+                      <li><em className="color">선택불가 : 정품등록하신 제품과 구매하신 ESP 상품이 매칭되지 않습니다.</em></li>
+                      <li className="bar">자세한 사항은 고객센터를 통해 문의 부탁 드립니다.</li>
                     </ul>
                   </div>
                 </div>

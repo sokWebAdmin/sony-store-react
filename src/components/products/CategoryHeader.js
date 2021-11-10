@@ -9,6 +9,9 @@ import categoryRight from '../../assets/images/category/btn_category_right.svg';
 import { categoriesLinkMap } from '../../const/category';
 import { useWindowSize } from '../../utils/utils';
 
+// style
+import '../../assets/scss/partials/categoryTabMenu.scss'
+
 export default function CategoryHeader({ category, changeCurrentCategoryByNo }) {
   const history = useHistory();
   const location = useLocation();
@@ -42,11 +45,11 @@ export default function CategoryHeader({ category, changeCurrentCategoryByNo }) 
 
   const openLink = ({ isAvailableMoveProductCompare, isAvailableMoveAccessoryCompatibility, e }) => {
     if (isAvailableMoveProductCompare) {
-      window.open(categoriesLinkMap[categoryLabel], '_blank');
+      window.openWindow(categoriesLinkMap[categoryLabel], '_blank');
     }
 
     if (isAvailableMoveAccessoryCompatibility) {
-      window.open('https://support.d-imaging.sony.co.jp/www/cscs/accessories/top.php?area=ap&lang=ko', '_blank');
+      window.openWindow('https://support.d-imaging.sony.co.jp/www/cscs/accessories/top.php?area=ap&lang=ko', '_blank');
     }
 
     e.preventDefault();

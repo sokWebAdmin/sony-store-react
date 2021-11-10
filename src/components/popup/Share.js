@@ -35,7 +35,7 @@ export default function Share({ link, label, setShareVisible }) {
         shareKakaoStoryButton(link, label);
         break;
       default:
-        window.open(link, '_blank');
+        window.openWindow(link, '_blank');
         break;
     }
   }
@@ -53,7 +53,7 @@ export default function Share({ link, label, setShareVisible }) {
         <ul>
           {
             shareList.map(({ name, link, label }) => (
-              <li className="lists">
+              <li className="lists" key={name}>
                 <a 
                   href="#none" 
                   className={`share_btn ${name}`} 

@@ -1,0 +1,14 @@
+@media (max-width: 640px) {
+  .category__header__sub .category__header__menu .swiper-wrapper {
+    .swiper-slide {
+      width: 33.33333%;
+
+      a {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

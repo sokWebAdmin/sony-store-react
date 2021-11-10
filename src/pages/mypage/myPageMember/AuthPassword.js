@@ -76,13 +76,20 @@ export default function AuthPassword({ setVisible, authResult }) {
     }
   };
 
+  const handleEnter = (event) => {
+    if (event.key.toLowerCase() === 'enter') {
+      event.preventDefault();
+      handleClick('check');
+    }
+  };
+
   return (
     <>
       <LayerPopup className="modify_pw_chk" onClose={close}>
         {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
         <p className="pop_tit tit_inp">비밀번호 확인</p>
         <div className="pop_cont_scroll">
-          <form>
+          <form onSubmit={() => handleClick('check')}>
             <div className="form_zone">
               <div className="input_item">
                 <div className="group">
@@ -96,6 +103,7 @@ export default function AuthPassword({ setVisible, authResult }) {
                         name="password"
                         value={password}
                         onChange={({ target }) => setPassword(target.value)}
+                        onKeyDown={handleEnter}
                         ref={passwordRef}
                       />
                       <span className="label">비밀번호 입력</span>

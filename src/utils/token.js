@@ -4,8 +4,9 @@ export const KEY = {
   ACCESS_TOKEN: 'accessToken',
   GUEST_TOKEN: 'guestToken',
   OPENID_PROVIDER: 'oauthProvider',
-  OPENID_TOKEN: 'oauthToken'
-}
+  OPENID_TOKEN: 'oauthToken',
+  APP_OAUTH_CALLBACK: 'appOauthCallback',
+};
 
 export const setItem = (name, value, expire = 60 * 5 * 1000) => {
   const data = JSON.stringify(value);
@@ -48,15 +49,15 @@ export const removeItem = (name) => {
     console.error('removeStorage: Error removing key [' + name + '] from localStorage: ' + JSON.stringify(err));
     return false;
   }
-}
+};
 
 export const setAccessToken = (accessToken, expireSeconds) => {
   setItem(KEY.ACCESS_TOKEN, accessToken, expireSeconds * 1000);
-}
+};
 
 export const getAccessToken = () => {
   return getItem(KEY.ACCESS_TOKEN) ?? '';
-}
+};
 
 export const removeAccessToken = () => {
   removeItem(KEY.ACCESS_TOKEN);

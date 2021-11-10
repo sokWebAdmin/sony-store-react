@@ -19,7 +19,7 @@ import Cookies from 'js-cookie';
 
 //context
 import GlobalContext from '../../context/global.context';
-import { setAccessToken, setGuestToken } from '../../utils/token';
+import { setAccessToken, setGuestToken, setItem } from '../../utils/token';
 import { fetchProfile, useProileDispatch } from '../../context/profile.context';
 import OpenLogin from '../../components/member/OpenLogin';
 import { postGuestOrdersOrderNo } from '../../api/order';
@@ -93,7 +93,7 @@ export default function Login({ location }) {
         const { accessToken, expireIn } = response.data;
         setAccessToken(accessToken, expireIn);
         history.push('/member/inactiveAccounts');
-      } else {
+      } else if (response.status === 200) {
         const { accessToken, expireIn } = response.data;
         setAccessToken(accessToken, expireIn);
         onChangeGlobal({ isLogin: true });
@@ -112,9 +112,11 @@ export default function Login({ location }) {
         if (!!history.location.state?.next) {
           history.push(history.location.state.next);
         } else {
-          console.log(nextLocation);
           nextLocation === 'cart' ? history.push(`/${nextLocation}?savingGuestCart=true`) : history.push('/');
         }
+      } else {
+        const errorMessage = response.data?.message ? JSON.parse(response.data.message).errorMessage : '';
+        alert(errorMessage);
       }
     }
   };
@@ -152,6 +154,7 @@ export default function Login({ location }) {
     if (isLogin) {
       history.push('/');
     }
+    setItem('currentPath', window.location.pathname);
   }, []);
 
   return (
@@ -319,7 +322,7 @@ export default function Login({ location }) {
                 <span className="txt">또는</span>
                 <span className="bar" />
               </div>
-              <OpenLogin />
+              <OpenLogin type="login" />
             </div>
 
             {/* 비회원 로그인 */}

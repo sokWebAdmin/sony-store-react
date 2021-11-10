@@ -21,6 +21,8 @@ export default function TobContent({
   setWish,
   naverPayBtnKey,
   saleStatus,
+  isMapping,
+  accumulationUseYn,
 }) {
   const size = useWindowSize();
   const isMobileSize = size.width <= 1280;
@@ -55,10 +57,6 @@ export default function TobContent({
               {stickerLabels[0]}
             </span>
           )}
-          {saleStatus === 'RESERVE' && <span className="badge__label badge__label__reserve">예약판매</span>}
-          {saleStatus === 'READY' && <span className={`badge__label badge__label__outofstock`}>일시품절</span>}
-          {saleStatus === 'SOLDOUT' && <span className={`badge__label badge__label__soldout`}>품절</span>}
-          {saleStatus === 'READY_RESERVE' && <span className={`badge__label badge__label__release`}>출시예정</span>}
           {/* {
             스티커 복수개 노출 시 주석 해제 후 윗 부분 삭제
             stickerLabels?.map((label, idx) => (
@@ -90,13 +88,10 @@ export default function TobContent({
             <div className="sale">
               <strong className="price">{toCurrencyString(price.salePrice)}</strong> 원
             </div>
-            {/* } */}
-            {saleStatus === 'READY' && <span className={`badge__label badge__label__outofstock`}>일시품절</span>}
-            {saleStatus === 'SOLDOUT' && <span className={`badge__label badge__label__soldout`}>품절</span>}
           </div>
         </div>
 
-        <Benefits price={price} />
+        <Benefits price={price} accumulationUseYn={productData?.baseInfo?.accumulationUseYn} />
 
         {hasColor && (
           <ColorChip isSoldOut={isSoldOut} setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />
@@ -105,6 +100,7 @@ export default function TobContent({
         {/* prd_select_wrap */}
         <div className={`cont prd_select_wrap ${isMobileSize && optionVisible && 'view'}`}>
           <Option
+            isMapping={isMapping}
             productName={productName}
             options={options}
             hasColor={hasColor}

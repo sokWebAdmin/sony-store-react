@@ -1,17 +1,18 @@
 import { React, useRef, useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
-export default function ResultTop({ handleSearch, allCount, initalKeyword }) {
+export default function ResultTop({ handleSearch, allCount, initalKeyword, setReset }) {
   const history = useHistory();
   const [keyword, setKeyword] = useState(initalKeyword);
   const searchKeyword = useRef(initalKeyword);
 
   const clickHandler = (event, k = keyword) => {
     event?.preventDefault();
-
-    history.replace(`/search-result/${k}`);
+    const mapKeyword = encodeURIComponent(k.replace('/', '&#47'));
+    history.push(`/search-result/${mapKeyword}`);
     handleSearch(k);
     searchKeyword.current = k;
+    setReset(true);
   };
 
   const handleKeywordChange = ({ target }) => setKeyword(target.value);

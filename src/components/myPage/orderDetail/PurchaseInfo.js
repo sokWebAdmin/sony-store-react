@@ -10,7 +10,7 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos }) {
   };
 
   const openCredicardReceipt = (receiptInfoUrl) => {
-    window.open(receiptInfoUrl);
+    window.openWindow(receiptInfoUrl);
   };
 
   return (
@@ -45,7 +45,7 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos }) {
               {toCurrencyString(amountInfo.payAmt)} <span className="won">원</span>
             </div>
             {/* 결제정보 현금 */}
-            {payInfo.payType === 'VIRTUAL_ACCOUNT' && (
+            {payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' && (
               <>
                 <div className="purchase_detail_method">
                   가상 계좌 : {payInfo.bankInfo.bankName}({payInfo.bankInfo.account})

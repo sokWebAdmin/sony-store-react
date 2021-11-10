@@ -34,8 +34,13 @@ const chat = () => {
   $form.submit();
 };
 
-export default function Floating({ scrollAction }) {
+export default function Floating({ location, scrollAction }) {
   const history = useHistory();
+
+  const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'), [location]);
+  const giftPage = useMemo(() => location.pathname.includes('/order/gift'), [location]);
+  const orderPage = useMemo(() => location.pathname.includes('/order/sheet'), [location]);
+  const cartPage = useMemo(() => location.pathname.includes('/cart'), [location]);
 
   const info = useMallState();
   const TEL = info?.mall?.serviceCenter.phoneNo;
@@ -109,8 +114,15 @@ export default function Floating({ scrollAction }) {
   });
 
   const scrollStyle = useMemo(() => {
+    if (orderPage || giftPage || cartPage || (window.scrollY === 0 && scrollBottomException)) {
+      return {
+        position: 'fixed',
+        bottom: '-9999px',
+      };
+    }
     if (reachend) {
       toggle(false);
+      sidebarRef?.current?.classList.remove('sidebar--visible');
       return {
         position: 'absolute',
         top: '24px',
@@ -118,6 +130,7 @@ export default function Floating({ scrollAction }) {
       };
     }
 
+    sidebarRef?.current?.classList.add('sidebar--visible');
     if (scrollAction === 'down') {
       return {
         position: 'fixed',
@@ -128,13 +141,13 @@ export default function Floating({ scrollAction }) {
     if (scrollAction === 'up') {
       return {
         position: 'fixed',
-        bottom: '88px',
+        bottom: '-100px',
       };
     }
-  }, [reachend, scrollAction]);
+  }, [reachend, scrollAction, location]);
 
   return (
-    <nav ref={sidebarRef} className={`sidebar ${active && 'sidebar--active'}`} style={scrollStyle}>
+    <nav ref={sidebarRef} className={`sidebar ${active && 'sidebar--active'} sidebar--visible`} style={scrollStyle}>
       <div className="sidebar__inner">
         <a href="#none" onClick={(e) => handleClick(e, 'kakao')} className="sidebar__btn sidebar__btn__link kakao">
           <span>카톡 상담</span>

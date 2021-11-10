@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { Switch, useLocation, Route, useHistory } from 'react-router-dom';
-import { throttle, debounce } from 'lodash';
+import { throttle, debounce, curry } from 'lodash';
 
 //Component
 import Header from './components/Header';
@@ -111,8 +111,7 @@ import CustomPopup from './components/common/customPopup/CustomPopup';
 import { getDisplayPopups, getDisplayPopupsPopupNos } from './api/display';
 import AppBar from './components/app/AppBar';
 
-import { openBrowser } from './utils/openBrowser.js'
-import{ curry } from 'lodash'
+import { openBrowser, openWindow } from './utils/openBrowser.js';
 
 const App = (props) => {
   const agent = getAgent();
@@ -127,8 +126,9 @@ const App = (props) => {
   const categoryDispatch = useCategoryDispatch();
 
   useEffect(() => {
-    window['anchorProtocol'] = 'https://'
-    window['openBrowser'] = curry(openBrowser)(agent)
+    window['anchorProtocol'] = 'https://';
+    window['openBrowser'] = curry(openBrowser)(agent);
+    window['openWindow'] = curry(openWindow)(agent);
   }, [agent]);
 
   useEffect(() => {
@@ -139,8 +139,7 @@ const App = (props) => {
   }, [dispatch, state?.mall]);
 
   const getMallInfo = async () => {
-    if (window.location.pathname === '/callback' || window.location.pathname ===
-      '/member/joinStep') {
+    if (window.location.pathname === '/callback' || window.location.pathname === '/member/joinStep') {
       return;
     }
     if (isLogin) {
@@ -239,24 +238,13 @@ const App = (props) => {
       return;
     }
 
-    fetchPopupNos().
-      then((nos) => nos.toString()).
-      then(fetchPopups).
-      then((res) => {
-        setPopups(res);
-      });
+    fetchPopupNos().then((nos) => nos.toString()).then(fetchPopups).then((res) => {
+      setPopups(res);
+    });
   }, [location]);
 
-  Array();
-
   const isAppBarEnabled = useMemo(() => {
-    const rejectPathNames = [
-      '/product-view',
-      '/cart',
-      '/order/sheet',
-      '/gift/sheet',
-      '/order/complete',
-      '/app/terms'];
+    const rejectPathNames = ['/product-view', '/cart', '/order/sheet', '/gift/sheet', '/order/complete', '/app/terms'];
     return (
       agent.isApp &&
       ['android', 'ios'].some((v) => v === agent.device) &&
@@ -272,6 +260,8 @@ const App = (props) => {
     throttle(
       (e) => {
         const window = e.currentTarget;
+        if (!window?.scrollY) return;
+
         if (y > window.scrollY) {
           setScrollAction('up');
         } else if (y < window.scrollY) {
@@ -396,6 +386,18 @@ const App = (props) => {
             <Route exact path="/member/lockedAccounts" component={LockedAccounts} />
             <Route exact path="/callback" component={Callback} />
 
+            {/* 검색 결과  */}
+            <Route path="/search-result/:keyword" component={SearchResult} />
+
+            {/* Footer  */}
+            <Route path="/footer/policy" component={Policy} />
+            <Route path="/footer/terms" component={Terms} />
+            <Route path="/footer/sitemap" component={SiteMap} />
+
+            {/* error */}
+            <Route exact path="/404" component={Error404} />
+            <Route exact path="/error-server" component={ErrorServer} />
+
             {/* app */}
             {agent.isApp && (
               <>
@@ -407,23 +409,11 @@ const App = (props) => {
               </>
             )}
 
-            {/* 검색 결과  */}
-            <Route path="/search-result/:keyword" component={SearchResult} />
-
-            {/* Footer  */}
-            <Route exact path="/footer/policy" component={Policy} />
-            <Route exact path="/footer/terms" component={Terms} />
-            <Route exact path="/footer/sitemap" component={SiteMap} />
-
-            {/* error */}
-            <Route exact path="/404" component={Error404} />
-            <Route exact path="/error-server" component={ErrorServer} />
-
             <Route component={Error404} />
           </Switch>
-          {isAppBarEnabled && <AppBar agent={agent} scrollAction={scrollAction} y={y} />}
+          {isAppBarEnabled && <AppBar agent={agent}scrollAction={scrollAction} y={y} />}
           {!window.location.href.includes('/app/terms/') && (
-            <Footer isAppBarEnabled={isAppBarEnabled} scrollAction={scrollAction} />
+            <Footer isAppBarEnabled={isAppBarEnabled} scrollAction={scrollAction} location={location} />
           )}
         </div>
       ) : (

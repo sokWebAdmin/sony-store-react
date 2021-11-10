@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { isMobile } from 'react-device-detect';
 import { getAccessToken, getGuestToken, removeAccessToken } from '../utils/token';
+import { getAgent } from '../utils/detectAgent';
 
-const SERVER = process.env.REACT_APP_API_URL;
-const version = '1.0';
-const clientId = 'MzuMctQTZBXWmdTlujFy3Q==';
+const SERVER = process.env.REACT_APP_SHOP_API_URL;
+const version = process.env.REACT_APP_SHOP_API_VERSION;
+const clientId = process.env.REACT_APP_SHOP_API_CLIENT_ID;
 //SonyStore ALPHA
 const platform = isMobile ? 'MOBILE_WEB' : 'PC';
 const credentialLevelUrl = {
@@ -39,6 +40,7 @@ const request = async (url, method, query = {}, requestBody = null) => {
 
   const exceptErrorUrls = ['authentications/sms', 'cart/count'];
   const goErrorCodes = ['AE001', 'PRDT0001'];
+  const agent = getAgent();
 
   return await axios({
     method,
@@ -48,7 +50,9 @@ const request = async (url, method, query = {}, requestBody = null) => {
     validateStatus: (status) => status,
   }).then((response) => {
     if (response.status === 401 && !exceptErrorUrls.includes(url)) {
-      if (response?.data?.message) {
+      if (agent.isApp && window.location.pathname.includes('my-page')) {
+        alert('로그인이 필요합니다.');
+      } else if (response?.data?.message) {
         window.location.pathname.includes('my-page')
           ? alert('로그인 상태가 만료되었습니다. 다시 로그인해주세요.')
           : alert(response?.data?.message);
@@ -56,10 +60,15 @@ const request = async (url, method, query = {}, requestBody = null) => {
         alert('토큰이 만료되었습니다.');
       }
       removeAccessToken();
-      window.location.replace('/');
+      window.location.replace('/member/login');
     }
     if (method === 'get') {
-      if (response.data.code === 'EVEC0001') {
+      const eventDetail = ['/event/only/', '/event/detail/', '/event/asc/', '/event/refined/', '/event/live-on/', '/event/refurbish/', '/event/employee/'];
+      if (
+        response.data.code === 'EVEC0001'
+        && url.includes('display/events/')
+        && eventDetail.some((path) => window.location.pathname.includes(path))
+      ) {
         alert('이미 종료된 이벤트 이거나 잘못된 이벤트 입니다.');
         window.location.replace('/');
       }

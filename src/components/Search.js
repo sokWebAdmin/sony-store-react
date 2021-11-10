@@ -11,6 +11,7 @@ import Alert from './common/Alert';
 import { useAlert } from '../hooks';
 import { tagColorMap } from '../const/category';
 import { getDisplaySectionsSectionNo, loadBanner } from '../api/display';
+import { bannerCode } from '../bannerCode';
 
 export default function Search({ setSearchOpen }) {
   const history = useHistory();
@@ -21,9 +22,10 @@ export default function Search({ setSearchOpen }) {
   const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
 
   const fetchFavoriteKeywords = async () => {
-    const FAVORITE_SECTION_CODE = '027';
+    const { keyword } = bannerCode.search;
+
     try {
-      const { data } = await loadBanner(FAVORITE_SECTION_CODE);
+      const { data } = await loadBanner(keyword);
       setFavoriteKeywords(
         _.chain(data)
           .flatMap(({ accounts }) => accounts)
@@ -38,10 +40,12 @@ export default function Search({ setSearchOpen }) {
   };
 
   const fetchRecommendedProducts = async () => {
+    const { searchBar } = bannerCode.product;
+
     try {
       const { data } = await getDisplaySectionsSectionNo({
         pathParams: {
-          sectionNo: 5963,
+          sectionNo: searchBar,
         },
         params: {
           by: 'ADMIN_SETTING',
@@ -69,8 +73,7 @@ export default function Search({ setSearchOpen }) {
   const searchHandler = (e, keyword) => {
     e?.preventDefault();
     if (keyword) {
-      console.log(keyword)
-      history.replace(`/search-result/${encodeURIComponent(keyword.replace('/','&#47'))}`);
+      history.replace(`/search-result/${encodeURIComponent(keyword.replace('/', '&#47'))}`);
       setSearchOpen(false);
     } else {
       openAlert('검색어를 입력해주세요.');

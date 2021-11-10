@@ -1,5 +1,5 @@
 import { React, useEffect, useState, useContext, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useQuery } from '../../hooks';
 import { useReactToPrint } from 'react-to-print';
 import OrderProcess from '../../components/myPage/orderDetail/OrderProcess';
@@ -30,8 +30,10 @@ import {
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/mypage.scss';
 import RefundAccount from '../order/RefundAccount';
+import OrderConfirm from '../../components/order/OrderConfirm';
 
 export default function OrderDetail() {
+  const history = useHistory();
   const query = useQuery();
   const printArea = useRef();
   const { isLogin } = useContext(GlobalContext);
@@ -41,6 +43,9 @@ export default function OrderDetail() {
     defaultOrderStatusType: '', // order의 가장 첫번째 옵션주문의 주문상태(api 동일)
     claimStatusTypeLabel: '', // 클레임 상태 라벨(기획 누락으로 샵바이 API에서 던져주는 claimStatusTypeLabel 사용)
   });
+
+  const [pgOrderNo, setPgOrderNo] = useState(null)
+
   const [claimInfo, setClaimInfo] = useState({
     claimStatusType: '',
     claimNo: '',
@@ -70,7 +75,7 @@ export default function OrderDetail() {
 
   const [payInfo, setPayInfo] = useState({
     // 결제 정보
-    payType: '', // 가상계좌 VIRTUAL_ACCOUNT, 신용카드 CREDIT_CARD
+    payType: '', // 가상계좌 ESCROW_VIRTUAL_ACCOUNT, 신용카드 CREDIT_CARD
     cardInfo: null, // 가상계좌일 때 NUll
     bankInfo: null, // 신용카드일 때 Null
   });
@@ -83,20 +88,24 @@ export default function OrderDetail() {
     setStates(await _getOrderByOrderNo());
   }, []);
 
-  const _getOrderByOrderNo = async () => {
+  const _getOrderByOrderNo = () => {
     const request = { path: { orderNo: query.get('orderNo') } };
     const getOrderByOrderNo = isLogin ? getProfileOrderByOrderNo : getGuestOrderByOrderNo;
 
-    try {
-      return await getOrderByOrderNo(request);
-    } catch (e) {
-      console.error(e);
-    }
+      return getOrderByOrderNo(request).then(res => {
+        if (res.status === 400) {
+          alert('해당 주문을 찾을 수 없습니다.')
+          history.push('/member/login')
+        }
+        return res;
+      });
   };
 
   const setStates = (res) => {
+    if (res.status === 400) return;
     const {
       orderNo,
+      pgOrderNo,
       orderYmdt,
       defaultOrderStatusType,
       orderer: { ordererName, ordererContact1 },
@@ -162,6 +171,8 @@ export default function OrderDetail() {
       bankInfo,
     });
 
+    pgOrderNo && setPgOrderNo(pgOrderNo)
+
     setReceiptInfos(receiptInfos);
   };
 
@@ -184,14 +195,17 @@ export default function OrderDetail() {
       }));
   };
 
+  const showOrderConfirm = orderStatusType => 'DELIVERY_DONE' === orderStatusType
+
   const showOrderCancel = (orderStatusType, claimStatusType) => {
     // 주문아이템에 orderStatusType과 claimStatusType 둘 다 있음.
+
     // claimStatusType이 존재하면 클레임 중이니 주문 취소 버튼 hidden 처리
     if (claimStatusType) {
       return false;
     }
 
-    return ['DEPOSIT_WAIT', 'PAY_DONE', 'PRODUCT_PREPARE', 'DELIVERY_PREPARE'].includes(orderStatusType);
+    return ['DEPOSIT_WAIT', 'PAY_DONE'].includes(orderStatusType);
   };
 
   const onPrint = useReactToPrint({
@@ -214,7 +228,7 @@ export default function OrderDetail() {
 
     if (status === 'ok') {
       if (confirm.name === 'cancel-confirm') {
-        if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+        if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' && orderInfo?.defaultOrderStatusType !== 'DEPOSIT_WAIT') {
           setRefundAccountVisible(() => true);
         } else {
           _cancelOrder();
@@ -274,18 +288,18 @@ export default function OrderDetail() {
 
       let message =
         '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
-      if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+      if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
         message += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.';
       }
 
       openAlert(message, () => {
-        if (payInfo.payType === 'VIRTUAL_ACCOUNT') {
+        if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
           return async () => {
             const { data } = await _getOrderByOrderNo();
             const { claimStatusType, claimNo } =
               data.orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0].orderOptions[0];
 
-            if (!!claimNo && payInfo.payType === 'VIRTUAL_ACCOUNT') {
+            if (!!claimNo && payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
               setClaimInfo(() => ({ claimStatusType, claimNo }));
               setRefundAccountVisible(() => false);
               window.location.reload();
@@ -299,6 +313,14 @@ export default function OrderDetail() {
   };
 
   const onOrderCancel = () => {
+    const orderStatus = orderProducts[0]?.orderStatusType;
+
+    if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' && !['DEPOSIT_WAIT', 'PAY_DONE'].includes(orderStatus)) {
+      openAlert('해당 주문의 취소/반품은 소니 고객센터에 문의해주세요')
+      return;
+    }
+
+
     setConfirm({
       ...confirm,
       visible: true,
@@ -316,9 +338,13 @@ export default function OrderDetail() {
         <div className="container my">
           <div className="content">
             <div className="common_head">
-              <Link to="/my-page/order-list" className="common_head_back">
-                주문/배송내역
-              </Link>
+              {isLogin ?
+                <Link to="/my-page/order-list" className="common_head_back">
+                  주문/배송내역
+                </Link>
+                :
+                <a className="common_head_back">주문/배송내역</a>
+              }
               <h1 className="common_head_name">주문 상세 조회</h1>
             </div>
             {!isClaimStart(orderInfo.defaultOrderStatusType) && (
@@ -345,6 +371,10 @@ export default function OrderDetail() {
             <OrderInfo ordererInfo={ordererInfo} shippingAddress={shippingAddress} />
             <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
+
+              {/* 에스크로 '구매확정' 버튼. 재사용시 구매확정 이 잘되는지, 구매확정 시 returnUrl 등 테스트 필요 */}
+              {/* showOrderConfirm(orderInfo.defaultOrderStatusType) && <OrderConfirm tid={pgOrderNo} /> */}
+
               {showOrderCancel(orderInfo.defaultOrderStatusType, claimInfo.claimStatusType) && (
                 <button type="button" className="button button_negative" onClick={onOrderCancel}>
                   주문 취소

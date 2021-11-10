@@ -153,7 +153,6 @@ export default function ButtonGroup({
       goToOrderPage(result, pathname);
     } catch (e) {
       e?.message && openAlert(e.message);
-      console.log(e);
     }
   };
 
@@ -215,7 +214,6 @@ export default function ButtonGroup({
       setCartVisible(true);
     } catch (e) {
       e?.message && openAlert(e.message);
-      console.log(e);
     }
   };
 

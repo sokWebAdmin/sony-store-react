@@ -88,8 +88,11 @@ export default function ProductView({ match }) {
     return productData;
   };
 
+  const [isMapping, setIsMapping] = useState(false);
   // product init data
-  const mapProductData = useCallback(([productData, { flatOptions, ...rest }]) => {
+  const mapProductData = useCallback(([productData, { flatOptions, type, ...rest }]) => {
+    setIsMapping(() => type === 'MAPPING');
+
     if (isInvalidForGradeProduct(productData.baseInfo.hsCode)) {
       const historyInfo = {
         pathname: '/member/login',
@@ -341,6 +344,8 @@ export default function ProductView({ match }) {
                 <MainImage imageUrls={imageUrls} selectedOptionNo={selectedOptionNo} />
               </div>
               <TobContent
+                accumulationUseYn={productData.baseInfo.accumulationUseYn}
+                isMapping={isMapping}
                 setSelectedOptionNo={setSelectedOptionNo}
                 productData={productData}
                 options={productOptions.flatOptions}

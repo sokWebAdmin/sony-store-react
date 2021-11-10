@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 // components
 import LayerPopup from '../common/LayerPopup';
@@ -9,6 +9,9 @@ import { getOrderSheetCoupon } from '../../api/order.js';
 import { toCurrencyString } from '../../utils/unit.js';
 import { syncCoupon } from '../../api/sony/coupon.js';
 import { wonComma } from '../../utils/utils';
+
+// style
+import '../../assets/scss/partials/useCoupon.scss';
 
 const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDiscount, show, setReject }) => {
   const $scroll = useRef();
@@ -22,9 +25,8 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
 
   const init = async () => {
     const originProducts = await fetchCoupons();
-    validation(originProducts);
-
-    if (products) {
+    if (originProducts.length !== 0) {
+      validation(originProducts);
       firstChoice(originProducts);
     }
   };
@@ -38,7 +40,7 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
   const fetchCoupons = async () => {
     await syncCoupon();
     const { data } = await getOrderSheetCoupon({ orderSheetNo });
-    setProducts(mapProducts([...data.products]));
+    data.products.length === 0 ? setProducts([]) : setProducts(mapProducts([...data.products]));
     return [...data.products];
   };
 
@@ -74,62 +76,64 @@ const UseCoupon = ({ setVisible, orderSheetNo, orderProducts, discount, setDisco
     return products.map(({ productNo, productName, mainOption, buyAmt, totalOrderCnt, productCoupons }) => ({
       productNo,
       productName,
-      imageUrl: orderProducts.find((products) => products.id === productNo)?.imageUrl ?? '',
+      imageUrl: orderProducts?.find((products) => products.id === productNo)?.imageUrl ?? '',
       mainOption,
       amount: toCurrencyString(buyAmt),
       totalOrderCnt,
-      hasProductCoupon: !!productCoupons?.length
+      hasProductCoupon: !!productCoupons?.length,
     }));
   }
 
   useEffect(init, [show]);
 
   return (
-    <LayerPopup className="find_address" size={'m'} popContClassName={'scrollH'} onClose={close} show={show}>
+    <LayerPopup className="find_address" size={'m'} onClose={close} show={show}>
       <p className="pop_tit">쿠폰 조회 및 적용</p>
-      <div className="pop_cont_scroll" ref={$scroll}>
+      <div className="pop_cont_scroll scroll_fix" ref={$scroll}>
         <div className="chk_select_zone">
           <ul className="chk_select_inner">
-            {products.filter(({ hasProductCoupon }) => hasProductCoupon).map((product, i) => (
-              <li className="chk_select_list" key={product.productNo}>
-                <div className="chk_select_item table label_click">
-                  <div className="radio_box radio_only chk_select">
-                    <input
-                      type="radio"
-                      className="inp_radio"
-                      id="prd_coupon1"
-                      name="prd_coupon"
-                      defaultChecked={i === 0}
-                    />
-                    <label htmlFor="prd_coupon1" className="contentType" style={{ display: 'none' }}>
-                      radio1
-                    </label>
+            {products
+              .filter(({ hasProductCoupon }) => hasProductCoupon)
+              .map((product, i) => (
+                <li className="chk_select_list" key={product.productNo}>
+                  <div className="chk_select_item table label_click">
+                    <div className="radio_box radio_only chk_select">
+                      <input
+                        type="radio"
+                        className="inp_radio"
+                        id="prd_coupon1"
+                        name="prd_coupon"
+                        defaultChecked={i === 0}
+                      />
+                      <label htmlFor="prd_coupon1" className="contentType" style={{ display: 'none' }}>
+                        radio1
+                      </label>
+                    </div>
+                    <div className="chk_select_info">
+                      <div className="info_cell prd_thumb">
+                        <span className="img">
+                          <img src={product.imageUrl} alt={product.productName} />
+                        </span>
+                      </div>
+                      <div className="info_cell prd_info">
+                        <p className="prd_tit">{product.productName}</p>
+                      </div>
+                      <div className="info_cell prd_price">
+                        <p className="prd_tit">
+                          <span className="price">{product.amount}</span>원
+                        </p>
+                        <p className="prd_desc">
+                          <span className="count">{product.totalOrderCnt}</span>개
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="chk_select_info">
-                    <div className="info_cell prd_thumb">
-                      <span className="img">
-                        <img src={product.imageUrl} alt={product.productName} />
-                      </span>
-                    </div>
-                    <div className="info_cell prd_info">
-                      <p className="prd_tit">{product.productName}</p>
-                    </div>
-                    <div className="info_cell prd_price">
-                      <p className="prd_tit">
-                        <span className="price">{product.amount}</span>원
-                      </p>
-                      <p className="prd_desc">
-                        <span className="count">{product.totalOrderCnt}</span>개
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            ))}
+                </li>
+              ))}
           </ul>
         </div>
         <div className="coupon_info">
-          {productCoupons.items.length > 0 && products.some(({ hasProductCoupon }) => hasProductCoupon) ? (
+          {productCoupons?.items?.length > 0 && products.some(({ hasProductCoupon }) => hasProductCoupon) ? (
             <SelectBox
               defaultInfo={{
                 type: 'dropdownHighlight',
