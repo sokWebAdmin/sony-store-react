@@ -27,6 +27,13 @@ import {
   useProileDispatch,
 } from '../../context/profile.context';
 import { getProfile } from '../../api/member';
+import { getAgent } from '../../utils/detectAgent';
+
+const CLIENT_ID = {
+  naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
+  facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
+  kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
+};
 
 const CLIENT_ID = {
   naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
@@ -223,7 +230,7 @@ export default function JoinStep() {
     if (response.status === 200) {
       if (response.data.errorCode === '0000') {
         //성공
-        openAlert('회원가입이 완료되었습니다.', async () => {
+        openAlert('회원가입이 완료되었습니다.', () => async () => {
           const provider = getItem(KEY.OPENID_PROVIDER);
           const response = await loginApi(email, !provider || getUrlParam('sns') !== 'true' ? password : CLIENT_ID[provider]);
           if (response.status === 200) {
@@ -234,6 +241,11 @@ export default function JoinStep() {
             const data = { type: '30', customerid: profile.data.memberId };
             setProfile(profileDispatch, profile.data);
             await fetchMyProfile(profileDispatch, data);
+
+            const agent = getAgent();
+            if (agent.isApp) {
+              window.location = `sonyapp://autoLoginYn?value=N&customerid=${profile.data.memberId}`;
+            }
             history.replace('/');
           } else {
             const errorMessage = response.data?.message ? JSON.parse(response.data.message).errorMessage : '';

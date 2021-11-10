@@ -33,7 +33,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   const { onChangeGlobal } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
 
-  const openIdData = ['naver', 'kakao', 'facebook']
+  const openIdData = ['naver', 'kakao']
     .sort((a) => (a === 'naver' ? -1 : 1))
     .map((provider) => ({
       provider,
@@ -58,9 +58,12 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   useEffect(() => {
     if (getAgent().isApp && getUrlParam('callback') === 'true') {
       const openIdProfile = getItem('openIdProfile');
-      openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
+      if (type === 'withdraw' || type === 'modify') {
+        openIdProfile && customCallback(openIdProfile.errorCode, openIdProfile.body);
+      } else {
+        openIdProfile && _openIdAuthCallback(openIdProfile.errorCode, openIdProfile.body);
+      }
     }
-    console.log(type);
   }, [history.location.search, history.location]);
 
   const openIdLogin = async (type) => {
@@ -114,7 +117,13 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
         setProfile(profileDispatch, profile.data);
         await fetchMyProfile(profileDispatch, data);
 
-        openAlert('로그인이 완료 되었습니다.', () => history.push('/'));
+        openAlert('로그인이 완료 되었습니다.', () => () => {
+          const agent = getAgent();
+          if (agent.isApp) {
+            window.location = `sonyapp://autoLoginYn?value=N&customerid=${profileResult.customerid}`;
+          }
+          history.push('/');
+        });
       }
     } else if (errorCode === '3012') {
       // 계정 없음

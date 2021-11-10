@@ -38,7 +38,9 @@ export default function Floating({ location, scrollAction }) {
   const history = useHistory();
   const isSheet = useMemo(() => ['order/sheet', 'gift/sheet'].some((p) => location.pathname.includes(p)), [location]);
   const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'), [location]);
+  const giftPage = useMemo(() => location.pathname.includes('/order/gift'), [location]);
   const orderPage = useMemo(() => location.pathname.includes('/order/sheet'), [location]);
+  const cartPage = useMemo(() => location.pathname.includes('/cart'), [location]);
 
   const info = useMallState();
   const TEL = info?.mall?.serviceCenter.phoneNo;
@@ -112,7 +114,7 @@ export default function Floating({ location, scrollAction }) {
   });
 
   const scrollStyle = useMemo(() => {
-    if (orderPage) {
+    if (orderPage || giftPage || cartPage || (window.scrollY === 0 && scrollBottomException)) {
       return {
         position: 'fixed',
         bottom: '-9999px',
@@ -129,28 +131,20 @@ export default function Floating({ location, scrollAction }) {
     }
 
     sidebarRef?.current?.classList.add('sidebar--visible');
-
-    if (isSheet) {
-      return {
-        position: 'fixed',
-        bottom: '60px',
-      };
-    }
-
-    if (scrollAction === 'down' && !scrollBottomException) {
+    if (scrollAction === 'down') {
       return {
         position: 'fixed',
         bottom: '-100px',
       };
     }
 
-    if (scrollAction === 'up' || scrollBottomException) {
+    if (scrollAction === 'up') {
       return {
         position: 'fixed',
-        bottom: '24px',
+        bottom: '-100px',
       };
     }
-  }, [reachend, scrollAction]);
+  }, [reachend, scrollAction, location]);
 
   return (
     <nav ref={sidebarRef} className={`sidebar ${active && 'sidebar--active'} sidebar--visible`} style={scrollStyle}>

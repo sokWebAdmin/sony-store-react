@@ -22,6 +22,7 @@ export default function TobContent({
   naverPayBtnKey,
   saleStatus,
   isMapping,
+  accumulationUseYn,
 }) {
   const size = useWindowSize();
   const isMobileSize = size.width <= 1280;
@@ -90,7 +91,7 @@ export default function TobContent({
           </div>
         </div>
 
-        <Benefits price={price} />
+        <Benefits price={price} accumulationUseYn={productData?.baseInfo?.accumulationUseYn} />
 
         {hasColor && (
           <ColorChip isSoldOut={isSoldOut} setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />

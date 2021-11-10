@@ -137,7 +137,7 @@ const Calculator = ({ payment, paymentInfo, orderCnt }) => {
         <li>브라우저 설정에서 팝업창 차단을 해제해 주세요.</li>
       </ul>
       {/* 모바일일때 버튼 */}
-      <div className="mo_pay_btn">
+      <div className="mo_pay_btn" style={{zIndex: 901}}>
         <button className="button button_positive button-full" onClick={() => submit()} type="button">
           총 <em>{toCurrency(paymentInfo?.paymentAmt)}</em> 원 ({toCurrency(orderCnt)}개) <span>결제하기</span>
         </button>

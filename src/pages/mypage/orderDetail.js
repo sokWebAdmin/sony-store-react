@@ -1,5 +1,5 @@
 import { React, useEffect, useState, useContext, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useQuery } from '../../hooks';
 import { useReactToPrint } from 'react-to-print';
 import OrderProcess from '../../components/myPage/orderDetail/OrderProcess';
@@ -33,6 +33,7 @@ import RefundAccount from '../order/RefundAccount';
 import OrderConfirm from '../../components/order/OrderConfirm';
 
 export default function OrderDetail() {
+  const history = useHistory();
   const query = useQuery();
   const printArea = useRef();
   const { isLogin } = useContext(GlobalContext);
@@ -87,18 +88,21 @@ export default function OrderDetail() {
     setStates(await _getOrderByOrderNo());
   }, []);
 
-  const _getOrderByOrderNo = async () => {
+  const _getOrderByOrderNo = () => {
     const request = { path: { orderNo: query.get('orderNo') } };
     const getOrderByOrderNo = isLogin ? getProfileOrderByOrderNo : getGuestOrderByOrderNo;
 
-    try {
-      return await getOrderByOrderNo(request);
-    } catch (e) {
-      console.error(e);
-    }
+      return getOrderByOrderNo(request).then(res => {
+        if (res.status === 400) {
+          alert('해당 주문을 찾을 수 없습니다.')
+          history.push('/member/login')
+        }
+        return res;
+      });
   };
 
   const setStates = (res) => {
+    if (res.status === 400) return;
     const {
       orderNo,
       pgOrderNo,
@@ -368,7 +372,8 @@ export default function OrderDetail() {
             <PurchaseInfo amountInfo={amountInfo} payInfo={payInfo} receiptInfos={receiptInfos} />
             <div className="cont button_wrap">
 
-              {showOrderConfirm(orderInfo.defaultOrderStatusType) && <OrderConfirm tid={pgOrderNo} />}
+              {/* 에스크로 '구매확정' 버튼. 재사용시 구매확정 이 잘되는지, 구매확정 시 returnUrl 등 테스트 필요 */}
+              {/* showOrderConfirm(orderInfo.defaultOrderStatusType) && <OrderConfirm tid={pgOrderNo} /> */}
 
               {showOrderCancel(orderInfo.defaultOrderStatusType, claimInfo.claimStatusType) && (
                 <button type="button" className="button button_negative" onClick={onOrderCancel}>

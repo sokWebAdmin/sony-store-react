@@ -88,7 +88,7 @@ export default function StoreInfo() {
                     <li className="route_subway">
                       <strong className="route_tit">지하철</strong>
                       <p className="route_method">
-                        <span className="color_subway1">7호선</span> 강남구청 3번 출구 /{' '}
+                        <span className="color_subway1">7호선</span> 강남구청 3-1번 출구 /{' '}
                         <span className="color_subway2">분당선</span> 압구정로데오역 5번 출구
                       </p>
                     </li>
@@ -112,7 +112,7 @@ export default function StoreInfo() {
                   <li className="route_subway">
                     <strong className="route_tit">지하철</strong>
                     <p className="route_method">
-                      <span className="color_subway1">7호선</span> 강남구청 3번 출구{' '}
+                      <span className="color_subway1">7호선</span> 강남구청 3-1번 출구{' '}
                       <span className="br">
                         <span className="color_subway2">분당선</span> 압구정로데오역 5번 출구
                       </span>

@@ -54,8 +54,6 @@ export default function Option({
 
   const showOption = options && (!isMobileSize || (isMobileSize && optionVisible));
 
-  useEffect(() => isMobileSize && !optionVisible && setSelectedOption(() => []), [optionVisible]);
-
   return (
     <div className="prd_select_inner">
       <div className="prd_select_box">

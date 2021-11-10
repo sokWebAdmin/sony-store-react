@@ -168,15 +168,7 @@ export default function Header(location) {
               <>
                 <div ref={sideRef} className={`member ${isInfoOpen && 'member--visible'}`}>
                   <div className="member__inner">
-                    <Link
-                      to="/member/login"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        openAlert('로그인이 필요합니다.', () => history.push('/member/login'));
-                        closeSubSlider();
-                      }}
-                      className="member__msg member__msg__login"
-                    >
+                    <Link to="/member/login" onClick={closeSubSlider} className="member__msg member__msg__login">
                       로그인이
                       <br />
                       필요합니다
@@ -199,14 +191,7 @@ export default function Header(location) {
                           </Link>
                         </li>
                         <li className="member__menu__order">
-                          <Link
-                            to={isLogin ? '/my-page/order-list' : '/member/login'}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              openAlert('로그인이 필요합니다.', () => history.push('/member/login'));
-                              closeSubSlider();
-                            }}
-                          >
+                          <Link to={isLogin ? '/my-page/order-list' : '/member/login'} onClick={closeSubSlider}>
                             주문/배송 조회
                           </Link>
                         </li>

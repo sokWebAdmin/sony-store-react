@@ -16,6 +16,8 @@ import EventProducts from '../../components/event/EventProducts';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
 import GradeSelect from '../../components/event/GradeSelect';
+import { useHistory } from 'react-router-dom';
+import IpChecker from '../../components/event/SonyInHouseIpChecker';
 
 const _scrollView = {
   pc : 5,
@@ -24,6 +26,8 @@ const _scrollView = {
 };
 
 export default function Refurbish() {
+  const history = useHistory()
+
   SwiperCore.use([Navigation]);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -45,7 +49,17 @@ export default function Refurbish() {
   }
 
   useEffect(() => {
-    fetchDetailEvent();
+    new IpChecker().run().then(checked => {
+      if (!checked) {
+        alert('회사 내에서만 접속이 가능합니다.')
+        history.push('/')
+      }
+
+      fetchDetailEvent()
+    }).catch(() => {
+      alert('잘못된 접근입니다.')
+      history.push('/')
+    });
   }, []);
 
   return (
