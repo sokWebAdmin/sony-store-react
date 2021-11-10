@@ -35,12 +35,6 @@ const CLIENT_ID = {
   kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
 };
 
-const CLIENT_ID = {
-  naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
-  facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
-  kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
-};
-
 export default function JoinStep() {
   const { onChangeGlobal, isLogin } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
