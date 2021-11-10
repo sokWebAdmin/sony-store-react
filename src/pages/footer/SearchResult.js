@@ -110,7 +110,7 @@ export default function SearchResult({ match }) {
 
   const fetchEvent = (pageNumber, data, pageSize = PAGE_SIZE.EVENT) => {
     if (pageNumber === 1) {
-      setEventList(data.slice(0, pageSize));
+      setEventList(() => data.slice(0, pageSize));
     } else {
       const start = (pageNumber - 1) * pageSize;
       const end = start + pageSize;
@@ -130,12 +130,12 @@ export default function SearchResult({ match }) {
       return dateL > dateR ? 1 : -1;
     };
     const sortData = newest ? [...data].sort(sortByLatestCreationDate) : [...data].sort(sortByOldestCreationDate);
-    setEventList(sortData);
+    setEventList(() => sortData);
   };
 
   const fetchCategory = (pageNumber, data, pageSize = PAGE_SIZE.CATEGORY) => {
     if (pageNumber === 1) {
-      setCategoryList(data.slice(0, pageSize));
+      setCategoryList(() => data.slice(0, pageSize));
     } else {
       const start = (pageNumber - 1) * pageSize;
       const end = start + pageSize;
@@ -146,7 +146,7 @@ export default function SearchResult({ match }) {
   const searchCategory = useCallback(async (keyword) => {
     try {
       const { data } = await getCategoryListByKeyword(keyword);
-      setInitialCategoryList(data.flatCategories);
+      setInitialCategoryList(() => data.flatCategories);
       // setCategoryList(data.flatCategories);
       setCategoryCount(data.flatCategories.length || 0);
       fetchCategory(1, data.flatCategories);
