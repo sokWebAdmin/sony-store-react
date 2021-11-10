@@ -33,7 +33,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   const { onChangeGlobal } = useContext(GlobalContext);
   const profileDispatch = useProileDispatch();
 
-  const openIdData = ['naver', 'kakao', 'facebook']
+  const openIdData = ['naver', 'kakao']
     .sort((a) => (a === 'naver' ? -1 : 1))
     .map((provider) => ({
       provider,
