@@ -34,7 +34,6 @@ export const useTerms = (termsTypes) => {
   };
 
   const setTermsNo = (histories) => {
-    debugger;
     const filtered = histories.filter(({ enforcementDate }) => isSameOrAfter('', getStrDate(enforcementDate)));
     if (filtered.length > 1) {
       fetchTermsByTermsNo(filtered[filtered.length - 1].termsNo, setPrevTerms);
