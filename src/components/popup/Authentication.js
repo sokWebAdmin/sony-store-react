@@ -107,9 +107,9 @@ export default function Authentication({
     const response = await verifySMS(phoneNum, code, usage, name);
     if (response.status === 200) {
       setAuthCheck(true);
-      setAuthForMobile(true)
+      setAuthForMobile?.(true);
       openAlert('인증되었습니다.');
-      setMyFormName(name);
+      setMyFormName?.(name);
     } else {
       openAlert(response.data.message);
     }
