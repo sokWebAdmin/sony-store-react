@@ -190,7 +190,7 @@ export default function EspList({history}) {
                                   <div className="prd_date">{product.slipReceiveDate}</div>
                                 </div>
                                 <div className="col_table_cell">
-                                  <div className="prd_num">{`${product.slipReceiveDate} (${product.serialno})`}</div>
+                                  <div className="prd_num">{`${product.lastdate} (${product.serialno})`}</div>
                                 </div>
                                 <div className="col_table_cell">
                                   {
