@@ -87,7 +87,7 @@ export default function SearchResult({ match }) {
   const searchProduct = useCallback(async (keyword, orderBy, pageNumber = 1) => {
     try {
       const { data } = await getProductSearch(getProductQuery(keyword, orderBy, pageNumber));
-      const ret = data.items.filter(({ hsCode }) => !hsCode);
+      const ret = data.items;
       setProductList((prev) => (pageNumber > 1 ? prev.concat(ret) : ret));
       // setProductCount((prev) => (pageNumber > 1 ? prev + ret.length : ret.length || 0));
       setProductCount(data.totalCount);
