@@ -199,14 +199,16 @@ export default function ProductList({ category }) {
       </div>
 
       <InfiniteScroll className="product__list" dataLength={products.length} next={_addProducts} hasMore={true}>
-        {products.map((product, index) => {
-          return (
-            <React.Fragment key={`category-product-${index}`}>
-              {index === 6 && !category.parent && <Banner category={category} />}
-              <Product product={product} category={category} />
-            </React.Fragment>
-          );
-        })}
+        {products
+          .filter(({ hsCode }) => !hsCode)
+          .map((product, index) => {
+            return (
+              <React.Fragment key={`category-product-${index}`}>
+                {index === 6 && !category.parent && <Banner category={category} />}
+                <Product product={product} category={category} />
+              </React.Fragment>
+            );
+          })}
       </InfiniteScroll>
     </div>
   );
