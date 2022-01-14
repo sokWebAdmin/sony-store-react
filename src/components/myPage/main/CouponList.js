@@ -1,43 +1,47 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { getCoupons } from '../../../api/promotion';
-import { syncCoupon } from '../../../api/sony/coupon';
-import CouponListItem from './CouponListItem';
+import CouponListItem from 'components/myPage/main/CouponListItem';
+import { getCoupons } from 'api/promotion';
+import { syncCoupon } from 'api/sony/coupon';
 
 const CouponList = () => {
     const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(true);
     const [coupons, setCoupons] = useState([]);
-    const nextPage = useRef(2);
+    const nextPage = useRef(1);
 
-    useEffect(async () => {
-        await syncCoupon();
-        fetchCoupons({ pageNumber: 1, pageSize: 10 });
+    useEffect(() => {
+        async function fetchCoupons() {
+            await syncCoupon();
+
+            const res = await getCoupons({
+                query: {
+                    pageNumber: nextPage.current,
+                    pageSize: 10,
+                    usable: true,
+                },
+            });
+
+            setCoupons(res.data.items);
+            showLoadMoreBtn(res.data.items);
+
+            nextPage.current++;
+        }
+
+        fetchCoupons();
     }, []);
-
-    const fetchCoupons = async ({ pageNumber, pageSize }) => {
-        const res = await getCoupons({
-            query: { pageNumber, pageSize, usable: true },
-        });
-
-        setCoupons(renameCoupons(res.data.items));
-        showLoadMoreBtn(res.data.items);
-
-        nextPage.current = 2;
-    };
-
-    const onClickLoadMore = (e) => {
-        e.preventDefault();
-        loadMore(nextPage.current, 10);
-    };
 
     const loadMore = async (pageNumber, pageSize) => {
         const res = await getCoupons({
             params: { pageNumber, pageSize, usable: true },
         });
+
         showLoadMoreBtn(res.data.items);
-        setCoupons([...coupons, ...renameCoupons(res.data.items)]);
-        nextPage.current += 1;
+        setCoupons((prev) => [...prev, ...res.data.items]);
+
+        nextPage.current++;
     };
+
+    const onClickLoadMore = () => loadMore(nextPage.current, 10);
 
     // 다음 페이지가 없는 경우 loadmore 버튼 숨김
     const showLoadMoreBtn = (newCoupons) => {
@@ -62,25 +66,6 @@ const CouponList = () => {
         return coupons.length > 0;
     };
 
-    // '/'이 들어간 쿠폰명들은 개행처리한다.
-    const renameCoupons = (conponResponseItems) => {
-        return conponResponseItems.map((coupon) => {
-            const newCouponName = coupon.couponName
-                .split('/')
-                .reduce((acc, splitName, index, splitNames) => {
-                    if (index === splitNames.length - 1) {
-                        acc += `${splitName}`;
-                    } else {
-                        acc += `${splitName}<br />`;
-                    }
-
-                    return acc;
-                }, '');
-
-            return { ...coupon, couponName: newCouponName };
-        });
-    };
-
     return (
         <div className='cont history_coupon'>
             <h3 className='cont_tit' id='coupon-tit'>
@@ -94,32 +79,44 @@ const CouponList = () => {
                         }`}
                     >
                         {/* class : on 내역이 있을 경우 on */}
-                        {divideCoupons(coupons)?.map((couponList, index) => {
-                            return (
+                        {coupons &&
+                            coupons.length !== 0 &&
+                            divideCoupons(coupons)?.map((couponList, index) => (
                                 <div className='coupon_list' key={index}>
-                                    {couponList?.map((coupon) => (
-                                        <CouponListItem
-                                            key={coupon.couponIssueNo}
-                                            couponIssueNo={coupon.couponIssueNo}
-                                            couponName={coupon.couponName}
-                                            discountRate={coupon.discountRate}
-                                            minSalePrice={coupon.minSalePrice}
-                                            issueYmdt={coupon.issueYmdt}
-                                            useEndYmdt={coupon.useEndYmdt}
-                                        />
-                                    ))}
+                                    {couponList?.map(
+                                        ({
+                                            couponIssueNo,
+                                            couponName,
+                                            fixedAmt,
+                                            discountAmt,
+                                            discountRate,
+                                            minSalePrice,
+                                            issueYmdt,
+                                            useEndYmdt,
+                                        }) => (
+                                            <CouponListItem
+                                                key={couponIssueNo}
+                                                couponIssueNo={couponIssueNo}
+                                                couponName={couponName}
+                                                fixedAmt={fixedAmt}
+                                                discountAmt={discountAmt}
+                                                discountRate={discountRate}
+                                                minSalePrice={minSalePrice}
+                                                issueYmdt={issueYmdt}
+                                                useEndYmdt={useEndYmdt}
+                                            />
+                                        ),
+                                    )}
                                 </div>
-                            );
-                        })}
+                            ))}
                         {loadMoreBtnVisible && (
                             <div className='btn_article line'>
-                                <a
-                                    href='#'
+                                <span
                                     className='more_btn'
                                     onClick={onClickLoadMore}
                                 >
                                     더보기
-                                </a>
+                                </span>
                             </div>
                         )}
                     </div>
@@ -178,6 +175,7 @@ const CouponList = () => {
                         }
                         onClick={window.openBrowser}
                         target='_blank'
+                        rel='noopener noreferrer'
                         title='새 창 열림'
                         className='box_link_inner ico_type2'
                     >
