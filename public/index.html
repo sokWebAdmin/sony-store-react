@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/images/favicon_144x144.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <meta name="msapplication-TileImage" content="%PUBLIC_URL%/images/favicon_144x144.png" />
-    <meta name="description" content="SonyStore Korea"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/images/favicon_144x144.png" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/images/favicon_144x144.png" />
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="%PUBLIC_URL%/images/favicon_144x144.png" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no"
+        />
+        <meta
+            name="msapplication-TileImage"
+            content="%PUBLIC_URL%/images/favicon_144x144.png"
+        />
+        <meta name="description" content="SonyStore Korea" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link
+            rel="apple-touch-icon"
+            href="%PUBLIC_URL%/images/favicon_144x144.png"
+        />
+        <link
+            rel="shortcut icon"
+            href="%PUBLIC_URL%/images/favicon_144x144.png"
+        />
 
-    <meta http-equiv="Cache-Control" content="No-Cache" />
+        <meta http-equiv="Cache-Control" content="No-Cache" />
 
-    <!--
+        <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -27,39 +39,53 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
 
-    <!-- pay scripts -->
-    <title>SonyStore</title>
-    <% if (process.env.NODE_ENV !== 'production') { %>
-    <script src="https://alpha-shop-api.e-ncp.com/payments/ncp_pay_alpha.js"></script>
-    <script src="https://stdpay.inicis.com/stdjs/INIStdPay.js"></script>
-    <!-- development only. NEVER INCLUDE THIS SCRIPT IN REAL -->
-    <script src="https://testpay.kcp.co.kr/plugin/payplus_web.jsp"></script>
-    <script type="text/javascript" src="https://test-pay.naver.com/customer/js/naverPayButton.js" charset="UTF-8"></script>
-    
-    <% } %>
-    <% if (process.env.NODE_ENV === 'production') { %>
-    <script src="https://shop-api.e-ncp.com/payments/ncp_pay.js"></script>
-    <script src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js"></script>
-    <script type="text/javascript" src="https://pay.naver.com/customer/js/naverPayButton.js" charset="UTF-8"></script>
-    <% } %>
+        <!-- pay scripts -->
+        <title>SonyStore</title>
+        <% if (process.env.NODE_ENV !== 'production') { %>
+        <script src="https://alpha-shop-api.e-ncp.com/payments/ncp_pay_alpha.js"></script>
+        <script src="https://stdpay.inicis.com/stdjs/INIStdPay.js"></script>
+        <!-- development only. NEVER INCLUDE THIS SCRIPT IN REAL -->
+        <script src="https://testpay.kcp.co.kr/plugin/payplus_web.jsp"></script>
+        <script
+            type="text/javascript"
+            src="https://test-pay.naver.com/customer/js/naverPayButton.js"
+            charset="UTF-8"
+        ></script>
+        <!-- /************* Omniture code tagging **************/ -->
+        <script
+            defer
+            type="text/javascript"
+            src="https://image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js"
+        ></script>
+        <!-- /************* Omniture code tagging **************/ -->
 
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script src="https://stdpay.inicis.com/stdjs/INIStdPay_escrow_conf.js"></script>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+        <% } %> <% if (process.env.NODE_ENV === 'production') { %>
+        <script src="https://shop-api.e-ncp.com/payments/ncp_pay.js"></script>
+        <script src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js"></script>
+        <script
+            type="text/javascript"
+            src="https://pay.naver.com/customer/js/naverPayButton.js"
+            charset="UTF-8"
+        ></script>
+        <% } %>
 
-    <script>
-      // 익스플로어인 build error 가 발생하여 index.html 안에 엣지 실행하는 코드 추가
-      if (navigator.userAgent.indexOf("Trident") > 0) {
-        window.location = 'microsoft-edge:' + window.location;
-      } else if (/MSIE \d |Trident.*rv:/.test(navigator.userAgent)) {
-        window.location = 'microsoft-edge:' + window.location;
-      }
-    </script>
+        <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+        <script src="https://stdpay.inicis.com/stdjs/INIStdPay_escrow_conf.js"></script>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
 
-    <div id="root"></div>
-    <!--
+        <script>
+            // 익스플로어인 build error 가 발생하여 index.html 안에 엣지 실행하는 코드 추가
+            if (navigator.userAgent.indexOf('Trident') > 0) {
+                window.location = 'microsoft-edge:' + window.location;
+            } else if (/MSIE \d |Trident.*rv:/.test(navigator.userAgent)) {
+                window.location = 'microsoft-edge:' + window.location;
+            }
+        </script>
+
+        <div id="root"></div>
+        <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -68,6 +94,5 @@
 
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    --></body>
 </html>

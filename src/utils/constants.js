@@ -1,6 +1,11 @@
-export const breakPoint = 1280;
+import { isTablet } from 'react-device-detect';
 
+export const breakPoint = 1280;
 export const breakPointTablet = 640;
+
+export const MOBILE_WIDTH = 640;
+
+export const HOW_MANY_WISH = isTablet ? 9 : 8;
 
 // vvip / vip / family
 export const memberGrade = {
