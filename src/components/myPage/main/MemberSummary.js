@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { toCurrencyString } from 'utils/unit';
 import { getCouponsSummary } from 'api/promotion';
 import { syncCoupon } from 'api/sony/coupon';
-import { memberGrade } from 'utils/constants';
+import { profileMemberGrade } from 'utils/constants';
 
 const MemberSummary = ({
     tabChange,
@@ -15,7 +15,7 @@ const MemberSummary = ({
     const [couponCount, setCouponCount] = useState(0);
 
     const grade = useMemo(
-        () => memberGrade[profile?.memberGradeName?.toLowerCase()],
+        () => profileMemberGrade[profile?.memberGradeName?.toLowerCase()],
         [profile],
     );
 

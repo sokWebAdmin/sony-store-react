@@ -14,3 +14,10 @@ export const memberGrade = {
     V: { className: 'vip', label: 'VIP' },
     VV: { className: 'vvip', label: 'VVIP' },
 };
+
+export const profileMemberGrade = {
+    일반: { className: 'family', label: 'MEMBERSHIP' }, // 일반도 MEMBERSHIP
+    membership: { className: 'family', label: 'MEMBERSHIP' },
+    vip: { className: 'vip', label: 'VIP' },
+    vvip: { className: 'vvip', label: 'VVIP' },
+};
