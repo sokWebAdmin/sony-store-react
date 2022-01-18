@@ -87,9 +87,6 @@ const CouponList = () => {
                                         ({
                                             couponIssueNo,
                                             couponName,
-                                            fixedAmt,
-                                            discountAmt,
-                                            discountRate,
                                             minSalePrice,
                                             issueYmdt,
                                             useEndYmdt,
@@ -98,9 +95,6 @@ const CouponList = () => {
                                                 key={couponIssueNo}
                                                 couponIssueNo={couponIssueNo}
                                                 couponName={couponName}
-                                                fixedAmt={fixedAmt}
-                                                discountAmt={discountAmt}
-                                                discountRate={discountRate}
                                                 minSalePrice={minSalePrice}
                                                 issueYmdt={issueYmdt}
                                                 useEndYmdt={useEndYmdt}
