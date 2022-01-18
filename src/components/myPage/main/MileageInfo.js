@@ -1,73 +1,115 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-
+import dayjs from 'dayjs';
 import MileageList from 'components/myPage/main/MileageList';
 import DateBox from 'components/myPage/DateBox';
 import { getMileageHistories } from 'api/sony/mileage';
 import { toCurrencyString } from 'utils/unit';
-import { getStrDate } from 'utils/dateFormat';
 
-const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
+const MileageInfo = ({ availableMileage, totalExpireMileage, profile }) => {
     const [pageIdx, setPageIdx] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
     const [list, setList] = useState([]);
-    const [startDateTime, setStartDateTime] = useState('');
-    const [endDateTime, setEndDateTime] = useState('');
+    const [selectMenu, setSelectMenu] = useState('threeM');
+    const [period, setPeriod] = useState({
+        startDate: new Date(dayjs().subtract('3', 'months')),
+        endDate: new Date(),
+    });
 
-    const changeDateTime = (startDate, endDate) => {
-        const strDate = (date) => getStrDate(date).replace(/\-/g, '');
+    const onClickTab = useCallback((menu) => {
+        setSelectMenu(menu);
 
-        setStartDateTime(strDate(startDate));
-        setEndDateTime(strDate(endDate));
-
-        return { start: strDate(startDate), end: strDate(endDate) };
-    };
-
-    const fetchMH = useCallback(
-        async (startDateTime, endDateTime, pageIdx) => {
-            const request = {
-                customerid: profile.memberId,
-                rowsPerPage: 10,
-                pageIdx,
-                startDateTime,
-                endDateTime,
-            };
-            const { data } = await getMileageHistories(request);
-            return data;
-        },
-        [profile.memberId],
-    );
+        if (menu === 'threeM') {
+            setPeriod((prev) => ({
+                ...prev,
+                startDate: new Date(
+                    dayjs(prev.endDate).subtract('3', 'months'),
+                ),
+            }));
+        }
+        if (menu === 'sixM') {
+            setPeriod((prev) => ({
+                ...prev,
+                startDate: new Date(
+                    dayjs(prev.endDate).subtract('6', 'months'),
+                ),
+            }));
+        }
+        if (menu === 'oneY') {
+            setPeriod((prev) => ({
+                ...prev,
+                startDate: new Date(dayjs(prev.endDate).subtract('1', 'year')),
+            }));
+        }
+    }, []);
 
     const hasMore = useMemo(
         () => totalCount > list.length * pageIdx,
         [totalCount, list, pageIdx],
     );
 
+    // TODO:비동기 작업은 try~catch로 묶어준다, 먼저 API에 오류처리가 되어있는지 확인
     const search = useCallback(
         async ({ startDate, endDate, more }) => {
-            const { start, end } = changeDateTime(startDate, endDate);
+            setPeriod((prev) => ({ ...prev, startDate, endDate }));
 
             if (!more) {
                 setPageIdx(1);
             }
-            const data = await fetchMH(start, end, pageIdx);
+
+            const { data } = await getMileageHistories({
+                customerid: profile.memberId,
+                rowsPerPage: 10,
+                pageIdx,
+                startDateTime: dayjs(startDate).format('YYYYMMDD'),
+                endDateTime: dayjs(endDate).format('YYYYMMDD'),
+            });
+
             const newList = data.body;
             more ? setList((prev) => [...prev, ...newList]) : setList(newList);
             setTotalCount(data.paginationInfo.totalCount);
         },
-        [fetchMH, pageIdx],
+        [pageIdx, profile.memberId],
     );
 
     const more = () => setPageIdx(pageIdx + 1);
 
     useEffect(() => {
-        if (pageIdx !== 1) {
-            search({
-                startDate: startDateTime,
-                endDate: endDateTime,
-                more: true,
-            });
+        search({
+            startDate: period.startDate,
+            endDate: period.endDate,
+            pageNumber: 1,
+            pageSize: 10,
+        });
+    }, [period.startDate, period.endDate, search]);
+
+    const onClickSearch = useCallback(() => {
+        search({
+            startDate: period.startDate,
+            endDate: period.endDate,
+            pageNumber: 1,
+            pageSize: 10,
+        });
+    }, [period.startDate, period.endDate, search]);
+
+    const onChangeStartDate = (startDate) => {
+        if (startDate > period.endDate) {
+            alert('종료일보다 큰 날짜를 선택할 수 없습니다.');
+            setPeriod((prev) => ({ ...prev }));
+            return false;
+        } else {
+            setPeriod((prev) => ({ ...prev, startDate }));
         }
-    }, [pageIdx, search, startDateTime, endDateTime]);
+    };
+
+    const onChangeEndDate = (endDate) => {
+        if (endDate < period.startDate) {
+            alert('시작일보다 작은 날짜를 선택할 수 없습니다.');
+            setPeriod((prev) => ({ ...prev }));
+            return false;
+        } else {
+            setPeriod((prev) => ({ ...prev, endDate }));
+        }
+    };
 
     return (
         <div className='cont history_mileage'>
@@ -79,7 +121,7 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
                     <p className='txt'>
                         {`사용 가능 `}
                         <span className='mileage_val'>
-                            {toCurrencyString(availablemileage)}
+                            {toCurrencyString(availableMileage)}
                         </span>
                         <span className='extinction'>
                             (
@@ -95,8 +137,13 @@ const MileageInfo = ({ availablemileage, totalExpireMileage, profile }) => {
                 </div>
                 <div className='mileage_inquiry'>
                     <DateBox
-                        search={search}
-                        firstSearch={true}
+                        selectMenu={selectMenu}
+                        onClickTab={onClickTab}
+                        onClickSearch={onClickSearch}
+                        startDate={period.startDate}
+                        endDate={period.endDate}
+                        onChangeStartDate={onChangeStartDate}
+                        onChangeEndDate={onChangeEndDate}
                         style={{ paddingBottom: '24px' }}
                     />
                     <div className='history_list'>
