@@ -1,12 +1,9 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
-const SEOHelmet = ({ title, children }) => (
-  <>
+const SEOHelmet = ({ title }) => (
     <Helmet>
-      <title>{title}</title>
-      {children}
+        <title>{title}</title>
     </Helmet>
-  </>
 );
 
 export default SEOHelmet;

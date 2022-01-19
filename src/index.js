@@ -1,40 +1,50 @@
 import React from 'react';
-import reportWebVitals from './reportWebVitals';
 import { render, hydrate } from 'react-dom';
-import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import { ContextDevTool } from 'react-context-devtool';
+import { HelmetProvider } from 'react-helmet-async';
 
-import GlobalContext from "./context/global.context";
-import GlobalProvider from "./provider/GlobalProvider";
-
-import { ContextDevTool } from "react-context-devtool";
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import GlobalContext from './context/global.context';
+import GlobalProvider from './provider/GlobalProvider';
 
 const rootElement = document.getElementById('root');
 
 if (rootElement.hasChildNodes()) {
-  hydrate(
-    <GlobalProvider>
-      <BrowserRouter>
-        <React.StrictMode>
-            <ContextDevTool context={GlobalContext} displayName="context Display Name" />
-            <App />
-        </React.StrictMode>
-      </BrowserRouter>
-    </GlobalProvider>,
-    rootElement
-  );
+    hydrate(
+        <GlobalProvider>
+            <BrowserRouter>
+                <React.StrictMode>
+                    <HelmetProvider>
+                        <ContextDevTool
+                            context={GlobalContext}
+                            displayName='context Display Name'
+                        />
+                        <App />
+                    </HelmetProvider>
+                </React.StrictMode>
+            </BrowserRouter>
+        </GlobalProvider>,
+        rootElement,
+    );
 } else {
-  render(
-    <GlobalProvider>
-      <BrowserRouter>
-        <React.StrictMode>
-            <ContextDevTool context={GlobalContext} displayName="context Display Name" />
-            <App />
-        </React.StrictMode>
-      </BrowserRouter>
-    </GlobalProvider>,
-    rootElement
-  );
+    render(
+        <GlobalProvider>
+            <BrowserRouter>
+                <React.StrictMode>
+                    <HelmetProvider>
+                        <ContextDevTool
+                            context={GlobalContext}
+                            displayName='context Display Name'
+                        />
+                        <App />
+                    </HelmetProvider>
+                </React.StrictMode>
+            </BrowserRouter>
+        </GlobalProvider>,
+        rootElement,
+    );
 }
 
 // If you want to start measuring performance in your app, pass a function
