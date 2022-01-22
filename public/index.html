@@ -51,13 +51,13 @@
             src="https://test-pay.naver.com/customer/js/naverPayButton.js"
             charset="UTF-8"
         ></script>
-        <!-- /************* Omniture code tagging **************/ -->
+        <!-- /************* Omniture DEV code tagging **************/ -->
         <script
             defer
             type="text/javascript"
             src="https://image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js"
         ></script>
-        <!-- /************* Omniture code tagging **************/ -->
+        <!-- /************* Omniture DEV code tagging **************/ -->
 
         <% } %> <% if (process.env.NODE_ENV === 'production') { %>
         <script src="https://shop-api.e-ncp.com/payments/ncp_pay.js"></script>
@@ -67,6 +67,13 @@
             src="https://pay.naver.com/customer/js/naverPayButton.js"
             charset="UTF-8"
         ></script>
+        <!-- /************* Omniture PROD code tagging **************/ -->
+        <script
+            defer
+            type="text/javascript"
+            src="https://image.sony.co.kr/omniture/real/sonystore_code_2013.js"
+        ></script>
+        <!-- /************* Omniture PROD code tagging **************/ -->
         <% } %>
 
         <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
