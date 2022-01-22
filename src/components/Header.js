@@ -1,38 +1,31 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
-//images
-import logo from '../assets/images/common/logo.svg';
-import search from '../assets/images/common/ic_search.svg';
-import mypage from '../assets/images/common/ic_mypage.svg';
-import cart from '../assets/images/common/ic_cart.svg';
-import menu from '../assets/images/common/ic_menu.svg';
-import close from '../assets/images/common/ic_close.svg';
-
-//component
-import Gnb from './Gnb';
-import Search from './Search';
-import CartCount from './cart/CartCount';
-
-//context
-import GlobalContext from '../context/global.context';
+import Gnb from 'components/Gnb';
+import Search from 'components/Search';
+import CartCount from 'components/cart/CartCount';
+import Alert from 'components/common/Alert';
+import GlobalContext from 'context/global.context';
 import {
     useHeaderDispatch,
     useHeaderState,
     openSideBar,
     closeSideBar,
-} from '../context/header.context';
-
-//utils
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import { removeAccessToken } from '../utils/token';
+} from 'context/header.context';
 import {
     resetProfile,
     useProfileState,
     useProileDispatch,
-} from '../context/profile.context';
-import { useAlert, useClickOutside, useMediaQuery, useScroll } from '../hooks';
-import { getAgent } from '../utils/detectAgent';
-import Alert from './common/Alert';
+} from 'context/profile.context';
+import { useAlert, useClickOutside, useMediaQuery, useScroll } from 'hooks';
+import { removeAccessToken } from 'utils/token';
+import { getAgent } from 'utils/detectAgent';
+import logo from 'assets/images/common/logo.svg';
+import search from 'assets/images/common/ic_search.svg';
+import mypage from 'assets/images/common/ic_mypage.svg';
+import cart from 'assets/images/common/ic_cart.svg';
+import menu from 'assets/images/common/ic_menu.svg';
+import close from 'assets/images/common/ic_close.svg';
 
 export default function Header(location) {
     const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
@@ -127,9 +120,9 @@ export default function Header(location) {
                 )}
                 <div className='header__wrapper'>
                     <h1 className='header__logo'>
-                        <Link to='/'>
+                        <a href='/'>
                             <img src={logo} alt='SONY' />
-                        </Link>
+                        </a>
                     </h1>
                     <div className='header__menu'>
                         <button
@@ -140,8 +133,7 @@ export default function Header(location) {
                         >
                             <img src={search} alt='검색창 열기' />
                         </button>
-                        <a
-                            href='#'
+                        <button
                             className='btn btn__desktop btn__mypage'
                             onClick={(e) => {
                                 e.preventDefault();
@@ -149,9 +141,8 @@ export default function Header(location) {
                             }}
                         >
                             <img src={mypage} alt='마이페이지' />
-                        </a>
-                        <a
-                            href='#'
+                        </button>
+                        <button
                             className='btn btn__cart'
                             onClick={(e) => {
                                 e.preventDefault();
@@ -163,7 +154,7 @@ export default function Header(location) {
                                 isOpened={isSiderbarOpen}
                                 className='badge'
                             />
-                        </a>
+                        </button>
                         <button
                             type='button'
                             className='btn btn__mo btn__menu__open'
