@@ -1,95 +1,122 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { addMonth, changeDateFormat } from '../../utils/dateFormat';
-import DateBox from '../../components/myPage/DateBox';
-import OldOrderListItem from '../../components/myPage/order/OldOrderListItem';
+import dayjs from 'dayjs';
 
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//api
-import { getOldOrders } from '../../api/sony/order';
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/mypage.scss';
+import DateBox from 'components/myPage/DateBox';
+import OldOrderListItem from 'components/myPage/order/OldOrderListItem';
+import SEOHelmet from 'components/SEOHelmet';
+import { SONY_RESPONSE } from 'utils/constants';
+import { getOldOrders } from 'api/sony/order';
+import 'assets/scss/contents.scss';
+import 'assets/scss/mypage.scss';
 
 export default function OldOrderList() {
+    const [selectMenu, setSelectMenu] = useState('threeM');
     const [searchPeriod, setSearchPeriod] = useState({
-        startDate: new Date(addMonth(new Date(), -3)),
+        startDate: new Date(dayjs().subtract('3', 'months')),
         endDate: new Date(),
     });
+    const [oldOrderProducts, setOldOrderProducts] = useState([]);
     const [loadMoreBtnVisible, setLoadMoreBtnVisible] = useState(false);
     const nextPage = useRef(2);
 
-    const [oldOrderProducts, setOldOrderProducts] = useState([]);
+    const onClickTab = useCallback((menu) => {
+        setSelectMenu(menu);
+
+        if (menu === 'threeM') {
+            setSearchPeriod((prev) => ({
+                ...prev,
+                startDate: new Date(
+                    dayjs(prev.endDate).subtract('3', 'months'),
+                ),
+            }));
+        }
+        if (menu === 'sixM') {
+            setSearchPeriod((prev) => ({
+                ...prev,
+                startDate: new Date(
+                    dayjs(prev.endDate).subtract('6', 'months'),
+                ),
+            }));
+        }
+        if (menu === 'oneY') {
+            setSearchPeriod((prev) => ({
+                ...prev,
+                startDate: new Date(dayjs(prev.endDate).subtract('1', 'year')),
+            }));
+        }
+    }, []);
+
+    const search = async ({ startDate, endDate, pageNumber, pageSize }) => {
+        const res = await getOldOrders({
+            requestBody: {
+                schStrtDt: dayjs(startDate).format('YYYY-MM-DD'),
+                schEndDt: dayjs(endDate).format('YYYY-MM-DD'),
+                pageIdx: pageNumber,
+                rowsPerPage: pageSize,
+                orderType: null,
+            },
+        });
+        console.log('🚀 ~ file: OldOrderList.js ~ line 59 ~ search ~ res', res);
+
+        if (res.data.errorCode === SONY_RESPONSE.SUCCESS) {
+            showLoadMoreBtn(res.data.body);
+            setOldOrderProducts((prev) => [...prev, ...res.data.body]);
+            nextPage.current = 2;
+        }
+
+        setSearchPeriod({ startDate, endDate });
+    };
 
     useEffect(() => {
         search({
-            startDate: new Date(addMonth(new Date(), -3)),
-            endDate: new Date(),
+            startDate: searchPeriod.startDate,
+            endDate: searchPeriod.endDate,
             pageNumber: 1,
             pageSize: 10,
             orderType: null,
         });
     }, []);
 
-    const search = async ({ startDate, endDate, pageNumber, pageSize }) => {
-        const schStrtDt = changeDateFormat(startDate, 'YYYY-MM-DD').replaceAll(
-            '-',
-            '',
-        );
-        const schEndDt = changeDateFormat(endDate, 'YYYY-MM-DD').replaceAll(
-            '-',
-            '',
-        );
-
+    const onClickSearch = useCallback(async () => {
         const res = await getOldOrders({
-            requsetBody: {
-                schStrtDt,
-                schEndDt,
-                pageIdx: pageNumber,
-                rowsPerPage: pageSize,
+            requestBody: {
+                schStrtDt: dayjs(searchPeriod.startDate).format('YYYY-MM-DD'),
+                schEndDt: dayjs(searchPeriod.endDate).format('YYYY-MM-DD'),
+                pageIdx: 1,
+                rowsPerPage: 10,
                 orderType: null,
             },
         });
 
-        showLoadMoreBtn(res.data.body);
-        setOldOrderProducts(res.data.body);
-        setSearchPeriod({ startDate, endDate });
-        nextPage.current = 2;
-    };
-
-    const onClickLoadMore = (e) => {
-        e.preventDefault();
-        loadMore(nextPage.current, 10);
-    };
+        if (res.data.errorCode === SONY_RESPONSE.SUCCESS) {
+            showLoadMoreBtn(res.data.body);
+            setOldOrderProducts((prev) => [...prev, ...res.data.body]);
+            nextPage.current++;
+        }
+    }, [searchPeriod.startDate, searchPeriod.endDate]);
 
     const loadMore = async (pageIdx, rowsPerPage) => {
         const { startDate, endDate } = searchPeriod;
-        const schStrtDt = changeDateFormat(startDate, 'YYYY-MM-DD').replaceAll(
-            '-',
-            '',
-        );
-        const schEndDt = changeDateFormat(endDate, 'YYYY-MM-DD').replaceAll(
-            '-',
-            '',
-        );
 
         const res = await getOldOrders({
-            requsetBody: {
-                schStrtDt,
-                schEndDt,
+            requestBody: {
+                schStrtDt: dayjs(startDate).format('YYYY-MM-DD'),
+                schEndDt: dayjs(endDate).format('YYYY-MM-DD'),
                 pageIdx,
                 rowsPerPage,
                 orderType: null,
             },
         });
-        showLoadMoreBtn(res.data.body);
-        setOldOrderProducts([...oldOrderProducts, ...res.data.body]);
 
-        nextPage.current += 1;
+        if (res.data.errorCode === SONY_RESPONSE.SUCCESS) {
+            showLoadMoreBtn(res.data.body);
+            setOldOrderProducts((prev) => [...prev, ...res.data.body]);
+            nextPage.current++;
+        }
     };
+
+    const onClickLoadMore = () => loadMore(nextPage.current, 10);
 
     // 다음 페이지가 없는 경우 loadmore 버튼 숨김
     const showLoadMoreBtn = (newOldOrderProducts) => {
@@ -99,6 +126,26 @@ export default function OldOrderList() {
         }
 
         setLoadMoreBtnVisible(true);
+    };
+
+    const onChangeStartDate = (startDate) => {
+        if (startDate > searchPeriod.endDate) {
+            alert('종료일보다 큰 날짜를 선택할 수 없습니다.');
+            setSearchPeriod((prev) => ({ ...prev }));
+            return false;
+        } else {
+            setSearchPeriod((prev) => ({ ...prev, startDate }));
+        }
+    };
+
+    const onChangeEndDate = (endDate) => {
+        if (endDate < searchPeriod.startDate) {
+            alert('시작일보다 작은 날짜를 선택할 수 없습니다.');
+            setSearchPeriod((prev) => ({ ...prev }));
+            return false;
+        } else {
+            setSearchPeriod((prev) => ({ ...prev, endDate }));
+        }
     };
 
     return (
@@ -124,7 +171,16 @@ export default function OldOrderList() {
                                 <h3 className='cont_tit'>
                                     2021년 11월 이전 주문 내역
                                 </h3>
-                                <DateBox search={search} />
+                                <DateBox
+                                    selectMenu={selectMenu}
+                                    onClickTab={onClickTab}
+                                    onClickSearch={onClickSearch}
+                                    startDate={searchPeriod.startDate}
+                                    endDate={searchPeriod.endDate}
+                                    onChangeStartDate={onChangeStartDate}
+                                    onChangeEndDate={onChangeEndDate}
+                                    style={{ paddingBottom: '24px' }}
+                                />
                             </div>
 
                             <div className='col_table_wrap order_list'>
@@ -145,20 +201,17 @@ export default function OldOrderList() {
                                     {oldOrderProducts.length > 0 && (
                                         <div className='col_table_body'>
                                             {oldOrderProducts.map(
-                                                (oldOrderProduct) => (
+                                                ({
+                                                    orderid,
+                                                    createdate,
+                                                    status,
+                                                    seqno,
+                                                }) => (
                                                     <OldOrderListItem
-                                                        orderid={
-                                                            oldOrderProduct.orderid
-                                                        }
-                                                        createdate={
-                                                            oldOrderProduct.createdate
-                                                        }
-                                                        status={
-                                                            oldOrderProduct.status
-                                                        }
-                                                        seqno={
-                                                            oldOrderProduct.seqno
-                                                        }
+                                                        orderid={orderid}
+                                                        createdate={createdate}
+                                                        status={status}
+                                                        seqno={seqno}
                                                     />
                                                 ),
                                             )}
@@ -170,13 +223,13 @@ export default function OldOrderList() {
                                         className='my btn_article'
                                         style={{ textAlign: 'center' }}
                                     >
-                                        <a
+                                        <button
                                             href='#'
                                             className='more_btn'
                                             onClick={onClickLoadMore}
                                         >
                                             더보기
-                                        </a>
+                                        </button>
                                     </div>
                                 )}
 
