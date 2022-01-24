@@ -86,7 +86,7 @@ export default function MyPageMain() {
 
     const memberName = useMemo(
         () => my?.firstname ?? profile?.memberName,
-        [my],
+        [my, profile?.memberName],
     );
 
     return (
