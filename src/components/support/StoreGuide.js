@@ -1,4 +1,3 @@
-//lib
 import SwiperCore, {
     Navigation,
     Pagination,
@@ -8,11 +7,12 @@ import SwiperCore, {
 } from 'swiper/core';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useWindowSize } from '../../utils/utils';
+import { useWindowSize } from 'utils/utils';
 
 export default function StoreGuide() {
     SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
     const size = useWindowSize();
+
     return (
         <div className='store_info_wrap_guidebox'>
             <div className='guidebox_slider swiper-container'>
@@ -42,33 +42,22 @@ export default function StoreGuide() {
                         </SwiperSlide>
                         <SwiperSlide className='swiper-slide box'>
                             <span className='box_tit'>고객센터 운영시간</span>
-                            <ul className='box_day'>
-                                <li className='weekday'>
-                                    <span className='weekday_day'>
-                                        월-금요일
-                                    </span>
-                                    <span className='weekday_time'>
-                                        11:00 ~ 20:00
-                                    </span>
-                                </li>
-                                <li className='weekday'>
-                                    <span className='weekday_day'>토요일</span>
-                                    <span className='weekday_time'>
-                                        11:00 ~ 15:00
-                                    </span>
-                                </li>
-                            </ul>
-                            <p className='box_desc'>(일요일, 공휴일 휴무)</p>
+                            <div className='box_day'>
+                                <div className='weekday'>
+                                    <p className='weekday_day'>월-금요일</p>
+                                    <p className='weekday_time'>
+                                        09:00 ~ 18:00
+                                    </p>
+                                </div>
+                            </div>
+                            <p className='box_desc'>(토/일요일, 공휴일 휴무)</p>
                         </SwiperSlide>
                         <SwiperSlide className='swiper-slide box search'>
                             <a
-                                href={
-                                    window.anchorProtocol +
-                                    'www.sony.co.kr/scs/handler/Service-AsCenter'
-                                }
+                                href={`${window.anchorProtocol}www.sony.co.kr/scs/handler/Service-AsCenter`}
                                 onClick={window.openBrowser}
                                 target='_blank'
-                                rel='noreferrer'
+                                rel='noopener noreferrer'
                             >
                                 <i className='icon'></i>
                                 <p className='box_desc'>AS 센터 찾기</p>
@@ -94,33 +83,22 @@ export default function StoreGuide() {
                         </div>
                         <div className='swiper-slide box'>
                             <span className='box_tit'>고객센터 운영시간</span>
-                            <ul className='box_day'>
-                                <li className='weekday'>
-                                    <span className='weekday_day'>
-                                        월-금요일
-                                    </span>
-                                    <span className='weekday_time'>
-                                        11:00 ~ 20:00
-                                    </span>
-                                </li>
-                                <li className='weekday'>
-                                    <span className='weekday_day'>토요일</span>
-                                    <span className='weekday_time'>
-                                        11:00 ~ 15:00
-                                    </span>
-                                </li>
-                            </ul>
-                            <p className='box_desc'>(일요일, 공휴일 휴무)</p>
+                            <div className='box_day'>
+                                <div className='weekday'>
+                                    <p className='weekday_day'>월-금요일</p>
+                                    <p className='weekday_time'>
+                                        09:00 ~ 18:00
+                                    </p>
+                                </div>
+                            </div>
+                            <p className='box_desc'>(토/일요일, 공휴일 휴무)</p>
                         </div>
                         <div className='swiper-slide box search'>
                             <a
-                                href={
-                                    window.anchorProtocol +
-                                    'www.sony.co.kr/scs/handler/Service-AsCenter'
-                                }
+                                href={`${window.anchorProtocol}www.sony.co.kr/scs/handler/Service-AsCenter`}
                                 target='_blank'
                                 onClick={window.openBrowser}
-                                rel='noreferrer'
+                                rel='noopener noreferrer'
                             >
                                 <i className='icon'></i>
                                 <p className='box_desc'>AS 센터 찾기</p>
