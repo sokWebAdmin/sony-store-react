@@ -1,12 +1,10 @@
-import { useMallState } from '../../../context/mall.context';
-import { getPricePerProduct } from '../../../utils/product';
-import { wonComma } from '../../../utils/utils';
+import { useMallState } from 'context/mall.context';
+import { wonComma } from 'utils/utils';
 
 // 할인 혜택
 export default function Benefits({ price, accumulationUseYn }) {
     const mallInfo = useMallState();
     const discount = price.salePrice;
-    // const { discount } = getPricePerProduct(price);
 
     const useAcc = accumulationUseYn === 'Y';
     const unit = mallInfo?.accumulationUnit;
@@ -17,7 +15,7 @@ export default function Benefits({ price, accumulationUseYn }) {
         <div className='cont line'>
             <p className='tit'>
                 {nonProfit
-                    ? '본 상품은 적립금이 적립되지 않는 상품입니다.'
+                    ? '본 상품은 마일리지가 적립되지 않는 상품입니다.'
                     : '회원별 마일리지 적립혜택 '}
                 <span className='icon_question'>!</span>
             </p>
