@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import SEOHelmet from '../../components/SEOHelmet';
 
-//lib-css
+import SEOHelmet from 'components/SEOHelmet';
+import Tabs from 'components/common/Tabs';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/swiper.scss';
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/membership.scss';
-// import "../../assets/scss/mypage.scss";
-
-import Tabs from '../../components/common/Tabs';
+import 'assets/scss/contents.scss';
+import 'assets/scss/membership.scss';
 
 const tabs = [
     { tabName: 'mileage', label: '마일리지' },
@@ -489,6 +484,7 @@ const Benefit = (props) => {
                                                 <h3 className='prmm_dtl_title'>
                                                     퀵/친환경 패키지 서비스
                                                 </h3>
+
                                                 <ul className='prmm_dtl_prctns'>
                                                     <li className='prmm_dtl_prctn'>
                                                         소니스토어에서는 온라인
@@ -499,6 +495,11 @@ const Benefit = (props) => {
                                                         박스/완충 포장재/테이프
                                                         모두 종이를 사용하여
                                                         환경 보호에 기여합니다.
+                                                    </li>
+                                                    <li className='prmm_dtl_prctn'>
+                                                        또한 300만원 이상 제품의
+                                                        경우, 화물배송으로
+                                                        배송됩니다.
                                                     </li>
                                                     <li className='prmm_dtl_prctn'>
                                                         퀵 서비스는
@@ -513,17 +514,11 @@ const Benefit = (props) => {
                                                         <strong className='primary-color'>
                                                             5만원 이상
                                                         </strong>
-                                                        인 경우에 이용 가능하며,
-                                                        국내 지역만 가능합니다.
-                                                    </li>
-                                                    <li className='prmm_dtl_prctn'>
-                                                        퀵 서비스 : 구매금액이{' '}
-                                                        <strong className='primary-color'>
-                                                            200만원 이상
-                                                        </strong>
-                                                        인 경우에 이용 가능하며,
-                                                        서울 지역에서만
-                                                        가능합니다.
+                                                        의 경우 고객 요청에 따라
+                                                        서울/경기 지역의
+                                                        퀵서비스 지원이
+                                                        가능하나, 비용은 고객
+                                                        부담으로 진행 됩니다.
                                                     </li>
                                                 </ul>
                                                 <p className='prmm_dtl_note'>
