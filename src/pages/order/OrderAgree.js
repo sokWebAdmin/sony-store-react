@@ -1,27 +1,15 @@
 import { useContext, useEffect, useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
-//context
-import {
-    useGuestDispatch,
-    setOrderAgree,
-} from '../../context/guest.context.js';
-
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//api
-
-// components
-import Terms from '../../components/popup/policy/Terms';
-import Privacy from '../../components/popup/policy/Privacy';
-
-//stylesheet
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/order.scss';
-import GlobalContext from '../../context/global.context';
-import Alert from '../../components/common/Alert';
-import { getUrlParam } from '../../utils/location.js';
+import SEOHelmet from 'components/SEOHelmet';
+import Terms from 'components/popup/policy/Terms';
+import Privacy from 'components/popup/policy/Privacy';
+import Alert from 'components/common/Alert';
+import { useGuestDispatch, setOrderAgree } from 'context/guest.context';
+import GlobalContext from 'context/global.context';
+import { getUrlParam } from 'utils/location';
+import 'assets/scss/contents.scss';
+import 'assets/scss/order.scss';
 
 export default function OrderAgree({ location }) {
     const { isLogin } = useContext(GlobalContext);
@@ -94,7 +82,7 @@ export default function OrderAgree({ location }) {
                         <div className='agree_chk_box'>
                             <div className='all_box'>
                                 <strong className='tit_label'>
-                                    약관 전체 동의<span>(선택 항목 포함)</span>
+                                    약관 전체 동의
                                 </strong>
                                 <div className='switchbtn'>
                                     <label className='switch'>
