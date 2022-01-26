@@ -21,3 +21,6 @@ export const profileMemberGrade = {
     vip: { className: 'vip', label: 'VIP' },
     vvip: { className: 'vvip', label: 'VVIP' },
 };
+
+export const CONSULT_INDIVIDUAL = '1';
+export const CONSULT_COMPANY = '2';

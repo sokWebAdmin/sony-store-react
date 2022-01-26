@@ -1,34 +1,29 @@
-import { React, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
 import qs from 'qs';
-//api
 
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/support.scss';
-import { postPurchaseConsulting } from '../../api/sony/support';
-import PurchaseConsultingNotice from '../../components/popup/PurchaseConsultingNotice';
-import ReCaptcha from '../../components/common/ReCaptcha';
-import { useAlert } from '../../hooks';
-import Alert from '../../components/common/Alert';
+import SEOHelmet from 'components/SEOHelmet';
+import PurchaseConsultingNotice from 'components/popup/PurchaseConsultingNotice';
+import ReCaptcha from 'components/common/ReCaptcha';
+import Alert from 'components/common/Alert';
+import { postPurchaseConsulting } from 'api/sony/support';
+import { CONSULT_COMPANY, CONSULT_INDIVIDUAL } from 'utils/constants';
+import { useAlert } from 'hooks';
+import 'assets/scss/contents.scss';
+import 'assets/scss/support.scss';
 
 export default function PurchaseConsulting() {
     const history = useHistory();
     const { openAlert, closeModal, alertMessage, alertVisible } = useAlert();
 
-    useEffect(() => {
-        const query = qs.parse(history.location.search, {
-            ignoreQueryPrefix: true,
-        });
-        if (!query?.agreement) {
-            history.push('/agreement');
-        }
-    }, []);
+    const query = qs.parse(history.location.search, {
+        ignoreQueryPrefix: true,
+    });
+    if (!query?.agreement) {
+        history.push('/agreement');
+    }
 
-    const [type, setType] = useState('1');
+    const [type, setType] = useState(CONSULT_COMPANY);
     const [company, setCompany] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -75,48 +70,56 @@ export default function PurchaseConsulting() {
         } else {
             setValidation((prev) => ({ ...prev, name: true }));
         }
-        if (type === '2' && company === '') {
+
+        if (type === CONSULT_COMPANY && company === '') {
             setValidation((prev) => ({ ...prev, company: false }));
             validation = false;
         } else {
             setValidation((prev) => ({ ...prev, company: true }));
         }
-        if (type === '2' && company === '') {
+
+        if (type === CONSULT_COMPANY && company === '') {
             setValidation((prev) => ({ ...prev, company: false }));
             validation = false;
         } else {
             setValidation((prev) => ({ ...prev, company: true }));
         }
+
         if (email === '') {
             setValidation((prev) => ({ ...prev, email: false }));
             validation = false;
         } else {
             setValidation((prev) => ({ ...prev, email: true }));
         }
+
         if (mobile === '') {
             setValidation((prev) => ({ ...prev, mobile: false }));
             validation = false;
         } else {
             setValidation((prev) => ({ ...prev, mobile: true }));
         }
+
         if (productName === '') {
             setValidation((prev) => ({ ...prev, productName: false }));
             validation = false;
         } else {
             setValidation((prev) => ({ ...prev, productName: true }));
         }
+
         if (requestQty === '') {
             setValidation((prev) => ({ ...prev, requestQty: false }));
             validation = false;
         } else {
             setValidation((prev) => ({ ...prev, requestQty: true }));
         }
+
         if (purpose === '') {
             setValidation((prev) => ({ ...prev, purpose: false }));
             validation = false;
         } else {
             setValidation((prev) => ({ ...prev, purpose: true }));
         }
+
         if (endUser === '') {
             setValidation((prev) => ({ ...prev, endUser: false }));
             validation = false;
@@ -159,9 +162,10 @@ export default function PurchaseConsulting() {
             duedateinfo: dueDateInfo,
             note,
         };
-        if (type === '2') {
+        if (type === CONSULT_COMPANY) {
             data.company = company;
         }
+
         const res = await postPurchaseConsulting(data);
         if (res?.data?.description === 'email') {
             openAlert('이메일 주소를 확인해 주세요.');
@@ -176,7 +180,9 @@ export default function PurchaseConsulting() {
         history.goBack();
     };
 
-    const onChangeType = (e) => setType(e.target.value);
+    const onChangeType = (e) => {
+        setType(e.target.value);
+    };
 
     return (
         <>
@@ -202,26 +208,10 @@ export default function PurchaseConsulting() {
                                         <input
                                             type='radio'
                                             className='inp_radio'
-                                            id='tab1'
-                                            value='1'
-                                            name='tabradio'
-                                            onChange={onChangeType}
-                                            defaultChecked='checked'
-                                        />
-                                        <label
-                                            htmlFor='tab1'
-                                            className='contentType'
-                                        >
-                                            일반구매 상담
-                                        </label>
-                                    </div>
-                                    <div className='radio_box'>
-                                        <input
-                                            type='radio'
-                                            className='inp_radio'
                                             id='tab2'
-                                            value='2'
+                                            value={CONSULT_COMPANY}
                                             name='tabradio'
+                                            checked={type === CONSULT_COMPANY}
                                             onChange={onChangeType}
                                         />
                                         <label
@@ -254,7 +244,7 @@ export default function PurchaseConsulting() {
                                             <p className='inp_wrap_amp'>
                                                 표시는 필수입력 정보
                                             </p>
-                                            {type === '1' && (
+                                            {type === CONSULT_INDIVIDUAL && (
                                                 <div className='inp_wrap_form'>
                                                     <div className='acc_cell vat'>
                                                         <label htmlFor='user_name'>
@@ -272,7 +262,7 @@ export default function PurchaseConsulting() {
                                                                     id='user_name'
                                                                     placeholder='띄어쓰기 없이 입력하세요.'
                                                                     autoComplete='off'
-                                                                    maxLength={
+                                                                    maxLengthg={
                                                                         50
                                                                     }
                                                                     value={name}
@@ -300,7 +290,7 @@ export default function PurchaseConsulting() {
                                                     </div>
                                                 </div>
                                             )}
-                                            {type === '2' && (
+                                            {type === CONSULT_COMPANY && (
                                                 <div className='inp_wrap_form'>
                                                     <div className='acc_cell vat'>
                                                         <label htmlFor='enterprise_name'>
@@ -348,7 +338,7 @@ export default function PurchaseConsulting() {
                                                     </div>
                                                 </div>
                                             )}
-                                            {type === '2' && (
+                                            {type === CONSULT_COMPANY && (
                                                 <div className='inp_wrap_form'>
                                                     <div className='acc_cell vat'>
                                                         <label htmlFor='manager_name'>
