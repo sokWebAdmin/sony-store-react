@@ -1,15 +1,12 @@
 import { useMallState } from 'context/mall.context';
-import { wonComma } from 'utils/utils';
+import currency from 'currency.js';
 
 // 할인 혜택
 export default function Benefits({ price, accumulationUseYn }) {
     const mallInfo = useMallState();
     const discount = price.salePrice;
-
-    const useAcc = accumulationUseYn === 'Y';
-    const unit = mallInfo?.accumulationUnit;
+    const unit = mallInfo?.accumulationUnit || '';
     const nonProfit = price.accumulationRate === 0;
-    const hasSpecialProfit = price.accumulationRate > 0;
 
     return (
         <div className='cont line'>
@@ -26,18 +23,18 @@ export default function Benefits({ price, accumulationUseYn }) {
                             ({ reserveBenefit, used }) =>
                                 reserveBenefit.reserveRate > 0 && used === true,
                         )
-                        .map((g, idx) => {
-                            const UPPERCASE = g.label.toUpperCase();
-                            const LOWERCASE = g.label.toLowerCase();
-                            const _profit =
-                                useAcc && hasSpecialProfit
-                                    ? price.accumulationRate
-                                    : g.reserveBenefit.reserveRate;
+                        .reverse()
+                        .map((grade, index) => {
+                            const UPPERCASE = grade.label.toUpperCase();
+                            const LOWERCASE = grade.label.toLowerCase();
+                            const reserveRate =
+                                grade.reserveBenefit.reserveRate;
+
                             return (
                                 <li
-                                    key={`${g.label}${idx}`}
+                                    key={`${grade.label}${index}`}
                                     className={
-                                        g.label === 'Membership'
+                                        grade.label === 'Membership'
                                             ? 'family'
                                             : LOWERCASE
                                     }
@@ -50,20 +47,19 @@ export default function Benefits({ price, accumulationUseYn }) {
                                     </span>
                                     <div className='save_info'>
                                         <span className='percentage'>
-                                            {UPPERCASE}{' '}
-                                            {g.reserveBenefit.reserveRate}%
+                                            {UPPERCASE} {reserveRate}%
                                         </span>
                                         <p className='mileage'>
                                             <span className='num'>
-                                                {wonComma(
-                                                    discount *
-                                                        (g.reserveBenefit
-                                                            .reserveRate /
-                                                            100),
-                                                )}
+                                                {currency(discount, {
+                                                    symbol: unit,
+                                                    precision: 0,
+                                                    pattern: `# !`,
+                                                })
+                                                    .multiply(reserveRate)
+                                                    .divide(100)
+                                                    .format()}
                                             </span>{' '}
-                                            {unit}
-                                            {/* <span className="num">{wonComma(discount * (_profit / 100))}</span> {unit} */}
                                         </p>
                                     </div>
                                 </li>
