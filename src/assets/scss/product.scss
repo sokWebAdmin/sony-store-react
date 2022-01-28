@@ -1654,6 +1654,8 @@
   }
 
   .prd_select_inner {
+    padding: 0 24px;
+
     .tit,
     .select_zone,
     .selected_opt {
@@ -1670,7 +1672,7 @@
     margin: 0 auto;
     width: calc(100% - 48px);
     @include only-mo {
-      width: 100%;
+      width: calc(100% - 48px);
     }
     &.search {
       @include only-mo {
@@ -1686,7 +1688,7 @@
 
   .result_btn_box {
     margin-top: 0;
-    padding-top: 16px;
+    padding: 16px 24px;
   }
 
   .product_cont {
@@ -1734,7 +1736,7 @@
   }
 
   .prd_select_wrap.view {
-    padding: 50px 24px 0 24px;
+    padding-top: 50px;
 
     .select_closed {
       display: block;
