@@ -1654,8 +1654,6 @@
   }
 
   .prd_select_inner {
-    padding: 0 24px;
-
     .tit,
     .select_zone,
     .selected_opt {
@@ -1688,7 +1686,7 @@
 
   .result_btn_box {
     margin-top: 0;
-    padding: 16px 24px;
+    padding-top: 16px;
   }
 
   .product_cont {
@@ -1736,7 +1734,7 @@
   }
 
   .prd_select_wrap.view {
-    padding-top: 50px;
+    padding: 50px 24px 0 24px;
 
     .select_closed {
       display: block;
