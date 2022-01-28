@@ -1,10 +1,11 @@
-import React from 'react';
-
-// stylesheet
-import '../../assets/scss/contents.scss';
+import { useLockBodyScroll } from 'hooks/useLockBodyScroll';
+import 'assets/scss/contents.scss';
 
 export default function PurchaseConsultingNotice({ setVisible }) {
     const closeModal = () => setVisible(false);
+
+    // 모달 팝업에서 body 스크롤 방지
+    useLockBodyScroll();
 
     return (
         <div
