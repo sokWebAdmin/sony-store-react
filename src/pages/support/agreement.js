@@ -1,16 +1,11 @@
 import { React, useState } from 'react';
-
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//api
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/support.scss';
-import { useAlert } from '../../hooks';
-import Alert from '../../components/common/Alert';
 import { useHistory } from 'react-router-dom';
+
+import SEOHelmet from 'components/SEOHelmet';
+import Alert from 'components/common/Alert';
+import { useAlert } from 'hooks';
+import 'assets/scss/contents.scss';
+import 'assets/scss/support.scss';
 
 export default function Agreement() {
     const history = useHistory();
@@ -19,9 +14,9 @@ export default function Agreement() {
 
     const [agreementList, setAgreementList] = useState([false, false, false]);
     const titleList = [
-        '소니스토어 이용약관에',
-        '소니 고객지원 사이트(SCS) 이용약관에',
-        '소니스토어 개인정보 수집 및 이용에 대해',
+        '소니스토어 이용약관에 ',
+        '소니 고객지원 사이트(SCS) 이용약관에 ',
+        '소니스토어 개인정보 수집 및 이용에 대해 ',
     ];
     const labelList = [
         '[필수] 소니스토어 쇼핑몰 이용약관 동의',
