@@ -16,7 +16,7 @@ export default function Benefits({ price, accumulationUseYn }) {
   return (
     <div className="cont line">
       <p className="tit">
-        {nonProfit ? '본 상품은 적립금이 적립되지 않는 상품입니다.' : '회원별 마일리지 적립혜택 '}
+        {nonProfit ? '본 상품은 마일리지가 적립되지 않는 상품입니다.' : '회원별 마일리지 적립혜택 '}
         <span className="icon_question">!</span>
       </p>
       {!nonProfit && (
