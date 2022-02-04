@@ -9,8 +9,8 @@ export const postOrderSheets = (requestBody) =>
 export const getProfileOrders = ({ params }) =>
     request('profile/orders', 'get', params);
 
-export const getProfileOrdersSummaryStatus = () =>
-    request('profile/orders/summary/status', 'get', null);
+export const getProfileOrdersSummaryStatus = ({ params }) =>
+    request('profile/orders/summary/status', 'get', params);
 
 export const getProfileOrderByOrderNo = ({ path: { orderNo } }) =>
     request(`profile/orders/${orderNo}`, 'get');
