@@ -147,7 +147,7 @@ export default function MyPageMain() {
                     <div className='cont_inner'>
                         {profile && (
                             <>
-                                <OrderSummary />
+                                <OrderSummary {...summary} />
 
                                 <MileageInfo
                                     availableMileage={availableMileage}

@@ -1,41 +1,28 @@
-import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { getProfileOrdersSummaryStatus } from '../../../api/order';
 
-const OrderSummary = () => {
+const OrderSummary = ({
+    depositWaitCnt = 0,
+    payDoneCnt = 0,
+    productPrepareCnt = 0,
+    deliveryPrepareCnt = 0,
+    deliveryIngCnt = 0,
+    deliveryDoneCnt = 0,
+    buyConfirmCnt = 0,
+    cancelDoneCnt = 0,
+    returnDoneCnt = 0,
+    exchangeDoneCnt = 0,
+    cancelProcessingCnt = 0,
+    returnProcessingCnt = 0,
+    exchangeProcessingCnt = 0,
+}) => {
     const history = useHistory();
-    const [summary, setSummary] = useState({
-        depositWaitCnt: 0,
-        payDoneCnt: 0,
-        productPrepareCnt: 0,
-        deliveryPrepareCnt: 0,
-        deliveryIngCnt: 0,
-        deliveryDoneCnt: 0,
-        buyConfirmCnt: 0,
-        cancelDoneCnt: 0,
-        returnDoneCnt: 0,
-        exchangeDoneCnt: 0,
-        cancelProcessingCnt: 0,
-        returnProcessingCnt: 0,
-        exchangeProcessingCnt: 0,
-    });
 
-    useEffect(() => {
-        getProfileOrdersSummaryStatus().then((res) => {
-            setSummary(res.data);
-        });
-    }, []);
+    const hasOrder = (statusCount) => (statusCount > 0 ? 'on' : '');
 
-    const hasOrder = (statusCount) => {
-        return statusCount > 0 ? 'on' : '';
-    };
-
-    const onClickOrderStatus = (e, orderRequestTypes) => {
-        e.preventDefault();
+    const onClickOrderStatus = (orderRequestTypes) =>
         history.push(
             `my-page/order-list?orderRequestTypes=${orderRequestTypes}`,
         );
-    };
 
     return (
         <div className='cont history_order'>
@@ -53,113 +40,89 @@ const OrderSummary = () => {
             <div className='history_inner'>
                 <div className='my_order'>
                     <ul className='order_list'>
-                        <li
-                            className={`step_1 ${hasOrder(
-                                summary.depositWaitCnt,
-                            )}`}
-                        >
+                        <li className={`step_1 ${hasOrder(depositWaitCnt)}`}>
                             {/* 1건 이상 부터 class: on 추가 */}
                             <div className='ship_box'>
                                 <span className='ico_txt'>입금대기</span>
-                                <a
-                                    href='#'
+                                <button
                                     className='val_txt'
-                                    onClick={(e) =>
-                                        onClickOrderStatus(e, 'DEPOSIT_WAIT')
+                                    onClick={() =>
+                                        onClickOrderStatus('DEPOSIT_WAIT')
                                     }
                                 >
                                     <span className='val'>
-                                        {summary.depositWaitCnt}
+                                        {depositWaitCnt}
                                     </span>
                                     <span>건</span>
-                                </a>
+                                </button>
                             </div>
                         </li>
-                        <li
-                            className={`step_2 ${hasOrder(summary.payDoneCnt)}`}
-                        >
+                        <li className={`step_2 ${hasOrder(payDoneCnt)}`}>
                             <div className='ship_box'>
                                 <span className='ico_txt'>결제완료</span>
-                                <a
-                                    href='#'
+                                <button
                                     className='val_txt'
-                                    onClick={(e) =>
-                                        onClickOrderStatus(e, 'PAY_DONE')
+                                    onClick={() =>
+                                        onClickOrderStatus('PAY_DONE')
                                     }
                                 >
-                                    <span className='val'>
-                                        {summary.payDoneCnt}
-                                    </span>
+                                    <span className='val'>{payDoneCnt}</span>
                                     <span>건</span>
-                                </a>
+                                </button>
                             </div>
                         </li>
                         <li
                             className={`step_3 ${hasOrder(
-                                summary.deliveryPrepareCnt +
-                                    summary.productPrepareCnt,
+                                deliveryPrepareCnt + productPrepareCnt,
                             )}`}
                         >
                             <div className='ship_box'>
                                 <span className='ico_txt'>배송준비</span>
-                                <a
-                                    href='#'
+                                <button
                                     className='val_txt'
-                                    onClick={(e) =>
+                                    onClick={() =>
                                         onClickOrderStatus(
-                                            e,
-                                            'PRODUCT_PREPARE,DELIVERY_PREPARE',
+                                            'PRODUCT_PREPARDELIVERY_PREPARE',
                                         )
                                     }
                                 >
                                     <span className='val'>
-                                        {summary.deliveryPrepareCnt +
-                                            summary.productPrepareCnt}
+                                        {deliveryPrepareCnt + productPrepareCnt}
                                     </span>
                                     <span>건</span>
-                                </a>
+                                </button>
                             </div>
                         </li>
-                        <li
-                            className={`step_4 ${hasOrder(
-                                summary.deliveryIngCnt,
-                            )}`}
-                        >
+                        <li className={`step_4 ${hasOrder(deliveryIngCnt)}`}>
                             <div className='ship_box'>
                                 <span className='ico_txt'>배송중</span>
-                                <a
-                                    href='#'
+                                <button
                                     className='val_txt'
-                                    onClick={(e) =>
-                                        onClickOrderStatus(e, 'DELIVERY_ING')
+                                    onClick={() =>
+                                        onClickOrderStatus('DELIVERY_ING')
                                     }
                                 >
                                     <span className='val'>
-                                        {summary.deliveryIngCnt}
+                                        {deliveryIngCnt}
                                     </span>
                                     <span>건</span>
-                                </a>
+                                </button>
                             </div>
                         </li>
-                        <li
-                            className={`step_5 ${hasOrder(
-                                summary.deliveryDoneCnt,
-                            )}`}
-                        >
+                        <li className={`step_5 ${hasOrder(deliveryDoneCnt)}`}>
                             <div className='ship_box'>
                                 <span className='ico_txt'>배송완료</span>
-                                <a
-                                    href='#'
+                                <button
                                     className='val_txt'
-                                    onClick={(e) =>
-                                        onClickOrderStatus(e, 'DELIVERY_DONE')
+                                    onClick={() =>
+                                        onClickOrderStatus('DELIVERY_DONE')
                                     }
                                 >
                                     <span className='val'>
-                                        {summary.deliveryDoneCnt}
+                                        {deliveryDoneCnt}
                                     </span>
                                     <span>건</span>
-                                </a>
+                                </button>
                             </div>
                         </li>
                     </ul>
@@ -167,58 +130,53 @@ const OrderSummary = () => {
                 <div className='my_claim'>
                     <p
                         className={`txt cancel ${hasOrder(
-                            summary.cancelProcessingCnt + summary.cancelDoneCnt,
+                            cancelProcessingCnt + cancelDoneCnt,
                         )}`}
                     >
                         주문 취소{' '}
-                        <a
-                            href='#'
+                        <button
                             title='주문 취소 건'
-                            onClick={(e) =>
+                            onClick={() =>
                                 onClickOrderStatus(
-                                    e,
                                     'CANCEL_PROCESSING,CANCEL_DONE',
                                 )
                             }
                         >
                             <strong className='val_txt'>
                                 <span className='val'>
-                                    {summary.cancelProcessingCnt +
-                                        summary.cancelDoneCnt}
+                                    {cancelProcessingCnt + cancelDoneCnt}
                                 </span>{' '}
                                 건
                             </strong>
-                        </a>
+                        </button>
                     </p>
                     <p
                         className={`txt return ${hasOrder(
-                            summary.exchangeDoneCnt +
-                                summary.returnDoneCnt +
-                                summary.returnProcessingCnt +
-                                summary.returnProcessingCnt,
+                            exchangeDoneCnt +
+                                returnDoneCnt +
+                                returnProcessingCnt +
+                                returnProcessingCnt,
                         )}`}
                     >
                         교환 반품{' '}
-                        <a
-                            href='#'
+                        <button
                             title='교환 반품 건'
-                            onClick={(e) =>
+                            onClick={() =>
                                 onClickOrderStatus(
-                                    e,
                                     'EXCHANGE_PROCESSING,EXCHANGE_DONE,RETURN_PROCESSING,RETURN_DONE',
                                 )
                             }
                         >
                             <strong className='val_txt'>
                                 <span className='val'>
-                                    {summary.exchangeDoneCnt +
-                                        summary.returnDoneCnt +
-                                        summary.returnProcessingCnt +
-                                        summary.exchangeProcessingCnt}
+                                    {exchangeDoneCnt +
+                                        returnDoneCnt +
+                                        returnProcessingCnt +
+                                        exchangeProcessingCnt}
                                 </span>{' '}
                                 건
                             </strong>
-                        </a>
+                        </button>
                     </p>
                 </div>
             </div>
