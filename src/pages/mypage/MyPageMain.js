@@ -1,4 +1,6 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import dayjs from 'dayjs';
+
 import SEOHelmet from 'components/SEOHelmet';
 import MemberSummary from 'components/myPage/main/MemberSummary';
 import BToBBanners from 'components/myPage/main/BToBBanners';
@@ -16,6 +18,7 @@ import { getWish } from 'api/order';
 import 'assets/scss/contents.scss';
 import 'assets/css/mypage.css';
 import { HOW_MANY_WISH } from 'utils/constants';
+import { getProfileOrdersSummaryStatus } from 'api/order';
 
 export default function MyPageMain() {
     const [viewContent, setViewContent] = useState('mileage');
@@ -26,6 +29,39 @@ export default function MyPageMain() {
     const [wishList, setWishList] = useState([]);
     const [wishCount, setWishCount] = useState(0);
     const [pageIndex, setPageIndex] = useState(1);
+
+    const [summary, setSummary] = useState({
+        depositWaitCnt: 0,
+        payDoneCnt: 0,
+        productPrepareCnt: 0,
+        deliveryPrepareCnt: 0,
+        deliveryIngCnt: 0,
+        deliveryDoneCnt: 0,
+        buyConfirmCnt: 0,
+        cancelDoneCnt: 0,
+        returnDoneCnt: 0,
+        exchangeDoneCnt: 0,
+        cancelProcessingCnt: 0,
+        returnProcessingCnt: 0,
+        exchangeProcessingCnt: 0,
+    });
+
+    // 기본 주문 검색 기간 3개월로 설정
+    useEffect(() => {
+        (async () => {
+            const response = await getProfileOrdersSummaryStatus({
+                params: {
+                    startYmd: dayjs()
+                        .subtract(3, 'months')
+                        .format('YYYY-MM-DD'),
+                    endYmd: dayjs().format('YYYY-MM-DD'),
+                },
+            });
+            setSummary((prev) => {
+                return { ...prev, ...response.data };
+            });
+        })();
+    }, []);
 
     const rerenderWish = () => {
         fetchWish()
