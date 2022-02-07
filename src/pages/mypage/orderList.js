@@ -1,6 +1,8 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
+import qs from 'qs';
+
 import SEOHelmet from 'components/SEOHelmet';
 import OrderStatusSummary from 'components/myPage/order/OrderStatusSummary';
 import DateBox from 'components/myPage/DateBox';
@@ -9,12 +11,16 @@ import OrderListItem from 'components/myPage/order/OrderListItem';
 import OrderNotice from 'components/myPage/order/OrderNotice';
 import OrderListLinkBox from 'components/myPage/order/OrderListLinkBox';
 import { getProfileOrders, getProfileOrdersSummaryStatus } from 'api/order';
-import { useQuery } from 'hooks';
+import { DEFAULT_SEARCH_PERIOD } from 'utils/constants';
 import 'assets/scss/contents.scss';
 import 'assets/scss/mypage.scss';
 
 export default function OrderList() {
-    const query = useQuery();
+    const location = useLocation();
+    const query = qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+    });
+
     const [summary, setSummary] = useState({
         depositWaitCnt: 0,
         payDoneCnt: 0,
@@ -32,7 +38,7 @@ export default function OrderList() {
     });
     const [selectMenu, setSelectMenu] = useState('threeM');
     const [searchPeriod, setSearchPeriod] = useState({
-        startDate: new Date(dayjs().subtract('3', 'months')),
+        startDate: new Date(dayjs().subtract(DEFAULT_SEARCH_PERIOD, 'months')),
         endDate: new Date(),
     });
     const [nextOrderRequestTypes, setNextOrderRequestTypes] = useState('');
@@ -41,9 +47,15 @@ export default function OrderList() {
     const nextPage = useRef(2);
 
     useEffect(() => {
-        async function fetchSummary() {
-            const summaryRes = await getProfileOrdersSummaryStatus();
-            const orderRequestTypesQuery = query.get('orderRequestTypes');
+        (async () => {
+            const summaryRes = await getProfileOrdersSummaryStatus({
+                params: {
+                    startYmd: dayjs(searchPeriod.startDate).format(
+                        'YYYY-MM-DD',
+                    ),
+                    endYmd: dayjs(searchPeriod.endDate).format('YYYY-MM-DD'),
+                },
+            });
 
             setSummary(summaryRes.data);
 
@@ -52,13 +64,9 @@ export default function OrderList() {
                 endDate: searchPeriod.endDate,
                 pageNumber: 1,
                 pageSize: 10,
-                orderRequestTypes: orderRequestTypesQuery
-                    ? orderRequestTypesQuery
-                    : '',
+                orderRequestTypes: query?.orderRequestTypes,
             });
-        }
-
-        fetchSummary();
+        })();
     }, []);
 
     const makeOrderProductsList = useCallback((profileOrdersResponse) => {
@@ -124,16 +132,28 @@ export default function OrderList() {
     );
 
     const onClickSearch = useCallback(async () => {
+        const startYmd = dayjs(searchPeriod.startDate).format('YYYY-MM-DD');
+        const endYmd = dayjs(searchPeriod.endDate).format('YYYY-MM-DD');
+
         const res = await getProfileOrders({
             params: {
-                startYmd: dayjs(searchPeriod.startDate).format('YYYY-MM-DD'),
-                endYmd: dayjs(searchPeriod.endDate).format('YYYY-MM-DD'),
+                startYmd,
+                endYmd,
                 pageSize: 10,
                 pageNumber: 1,
                 orderRequestTypes: nextOrderRequestTypes,
             },
         });
         const newOrderProducts = makeOrderProductsList(res.data);
+
+        const summaryRes = await getProfileOrdersSummaryStatus({
+            params: {
+                startYmd,
+                endYmd,
+            },
+        });
+
+        setSummary(summaryRes.data);
 
         showLoadMoreBtn(newOrderProducts);
         setOrderProducts(newOrderProducts);
@@ -220,7 +240,12 @@ export default function OrderList() {
                             </Link>
                             <h1 className='common_head_name'>주문/배송내역</h1>
                         </div>
-                        <OrderStatusSummary summary={summary} search={search} />
+                        <OrderStatusSummary
+                            summary={summary}
+                            search={search}
+                            startDate={searchPeriod.startDate}
+                            endDate={searchPeriod.endDate}
+                        />
                         <div className='cont recent_order'>
                             <div className='tit_head mileage_inquiry'>
                                 <h3 className='cont_tit'>최근주문</h3>
