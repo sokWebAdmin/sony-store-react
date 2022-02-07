@@ -14,11 +14,11 @@ import {
     useProfileState,
     useProileDispatch,
 } from 'context/profile.context';
+import { DEFAULT_SEARCH_PERIOD, HOW_MANY_WISH } from 'utils/constants';
 import { getWish } from 'api/order';
+import { getProfileOrdersSummaryStatus } from 'api/order';
 import 'assets/scss/contents.scss';
 import 'assets/css/mypage.css';
-import { HOW_MANY_WISH } from 'utils/constants';
-import { getProfileOrdersSummaryStatus } from 'api/order';
 
 export default function MyPageMain() {
     const [viewContent, setViewContent] = useState('mileage');
@@ -52,7 +52,7 @@ export default function MyPageMain() {
             const response = await getProfileOrdersSummaryStatus({
                 params: {
                     startYmd: dayjs()
-                        .subtract(3, 'months')
+                        .subtract(DEFAULT_SEARCH_PERIOD, 'months')
                         .format('YYYY-MM-DD'),
                     endYmd: dayjs().format('YYYY-MM-DD'),
                 },
