@@ -102,28 +102,29 @@ export default function JoinStep() {
     return provider.substring(0, 1).toUpperCase();
   };
 
-  const onChangeGender = (e) => setGender(e.target.value);
-  const _registerApi = async () => {
-    //이메일
-    if (emptyCheck(email.trim())) {
+
+  const checkMail = (e) => {
+    if (emptyCheck(e.trim())) {
       setIsEmail(false);
-      return;
+      return true;
     } else {
       //email check 
-      if (email.match(/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/g)) {
+      if (e.match(/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/g)) {
         setIsEmail(true);
       } else {
         setIsEmail(false);
-        return;
+        return true;
       }
     }
+  }
 
+  const checkMatchPwd = (e) => {
     if (!location.state?.email) {
       //비밀번호
-      if (emptyCheck(password.trim())) {
+      if (emptyCheck(e.trim())) {
         setPwWrongType(1);
         setIsPassword(false);
-        return;
+        return true;
       } else {
         const patternNumber = /[0-9]/g;
         const patternEnglish = /[a-zA-Z]/g;
@@ -133,28 +134,42 @@ export default function JoinStep() {
         const checkEnglish = patternEnglish.test(password) ? 1 : 0;
         const checkSpecial = patternSpecial.test(password) ? 1 : 0;
         const checkSum = checkNumber + checkEnglish + checkSpecial;
-        if (checkSum === 3 && password.length >= 12) {
+        if (checkSum === 3 && e.length >= 12) {
           setIsPassword(true);
         } else {
           setPwWrongType(2);
           setIsPassword(false);
-          return;
+          return true;
         }
       }
+    }
+  }
 
+  const checkMatchConfirmPwd = (e, c) => {
       //비밀번호 확인
-      if (emptyCheck(confirm.trim())) {
-        setConfirmWrongType(1);
-        setIsConfirm(false);
-        return;
+      if (e.trim() === c.trim()) {
+        setIsConfirm(true);
       } else {
-        if (password.trim() == confirm.trim()) {
-          setIsConfirm(true);
-        } else {
-          setConfirmWrongType(2);
-          setIsConfirm(false);
-        }
+        setConfirmWrongType(2);
+        setIsConfirm(false);
+        return true;
       }
+  }
+
+  const onChangeGender = (e) => setGender(e.target.value);
+  const _registerApi = async () => {
+    //이메일
+    if(checkMail(email)) {
+      return;
+    }
+
+    //패스워드
+    if(checkMatchPwd(password)) {
+      return;
+    }
+
+    if(checkMatchConfirmPwd(password, confirm)) {
+      return;
     }
 
     //이름
@@ -324,8 +339,15 @@ export default function JoinStep() {
                   <label className="inp_desc" htmlFor="loginName">
                     <input type="text" id="loginName" className="inp" placeholder=" " autoComplete="off"
                            readOnly={location.state?.email}
+                           onBlur={(e) => {
+                             if(e.target.value.length > 0) {
+                              checkMail(e.target.value);
+                             } else {
+                              setIsEmail(true);   
+                             }
+                           }}
                            value={email} onChange={(e) => {
-                      setEmail(e.target.value);
+                            setEmail(e.target.value);
                     }} />
                     <span className="label">이메일 아이디<span>(예 : sony@sony.co.kr)</span></span>
                     <span className="focus_bg" />
@@ -338,7 +360,17 @@ export default function JoinStep() {
                   <div className="inp_box password_box">
                     <label className="inp_desc" htmlFor="loginPw1">
                       <input type={`${isPwVisible === true ? 'text' : 'password'}`} id="loginPw1" className="inp"
-                             placeholder=" " autoComplete="off" value={password} onChange={(e) => {
+                             placeholder=" " autoComplete="off" value={password} onBlur={(e) => {
+                              if(e.target.value.length > 0) {
+                                checkMatchPwd(e.target.value);
+                                if(confirm.length > 0) {
+                                  checkMatchConfirmPwd(e.target.value, confirm);
+                                }
+                              } else {
+                                setIsPassword(true);
+                              }
+                              
+                           }} onChange={(e) => {
                         setPassword(e.target.value);
                       }} />
                       <span className="label">비밀번호<span>(대/소문자, 숫자, 특수문자 3종 포함 12~15자리 미만)</span></span>
@@ -357,7 +389,14 @@ export default function JoinStep() {
                   <div className="inp_box password_box">
                     <label className="inp_desc" htmlFor="loginPw2">
                       <input type={`${isConfirmVisible === true ? 'text' : 'password'}`} id="loginPw2" className="inp"
-                             placeholder=" " autoComplete="off" value={confirm} onChange={(e) => {
+                             placeholder=" " autoComplete="off" value={confirm} onBlur={(e) => {
+                               if(e.target.value.length > 0) {
+                                checkMatchConfirmPwd(password, e.target.value);
+                               } else {
+                                setIsConfirm(true);
+                               }
+                               
+                            }} onChange={(e) => {
                         setConfirm(e.target.value);
                       }} />
                       <span className="label">비밀번호 확인</span>
