@@ -514,6 +514,7 @@ const Benefit = (props) => {
                                                         입니다.
                                                     </li>
                                                     <li className='prmm_dtl_prctn'>
+                                                        <br />
                                                     </li>
                                                     <li className='prmm_dtl_prctn'>
                                                         <strong className='primary-color'>
