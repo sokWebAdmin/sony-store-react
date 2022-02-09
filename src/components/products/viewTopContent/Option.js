@@ -37,6 +37,7 @@ export default function Option({
       const colorChipInfo = getColorChipInfo(hasColor, productName, _.head(colorByOptionNo[o.optionNo])?.value, o);
 
       const disabledLabel = getDisabledLabel(reserved, o);
+
       return {
         ...o,
         disabled: !!disabledLabel,

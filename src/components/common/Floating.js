@@ -36,7 +36,6 @@ const chat = () => {
 
 export default function Floating({ location, scrollAction }) {
   const history = useHistory();
-
   const scrollBottomException = useMemo(() => location.pathname.includes('/product-view/'), [location]);
   const giftPage = useMemo(() => location.pathname.includes('/order/gift'), [location]);
   const orderPage = useMemo(() => location.pathname.includes('/order/sheet'), [location]);

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { unescape } from 'lodash';
 
@@ -27,7 +26,7 @@ const orderList = [
   },
 ];
 
-export default function ProductList({category}) {
+export default function ProductList({ category }) {
   const [products, setProducts] = useState([]);
 
   const [page, setPage] = useState({ number: 0, update: false });
@@ -92,23 +91,24 @@ export default function ProductList({category}) {
         throw 'get produts is not 200';
       }
 
-      result.list = await _getGroupManagementMappingProducts(data.items.map(({ productName, ...rest }) => ({ ...rest, productName: unescape(productName) })));
+      result.list = await _getGroupManagementMappingProducts(
+        data.items.map(({ productName, ...rest }) => ({ ...rest, productName: unescape(productName) })),
+      );
       result.totalCount = data.totalCount;
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e);
     }
 
     setIsLoading(() => false);
 
     return result;
-  }
+  };
 
-  const _getGroupManagementMappingProducts = async list => {
+  const _getGroupManagementMappingProducts = async (list) => {
     const result = [...list];
 
     try {
-      let arrExistGroup = result.filter(p => !!p.groupManagementCode).map(p => p.groupManagementCode);
+      let arrExistGroup = result.filter((p) => !!p.groupManagementCode).map((p) => p.groupManagementCode);
 
       if (arrExistGroup.length > 0) {
         arrExistGroup = arrExistGroup.reduce((unique, item) => {
@@ -132,25 +132,28 @@ export default function ProductList({category}) {
           throw 'get group produts is not 200';
         }
 
-        data.map(g => {
-          result.filter(p => p.groupManagementCode === g.groupManagementCode).map(p => {
-            p.groupManagementMappingProducts = g.groupManagementMappingProducts.sort(gp => gp.productNo === p.productNo ? -1 : 0);
-          });
+        data.map((g) => {
+          result
+            .filter((p) => p.groupManagementCode === g.groupManagementCode)
+            .map((p) => {
+              p.groupManagementMappingProducts = g.groupManagementMappingProducts.sort((gp) =>
+                gp.productNo === p.productNo ? -1 : 0,
+              );
+            });
         });
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e);
     }
 
     return result;
-  }
+  };
 
   const _addProducts = () => {
     if (!isLoading) {
       setPage({ number: page.number + 1, update: true });
     }
-  }
+  };
 
   return (
     <div className="product__list__wrapper">
@@ -158,49 +161,55 @@ export default function ProductList({category}) {
         <span className="list__info__name">제품</span>
         <span className="list__info__num">({totalCount})</span>
       </h2>
-      <div className={`itemsort ${orderOpen ? "itemsort--open" : ""}`} aria-label="상품 정렬" ref={productsRef}>
-        <button className="itemsort__button" onClick={e => {
-          setOrderOpen(!orderOpen);
-          e.preventDefault();
-        }}>
+      <div className={`itemsort ${orderOpen ? 'itemsort--open' : ''}`} aria-label="상품 정렬" ref={productsRef}>
+        <button
+          className="itemsort__button"
+          onClick={(e) => {
+            setOrderOpen(!orderOpen);
+            e.preventDefault();
+          }}
+        >
           <span className="itemsort__button__label sr-only">정렬기준:</span>
-          <span className="itemsort__button__selected">{ orderList[currentOrder.index].title }</span>
+          <span className="itemsort__button__selected">{orderList[currentOrder.index].title}</span>
         </button>
         <div className="itemsort__drawer">
           <ul className="itemsort__items">
             {orderList.map((o, index) => {
-              return <li className={`itemsort__item ${ currentOrder.index === index ? "itemsort__item--active" : ""}`} key={`product-list-order-${index}`}>
-                <a href="#" className="itemsort__item__link" onClick={e => {
-                  setCurrentOrder({index, update: true});
-                  setOrderOpen(false);
-                  e.preventDefault();
-                }
-                }>{o.title}</a>
-              </li>
+              return (
+                <li
+                  className={`itemsort__item ${currentOrder.index === index ? 'itemsort__item--active' : ''}`}
+                  key={`product-list-order-${index}`}
+                >
+                  <a
+                    href="#"
+                    className="itemsort__item__link"
+                    onClick={(e) => {
+                      setCurrentOrder({ index, update: true });
+                      setOrderOpen(false);
+                      e.preventDefault();
+                    }}
+                  >
+                    {o.title}
+                  </a>
+                </li>
+              );
             })}
           </ul>
         </div>
       </div>
 
-      <InfiniteScroll
-        className="product__list"
-        dataLength={products.length}
-        next={_addProducts}
-        hasMore={true}
-      >
-        {products.filter(({ hsCode }) => !hsCode).map((product, index) => {
-          return <React.Fragment key={`category-product-${index}`}>
-            {
-              index === 6 && !category.parent && <Banner category={category} />
-            }
-            <Product product={product} category={category}/>
-          </React.Fragment>
-        })
-        }
+      <InfiniteScroll className="product__list" dataLength={products.length} next={_addProducts} hasMore={true}>
+        {products
+          .filter(({ hsCode }) => !hsCode)
+          .map((product, index) => {
+            return (
+              <React.Fragment key={`category-product-${index}`}>
+                {index === 6 && !category.parent && <Banner category={category} />}
+                <Product product={product} category={category} />
+              </React.Fragment>
+            );
+          })}
       </InfiniteScroll>
     </div>
   );
 }
-
-
-                                    
