@@ -1894,8 +1894,6 @@
           margin-top: 10px;
 
           .weekday {
-            display: flex;
-            justify-content: flex-end;
             padding: 0 49px;
 
             &:last-child {
@@ -1903,15 +1901,10 @@
             }
 
             &_day {
-              display: inline-block;
-              text-align: right;
               font-size: 20px;
             }
 
             &_time {
-              display: inline-block;
-              margin-left: 11px;
-              text-align: right;
               font-size: 21px;
             }
           }
