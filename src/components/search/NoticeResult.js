@@ -52,7 +52,9 @@ export default function NoticeResult({
                     {noticeList.map(({ articleNo, title, registerYmdt }) => {
                         return (
                             <li key={articleNo}>
-                                <Link to={`/notice/${articleNo}`}>
+                                <Link
+                                    to={`/notice/${articleNo}?boardNo=${boardNo}`}
+                                >
                                     <span className='num'>{articleNo}</span>
                                     <span
                                         className='tit'
