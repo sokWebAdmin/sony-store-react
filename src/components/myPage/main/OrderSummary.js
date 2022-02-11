@@ -82,7 +82,7 @@ const OrderSummary = ({
                                     className='val_txt'
                                     onClick={() =>
                                         onClickOrderStatus(
-                                            'PRODUCT_PREPARDELIVERY_PREPARE',
+                                            'PRODUCT_PREPARE,DELIVERY_PREPARE',
                                         )
                                     }
                                 >
