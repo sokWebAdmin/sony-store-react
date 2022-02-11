@@ -175,11 +175,3 @@ export const getPricePerProduct = ({
         ? { origin: salePrice, discount }
         : { discount };
 };
-
-export const hightLightKeyword = (title, keyword) => {
-    if (title.includes(keyword)) {
-        const [prev, next] = title.split(keyword);
-        return `${prev}<strong class="keyword">${keyword}</strong>${next}`;
-    }
-    return title;
-};

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import ViewMore from 'components/common/ViewMore';
 import Newest from 'components/search/Newest';
-import { hightLightKeyword } from 'utils/product';
+import { highlightKeyword } from 'utils/html';
 import { PAGE_SIZE } from 'const/search';
 
 export default function NoticeResult({
@@ -59,7 +59,7 @@ export default function NoticeResult({
                                     <span
                                         className='tit'
                                         dangerouslySetInnerHTML={{
-                                            __html: hightLightKeyword(
+                                            __html: highlightKeyword(
                                                 title,
                                                 keyword,
                                             ),

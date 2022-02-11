@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
-import React from 'react';
-import { categoriesExtraDataMap } from '../../const/category';
-import { PAGE_SIZE } from '../../const/search';
-import ViewMore from '../common/ViewMore';
-import { useHistory } from 'react-router';
-import '../../assets/scss/product.scss';
+import PropTypes from 'prop-types';
+
+import ViewMore from 'components/common/ViewMore';
+import { highlightCategory } from 'utils/html';
+import { categoriesExtraDataMap } from 'const/category';
+import { PAGE_SIZE } from 'const/search';
+import 'assets/scss/product.scss';
 
 const getCategoryNo = (category) => {
     return _.chain(category)
@@ -14,19 +16,11 @@ const getCategoryNo = (category) => {
         .value();
 };
 
-const getLabelHtml = (label, keyword) => {
-    if (label.includes(keyword)) {
-        const [p, n] = label.split(keyword);
-        return `<span class="keword categoryList">${p}${keyword}${n}</span>`;
-    }
-
-    return `<span class="categoryList">${label}</span>`;
-};
 const getCategoryLabel = (category, keyword) => {
     return _.chain(category)
         .pickBy((_, k) => k.includes('Label'))
         .filter((v) => Boolean(v))
-        .map((v) => getLabelHtml(v, keyword))
+        .map((v) => highlightCategory(v, keyword))
         .value()
         .join('');
 };
@@ -44,26 +38,22 @@ export default function CategoryResult({
     categoryCount,
     keyword,
 }) {
-    const history = useHistory();
-
+    console.log(
+        '🚀 ~ file: CategoryResult.js ~ line 53 ~ categoryList',
+        categoryList,
+    );
     const getNextUrl = (no) => {
+        // esp
         const esp = [81644, 81643, 81645];
-        if (esp.includes(no)) return '/esp';
+        if (esp.includes(no)) {
+            return '/esp';
+        }
 
         return _.chain(categoriesExtraDataMap)
             .filter(({ categoryNo }) => categoryNo === no)
             .map(({ url }) => url)
             .head()
             .value();
-    };
-
-    const clickHandler = (e, categoryNo) => {
-        e.preventDefault();
-
-        history.push({
-            pathname: getNextUrl(categoryNo),
-            state: { categoryNo },
-        });
     };
 
     return (
@@ -79,10 +69,14 @@ export default function CategoryResult({
                         .map((category) => convertCategory(category, keyword))
                         .map(({ categoryNo, label }) => (
                             <li key={categoryNo}>
-                                <a
-                                    href='#none'
-                                    onClick={(e) => clickHandler(e, categoryNo)}
-                                    dangerouslySetInnerHTML={{ __html: label }}
+                                <Link
+                                    to={{
+                                        pathname: getNextUrl(categoryNo),
+                                        state: { categoryNo },
+                                    }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: label,
+                                    }}
                                 />
                             </li>
                         ))}
@@ -98,3 +92,10 @@ export default function CategoryResult({
         </>
     );
 }
+
+CategoryResult.propTypes = {
+    fetchCategory: PropTypes.func.isRequired,
+    categoryList: PropTypes.array.isRequired,
+    categoryCount: PropTypes.number.isRequired,
+    keyword: PropTypes.string.isRequired,
+};
