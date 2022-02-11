@@ -330,6 +330,7 @@ export default function SearchResult({ match }) {
                                             noticeNewest={noticeNewest}
                                             setNoticeNewest={setNoticeNewest}
                                             searchNotice={searchNotice}
+                                            boardNo={config.notice.boardNo}
                                         />
                                     )}
                                 </div>

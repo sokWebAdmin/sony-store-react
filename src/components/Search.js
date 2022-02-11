@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import _ from 'lodash';
 
-//images
-import search from '../assets/images/common/ic_search.svg';
-import close from '../assets/images/common/ic_close.svg';
-
-//utils
-import { Link, useHistory } from 'react-router-dom';
-import Alert from './common/Alert';
-import { useAlert } from '../hooks';
-import { tagColorMap } from '../const/category';
-import { getDisplaySectionsSectionNo, loadBanner } from '../api/display';
-import { bannerCode } from '../bannerCode';
+import Alert from 'components/common/Alert';
+import { useAlert } from 'hooks';
+import { tagColorMap } from 'const/category';
+import { getDisplaySectionsSectionNo, loadBanner } from 'api/display';
+import { bannerCode } from 'bannerCode';
+import search from 'assets/images/common/ic_search.svg';
+import close from 'assets/images/common/ic_close.svg';
 
 export default function Search({ setSearchOpen }) {
     const history = useHistory();
-
     const [keyword, setKeyword] = useState('');
     const [favoriteKeywords, setFavoriteKeywords] = useState([]);
     const [recommendedProducts, setRecommendedProducts] = useState([]);

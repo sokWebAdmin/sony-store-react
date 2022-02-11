@@ -1,17 +1,12 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PAGE_SIZE } from '../../const/search';
-import { useBoardState } from '../../context/board.context';
-import { formatDateWithDot } from '../../utils/dateFormat';
-import ViewMore from '../common/ViewMore';
-import Newest from './Newest';
-const getHightKeyword = (title, keyword) => {
-    if (title.includes(keyword)) {
-        const [prev, next] = title.split(keyword);
-        return `${prev}<strong class="keword">${keyword}</strong>${next}`;
-    }
-    return title;
-};
+import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
+
+import ViewMore from 'components/common/ViewMore';
+import Newest from 'components/search/Newest';
+import { hightLightKeyword } from 'utils/product';
+import { PAGE_SIZE } from 'const/search';
 
 export default function NoticeResult({
     noticeList,
@@ -20,16 +15,28 @@ export default function NoticeResult({
     noticeNewest,
     setNoticeNewest,
     searchNotice,
+    boardNo,
 }) {
-    const { config } = useBoardState();
+    const [mobileOrderOpen, setMobileOrderOpen] = useState(false);
+
     return (
         <>
             <div className='section_top'>
                 <h2 className='title'>
                     공지사항<span>({noticeCount})</span>
                 </h2>
-                <div className='itemsort' aria-label='게시판 정렬'>
-                    <button className='itemsort__button'>
+                <div
+                    className={`itemsort ${
+                        mobileOrderOpen ? 'itemsort--open' : ''
+                    }`}
+                    aria-label='게시판 정렬'
+                >
+                    <button
+                        className='itemsort__button'
+                        onClick={() => {
+                            setMobileOrderOpen((prev) => !prev);
+                        }}
+                    >
                         <span className='itemsort__button__label sr-only'>
                             정렬기준:
                         </span>
@@ -42,37 +49,36 @@ export default function NoticeResult({
             </div>
             <div className='result_list on search'>
                 <ul className='noti'>
-                    {noticeList.map((notice) => (
-                        <li key={notice.articleNo}>
-                            <Link to={`/notice/${notice.articleNo}`}>
-                                <span className='num'>{notice.articleNo}</span>
-                                <span
-                                    className='tit'
-                                    dangerouslySetInnerHTML={{
-                                        __html: getHightKeyword(
-                                            notice.title,
-                                            keyword,
-                                        ),
-                                    }}
-                                ></span>
-                                <span className='date'>
-                                    {formatDateWithDot(notice.registerYmdt)}
-                                </span>
-                            </Link>
-                        </li>
-                    ))}
+                    {noticeList.map(({ articleNo, title, registerYmdt }) => {
+                        return (
+                            <li key={articleNo}>
+                                <Link to={`/notice/${articleNo}`}>
+                                    <span className='num'>{articleNo}</span>
+                                    <span
+                                        className='tit'
+                                        dangerouslySetInnerHTML={{
+                                            __html: hightLightKeyword(
+                                                title,
+                                                keyword,
+                                            ),
+                                        }}
+                                    />
+                                    <span className='date'>
+                                        {dayjs(registerYmdt).format(
+                                            'YYYY. MM. DD',
+                                        )}
+                                    </span>
+                                </Link>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
             {noticeCount >= 10 && (
                 <ViewMore
                     totalCount={noticeCount}
                     viewMore={(pageNumber) =>
-                        searchNotice(
-                            keyword,
-                            config.notice.boardNo,
-                            noticeNewest,
-                            pageNumber,
-                        )
+                        searchNotice(keyword, boardNo, noticeNewest, pageNumber)
                     }
                     pageSize={PAGE_SIZE.NOTICE}
                 />
@@ -80,3 +86,13 @@ export default function NoticeResult({
         </>
     );
 }
+
+NoticeResult.propTypes = {
+    noticeList: PropTypes.array.isRequired,
+    noticeCount: PropTypes.number.isRequired,
+    keyword: PropTypes.string.isRequired,
+    noticeNewest: PropTypes.bool.isRequired,
+    setNoticeNewest: PropTypes.func.isRequired,
+    searchNotice: PropTypes.func.isRequired,
+    boardNo: PropTypes.number.isRequired,
+};

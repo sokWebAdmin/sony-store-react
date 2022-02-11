@@ -1,10 +1,12 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PAGE_SIZE } from '../../const/search';
-import { formatDateWithDot } from '../../utils/dateFormat';
-import ViewMore from '../common/ViewMore';
-import Newest from './Newest';
 import { unescape } from 'lodash';
+import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
+
+import { PAGE_SIZE } from 'const/search';
+import ViewMore from 'components/common/ViewMore';
+import Newest from 'components/search/Newest';
 
 export default function EventResult({
     fetchEvent,
@@ -13,14 +15,26 @@ export default function EventResult({
     newest,
     setNewest,
 }) {
+    const [mobileOrderOpen, setMobileOrderOpen] = useState(false);
+
     return (
         <>
             <div className='section_top'>
                 <h2 className='title'>
                     기획전<span>({eventCount})</span>
                 </h2>
-                <div className='itemsort' aria-label='게시판 정렬'>
-                    <button className='itemsort__button'>
+                <div
+                    className={`itemsort ${
+                        mobileOrderOpen ? 'itemsort--open' : ''
+                    }`}
+                    aria-label='게시판 정렬'
+                >
+                    <button
+                        className='itemsort__button'
+                        onClick={() => {
+                            setMobileOrderOpen((prev) => !prev);
+                        }}
+                    >
                         <span className='itemsort__button__label sr-only'>
                             정렬기준:
                         </span>
@@ -32,33 +46,43 @@ export default function EventResult({
                 </div>
             </div>
             <ul className='product_List grid'>
-                {eventList.map((event) => (
-                    <li key={event.eventNo}>
-                        <div className='grid_inner'>
-                            <div className='grid_img'>
-                                <Link to={`/event/detail/${event.eventNo}`}>
-                                    {/* pcImageUrl mobileimageUrl */}
-                                    <img
-                                        src={event.pcImageUrl}
-                                        alt={event.label}
-                                    />
-                                </Link>
-                            </div>
-                            <dl className='grid_info'>
-                                <dt>
-                                    <Link to={`/event/detail/${event.eventNo}`}>
-                                        {unescape(event.label)}
+                {eventList.map(
+                    ({
+                        eventNo,
+                        pcImageUrl,
+                        label,
+                        startYmdt,
+                        endYmdt,
+                        displayPeriodType,
+                    }) => (
+                        <li key={eventNo}>
+                            <div className='grid_inner'>
+                                <div className='grid_img'>
+                                    <Link to={`/event/detail/${eventNo}`}>
+                                        {/* pcImageUrl mobileimageUrl */}
+                                        <img src={pcImageUrl} alt={label} />
                                     </Link>
-                                </dt>
-                                <dd>{`${formatDateWithDot(event.startYmdt)} ~ ${
-                                    event.displayPeriodType === 'REGULAR'
-                                        ? '재고 소진 시'
-                                        : formatDateWithDot(event.endYmdt)
-                                }`}</dd>
-                            </dl>
-                        </div>
-                    </li>
-                ))}
+                                </div>
+                                <dl className='grid_info'>
+                                    <dt>
+                                        <Link to={`/event/detail/${eventNo}`}>
+                                            {unescape(label)}
+                                        </Link>
+                                    </dt>
+                                    <dd>{`${dayjs(startYmdt).format(
+                                        'YYYY. MM. DD',
+                                    )} ~ ${
+                                        displayPeriodType === 'REGULAR'
+                                            ? '재고 소진 시'
+                                            : dayjs(endYmdt).format(
+                                                  'YYYY. MM. DD',
+                                              )
+                                    }`}</dd>
+                                </dl>
+                            </div>
+                        </li>
+                    ),
+                )}
             </ul>
             {eventCount >= 10 && (
                 <ViewMore
@@ -70,3 +94,11 @@ export default function EventResult({
         </>
     );
 }
+
+EventResult.propTypes = {
+    fetchEvent: PropTypes.func.isRequired,
+    eventList: PropTypes.array.isRequired,
+    eventCount: PropTypes.number.isRequired,
+    newest: PropTypes.bool.isRequired,
+    setNewest: PropTypes.func.isRequired,
+};
