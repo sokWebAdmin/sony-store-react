@@ -1,17 +1,18 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
-import { getDisplayEvents } from '../../api/display';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { getUrlParam } from '../../utils/location';
-import moment from 'moment';
-import LayerPopup from '../common/LayerPopup';
-import { useAlert, useClickOutside } from '../../hooks';
-import Alert from '../common/Alert';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
-import { shareKakaoButton, shareKakaoStoryButton } from '../../utils/share';
-import '../../assets/scss/event.scss';
-import { getStrDate } from '../../utils/dateFormat';
-import { bannerCode } from '../../bannerCode';
+import qs from 'qs';
+import dayjs from 'dayjs';
+
+import Event from 'components/event/Event';
+import LayerPopup from 'components/common/LayerPopup';
+import Alert from 'components/common/Alert';
+import { getDisplayEvents } from 'api/display';
+import { useAlert, useClickOutside } from 'hooks';
+import { shareKakaoButton, shareKakaoStoryButton } from 'utils/share';
+import { bannerCode } from 'bannerCode';
+import 'assets/scss/event.scss';
 
 const initTabs = [
     { key: 'all', label: '전체' },
@@ -44,7 +45,7 @@ const EventBottom = () => {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
     const [events, setEvents] = useState([]);
-    const [tabState, setTabState] = useState(getUrlParam('tab') || 'all');
+    const [tabState, setTabState] = useState('all');
     const [newest, setNewest] = useState(true);
     const [showShareLayer, setShowShareLayer] = useState(false);
     const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
@@ -61,6 +62,13 @@ const EventBottom = () => {
 
     useClickOutside(sortRef, () => setSortSelect(false));
 
+    const query = qs.parse(history.location.search, {
+        ignoreQueryPrefix: true,
+    });
+    useLayoutEffect(() => {
+        setTabState(query.tab ?? 'all');
+    }, [query.tab]);
+
     const fetchDisplayEvents = async () => {
         const { curation } = bannerCode;
         const keyword = tags[tabState];
@@ -70,24 +78,19 @@ const EventBottom = () => {
     };
 
     const modifyTabs = (tabData = tabs) => {
-        setTabState(getUrlParam('tab') || 'all');
+        setTabState(query.tab || 'all');
         const showLabel = tabData.find(
-            ({ key }) => (getUrlParam('tab') || 'all') === key,
+            ({ key }) => (query.tab || 'all') === key,
         )?.label;
         setShowLabel(showLabel);
     };
 
     const sortEvents = (data = events, sortNewest = newest) => {
-        const sortByLatestCreationDate = (a, b) => {
-            const dateL = moment(a.startYmdt).toDate().getTime();
-            const dateR = moment(b.startYmdt).toDate().getTime();
-            return dateL < dateR ? 1 : -1;
-        };
-        const sortByOldestCreationDate = (a, b) => {
-            const dateL = moment(a.startYmdt).toDate().getTime();
-            const dateR = moment(b.startYmdt).toDate().getTime();
-            return dateL > dateR ? 1 : -1;
-        };
+        const sortByLatestCreationDate = (a, b) =>
+            dayjs(a.startYmdt).diff(b.startYmdt) < 0 ? 1 : -1;
+        const sortByOldestCreationDate = (a, b) =>
+            dayjs(a.startYmdt).diff(b.startYmdt) > 0 ? 1 : -1;
+
         const sortData = sortNewest
             ? [...data].sort(sortByLatestCreationDate)
             : [...data].sort(sortByOldestCreationDate);
@@ -165,58 +168,6 @@ const EventBottom = () => {
         modifyTabs();
     }, [location]);
 
-    const Event = ({ event }) => {
-        const {
-            eventNo,
-            label,
-            pcImageUrl,
-            startYmdt,
-            endYmdt,
-            tag: tagName,
-            displayPeriodType,
-        } = event;
-        return (
-            <div
-                className='event_item'
-                key={eventNo}
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    e.nativeEvent.stopImmediatePropagation();
-                    onClickEventDetail(eventNo, tagName, event);
-                }}
-            >
-                <a href='javascript:' className='item'>
-                    <div className='img'>
-                        <img src={pcImageUrl} alt={label} />
-                    </div>
-                    <div className='event_desc'>
-                        <p className='tit'>{label}</p>
-                        <p className='event_duration'>
-                            {displayPeriodType === 'PERIOD'
-                                ? getStrDate(startYmdt) +
-                                  ' ~ ' +
-                                  getStrDate(endYmdt)
-                                : getStrDate(startYmdt) + ' ~ 재고 소진 시'}
-                        </p>
-                    </div>
-                </a>
-                <a
-                    href='javascript:void(0)'
-                    className='event_share popup_comm_btn'
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        e.nativeEvent.stopImmediatePropagation();
-                        openShareEventLayer(eventNo, label, tagName, event);
-                    }}
-                >
-                    공유하기
-                </a>
-            </div>
-        );
-    };
-
     return (
         <>
             {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
@@ -225,13 +176,12 @@ const EventBottom = () => {
                     <p className='pop_tit'>공유하기</p>
                     <div className='copy_box'>
                         <span className='copy_txt'>{getLink()}</span>
-                        <a
-                            href='javascript:void(0)'
+                        <button
                             className='copy_url'
                             onClick={() => copyLink(getLink())}
                         >
                             링크 복사
-                        </a>
+                        </button>
                     </div>
                     <div className='share_list'>
                         <ul>
@@ -411,8 +361,7 @@ const EventBottom = () => {
                                                         : ''
                                                 }`}
                                             >
-                                                <a
-                                                    href='javascript:void(0)'
+                                                <button
                                                     className='itemsort__item__link'
                                                     onClick={() => {
                                                         setNewest(true);
@@ -420,7 +369,7 @@ const EventBottom = () => {
                                                     }}
                                                 >
                                                     최신순
-                                                </a>
+                                                </button>
                                             </li>
                                             <li
                                                 className={`itemsort__item ${
@@ -429,8 +378,7 @@ const EventBottom = () => {
                                                         : ''
                                                 }`}
                                             >
-                                                <a
-                                                    href='javascript:void(0)'
+                                                <button
                                                     className='itemsort__item__link'
                                                     onClick={() => {
                                                         setNewest(false);
@@ -438,7 +386,7 @@ const EventBottom = () => {
                                                     }}
                                                 >
                                                     오래된 순
-                                                </a>
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>
@@ -456,25 +404,32 @@ const EventBottom = () => {
                                         ...Array(
                                             Math.round(events.length / 2),
                                         ).keys(),
-                                    ].map((index) => {
-                                        return (
-                                            <div className='item_row'>
+                                    ].map((index) => (
+                                        <div className='item_row' key={index}>
+                                            <Event
+                                                event={events[index * 2]}
+                                                onClickEventDetail={
+                                                    onClickEventDetail
+                                                }
+                                                openShareEventLayer={
+                                                    openShareEventLayer
+                                                }
+                                            />
+                                            {index * 2 + 1 < events.length && (
                                                 <Event
-                                                    event={events[index * 2]}
+                                                    event={
+                                                        events[index * 2 + 1]
+                                                    }
+                                                    onClickEventDetail={
+                                                        onClickEventDetail
+                                                    }
+                                                    openShareEventLayer={
+                                                        openShareEventLayer
+                                                    }
                                                 />
-                                                {index * 2 + 1 <
-                                                    events.length && (
-                                                    <Event
-                                                        event={
-                                                            events[
-                                                                index * 2 + 1
-                                                            ]
-                                                        }
-                                                    />
-                                                )}
-                                            </div>
-                                        );
-                                    })}
+                                            )}
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                         {events.length === 0 && (
