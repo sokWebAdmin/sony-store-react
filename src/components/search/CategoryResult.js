@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
+import { chain } from 'lodash';
 import PropTypes from 'prop-types';
 
 import ViewMore from 'components/common/ViewMore';
 import { highlightCategory } from 'utils/html';
-import { categoriesExtraDataMap } from 'const/category';
+import { categoriesExtraDataMap, displayCategoryMap } from 'const/category';
 import { PAGE_SIZE } from 'const/search';
 import 'assets/scss/product.scss';
 
 const getCategoryNo = (category) => {
-    return _.chain(category)
+    return chain(category)
         .pickBy((_, k) => k.includes('CategoryNo'))
         .filter((v) => Boolean(v))
         .last()
@@ -17,7 +17,7 @@ const getCategoryNo = (category) => {
 };
 
 const getCategoryLabel = (category, keyword) => {
-    return _.chain(category)
+    return chain(category)
         .pickBy((_, k) => k.includes('Label'))
         .filter((v) => Boolean(v))
         .map((v) => highlightCategory(v, keyword))
@@ -38,22 +38,32 @@ export default function CategoryResult({
     categoryCount,
     keyword,
 }) {
-    console.log(
-        '🚀 ~ file: CategoryResult.js ~ line 53 ~ categoryList',
-        categoryList,
-    );
     const getNextUrl = (no) => {
         // esp
         const esp = [81644, 81643, 81645];
         if (esp.includes(no)) {
-            return '/esp';
+            return {
+                pathname: '/esp',
+                state: { categoryNo: no },
+            };
         }
 
-        return _.chain(categoriesExtraDataMap)
+        // 기획전
+        if (displayCategoryMap[no]) {
+            return {
+                pathname: '/event/list',
+                state: { categoryNo: no },
+                search: `?tab=${displayCategoryMap[no]['tab']}`,
+            };
+        }
+
+        const pathname = chain(categoriesExtraDataMap)
             .filter(({ categoryNo }) => categoryNo === no)
             .map(({ url }) => url)
             .head()
             .value();
+
+        return { pathname, state: { categoryNo: no } };
     };
 
     return (
@@ -70,10 +80,7 @@ export default function CategoryResult({
                         .map(({ categoryNo, label }) => (
                             <li key={categoryNo}>
                                 <Link
-                                    to={{
-                                        pathname: getNextUrl(categoryNo),
-                                        state: { categoryNo },
-                                    }}
+                                    to={{ ...getNextUrl(categoryNo) }}
                                     dangerouslySetInnerHTML={{
                                         __html: label,
                                     }}
