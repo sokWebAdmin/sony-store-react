@@ -16,8 +16,8 @@ const CATEGORY = {
         esp: 81643,
         camera: 60859,
         lens: 60860,
-        lenscamera: 60860,
-        lenslens: 60860,
+        lenscamera: 60863,
+        lenslens: 60864,
         compact: 60862,
         videocamera: 60865,
         cinema: 60866,
@@ -474,10 +474,20 @@ const categoriesLinkMap = {
     lens: 'https://www.sony.co.kr/electronics/interchangeable-lens-camera-products/t/interchangeable-lens-cameras',
 };
 
+// TODO: 운영서버 확인필요
+const displayCategoryMap = {
+    81716: { displayName: 'LIVE ON', tab: 'live-on' },
+    81715: { displayName: '정품등록 이벤트', tab: 'refined' },
+    81714: { displayName: '예약판매', tab: 'pre-order' },
+    81713: { displayName: '혜택존', tab: 'benefit-zone' },
+    81610: { displayName: '소니스토어 단독', tab: 'only' },
+};
+
 export {
     tagColorMap,
     categoriesExtraDataMap,
     espCategoryNo,
     gnbCategories,
     categoriesLinkMap,
+    displayCategoryMap,
 };
