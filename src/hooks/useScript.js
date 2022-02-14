@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-const useScript = () => {
-    const [status, setStatus] = useState<ScriptStatus>(src ? 'loading' : 'idle');
+const useScript = (src) => {
+    const [status, setStatus] = useState(src ? 'loading' : 'idle');
 
     useEffect(
         () => {
@@ -26,15 +26,18 @@ const useScript = () => {
 
                 // Store status in attribute on script
                 // This can be read by other instances of this hook
-                const setAttributeFromEvent = (event: Event) => {
-                    script?.setAttribute('data-status', event.type === 'load' ? 'ready' : 'error');
+                const setAttributeFromEvent = (event) => {
+                    script?.setAttribute(
+                        'data-status',
+                        event.type === 'load' ? 'ready' : 'error',
+                    );
                 };
 
                 script.addEventListener('load', setAttributeFromEvent);
                 script.addEventListener('error', setAttributeFromEvent);
             } else {
                 // Grab existing script status from attribute and set to state.
-                setStatus(script.getAttribute('data-status') as ScriptStatus);
+                setStatus(script.getAttribute('data-status'));
             }
 
             // Script event handler to update status in state
@@ -61,6 +64,6 @@ const useScript = () => {
     );
 
     return status;
-}
+};
 
 export default useScript;
