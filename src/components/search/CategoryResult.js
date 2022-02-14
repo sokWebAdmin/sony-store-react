@@ -6,6 +6,7 @@ import ViewMore from 'components/common/ViewMore';
 import { highlightCategory } from 'utils/html';
 import { categoriesExtraDataMap, displayCategoryMap } from 'const/category';
 import { PAGE_SIZE } from 'const/search';
+import { espList } from 'const/productView';
 import 'assets/scss/product.scss';
 
 const getCategoryNo = (category) => {
@@ -40,8 +41,7 @@ export default function CategoryResult({
 }) {
     const getNextUrl = (no) => {
         // esp
-        const esp = [81644, 81643, 81645];
-        if (esp.includes(no)) {
+        if (espList.includes(no)) {
             return {
                 pathname: '/esp',
                 state: { categoryNo: no },
