@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-
-//util
+import { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { getProductsOptions } from '../../api/product';
-import {
-    getCategoryByKey,
-    useCategoryState,
-} from '../../context/category.context';
-import { getSaleStatus, getSaleStatusForOption } from '../../utils/product';
-import { toCurrencyString } from '../../utils/unit';
+import PropTypes from 'prop-types';
+
+import { getProductsOptions } from 'api/product';
+import { getCategoryByKey, useCategoryState } from 'context/category.context';
+import { getSaleStatus, getSaleStatusForOption } from 'utils/product';
+import { toCurrencyString } from 'utils/unit';
+import { espList } from 'const/productView';
 
 export default function Product({ product, category, reset, micro }) {
     const history = useHistory();
@@ -57,6 +55,7 @@ export default function Product({ product, category, reset, micro }) {
                 imageUrl: product.imageUrls[0],
                 colorLabel,
                 colorCode,
+                displayCategoryNos: product.displayCategoryNos,
             });
         }
 
@@ -164,8 +163,12 @@ export default function Product({ product, category, reset, micro }) {
                 </Link>
             </div>
 
-            {groupProducts.filter((gp) => !!gp.colorLabel && !!gp.colorCode)
-                .length > 0 ? (
+            {groupProducts.filter(
+                ({ colorLabel, colorCode, displayCategoryNos }) =>
+                    !!colorLabel &&
+                    !!colorCode &&
+                    !espList.includes(Number(displayCategoryNos)),
+            ).length > 0 && (
                 <div className='colorchip'>
                     <span className='sr-only'>전체 색상</span>
                     {groupProducts
@@ -204,8 +207,6 @@ export default function Product({ product, category, reset, micro }) {
                             );
                         })}
                 </div>
-            ) : (
-                <div className='colorchip'></div>
             )}
 
             <Link
@@ -265,4 +266,11 @@ export default function Product({ product, category, reset, micro }) {
 Product.defaultProps = {
     reset: () => null,
     micro: false,
+};
+
+Product.propTypes = {
+    product: PropTypes.object,
+    category: PropTypes.any,
+    reset: PropTypes.func.isRequired,
+    micro: PropTypes.bool.isRequired,
 };
