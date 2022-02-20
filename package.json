@@ -82,6 +82,7 @@
         "react-google-recaptcha": "^2.1.0",
         "react-gsap": "^3.2.1",
         "react-helmet": "^6.1.0",
+        "react-helmet-async": "^1.2.3",
         "react-infinite-scroll-component": "^6.1.0",
         "react-naver-maps": "^0.0.13",
         "react-refresh": "^0.8.3",
