@@ -1,18 +1,15 @@
-import { React } from 'react';
+import ReactPlayer from 'react-player';
 
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//api
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/support.scss';
+import SEO from 'components/SEO';
+import { videoCourse as videoCourseSEO } from 'const/seo';
+import 'assets/scss/contents.scss';
+import 'assets/scss/support.scss';
 
 export default function videoCourse() {
     return (
         <>
-            <SEOHelmet title={'고객 서비스 : 동영상 강좌'} />
+            <SEO data={videoCourseSEO} />
+
             <div className='contents support'>
                 <div className='container full'>
                     <div className='course_video'>
@@ -28,12 +25,16 @@ export default function videoCourse() {
                         <div className='course_video_zone'>
                             <div className='course_video_main'>
                                 <div className='video_wrap'>
-                                    {/* <a  class="video_cover"><img src="/images/_tmp/course_video_thumb_01.png" alt=""></a> */}
-                                    <iframe
-                                        src='https://www.youtube.com/embed/MQHGdefGaiI'
-                                        frameBorder={0}
-                                        width='100%'
-                                        height='100%'
+                                    <ReactPlayer
+                                        className='react-player'
+                                        url='https://www.youtube.com/embed/MQHGdefGaiI'
+                                        width='100%' // 플레이어 크기 (가로)
+                                        height='100%' // 플레이어 크기 (세로)
+                                        playing={false} // 자동 재생 off
+                                        muted={false} // 음소거 off
+                                        controls={true} // 플레이어 컨트롤 노출 여부
+                                        light={false} // 플레이어 모드
+                                        pip={true} // pip 모드 설정 여부
                                     />
                                 </div>
                                 <p className='course_video_tit'>
