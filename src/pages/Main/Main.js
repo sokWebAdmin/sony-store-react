@@ -9,10 +9,11 @@ import SwiperCore, {
     Controller,
 } from 'swiper/core';
 
-import SEOHelmet from 'components/SEOHelmet';
+import SEO from 'components/SEO';
 import Alert from 'components/common/Alert';
 import { useWindowSize, wonComma } from 'utils/utils';
 import { breakPoint } from 'utils/constants';
+import { main } from 'const/seo';
 import { getDisplaySectionsSectionNo, loadBanner } from 'api/display';
 import { useAlert } from 'hooks';
 import { bannerCode } from 'bannerCode';
@@ -228,7 +229,30 @@ export default function Main() {
 
     return (
         <>
-            <SEOHelmet title={'메인'} />
+            <SEO
+                canonical={main.canonical}
+                meta={{
+                    title: main.meta.title,
+                    description: main.meta.description,
+                }}
+                og={{
+                    title: main.og.title,
+                    description: main.og.description,
+                    image: main.og.image,
+                }}
+                twitter={{
+                    card: main.twitter.card,
+                    title: main.twitter.title,
+                    description: main.twitter.description,
+                    image: main.twitter.image,
+                }}
+                itemprop={{
+                    name: main.itemprop.name,
+                    description: main.itemprop.description,
+                    image: main.itemprop.image,
+                }}
+            />
+
             <div className='main'>
                 <div id='container' className='container'>
                     <div className='content main'>

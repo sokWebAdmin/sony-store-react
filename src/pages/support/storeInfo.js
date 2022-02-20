@@ -1,11 +1,4 @@
-import { React, useState } from 'react';
-
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//api
-
-//lib
+import { useState } from 'react';
 import SwiperCore, {
     Navigation,
     Pagination,
@@ -14,32 +7,53 @@ import SwiperCore, {
     Controller,
 } from 'swiper/core';
 import { Swiper, SwiperSlide } from 'swiper/react';
-//lib-css
+
+import SEO from 'components/SEO';
+import SEOHelmet from 'components/SEOHelmet';
+import LoadedNaverMap from 'components/support/LoadedNaverMap';
+import StoreGuide from 'components/support/StoreGuide';
+import { storeInfo } from 'const/seo';
+import { storeImages } from 'const/support';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/swiper.scss';
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/support.scss';
-
-import { storeImages } from '../../const/support';
-import LoadedNaverMap from '../../components/support/LoadedNaverMap';
-import StoreGuide from '../../components/support/StoreGuide';
+import 'assets/scss/contents.scss';
+import 'assets/scss/support.scss';
 
 export default function StoreInfo() {
     const [isMapOpen, setIsMapOpen] = useState(false);
 
     SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 
-    const onOpenMap = () => {
-        setIsMapOpen(!isMapOpen);
-    };
+    const onOpenMap = () => setIsMapOpen(!isMapOpen);
 
     return (
         <>
-            <SEOHelmet title={'고객 서비스 : 직영점 안내'} />
+            <SEO
+                canonical={storeInfo.canonical}
+                meta={{
+                    title: storeInfo.meta.title,
+                    description: storeInfo.meta.description,
+                }}
+                og={{
+                    title: storeInfo.og.title,
+                    description: storeInfo.og.description,
+                    image: storeInfo.og.image,
+                }}
+                twitter={{
+                    card: storeInfo.twitter.card,
+                    title: storeInfo.twitter.title,
+                    description: storeInfo.twitter.description,
+                    image: storeInfo.twitter.image,
+                }}
+                itemprop={{
+                    name: storeInfo.itemprop.name,
+                    description: storeInfo.itemprop.description,
+                    image: storeInfo.itemprop.image,
+                }}
+            />
+
             <div className='contents support'>
                 <div className='container full'>
                     <div className='content'>
