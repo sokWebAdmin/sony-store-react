@@ -35,19 +35,47 @@ const storeInfo = {
     og: {
         title: '소니스토어 직영점 안내',
         description: '소니스토어 압구정점 위치 및 운영시간 안내',
-        image: '소니스토어 압구정점 위치 및 운영시간 안내',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/storeinfo.jpg',
     },
     twitter: {
         card: 'summary',
         title: '소니스토어 직영점 안내',
         description: '소니스토어 압구정점 위치 및 운영시간 안내',
-        image: '소니스토어 압구정점 위치 및 운영시간 안내',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/storeinfo.jpg',
     },
     itemprop: {
         name: '소니스토어 직영점 안내',
         description: '소니스토어 압구정점 위치 및 운영시간 안내',
-        image: '소니스토어 압구정점 위치 및 운영시간 안내',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/storeinfo.jpg',
     },
 };
 
-export { main, storeInfo };
+const benefit = {
+    canonical: 'https://store.sony.co.kr/membership/benefit',
+    meta: {
+        tittle: '소니스토어 회원을 위한 멤버십 서비스',
+        description:
+            '소니스토어 회원이 되시면 다양한 멤버십 혜택을 누리실 수 있습니다!',
+    },
+    og: {
+        title: '소니스토어 회원을 위한 멤버십 서비스',
+        description:
+            '소니스토어 회원이 되시면 다양한 멤버십 혜택을 누리실 수 있습니다!',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/benefit.jpg',
+    },
+    twitter: {
+        card: 'summary',
+        title: '소니스토어 회원을 위한 멤버십 서비스',
+        description:
+            '소니스토어 회원이 되시면 다양한 멤버십 혜택을 누리실 수 있습니다!',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/benefit.jpg',
+    },
+    itemprop: {
+        name: '소니스토어 회원을 위한 멤버십 서비스',
+        description:
+            '소니스토어 회원이 되시면 다양한 멤버십 혜택을 누리실 수 있습니다!',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/benefit.jpg',
+    },
+};
+
+export { main, storeInfo, benefit };
