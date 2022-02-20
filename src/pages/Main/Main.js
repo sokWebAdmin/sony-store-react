@@ -229,29 +229,7 @@ export default function Main() {
 
     return (
         <>
-            <SEO
-                canonical={main.canonical}
-                meta={{
-                    title: main.meta.title,
-                    description: main.meta.description,
-                }}
-                og={{
-                    title: main.og.title,
-                    description: main.og.description,
-                    image: main.og.image,
-                }}
-                twitter={{
-                    card: main.twitter.card,
-                    title: main.twitter.title,
-                    description: main.twitter.description,
-                    image: main.twitter.image,
-                }}
-                itemprop={{
-                    name: main.itemprop.name,
-                    description: main.itemprop.description,
-                    image: main.itemprop.image,
-                }}
-            />
+            <SEO data={main} />
 
             <div className='main'>
                 <div id='container' className='container'>

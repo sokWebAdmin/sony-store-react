@@ -1,7 +1,7 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
-const SEO = ({ title, canonical, meta, og, twitter, itemprop }) => {
+const SEO = ({ data }) => {
     // TODO: 추후 별도 파일로 분리
     const config = { title: 'SonyStore', description: '' };
 
@@ -9,89 +9,112 @@ const SEO = ({ title, canonical, meta, og, twitter, itemprop }) => {
         <HelmetProvider>
             <Helmet>
                 {/* 타이틀  */}
-                <title>{title || config.title}</title>
+                <title>{data.title || config.title}</title>
 
                 {/* Canonical tag */}
-                {canonical && <link rel='canonical' href={canonical} />}
+                {data.canonical && (
+                    <link rel='canonical' href={data.canonical} />
+                )}
 
                 {/* 메타데이터 */}
-                {meta.title && (
-                    <meta name='title' content={meta.title || config.title} />
+                {data.meta?.title && (
+                    <meta
+                        name='title'
+                        content={data.meta.title || config.title}
+                    />
                 )}
-                {meta.description && (
+                {data.meta?.description && (
                     <meta
                         name='description'
-                        content={meta.description || config.description}
+                        content={data.meta.description || config.description}
                     />
                 )}
 
                 {/* 오픈그래프 */}
                 <meta property='og:type' content='website' />
-                {og.title && <meta property='og:title' content={og.title} />}
-                {og.description && (
-                    <meta property='og:description' content={og.description} />
+                {data.og?.title && (
+                    <meta property='og:title' content={data.og.title} />
                 )}
-                {og.image && <meta property='og:image' content={og.image} />}
-
-                {/* 트위터 */}
-                {twitter.card && (
-                    <meta property='twitter:card' content={twitter.card} />
-                )}
-                {twitter.title && (
-                    <meta property='twitter:title' content={twitter.title} />
-                )}
-                {twitter.description && (
+                {data.og?.description && (
                     <meta
-                        property='twitter:description'
-                        content={twitter.description}
+                        property='og:description'
+                        content={data.og.description}
                     />
                 )}
-                {twitter.image && (
-                    <meta property='twitter:image' content={twitter.image} />
+                {data.og?.image && (
+                    <meta property='og:image' content={data.og.image} />
+                )}
+
+                {/* 트위터 */}
+                {data.twitter?.card && (
+                    <meta property='twitter:card' content={data.twitter.card} />
+                )}
+                {data.twitter?.title && (
+                    <meta
+                        property='twitter:title'
+                        content={data.twitter.title}
+                    />
+                )}
+                {data.twitter?.description && (
+                    <meta
+                        property='twitter:description'
+                        content={data.twitter.description}
+                    />
+                )}
+                {data.twitter?.image && (
+                    <meta
+                        property='twitter:image'
+                        content={data.twitter.image}
+                    />
                 )}
 
                 {/* itemprop */}
-                {itemprop.name && (
-                    <meta itemprop='name' content={itemprop.name || ''} />
+                {data.itemprop?.name && (
+                    <meta itemprop='name' content={data.itemprop.name || ''} />
                 )}
-                {itemprop.description && (
+                {data.itemprop?.description && (
                     <meta
                         itemprop='description'
-                        content={itemprop.description || ''}
+                        content={data.itemprop.description || ''}
                     />
                 )}
-                {itemprop.image && (
-                    <meta itemprop='image' content={itemprop.image || ''} />
+                {data.itemprop?.image && (
+                    <meta
+                        itemprop='image'
+                        content={data.itemprop.image || ''}
+                    />
                 )}
             </Helmet>
         </HelmetProvider>
     );
 };
 
-SEO.propTypes = {
-    title: PropTypes.string.isRequired,
-    canonical: PropTypes.string,
-    meta: PropTypes.shape({
+SEO.proTypes = {
+    data: {
         title: PropTypes.string,
-        description: PropTypes.string,
-        image: PropTypes.string,
-    }),
-    og: PropTypes.shape({
-        title: PropTypes.string,
-        description: PropTypes.string,
-        image: PropTypes.string,
-    }),
-    twitter: PropTypes.shape({
-        card: PropTypes.string,
-        title: PropTypes.string,
-        description: PropTypes.string,
-        image: PropTypes.string,
-    }),
-    itemprop: PropTypes.shape({
-        name: PropTypes.string,
-        description: PropTypes.string,
-        image: PropTypes.string,
-    }),
+        canonical: PropTypes.string,
+        meta: PropTypes.shape({
+            title: PropTypes.string,
+            description: PropTypes.string,
+            image: PropTypes.string,
+        }),
+        og: PropTypes.shape({
+            title: PropTypes.string,
+            description: PropTypes.string,
+            image: PropTypes.string,
+        }),
+        twitter: PropTypes.shape({
+            card: PropTypes.string,
+            title: PropTypes.string,
+            description: PropTypes.string,
+            image: PropTypes.string,
+        }),
+        itemprop: PropTypes.shape({
+            name: PropTypes.string,
+            description: PropTypes.string,
+            image: PropTypes.string,
+        }),
+    },
 };
 
 export default SEO;

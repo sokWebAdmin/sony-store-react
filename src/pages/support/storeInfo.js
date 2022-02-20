@@ -30,29 +30,7 @@ export default function StoreInfo() {
 
     return (
         <>
-            <SEO
-                canonical={storeInfo.canonical}
-                meta={{
-                    title: storeInfo.meta.title,
-                    description: storeInfo.meta.description,
-                }}
-                og={{
-                    title: storeInfo.og.title,
-                    description: storeInfo.og.description,
-                    image: storeInfo.og.image,
-                }}
-                twitter={{
-                    card: storeInfo.twitter.card,
-                    title: storeInfo.twitter.title,
-                    description: storeInfo.twitter.description,
-                    image: storeInfo.twitter.image,
-                }}
-                itemprop={{
-                    name: storeInfo.itemprop.name,
-                    description: storeInfo.itemprop.description,
-                    image: storeInfo.itemprop.image,
-                }}
-            />
+            <SEO data={storeInfo} />
 
             <div className='contents support'>
                 <div className='container full'>
