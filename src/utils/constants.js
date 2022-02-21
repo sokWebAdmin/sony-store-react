@@ -24,3 +24,9 @@ export const profileMemberGrade = {
 
 export const CONSULT_INDIVIDUAL = '1';
 export const CONSULT_COMPANY = '2';
+
+export const CLIENT_ID = {
+    naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
+    facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
+    kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
+};

@@ -5,7 +5,6 @@ import GlobalContext from 'context/global.context';
 import {
     fetchMyProfile,
     setProfile,
-    useProfileState,
     useProileDispatch,
 } from 'context/profile.context';
 import SEOHelmet from 'components/SEOHelmet';
@@ -17,18 +16,12 @@ import { emptyCheck, timeFormat } from 'utils/utils';
 import { getUrlParam } from 'utils/location';
 import { getItem, KEY, setAccessToken } from 'utils/token';
 import { getAgent } from 'utils/detectAgent';
+import { CLIENT_ID } from 'utils/constants';
 import 'assets/scss/contents.scss';
-
-const CLIENT_ID = {
-    naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
-    facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
-    kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
-};
 
 export default function JoinStep() {
     const { onChangeGlobal, isLogin } = useContext(GlobalContext);
     const profileDispatch = useProileDispatch();
-    const { profile } = useProfileState();
 
     const history = useHistory();
     const location = useLocation();
@@ -55,7 +48,6 @@ export default function JoinStep() {
     const [isName, setIsName] = useState(true);
     const [isBirthday, setIsBirthday] = useState(true);
     const [isPhone, setIsPhone] = useState(true);
-    const [isAuthCode, setIsAuthCode] = useState(true);
 
     const [authAvailable, setAuthAvailable] = useState(false);
 
@@ -64,7 +56,6 @@ export default function JoinStep() {
     const [confirmWrongType, setConfirmWrongType] = useState('');
     const [birthdayWrongType, setBirthdayWrongType] = useState('');
     const [phoneWrongType, setPhoneWrongType] = useState('');
-    const [authWrongType, setAuthWrongType] = useState('');
 
     //timer
     const [time, setTime] = useState(179);
@@ -80,6 +71,7 @@ export default function JoinStep() {
         setAlertMessage(message);
         setAlertCloseFun(onClose);
     };
+
     const closeModal = () => {
         setAlertVisible(false);
         alertCloseFunc?.();
@@ -139,6 +131,63 @@ export default function JoinStep() {
         }
     };
 
+    const onEmailChange = (e) => setEmail(e.target.value);
+
+    const onPasswordChange = (e) => setPassword(e.target.value);
+
+    const onPasswordConfirmChange = (e) => setConfirm(e.target.value);
+
+    const onNameChange = (e) => {
+        const value = e.target.value.toString();
+        const name = value.replace(/[^a-zA-Zㄱ-힣]/g, '');
+        setName(name);
+    };
+
+    const onBirthdayChange = (e) => {
+        const value = e.target.value.toString();
+        const birthday = value.replace(/[^0-9]/g, '');
+        setBirthday(birthday);
+    };
+
+    const onPhoneChange = (e) => {
+        const value = e.target.value.toString();
+        const phoneNo = value.replace(/[^0-9]/g, '');
+        setPhone(phoneNo);
+    };
+
+    const onEmailBlur = (e) => {
+        if (e.target.value.length > 0) {
+            checkMail(e.target.value);
+        } else {
+            setIsEmail(true);
+        }
+    };
+
+    const onPasswordBlur = (e) => {
+        if (e.target.value.length > 0) {
+            checkMatchPwd(e.target.value);
+
+            if (confirm.length > 0) {
+                checkMatchConfirmPwd(e.target.value, confirm);
+            }
+        } else {
+            setIsPassword(true);
+        }
+    };
+
+    const onPasswordConfirmBlur = (e) => {
+        if (e.target.value.length > 0) {
+            checkMatchConfirmPwd(password, e.target.value);
+        } else {
+            setIsConfirm(true);
+        }
+    };
+
+    const onPasswordVisibleClick = () => setPwVisible((prev) => !prev);
+
+    const onPasswordConfirmVisibleClick = () =>
+        setConfirmVisible((prev) => !prev);
+
     const checkMatchConfirmPwd = (e, c) => {
         //비밀번호 확인
         if (e.trim() === c.trim()) {
@@ -151,6 +200,11 @@ export default function JoinStep() {
     };
 
     const onChangeGender = (e) => setGender(e.target.value);
+
+    const onSubmit = async () => {
+        await _registerApi();
+    };
+
     const _registerApi = async () => {
         //이메일
         if (checkMail(email)) {
@@ -373,17 +427,10 @@ export default function JoinStep() {
                                             placeholder=' '
                                             autoComplete='off'
                                             readOnly={location.state?.email}
-                                            onBlur={(e) => {
-                                                if (e.target.value.length > 0) {
-                                                    checkMail(e.target.value);
-                                                } else {
-                                                    setIsEmail(true);
-                                                }
-                                            }}
+                                            onBlur={onEmailBlur}
                                             value={email}
-                                            onChange={(e) => {
-                                                setEmail(e.target.value);
-                                            }}
+                                            name='email'
+                                            onChange={onEmailChange}
                                         />
                                         <span className='label'>
                                             이메일 아이디
@@ -410,43 +457,18 @@ export default function JoinStep() {
                                                 htmlFor='loginPw1'
                                             >
                                                 <input
-                                                    type={`${
-                                                        isPwVisible === true
+                                                    type={
+                                                        isPwVisible
                                                             ? 'text'
                                                             : 'password'
-                                                    }`}
+                                                    }
                                                     id='loginPw1'
                                                     className='inp'
                                                     placeholder=' '
                                                     autoComplete='off'
                                                     value={password}
-                                                    onBlur={(e) => {
-                                                        if (
-                                                            e.target.value
-                                                                .length > 0
-                                                        ) {
-                                                            checkMatchPwd(
-                                                                e.target.value,
-                                                            );
-                                                            if (
-                                                                confirm.length >
-                                                                0
-                                                            ) {
-                                                                checkMatchConfirmPwd(
-                                                                    e.target
-                                                                        .value,
-                                                                    confirm,
-                                                                );
-                                                            }
-                                                        } else {
-                                                            setIsPassword(true);
-                                                        }
-                                                    }}
-                                                    onChange={(e) => {
-                                                        setPassword(
-                                                            e.target.value,
-                                                        );
-                                                    }}
+                                                    onBlur={onPasswordBlur}
+                                                    onChange={onPasswordChange}
                                                 />
                                                 <span className='label'>
                                                     비밀번호
@@ -461,11 +483,9 @@ export default function JoinStep() {
                                                     <button
                                                         type='button'
                                                         title='비밀번호 숨김'
-                                                        onClick={() => {
-                                                            setPwVisible(
-                                                                !isPwVisible,
-                                                            );
-                                                        }}
+                                                        onClick={
+                                                            onPasswordVisibleClick
+                                                        }
                                                     >
                                                         <i
                                                             className={
@@ -507,24 +527,12 @@ export default function JoinStep() {
                                                     placeholder=' '
                                                     autoComplete='off'
                                                     value={confirm}
-                                                    onBlur={(e) => {
-                                                        if (
-                                                            e.target.value
-                                                                .length > 0
-                                                        ) {
-                                                            checkMatchConfirmPwd(
-                                                                password,
-                                                                e.target.value,
-                                                            );
-                                                        } else {
-                                                            setIsConfirm(true);
-                                                        }
-                                                    }}
-                                                    onChange={(e) => {
-                                                        setConfirm(
-                                                            e.target.value,
-                                                        );
-                                                    }}
+                                                    onBlur={
+                                                        onPasswordConfirmBlur
+                                                    }
+                                                    onChange={
+                                                        onPasswordConfirmChange
+                                                    }
                                                 />
                                                 <span className='label'>
                                                     비밀번호 확인
@@ -534,11 +542,9 @@ export default function JoinStep() {
                                                     <button
                                                         type='button'
                                                         title='비밀번호 숨김'
-                                                        onClick={() => {
-                                                            setConfirmVisible(
-                                                                !isConfirmVisible,
-                                                            );
-                                                        }}
+                                                        onClick={
+                                                            onPasswordConfirmVisibleClick
+                                                        }
                                                     >
                                                         <i
                                                             className={
@@ -555,7 +561,7 @@ export default function JoinStep() {
                                             <span className='ico' />
                                             {confirmWrongType == 1
                                                 ? '비밀번호를 재입력 해주세요.'
-                                                : '비밀번호와 확인이 같지 않습니다.'}
+                                                : '입력하신 비밀번호가 일치하지 않습니다.'}
                                         </div>
                                     </div>
                                 </>
@@ -578,15 +584,7 @@ export default function JoinStep() {
                                                 placeholder=' '
                                                 autoComplete='off'
                                                 value={name}
-                                                onChange={(e) => {
-                                                    const value =
-                                                        e.target.value.toString();
-                                                    const name = value.replace(
-                                                        /[^a-zA-Zㄱ-힣]/g,
-                                                        '',
-                                                    );
-                                                    setName(name);
-                                                }}
+                                                onChange={onNameChange}
                                             />
                                             <span className='label'>
                                                 이름
@@ -618,16 +616,7 @@ export default function JoinStep() {
                                                 className='inp'
                                                 placeholder=' '
                                                 value={birthday}
-                                                onChange={(e) => {
-                                                    const value =
-                                                        e.target.value.toString();
-                                                    const birthday =
-                                                        value.replace(
-                                                            /[^0-9]/g,
-                                                            '',
-                                                        );
-                                                    setBirthday(birthday);
-                                                }}
+                                                onChange={onBirthdayChange}
                                             />
                                             <span className='label'>
                                                 생년월일
@@ -706,15 +695,7 @@ export default function JoinStep() {
                                             placeholder=' '
                                             autoComplete='off'
                                             value={phone}
-                                            onChange={(e) => {
-                                                const value =
-                                                    e.target.value.toString();
-                                                const phoneNo = value.replace(
-                                                    /[^0-9]/g,
-                                                    '',
-                                                );
-                                                setPhone(phoneNo);
-                                            }}
+                                            onChange={onPhoneChange}
                                             readOnly={authSent ? true : false}
                                         />
                                         <span className='label'>
@@ -868,9 +849,7 @@ export default function JoinStep() {
                                 <button
                                     type='button'
                                     className='btn btn_dark'
-                                    onClick={async () => {
-                                        await _registerApi();
-                                    }}
+                                    onClick={onSubmit}
                                 >
                                     가입 완료
                                 </button>
