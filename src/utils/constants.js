@@ -7,6 +7,8 @@ export const MOBILE_WIDTH = 640;
 
 export const HOW_MANY_WISH = isTablet ? 9 : 8;
 
+export const DEFAULT_SEARCH_PERIOD = 3;
+
 // vvip / vip / family
 export const memberGrade = {
     N: { className: 'family', label: 'MEMBERSHIP' }, // 일반도 MEMBERSHIP
