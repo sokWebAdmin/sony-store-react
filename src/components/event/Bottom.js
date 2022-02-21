@@ -290,11 +290,6 @@ const EventBottom = () => {
                                 slidesPerView: _scrollView.pc,
                             },
                         }}
-                        on={{
-                            init: (swiper) => {
-                                swiper.navigation.update();
-                            },
-                        }}
                         onSwiper={setSwiperTab}
                     >
                         {tabs &&
