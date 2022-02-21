@@ -1,10 +1,10 @@
 import { React, useEffect, useMemo } from 'react';
+import dayjs from 'dayjs';
 
 import SEOHelmet from 'components/SEOHelmet';
 import Articles from 'components/support/Articles';
-import { toLocalDateStr } from 'utils/dateFormat';
 import { articles } from 'const/support';
-import { useTerms } from 'hooks/support';
+import { useTerms } from 'hooks/useTerms';
 import 'assets/scss/contents.scss';
 
 export default function Terms() {
@@ -50,12 +50,12 @@ export default function Terms() {
                                     <strong>
                                         시행일자 :{' '}
                                         {historyVisible
-                                            ? toLocalDateStr(
+                                            ? dayjs(
                                                   prevTerms?.enforcementDate,
-                                              )
-                                            : toLocalDateStr(
+                                              ).format('YYYY년 MM월 DD일')
+                                            : dayjs(
                                                   activeTerms?.enforcementDate,
-                                              )}
+                                              ).format('YYYY년 MM월 DD일')}
                                     </strong>
                                     <a
                                         href='#none'
@@ -116,15 +116,19 @@ export default function Terms() {
                                             <>
                                                 <p>
                                                     ※ 본 약관은 시행일자 :{' '}
-                                                    {toLocalDateStr(
+                                                    {dayjs(
                                                         prevTerms?.enforcementDate,
+                                                    ).format(
+                                                        'YYYY년 MM월 DD일',
                                                     )}
                                                     부터 적용됩니다.
                                                 </p>
                                                 <strong className='caution_box--date'>
                                                     직전변경일 :{' '}
-                                                    {toLocalDateStr(
+                                                    {dayjs(
                                                         prevEnforcementDate,
+                                                    ).format(
+                                                        'YYYY년 MM월 DD일',
                                                     )}
                                                 </strong>
                                             </>
@@ -132,16 +136,20 @@ export default function Terms() {
                                             <>
                                                 <p>
                                                     ※ 본 약관은 시행일자 :{' '}
-                                                    {toLocalDateStr(
+                                                    {dayjs(
                                                         activeTerms?.enforcementDate,
+                                                    ).format(
+                                                        'YYYY년 MM월 DD일',
                                                     )}
                                                     부터 적용됩니다.
                                                 </p>
                                                 <strong className='caution_box--date'>
                                                     직전변경일 :{' '}
-                                                    {toLocalDateStr(
+                                                    {dayjs(
                                                         prevTerms?.enforcementDate ||
                                                             prevEnforcementDate,
+                                                    ).format(
+                                                        'YYYY년 MM월 DD일',
                                                     )}
                                                 </strong>
                                             </>
