@@ -60,13 +60,18 @@ export const getColorChipInfo = (hasColor, productName, values, option) => {
         const { label, value } = option;
         const keys = label.split('|');
         const values = value.split('|');
-        return {
-            label: _.chain()
-                .range(keys.length)
-                .map((i) => `${keys[i]}: ${values[i]}`)
-                .join(' | ')
-                .value(),
-        };
+
+        if (label === value) {
+            return { label: `${value}` };
+        } else {
+            return {
+                label: _.chain()
+                    .range(keys.length)
+                    .map((i) => `${keys[i]}: ${values[i]}`)
+                    .join(' | ')
+                    .value(),
+            };
+        }
     }
 };
 
