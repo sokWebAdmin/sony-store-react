@@ -205,6 +205,9 @@ export default function Withdraw() {
                             <p className='txt_primary'>
                                 개인정보, 쿠폰 정보, 보유하신 마일리지, 정품등록
                                 정보 등 회원 탈퇴 시 삭제됩니다.
+                                <br />
+                                SNS 계정으로 가입하신 회원님은 하단에 가입하신
+                                SNS로 인증하신 후 탈퇴 사유를 선택해주세요.
                             </p>
                             <form>
                                 <div className='withdraw_box'>
