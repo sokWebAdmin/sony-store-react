@@ -703,6 +703,11 @@ export default function MyPageMember() {
                                                     </div>
                                                 </div>
                                             </div>
+                                            <p className='txt_primary'>
+                                                SNS 계정으로 가입하신 회원님은
+                                                각 SNS 페이지에서 수정 및
+                                                변경하시기 바랍니다.
+                                            </p>
                                         </div>
 
                                         <div className='member_list address'>
