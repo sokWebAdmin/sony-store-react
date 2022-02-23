@@ -1,45 +1,33 @@
 import React, { useState, useMemo, useContext, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import dayjs from 'dayjs';
 
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//api
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/mypage.scss';
 import {
     resetProfile,
     useProfileState,
     useProileDispatch,
-} from '../../context/profile.context';
-import { Link, useHistory } from 'react-router-dom';
-import SelectBox from '../../components/common/SelectBox';
-import { withdrawalReasons } from '../../const/mypage';
-import OpenLogin from '../../components/member/OpenLogin';
-import { withdrawalMember } from '../../api/sony/member';
-import { deleteProfile } from '../../api/member';
-import { useAlert } from '../../hooks';
-import Alert from '../../components/common/Alert';
-import { getProfileOrdersSummaryStatus } from '../../api/order';
-import LayerPopup from '../../components/common/LayerPopup';
-import { loginApi } from '../../api/auth';
-import { toCurrencyString } from '../../utils/unit';
+} from 'context/profile.context';
+import GlobalContext from 'context/global.context';
+import SEOHelmet from 'components/SEOHelmet';
+import SelectBox from 'components/common/SelectBox';
+import OpenLogin from 'components/member/OpenLogin';
+import Alert from 'components/common/Alert';
+import LayerPopup from 'components/common/LayerPopup';
+import { withdrawalMember } from 'api/sony/member';
+import { getProfileOrdersSummaryStatus } from 'api/order';
+import { toCurrencyString } from 'utils/unit';
 import {
     getItem,
     KEY,
     removeAccessToken,
     removeItem,
     setItem,
-} from '../../utils/token';
-import GlobalContext from '../../context/global.context';
-import { getAgent } from '../../utils/detectAgent';
-
-const CLIENT_ID = {
-    naver: process.env.REACT_APP_NAVER_JAVASCRIPT_KEY,
-    facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
-    kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
-};
+} from 'utils/token';
+import { getAgent } from 'utils/detectAgent';
+import { useAlert } from 'hooks';
+import { withdrawalReasons } from 'const/mypage';
+import 'assets/scss/contents.scss';
+import 'assets/scss/mypage.scss';
 
 export default function Withdraw() {
     const history = useHistory();
@@ -67,7 +55,15 @@ export default function Withdraw() {
             openAlert('탈퇴사유를 선택해주세요.');
             return;
         }
-        const orderSummary = await getProfileOrdersSummaryStatus();
+
+        // TODO: 기본 검색 기간은 3개월이지만 정확히 명시, 탈퇴전 주문 확인 기간 확인 필요
+        const orderSummary = await getProfileOrdersSummaryStatus({
+            params: {
+                startYmd: dayjs().subtract('3', 'months').format('YYYY-MM-DD'),
+                endYmd: dayjs().format('YYYY-MM-DD'),
+            },
+        });
+
         if (orderSummary.status !== 200) {
             openAlert('잠시 후 다시 시도해 주세요.');
             return;
