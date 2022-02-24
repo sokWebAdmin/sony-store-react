@@ -17,7 +17,7 @@ export default function Event({ events }) {
   return (
     <div className="product_cont exhibitions_zone">
       <p className="title">진행중인 기획전</p>
-      <div className={"exhibitions_inner swiper-container " +(Array.from(events).length === 1 ? 'swiper_none' : 'item_list')}> 
+      <div className="exhibitions_inner swiper-container item_list">
         <Swiper 
           className="swiper-wrapper"
           navigation={{
