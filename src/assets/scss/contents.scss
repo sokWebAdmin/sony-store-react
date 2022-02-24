@@ -801,6 +801,7 @@
 
     .swiper-button-prev,
     .swiper-button-next {
+      margin-top: calc(-2 * var(--swiper-navigation-size)/ 2);
       width: 36px;
       height: 36px;
       background: url(../images/common/arrow_recommend.png) no-repeat 0 0;
@@ -1196,7 +1197,7 @@
         color: #444;
         box-sizing: border-box;
 
-        .keword {
+        .keyword {
           color: $primary-color;
         }
       }
@@ -1216,7 +1217,7 @@
             }
           }
 
-          .keword {
+          .keyword {
             margin-left: 10px;
 
             &:hover {

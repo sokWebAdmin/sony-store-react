@@ -279,13 +279,14 @@ export default function ProductView({ match }) {
         .value();
     }
 
-    const images = _.chain(productGroup)
-      .take(1)
-      .flatMap(({ images }) => images)
-      .compact()
-      .value();
+    // const images = _.chain(productGroup)
+    //   .take(1)
+    //   .flatMap(({ images }) => images)
+    //   .compact()
+    //   .value();
 
-    return images?.length > 0 ? images : productData?.baseInfo?.imageUrls;
+    //return images?.length > 0 ? images : productData?.baseInfo?.imageUrls;
+    return productData?.baseInfo?.imageUrls;
   }, [selectedOptionNo, productGroup, productData?.baseInfo?.imageUrls]);
 
   //
