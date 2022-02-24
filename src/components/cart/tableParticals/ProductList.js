@@ -1,12 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { toCurrencyString } from '../../../utils/unit';
-import GlobalContext from '../../../context/global.context';
 
 const ProductList = ({ products, setProducts, setBeforeCountProducts, checkedIndexes, setCheckedIndexes, deleteItem }) => {
   const onCheck = (event, index) => {
     const { checked } = event.currentTarget;
-
-   
 
     if (checked) {
       const newCheckedIndexes = [...checkedIndexes, index];
@@ -37,23 +34,13 @@ const ProductList = ({ products, setProducts, setBeforeCountProducts, checkedInd
     setProducts(newProducts);
   };
 
-  let reversedItems = products;
-  const { isLogin } = useContext(GlobalContext);
-
-  // 로그인, 비로그인 순서가 뒤죽박죽으로 옴
-  if (!isLogin) {
-    reversedItems = products.concat().reverse();
-  } else {
-    reversedItems = products.sort((a, b) => a.cartNo > b.cartNo ? -1 : 1)
-  }
   return (
     <>
       <div className="col_table">
         <Header />
         <div className="col_table_body">
-          {reversedItems.map((product, i) => (
-            
-            <div className="col_table_row" key={product.productNo + '_' + reversedItems.length-i-1}>
+          {products.map((product, i) => (
+            <div className="col_table_row" key={product.productNo + '_' + i}>
               <div className="col_table_cell prd_wrap tal">
                 <div className="prd">
                   <div className="check check_only">
@@ -61,8 +48,8 @@ const ProductList = ({ products, setProducts, setBeforeCountProducts, checkedInd
                       type="checkbox"
                       className="inp_check"
                       name="check_cart_item"
-                      checked={checkedIndexes.some((v) => v === reversedItems.length-i-1)}
-                      onChange={(event) => onCheck(event, reversedItems.length-i-1)}
+                      checked={checkedIndexes.some((v) => v === i)}
+                      onChange={(event) => onCheck(event, i)}
                     />
                   </div>
                   <div className="prd_thumb">
@@ -79,11 +66,11 @@ const ProductList = ({ products, setProducts, setBeforeCountProducts, checkedInd
               </div>
               <div className="col_table_cell prd_count">
                 <div className="count_ui_box">
-                  <button className="minus" onClick={() => changeQuantity(reversedItems.length-i-1, -1)} disabled={product.orderCnt <= 1}>
+                  <button className="minus" onClick={() => changeQuantity(i, -1)} disabled={product.orderCnt <= 1}>
                     감소
                   </button>
                   <input type="text" readOnly="readonly" value={product.orderCnt} className="count" />
-                  <button className="plus" onClick={() => changeQuantity(reversedItems.length-i-1, 1)}>
+                  <button className="plus" onClick={() => changeQuantity(i, 1)}>
                     증가
                   </button>
                 </div>
@@ -92,7 +79,7 @@ const ProductList = ({ products, setProducts, setBeforeCountProducts, checkedInd
                 {toCurrencyString(product.buyAmt)} <span className="won">원</span>
               </div>
               <div className="col_table_cell">
-                <button type="button" className="btn_del_prd" onClick={() => deleteItem(product.cartNo || reversedItems.length-i-1)}>
+                <button type="button" className="btn_del_prd" onClick={() => deleteItem(product.cartNo || i)}>
                   <img src="../../images/common/ic_close.svg" alt="제품 삭제" />
                 </button>
               </div>
