@@ -1672,7 +1672,7 @@
     margin: 0 auto;
     width: calc(100% - 48px);
     @include only-mo {
-      width: 100%;
+      width: calc(100% - 48px);
     }
     &.search {
       @include only-mo {
