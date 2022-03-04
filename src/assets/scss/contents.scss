@@ -1334,6 +1334,7 @@
 
     .product_List {
       li {
+        height: 400px;
         &:nth-child(-n + 3) {
           .product_tabArea {
             margin-top: 0;
