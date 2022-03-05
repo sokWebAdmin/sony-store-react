@@ -1,29 +1,5 @@
-import {
-    React,
-    useState,
-    useEffect,
-    useContext,
-    useRef,
-    useCallback,
-} from 'react';
-
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//api
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/recommend.scss';
-import arrow from '../../assets/images/common/arrow_recommend.png';
-//context
-import GlobalContext from '../../context/global.context';
-
-//utils
-import { useWindowSize } from '../../utils/utils';
-import { useHistory } from 'react-router-dom';
-
-//lib
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { Controller, Scene } from 'react-scrollmagic';
 import { Tween } from 'react-gsap';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -34,19 +10,21 @@ import SwiperCore, {
     Autoplay,
 } from 'swiper/core';
 
-//lib-css
+import SEO from 'components/SEO';
+import { useWindowSize } from 'utils/utils';
+import { changeDateFormat } from 'utils/dateFormat';
+import { loadBanner } from 'api/display';
+import { bannerCode } from 'bannerCode';
+import { recommend } from 'const/seo';
+import arrow from 'assets/images/common/arrow_recommend.png';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/swiper.scss';
-import { Link } from 'react-router-dom';
-import { loadBanner } from '../../api/display';
-import { changeDateFormat, getDay, getStrHM } from '../../utils/dateFormat';
-import { bannerCode } from '../../bannerCode';
+import 'assets/scss/contents.scss';
+import 'assets/scss/recommend.scss';
 
-export default function Recommend({ match }) {
-    const history = useHistory();
-
+export default function Recommend() {
     const size = useWindowSize();
     const [slideBanners, setSlideBanners] = useState([]);
     const [recommendTopBanners, setRecommendTopBanners] = useState([]);
@@ -99,6 +77,7 @@ export default function Recommend({ match }) {
             return acc;
         }, '');
     };
+
     const trigger2 = useRef();
     useEffect(() => {
         document.body.style.position = 'fixed';
@@ -142,7 +121,8 @@ export default function Recommend({ match }) {
 
     return (
         <>
-            <SEOHelmet title={'스토어 추천제품 : 추천제품'} />
+            <SEO data={recommend} />
+
             <Controller>
                 <div className='contents recommend'>
                     <div className='container'>

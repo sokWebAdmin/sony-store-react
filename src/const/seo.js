@@ -26,6 +26,34 @@ const main = {
     },
 };
 
+const recommend = {
+    canonical: 'https://store.sony.co.kr/recommend',
+    meta: {
+        title: '소니스토어 최신 추천 제품',
+        description:
+            '소니가 추천하는 이 달의 추천 제품을 가장 먼저 만나고, 특별 혜택도 함께 확인해보세요.',
+    },
+    og: {
+        title: '소니스토어 최신 추천 제품',
+        description:
+            '소니가 추천하는 이 달의 추천 제품을 가장 먼저 만나고, 특별 혜택도 함께 확인해보세요.',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/recommend.jpg',
+    },
+    twitter: {
+        card: 'summary',
+        title: '소니스토어 최신 추천 제품',
+        description:
+            '소니가 추천하는 이 달의 추천 제품을 가장 먼저 만나고, 특별 혜택도 함께 확인해보세요.',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/recommend.jpg',
+    },
+    itemprop: {
+        name: '소니스토어 최신 추천 제품',
+        description:
+            '소니가 추천하는 이 달의 추천 제품을 가장 먼저 만나고, 특별 혜택도 함께 확인해보세요.',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/recommend.jpg',
+    },
+};
+
 const storeInfo = {
     canonical: 'https://store.sony.co.kr/store-info',
     meta: {
@@ -106,4 +134,4 @@ const videoCourse = {
     },
 };
 
-export { main, storeInfo, benefit, videoCourse };
+export { main, recommend, storeInfo, benefit, videoCourse };
