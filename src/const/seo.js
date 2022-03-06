@@ -54,6 +54,34 @@ const recommend = {
     },
 };
 
+const curation = {
+    canonical: 'https://store.sony.co.kr/curation',
+    meta: {
+        title: '“소니스토어가 제안하는 선물 리스트',
+        description:
+            '사랑하는 사람에게 선물할 제품을 찾고 있다면? 소니 제품과 함께 그 마음을 전하세요.',
+    },
+    og: {
+        title: '소니스토어가 제안하는 선물 리스트',
+        description:
+            '사랑하는 사람에게 선물할 제품을 찾고 있다면? 소니 제품과 함께 그 마음을 전하세요.',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/curation.jpg',
+    },
+    twitter: {
+        card: 'summary',
+        title: '소니스토어가 제안하는 선물 리스트',
+        description:
+            '사랑하는 사람에게 선물할 제품을 찾고 있다면? 소니 제품과 함께 그 마음을 전하세요.',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/curation.jpg',
+    },
+    itemprop: {
+        name: '소니스토어가 제안하는 선물 리스트',
+        description:
+            '사랑하는 사람에게 선물할 제품을 찾고 있다면? 소니 제품과 함께 그 마음을 전하세요.',
+        image: 'https://image.sony.co.kr/newStore/images/ogimage/curation.jpg',
+    },
+};
+
 const storeInfo = {
     canonical: 'https://store.sony.co.kr/store-info',
     meta: {
@@ -134,4 +162,4 @@ const videoCourse = {
     },
 };
 
-export { main, recommend, storeInfo, benefit, videoCourse };
+export { main, recommend, curation, storeInfo, benefit, videoCourse };
