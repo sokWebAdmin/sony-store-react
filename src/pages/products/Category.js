@@ -1,23 +1,19 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//css
-import '../../assets/scss/category.scss';
-
-//utils
-import CategoryHeader from '../../components/products/CategoryHeader';
-import ProductList from '../../components/products/ProductList';
 import {
     getCategoryByKey,
     useCategoryState,
     useGetCategoryByKey,
-} from '../../context/category.context';
+} from 'context/category.context';
+import CategoryHeader from 'components/products/CategoryHeader';
+import ProductList from 'components/products/ProductList';
+import SEOHelmet from 'components/SEOHelmet';
+import 'assets/scss/category.scss';
+import { getSEOData } from 'const/seo';
+import SEO from 'components/SEO';
 
 export default function Category({ match, history }) {
     const category = useGetCategoryByKey('url', match.url);
-
     const { categories } = useCategoryState();
 
     if (categories.length > 0 && !category) {
@@ -44,7 +40,7 @@ export default function Category({ match, history }) {
 
     return (
         <>
-            <SEOHelmet title={`제품목록:${category?.label || ''}`} />
+            <SEO data={getSEOData(match.url)} />
 
             <div className='category'>
                 <div className='container'>
