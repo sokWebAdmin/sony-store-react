@@ -4997,7 +4997,11 @@ body {
 
 @media screen and (max-width: 640px) {
   .popup_wrap {
-    width: 90% !important
+    width: 90% !important;
+  }
+
+  .popup_wrap.find_address {
+    height: 70%;
   }
 
   .password_change {

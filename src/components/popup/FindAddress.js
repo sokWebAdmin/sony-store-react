@@ -1,32 +1,27 @@
 import { useState, useEffect, useRef } from 'react';
+import { isMobile } from 'react-device-detect';
 
-// components
-import LayerPopup from '../common/LayerPopup';
-
-// api
-import { getAddresses } from '../../api/manage';
-
-// utils
-import { setObjectState } from '../../utils/state';
-
-// stylesheet
-import '../../assets/scss/partials/popup/findAddress.scss';
+import LayerPopup from 'components/common/LayerPopup';
+import { useLockBodyScroll } from 'hooks/useLockBodyScroll';
+import { getAddresses } from 'api/manage';
+import { setObjectState } from 'utils/state';
+import 'assets/scss/partials/popup/findAddress.scss';
 
 const getDefaultPage = () => ({
     current: 1,
-    size: 10,
+    size: isMobile ? 5 : 10,
 });
 
 const FindAddress = ({ setVisible, setAddress }) => {
     const [searchKeyword, setSearchKeyword] = useState('');
-
     const [noSearch, setNoSearch] = useState(true);
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(getDefaultPage());
-
     const [pageTotal, setPageTotal] = useState(0);
 
     const result = useRef();
+
+    useLockBodyScroll();
 
     const close = () => setVisible(false);
 
@@ -75,93 +70,85 @@ const FindAddress = ({ setVisible, setAddress }) => {
         setPageTotal(Math.ceil(itemCount / page.size));
 
     return (
-        <>
-            <LayerPopup className='find_address' onClose={close}>
-                <p className='pop_tit'>우편번호 찾기</p>
-                <form className='search_container' onSubmit={submit}>
-                    <input
-                        type='text'
-                        placeholder='도로명,지번,건물명 입력'
-                        className='search_input'
-                        name='searchKeyword'
-                        value={searchKeyword}
-                        onChange={({ target }) =>
-                            setSearchKeyword(target.value)
-                        }
-                    />
-                    <button
-                        type='submit'
-                        className='search_button button button_negative'
-                    >
-                        검색
-                    </button>
-                </form>
+        <LayerPopup className='find_address' onClose={close}>
+            <p className='pop_tit'>우편번호 찾기</p>
+            <form className='search_container' onSubmit={submit}>
+                <input
+                    type='text'
+                    placeholder='도로명,지번,건물명 입력'
+                    className='search_input'
+                    name='searchKeyword'
+                    value={searchKeyword}
+                    onChange={({ target }) => setSearchKeyword(target.value)}
+                />
+                <button
+                    type='submit'
+                    className='search_button button button_negative'
+                >
+                    검색
+                </button>
+            </form>
 
-                {noSearch ? (
-                    <SearchTip />
-                ) : (
-                    <>
-                        <div className='result' ref={result}>
-                            {items?.length >= 1 ? (
-                                <ul className='addresses'>
-                                    {items.map((item, i) => (
-                                        <li key={i + '_' + item.zipCode}>
-                                            <button
-                                                onClick={() => select(item)}
-                                            >
-                                                <div className='address'>
-                                                    <div className='road'>
-                                                        <span className='badge'>
-                                                            도로명
-                                                        </span>
-                                                        <p>{item.address}</p>
-                                                    </div>
-                                                    <div className='ground'>
-                                                        <span className='badge'>
-                                                            지번
-                                                        </span>
-                                                        <p>
-                                                            {item.jibunAddress}
-                                                        </p>
-                                                    </div>
+            {noSearch ? (
+                <SearchTip />
+            ) : (
+                <>
+                    <div className='result' ref={result}>
+                        {items?.length >= 1 ? (
+                            <ul className='addresses'>
+                                {items.map((item, i) => (
+                                    <li key={i + '_' + item.zipCode}>
+                                        <button onClick={() => select(item)}>
+                                            <div className='address'>
+                                                <div className='road'>
+                                                    <span className='badge'>
+                                                        도로명
+                                                    </span>
+                                                    <p>{item.address}</p>
                                                 </div>
-                                                <span className='zip_code'>
-                                                    {item.zipCode}
-                                                </span>
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <NoResult />
-                            )}
-                        </div>
-                        {pageTotal > 1 && (
-                            <div className='page'>
-                                <button
-                                    className='prev'
-                                    onClick={onPrev}
-                                    disabled={page.current === 1}
-                                >
-                                    이전
-                                </button>
-                                <div className='count'>
-                                    <span>{page.current}</span>/
-                                    <span>{pageTotal}</span>
-                                </div>
-                                <button
-                                    className='next'
-                                    onClick={onNext}
-                                    disabled={page.current === pageTotal}
-                                >
-                                    다음
-                                </button>
-                            </div>
+                                                <div className='ground'>
+                                                    <span className='badge'>
+                                                        지번
+                                                    </span>
+                                                    <p>{item.jibunAddress}</p>
+                                                </div>
+                                            </div>
+                                            <span className='zip_code'>
+                                                {item.zipCode}
+                                            </span>
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <NoResult />
                         )}
-                    </>
-                )}
-            </LayerPopup>
-        </>
+                    </div>
+                    {pageTotal > 1 && (
+                        <div className='page'>
+                            <button
+                                className='prev'
+                                onClick={onPrev}
+                                disabled={page.current === 1}
+                            >
+                                이전
+                            </button>
+                            <div className='count'>
+                                <span>{page.current}</span>/
+                                <span>{pageTotal}</span>
+                            </div>
+                            <button
+                                className='next'
+                                onClick={onNext}
+                                disabled={page.current === pageTotal}
+                            >
+                                다음
+                            </button>
+                        </div>
+                    )}
+                </>
+            )}
+        </LayerPopup>
     );
 };
 
