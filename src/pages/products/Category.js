@@ -5,12 +5,11 @@ import {
     useCategoryState,
     useGetCategoryByKey,
 } from 'context/category.context';
+import SEO from 'components/SEO';
 import CategoryHeader from 'components/products/CategoryHeader';
 import ProductList from 'components/products/ProductList';
-import SEOHelmet from 'components/SEOHelmet';
-import 'assets/scss/category.scss';
 import { getSEOData } from 'const/seo';
-import SEO from 'components/SEO';
+import 'assets/scss/category.scss';
 
 export default function Category({ match, history }) {
     const category = useGetCategoryByKey('url', match.url);
