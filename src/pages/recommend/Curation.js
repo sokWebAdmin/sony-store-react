@@ -28,7 +28,7 @@ export default function Curation() {
             if (response.status === 400) return;
             setUrl(response.data.url);
         })();
-    }, []);
+    }, [curation]);
 
     const iframePart = () => {
         return {
