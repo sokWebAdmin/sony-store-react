@@ -1,26 +1,15 @@
-import { React } from 'react';
-
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//api
-
-//css
-import '../../assets/scss/contents.scss';
-
-//img
-import errorLogo from '../../assets/images/common/error_logo.svg';
-import ic404 from '../../assets/images/common/ic_404.svg';
-
-//utils
 import { useHistory } from 'react-router-dom';
+
+import SEO from 'components/SEO';
+import 'assets/scss/contents.scss';
+import ic404 from 'assets/images/common/ic_404.svg';
 
 export default function Error404() {
     const history = useHistory();
 
     return (
         <>
-            <SEOHelmet title={'페이지를 찾을 수 없습니다'} />
+            <SEO data={{ title: '페이지를 찾을 수 없습니다' }} />
 
             <div className='error'>
                 <div className='error__container'>
@@ -41,14 +30,14 @@ export default function Error404() {
                             찾아주십시오. 감사합니다.
                         </p>
                         <div className='btn_box'>
-                            <a
+                            <button
+                                className='btn btn_dark'
                                 onClick={() => {
                                     history.push('/');
                                 }}
-                                className='btn btn_dark'
                             >
                                 홈으로
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
