@@ -1,4 +1,4 @@
-import React, {
+import {
     useState,
     useEffect,
     useContext,
@@ -6,20 +6,20 @@ import React, {
     useMemo,
     Fragment,
 } from 'react';
-import { toCurrencyString } from '../../utils/unit';
 import { Link, useHistory } from 'react-router-dom';
-import { postOrderSheets } from '../../api/order';
-import GlobalContext from '../../context/global.context';
-import { getProductOptions } from '../../api/product';
 import qs from 'qs';
-import { useAlert, useMediaQuery } from '../../hooks';
-import Notification from '../products/Notification';
-import Alert from '../common/Alert';
-import HsValidator from '../cart/HsValidator';
 import { unescape } from 'lodash';
-import { getSaleStatus } from '../../utils/product';
-import { useHeaderDispatch } from '../../context/header.context';
-import styled from 'styled-components';
+
+import GlobalContext from 'context/global.context';
+import Notification from 'components/products/Notification';
+import Alert from 'components/common/Alert';
+import HsValidator from 'components/cart/HsValidator';
+import SectionImage from 'components/event/SectionImage';
+import { postOrderSheets } from 'api/order';
+import { getProductOptions } from 'api/product';
+import { toCurrencyString } from 'utils/unit';
+import { getSaleStatus } from 'utils/product';
+import { useAlert, useMediaQuery } from 'hooks';
 
 const ERROR_CODE_MAPPING_ROUTE = {
     O8001: {
@@ -43,7 +43,6 @@ const EventProducts = ({
     sectionImage = false,
 }) => {
     const { isLogin } = useContext(GlobalContext);
-    const headerDispatch = useHeaderDispatch();
     const history = useHistory();
     const onlyMo = useMediaQuery('(max-width: 640px)');
 
@@ -339,13 +338,7 @@ const EventProducts = ({
                 event.section.map(({ imageUrl, products }, index) => {
                     return (
                         <Fragment key={`${products.productNo}-${index}`}>
-                            <SectionImage onlyMo={onlyMo}>
-                                <img
-                                    src={imageUrl}
-                                    alt=''
-                                    style={{ width: '100%' }}
-                                />
-                            </SectionImage>
+                            <SectionImage onlyMo={onlyMo} imageUrl={imageUrl} />
                             <div className='event_tablist type1'>
                                 <div className='employee_prd'>
                                     <div className='event_prd_list'>
@@ -390,12 +383,5 @@ const EventProducts = ({
         </>
     );
 };
-
-const SectionImage = styled.div`
-    position: relative;
-    max-width: ${({ onlyMo }) => (onlyMo ? '760px' : '1200px')};
-    margin: 0 auto;
-    padding-top: 40px;
-`;
 
 export default EventProducts;
