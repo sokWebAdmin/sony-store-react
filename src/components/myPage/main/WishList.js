@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { isTablet } from 'react-device-detect';
 
@@ -245,6 +246,13 @@ const Products = ({ list, check, checkedProductNos }) => {
             ))}
         </ul>
     );
+};
+
+WishList.propTypes = {
+    wishList: PropTypes.array.isRequired,
+    wishCount: PropTypes.number.isRequired,
+    more: PropTypes.func.isRequired,
+    rerender: PropTypes.func.isRequired,
 };
 
 export default WishList;
