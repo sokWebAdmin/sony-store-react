@@ -1,17 +1,15 @@
 import { useState, useMemo } from 'react';
-import { toCurrencyString } from '../../../utils/unit.js';
-import {
-    getProductsOptions,
-    postProfileLikeProducts,
-} from '../../../api/product';
-import Confirm from '../../common/Confirm';
-import Alert from '../../common/Alert';
-import { postCart } from '../../../api/order';
-import Notification from '../../products/Notification';
-import { useAlert } from '../../../hooks';
-import ViewMore from '../../common/ViewMore';
-import { isTablet } from 'react-device-detect';
 import { useHistory } from 'react-router-dom';
+import { isTablet } from 'react-device-detect';
+
+import Confirm from 'components/common/Confirm';
+import ViewMore from 'components/common/ViewMore';
+import Alert from 'components/common/Alert';
+import Notification from 'components/products/Notification';
+import { getProductsOptions, postProfileLikeProducts } from 'api/product';
+import { postCart } from 'api/order';
+import { toCurrencyString } from 'utils/unit.js';
+import { useAlert } from 'hooks';
 
 const WishList = ({ wishList, wishCount, more, rerender }) => {
     const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
@@ -78,7 +76,7 @@ const WishList = ({ wishList, wishCount, more, rerender }) => {
         if (status === 200) {
             setCartNotify(true);
         } else {
-            alert('장바구니 담기 실패');
+            alert('상품의 재고가 충분하지 않습니다.');
         }
     };
 
