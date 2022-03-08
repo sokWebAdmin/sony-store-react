@@ -81,7 +81,7 @@ const benefit = {
 const videoCourse = {
     canonical: 'https://store.sony.co.kr/video-course',
     meta: {
-        title: '“소니 제품 동영상 강좌',
+        title: '소니 제품 동영상 강좌',
         description:
             '제품의 기본 기능부터 숨겨진 기능까지 한번에 알 수 있는 동영상 강좌',
     },
