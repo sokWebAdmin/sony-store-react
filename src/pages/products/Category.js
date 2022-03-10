@@ -39,7 +39,7 @@ export default function Category({ match, history }) {
 
     return (
         <>
-            <SEO data={getSEOData(match.url)} />
+            {category && <SEO data={getSEOData(match.url, category.label)} />}
 
             <div className='category'>
                 <div className='container'>

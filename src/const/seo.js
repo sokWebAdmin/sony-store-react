@@ -1,4 +1,5 @@
 const main = {
+    title: '메인',
     canonical: 'https://store.sony.co.kr/',
     meta: {
         title: '소니스토어',
@@ -27,6 +28,7 @@ const main = {
 };
 
 const recommend = {
+    title: '스토어 추천제품 : 추천제품',
     canonical: 'https://store.sony.co.kr/recommend',
     meta: {
         title: '소니스토어 최신 추천 제품',
@@ -55,6 +57,7 @@ const recommend = {
 };
 
 const curation = {
+    title: '스토어 추천제품 : 선물제안',
     canonical: 'https://store.sony.co.kr/curation',
     meta: {
         title: '소니스토어가 제안하는 선물 리스트',
@@ -531,6 +534,7 @@ const playstationTitle = {
 };
 
 const storeInfo = {
+    title: '고객 서비스 : 직영점 안내',
     canonical: 'https://store.sony.co.kr/store-info',
     meta: {
         title: '소니스토어 직영점 안내',
@@ -555,6 +559,7 @@ const storeInfo = {
 };
 
 const benefit = {
+    title: '멤버십 : 등급/혜택안내',
     canonical: 'https://store.sony.co.kr/membership/benefit',
     meta: {
         title: '소니스토어 회원을 위한 멤버십 서비스',
@@ -583,6 +588,7 @@ const benefit = {
 };
 
 const videoCourse = {
+    title: '고객 서비스 : 동영상 강좌',
     canonical: 'https://store.sony.co.kr/video-course',
     meta: {
         title: '소니 제품 동영상 강좌',
@@ -610,47 +616,68 @@ const videoCourse = {
     },
 };
 
-const getSEOData = (url) => {
+const getSEOData = (url, title = '') => {
+    let seo;
     switch (url) {
         case '/products/camera':
-            return camera;
-        case '/products/camera/lens':
-            return lens;
-        case '/products/camera/compact':
-            return compact;
-        case '/products/videocamera':
-            return videoCamera;
-        case '/products/videocamera/cinema':
-            return cinema;
-        case '/products/videocamera/camcoder':
-            return camcoder;
-        case '/products/videocamera/action':
-            return action;
-        case '/products/audio':
-            return audio;
-        case '/products/audio/headphone':
-            return headphone;
-        case '/products/audio/speaker':
-            return speaker;
-        case '/products/audio/homeaudio':
-            return homeaudio;
-        case '/products/audio/recorder':
-            return recorder;
-        case '/products/accessory':
-            return accessory;
-        case '/products/accessory/camera':
-            return accessoryCamera;
-        case '/products/accessory/audio':
-            return accessoryAudio;
-        case '/products/playstation':
-            return playstation;
-        case '/products/playstation/playstation':
-            return playstationPlaystation;
-        case '/products/playstation/title':
-            return playstationTitle;
-        default:
+            seo = camera;
             break;
+        case '/products/camera/lens':
+            seo = lens;
+            break;
+        case '/products/camera/compact':
+            seo = compact;
+            break;
+        case '/products/videocamera':
+            seo = videoCamera;
+            break;
+        case '/products/videocamera/cinema':
+            seo = cinema;
+            break;
+        case '/products/videocamera/camcoder':
+            seo = camcoder;
+            break;
+        case '/products/videocamera/action':
+            seo = action;
+            break;
+        case '/products/audio':
+            seo = audio;
+            break;
+        case '/products/audio/headphone':
+            seo = headphone;
+            break;
+        case '/products/audio/speaker':
+            seo = speaker;
+            break;
+        case '/products/audio/homeaudio':
+            seo = homeaudio;
+            break;
+        case '/products/audio/recorder':
+            seo = recorder;
+            break;
+        case '/products/accessory':
+            seo = accessory;
+            break;
+        case '/products/accessory/camera':
+            seo = accessoryCamera;
+            break;
+        case '/products/accessory/audio':
+            seo = accessoryAudio;
+            break;
+        case '/products/playstation':
+            seo = playstation;
+            break;
+        case '/products/playstation/playstation':
+            seo = playstationPlaystation;
+            break;
+        case '/products/playstation/title':
+            seo = playstationTitle;
+            break;
+        default:
+            seo = {};
     }
+
+    return Object.assign({}, seo, { title });
 };
 
 export {

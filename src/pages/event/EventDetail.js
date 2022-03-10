@@ -23,6 +23,7 @@ const EventDetail = () => {
                 setEvent(data);
                 setSeo((prev) => ({
                     ...prev,
+                    title: data.label,
                     meta: {
                         title: data.label,
                         description: data.promotionText,
