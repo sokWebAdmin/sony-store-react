@@ -1,4 +1,5 @@
 const main = {
+    title: '메인',
     canonical: 'https://store.sony.co.kr/',
     meta: {
         title: '소니스토어',
@@ -27,6 +28,7 @@ const main = {
 };
 
 const storeInfo = {
+    title: '고객 서비스 : 직영점 안내',
     canonical: 'https://store.sony.co.kr/store-info',
     meta: {
         title: '소니스토어 직영점 안내',
@@ -51,6 +53,7 @@ const storeInfo = {
 };
 
 const benefit = {
+    title: '멤버십 : 등급/혜택안내',
     canonical: 'https://store.sony.co.kr/membership/benefit',
     meta: {
         title: '소니스토어 회원을 위한 멤버십 서비스',
@@ -79,6 +82,7 @@ const benefit = {
 };
 
 const videoCourse = {
+    title: '고객 서비스 : 동영상 강좌',
     canonical: 'https://store.sony.co.kr/video-course',
     meta: {
         title: '소니 제품 동영상 강좌',
