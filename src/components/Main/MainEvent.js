@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { breakPoint } from 'utils/constants';
 import { wonComma } from 'utils/utils';
+import { getLinkTarget } from 'utils/html';
 
 const MainEvent = ({
     size,
@@ -147,12 +148,9 @@ const MainEvent = ({
                                 >
                                     <Link
                                         to={banners[0].landingUrl}
-                                        target={
-                                            banners[0]?.browerTargetType ===
-                                            'CURRENT'
-                                                ? '_self'
-                                                : '_blank'
-                                        }
+                                        target={getLinkTarget(
+                                            banners[0].browerTargetType,
+                                        )}
                                     >
                                         <div className='event__sub__inner'>
                                             <p className='event__copy__head'>

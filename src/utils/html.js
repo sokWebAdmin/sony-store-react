@@ -15,4 +15,8 @@ const highlightKeyword = (title, keyword) => {
     return title;
 };
 
-export { highlightCategory, highlightKeyword };
+const getLinkTarget = (target) => {
+    return target === 'CURRENT' ? '_self' : '_blank';
+};
+
+export { highlightCategory, highlightKeyword, getLinkTarget };
