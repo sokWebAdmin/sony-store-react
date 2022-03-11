@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
     Autoplay,
@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 import { loadBanner } from 'api/display';
-import { useMediaQuery } from 'hooks';
+import { useMediaQuery } from 'hooks/useMedeaQuery';
 import { bannerCode } from 'bannerCode';
 
 const EventTop = () => {
