@@ -10,6 +10,7 @@ import SwiperCore, {
 } from 'swiper/core';
 
 import SEO from 'components/SEO';
+import CustomerService from 'components/CustomerService';
 import Alert from 'components/common/Alert';
 import { useWindowSize, wonComma } from 'utils/utils';
 import { breakPoint } from 'utils/constants';
@@ -220,12 +221,6 @@ export default function Main() {
             recRightSwiper.controller.control = recLeftSwiper;
         }
     }, [recRightSwiper, recLeftSwiper]);
-
-    const onClickServiceCenter = () => {
-        openAlert(
-            '고객님께서 원하시는 제품을<br />빠르고 정확하게 구매하실 수 있도록<br />도와드리겠습니다.<br/>고객지원센터: 1588-0911',
-        );
-    };
 
     return (
         <>
@@ -954,41 +949,8 @@ export default function Main() {
                         {/* // academy banner */}
 
                         {/* customer service */}
-                        <div className='main__help'>
-                            <h2 className='main__help__title'>
-                                무엇을
-                                <br />
-                                도와드릴까요?
-                            </h2>
-                            <ul className='main__help__lists'>
-                                <li className='main__help__list notice'>
-                                    <Link to='/faq'>FAQ & 공지사항</Link>
-                                </li>
-                                <li className='main__help__list location'>
-                                    <Link to='/store-info'>매장안내</Link>
-                                </li>
-                                <li className='main__help__list customer'>
-                                    <a
-                                        href='javascript:void(0)'
-                                        onClick={onClickServiceCenter}
-                                    >
-                                        고객센터
-                                    </a>
-                                </li>
-                                <li className='main__help__list service'>
-                                    <a
-                                        href={
-                                            window.anchorProtocol +
-                                            'www.sony.co.kr/electronics/support'
-                                        }
-                                        onClick={window.openBrowser}
-                                        target='_blank'
-                                    >
-                                        제품지원
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        <CustomerService />
+
                         {/* customer service */}
                         {alertVisible && (
                             <Alert onClose={closeModal}>{alertMessage}</Alert>
