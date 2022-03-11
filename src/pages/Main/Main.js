@@ -893,6 +893,10 @@ export default function Main() {
                                     academyPcBanners?.banners ? (
                                         <h2
                                             className='main__banner__title'
+                                            style={{
+                                                color: academyPcBanners
+                                                    ?.banners[0]?.nameColor,
+                                            }}
                                             dangerouslySetInnerHTML={{
                                                 __html: academyPcBanners
                                                     ?.banners[0]?.nameList,
@@ -901,6 +905,10 @@ export default function Main() {
                                     ) : (
                                         <h2
                                             className='main__banner__title'
+                                            style={{
+                                                color: academyMoBanners
+                                                    ?.banners[0]?.nameColor,
+                                            }}
                                             dangerouslySetInnerHTML={{
                                                 __html: academyMoBanners
                                                     ?.banners[0]?.nameList,
@@ -915,6 +923,7 @@ export default function Main() {
                                                 academyPcBanners.banners[0]
                                                     ?.landingUrl
                                             }
+                                            rel='noreferrer'
                                             target={
                                                 academyPcBanners?.banners[0]
                                                     ?.browerTargetType ===
@@ -932,6 +941,7 @@ export default function Main() {
                                                 academyMoBanners.banners[0]
                                                     ?.landingUrl
                                             }
+                                            rel='noreferrer'
                                             target={
                                                 academyMoBanners?.banners[0]
                                                     ?.browerTargetType ===
