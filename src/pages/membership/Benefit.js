@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import SEOHelmet from 'components/SEOHelmet';
+import SEO from 'components/SEO';
 import Tabs from 'components/common/Tabs';
+import { benefit } from 'const/seo';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
@@ -26,7 +27,8 @@ const Benefit = (props) => {
 
     return (
         <>
-            <SEOHelmet title={'멤버십 : 등급/혜택안내'} />
+            <SEO data={benefit} />
+
             <div className='contents membership full'>
                 <div className='content' style={{ padding: 0, margin: 0 }}>
                     <div className='membership'>
@@ -497,19 +499,27 @@ const Benefit = (props) => {
                                                         환경 보호에 기여합니다.
                                                     </li>
                                                     <li className='prmm_dtl_prctn'>
-                                                        또한 안전한 배송을 위해 300만원 이상의 제품은 화물배송으로 발송됩니다.
+                                                        또한 안전한 배송을 위해
+                                                        300만원 이상의 제품은
+                                                        화물배송으로 발송됩니다.
                                                     </li>
                                                     <li className='prmm_dtl_prctn'>
                                                         퀵서비스는 구매 금액이{' '}
                                                         <strong className='primary-color'>
                                                             5만원 이상
                                                         </strong>
-                                                        일 경우 고객 요청에 따라 서울/경이 지역의 퀵서비스 지원이 가능하며,
+                                                        일 경우 고객 요청에 따라
+                                                        서울/경이 지역의
+                                                        퀵서비스 지원이
+                                                        가능하며,
                                                     </li>
                                                     <li className='prmm_dtl_prctn'>
-                                                        제품 구매 금액에 따라 배송 비용이 할증될 수 있습니다. 
+                                                        제품 구매 금액에 따라
+                                                        배송 비용이 할증될 수
+                                                        있습니다.
                                                         <strong className='primary-color'>
-                                                        퀵서비스 비용은 고객 부담
+                                                            퀵서비스 비용은 고객
+                                                            부담
                                                         </strong>
                                                         입니다.
                                                     </li>
@@ -518,20 +528,25 @@ const Benefit = (props) => {
                                                     </li>
                                                     <li className='prmm_dtl_prctn'>
                                                         <strong className='primary-color'>
-                                                        #소니스토어 온라인
+                                                            #소니스토어 온라인
                                                         </strong>
                                                     </li>
                                                     <li className='prmm_dtl_prctn'>
-                                                        * 일반배송 : CJ대한통운 택배배송
+                                                        * 일반배송 : CJ대한통운
+                                                        택배배송
                                                     </li>
                                                     <li className='prmm_dtl_prctn'>
                                                         * 화물배송 : 300만원이상
                                                     </li>
                                                     <li className='prmm_dtl_prctn'>
-                                                        * 퀵서비스 : 구매 금액이 5만원 이상의 경우 고객 요청에 따라 서울/경기 지역의 퀵서비스 지원이 가능(비용 고객 부담)
+                                                        * 퀵서비스 : 구매 금액이
+                                                        5만원 이상의 경우 고객
+                                                        요청에 따라 서울/경기
+                                                        지역의 퀵서비스 지원이
+                                                        가능(비용 고객 부담)
                                                     </li>
                                                 </ul>
-                                                
+
                                                 {/*
                                                 <p className='prmm_dtl_note'>
                                                     * 비용은 고객 부담입니다.
