@@ -193,7 +193,7 @@ const MainEvent = ({
 };
 
 MainEvent.propTypes = {
-    eventBanners: PropTypes.object.isRequired,
+    eventBanners: PropTypes.array.isRequired,
     eventSections: PropTypes.object.isRequired,
     eventBgMoBanners: PropTypes.object.isRequired,
     eventBgPcBanners: PropTypes.object.isRequired,

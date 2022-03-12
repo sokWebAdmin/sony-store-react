@@ -24,6 +24,7 @@ import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/swiper.scss';
 import 'assets/scss/main.scss';
+import MainRecommend from 'components/Main/MainRecommend';
 
 export default function Main() {
     const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
@@ -51,7 +52,7 @@ export default function Main() {
     //6. 추천제품 상품섹션
     const [recommendedSections, setRecommendedSections] = useState([]);
 
-    const [eventSections, setEventSections] = useState([]);
+    const [eventSections, setEventSections] = useState();
 
     const getRecommendedBannerNames = (bannerInfoList) => {
         bannerInfoList.forEach((bannerInfo) => {
@@ -486,157 +487,23 @@ export default function Main() {
                         {/* <!-- // key visual --> */}
 
                         {/* <!-- recommended --> */}
-                        <div className='recommend'>
-                            <div className='recommend__bg__swiper swiper-container'>
-                                {recommendedBanners.length > 0 && (
-                                    <Swiper
-                                        className='swiper-wrapper'
-                                        onSwiper={setRecLeftSwiper}
-                                        slidesPerView={1.000000001}
-                                        observer={true}
-                                        resizeObserver={true}
-                                        loop={true}
-                                        speed={600}
-                                        spaceBetween={0}
-                                    >
-                                        {recommendedBanners.map(
-                                            (recommendedBanner, index) => (
-                                                <SwiperSlide
-                                                    key={index}
-                                                    className='swiper-slide'
-                                                    style={{
-                                                        backgroundImage: `url(${recommendedBanner?.banners[0]?.imageUrl})`,
-                                                    }}
-                                                />
-                                            ),
-                                        )}
-                                    </Swiper>
-                                )}
-                            </div>
-                            <div className='recommend__swiper swiper-container'>
-                                {recommendedBanners.length > 0 && (
-                                    <Swiper
-                                        className='swiper-wrapper'
-                                        onSwiper={setRecRightSwiper}
-                                        scrollbar={{
-                                            el: '.rec-scrollbar',
-                                            draggable: false,
-                                        }}
-                                        on={{
-                                            init: (swiper) => {
-                                                swiper.update();
-                                            },
-                                            resize: (swiper) => {
-                                                swiper.update();
-                                            },
-                                            update: (swiper) => {},
-                                        }}
-                                        observer={true}
-                                        resizeObserver={true}
-                                        loop={true}
-                                        speed={600}
-                                        slidesPerView={1.5}
-                                        spaceBetween={157}
-                                        breakpoints={{
-                                            320: {
-                                                slidesPerView: 1.5,
-                                                spaceBetween: 50,
-                                                allowTouchMove: true,
-                                            },
-                                            1281: {
-                                                slidesPerView: 1.5,
-                                                spaceBetween: 110,
-                                                allowTouchMove: false,
-                                            },
-                                        }}
-                                    >
-                                        {recommendedBanners.map(
-                                            (recommendedBanner, index) => (
-                                                <SwiperSlide
-                                                    className='recommend__item swiper-slide'
-                                                    key={index}
-                                                >
-                                                    <Link
-                                                        to={`product-view/${recommendedSections[index]?.productNo}`}
-                                                        target={
-                                                            recommendedBanner
-                                                                ?.banners[0]
-                                                                ?.browerTargetType ===
-                                                            'CURRENT'
-                                                                ? '_self'
-                                                                : '_blank'
-                                                        }
-                                                        onClick={(e) => {
-                                                            if (
-                                                                window.innerWidth >
-                                                                breakPoint
-                                                            ) {
-                                                                if (
-                                                                    e.currentTarget.parentElement.classList.contains(
-                                                                        'swiper-slide-next',
-                                                                    )
-                                                                ) {
-                                                                    e.preventDefault();
-                                                                    recRightSwiper.slideNext();
-                                                                }
-                                                            }
-                                                        }}
-                                                    >
-                                                        <span
-                                                            className='recommend__item__copy'
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: recommendedBanner
-                                                                    .banners[0]
-                                                                    .nameList,
-                                                            }}
-                                                        />
-                                                        <div
-                                                            className='recommend__item__pic'
-                                                            style={{
-                                                                textAlign:
-                                                                    'center',
-                                                            }}
-                                                        >
-                                                            <img
-                                                                src={
-                                                                    recommendedSections[
-                                                                        index
-                                                                    ]
-                                                                        ?.listImageUrls[0]
-                                                                }
-                                                                alt={`"${recommendedBanner?.banners[0]?.name}"`}
-                                                            />
-                                                        </div>
-                                                        <span className='recommend__item__desc'>
-                                                            {
-                                                                recommendedSections[
-                                                                    index
-                                                                ]?.productName
-                                                            }
-                                                        </span>
-                                                        <span className='recommend__item__name'>
-                                                            {
-                                                                recommendedSections[
-                                                                    index
-                                                                ]?.productNameEn
-                                                            }
-                                                        </span>
-                                                    </Link>
-                                                </SwiperSlide>
-                                            ),
-                                        )}
-                                    </Swiper>
-                                )}
-                                <div
-                                    className='swiper-scrollbar rec-scrollbar'
-                                    style={{ position: 'absolute' }}
+                        {recRightSwiper &&
+                            recommendedBanners &&
+                            recommendedSections && (
+                                <MainRecommend
+                                    recommendedBanners={recommendedBanners}
+                                    setRecLeftSwiper={setRecLeftSwiper}
+                                    setRecRightSwiper={setRecRightSwiper}
+                                    recRightSwiper={recRightSwiper}
+                                    recommendedSections={recommendedSections}
                                 />
-                            </div>
-                        </div>
+                            )}
+
                         {/* <!-- // recommended --> */}
 
                         {/* <!-- event --> */}
-                        {eventBgMoBanners &&
+                        {size &&
+                            eventBgMoBanners &&
                             eventBgPcBanners &&
                             eventSections &&
                             eventBanners && (
