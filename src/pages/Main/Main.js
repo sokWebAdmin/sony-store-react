@@ -19,6 +19,7 @@ import {
     getRecommendedBannerNames,
     getSlideBannerNames,
     getAcademyBannerNames,
+    getLinkTarget,
 } from 'utils/html';
 import { breakPoint } from 'utils/constants';
 import { main } from 'const/seo';
@@ -83,6 +84,7 @@ export default function Main() {
             const eventBanners =
                 data.find(({ code }) => code === eventMain)?.accounts || [];
             setEventBanners(eventBanners);
+
             const academyPcBanners =
                 data.find(({ code }) => code === academyPc)?.accounts[0] || {};
             getAcademyBannerNames(academyPcBanners);
@@ -332,6 +334,11 @@ export default function Main() {
                                                         breakPoint ? (
                                                             <div
                                                                 className='kv__head'
+                                                                style={{
+                                                                    color: bannerInfo
+                                                                        .banners[0]
+                                                                        .nameColor,
+                                                                }}
                                                                 dangerouslySetInnerHTML={{
                                                                     __html: bannerInfo
                                                                         .banners[0]
@@ -341,6 +348,11 @@ export default function Main() {
                                                         ) : (
                                                             <div
                                                                 className='kv__head'
+                                                                style={{
+                                                                    color: bannerInfo
+                                                                        .banners[0]
+                                                                        .nameColor,
+                                                                }}
                                                                 dangerouslySetInnerHTML={{
                                                                     __html: slideMoBanners[
                                                                         index
@@ -351,7 +363,21 @@ export default function Main() {
                                                         )}
 
                                                         <span className='kv__product'>
-                                                            <span>
+                                                            <span
+                                                                style={{
+                                                                    color:
+                                                                        size.width >
+                                                                        breakPoint
+                                                                            ? bannerInfo
+                                                                                  .banners[0]
+                                                                                  .descriptionColor
+                                                                            : slideMoBanners[
+                                                                                  index
+                                                                              ]
+                                                                                  .banners[0]
+                                                                                  .descriptionColor,
+                                                                }}
+                                                            >
                                                                 {size.width >
                                                                 breakPoint
                                                                     ? bannerInfo
@@ -375,14 +401,11 @@ export default function Main() {
                                                                               ?.banners[0]
                                                                               ?.landingUrl
                                                                       }
-                                                                      target={
+                                                                      target={getLinkTarget(
                                                                           bannerInfo
                                                                               ?.banners[0]
-                                                                              .browerTargetType ===
-                                                                          'CURRENT'
-                                                                              ? '_self'
-                                                                              : '_blank'
-                                                                      }
+                                                                              .browerTargetType,
+                                                                      )}
                                                                       className='kv__link'
                                                                       style={{
                                                                           padding:
@@ -408,16 +431,13 @@ export default function Main() {
                                                                               .banners[0]
                                                                               ?.landingUrl
                                                                       }
-                                                                      target={
+                                                                      target={getLinkTarget(
                                                                           slideMoBanners[
                                                                               index
                                                                           ]
                                                                               .banners[0]
-                                                                              .browerTargetType ===
-                                                                          'CURRENT'
-                                                                              ? '_self'
-                                                                              : '_blank'
-                                                                      }
+                                                                              .browerTargetType,
+                                                                      )}
                                                                       className='kv__link'
                                                                       style={{
                                                                           padding:
