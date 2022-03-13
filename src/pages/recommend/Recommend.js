@@ -346,20 +346,6 @@ export default function Recommend({ match }) {
                       resizeObserver={true}
                       slidesPerView={2}
                       spaceBetween={24}
-                      breakpoints={{
-                        320: {
-                          slidesPerView: 1,
-                          spaceBetween: 0,
-                        },
-                        641: {
-                          slidesPerView: 2,
-                          spaceBetween: 16,
-                        },
-                        1281: {
-                          slidesPerView: 2,
-                          spaceBetween: 24,
-                        },
-                      }}
                     >
                       {eventBanners.map((bannerInfo, index) => (
                         <SwiperSlide className="swiper-slide" key={index}>
