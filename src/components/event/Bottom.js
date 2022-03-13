@@ -42,8 +42,6 @@ const EventBottom = () => {
     SwiperCore.use([Navigation]);
     const history = useHistory();
     const location = useLocation();
-    const prevRef = useRef(null);
-    const nextRef = useRef(null);
     const [events, setEvents] = useState([]);
     const [tabState, setTabState] = useState('all');
     const [newest, setNewest] = useState(true);
@@ -150,6 +148,13 @@ const EventBottom = () => {
 
     const closeShareLayer = () => {
         setShowShareLayer(false);
+    };
+
+    const onSortClick = (e) => setSortSelect((prev) => !prev);
+
+    const onTabClick = (key, label) => {
+        setTabState(key);
+        setShowLabel(label);
     };
 
     useEffect(() => {
@@ -273,10 +278,6 @@ const EventBottom = () => {
                 >
                     <Swiper
                         className='swiper-wrapper'
-                        navigation={{
-                            prevEl: prevRef.current,
-                            nextEl: nextRef.current,
-                        }}
                         slidesPerView={_scrollView.pc}
                         breakpoints={{
                             320: {
@@ -287,15 +288,6 @@ const EventBottom = () => {
                             },
                             1281: {
                                 slidesPerView: _scrollView.pc,
-                            },
-                        }}
-                        on={{
-                            init: (swiper) => {
-                                swiper.params.navigation.prevEl =
-                                    prevRef.current;
-                                swiper.params.navigation.nextEl =
-                                    nextRef.current;
-                                swiper.navigation.update();
                             },
                         }}
                         onSwiper={setSwiperTab}
@@ -312,10 +304,9 @@ const EventBottom = () => {
                                     >
                                         <Link
                                             to={`/event/list?tab=${key}`}
-                                            onClick={() => {
-                                                setTabState(key);
-                                                setShowLabel(label);
-                                            }}
+                                            onClick={() =>
+                                                onTabClick(key, label)
+                                            }
                                             className='btn'
                                         >
                                             {label}
@@ -323,8 +314,6 @@ const EventBottom = () => {
                                     </SwiperSlide>
                                 );
                             })}
-                        <div className='swiper-button-prev' ref={prevRef}></div>
-                        <div className='swiper-button-next' ref={nextRef}></div>
                     </Swiper>
                 </div>
                 <div className='tab_ui_info'>
@@ -341,9 +330,7 @@ const EventBottom = () => {
                                 >
                                     <button
                                         className='itemsort__button'
-                                        onClick={() =>
-                                            setSortSelect(!sortSelect)
-                                        }
+                                        onClick={onSortClick}
                                     >
                                         <span className='itemsort__button__label sr-only'>
                                             정렬기준:
