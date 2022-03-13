@@ -1,33 +1,22 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-import '../../../../assets/scss/partials/customPopup.scss';
-
-const Z_INDEX_START_AT = 990;
+import { POPUP_Z_INDEX_START_AT } from 'utils/constants';
+import 'assets/scss/partials/customPopup.scss';
 
 const LayerPopup = ({ popup, todayNotShow, index }) => {
     const [show, setShow] = useState(true);
+    const [popupContents, setPopupContents] = useState('');
 
-    const contentArea = useRef();
-
-    const changed = () => {
-        setContent(popup.content);
-    };
-
-    useEffect(() => changed(), [popup]);
-
-    const sizeStyle = useMemo(
-        () => ({
-            width: popup.width + 'px',
-            height: popup.height + 'px',
-        }),
-        [popup],
-    );
-
-    function setContent(stringifyHTML) {
+    useEffect(() => {
         if (show) {
-            contentArea.current.innerHTML = stringifyHTML;
+            setPopupContents(popup.content);
         }
-    }
+
+        return () => {
+            setPopupContents('');
+        };
+    }, [popup.content, show]);
 
     return (
         show && (
@@ -37,7 +26,7 @@ const LayerPopup = ({ popup, todayNotShow, index }) => {
                     tabIndex='0'
                     style={{
                         display: 'block',
-                        zIndex: Z_INDEX_START_AT + index,
+                        zIndex: `${POPUP_Z_INDEX_START_AT + index}`,
                     }}
                 />
                 <div
@@ -47,8 +36,11 @@ const LayerPopup = ({ popup, todayNotShow, index }) => {
                     <div className='pop_inner'>
                         <div
                             className='pop_cont custom_popup_layer--container'
-                            ref={contentArea}
-                            style={sizeStyle}
+                            style={{
+                                width: `${popup.width}px`,
+                                height: `${popup.height}px`,
+                            }}
+                            dangerouslySetInnerHTML={{ __html: popupContents }}
                         />
                         <button
                             type='button'
@@ -79,6 +71,28 @@ const LayerPopup = ({ popup, todayNotShow, index }) => {
             </>
         )
     );
+};
+
+LayerPopup.propTypes = {
+    popup: PropTypes.shape({
+        content: PropTypes.string.isRequired,
+        displayTypes: PropTypes.array.isRequired,
+        endYmdt: PropTypes.string.isRequired,
+        height: PropTypes.number.isRequired,
+        label: PropTypes.string.isRequired,
+        pageInfos: PropTypes.object.isRequired,
+        popupNo: PropTypes.number.isRequired,
+        popupPosition: PropTypes.string.isRequired,
+        startYmdt: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        width: PropTypes.number.isRequired,
+    }),
+    todayNotShow: PropTypes.shape({
+        get: PropTypes.func.isRequired,
+        getPeriod: PropTypes.func.isRequired,
+        set: PropTypes.func.isRequired,
+    }),
+    index: PropTypes.number.isRequired,
 };
 
 export default LayerPopup;

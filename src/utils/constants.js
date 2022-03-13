@@ -32,3 +32,5 @@ export const CLIENT_ID = {
     facebook: process.env.REACT_APP_FACEBOOK_JAVASCRIPT_KEY,
     kakao: process.env.REACT_APP_KAKAO_RESTAPI_KEY,
 };
+
+export const POPUP_Z_INDEX_START_AT = 990;
