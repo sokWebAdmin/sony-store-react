@@ -72,7 +72,7 @@ const useTerms = (termsTypes) => {
 
         if (prevEnforcementDate === '2018-04-16') {
             window.openWindow(
-                'https://store.sony.co.kr/handler/Common-PageView?pageName=jsp/footer/CF-termsTransfer.jsp ',
+                'https://image.sony.co.kr/newStore/html/terms_prev.html',
             );
             return;
         }
@@ -92,7 +92,7 @@ const useTerms = (termsTypes) => {
 };
 
 useTerms.propTypes = {
-    termsTypes: PropTypes.oneOf(['USE', 'PI_PROCESS', 'USE']),
+    termsTypes: PropTypes.oneOf(['USE', 'PI_PROCESS']),
 };
 
 export { useTerms };

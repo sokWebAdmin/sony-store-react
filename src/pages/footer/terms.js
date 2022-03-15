@@ -1,7 +1,7 @@
-import { React, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 
-import SEOHelmet from 'components/SEOHelmet';
+import SEO from 'components/SEO';
 import Articles from 'components/support/Articles';
 import { articles } from 'const/support';
 import { useTerms } from 'hooks/useTerms';
@@ -33,7 +33,8 @@ export default function Terms() {
 
     return (
         <>
-            <SEOHelmet title={'소니스토어 이용약관'} />
+            <SEO data={{ title: '소니스토어 이용약관' }} />
+
             <div className='contents'>
                 <div className='container'>
                     <div className='content'>
