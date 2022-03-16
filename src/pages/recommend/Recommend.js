@@ -631,15 +631,12 @@ export default function Recommend() {
                                             breakpoints={{
                                                 320: {
                                                     slidesPerView: 1,
-                                                    spaceBetween: 0,
                                                 },
                                                 641: {
                                                     slidesPerView: 2,
-                                                    spaceBetween: 16,
                                                 },
                                                 1281: {
                                                     slidesPerView: 2,
-                                                    spaceBetween: 24,
                                                 },
                                             }}
                                         >
