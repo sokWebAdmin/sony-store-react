@@ -120,6 +120,10 @@
         "defaults"
     ],
     "reactSnap": {
+        "puppeteerArgs": [
+            "--no-sandbox",
+            "--disable-setuid-sandbox"
+        ],
         "destination": "build/pre-rendered",
         "removeScriptTags": true
     },
