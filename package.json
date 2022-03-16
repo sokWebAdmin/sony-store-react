@@ -7,6 +7,7 @@
         "start_original": "node scripts/start.js",
         "build:development": "node scripts/build.js development",
         "build": "node scripts/build.js production",
+        "postbuild": "react-snap",
         "test": "node scripts/test.js",
         "markup": "cd published && npx lite-server index.html"
     },
@@ -119,10 +120,8 @@
         "defaults"
     ],
     "reactSnap": {
-        "puppeteerArgs": [
-            "--no-sandbox",
-            "--disable-setuid-sandbox"
-        ]
+        "destination": "build/pre-rendered",
+        "removeScriptTags": true
     },
     "jest": {
         "roots": [
