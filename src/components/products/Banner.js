@@ -1,48 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-//util
-import { loadBanner } from '../../api/display';
+import { loadBanner } from 'api/display';
+import { getLinkTarget } from 'utils/html';
 
 export default function Banner({ category }) {
     const [banner, setBanner] = useState(null);
 
     useEffect(() => {
-        _initBanner();
-    }, [category]);
+        (async () => {
+            try {
+                const { data } = await loadBanner(category.bannerSectionCodes);
 
-    const _initBanner = async () => {
-        try {
-            const { data } = await loadBanner(category.bannerSectionCodes);
+                if (data?.[0]?.accounts?.[0]?.banners?.length > 0) {
+                    const bannerData = {
+                        accountName: data[0].accounts[0].accountName,
+                        ...data?.[0]?.accounts?.[0]?.banners[0],
+                    };
 
-            if (data?.[0]?.accounts?.[0]?.banners?.length > 0) {
-                const bannerData = {
-                    accountName: data[0].accounts[0].accountName,
-                    ...data?.[0]?.accounts?.[0]?.banners[0],
-                };
+                    bannerData.nameHtml = bannerData.name
+                        .split('/')
+                        .map((s) => `<span>${s}</span>`)
+                        .join('');
+                    bannerData.descriptionHtml = bannerData.description
+                        .split('/')
+                        .map((s) => `<span>${s}</span>`)
+                        .join('');
 
-                bannerData.nameHtml = bannerData.name
-                    .split('/')
-                    .map((s) => `<span>${s}</span>`)
-                    .join('');
-                bannerData.descriptionHtml = bannerData.description
-                    .split('/')
-                    .map((s) => `<span>${s}</span>`)
-                    .join('');
-
-                if (!!bannerData.imageUrl) {
-                    setBanner(bannerData);
+                    if (!!bannerData.imageUrl) {
+                        setBanner(bannerData);
+                    }
                 }
+            } catch (e) {
+                console.error(e);
             }
-        } catch (e) {
-            console.error(e);
-        }
-    };
+        })();
+    }, [category.bannerSectionCodes]);
 
-    const moveLink = () => {
+    const onButtonClick = (e) => {
+        e.preventDefault();
+
         if (!!banner?.landingUrl) {
             window.openWindow(
                 banner.landingUrl,
-                banner.browerTargetType === 'CURRENT' ? '_self' : '_blank',
+                getLinkTarget(banner.browerTargetType),
             );
         }
     };
@@ -73,10 +73,7 @@ export default function Banner({ category }) {
                         <a
                             href='#'
                             className='product__banner__link'
-                            onClick={(e) => {
-                                moveLink();
-                                e.preventDefault();
-                            }}
+                            onClick={onButtonClick}
                         >
                             자세히 보기
                         </a>
