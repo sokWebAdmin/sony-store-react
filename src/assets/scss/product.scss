@@ -127,6 +127,22 @@
     }
   }
 
+  .question_sign{
+    display:none;
+    position:absolute;
+    top:48px;
+    left:0;
+    width:100%;
+    padding:11px 24px;
+    border:1px solid #ddd;
+    background:#fbfbfb;
+    .sign_txt{
+      line-height:22px;
+      letter-spacing:-0.3px;
+      color:#444;
+    }
+  }
+
   .result_list {
     margin-top: 24px;
     padding-top: 30px;
