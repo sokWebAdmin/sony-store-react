@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
-import { orderList, PAGE_SIZE } from '../../const/search';
-import Product from '../products/Product';
+import { useEffect, useState, memo } from 'react';
+import PropTypes from 'prop-types';
+import { chain, map, head } from 'lodash';
 
-import _ from 'lodash';
-import { postProductsGroupManagementCode } from '../../api/product';
-import ViewMore from '../common/ViewMore';
+import Product from 'components/products/Product';
+import ViewMore from 'components/common/ViewMore';
+import { postProductsGroupManagementCode } from 'api/product';
+import { orderList, PAGE_SIZE } from 'const/search';
 
-export default function ProductResult({
+const ProductResult = ({
     productList,
     orderBy,
     setOrderBy,
     productCount,
     searchProduct,
     keyword,
-}) {
+}) => {
     const [mobileOrderOpen, setMobileOrderOpen] = useState(false);
     const [products, setProducts] = useState(productList);
 
@@ -27,7 +28,7 @@ export default function ProductResult({
             isSoldOut: true,
         });
 
-        const groupByCode = _.chain(data)
+        const groupByCode = chain(data)
             .map(({ groupManagementMappingProducts, groupManagementCode }) => ({
                 groupManagementCode,
                 groupManagementMappingProducts,
@@ -36,9 +37,9 @@ export default function ProductResult({
             .value();
 
         setProducts(() => {
-            let products = _.map(productList, (p) => ({
+            let products = map(productList, (p) => ({
                 ...p,
-                groupManagementMappingProducts: _.head(
+                groupManagementMappingProducts: head(
                     groupByCode[p.groupManagementCode],
                 )?.groupManagementMappingProducts,
             }));
@@ -59,12 +60,14 @@ export default function ProductResult({
                 return '높은 가격순';
             case 'OLD_PRODUCT':
                 return '오래된 순';
+            case 'POPULAR':
+                return '인기순';
             default:
                 throw new Error('Unknown orderBy type');
         }
     };
 
-    const codes = _.chain(productList)
+    const codes = chain(productList)
         .flatMap(({ groupManagementCode }) => groupManagementCode)
         .compact()
         .uniq()
@@ -147,4 +150,15 @@ export default function ProductResult({
             )}
         </>
     );
-}
+};
+
+ProductResult.propTypes = {
+    productList: PropTypes.array.isRequired,
+    orderBy: PropTypes.string.isRequired,
+    setOrderBy: PropTypes.func.isRequired,
+    productCount: PropTypes.number.isRequired,
+    searchProduct: PropTypes.func.isRequired,
+    keyword: PropTypes.string.isRequired,
+};
+
+export default memo(ProductResult);
