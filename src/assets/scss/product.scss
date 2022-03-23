@@ -127,6 +127,22 @@
     }
   }
 
+  .question_sign{
+    display:none;
+    position:absolute;
+    top:48px;
+    left:0;
+    width:100%;
+    padding:11px 24px;
+    border:1px solid #ddd;
+    background:#fbfbfb;
+    .sign_txt{
+      line-height:22px;
+      letter-spacing:-0.3px;
+      color:#444;
+    }
+  }
+
   .result_list {
     margin-top: 24px;
     padding-top: 30px;
@@ -290,6 +306,10 @@
     text-align: center;
     line-height: 18px;
     color: #fff;
+
+    &.hover {
+      cursor: help;
+    }
   }
 
   .membership_rating {
@@ -442,6 +462,21 @@
     display: block;
     clear: both;
     content: "";
+  }
+
+  @include only-mo {
+    display:flex;
+    flex-wrap: wrap;
+    -webkit-flex-direction:row;
+    -webkit-justify-content:flex-end;
+    position:relative;
+    width:calc(100% - 30px);
+    max-width:280px;
+    &>li {
+      width:20%;
+      min-height:35px;
+      margin-bottom:10px;
+    }
   }
 }
 
