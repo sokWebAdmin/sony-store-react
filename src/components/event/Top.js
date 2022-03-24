@@ -63,7 +63,7 @@ const EventTop = () => {
                         />
                         <p
                             className='txt'
-                            style={{ color: banner.descriptionColor }}
+                            style={{ color: banner.nameColor }}
                             dangerouslySetInnerHTML={{
                                 __html: banner.description,
                             }}
