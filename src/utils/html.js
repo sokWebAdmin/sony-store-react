@@ -69,6 +69,15 @@ const getAcademyBannerNames = (bannerInfoList) => {
     );
 };
 
+const splitExhibitionsName = (str) => {
+    if (!str) return;
+    const strList = str.split('/');
+    return strList?.reduce((acc, string, index) => {
+        acc += index + 1 !== strList.length ? `${string}<br />` : string;
+        return acc;
+    }, '');
+};
+
 export {
     highlightCategory,
     highlightKeyword,
@@ -76,4 +85,5 @@ export {
     getRecommendedBannerNames,
     getSlideBannerNames,
     getAcademyBannerNames,
+    splitExhibitionsName,
 };

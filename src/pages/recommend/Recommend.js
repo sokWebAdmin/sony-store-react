@@ -1,52 +1,22 @@
-import {
-    React,
-    useState,
-    useEffect,
-    useContext,
-    useRef,
-    useCallback,
-} from 'react';
-
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//api
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/recommend.scss';
-import arrow from '../../assets/images/common/arrow_recommend.png';
-//context
-import GlobalContext from '../../context/global.context';
-
-//utils
-import { useWindowSize } from '../../utils/utils';
-import { useHistory } from 'react-router-dom';
-
-//lib
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { Controller, Scene } from 'react-scrollmagic';
 import { Tween } from 'react-gsap';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, {
-    Navigation,
-    Pagination,
-    Scrollbar,
-    Autoplay,
-} from 'swiper/core';
 
-//lib-css
+import SEO from 'components/SEO';
+import Exhibitions from 'components/recommend/Exhibitions';
+import { loadBanner } from 'api/display';
+import { useWindowSize } from 'utils/utils';
+import { splitExhibitionsName } from 'utils/html';
+import { bannerCode } from 'bannerCode';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/swiper.scss';
-import { Link } from 'react-router-dom';
-import { loadBanner } from '../../api/display';
-import { changeDateFormat, getDay, getStrHM } from '../../utils/dateFormat';
-import { bannerCode } from '../../bannerCode';
+import 'assets/scss/contents.scss';
+import 'assets/scss/recommend.scss';
 
 export default function Recommend({ match }) {
-    const history = useHistory();
-
     const size = useWindowSize();
     const [slideBanners, setSlideBanners] = useState([]);
     const [recommendTopBanners, setRecommendTopBanners] = useState([]);
@@ -86,19 +56,6 @@ export default function Recommend({ match }) {
         }
     }, []);
 
-    const getDate = (data) => {
-        const date = data.split(' ')[0];
-        return `${changeDateFormat(date, 'YYYY.MM.DD')}`;
-    };
-
-    const splitStr = (str) => {
-        if (!str) return;
-        const strList = str.split('/');
-        return strList?.reduce((acc, string, index) => {
-            acc += index + 1 !== strList.length ? `${string}<br />` : string;
-            return acc;
-        }, '');
-    };
     const trigger2 = useRef();
     useEffect(() => {
         document.body.style.position = 'fixed';
@@ -108,8 +65,6 @@ export default function Recommend({ match }) {
         getBanners();
         onScroll();
     }, [getBanners]);
-
-    SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay]);
 
     const onScroll = () => {
         const movingStart = trigger2.current.offsetTop;
@@ -142,7 +97,7 @@ export default function Recommend({ match }) {
 
     return (
         <>
-            <SEOHelmet title={'스토어 추천제품 : 추천제품'} />
+            <SEO data={{ title: '스토어 추천제품 : 추천제품' }} />
             <Controller>
                 <div className='contents recommend'>
                     <div className='container'>
@@ -300,7 +255,7 @@ export default function Recommend({ match }) {
                                                                 <h1
                                                                     className='reco_kv_title'
                                                                     dangerouslySetInnerHTML={{
-                                                                        __html: splitStr(
+                                                                        __html: splitExhibitionsName(
                                                                             slideBanners[2]
                                                                                 ?.banners[0]
                                                                                 ?.name,
@@ -310,7 +265,7 @@ export default function Recommend({ match }) {
                                                                 <p
                                                                     className='reco_kv_desc'
                                                                     dangerouslySetInnerHTML={{
-                                                                        __html: splitStr(
+                                                                        __html: splitExhibitionsName(
                                                                             slideBanners[2]
                                                                                 ?.banners[0]
                                                                                 ?.description,
@@ -637,104 +592,11 @@ export default function Recommend({ match }) {
                                     )}
                                 </div>
                                 {/* //flex */}
+
                                 {/* 기획전 슬라이드 */}
-                                <div className='exhibitions_zone'>
-                                    <p className='title'>진행중인 기획전</p>
-                                    <div className='exhibitions_inner swiper-container swiper_none'>
-                                        <Swiper
-                                            className='swiper-wrapper'
-                                            navigation={{
-                                                nextEl: '.swiper-button-next',
-                                                prevEl: '.swiper-button-prev',
-                                            }}
-                                            observer={true}
-                                            resizeObserver={true}
-                                            slidesPerView={2}
-                                            spaceBetween={24}
-                                            breakpoints={{
-                                                320: {
-                                                    slidesPerView: 1,
-                                                    spaceBetween: 0,
-                                                },
-                                                641: {
-                                                    slidesPerView: 2,
-                                                    spaceBetween: 16,
-                                                },
-                                                1281: {
-                                                    slidesPerView: 2,
-                                                    spaceBetween: 24,
-                                                },
-                                            }}
-                                        >
-                                            {eventBanners.map(
-                                                (bannerInfo, index) => (
-                                                    <SwiperSlide
-                                                        className='swiper-slide'
-                                                        key={index}
-                                                    >
-                                                        <div className='slide_item'>
-                                                            <Link
-                                                                to={
-                                                                    bannerInfo
-                                                                        .banners[0]
-                                                                        .landingUrl
-                                                                }
-                                                                className='item'
-                                                            >
-                                                                <div className='img'>
-                                                                    <img
-                                                                        src={
-                                                                            bannerInfo
-                                                                                .banners[0]
-                                                                                .imageUrl
-                                                                        }
-                                                                        alt=''
-                                                                    />
-                                                                </div>
-                                                                <div className='event_desc'>
-                                                                    <p
-                                                                        className='tit'
-                                                                        dangerouslySetInnerHTML={{
-                                                                            __html: splitStr(
-                                                                                bannerInfo
-                                                                                    ?.banners[0]
-                                                                                    ?.name,
-                                                                            ),
-                                                                        }}
-                                                                    />
-                                                                    <p className='event_duration'>{`${getDate(
-                                                                        bannerInfo
-                                                                            ?.banners[0]
-                                                                            ?.displayStartYmdt,
-                                                                    )} ~ ${
-                                                                        bannerInfo
-                                                                            ?.banners[0]
-                                                                            ?.displayPeriodType ===
-                                                                        'PERIOD'
-                                                                            ? getDate(
-                                                                                  bannerInfo
-                                                                                      ?.banners[0]
-                                                                                      ?.displayEndYmdt,
-                                                                              )
-                                                                            : '재고 소진 시'
-                                                                    }`}</p>
-                                                                </div>
-                                                            </Link>
-                                                        </div>
-                                                    </SwiperSlide>
-                                                ),
-                                            )}
-                                        </Swiper>
-                                        <div className='arrow_btn'>
-                                            <a className='arrow swiper-button-prev'>
-                                                <img src={arrow} alt='이전' />
-                                            </a>
-                                            <a className='arrow swiper-button-next'>
-                                                <img src={arrow} alt='다음' />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                {eventBanners.length > 0 && (
+                                    <Exhibitions eventBanners={eventBanners} />
+                                )}
                             </div>
                         </div>
                     </div>
