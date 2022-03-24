@@ -1,33 +1,32 @@
-import { useCallback, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { loadBanner } from '../../../api/display';
 
-import '../../../assets/scss/partials/myPageBanner.scss';
-import { bannerCode } from '../../../bannerCode';
+import { loadBanner } from 'api/display';
+import { getLinkTarget } from 'utils/html';
+import { bannerCode } from 'bannerCode';
+import 'assets/scss/partials/myPageBanner.scss';
 
 const BToBBanners = () => {
     const [banners, setBanners] = useState([]);
 
-    const init = useCallback(async () => {
-        const { asc, employee, refined } = bannerCode.myPage;
-        mapData(await fetchBanner(employee));
-        mapData(await fetchBanner(refined));
-        mapData(await fetchBanner(asc));
+    useEffect(() => {
+        (async () => {
+            const { asc, employee, refined } = bannerCode.myPage;
+
+            const result = await Promise.all([
+                loadBanner(employee),
+                loadBanner(refined),
+                loadBanner(asc),
+            ]);
+
+            result.forEach((data) => {
+                const banners = data.data
+                    .flatMap((section) => section.accounts)
+                    .flatMap((account) => account.banners);
+                setBanners((prev) => [...prev, ...banners]);
+            });
+        })();
     }, []);
-
-    useEffect(init, []);
-
-    async function fetchBanner(bannerNumber) {
-        const { data } = await loadBanner(bannerNumber);
-        return data;
-    }
-
-    function mapData(data) {
-        const result = data
-            .flatMap((section) => section.accounts)
-            .flatMap((account) => account.banners);
-        setBanners((prev) => [...prev, ...result]);
-    }
 
     return (
         <div className='cont_inner'>
@@ -37,35 +36,57 @@ const BToBBanners = () => {
                         회원님께만 제공되는 특별한 혜택!
                     </span>
                 )}
-                {banners.map((banner, index) => (
-                    <Banner banner={banner} key={index} />
-                ))}
+                {banners.length > 0 &&
+                    banners.map(
+                        (
+                            {
+                                landingUrl,
+                                browerTargetType,
+                                leftSpaceColor,
+                                rightSpaceColor,
+                                imageUrl,
+                                nameColor,
+                                name,
+                                description,
+                            },
+                            index,
+                        ) => {
+                            return (
+                                <Link
+                                    key={index}
+                                    to={landingUrl}
+                                    target={getLinkTarget(browerTargetType)}
+                                    className='b2b_link'
+                                    style={{
+                                        background: `linear-gradient(to right, ${leftSpaceColor}, ${rightSpaceColor})`,
+                                    }}
+                                >
+                                    <img
+                                        className='banner_icon'
+                                        src={imageUrl}
+                                        alt={`${name} 아이콘`}
+                                    />
+                                    <div className='txt_box'>
+                                        <p
+                                            className='tit'
+                                            style={{ color: nameColor }}
+                                        >
+                                            {name}
+                                        </p>
+                                        <p
+                                            className='txt'
+                                            style={{ color: nameColor }}
+                                        >
+                                            {description}
+                                        </p>
+                                    </div>
+                                </Link>
+                            );
+                        },
+                    )}
             </div>
         </div>
     );
 };
 
-const Banner = ({ banner }) => (
-    <>
-        <Link
-            to={banner.landingUrl}
-            target={banner?.browerTargetType === 'CURRENT' ? '_self' : '_blank'}
-            className={`b2b_link`}
-            style={{
-                background: `linear-gradient(to right, ${banner.leftSpaceColor}, ${banner.rightSpaceColor})`,
-            }}
-        >
-            <img
-                className='banner_icon'
-                src={banner.imageUrl}
-                alt={banner.name + ' 아이콘'}
-            />
-            <div className='txt_box'>
-                <p className='tit'>{banner.name}</p>
-                <p className='txt'>{banner.description}</p>
-            </div>
-        </Link>
-    </>
-);
-
-export default BToBBanners;
+export default memo(BToBBanners);
