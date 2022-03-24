@@ -1,19 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//css
-import '../../assets/scss/category.scss';
-
-//utils
-import CategoryHeader from '../../components/products/CategoryHeader';
-import ProductList from '../../components/products/ProductList';
+import SEO from 'components/SEO';
+import CategoryHeader from 'components/products/CategoryHeader';
+import ProductList from 'components/products/ProductList';
 import {
     getCategoryByKey,
     useCategoryState,
     useGetCategoryByKey,
-} from '../../context/category.context';
+} from 'context/category.context';
+import 'assets/scss/category.scss';
 
 export default function Category({ match, history }) {
     const category = useGetCategoryByKey('url', match.url);
@@ -44,7 +39,7 @@ export default function Category({ match, history }) {
 
     return (
         <>
-            <SEOHelmet title={`제품목록:${category?.label || ''}`} />
+            <SEO data={{ title: `제품목록:${category?.label || ''}` }} />
 
             <div className='category'>
                 <div className='container'>
@@ -56,10 +51,8 @@ export default function Category({ match, history }) {
                                     changeCurrentCategoryByNo={
                                         changeCurrentCategoryByNo
                                     }
-                                ></CategoryHeader>
-                                <ProductList
-                                    category={currentCategory}
-                                ></ProductList>
+                                />
+                                <ProductList category={currentCategory} />
                             </>
                         )}
                     </div>

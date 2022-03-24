@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-
-//util
+import { useState, useEffect, useMemo, useRef, memo } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import categoryLeft from '../../assets/images/category/btn_category_left.svg';
+import PropTypes from 'prop-types';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
     Navigation,
@@ -11,17 +9,14 @@ import SwiperCore, {
     Autoplay,
     Controller,
 } from 'swiper/core';
-import categoryRight from '../../assets/images/category/btn_category_right.svg';
-import { categoriesLinkMap } from '../../const/category';
-import { useWindowSize } from '../../utils/utils';
 
-// style
-import '../../assets/scss/partials/categoryTabMenu.scss';
+import { categoriesLinkMap } from 'const/category';
+import { useWindowSize } from 'utils/utils';
+import 'assets/scss/partials/categoryTabMenu.scss';
+import categoryRight from 'assets/images/category/btn_category_right.svg';
+import categoryLeft from 'assets/images/category/btn_category_left.svg';
 
-export default function CategoryHeader({
-    category,
-    changeCurrentCategoryByNo,
-}) {
+const CategoryHeader = ({ category, changeCurrentCategoryByNo }) => {
     const history = useHistory();
     const location = useLocation();
     const categoryLabel = useMemo(() => {
@@ -50,7 +45,7 @@ export default function CategoryHeader({
 
     useEffect(() => {
         changeCurrentCategoryByNo(currentCategoryNo);
-    }, [currentCategoryNo]);
+    }, [changeCurrentCategoryByNo, currentCategoryNo]);
 
     SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 
@@ -312,4 +307,21 @@ export default function CategoryHeader({
             )}
         </div>
     );
-}
+};
+
+CategoryHeader.propTypes = {
+    category: PropTypes.shape({
+        bannerSectionCodes: PropTypes.string.isRequired,
+        categoryNo: PropTypes.number.isRequired,
+        children: PropTypes.array.isRequired,
+        content: PropTypes.string.isRequired,
+        depth: PropTypes.number.isRequired,
+        icon: PropTypes.string.isRequired,
+        isAvailableMoveProductCompare: PropTypes.bool.isRequired,
+        label: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+    }),
+    changeCurrentCategoryByNo: PropTypes.func.isRequired,
+};
+
+export default memo(CategoryHeader);
