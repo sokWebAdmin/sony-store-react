@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
     Navigation,
@@ -6,10 +7,11 @@ import SwiperCore, {
     Autoplay,
     Controller,
 } from 'swiper/core';
-import Product from './Product';
-import { useCategoryState } from '../../context/category.context';
 
-export default function RelatedProducts({ products, reset }) {
+import Product from 'components/products/Product';
+import { useCategoryState } from 'context/category.context';
+
+const RelatedProducts = ({ products, reset }) => {
     SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
     const { categories } = useCategoryState();
 
@@ -55,4 +57,11 @@ export default function RelatedProducts({ products, reset }) {
             </div>
         </div>
     );
-}
+};
+
+RelatedProducts.propTypes = {
+    products: PropTypes.array.isRequired,
+    reset: PropTypes.func.isRequired,
+};
+
+export default RelatedProducts;
