@@ -61,7 +61,7 @@ const ProductResult = ({
             case 'OLD_PRODUCT':
                 return '오래된 순';
             case 'POPULAR':
-                return '인기순';
+                return '정확도 순';
             default:
                 throw new Error('Unknown orderBy type');
         }
