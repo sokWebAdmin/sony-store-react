@@ -5,7 +5,6 @@ import { getLinkTarget } from 'utils/html';
 import { loadBanner } from 'api/display';
 
 const Banner = ({ category }) => {
-    console.log('🚀 ~ file: Banner.js ~ line 7 ~ Banner ~ category', category);
     const [banner, setBanner] = useState(null);
 
     useEffect(() => {

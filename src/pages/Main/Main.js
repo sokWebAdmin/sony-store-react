@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
     Navigation,
     Pagination,
@@ -10,6 +9,7 @@ import SwiperCore, {
 } from 'swiper/core';
 
 import SEO from 'components/SEO';
+import MainKV from 'components/Main/MainKV';
 import MainRecommend from 'components/Main/MainRecommend';
 import MainEvent from 'components/Main/MainEvent';
 import CustomerService from 'components/CustomerService';
@@ -188,282 +188,27 @@ export default function Main() {
                 <div id='container' className='container'>
                     <div className='content main'>
                         {/* <!-- key visual --> */}
-                        <div
-                            className={`kv swiper-container ${
-                                mPointer !== 'none' && mPointer
-                            }`}
-                            onMouseMove={(e) => {
-                                if (size.width > breakPoint) {
-                                    let halfWidth = size.width / 2;
-                                    let activeClass = 'none';
+                        {size &&
+                            slidePcBanners.length > 0 &&
+                            slideMoBanners.length > 0 && (
+                                <MainKV
+                                    size={size}
+                                    mPointer={mPointer}
+                                    setMPointer={setMPointer}
+                                    breakPoint={breakPoint}
+                                    topSwiper={topSwiper}
+                                    setTopSwiper={setTopSwiper}
+                                    slidePcBanners={slidePcBanners}
+                                    slideMoBanners={slideMoBanners}
+                                />
+                            )}
 
-                                    if (e.clientX < halfWidth) {
-                                        activeClass = 'hover-prev';
-                                    } else {
-                                        activeClass = 'hover-next';
-                                    }
-
-                                    setMPointer(activeClass);
-                                }
-                            }}
-                            onMouseLeave={() => {
-                                if (size.width > breakPoint) {
-                                    setMPointer('none');
-                                }
-                            }}
-                            onClick={() => {
-                                if (size.width > breakPoint) {
-                                    if (mPointer === 'hover-prev') {
-                                        if (topSwiper) {
-                                            topSwiper.slidePrev();
-                                        }
-                                    } else if (mPointer === 'hover-next') {
-                                        topSwiper.slideNext();
-                                    }
-                                }
-                            }}
-                        >
-                            {slidePcBanners.length > 0 &&
-                                slideMoBanners.length > 0 && (
-                                    <Swiper
-                                        className='swiper-wrapper'
-                                        onSwiper={setTopSwiper}
-                                        resizeObserver={true}
-                                        observer={true}
-                                        loop={true}
-                                        speed={600}
-                                        autoplay={{
-                                            delay: 20000,
-                                            disableOnInteraction: true,
-                                        }}
-                                        pagination={{
-                                            el: '.swiper-pagination',
-                                            type: 'custom',
-                                            renderCustom: (
-                                                swiper,
-                                                current,
-                                                total,
-                                            ) => {
-                                                let _current = current;
-                                                let _total = total;
-                                                if (current < 10)
-                                                    _current = '0' + current;
-                                                if (total < 10)
-                                                    _total = '0' + total;
-
-                                                return (
-                                                    "<span class='swiper-pagination-current'>No. " +
-                                                    _current +
-                                                    '</span>' +
-                                                    "<span class='swiper-pagination-total'>" +
-                                                    _total +
-                                                    '</span>'
-                                                );
-                                            },
-                                        }}
-                                    >
-                                        {slidePcBanners.map(
-                                            (bannerInfo, index) => (
-                                                <SwiperSlide
-                                                    key={index}
-                                                    className='swiper-slide video-slide'
-                                                    data-swiper-autoplay='10000'
-                                                    style={{
-                                                        backgroundImage:
-                                                            size.width >
-                                                            breakPoint
-                                                                ? bannerInfo
-                                                                      .banners[0]
-                                                                      .videoUrl ===
-                                                                      '' &&
-                                                                  `url(${bannerInfo.banners[0].imageUrl})`
-                                                                : slideMoBanners[
-                                                                      index
-                                                                  ].banners[0]
-                                                                      .videoUrl ===
-                                                                      '' &&
-                                                                  `url(${slideMoBanners[index]?.banners[0]?.imageUrl})`,
-                                                    }}
-                                                >
-                                                    {size.width > breakPoint
-                                                        ? bannerInfo.banners[0]
-                                                              .videoUrl !==
-                                                              '' && (
-                                                              <video
-                                                                  className='video-slide-player'
-                                                                  autoPlay
-                                                                  muted
-                                                                  playsInline
-                                                                  loop
-                                                              >
-                                                                  <source
-                                                                      src={
-                                                                          bannerInfo
-                                                                              .banners[0]
-                                                                              .videoUrl
-                                                                      }
-                                                                      type='video/mp4'
-                                                                  />
-                                                              </video>
-                                                          )
-                                                        : slideMoBanners[index]
-                                                              .banners[0]
-                                                              .videoUrl !==
-                                                              '' && (
-                                                              <video
-                                                                  className='video-slide-player'
-                                                                  autoPlay
-                                                                  muted
-                                                                  playsInline
-                                                                  loop
-                                                              >
-                                                                  <source
-                                                                      src={
-                                                                          slideMoBanners[
-                                                                              index
-                                                                          ]
-                                                                              .banners[0]
-                                                                              .videoUrl
-                                                                      }
-                                                                      type='video/mp4'
-                                                                  />
-                                                              </video>
-                                                          )}
-                                                    <div className='kv__slide'>
-                                                        {size.width >
-                                                        breakPoint ? (
-                                                            <div
-                                                                className='kv__head'
-                                                                style={{
-                                                                    color: bannerInfo
-                                                                        .banners[0]
-                                                                        .nameColor,
-                                                                }}
-                                                                dangerouslySetInnerHTML={{
-                                                                    __html: bannerInfo
-                                                                        .banners[0]
-                                                                        .nameList,
-                                                                }}
-                                                            />
-                                                        ) : (
-                                                            <div
-                                                                className='kv__head'
-                                                                style={{
-                                                                    color: bannerInfo
-                                                                        .banners[0]
-                                                                        .nameColor,
-                                                                }}
-                                                                dangerouslySetInnerHTML={{
-                                                                    __html: slideMoBanners[
-                                                                        index
-                                                                    ].banners[0]
-                                                                        .nameList,
-                                                                }}
-                                                            />
-                                                        )}
-
-                                                        <span className='kv__product'>
-                                                            <span
-                                                                style={{
-                                                                    color:
-                                                                        size.width >
-                                                                        breakPoint
-                                                                            ? bannerInfo
-                                                                                  .banners[0]
-                                                                                  .descriptionColor
-                                                                            : slideMoBanners[
-                                                                                  index
-                                                                              ]
-                                                                                  .banners[0]
-                                                                                  .descriptionColor,
-                                                                }}
-                                                            >
-                                                                {size.width >
-                                                                breakPoint
-                                                                    ? bannerInfo
-                                                                          .banners[0]
-                                                                          .description
-                                                                    : slideMoBanners[
-                                                                          index
-                                                                      ]
-                                                                          .banners[0]
-                                                                          .description}
-                                                            </span>
-                                                        </span>
-                                                        {size.width > breakPoint
-                                                            ? bannerInfo
-                                                                  ?.banners[0]
-                                                                  ?.landingUrl !==
-                                                                  '//' && (
-                                                                  <Link
-                                                                      to={
-                                                                          bannerInfo
-                                                                              ?.banners[0]
-                                                                              ?.landingUrl
-                                                                      }
-                                                                      target={getLinkTarget(
-                                                                          bannerInfo
-                                                                              ?.banners[0]
-                                                                              .browerTargetType,
-                                                                      )}
-                                                                      className='kv__link'
-                                                                      style={{
-                                                                          padding:
-                                                                              '30px 10px 30px 0',
-                                                                      }}
-                                                                  >
-                                                                      <span>
-                                                                          자세히
-                                                                          보기
-                                                                      </span>
-                                                                  </Link>
-                                                              )
-                                                            : slideMoBanners[
-                                                                  index
-                                                              ]?.banners[0]
-                                                                  ?.landingUrl !==
-                                                                  '//' && (
-                                                                  <Link
-                                                                      to={
-                                                                          slideMoBanners[
-                                                                              index
-                                                                          ]
-                                                                              .banners[0]
-                                                                              ?.landingUrl
-                                                                      }
-                                                                      target={getLinkTarget(
-                                                                          slideMoBanners[
-                                                                              index
-                                                                          ]
-                                                                              .banners[0]
-                                                                              .browerTargetType,
-                                                                      )}
-                                                                      className='kv__link'
-                                                                      style={{
-                                                                          padding:
-                                                                              '30px 10px 30px 0',
-                                                                      }}
-                                                                  >
-                                                                      <span>
-                                                                          자세히
-                                                                          보기
-                                                                      </span>
-                                                                  </Link>
-                                                              )}
-                                                    </div>
-                                                </SwiperSlide>
-                                            ),
-                                        )}
-                                    </Swiper>
-                                )}
-                            <div className='swiper-pagination' />
-                        </div>
                         {/* <!-- // key visual --> */}
 
                         {/* <!-- recommended --> */}
                         {recRightSwiper &&
-                            recommendedBanners &&
-                            recommendedSections && (
+                            recommendedBanners.length > 0 &&
+                            recommendedSections.length > 0 && (
                                 <MainRecommend
                                     recommendedBanners={recommendedBanners}
                                     setRecLeftSwiper={setRecLeftSwiper}
@@ -477,10 +222,10 @@ export default function Main() {
 
                         {/* <!-- event --> */}
                         {size &&
-                            eventBgMoBanners &&
-                            eventBgPcBanners &&
+                            eventBgMoBanners.length > 0 &&
+                            eventBgPcBanners.length > 0 &&
                             eventSections &&
-                            eventBanners && (
+                            eventBanners.length > 0 && (
                                 <MainEvent
                                     size={size}
                                     breakPoint={breakPoint}
@@ -569,14 +314,15 @@ export default function Main() {
                                                 academyPcBanners.banners[0]
                                                     ?.landingUrl
                                             }
+                                            style={{
+                                                color: academyPcBanners
+                                                    ?.banners[0]?.nameColor,
+                                            }}
                                             rel='noreferrer'
-                                            target={
+                                            target={getLinkTarget(
                                                 academyPcBanners?.banners[0]
-                                                    ?.browerTargetType ===
-                                                'CURRENT'
-                                                    ? '_self'
-                                                    : '_blank'
-                                            }
+                                                    ?.browerTargetType,
+                                            )}
                                         >
                                             자세히 보기
                                         </a>
@@ -587,14 +333,15 @@ export default function Main() {
                                                 academyMoBanners.banners[0]
                                                     ?.landingUrl
                                             }
+                                            style={{
+                                                color: academyMoBanners
+                                                    ?.banners[0]?.nameColor,
+                                            }}
                                             rel='noreferrer'
-                                            target={
+                                            target={getLinkTarget(
                                                 academyMoBanners?.banners[0]
-                                                    ?.browerTargetType ===
-                                                'CURRENT'
-                                                    ? '_self'
-                                                    : '_blank'
-                                            }
+                                                    ?.browerTargetType,
+                                            )}
                                         >
                                             자세히 보기
                                         </a>
