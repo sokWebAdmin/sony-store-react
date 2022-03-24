@@ -7,7 +7,7 @@ import SEO from 'components/SEO';
 import Exhibitions from 'components/recommend/Exhibitions';
 import { loadBanner } from 'api/display';
 import { useWindowSize } from 'utils/utils';
-import { splitExhibitionsName } from 'utils/html';
+import { getLinkTarget, splitExhibitionsName } from 'utils/html';
 import { bannerCode } from 'bannerCode';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
@@ -298,10 +298,10 @@ export default function Recommend({ match }) {
                                 {/* flex */}
                                 <div className='reco_items'>
                                     {recommendTopBanners?.map(
-                                        (bannerInfo, index) => (
+                                        ({ banners, accountNo }) => (
                                             <div
                                                 className='reco_item'
-                                                key={index}
+                                                key={accountNo}
                                             >
                                                 <div className='reco_item_inner'>
                                                     <Scene
@@ -321,18 +321,13 @@ export default function Recommend({ match }) {
                                                             >
                                                                 <Link
                                                                     to={
-                                                                        bannerInfo
-                                                                            .banners[0]
+                                                                        banners[0]
                                                                             .landingUrl
                                                                     }
-                                                                    target={
-                                                                        bannerInfo
-                                                                            ?.banners[0]
-                                                                            .browerTargetType ===
-                                                                        'CURRENT'
-                                                                            ? '_self'
-                                                                            : '_blank'
-                                                                    }
+                                                                    target={getLinkTarget(
+                                                                        banners[0]
+                                                                            .browerTargetType,
+                                                                    )}
                                                                     className={`reco_prod ${
                                                                         progress ===
                                                                             1 &&
@@ -341,13 +336,11 @@ export default function Recommend({ match }) {
                                                                 >
                                                                     <img
                                                                         src={
-                                                                            bannerInfo
-                                                                                .banners[0]
+                                                                            banners[0]
                                                                                 .imageUrl
                                                                         }
                                                                         alt={
-                                                                            bannerInfo
-                                                                                .banners[0]
+                                                                            banners[0]
                                                                                 .name
                                                                         }
                                                                         className='reco_prod_img'
@@ -378,10 +371,13 @@ export default function Recommend({ match }) {
                                                                             1 &&
                                                                         'end'
                                                                     }`}
+                                                                    style={{
+                                                                        color: banners[0]
+                                                                            .nameColor,
+                                                                    }}
                                                                 >
                                                                     {
-                                                                        bannerInfo
-                                                                            .banners[0]
+                                                                        banners[0]
                                                                             .name
                                                                     }
                                                                 </h2>
@@ -410,10 +406,13 @@ export default function Recommend({ match }) {
                                                                             1 &&
                                                                         'end'
                                                                     }`}
+                                                                    style={{
+                                                                        color: banners[0]
+                                                                            .nameColor,
+                                                                    }}
                                                                 >
                                                                     {
-                                                                        bannerInfo
-                                                                            .banners[0]
+                                                                        banners[0]
                                                                             .description
                                                                     }
                                                                 </p>
@@ -464,10 +463,10 @@ export default function Recommend({ match }) {
                                     </div>
 
                                     {recommendBottomBanners.map(
-                                        (bannerInfo, index) => (
+                                        ({ banners, accountNo }) => (
                                             <div
                                                 className='reco_item'
-                                                key={index}
+                                                key={accountNo}
                                             >
                                                 <div className='reco_item_inner'>
                                                     <Scene
@@ -487,18 +486,13 @@ export default function Recommend({ match }) {
                                                             >
                                                                 <Link
                                                                     to={
-                                                                        bannerInfo
-                                                                            .banners[0]
+                                                                        banners[0]
                                                                             .landingUrl
                                                                     }
-                                                                    target={
-                                                                        bannerInfo
-                                                                            ?.banners[0]
-                                                                            .browerTargetType ===
-                                                                        'CURRENT'
-                                                                            ? '_self'
-                                                                            : '_blank'
-                                                                    }
+                                                                    target={getLinkTarget(
+                                                                        banners[0]
+                                                                            .browerTargetType,
+                                                                    )}
                                                                     className={`reco_prod ${
                                                                         progress ===
                                                                             1 &&
@@ -507,13 +501,11 @@ export default function Recommend({ match }) {
                                                                 >
                                                                     <img
                                                                         src={
-                                                                            bannerInfo
-                                                                                .banners[0]
+                                                                            banners[0]
                                                                                 .imageUrl
                                                                         }
                                                                         alt={
-                                                                            bannerInfo
-                                                                                .banners[0]
+                                                                            banners[0]
                                                                                 .name
                                                                         }
                                                                         className='reco_prod_img'
@@ -544,10 +536,13 @@ export default function Recommend({ match }) {
                                                                             1 &&
                                                                         'end'
                                                                     }`}
+                                                                    style={{
+                                                                        color: banners[0]
+                                                                            .nameColor,
+                                                                    }}
                                                                 >
                                                                     {
-                                                                        bannerInfo
-                                                                            .banners[0]
+                                                                        banners[0]
                                                                             .name
                                                                     }
                                                                 </h2>
@@ -576,10 +571,13 @@ export default function Recommend({ match }) {
                                                                             1 &&
                                                                         'end'
                                                                     }`}
+                                                                    style={{
+                                                                        color: banners[0]
+                                                                            .nameColor,
+                                                                    }}
                                                                 >
                                                                     {
-                                                                        bannerInfo
-                                                                            .banners[0]
+                                                                        banners[0]
                                                                             .description
                                                                     }
                                                                 </p>
