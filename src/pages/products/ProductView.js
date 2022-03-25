@@ -245,7 +245,6 @@ export default function ProductView({ match }) {
         [productNo],
     );
 
-    // TODO: 여기가 문제임!
     const fetchEvent = useCallback(
         async (productNo) => {
             const query =
@@ -253,11 +252,10 @@ export default function ProductView({ match }) {
                     ? { params: { productNos } }
                     : { pathParams: { productNo } };
 
-            const ret = await getEventByProductNo(query);
-            setProductEvents(ret.data);
+            const { data } = await getEventByProductNo(query);
+            setProductEvents((prev) => [...prev, ...data]);
         },
-        [productNos?.length],
-        // [productNos],
+        [productNos],
     );
 
     const fetchOrderConfigs = async (naverPayHandling) => {
