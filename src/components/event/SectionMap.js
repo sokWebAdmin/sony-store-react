@@ -96,7 +96,7 @@ const SectionMap = ({ product, gift, giftProduct, addToCart, hsValidator }) => {
                             className='button button_secondary button-s'
                             onClick={() => giftProduct(product.productNo)}
                         >
-                            <i className='ico gift'></i>선물
+                            <i className='ico gift'></i>선물하기
                         </button>
                     )}
                     <button

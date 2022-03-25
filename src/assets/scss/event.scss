@@ -1679,9 +1679,6 @@
         &.view:after {
           content: '';
         }
-        &:after {
-          content: '하기';
-        }
         &:disabled{
           border-color:#ddd;
           &:after{
