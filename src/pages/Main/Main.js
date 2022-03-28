@@ -16,6 +16,7 @@ import { breakPoint } from 'utils/constants';
 import { main } from 'const/seo';
 import { getDisplaySectionsSectionNo, loadBanner } from 'api/display';
 import { useAlert } from 'hooks';
+import useScript from 'hooks/useScript';
 import { bannerCode } from 'bannerCode';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
@@ -24,6 +25,8 @@ import 'swiper/swiper.scss';
 import 'assets/scss/main.scss';
 
 export default function Main() {
+    useScript('//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js');
+
     const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
 
     const size = useWindowSize();
