@@ -6,40 +6,31 @@ import {
     useMemo,
     createRef,
 } from 'react';
-import GlobalContext from '../../context/global.context';
-import { useHistory } from 'react-router';
-import { usePrevious } from '../../hooks';
+import { useHistory } from 'react-router-dom';
 
-import orderPayment from '../../components/order/orderPayment.js';
-import paymentType from '../../const/paymentType';
-
-// components
-import SEOHelmet from '../../components/SEOHelmet';
-import Products from '../../components/order/Products';
-import Accordion from '../../components/common/surface/Accordion';
-
-import OrdererForm from '../../components/order/OrdererForm';
-import ShippingAddressForm from '../../components/order/ShippingAddressForm';
-import GiftReceiverForm from '../../components/order/GiftReceiverForm';
-import DiscountForm from '../../components/order/DiscountForm';
-import PaymentForm from '../../components/order/PaymentForm';
-import GuestPasswordForm from '../../components/order/GuestPasswordForm';
-import Calculator from '../../components/order/Calculator';
-
-//api
-import { getOrderSheets, postOrderSheetCalculate } from '../../api/order';
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/order.scss';
-import '../../assets/scss/partials/orderBreadcrum.scss';
-import '../../assets/scss/partials/orderSheet.scss';
-
-// functions
-import { getUrlParam } from '../../utils/location';
-import { truncate } from '../../utils/unit';
-import { useGuestState } from '../../context/guest.context';
-import { getAgent } from '../../utils/detectAgent';
+import orderPayment from 'components/order/orderPayment.js';
+import SEOHelmet from 'components/SEOHelmet';
+import Products from 'components/order/Products';
+import Accordion from 'components/common/surface/Accordion';
+import OrdererForm from 'components/order/OrdererForm';
+import ShippingAddressForm from 'components/order/ShippingAddressForm';
+import GiftReceiverForm from 'components/order/GiftReceiverForm';
+import DiscountForm from 'components/order/DiscountForm';
+import PaymentForm from 'components/order/PaymentForm';
+import GuestPasswordForm from 'components/order/GuestPasswordForm';
+import Calculator from 'components/order/Calculator';
+import GlobalContext from 'context/global.context';
+import { useGuestState } from 'context/guest.context';
+import { getOrderSheets, postOrderSheetCalculate } from 'api/order';
+import { usePrevious } from 'hooks';
+import { getUrlParam } from 'utils/location';
+import { truncate } from 'utils/unit';
+import { getAgent } from 'utils/detectAgent';
+import paymentType from 'const/paymentType';
+import 'assets/scss/contents.scss';
+import 'assets/scss/order.scss';
+import 'assets/scss/partials/orderBreadcrum.scss';
+import 'assets/scss/partials/orderSheet.scss';
 
 const agent = getAgent();
 
@@ -239,6 +230,13 @@ const OrderSheet = ({ location }) => {
             deliveryMemo: shippingAddress.deliveryMemo,
             inAppYn: agent.isApp ? 'Y' : 'N',
         };
+
+        if (payment.payType === 'VIRTUAL_ACCOUNT') {
+            result['inputValue'] = 'Y';
+            result['extraData'] = {
+                SGICAgreeYN: 'Y',
+            };
+        }
 
         delete result.shippingAddress.deliveryMemo;
 
