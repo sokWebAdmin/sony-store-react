@@ -60,7 +60,7 @@ const sortOptionsByProductNo = (options, productNo) => {
 };
 
 export default function ProductView({ match }) {
-    // useScript('//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js');
+    useScript('//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js');
     const history = useHistory();
     const { isLogin } = useContext(GlobalContext);
     const productNo = Number(match.params?.productNo) || 0;
