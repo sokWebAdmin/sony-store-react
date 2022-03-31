@@ -54,7 +54,7 @@ const Benefits = ({ price, accumulationUseYn }) => {
             </p>
             <div class='question_sign' ref={questionSignRef}>
                 <p class='sign_txt'>
-                    회원 등급별 기본으로 적립되는 마일리지 혜택과
+                    회원 등급별 기본으로 적립되는 마일리지 혜택과&nbsp;
                     <br class='mo_none' />
                     이벤트를 통해 지급되는 마일리지는 상이할 수 있습니다.
                 </p>
