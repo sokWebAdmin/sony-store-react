@@ -70,12 +70,12 @@ const useTerms = (termsTypes) => {
     const handleHistory = (e) => {
         e.preventDefault();
 
-        if (prevEnforcementDate === '2018-04-16') {
-            window.openWindow(
-                'https://image.sony.co.kr/newStore/html/terms_prev.html',
-            );
-            return;
-        }
+        // if (prevEnforcementDate === '2018-04-16') {
+        window.openWindow(
+            'https://image.sony.co.kr/newStore/html/terms_prev.html',
+        );
+        // return;
+        // }
         setHistoryVisible((prev) => !prev);
         document.querySelector('.contents').scrollIntoView();
     };
