@@ -56,6 +56,7 @@ const useScript = (src) => {
                 if (script) {
                     script.removeEventListener('load', setStateFromEvent);
                     script.removeEventListener('error', setStateFromEvent);
+                    script.remove();
                 }
             };
         },

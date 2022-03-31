@@ -49,7 +49,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%
+  -ms-text-size-adjust: 100%;
 }
 
 html,
@@ -416,7 +416,9 @@ body {
   line-height: 1.4;
   letter-spacing: -0.025em;
   word-break: keep-all;
-  color: #666
+  color: #666;
+  margin: 0 auto;
+  overflow-x: hidden !important;
 }
 
 .wrapper {
@@ -4997,7 +4999,11 @@ body {
 
 @media screen and (max-width: 640px) {
   .popup_wrap {
-    width: 90% !important
+    width: 90% !important;
+  }
+
+  .popup_wrap.find_address {
+    height: 70%;
   }
 
   .password_change {
