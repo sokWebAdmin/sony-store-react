@@ -9,7 +9,6 @@ import SwiperCore, {
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import SEO from 'components/SEO';
-import SEOHelmet from 'components/SEOHelmet';
 import LoadedNaverMap from 'components/support/LoadedNaverMap';
 import StoreGuide from 'components/support/StoreGuide';
 import { storeInfo } from 'const/seo';
