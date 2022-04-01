@@ -51,7 +51,6 @@ import GlobalContext from '../../context/global.context';
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
 import { getOrderConfigs } from '../../api/order';
-import useScript from 'hooks/useScript';
 
 const sortOptionsByProductNo = (options, productNo) => {
     const findIdx = options.findIndex(({ productNo: no }) => no === productNo);
@@ -60,7 +59,6 @@ const sortOptionsByProductNo = (options, productNo) => {
 };
 
 export default function ProductView({ match }) {
-    useScript('//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js');
     const history = useHistory();
     const { isLogin } = useContext(GlobalContext);
     const productNo = Number(match.params?.productNo) || 0;
