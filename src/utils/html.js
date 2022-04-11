@@ -19,4 +19,14 @@ const getLinkTarget = (target) => {
     return target === 'CURRENT' ? '_self' : '_blank';
 };
 
-export { highlightCategory, highlightKeyword, getLinkTarget };
+const splitStr = (str) => {
+    if (str) {
+        const strList = str.split('/');
+        return strList?.reduce((acc, string, index) => {
+            acc += index + 1 !== strList.length ? `${string}<br />` : string;
+            return acc;
+        }, '');
+    }
+};
+
+export { highlightCategory, highlightKeyword, getLinkTarget, splitStr };
