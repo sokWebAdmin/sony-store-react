@@ -2,12 +2,24 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, {
+    Navigation,
+    Pagination,
+    Scrollbar,
+    Autoplay,
+} from 'swiper/core';
 
 import { splitStr } from 'utils/html';
 import { formatDate } from 'utils/dateFormat';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
+import 'swiper/swiper.scss';
 import arrow from 'assets/images/common/arrow_recommend.png';
 
 const RecommendEventBanners = ({ eventBanners }) => {
+    SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay]);
+
     return (
         <div className='exhibitions_zone'>
             <p className='title'>진행중인 기획전</p>
