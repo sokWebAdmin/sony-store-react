@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Controller, Scene } from 'react-scrollmagic';
 import { Tween } from 'react-gsap';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
     Navigation,
     Pagination,
@@ -11,8 +10,9 @@ import SwiperCore, {
 } from 'swiper/core';
 
 import SEO from 'components/SEO';
-import RecommendEventBanners from './RecommendEventBanners';
+import RecommendEventBanners from 'components/recommend/RecommendEventBanners';
 import { useWindowSize } from 'utils/utils';
+import { getLinkTarget, splitStr } from 'utils/html';
 import { loadBanner } from 'api/display';
 import { bannerCode } from 'bannerCode';
 import { recommend } from 'const/seo';
@@ -62,15 +62,6 @@ export default function Recommend() {
             console.error(e);
         }
     }, []);
-
-    const splitStr = (str) => {
-        if (!str) return;
-        const strList = str.split('/');
-        return strList?.reduce((acc, string, index) => {
-            acc += index + 1 !== strList.length ? `${string}<br />` : string;
-            return acc;
-        }, '');
-    };
 
     const trigger2 = useRef();
     useEffect(() => {
@@ -344,14 +335,11 @@ export default function Recommend() {
                                                                             .banners[0]
                                                                             .landingUrl
                                                                     }
-                                                                    target={
+                                                                    target={getLinkTarget(
                                                                         bannerInfo
                                                                             ?.banners[0]
-                                                                            .browerTargetType ===
-                                                                        'CURRENT'
-                                                                            ? '_self'
-                                                                            : '_blank'
-                                                                    }
+                                                                            .browerTargetType,
+                                                                    )}
                                                                     className={`reco_prod ${
                                                                         progress ===
                                                                             1 &&
@@ -510,14 +498,11 @@ export default function Recommend() {
                                                                             .banners[0]
                                                                             .landingUrl
                                                                     }
-                                                                    target={
+                                                                    target={getLinkTarget(
                                                                         bannerInfo
                                                                             ?.banners[0]
-                                                                            .browerTargetType ===
-                                                                        'CURRENT'
-                                                                            ? '_self'
-                                                                            : '_blank'
-                                                                    }
+                                                                            .browerTargetType,
+                                                                    )}
                                                                     className={`reco_prod ${
                                                                         progress ===
                                                                             1 &&
@@ -612,9 +597,11 @@ export default function Recommend() {
                                 </div>
                                 {/* //flex */}
                                 {/* 기획전 슬라이드 */}
-                                <RecommendEventBanners
-                                    eventBanners={eventBanners}
-                                />
+                                {eventBanners.length > 0 && (
+                                    <RecommendEventBanners
+                                        eventBanners={eventBanners}
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
