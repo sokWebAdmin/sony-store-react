@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import dayjs from 'dayjs';
 
-import SEOHelmet from 'components/SEOHelmet';
+import SEO from 'components/SEO';
 import MemberSummary from 'components/myPage/main/MemberSummary';
 import BToBBanners from 'components/myPage/main/BToBBanners';
 import OrderSummary from 'components/myPage/main/OrderSummary';
@@ -127,7 +127,7 @@ export default function MyPageMain() {
 
     return (
         <>
-            <SEOHelmet title={'마이페이지 메인'} />
+            <SEO data={{ title: '마이페이지 메인' }} />
 
             <div className='contents mypage my'>
                 <div className='my_wrap'>

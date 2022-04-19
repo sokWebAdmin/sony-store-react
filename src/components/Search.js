@@ -98,7 +98,7 @@ export default function Search({ setSearchOpen }) {
                                     type='text'
                                     id='search__input'
                                     className='search__field__input'
-                                    placeholder='검색어를 입력해 주세요.'
+                                    placeholder='검색어를 입력해 주세요. (특수문자 제외)'
                                     title='검색어 입력'
                                     maxLength='40'
                                     value={keyword}
