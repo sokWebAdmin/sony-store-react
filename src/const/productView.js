@@ -70,4 +70,9 @@ export const notificationInfo = {
     },
 };
 
-export const espList = [81644, 81643, 81645];
+
+// 개발
+// export const espList = [81644, 81643, 81645];
+
+// 운영
+export const espList = [232810, 232809, 81645];
