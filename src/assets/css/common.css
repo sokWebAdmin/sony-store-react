@@ -49,7 +49,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%
+  -ms-text-size-adjust: 100%;
 }
 
 html,
@@ -416,7 +416,9 @@ body {
   line-height: 1.4;
   letter-spacing: -0.025em;
   word-break: keep-all;
-  color: #666
+  color: #666;
+  margin: 0 auto;
+  overflow-x: hidden !important;
 }
 
 .wrapper {
@@ -2285,8 +2287,8 @@ body {
   text-indent: -9999em
 }
 
-.layer .layer_wrap .layer_close :before,
-.layer .layer_wrap .layer_close :after {
+.layer .layer_wrap .layer_close > span:before,
+.layer .layer_wrap .layer_close > span:after {
   position: absolute;
   top: 50%;
   left: 0;
@@ -2295,19 +2297,15 @@ body {
   width: 98%;
   height: 2px;
   background: #222;
+  transition: all 0.2s;
   -webkit-transition: .2s;
-  transition: .2s
-}
-
-.layer .layer_wrap .layer_close :before {
+  transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
-  transform: rotate(45deg)
 }
 
-.layer .layer_wrap .layer_close :after {
-  bottom: 0;
+.layer .layer_wrap .layer_close>span:after {
+  transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg)
 }
 
 @media screen and (max-width: 640px) {
@@ -2328,10 +2326,11 @@ body {
   }
 
   .layer .layer_wrap .layer_close {
+    position: absolute;
     top: 0;
     right: 0;
     width: 70px;
-    height: 70px
+    height: 70px;
   }
 
   .layer .layer_wrap .layer_close span {
@@ -2448,20 +2447,19 @@ body {
 
   .layer.full_layer .layer_container .layer_title,
   .layer.agree_layer .layer_container .layer_title {
-    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
     font-size: 20px;
-    background-color: #fff
+    background-color: #fff;
   }
 
   .layer.full_layer .layer_container .layer_content,
   .layer.agree_layer .layer_container .layer_content {
-    margin: 20px 0 40px 0;
+    margin: 0 0 40px 0;
     height: auto;
     max-height: 560px;
-    -webkit-overflow-scrolling: touch
+    -webkit-overflow-scrolling: touch;
   }
 
   .layer.full_layer .layer_container .layer_content .foot_cont .Fh4_tit,
@@ -4997,7 +4995,11 @@ body {
 
 @media screen and (max-width: 640px) {
   .popup_wrap {
-    width: 90% !important
+    width: 90% !important;
+  }
+
+  .popup_wrap.find_address {
+    height: 70%;
   }
 
   .password_change {

@@ -446,7 +446,14 @@
       transition-property: transform;
     }
   }
+
+  .exhibitions_zone .exhibitions_inner.swiper_none .swiper-slide {
+    width: calc((100% - 16px)/2);
+    margin-left: 0
+  }
+
   .exhibitions_zone .exhibitions_inner.swiper_none .arrow_btn{
     display: inline-block !important;
   }
+  
 }

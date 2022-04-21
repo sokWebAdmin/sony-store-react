@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
     <head>
         <meta charset="utf-8" />
         <link rel="icon" href="%PUBLIC_URL%/images/favicon_144x144.png" />
@@ -11,7 +11,6 @@
             name="msapplication-TileImage"
             content="%PUBLIC_URL%/images/favicon_144x144.png"
         />
-        <meta name="description" content="SonyStore Korea" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <link
             rel="apple-touch-icon"
@@ -51,14 +50,6 @@
             src="https://test-pay.naver.com/customer/js/naverPayButton.js"
             charset="UTF-8"
         ></script>
-        <!-- /************* Omniture code tagging **************/ -->
-        <script
-            defer
-            type="text/javascript"
-            src="https://image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js"
-        ></script>
-        <!-- /************* Omniture code tagging **************/ -->
-
         <% } %> <% if (process.env.NODE_ENV === 'production') { %>
         <script src="https://shop-api.e-ncp.com/payments/ncp_pay.js"></script>
         <script src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js"></script>
@@ -69,7 +60,7 @@
         ></script>
         <% } %>
 
-        <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+        <script src="//developers.kakao.com/sdk/js/kakao.js"></script>
         <script src="https://stdpay.inicis.com/stdjs/INIStdPay_escrow_conf.js"></script>
     </head>
     <body>
