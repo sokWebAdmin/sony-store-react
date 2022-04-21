@@ -114,7 +114,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                       <label htmlFor="sgic_tab_radio2" className="contentType">신청 안함</label>
                     </div>
                   </div>
-                  <div className="sgic_box_result_cont sgic_tab_radio1">
+                  <div className="sgic_box_result_cont sgic_tab_radio1 on">
                     <div className="acc_form">
                       <div className="acc_cell vat">
                         <label htmlFor="sgic_birth">생년월일</label>
