@@ -1626,17 +1626,23 @@ body {
         &:last-child {
           display: inline-block;
           margin-top: .5em;
+          margin-bottom:1.5em;
           padding-right: 3.5em;
 
           a {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 33px;
-            height: 33px;
-            background: url("https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_gray.png") no-repeat 50%;
-            background-size: cover;
-            text-indent: -9999em;
+            color:#888;
+            
+            &::after {
+              content: "";
+              display: inline-block;
+              width: 5px;
+              height: 5px;
+              margin-left: 4px;
+              margin-right: 12px;
+              transform: rotate(45deg);
+              border-top: 1px solid #888;
+              border-right: 1px solid #888;
+            }
           }
         }
 
@@ -1971,10 +1977,6 @@ body {
 
       &__link {
         display: inline-block;
-      }
-
-      &__warning br {
-        display: none;
       }
     }
 
