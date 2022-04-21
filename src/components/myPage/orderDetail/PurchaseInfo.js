@@ -50,25 +50,6 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos }) {
                 <div className="purchase_detail_method">
                   가상 계좌 : {payInfo.bankInfo.bankName}({payInfo.bankInfo.account})
                 </div>
-                <button
-                  type="button"
-                  className="button button_negative button-s"
-                  disabled
-                >
-                  보증보험 신청중
-                </button>
-                <a
-                href={
-                    window.anchorProtocol +
-                    '#'
-                }
-                onClick={window.openBrowser}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='button button_negative button-s'
-                >
-                    보증보험 조회하기
-                </a>
               </>
             )}
             {payInfo.payType === 'CREDIT_CARD' && (
