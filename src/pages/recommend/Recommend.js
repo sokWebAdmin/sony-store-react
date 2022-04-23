@@ -9,6 +9,7 @@ import { loadBanner } from 'api/display';
 import { useWindowSize } from 'utils/utils';
 import { getLinkTarget, splitExhibitionsName } from 'utils/html';
 import { bannerCode } from 'bannerCode';
+import { recommend } from 'const/seo';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
@@ -16,7 +17,7 @@ import 'swiper/swiper.scss';
 import 'assets/scss/contents.scss';
 import 'assets/scss/recommend.scss';
 
-export default function Recommend({ match }) {
+export default function Recommend() {
     const size = useWindowSize();
     const [slideBanners, setSlideBanners] = useState([]);
     const [recommendTopBanners, setRecommendTopBanners] = useState([]);
@@ -97,7 +98,8 @@ export default function Recommend({ match }) {
 
     return (
         <>
-            <SEO data={{ title: '스토어 추천제품 : 추천제품' }} />
+            <SEO data={recommend} />
+
             <Controller>
                 <div className='contents recommend'>
                     <div className='container'>

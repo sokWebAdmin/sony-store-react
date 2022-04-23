@@ -105,3 +105,4 @@ Banner.propTypes = {
 };
 
 export default memo(Banner);
+

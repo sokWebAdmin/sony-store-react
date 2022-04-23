@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
-import SEO from 'components/SEO';
-import CategoryHeader from 'components/products/CategoryHeader';
-import ProductList from 'components/products/ProductList';
 import {
     getCategoryByKey,
     useCategoryState,
     useGetCategoryByKey,
 } from 'context/category.context';
+import SEO from 'components/SEO';
+import CategoryHeader from 'components/products/CategoryHeader';
+import ProductList from 'components/products/ProductList';
+import { getSEOData } from 'const/seo';
 import 'assets/scss/category.scss';
 
 export default function Category({ match, history }) {
     const category = useGetCategoryByKey('url', match.url);
-
     const { categories } = useCategoryState();
 
     if (categories.length > 0 && !category) {
@@ -39,7 +39,7 @@ export default function Category({ match, history }) {
 
     return (
         <>
-            <SEO data={{ title: `제품목록:${category?.label || ''}` }} />
+            {category && <SEO data={getSEOData(match.url, category.label)} />}
 
             <div className='category'>
                 <div className='container'>

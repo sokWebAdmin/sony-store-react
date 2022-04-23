@@ -1,15 +1,15 @@
 export const getInfoLinks = () => [
     {
         name: 'alpha',
-        href: 'https://www.sony.co.kr/alpha/handler/NAlpha-Main',
+        href: 'https://www.youtube.com/c/SonyAlphaUniverseKorea',
         imgUrl: '/images/product/ico__relation_alpha.png',
-        label: '소니 알파 사이트',
+        label: '소니 알파 유니버스',
     },
     {
-        name: 'youtube',
-        href: 'https://www.youtube.com/user/sonystyleblog',
-        imgUrl: '/images/product/ico__relation_youtube.png',
-        label: '소니코리아 공식 유튜브',
+        name: 'blog',
+        href: 'https://stylezineblog.com/?intcmp=Main_Blog',
+        imgUrl: '/images/product/ic_blog.png',
+        label: '소니 블로그',
     },
     {
         name: 'manual',
@@ -70,4 +70,9 @@ export const notificationInfo = {
     },
 };
 
+
+// 개발
 export const espList = [81644, 81643, 81645];
+
+// 운영
+// export const espList = [232810, 232809, 81645];
