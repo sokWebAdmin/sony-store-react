@@ -120,7 +120,7 @@ const OrderComplete = ({ location }) => {
                   </li>
                   <li>
                     본 주문에 대한 소비자 피해보상보험 신청되었습니다.<br />
-                    상세 신청 내역은&nbsp;
+                    상세 신청 내역은 
                     <a
                     href={
                         window.anchorProtocol +
