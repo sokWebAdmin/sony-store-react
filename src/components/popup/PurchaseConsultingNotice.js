@@ -15,16 +15,7 @@ export default function PurchaseConsultingNotice({ setVisible }) {
             <div className='layer_wrap'>
                 <div className='layer_container'>
                     <div className='layer_title'>
-                        <h1 className='layer_title_text'>
-                            기업 구매 시 유의사항
-                        </h1>
-                        <button
-                            onClick={closeModal}
-                            className='layer_close close'
-                            title='팝업창 닫기'
-                        >
-                            <span>팝업창 닫기</span>
-                        </button>
+                        <h1>기업 구매 시 유의사항</h1>
                     </div>
                     <div className='layer_content'>
                         <div className='scroll_inner'>
@@ -90,6 +81,13 @@ export default function PurchaseConsultingNotice({ setVisible }) {
                                 </ul>
                             </div>
                         </div>
+                        <button
+                            onClick={closeModal}
+                            className='layer_close close'
+                            title='팝업창 닫기'
+                        >
+                            <span>팝업창 닫기</span>
+                        </button>
                     </div>
                 </div>
             </div>

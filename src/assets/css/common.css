@@ -2501,19 +2501,6 @@ body {
     padding: 20px 65px 20px 20px
   }
 
-  .layer.full_layer .layer_container .layer_title,
-  .layer.agree_layer .layer_container .layer_title::after { 
-    content: " ";
-    display: block; 
-    height: 0; 
-    clear: both;
-  }
-
-  .layer.full_layer .layer_container .layer_title,
-  .layer.agree_layer .layer_container .layer_title .layer_title_text{
-    float: left;
-  }
-
   .layer.full_layer .layer_container .layer_content .scroll_inner,
   .layer.agree_layer .layer_container .layer_content .scroll_inner {
     padding: 0 24px 0 24px
@@ -2521,7 +2508,9 @@ body {
 
   .layer.full_layer .layer_container .layer_close,
   .layer.agree_layer .layer_container .layer_close {
-    float: right;
+    position: fixed;
+    top: 0;
+    right: 0;
     width: 70px;
     height: 70px
   }
