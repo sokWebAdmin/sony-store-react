@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
-
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//api
-import { sendSMS, verifySMS } from '../../api/auth';
-import { getMemberInfo } from '../../api/sony/member';
-
-//css
-import '../../assets/scss/contents.scss';
-import { emptyCheck, timeFormat } from '../../utils/utils';
-import Alert from '../../components/common/Alert';
 import { Link, useHistory } from 'react-router-dom';
-import { getUrlParam } from '../../utils/location';
+
+import SEOHelmet from 'components/SEOHelmet';
+import Alert from 'components/common/Alert';
+import { sendSMS, verifySMS } from 'api/auth';
+import { getMemberInfo } from 'api/sony/member';
+import { emptyCheck, timeFormat } from 'utils/utils';
+import { getUrlParam } from 'utils/location';
+import 'assets/scss/contents.scss';
 
 export default function Search() {
     const history = useHistory();
@@ -183,6 +178,12 @@ export default function Search() {
                                 등록하신 정보로 아이디와 비밀번호를 찾으실 수
                                 있습니다.
                             </span>
+                        </p>
+                        <p className='login__desc'>
+                            * SNS 계정으로 가입하신 회원님은 가입하신 SNS의
+                            이메일 아이디로 찾으실 수 있고 <br />
+                            비밀번호의 경우는 가입하신 SNS에서 직접 찾기, 혹은
+                            변경하실 수 있습니다.
                         </p>
                         <div className='login__search_box'>
                             <ul className='login__tab search_type'>
