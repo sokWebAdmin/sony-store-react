@@ -15,13 +15,14 @@ import { useWindowSize } from 'utils/utils';
 import { changeDateFormat } from 'utils/dateFormat';
 import { loadBanner } from 'api/display';
 import { bannerCode } from 'bannerCode';
+import { recommend } from 'const/seo';
+import arrow from 'assets/images/common/arrow_recommend.png';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/swiper.scss';
 import 'assets/scss/contents.scss';
 import 'assets/scss/recommend.scss';
-import arrow from 'assets/images/common/arrow_recommend.png';
 
 export default function Recommend() {
     const size = useWindowSize();
@@ -76,6 +77,7 @@ export default function Recommend() {
             return acc;
         }, '');
     };
+
     const trigger2 = useRef();
     useEffect(() => {
         document.body.style.position = 'fixed';
@@ -119,7 +121,8 @@ export default function Recommend() {
 
     return (
         <>
-            <SEO data={{ title: '스토어 추천제품 : 추천제품' }} />
+            <SEO data={recommend} />
+
             <Controller>
                 <div className='contents recommend'>
                     <div className='container'>
@@ -631,12 +634,15 @@ export default function Recommend() {
                                             breakpoints={{
                                                 320: {
                                                     slidesPerView: 1,
+                                                    spaceBetween: 0,
                                                 },
                                                 641: {
                                                     slidesPerView: 2,
+                                                    spaceBetween: 16,
                                                 },
                                                 1281: {
                                                     slidesPerView: 2,
+                                                    spaceBetween: 24,
                                                 },
                                             }}
                                         >

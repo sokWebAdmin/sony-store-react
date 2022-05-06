@@ -415,6 +415,7 @@ export default function ProductView({ match }) {
                         {hasEvents && productEvents.length > 0 && (
                             <Event events={productEvents} />
                         )}
+
                         <div className='product_cont full'>
                             <div
                                 className='relation_link scroll'
@@ -464,6 +465,7 @@ export default function ProductView({ match }) {
                     </div>
                 )}
             </div>
+
             {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
         </>
     );
