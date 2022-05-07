@@ -1,49 +1,23 @@
-import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import GlobalContext from 'context/global.context';
 import { toCurrencyString } from 'utils/unit';
 
 const ProductList = ({
     products,
-    setProducts,
-    setBeforeCountProducts,
+    deleteItem,
     checkedIndexes,
     setCheckedIndexes,
-    deleteItem,
+    changeQuantity,
 }) => {
-    const { isLogin } = useContext(GlobalContext);
-
-    const [newProducts, setNewProducts] = useState(
-        isLogin
-            ? products.concat().reverse()
-            : products.sort((a, b) => (a.cartNo > b.cartNo ? -1 : 1)),
-    );
-
+    console.log('🚀 ~ file: ProductList.js ~ line 12 ~ products', products);
     const onCheck = (event, index) => {
         const { checked } = event.currentTarget;
 
-        if (checked) {
-            const newCheckedIndexes = [...checkedIndexes, index];
-
-            setCheckedIndexes(newCheckedIndexes);
-        } else {
-            const newCheckedIndexes = checkedIndexes.filter((v) => v !== index);
-
-            setCheckedIndexes(newCheckedIndexes);
-        }
-    };
-
-    const changeQuantity = (productIndex, value) => {
-        // 장바구니에서 재고 소진 등 문제로 해당 상품이 장바구니에서 사라지는 문제 보정하기 위함
-        setBeforeCountProducts(JSON.parse(JSON.stringify(newProducts))); // 비회원
-        setNewProducts((prev) => {
-            prev[productIndex].orderCnt += value;
-            prev[productIndex].update = true;
-            return prev;
-        });
-
-        setProducts([...newProducts]);
+        setCheckedIndexes(
+            checked
+                ? [...checkedIndexes, index]
+                : checkedIndexes.filter((v) => v !== index),
+        );
     };
 
     return (
@@ -59,7 +33,7 @@ const ProductList = ({
             </div>
 
             <div className='col_table_body'>
-                {newProducts.map(
+                {products.map(
                     (
                         {
                             optionNo,
@@ -157,11 +131,10 @@ const ProductList = ({
 
 ProductList.propTypes = {
     products: PropTypes.array.isRequired,
-    setProducts: PropTypes.func.isRequired,
-    setBeforeCountProducts: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
     checkedIndexes: PropTypes.array.isRequired,
     setCheckedIndexes: PropTypes.func.isRequired,
-    deleteItem: PropTypes.func.isRequired,
+    changeQuantity: PropTypes.func.isRequired,
 };
 
 export default ProductList;
