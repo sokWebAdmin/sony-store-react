@@ -76,11 +76,11 @@ export default function Main() {
             bannerInfo.banners[0].nameList = bannerNameList.reduce(
                 (acc, bannerName) => {
                     const nameHtml = bannerName.reduce((acc, name) => {
-                        acc += `<span class="copy-${count}"><span>${name}</span></span>`;
+                        acc += `<span className="copy-${count}"><span>${name}</span></span>`;
                         count++;
                         return acc;
                     }, '');
-                    acc += `<div class="kv__head__copy">${nameHtml}</div>`;
+                    acc += `<div className="kv__head__copy">${nameHtml}</div>`;
                     return acc;
                 },
                 '',
@@ -299,10 +299,10 @@ export default function Main() {
                                                     _total = '0' + total;
 
                                                 return (
-                                                    "<span class='swiper-pagination-current'>No. " +
+                                                    "<span className='swiper-pagination-current'>No. " +
                                                     _current +
                                                     '</span>' +
-                                                    "<span class='swiper-pagination-total'>" +
+                                                    "<span className='swiper-pagination-total'>" +
                                                     _total +
                                                     '</span>'
                                                 );
