@@ -9,7 +9,6 @@ const ProductList = ({
     setCheckedIndexes,
     changeQuantity,
 }) => {
-    console.log('🚀 ~ file: ProductList.js ~ line 12 ~ products', products);
     const onCheck = (event, index) => {
         const { checked } = event.currentTarget;
 
