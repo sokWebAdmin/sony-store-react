@@ -10,7 +10,7 @@ import QnA from 'components/cart/QnA';
 import Empty from 'components/cart/Empty';
 import CartTable from 'components/cart/CartTable';
 import Controller from 'components/cart/tableParticals/Controller';
-import ProductList from 'components/cart/tableParticals/ProductList_dev';
+import ProductList from 'components/cart/tableParticals/ProductList';
 import TotalAmount from 'components/cart/tableParticals/TotalAmount';
 import Solicitation from 'components/popup/Solicitation';
 import {
