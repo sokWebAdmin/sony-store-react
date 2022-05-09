@@ -408,15 +408,13 @@ const Cart = ({ location }) => {
         (productIndex, value) => {
             setBeforeCountProducts(JSON.parse(JSON.stringify(products))); // 비회원
 
-            const newProducts = isLogin
-                ? products.concat().reverse()
-                : products.sort((a, b) => (a.cartNo > b.cartNo ? -1 : 1));
+            const newProducts = products;
 
             newProducts[productIndex].orderCnt += value;
             newProducts[productIndex].update = true;
-            // FIX: 함수형으로 업데이트할 경우 count가 2씩 증가함
-            setProducts([...newProducts]);
+            setProducts([...products]);
 
+            // FIX: 함수형으로 업데이트할 경우 count가 2씩 증가함
             // setProducts((prev) => {
             //     // 이미 이전값에 2가 증가해있음!
             //     console.log('beforePrev');
@@ -432,7 +430,7 @@ const Cart = ({ location }) => {
             //     return [...prev];
             // });
         },
-        [isLogin, products, setBeforeCountProducts, setProducts],
+        [products, setBeforeCountProducts, setProducts],
     );
 
     useEffect(init, []);
