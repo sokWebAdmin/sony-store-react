@@ -6,7 +6,6 @@ import SwiperCore, { Navigation } from 'swiper/core';
 import dayjs from 'dayjs';
 
 import 'swiper/swiper.scss';
-import 'assets/scss/recommend.scss';
 import arrow from 'assets/images/common/arrow_recommend.png';
 
 const Event = ({ events }) => {
