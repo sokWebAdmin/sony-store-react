@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useContext } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { chain, unescape, head } from 'lodash';
 
 import GlobalContext from 'context/global.context';
@@ -10,6 +10,7 @@ import RelatedProducts from 'components/products/RelatedProducts';
 import Event from 'components/products/Event';
 import BottomContent from 'components/products/ViewBottomContent';
 import Alert from 'components/common/Alert';
+import { useAlert } from 'hooks';
 import {
     getProductDetail,
     getProductOptions,
@@ -17,8 +18,8 @@ import {
     getProductsOptions,
     postProductsGroupManagementCode,
 } from 'api/product';
-import { getOrderConfigs } from 'api/order';
 import { getEventByProductNo } from 'api/display';
+import { getOrderConfigs } from 'api/order';
 import { useWindowSize } from 'utils/utils';
 import {
     getColorChipValues,
@@ -26,9 +27,7 @@ import {
     getSaleStatus,
     getSaleStatusForOption,
 } from 'utils/product';
-import { useAlert } from 'hooks';
 import { getInfoLinks, mapContents } from 'const/productView';
-
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
@@ -178,7 +177,6 @@ export default function ProductView({ match }) {
             hasColor,
         }));
     };
-
     const mapProductGroupInfo = ({ imageUrls, options }) => {
         const { optionNo, value } = head(options);
         return {
@@ -253,10 +251,10 @@ export default function ProductView({ match }) {
                     ? { params: { productNos } }
                     : { pathParams: { productNo } };
 
-            const ret = await getEventByProductNo(query);
-            setProductEvents(ret.data);
+            const { data } = await getEventByProductNo(query);
+            setProductEvents((prev) => [...prev, ...data]);
         },
-        [productNos?.length],
+        [productNos],
     );
 
     const fetchOrderConfigs = async (naverPayHandling) => {
@@ -316,6 +314,7 @@ export default function ProductView({ match }) {
     const getLinkInnerWidth = () => {
         const width = size.width - 48;
         const $lis = document.querySelectorAll('.link_inner >li');
+
         const sum = chain($lis)
             .map((el) => window.getComputedStyle(el).getPropertyValue('width'))
             .map((v) => parseInt(v))
@@ -375,6 +374,7 @@ export default function ProductView({ match }) {
     return (
         <>
             <SEO data={{ title: getTitle }} />
+
             <div className='contents product'>
                 {productData && (
                     <div
@@ -408,6 +408,7 @@ export default function ProductView({ match }) {
                                 saleStatus={saleStatus}
                             />
                         </div>
+
                         {relatedProducts.length >= 2 && (
                             <RelatedProducts
                                 reset={reset}
@@ -415,7 +416,10 @@ export default function ProductView({ match }) {
                             />
                         )}
 
-                        {hasEvents && <Event events={productEvents} />}
+                        {hasEvents && productEvents.length > 0 && (
+                            <Event events={productEvents} />
+                        )}
+
                         <div className='product_cont full'>
                             <div
                                 className='relation_link scroll'

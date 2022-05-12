@@ -1,9 +1,13 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
+import useScript from 'hooks/useScript';
+
 const SEO = ({ data }) => {
     // TODO: 추후 별도 파일로 분리
     const config = { title: 'SonyStore', description: '' };
+
+    useScript('//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js');
 
     return (
         <HelmetProvider>

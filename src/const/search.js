@@ -9,7 +9,7 @@ export const TAB_MAP = {
 export const orderList = [
     {
         orderBy: 'POPULAR',
-        label: '인기순',
+        label: '정확도 순',
         query: { 'order.by': 'POPULAR', 'order.direction': 'DESC' },
     },
     {

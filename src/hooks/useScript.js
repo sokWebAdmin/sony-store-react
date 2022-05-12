@@ -48,14 +48,19 @@ const useScript = (src) => {
             };
 
             // Add event listeners
-            script.addEventListener('load', setStateFromEvent);
-            script.addEventListener('error', setStateFromEvent);
+            window.addEventListener('load', () => {
+                script.addEventListener('load', setStateFromEvent);
+                script.addEventListener('error', setStateFromEvent);
+            });
 
             // Remove event listeners on cleanup
             return () => {
                 if (script) {
-                    script.removeEventListener('load', setStateFromEvent);
-                    script.removeEventListener('error', setStateFromEvent);
+                    window.removeEventListener('load', () => {
+                        script.removeEventListener('load', setStateFromEvent);
+                        script.removeEventListener('error', setStateFromEvent);
+                    });
+                    script.remove();
                 }
             };
         },
