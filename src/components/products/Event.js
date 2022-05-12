@@ -1,4 +1,4 @@
-import { useRef, memo } from 'react';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -34,6 +34,11 @@ const Event = ({ events }) => {
                     spaceBetween={10}
                     on={{
                         init: (swiper) => {
+                            swiper.params.navigation.prevEl = prevRef.current;
+                            swiper.params.navigation.nextEl = nextRef.current;
+                            swiper.navigation.update();
+                        },
+                        beforeInit: (swiper) => {
                             swiper.params.navigation.prevEl = prevRef.current;
                             swiper.params.navigation.nextEl = nextRef.current;
                             swiper.navigation.update();
@@ -133,20 +138,22 @@ const Event = ({ events }) => {
 };
 
 Event.propTypes = {
-    events: PropTypes.arrayOf({
-        eventNo: PropTypes.number.isRequired,
-        eventYn: PropTypes.string.isRequired,
-        label: PropTypes.string.isRequired,
-        tag: PropTypes.string.isRequired,
-        promotionText: PropTypes.string.isRequired,
-        pcImageUrl: PropTypes.string.isRequired,
-        mobileimageUrl: PropTypes.string.isRequired,
-        displayPeriodType: PropTypes.string.isRequired,
-        startYmdt: PropTypes.string.isRequired,
-        endYmdt: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired,
-        urlType: PropTypes.string.isRequired,
-    }).isRequired,
+    events: PropTypes.arrayOf(
+        PropTypes.shape({
+            eventNo: PropTypes.number.isRequired,
+            eventYn: PropTypes.string.isRequired,
+            label: PropTypes.string.isRequired,
+            tag: PropTypes.string.isRequired,
+            promotionText: PropTypes.string.isRequired,
+            pcImageUrl: PropTypes.string.isRequired,
+            mobileimageUrl: PropTypes.string.isRequired,
+            displayPeriodType: PropTypes.string.isRequired,
+            startYmdt: PropTypes.string.isRequired,
+            endYmdt: PropTypes.string.isRequired,
+            url: PropTypes.string.isRequired,
+            urlType: PropTypes.string.isRequired,
+        }),
+    ).isRequired,
 };
 
-export default memo(Event);
+export default Event;
