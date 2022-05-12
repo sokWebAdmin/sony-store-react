@@ -5,7 +5,7 @@ import currency from 'currency.js';
 import { useMallState } from 'context/mall.context';
 
 // 할인 혜택
-const Benefits = ({ price, accumulationUseYn }) => {
+const Benefits = ({ price }) => {
     const mallInfo = useMallState();
     const discount = price.salePrice;
     const unit = mallInfo?.accumulationUnit || '';
@@ -43,7 +43,7 @@ const Benefits = ({ price, accumulationUseYn }) => {
                     ? '본 상품은 마일리지가 적립되지 않는 상품입니다.'
                     : '회원별 마일리지 적립혜택 '}
                 <span
-                    class='icon_question'
+                    className='icon_question'
                     onMouseOver={onQuestionMarkMouseOver}
                     onMouseLeave={onQuestionMarkMouseLeave}
                     onTouchStart={onQuestionMarkTouchStart}
@@ -52,10 +52,10 @@ const Benefits = ({ price, accumulationUseYn }) => {
                     !
                 </span>
             </p>
-            <div class='question_sign' ref={questionSignRef}>
-                <p class='sign_txt'>
+            <div className='question_sign' ref={questionSignRef}>
+                <p className='sign_txt'>
                     회원 등급별 기본으로 적립되는 마일리지 혜택과&nbsp;
-                    <br class='mo_none' />
+                    <br className='mo_none' />
                     이벤트를 통해 지급되는 마일리지는 상이할 수 있습니다.
                 </p>
             </div>
@@ -116,7 +116,6 @@ const Benefits = ({ price, accumulationUseYn }) => {
 
 Benefits.propTypes = {
     price: PropTypes.object.isRequired,
-    accumulationUseYn: PropTypes.string,
 };
 
 export default memo(Benefits);
