@@ -69,9 +69,12 @@ const ProductList = ({
                                         />
                                     </div>
                                     <div className='prd_info'>
-                                        <div className='prd_info_name'>
-                                            {productName}
-                                        </div>
+                                        <div
+                                            className='prd_info_name'
+                                            dangerouslySetInnerHTML={{
+                                                __html: productName,
+                                            }}
+                                        />
                                     </div>
                                 </div>
                             </div>
