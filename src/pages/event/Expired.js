@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 import ViewMore from 'components/common/ViewMore';
-import SEOHelmet from 'components/SEOHelmet';
+import SEO from 'components/SEO';
 import { getDisplayCloseEvents } from 'api/display';
-import { getStrDate } from 'utils/dateFormat';
 import 'assets/scss/event.scss';
 
 const Expired = () => {
     const [events, setEvents] = useState({ items: [], totalCount: 0 });
     const [keyword, setKeyword] = useState('');
 
+    // FIXME: 인풋을 클릭할때마다 검색
     const fetchInitDisplayEvents = async (pageNumber = 1, keyword = '') => {
         const query = keyword
-            ? { keyword: keyword.trim(), pageNumber }
+            ? { eventTitle: keyword.trim(), pageNumber }
             : { pageNumber };
         const { data } = await getDisplayCloseEvents({
             ...query,
             hasTotalCount: true,
         });
+
         const closeEvents =
             pageNumber === 1
                 ? data
@@ -38,7 +40,7 @@ const Expired = () => {
 
     return (
         <>
-            <SEOHelmet title={'종료된 기획전'} />
+            <SEO data={{ title: '종료된 기획전' }} />
             <div className='container full expired'>
                 <div className='content'>
                     <div className='common_head first_tit'>
@@ -115,52 +117,54 @@ const Expired = () => {
                                     </div>
                                     <div className='col_table_body'>
                                         {events?.items &&
-                                            events.items.map((event, index) => {
-                                                const {
+                                            events.items.map(
+                                                ({
                                                     eventNo,
                                                     label,
                                                     startYmdt,
                                                     endYmdt,
-                                                } = event;
-                                                return (
-                                                    <div
-                                                        className='col_table_row'
-                                                        key={eventNo}
-                                                    >
-                                                        <div className='col_table_cell event_name'>
-                                                            {/*<p className="txt"></p>*/}
-                                                        </div>
-                                                        <div className='col_table_cell divide'>
-                                                            <div className='divide_table'>
-                                                                <div className='table_cell tal event_name'>
-                                                                    <a className='txt'>
-                                                                        {label}
-                                                                    </a>
-                                                                </div>
-                                                                <div className='table_cell event_duration'>
-                                                                    <p className='txt'>
-                                                                        {getStrDate(
-                                                                            startYmdt,
-                                                                            'YY.MM.DD',
-                                                                        )}{' '}
-                                                                        ~{' '}
-                                                                        {getStrDate(
-                                                                            endYmdt,
-                                                                            'YY.MM.DD',
-                                                                        )}
-                                                                    </p>
+                                                }) => {
+                                                    return (
+                                                        <div
+                                                            className='col_table_row'
+                                                            key={eventNo}
+                                                        >
+                                                            <div className='col_table_cell event_name'></div>
+                                                            <div className='col_table_cell divide'>
+                                                                <div className='divide_table'>
+                                                                    <div className='table_cell tal event_name'>
+                                                                        <a className='txt'>
+                                                                            {
+                                                                                label
+                                                                            }
+                                                                        </a>
+                                                                    </div>
+                                                                    <div className='table_cell event_duration'>
+                                                                        <p className='txt'>
+                                                                            {`${dayjs(
+                                                                                startYmdt,
+                                                                            ).format(
+                                                                                'YY.MM.DD',
+                                                                            )} ~ ${dayjs(
+                                                                                endYmdt,
+                                                                            ).format(
+                                                                                'YY.MM.DD',
+                                                                            )}`}
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                );
-                                            })}
+                                                    );
+                                                },
+                                            )}
                                     </div>
                                 </div>
                                 <ViewMore
                                     totalCount={events.totalCount}
                                     viewMore={fetchInitDisplayEvents}
                                     pageSize={10}
+                                    keyword={keyword}
                                 />
                             </div>
                         </div>

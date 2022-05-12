@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 
-export default function ViewMore({
+const ViewMore = ({
     totalCount,
     viewMore,
     pageSize,
     reset = false,
-}) {
+    keyword = '',
+}) => {
     const [pageNumber, setPageNumber] = useState(1);
     const hide = useMemo(
         () => pageNumber * pageSize > totalCount,
@@ -14,7 +16,7 @@ export default function ViewMore({
     );
 
     const debounceViewMore = debounce(
-        (pageNumber) => viewMore(pageNumber),
+        (pageNumber) => viewMore(pageNumber, keyword),
         500,
     );
 
@@ -41,4 +43,14 @@ export default function ViewMore({
             </a>
         </div>
     );
-}
+};
+
+ViewMore.propTypes = {
+    totalCount: PropTypes.number.isRequired,
+    viewMore: PropTypes.func.isRequired,
+    pageSize: PropTypes.number.isRequired,
+    reset: PropTypes.bool,
+    keyword: PropTypes.string,
+};
+
+export default ViewMore;
