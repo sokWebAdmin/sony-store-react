@@ -53,18 +53,31 @@ const Cart = ({ location }) => {
             })),
         [products],
     );
+    const checkedProducts = useMemo(
+        () => products.filter((_, index) => checkedIndexes.includes(index)),
+        [products, checkedIndexes],
+    );
     const productCount = useMemo(
-        () => products.reduce((sum, product) => (sum += product.orderCnt), 0),
-        [products],
+        () =>
+            checkedProducts.reduce(
+                (sum, product) => (sum += product.orderCnt),
+                0,
+            ),
+        [checkedProducts],
+    );
+    const productAmount = useMemo(
+        () =>
+            checkedProducts.reduce(
+                (sum, product) => (sum += product.buyAmt),
+                0,
+            ),
+        [checkedProducts],
     );
     const allProductIndexes = useMemo(
         () => products.map((_, i) => i),
         [products],
     );
-    const checkedProducts = useMemo(
-        () => products.filter((_, index) => checkedIndexes.includes(index)),
-        [products, checkedIndexes],
-    );
+
     const isUpdate = useMemo(
         () => products.some(({ update }) => update),
         [products],
@@ -470,12 +483,10 @@ const Cart = ({ location }) => {
                                             }
                                             changeQuantity={changeQuantity}
                                         />
-                                        {amount && (
-                                            <TotalAmount
-                                                productCount={productCount}
-                                                amount={amount}
-                                            />
-                                        )}
+                                        <TotalAmount
+                                            productCount={productCount}
+                                            productAmount={productAmount}
+                                        />
                                         <div className='button_wrap'>
                                             <Link
                                                 to='/'
