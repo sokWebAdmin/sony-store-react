@@ -35,7 +35,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
 
   // components state
   const [specifyDelivery, setSpecifyDelivery] = useState(false); // bool
-  const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(new Date()); // Date
+  const [specifyDeliveryDate, setSpecifyDeliveryDate] = useState(new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)); // Date
   const [deliveryMemoVisible, setDeliveryMemoVisible] = useState(false); // Date
   const [deliveryMemo, setDeliveryMemo] = useState(''); // Date
   // object
@@ -139,6 +139,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
     el.parentNode.classList.add('error');
     el.focus();
   }
+  const onChangeDate = (date) => setSpecifyDeliveryDate(date);
 
   return (
     <>
@@ -401,7 +402,8 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
               <DatePicker
                 style={{ display: specifyDelivery ? 'block' : 'none' }}
                 disabled={!specifyDelivery}
-                bindDate={setSpecifyDeliveryDate}
+                bindDate={onChangeDate}
+                dateValue={specifyDeliveryDate}
                 option={{
                   selectableRanges: [[new Date(Date.now() + 1000 * 60 * 60 * 24 * 3), new Date(2999, 11, 31)]],
                 }}
@@ -430,5 +432,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
     </>
   );
 });
+
+ShippingAddressForm.displayName = 'ShippingAddressForm';
 
 export default ShippingAddressForm;

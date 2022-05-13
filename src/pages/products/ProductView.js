@@ -1,56 +1,39 @@
-import React, {
-    useState,
-    useEffect,
-    useCallback,
-    useMemo,
-    useContext,
-} from 'react';
-import { getEventByProductNo } from '../../api/display';
+import { useState, useEffect, useCallback, useMemo, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//lib-css
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
-import 'swiper/components/scrollbar/scrollbar.scss';
-import 'swiper/swiper.scss';
-
-//api
+import SEO from 'components/SEO';
+import MainImage from 'components/products/MainImage';
+import TobContent from 'components/products/ViewTopContent';
+import RelatedProducts from 'components/products/RelatedProducts';
+import Event from 'components/products/Event';
+import BottomContent from 'components/products/ViewBottomContent';
+import Alert from 'components/common/Alert';
+import GlobalContext from 'context/global.context';
 import {
     getProductDetail,
     getProductOptions,
     getProductSearch,
     getProductsOptions,
     postProductsGroupManagementCode,
-} from '../../api/product';
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/product.scss';
-// import '../../assets/scss/event.scss'
-
-//util
-import { useWindowSize } from '../../utils/utils';
-import { getInfoLinks, mapContents } from '../../const/productView';
+} from 'api/product';
+import { getEventByProductNo } from 'api/display';
+import { getOrderConfigs } from 'api/order';
+import { useAlert } from 'hooks';
+import { useWindowSize } from 'utils/utils';
 import {
     getColorChipValues,
     getMainSliderStyle,
     getSaleStatus,
     getSaleStatusForOption,
-} from '../../utils/product';
-
-import MainImage from '../../components/products/MainImage';
-import TobContent from '../../components/products/ViewTopContent';
-import RelatedProducts from '../../components/products/RelatedProducts';
-import Event from '../../components/products/Event';
-import BottomContent from '../../components/products/ViewBottomContent';
-import { useHistory } from 'react-router';
-import GlobalContext from '../../context/global.context';
-import { useAlert } from '../../hooks';
-import Alert from '../../components/common/Alert';
-import { getOrderConfigs } from '../../api/order';
+} from 'utils/product';
+import { getInfoLinks, mapContents } from 'const/productView';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
+import 'swiper/swiper.scss';
+import 'assets/scss/contents.scss';
+import 'assets/scss/product.scss';
 
 const sortOptionsByProductNo = (options, productNo) => {
     const findIdx = options.findIndex(({ productNo: no }) => no === productNo);
@@ -66,8 +49,6 @@ export default function ProductView({ match }) {
     //ui
     const [headerHeight, setHeaderHeight] = useState(0);
     const size = useWindowSize();
-
-    // SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 
     useEffect(() => {
         const $header = document.querySelector('header');
@@ -271,10 +252,10 @@ export default function ProductView({ match }) {
                     ? { params: { productNos } }
                     : { pathParams: { productNo } };
 
-            const ret = await getEventByProductNo(query);
-            setProductEvents(ret.data);
+            const { data } = await getEventByProductNo(query);
+            setProductEvents((prev) => [...prev, ...data]);
         },
-        [productNos?.length],
+        [productNos],
     );
 
     const fetchOrderConfigs = async (naverPayHandling) => {
@@ -392,7 +373,8 @@ export default function ProductView({ match }) {
 
     return (
         <>
-            <SEOHelmet title={getTitle} />
+            <SEO data={{ title: getTitle }} />
+
             <div className='contents product'>
                 {productData && (
                     <div
@@ -430,7 +412,10 @@ export default function ProductView({ match }) {
                             reset={reset}
                             products={relatedProducts}
                         />
-                        {hasEvents && <Event events={productEvents} />}
+                        {hasEvents && productEvents.length > 0 && (
+                            <Event events={productEvents} />
+                        )}
+
                         <div className='product_cont full'>
                             <div
                                 className='relation_link scroll'
@@ -480,6 +465,7 @@ export default function ProductView({ match }) {
                     </div>
                 )}
             </div>
+
             {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
         </>
     );
