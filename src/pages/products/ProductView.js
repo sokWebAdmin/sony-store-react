@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useMemo, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import _ from 'lodash';
+import { chain, unescape, head } from 'lodash';
 
+import GlobalContext from 'context/global.context';
 import SEO from 'components/SEO';
 import MainImage from 'components/products/MainImage';
 import TobContent from 'components/products/ViewTopContent';
@@ -9,7 +10,7 @@ import RelatedProducts from 'components/products/RelatedProducts';
 import Event from 'components/products/Event';
 import BottomContent from 'components/products/ViewBottomContent';
 import Alert from 'components/common/Alert';
-import GlobalContext from 'context/global.context';
+import { useAlert } from 'hooks';
 import {
     getProductDetail,
     getProductOptions,
@@ -19,7 +20,6 @@ import {
 } from 'api/product';
 import { getEventByProductNo } from 'api/display';
 import { getOrderConfigs } from 'api/order';
-import { useAlert } from 'hooks';
 import { useWindowSize } from 'utils/utils';
 import {
     getColorChipValues,
@@ -76,7 +76,7 @@ export default function ProductView({ match }) {
 
     const isInvalidForGradeProduct = (hsCode) => hsCode && !isLogin;
     const unescapeProductName = (productData) => {
-        productData.baseInfo.productName = _.unescape(
+        productData.baseInfo.productName = unescape(
             productData.baseInfo.productName,
         );
         return productData;
@@ -133,8 +133,8 @@ export default function ProductView({ match }) {
 
             hasColor &&
                 setProductGroup(
-                    _.chain(flatOptions).map(({ images, optionNo, value }) => ({
-                        img: _.head(images),
+                    chain(flatOptions).map(({ images, optionNo, value }) => ({
+                        img: head(images),
                         optionNo,
                         colors: getColorChipValues(value),
                     })),
@@ -157,9 +157,9 @@ export default function ProductView({ match }) {
 
     const fetchProductGroupOptions = async (productNos) => {
         const { data } = await getProductsOptions({ productNos });
-        const flatOptions = _.chain(data.optionInfos)
+        const flatOptions = chain(data.optionInfos)
             .flatMap(({ options, mallProductNo }) => ({
-                ..._.head(options),
+                ...head(options),
                 productNo: mallProductNo,
             }))
             .map(({ children, ...rest }) => ({ ...rest }))
@@ -177,9 +177,8 @@ export default function ProductView({ match }) {
             hasColor,
         }));
     };
-
     const mapProductGroupInfo = ({ imageUrls, options }) => {
-        const { optionNo, value } = _.head(options);
+        const { optionNo, value } = head(options);
         return {
             images: imageUrls,
             optionNo,
@@ -202,9 +201,9 @@ export default function ProductView({ match }) {
             productNo,
         );
 
-        setProductGroup(_.chain(gp).map(mapProductGroupInfo).value());
+        setProductGroup(chain(gp).map(mapProductGroupInfo).value());
 
-        const productNos = _.chain(gp)
+        const productNos = chain(gp)
             .flatMap(({ productNo }) => productNo)
             .join()
             .value();
@@ -217,7 +216,7 @@ export default function ProductView({ match }) {
         async (categories) => {
             if (!categories) return;
 
-            const ret = await getProductSearch({
+            const { data } = await getProductSearch({
                 'order.by': 'POPULAR',
                 categoryNos: categories
                     .flatMap(({ categories }) => categories)
@@ -226,16 +225,16 @@ export default function ProductView({ match }) {
             });
 
             setRelatedProducts(
-                _.chain(ret.data.items)
+                chain(data.items)
                     .reject(({ productNo: no }) => no === productNo)
                     .filter(({ hsCode }) => !hsCode)
                     .map((o) => ({
                         ...o,
-                        productName: _.unescape(o.productName),
+                        productName: unescape(o.productName),
                         groupManagementMappingProducts: [
                             {
                                 options: [{ value: o.optionValues }],
-                                mainImageUrl: _.head(o.imageUrls),
+                                mainImageUrl: head(o.imageUrls),
                             },
                         ],
                     }))
@@ -295,7 +294,7 @@ export default function ProductView({ match }) {
 
     const imageUrls = useMemo(() => {
         if (selectedOptionNo > 0) {
-            return _.chain(productGroup)
+            return chain(productGroup)
                 .filter(({ optionNo }) => optionNo === selectedOptionNo)
                 .flatMap(({ images }) => images)
                 .value();
@@ -315,7 +314,8 @@ export default function ProductView({ match }) {
     const getLinkInnerWidth = () => {
         const width = size.width - 48;
         const $lis = document.querySelectorAll('.link_inner >li');
-        const sum = _.chain($lis)
+
+        const sum = chain($lis)
             .map((el) => window.getComputedStyle(el).getPropertyValue('width'))
             .map((v) => parseInt(v))
             .sum()
@@ -332,7 +332,7 @@ export default function ProductView({ match }) {
 
         if (!productData.categories) return productName;
 
-        const categoryCode = _.chain(productData.categories)
+        const categoryCode = chain(productData.categories)
             .take(1)
             .flatMap(({ categories }) => categories)
             .map(({ label }) => label)
@@ -408,10 +408,14 @@ export default function ProductView({ match }) {
                                 saleStatus={saleStatus}
                             />
                         </div>
-                        <RelatedProducts
-                            reset={reset}
-                            products={relatedProducts}
-                        />
+
+                        {relatedProducts.length >= 2 && (
+                            <RelatedProducts
+                                reset={reset}
+                                products={relatedProducts}
+                            />
+                        )}
+
                         {hasEvents && productEvents.length > 0 && (
                             <Event events={productEvents} />
                         )}
@@ -465,7 +469,6 @@ export default function ProductView({ match }) {
                     </div>
                 )}
             </div>
-
             {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
         </>
     );
