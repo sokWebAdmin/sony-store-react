@@ -6,6 +6,8 @@ import {
     forwardRef,
     useImperativeHandle,
 } from 'react';
+import { trim } from 'lodash';
+import dayjs from 'dayjs';
 
 import GlobalContext from 'context/global.context';
 import DatePicker from 'components/common/DatePicker';
@@ -13,7 +15,6 @@ import SelectBox from 'components/common/SelectBox';
 import FindAddress from 'components/popup/FindAddress';
 import PickRecentAddresses from 'components/popup/PickRecentAddresses';
 import { handleChange, setObjectState } from 'utils/state';
-import { getStrYMDHMSS } from 'utils/dateFormat';
 import { deliveryMemos } from 'const/order';
 import 'assets/scss/interaction/field.dynamic.scss';
 
@@ -47,7 +48,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
             specifyDelivery
                 ? handleShippingChangeParameter(
                       'requestShippingDate',
-                      getStrYMDHMSS(specifyDeliveryDate)?.substr(0, 10),
+                      dayjs(specifyDeliveryDate).format('YYYY-MM-DD'),
                   )
                 : handleShippingChangeParameter('requestShippingDate', null),
         [specifyDeliveryDate, specifyDelivery],
@@ -89,7 +90,7 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
             return;
         }
 
-        const { name } = event.target;
+        const { name, value, parentNode } = event.target;
         const noSame = ['receiverName', 'receiverContact1'].some(
             (v) => v === name,
         );
@@ -97,20 +98,24 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
             setSameAsOrderer(false);
         }
 
-        if (event.target.value.trim()) {
-            event.target.parentNode.classList.remove('error');
+        if (value.trim()) {
+            parentNode.classList.remove('error');
         }
+
+        if (value.trim().length < 17) {
+            parentNode.lastChild.classList.remove('error');
+        }
+
         handleChange(event)(setShipping);
 
         if (name === 'deliveryMemo') {
-            handleShippingChangeParameter('deliveryMemo', event.target.value);
-            setDeliveryMemo(event.target.value);
+            handleShippingChangeParameter('deliveryMemo', value);
+            setDeliveryMemo(value);
         }
     };
 
-    function handleShippingChangeParameter(key, value) {
+    const handleShippingChangeParameter = (key, value) =>
         setObjectState(key, value)(setShipping);
-    }
 
     const [sameAsOrderer, setSameAsOrderer] = useState(false);
 
@@ -137,21 +142,33 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
             const emptyRef = Object.entries(refs).find(
                 ([k]) => !shipping[k],
             )?.[1];
+
+            const receiverDetailAddressRef = refs.receiverDetailAddress.current;
+            if (trim(receiverDetailAddressRef.value).length > 17) {
+                receiverDetailAddressRef.parentNode.lastChild.classList.add(
+                    'error',
+                );
+                receiverDetailAddressRef.focus();
+                return false;
+            }
+
             if (!emptyRef) {
                 return true;
             }
 
             attachError(emptyRef);
+
             return false;
         },
         sameAsOrderer,
     }));
 
-    function attachError(ref) {
+    const attachError = (ref) => {
         const el = ref.current;
         el.parentNode.classList.add('error');
         el.focus();
-    }
+    };
+
     const onChangeDate = (date) => setSpecifyDeliveryDate(date);
 
     return (
@@ -343,6 +360,11 @@ const ShippingAddressForm = forwardRef((prop, ref) => {
                             <p className='error_txt'>
                                 <span className='ico' />
                                 상세 주소를 입력해 주세요.
+                            </p>
+
+                            <p className='error_txt character'>
+                                <span className='ico' />
+                                17자 이내로 입력해주세요.
                             </p>
                         </div>
                     </div>
