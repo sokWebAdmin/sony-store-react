@@ -13,6 +13,7 @@ import SEO from 'components/SEO';
 import Alert from 'components/common/Alert';
 import { useWindowSize, wonComma } from 'utils/utils';
 import { breakPoint } from 'utils/constants';
+import { splitStr } from 'utils/html';
 import { main } from 'const/seo';
 import { getDisplaySectionsSectionNo, loadBanner } from 'api/display';
 import { useAlert } from 'hooks';
@@ -400,18 +401,22 @@ export default function Main() {
                                                         )}
 
                                                         <span className='kv__product'>
-                                                            <span>
-                                                                {size.width >
-                                                                breakPoint
-                                                                    ? bannerInfo
-                                                                          .banners[0]
-                                                                          .description
-                                                                    : slideMoBanners[
-                                                                          index
-                                                                      ]
-                                                                          .banners[0]
-                                                                          .description}
-                                                            </span>
+                                                            <span
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html: splitStr(
+                                                                        size.width >
+                                                                            breakPoint
+                                                                            ? bannerInfo
+                                                                                  .banners[0]
+                                                                                  .description
+                                                                            : slideMoBanners[
+                                                                                  index
+                                                                              ]
+                                                                                  .banners[0]
+                                                                                  .description,
+                                                                    ),
+                                                                }}
+                                                            />
                                                         </span>
                                                         {size.width > breakPoint
                                                             ? bannerInfo
