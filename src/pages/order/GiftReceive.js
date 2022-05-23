@@ -14,6 +14,7 @@ import { deliveryMemos } from 'const/order';
 import 'assets/scss/contents.scss';
 import 'assets/css/order.css';
 import 'assets/scss/interaction/field.dynamic.scss';
+import { trim } from 'lodash';
 
 // const TEST_ENCRYPTED_SHIPPING_NO = 'eW5Pb3NJVndBcTFNZ3RZTHhxQ3dQdz09';
 const receiverAddressMap = {
@@ -56,9 +57,15 @@ const GiftReceive = ({ location }) => {
             return;
         }
 
-        if (event.target.value.trim()) {
-            event.target.parentNode.classList.remove('error');
+        const { value, parentNode } = event.target;
+        if (value.trim()) {
+            parentNode.classList.remove('error');
         }
+
+        if (value.trim().length < 17) {
+            parentNode.lastChild.classList.remove('error');
+        }
+
         handleChange(event)(setLatestShipping);
     };
 
@@ -78,6 +85,12 @@ const GiftReceive = ({ location }) => {
         if (!fieldValidation()) {
             return;
         }
+
+        console.log(
+            '🚀 ~ file: GiftReceive.js ~ line 102 ~ submit ~ submit',
+            submit,
+        );
+        return;
 
         const request = { ...latestShipping };
 
@@ -113,6 +126,16 @@ const GiftReceive = ({ location }) => {
         const emptyRef = Object.entries(refs).find(
             ([k]) => !latestShipping[k],
         )?.[1];
+
+        const receiverDetailAddressRef = refs.receiverDetailAddress.current;
+        if (trim(receiverDetailAddressRef.value).length > 17) {
+            receiverDetailAddressRef.parentNode.lastChild.classList.add(
+                'error',
+            );
+            receiverDetailAddressRef.focus();
+            return false;
+        }
+
         if (!emptyRef) {
             return true;
         }
@@ -342,6 +365,11 @@ const GiftReceive = ({ location }) => {
                                                                 <span className='ico' />
                                                                 상세 주소를
                                                                 입력해 주세요.
+                                                            </p>
+                                                            <p className='error_txt character'>
+                                                                <span className='ico' />
+                                                                17자 이내로
+                                                                입력해주세요.
                                                             </p>
                                                         </div>
                                                     </div>
