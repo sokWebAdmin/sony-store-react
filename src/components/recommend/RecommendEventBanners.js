@@ -71,19 +71,6 @@ const RecommendEventBanners = ({ eventBanners }) => {
                                                 ),
                                             }}
                                         />
-                                        <p className='event_duration'>
-                                            {`${formatDate(
-                                                banners[0].displayStartYmdt,
-                                            )} ~ ${
-                                                banners[0].displayPeriodType ===
-                                                'PERIOD'
-                                                    ? formatDate(
-                                                          banners[0]
-                                                              .displayEndYmdt,
-                                                      )
-                                                    : '재고 소진 시'
-                                            }`}
-                                        </p>
                                     </div>
                                 </Link>
                             </div>

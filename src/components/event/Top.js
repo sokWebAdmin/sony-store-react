@@ -9,7 +9,6 @@ import SwiperCore, {
     Scrollbar,
 } from 'swiper/core';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 
 import { loadBanner } from 'api/display';
 import { useMediaQuery } from 'hooks';
@@ -67,17 +66,7 @@ const EventTop = () => {
                             dangerouslySetInnerHTML={{
                                 __html: banner.description,
                             }}
-                        ></p>
-                        <p
-                            className='event_duration'
-                            style={{ color: banner.nameColor }}
-                        >
-                            {`${dayjs(banner.displayStartYmdt).format(
-                                'YYYY-MM-DD',
-                            )} ~ ${dayjs(banner.displayEndYmdt).format(
-                                'YYYY-MM-DD',
-                            )}`}
-                        </p>
+                        />
                         <div className='btn_article'>
                             <DetailLink
                                 to={banner.landingUrl}
