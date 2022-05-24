@@ -86,12 +86,6 @@ const GiftReceive = ({ location }) => {
             return;
         }
 
-        console.log(
-            '🚀 ~ file: GiftReceive.js ~ line 102 ~ submit ~ submit',
-            submit,
-        );
-        return;
-
         const request = { ...latestShipping };
 
         delete request.deliveryNo;
