@@ -7,7 +7,7 @@ const SEO = ({ data }) => {
     // TODO: 추후 별도 파일로 분리
     const config = { title: 'SonyStore', description: '' };
 
-    useScript('//image.sony.co.kr/omniture/real/sonystore_code_2013.js');
+    useScript('//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js');
 
     return (
         <HelmetProvider>
