@@ -65,121 +65,118 @@ export default function Recommend() {
         <>
             <SEO data={recommend} />
 
-            <Controller>
-                <div className='contents recommend'>
-                    <div className='container'>
-                        <div className='content'>
-                            <div className='reco'>
-                                {/* kv */}
-                                {slideBanners.length > 0 && (
-                                    <div
-                                        className='reco_kv'
-                                        style={{ height: '70vh' }}
-                                    >
-                                        <div className='reco_kv_inner end'>
-                                            <Controller>
-                                                <Scene
-                                                    triggerElement='.trigger-3'
-                                                    duration={height * 1.2}
-                                                    delay={3}
-                                                >
-                                                    {(progress) => (
-                                                        <Tween
-                                                            duration='2'
-                                                            delay='2'
-                                                            totalProgress={
-                                                                progress
-                                                            }
-                                                            paused
+            {/* <Controller> */}
+            <div className='contents recommend'>
+                <div className='container'>
+                    <div className='content'>
+                        <div className='reco'>
+                            {/* kv */}
+                            {slideBanners.length > 0 && (
+                                <div
+                                    className='reco_kv'
+                                    style={{ height: '70vh' }}
+                                >
+                                    <div className='reco_kv_inner end'>
+                                        <Controller>
+                                            <Scene
+                                                triggerElement='.trigger-3'
+                                                duration={height * 1.2}
+                                                delay={3}
+                                            >
+                                                {(progress) => (
+                                                    <Tween
+                                                        duration='2'
+                                                        delay='2'
+                                                        totalProgress={progress}
+                                                        paused
+                                                    >
+                                                        <div
+                                                            id='reco_kv_img-3'
+                                                            className='reco_kv_img reco_kv_img-3 end'
                                                         >
-                                                            <div
-                                                                id='reco_kv_img-3'
-                                                                className='reco_kv_img reco_kv_img-3 end'
-                                                            >
-                                                                <img
-                                                                    src={
-                                                                        slideBanners[2]
-                                                                            ?.banners[0]
-                                                                            ?.imageUrl
-                                                                    }
-                                                                    alt={
-                                                                        slideBanners[2]
-                                                                            ?.banners[0]
-                                                                            ?.name
-                                                                    }
-                                                                />
-                                                            </div>
-                                                        </Tween>
-                                                    )}
-                                                </Scene>
-                                            </Controller>
-                                            <Controller>
-                                                <Scene
-                                                    triggerElement='.trigger-4'
-                                                    duration={height * 1.2}
-                                                >
-                                                    {(progress) => (
-                                                        <Tween
-                                                            totalProgress={
-                                                                progress
-                                                            }
-                                                            paused
+                                                            <img
+                                                                src={
+                                                                    slideBanners[0]
+                                                                        ?.banners[0]
+                                                                        ?.imageUrl
+                                                                }
+                                                                alt={
+                                                                    slideBanners[0]
+                                                                        ?.banners[0]
+                                                                        ?.name
+                                                                }
+                                                            />
+                                                        </div>
+                                                    </Tween>
+                                                )}
+                                            </Scene>
+                                        </Controller>
+                                        <Controller>
+                                            <Scene
+                                                triggerElement='.trigger-4'
+                                                duration={height * 1.2}
+                                            >
+                                                {(progress) => (
+                                                    <Tween
+                                                        totalProgress={progress}
+                                                        paused
+                                                    >
+                                                        <div
+                                                            className={`reco_kv_copy ${
+                                                                progress > 0
+                                                                    ? 'end'
+                                                                    : ''
+                                                            }`}
                                                         >
-                                                            <div
-                                                                className={`reco_kv_copy ${
-                                                                    progress > 0
-                                                                        ? 'end'
-                                                                        : ''
-                                                                }`}
-                                                            >
-                                                                <h1
-                                                                    className='reco_kv_title'
-                                                                    dangerouslySetInnerHTML={{
-                                                                        __html: splitStr(
-                                                                            slideBanners[2]
-                                                                                ?.banners[0]
-                                                                                ?.name,
-                                                                        ),
-                                                                    }}
-                                                                />
-                                                                <p
-                                                                    className='reco_kv_desc'
-                                                                    dangerouslySetInnerHTML={{
-                                                                        __html: splitStr(
-                                                                            slideBanners[2]
-                                                                                ?.banners[0]
-                                                                                ?.description,
-                                                                        ),
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                        </Tween>
-                                                    )}
-                                                </Scene>
-                                            </Controller>
-                                            <Controller>
-                                                <Scene triggerElement='.trigger-end'>
-                                                    {(progress) => <></>}
-                                                </Scene>
-                                            </Controller>
-                                        </div>
-
-                                        <div
-                                            className='trigger trigger-3'
-                                            style={{ top: '0vh' }}
-                                        />
-                                        <div
-                                            className='trigger trigger-4'
-                                            style={{ top: '30vh' }}
-                                        />
-                                        <div
-                                            className='trigger trigger-end'
-                                            style={{ top: '80vh' }}
-                                        />
+                                                            <h1
+                                                                className='reco_kv_title'
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html: splitStr(
+                                                                        slideBanners[0]
+                                                                            ?.banners[0]
+                                                                            ?.name,
+                                                                    ),
+                                                                }}
+                                                            />
+                                                            <p
+                                                                className='reco_kv_desc'
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html: splitStr(
+                                                                        slideBanners[0]
+                                                                            ?.banners[0]
+                                                                            ?.description,
+                                                                    ),
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </Tween>
+                                                )}
+                                            </Scene>
+                                        </Controller>
+                                        <Controller>
+                                            <Scene triggerElement='.trigger-end'>
+                                                {(progress) => <></>}
+                                            </Scene>
+                                        </Controller>
                                     </div>
-                                )}
-                                {/* //kv */}
-                                {/* flex */}
+
+                                    <div
+                                        className='trigger trigger-3'
+                                        style={{ top: '0vh' }}
+                                    />
+                                    <div
+                                        className='trigger trigger-4'
+                                        style={{ top: '30vh' }}
+                                    />
+                                    <div
+                                        className='trigger trigger-end'
+                                        style={{ top: '70vh' }}
+                                    />
+                                </div>
+                            )}
+                            {/* //kv */}
+                            {/* flex */}
+                            <Controller>
                                 <div className='reco_items'>
                                     {recommendTopBanners.length > 0 &&
                                         recommendTopBanners.map(
@@ -315,6 +312,7 @@ export default function Recommend() {
                                         }}
                                     >
                                         <Scene
+                                            triggerElement='.reco_banner'
                                             duration={height * 0.5}
                                             triggerHook={0.75}
                                         >
@@ -464,18 +462,19 @@ export default function Recommend() {
                                         ),
                                     )}
                                 </div>
-                                {/* //flex */}
-                                {/* 기획전 슬라이드 */}
-                                {eventBanners.length > 0 && (
-                                    <RecommendEventBanners
-                                        eventBanners={eventBanners}
-                                    />
-                                )}
-                            </div>
+                            </Controller>
+                            {/* //flex */}
+                            {/* 기획전 슬라이드 */}
+                            {eventBanners.length > 0 && (
+                                <RecommendEventBanners
+                                    eventBanners={eventBanners}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
-            </Controller>
+            </div>
+            {/* </Controller> */}
         </>
     );
 }
