@@ -6,10 +6,11 @@ import CountBox from '../../common/CountBox';
 import { wonComma } from '../../../utils/utils';
 
 const getDisabledLabel = (reserved, o) => {
-  if (o.reservationStockCnt > 0) return '';
-  if (o.stockCnt > 0) return '';
-  if (o.saleType === 'SOLDOUT') return '일시품절';
   //Hotfix : 2022-05-26 옵션 품절여부 체크 수정
+  // if (o.reservationStockCnt > 0) return ''; 
+  // if (o.stockCnt > 0) return '';
+  if (reserved && o.reservationStockCnt === 0) return '일시품절';
+  if (o.saleType === 'SOLDOUT') return '일시품절';
   //if (o.stockCnt === 0 || o.reservationStockCnt === 0) return '일시품절';
   return '';
 };
