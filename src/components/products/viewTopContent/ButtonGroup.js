@@ -306,29 +306,27 @@ export default function ButtonGroup({
   const handleClick = async (e, type) => {
     // main
     e.preventDefault();
-
-    if (!await isSaleable(productNo, type)) {  // 20220526 판매가능 여부 체크 로직 추가
-      return;
-    }
-
-    switch (type) {
-      case 'gift':
-        gift();
-        break;
-      case 'order':
-        order();
-        break;
-      case 'cart':
-        cart();
-        break;
-      case 'wish':
-        wishHandler();
-        break;
-      case 'reserve':
-        order();
-        break;
-      default:
-        break;
+    
+    if (await isSaleable(productNo, type)) {  // 20220526 판매가능 여부 체크 로직 추가
+      switch (type) {
+        case 'gift':
+          gift();
+          break;
+        case 'order':
+          order();
+          break;
+        case 'cart':
+          cart();
+          break;
+        case 'wish':
+          wishHandler();
+          break;
+        case 'reserve':
+          order();
+          break;
+        default:
+          break;
+      }
     }
   };
 
@@ -373,7 +371,7 @@ export default function ButtonGroup({
   const isSoldOut = useMemo(() => saleStatus === 'SOLDOUT', [saleStatus]);
   const isBackOrdered = useMemo(() => saleStatus === 'READY', [saleStatus]);
 
-  const isSaleable = async (productNo, type) => {
+  async function isSaleable(productNo, type) {
 
     const STOP_MSG        = "구매하실 수 없는 제품입니다.";
     const PROHIBITION_MSG = "구매하실 수 없는 제품입니다.";
