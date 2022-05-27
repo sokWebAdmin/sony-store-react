@@ -4,7 +4,7 @@ import { isSgicExists } from "../../../api/sony/order";
 
 export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos, orderNo }) {
 
-  let sgicYn = "N";
+  const [sgicYn, setSgicYn] = useState("N");
   const [sgicUrl, setSgicUrl] = useState(null);
 
   const getInstallmentPeriod = (cardInfo) => {
@@ -29,13 +29,18 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos, orderN
       console.error(err);
     }
   }
+  useEffect(() => {
+    console.log("1");
+    if (payInfo.payType === 'VIRTUAL_ACCOUNT' && typeof amountInfo.extraData.privateAgree !== 'undefined') {
+      setSgicYn(amountInfo.extraData.privateAgree);
 
-  if (payInfo.payType === 'VIRTUAL_ACCOUNT' && typeof amountInfo.extraData.privateAgree !== 'undefined') {
-    sgicYn = amountInfo.extraData.privateAgree;
+      console.log(sgicYn);
+    }
+  }, []);
 
-  }
 
   useEffect(() => {
+    console.log("2");
     if (sgicYn === 'Y') {
       isSgicExistsCheck().then(r => setSgicUrl(r));
     }
@@ -78,7 +83,7 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos, orderN
                 <div className="purchase_detail_method">
                   가상 계좌 : {payInfo.bankInfo.bankName}({payInfo.bankInfo.account})
                 </div>
-                {(sgicYn === 'Y' && (typeof sgicUrl === 'string' && sgicUrl !== '')? (
+                {(sgicYn === 'Y' && ((typeof sgicUrl === 'string' && sgicUrl !== '')? (
                     <a href={sgicUrl} target="_blank" className="button button_negative button-s">보증보험 조회하기</a>
                     ) : (
                         <button
@@ -88,7 +93,7 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos, orderN
                         >
                           보증보험 신청중
                         </button>
-                    )
+                    ))
                 )}
               </>
             )}
