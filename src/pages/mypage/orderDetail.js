@@ -141,6 +141,7 @@ export default function OrderDetail() {
             payInfo: { cardInfo, bankInfo },
             receiptInfos,
             orderOptionsGroupByPartner,
+            extraData,
         } = res.data;
 
         setOrderInfo({
@@ -193,6 +194,7 @@ export default function OrderDetail() {
                 promotionDiscountAmt + couponDiscountAmt + subPayAmt,
             // payAmt는 할인 다 적용되고 적립금까지 포함된 금액이라 적립금은 제외해야함 (from 김진훈 선임)
             payAmt: payAmt - subPayAmt,
+            extraData,
         });
 
         setPayInfo({
@@ -449,6 +451,7 @@ export default function OrderDetail() {
                             amountInfo={amountInfo}
                             payInfo={payInfo}
                             receiptInfos={receiptInfos}
+                            orderNo={orderInfo.orderNo}
                         />
                         <div className='cont button_wrap'>
                             {/* 에스크로 '구매확정' 버튼. 재사용시 구매확정 이 잘되는지, 구매확정 시 returnUrl 등 테스트 필요 */}
