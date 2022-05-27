@@ -78,18 +78,18 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos, orderN
                 <div className="purchase_detail_method">
                   가상 계좌 : {payInfo.bankInfo.bankName}({payInfo.bankInfo.account})
                 </div>
-
-                {(sgicYn === 'Y' && typeof sgicUrl === 'string' && sgicUrl !== '')? (
+                {(sgicYn === 'Y' && (typeof sgicUrl === 'string' && sgicUrl !== '')? (
                     <a href={sgicUrl} target="_blank" className="button button_negative button-s">보증보험 조회하기</a>
-                ) : (
-                  <button
-                  type="button"
-                  className="button button_negative button-s"
-                  disabled
-                  >
-                  보증보험 신청중
-                  </button>
-                  )}
+                    ) : (
+                        <button
+                            type="button"
+                            className="button button_negative button-s"
+                            disabled
+                        >
+                          보증보험 신청중
+                        </button>
+                    )
+                )}
               </>
             )}
             {payInfo.payType === 'CREDIT_CARD' && (
