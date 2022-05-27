@@ -45,48 +45,60 @@ export default function Withdraw() {
     const [password, setPassword] = useState('');
     const [withdrawReason, setWithdrawReason] = useState(null);
     const [verifyOpenId, setVerifyOpenId] = useState(false);
+    const [hasProcessOrder, setHasProcessOrder] = useState(false);
 
     const availablemileage = useMemo(() => {
         return my?.availablemileage ?? 0;
     }, [my]);
 
+    useEffect(() => {
+        (async () => {
+            // TODO: 기본 주문 검색기간은 1년이지만 확인 필요
+            const { status, data } = await getProfileOrdersSummaryStatus({
+                params: {
+                    startYmd: dayjs()
+                        .subtract('1', 'years')
+                        .format('YYYY-MM-DD'),
+                    endYmd: dayjs().format('YYYY-MM-DD'),
+                },
+            });
+
+            if (status !== 200) {
+                openAlert('잠시 후 다시 시도해 주세요.');
+                return;
+            }
+
+            const {
+                depositWaitCnt,
+                payDoneCnt,
+                deliveryIngCnt,
+                deliveryPrepareCnt,
+                cancelProcessingCnt,
+                exchangeProcessingCnt,
+                returnProcessingCnt,
+            } = data;
+            const hasOrder =
+                depositWaitCnt > 0 ||
+                deliveryIngCnt > 0 ||
+                deliveryPrepareCnt > 0 ||
+                payDoneCnt > 0;
+            const hasClaim =
+                cancelProcessingCnt > 0 ||
+                exchangeProcessingCnt > 0 ||
+                returnProcessingCnt > 0;
+            setHasProcessOrder(hasOrder || hasClaim);
+        })();
+    }, [history, openAlert]);
+
     const validateWithdraw = async () => {
-        if (!withdrawReason) {
-            openAlert('탈퇴사유를 선택해주세요.');
-            return;
-        }
-
-        // TODO: 기본 검색 기간은 3개월이지만 정확히 명시, 탈퇴전 주문 확인 기간 확인 필요
-        const orderSummary = await getProfileOrdersSummaryStatus({
-            params: {
-                startYmd: dayjs().subtract('3', 'months').format('YYYY-MM-DD'),
-                endYmd: dayjs().format('YYYY-MM-DD'),
-            },
-        });
-
-        if (orderSummary.status !== 200) {
-            openAlert('잠시 후 다시 시도해 주세요.');
-            return;
-        }
-        const {
-            deliveryIngCnt,
-            deliveryPrepareCnt,
-            payDoneCnt,
-            cancelProcessingCnt,
-            exchangeProcessingCnt,
-            returnProcessingCnt,
-        } = orderSummary;
-        const hasOrder =
-            deliveryIngCnt > 0 || deliveryPrepareCnt > 0 || payDoneCnt > 0;
-        const hasClaim =
-            cancelProcessingCnt > 0 ||
-            exchangeProcessingCnt > 0 ||
-            returnProcessingCnt > 0;
-        const hasProcessOrder = hasOrder || hasClaim;
         if (hasProcessOrder) {
             openAlert(
                 '진행중인 주문이 있어서 주문진행 완료 후 탈퇴가 가능합니다.',
             );
+            return;
+        }
+        if (!withdrawReason) {
+            openAlert('탈퇴사유를 선택해주세요.');
             return;
         }
         if (!password) {
@@ -148,6 +160,13 @@ export default function Withdraw() {
     return (
         <>
             <SEOHelmet title={'마이페이지 : 회원 탈퇴'} />
+            {hasProcessOrder && (
+                <Alert onClose={() => history.goBack()}>
+                    {
+                        '진행중인 주문이 있어서 주문진행 완료 후 탈퇴가 가능합니다.'
+                    }
+                </Alert>
+            )}
             {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
             {confirmVisible && (
                 <LayerPopup

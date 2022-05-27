@@ -57,12 +57,14 @@ export default function EspMain() {
     const _addProduct = async () => {
         const data = { ...product };
         const addData = await _getEspProducts(data.page + 1);
+        const getListLength = data.list.length;
 
-        if (addData.list.length === 0) {
+
+        if (getListLength === 0) {
             return;
         }
 
-        data.list.concat(addData.list);
+        data.list = data.list.concat(addData.list);
         ++data.page;
 
         setProduct(data);
@@ -210,12 +212,12 @@ export default function EspMain() {
                                             </ul>
                                             <div className="btn_area">
                                                 {
-                                                    product.list.length === product.totalCount ? '' :
+                                                    (product.totalCount%15 !== 0 && product.list.length !== product.totalCount) ?
                                                       <button type="button" className="btn_more" title="ESP 상품 더보기" onClick={() => {
                                                           _addProduct();
                                                       }}>
                                                           더보기<span className="ico_plus"></span>
-                                                      </button>
+                                                      </button> : ''
                                                 }
                                             </div>
 

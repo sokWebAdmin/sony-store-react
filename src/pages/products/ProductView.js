@@ -1,56 +1,39 @@
-import React, {
-    useState,
-    useEffect,
-    useCallback,
-    useMemo,
-    useContext,
-} from 'react';
-import { getEventByProductNo } from '../../api/display';
-import _ from 'lodash';
+import { useState, useEffect, useCallback, useMemo, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { chain, unescape, head } from 'lodash';
 
-//SEO
-import SEOHelmet from '../../components/SEOHelmet';
-
-//lib-css
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
-import 'swiper/components/scrollbar/scrollbar.scss';
-import 'swiper/swiper.scss';
-
-//api
+import GlobalContext from 'context/global.context';
+import SEO from 'components/SEO';
+import MainImage from 'components/products/MainImage';
+import TobContent from 'components/products/ViewTopContent';
+import RelatedProducts from 'components/products/RelatedProducts';
+import Event from 'components/products/Event';
+import BottomContent from 'components/products/ViewBottomContent';
+import Alert from 'components/common/Alert';
+import { useAlert } from 'hooks';
 import {
     getProductDetail,
     getProductOptions,
     getProductSearch,
     getProductsOptions,
     postProductsGroupManagementCode,
-} from '../../api/product';
-
-//css
-import '../../assets/scss/contents.scss';
-import '../../assets/scss/product.scss';
-// import '../../assets/scss/event.scss'
-
-//util
-import { useWindowSize } from '../../utils/utils';
-import { getInfoLinks, mapContents } from '../../const/productView';
+} from 'api/product';
+import { getEventByProductNo } from 'api/display';
+import { getOrderConfigs } from 'api/order';
+import { useWindowSize } from 'utils/utils';
 import {
     getColorChipValues,
     getMainSliderStyle,
     getSaleStatus,
     getSaleStatusForOption,
-} from '../../utils/product';
-
-import MainImage from '../../components/products/MainImage';
-import TobContent from '../../components/products/ViewTopContent';
-import RelatedProducts from '../../components/products/RelatedProducts';
-import Event from '../../components/products/Event';
-import BottomContent from '../../components/products/ViewBottomContent';
-import { useHistory } from 'react-router';
-import GlobalContext from '../../context/global.context';
-import { useAlert } from '../../hooks';
-import Alert from '../../components/common/Alert';
-import { getOrderConfigs } from '../../api/order';
+} from 'utils/product';
+import { getInfoLinks, mapContents } from 'const/productView';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
+import 'swiper/swiper.scss';
+import 'assets/scss/contents.scss';
+import 'assets/scss/product.scss';
 
 const sortOptionsByProductNo = (options, productNo) => {
     const findIdx = options.findIndex(({ productNo: no }) => no === productNo);
@@ -66,8 +49,6 @@ export default function ProductView({ match }) {
     //ui
     const [headerHeight, setHeaderHeight] = useState(0);
     const size = useWindowSize();
-
-    // SwiperCore.use([Navigation, Pagination, Scrollbar, Autoplay, Controller]);
 
     useEffect(() => {
         const $header = document.querySelector('header');
@@ -95,7 +76,7 @@ export default function ProductView({ match }) {
 
     const isInvalidForGradeProduct = (hsCode) => hsCode && !isLogin;
     const unescapeProductName = (productData) => {
-        productData.baseInfo.productName = _.unescape(
+        productData.baseInfo.productName = unescape(
             productData.baseInfo.productName,
         );
         return productData;
@@ -152,8 +133,8 @@ export default function ProductView({ match }) {
 
             hasColor &&
                 setProductGroup(
-                    _.chain(flatOptions).map(({ images, optionNo, value }) => ({
-                        img: _.head(images),
+                    chain(flatOptions).map(({ images, optionNo, value }) => ({
+                        img: head(images),
                         optionNo,
                         colors: getColorChipValues(value),
                     })),
@@ -176,9 +157,9 @@ export default function ProductView({ match }) {
 
     const fetchProductGroupOptions = async (productNos) => {
         const { data } = await getProductsOptions({ productNos });
-        const flatOptions = _.chain(data.optionInfos)
+        const flatOptions = chain(data.optionInfos)
             .flatMap(({ options, mallProductNo }) => ({
-                ..._.head(options),
+                ...head(options),
                 productNo: mallProductNo,
             }))
             .map(({ children, ...rest }) => ({ ...rest }))
@@ -196,9 +177,8 @@ export default function ProductView({ match }) {
             hasColor,
         }));
     };
-
     const mapProductGroupInfo = ({ imageUrls, options }) => {
-        const { optionNo, value } = _.head(options);
+        const { optionNo, value } = head(options);
         return {
             images: imageUrls,
             optionNo,
@@ -221,9 +201,9 @@ export default function ProductView({ match }) {
             productNo,
         );
 
-        setProductGroup(_.chain(gp).map(mapProductGroupInfo).value());
+        setProductGroup(chain(gp).map(mapProductGroupInfo).value());
 
-        const productNos = _.chain(gp)
+        const productNos = chain(gp)
             .flatMap(({ productNo }) => productNo)
             .join()
             .value();
@@ -236,7 +216,7 @@ export default function ProductView({ match }) {
         async (categories) => {
             if (!categories) return;
 
-            const ret = await getProductSearch({
+            const { data } = await getProductSearch({
                 'order.by': 'POPULAR',
                 categoryNos: categories
                     .flatMap(({ categories }) => categories)
@@ -245,16 +225,16 @@ export default function ProductView({ match }) {
             });
 
             setRelatedProducts(
-                _.chain(ret.data.items)
+                chain(data.items)
                     .reject(({ productNo: no }) => no === productNo)
                     .filter(({ hsCode }) => !hsCode)
                     .map((o) => ({
                         ...o,
-                        productName: _.unescape(o.productName),
+                        productName: unescape(o.productName),
                         groupManagementMappingProducts: [
                             {
                                 options: [{ value: o.optionValues }],
-                                mainImageUrl: _.head(o.imageUrls),
+                                mainImageUrl: head(o.imageUrls),
                             },
                         ],
                     }))
@@ -271,10 +251,10 @@ export default function ProductView({ match }) {
                     ? { params: { productNos } }
                     : { pathParams: { productNo } };
 
-            const ret = await getEventByProductNo(query);
-            setProductEvents(ret.data);
+            const { data } = await getEventByProductNo(query);
+            setProductEvents((prev) => [...prev, ...data]);
         },
-        [productNos?.length],
+        [productNos],
     );
 
     const fetchOrderConfigs = async (naverPayHandling) => {
@@ -314,7 +294,7 @@ export default function ProductView({ match }) {
 
     const imageUrls = useMemo(() => {
         if (selectedOptionNo > 0) {
-            return _.chain(productGroup)
+            return chain(productGroup)
                 .filter(({ optionNo }) => optionNo === selectedOptionNo)
                 .flatMap(({ images }) => images)
                 .value();
@@ -334,7 +314,8 @@ export default function ProductView({ match }) {
     const getLinkInnerWidth = () => {
         const width = size.width - 48;
         const $lis = document.querySelectorAll('.link_inner >li');
-        const sum = _.chain($lis)
+
+        const sum = chain($lis)
             .map((el) => window.getComputedStyle(el).getPropertyValue('width'))
             .map((v) => parseInt(v))
             .sum()
@@ -351,7 +332,7 @@ export default function ProductView({ match }) {
 
         if (!productData.categories) return productName;
 
-        const categoryCode = _.chain(productData.categories)
+        const categoryCode = chain(productData.categories)
             .take(1)
             .flatMap(({ categories }) => categories)
             .map(({ label }) => label)
@@ -392,7 +373,8 @@ export default function ProductView({ match }) {
 
     return (
         <>
-            <SEOHelmet title={getTitle} />
+            <SEO data={{ title: getTitle }} />
+
             <div className='contents product'>
                 {productData && (
                     <div
@@ -426,11 +408,18 @@ export default function ProductView({ match }) {
                                 saleStatus={saleStatus}
                             />
                         </div>
-                        <RelatedProducts
-                            reset={reset}
-                            products={relatedProducts}
-                        />
-                        {hasEvents && <Event events={productEvents} />}
+
+                        {relatedProducts.length >= 2 && (
+                            <RelatedProducts
+                                reset={reset}
+                                products={relatedProducts}
+                            />
+                        )}
+
+                        {hasEvents && productEvents.length > 0 && (
+                            <Event events={productEvents} />
+                        )}
+
                         <div className='product_cont full'>
                             <div
                                 className='relation_link scroll'

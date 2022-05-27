@@ -22,6 +22,7 @@ import {
     getLinkTarget,
 } from 'utils/html';
 import { breakPoint } from 'utils/constants';
+import { splitStr } from 'utils/html';
 import { main } from 'const/seo';
 import { getDisplaySectionsSectionNo, loadBanner } from 'api/display';
 import { useAlert } from 'hooks';

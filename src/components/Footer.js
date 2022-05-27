@@ -310,14 +310,14 @@ export default function Footer({ location, isAppBarEnabled, scrollAction }) {
                                 본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.
                             </p>
                             <p>
-                                <strong>소비자피해보상보험</strong> 고객님은 안전거래를 위해 현금 등으로 결제 시 저희 쇼핑몰에서 가입한 구매안전서비스를 이용하실 수 있습니다. <br />
+                                <strong>소비자피해보상보험</strong> 고객님은 안전거래를 위해 현금 등으로 결제 시 저희 쇼핑몰에서 가입한 구매안전서비스를 이용하실 수 있습니다.<br/>
                                 <a
                                 href={
                                     window.anchorProtocol +
                                     'mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810'
                                 }
-                                onClick={window.openBrowser}
-                                target='_blank'
+                                   onClick={window.openBrowser}
+                                   target='_blank'
                                 rel='noopener noreferrer'
                                 className='arrow under_line'
                                 >
@@ -328,8 +328,8 @@ export default function Footer({ location, isAppBarEnabled, scrollAction }) {
                                     window.anchorProtocol +
                                     'www.usafe.co.kr/u_customer_issue.asp'
                                 }
-                                onClick={window.openBrowser}
-                                target='_blank'
+                                   onClick={window.openBrowser}
+                                   target='_blank'
                                 rel='noopener noreferrer'
                                 className='arrow under_line'
                                 >
