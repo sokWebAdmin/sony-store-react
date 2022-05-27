@@ -11,7 +11,6 @@ import "../../assets/scss/category.scss";
 import "../../assets/scss/contents.scss";
 import "../../assets/scss/esp.scss";
 
-
 //lib-css
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
@@ -21,7 +20,8 @@ import "swiper/swiper.scss"
 import GlobalContext from '../../context/global.context';
 import { getRegisteredProduct } from '../../api/sony/product';
 import { useProfileState } from '../../context/profile.context';
-import EspAddCart from '../../components/popup/esp/EspAddCart';
+// import EspAddCart from '../../components/popup/esp/EspAddCart';
+import EspGoOrderSheet from '../../components/popup/esp/EspGoOrderSheet';
 import qs from 'qs';
 import { getProductDetail } from '../../api/product';
 
@@ -77,7 +77,7 @@ export default function EspList({history}) {
     try {
       const { data } = await getProductDetail(query.productNo);
 
-      if (data?.stock?.stockCnt > 0) {
+      if (!(data?.status?.soldout)) {
         return true;
       }
     }
@@ -228,7 +228,7 @@ export default function EspList({history}) {
                     <strong className="esp_tit">[안내]</strong>
                     <ul className="list_dot">
                       <li>고객님의 아이디로 정품등록 되어진 모델에 대한 정보입니다.</li>
-                      <li>연장 서비스 플랜을 구매하실 수 있는 경우 &lt;구매신청&gt;버튼이 노출되며, 클릭하시면 장바구니 페이지로 이동합니다.</li>
+                      <li>연장 서비스 플랜을 구매하실 수 있는 경우 &lt;구매신청&gt;버튼이 노출되며, 클릭하시면 주문·결제 페이지로 이동합니다.</li>
                       <li><em className="color">구매불가 : ESP 상품을 구매할 수 있는 정품등록 제품이 없습니다.</em></li>
                       <li><em className="color">선택불가 : 정품등록하신 제품과 구매하신 ESP 상품이 매칭되지 않습니다.</em></li>
                       <li className="bar">자세한 사항은 고객센터를 통해 문의 부탁 드립니다.</li>
@@ -242,7 +242,7 @@ export default function EspList({history}) {
       </div>
       {
         targetProduct && 
-        <EspAddCart product={targetProduct} onClose={_closePopup} history={history} />
+        <EspGoOrderSheet product={targetProduct} onClose={_closePopup} history={history} />
       }
       
     </>

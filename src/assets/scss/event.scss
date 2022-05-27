@@ -661,6 +661,7 @@
     position:relative;
     width:calc((100% - 24px)/2);
     margin-left:24px;
+    cursor: pointer;
     &:first-child{
       margin-left:0;
     }

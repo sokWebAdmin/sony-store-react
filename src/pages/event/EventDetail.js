@@ -35,7 +35,6 @@ const EventDetail = () => {
     return (
         <>
             <SEO data={{ title: event?.label }} />
-
             {event && (
                 <div className='contents events'>
                     <div className='container full'>
