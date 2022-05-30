@@ -33,7 +33,6 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos, orderD
 
   useEffect(() => {
     if (typeof orderData.extraData !== 'undefined') {
-      console.log(orderData.extraData);
       setSgicYn(orderData.extraData.privateAgree);
     }
   }, [orderData]);
