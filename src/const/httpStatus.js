@@ -1,0 +1,6 @@
+module.exports = {
+    SUCCESS: 200,
+    BAD_REQUEST: 400,
+    METHOD_NOW_ALLOWED: 405,
+    INTERNAL_SERVER_ERROR: 500,
+};
