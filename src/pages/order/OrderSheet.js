@@ -45,6 +45,13 @@ const OrderSheet = ({ location }) => {
   const [deliveryGroups, setDeliveryGroups] = useState([]);
   const [paymentInfo, setPaymentInfo] = useState(null);
   const [recentAddresses, setRecentAddresses] = useState([]);
+  const [sgic, setSgic] = useState({
+    sgicEmail : 'zespy225@daum.net'
+    ,gender : '1'
+    ,privateAgree : 'Y'
+    ,sgicDate : '20220524'
+    ,
+  });
 
   const orderCnt = useMemo(() => {
     return deliveryGroups
@@ -58,6 +65,7 @@ const OrderSheet = ({ location }) => {
   const shippingAddressForm = createRef();
   const giftReceiverForm = createRef();
   const guestPasswordForm = createRef();
+  const paymentForm = createRef();
 
   // form data
   const [orderer, setOrderer] = useState({
@@ -214,6 +222,7 @@ const OrderSheet = ({ location }) => {
       ...discount,
       deliveryMemo: shippingAddress.deliveryMemo,
       inAppYn: agent.isApp ? 'Y' : 'N',
+      extraData:{...sgic},
     };
 
     delete result.shippingAddress.deliveryMemo;
@@ -266,6 +275,9 @@ const OrderSheet = ({ location }) => {
     if (!isLogin) {
       entries.push(guestPasswordForm.current.fieldValidation);
     }
+
+    entries.push(paymentForm.current.fieldValidation);
+
     isGiftOrder
       ? entries.push(giftReceiverForm.current.fieldValidation)
       : entries.push(shippingAddressForm.current.fieldValidation);
@@ -368,7 +380,7 @@ const OrderSheet = ({ location }) => {
                       )}
 
                       <Accordion title={'결제 방법'} defaultVisible={true}>
-                        <PaymentForm payment={payment} setPayment={setPayment} orderSheetNo={orderSheetNo} />
+                        <PaymentForm payment={payment} setPayment={setPayment} orderSheetNo={orderSheetNo} setSgic={setSgic} ref={paymentForm} />
                       </Accordion>
 
                       {!isLogin && (

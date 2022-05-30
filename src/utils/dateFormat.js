@@ -11,7 +11,9 @@ export function changeDateFormat(time, format) {
   }
   return moment(time).format(format);
 }
-
+export function getStrYear() {
+  return new Date().getFullYear();
+}
 export function getStrDate(date, format = 'YYYY-MM-DD') {
   return moment(date).format(format);
 }
