@@ -1,18 +1,15 @@
 import { Helmet } from 'react-helmet';
 
-import useScript from 'hooks/useScript';
+import Omniture from './Omniture';
 
 const SEOHelmet = ({ title, children }) => {
-    //useScript('//image.sony.co.kr/omniture/real/sonystore_code_2013.js');
-    
-    useScript('//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js');
-    
     return (
         <>
             <Helmet>
                 <title>{title}</title>
                 {children}
             </Helmet>
+            {title && <Omniture />}
         </>
     );
 };
