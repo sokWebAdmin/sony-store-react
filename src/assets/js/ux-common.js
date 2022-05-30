@@ -144,28 +144,6 @@ $(() => {
     });
   };
 
-  // footer - family site on desktop
-  const footerFamLink = document.querySelector(".footer__family__link__trigger");
-  if (footerFamLink) {
-    footerFamLink.addEventListener("click", e => {
-      const link = e.target.closest(".footer__family__link");
-      const active = "footer__family__link--active";
-      const outsideClick = e => {
-        if (!link.contains(e.target)) {
-          $(link).removeClass(active);
-          body.removeEventListener("click", outsideClick);
-        };
-      };
-
-      if (link.classList.contains(active)) {
-        link.classList.remove(active);
-      } else {
-        link.classList.add(active);
-        body.addEventListener("click", outsideClick);
-      };
-    });
-  }
-
   // sort
   const itemsort = $(".itemsort");
 
