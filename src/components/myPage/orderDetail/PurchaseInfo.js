@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { toCurrencyString } from '../../../utils/unit';
 import { isSgicExists } from "../../../api/sony/order";
 
-export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos, orderNo }) {
+export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos, orderData }) {
 
   const [sgicYn, setSgicYn] = useState("N");
   const [sgicUrl, setSgicUrl] = useState(null);
+  const [cPayType] = payInfo.payType;
 
   const getInstallmentPeriod = (cardInfo) => {
     const { installmentPeriod, noInterest } = cardInfo;
@@ -21,7 +22,7 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos, orderN
 
   async function isSgicExistsCheck() {
     try {
-      const res = await isSgicExists(orderNo);
+      const res = await isSgicExists(orderData.orderNo);
       if (res?.data?.body) {
         return res.data.body;
       }
@@ -29,18 +30,18 @@ export default function PurchaseInfo({ amountInfo, payInfo, receiptInfos, orderN
       console.error(err);
     }
   }
-  useEffect(() => {
-    console.log("1");
-    if (payInfo.payType === 'VIRTUAL_ACCOUNT' && typeof amountInfo.extraData.privateAgree !== 'undefined') {
-      setSgicYn(amountInfo.extraData.privateAgree);
 
-      console.log(sgicYn);
+  useEffect(() => {
+    if (typeof orderData.extraData !== 'undefined') {
+      console.log(orderData.extraData);
+      setSgicYn(orderData.extraData.privateAgree);
     }
-  }, []);
+  }, [orderData]);
+
+
 
 
   useEffect(() => {
-    console.log("2");
     if (sgicYn === 'Y') {
       isSgicExistsCheck().then(r => setSgicUrl(r));
     }
