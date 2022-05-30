@@ -155,7 +155,7 @@ MainRecommend.propTypes = {
     recommendedBanners: PropTypes.array.isRequired,
     setRecLeftSwiper: PropTypes.func.isRequired,
     setRecRightSwiper: PropTypes.func.isRequired,
-    recRightSwiper: PropTypes.object.isRequired,
+    recRightSwiper: PropTypes.object,
     recommendedSections: PropTypes.array.isRequired,
 };
 

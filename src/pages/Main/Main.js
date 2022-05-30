@@ -47,8 +47,8 @@ export default function Main() {
 
     //4. 이벤트 : 003
     const [eventBanners, setEventBanners] = useState([]);
-    const [eventBgPcBanners, setEventBgPcBanners] = useState([]);
-    const [eventBgMoBanners, setEventBgMoBanners] = useState([]);
+    const [eventBgPcBanners, setEventBgPcBanners] = useState(null);
+    const [eventBgMoBanners, setEventBgMoBanners] = useState(null);
 
     //5. 아카데미 pc : 004
     const [academyPcBanners, setAcademyPcBanners] = useState({});
@@ -78,38 +78,42 @@ export default function Main() {
                 `${kvPc},${kvMo},${recommend},${eventMain},${academyPc},${academyMo},${eventBgPc},${eventBgMo}`,
             );
 
-            const moBanners =
-                data.find(({ code }) => code === kvMo)?.accounts || [];
-            getSlideBannerNames(moBanners);
-            setSlideMoBanners(moBanners);
-            const eventBanners =
-                data.find(({ code }) => code === eventMain)?.accounts || [];
-            setEventBanners(eventBanners);
+            data?.forEach(({ code, accounts }) => {
+                switch (code) {
+                    case kvMo:
+                        getSlideBannerNames(accounts);
+                        setSlideMoBanners(accounts);
+                        break;
+                    case eventMain:
+                        setEventBanners(accounts);
+                        break;
+                    case academyPc:
+                        getAcademyBannerNames(accounts[0]);
+                        setAcademyPcBanners(accounts[0]);
+                        break;
+                    case academyMo:
+                        getAcademyBannerNames(accounts[0]);
+                        setAcademyMoBanners(accounts[0]);
+                        break;
+                    case kvPc:
+                        getSlideBannerNames(accounts);
+                        setSlidePcBanners(accounts);
+                        break;
+                    case recommend:
+                        getRecommendedBannerNames(accounts);
+                        setRecommendedBanners(accounts);
+                        break;
+                    case eventBgPc:
+                        setEventBgPcBanners(accounts[0]);
+                        break;
+                    case eventBgMo:
+                        setEventBgMoBanners(accounts[0]);
+                        break;
 
-            const academyPcBanners =
-                data.find(({ code }) => code === academyPc)?.accounts[0] || {};
-            getAcademyBannerNames(academyPcBanners);
-            setAcademyPcBanners(academyPcBanners);
-            const academyMoBanners =
-                data.find(({ code }) => code === academyMo)?.accounts[0] || {};
-            getAcademyBannerNames(academyMoBanners);
-            setAcademyMoBanners(academyMoBanners);
-
-            const slidePcBanners =
-                data.find(({ code }) => code === kvPc)?.accounts || [];
-            getSlideBannerNames(slidePcBanners);
-            setSlidePcBanners(slidePcBanners);
-            const recommendedBanners =
-                data.find(({ code }) => code === recommend)?.accounts || [];
-            getRecommendedBannerNames(recommendedBanners);
-            setRecommendedBanners(recommendedBanners);
-
-            const eventBgPcBanners =
-                data.find(({ code }) => code === eventBgPc)?.accounts[0] || [];
-            setEventBgPcBanners(eventBgPcBanners);
-            const eventBgMoBanners =
-                data.find(({ code }) => code === eventBgMo)?.accounts[0] || [];
-            setEventBgMoBanners(eventBgMoBanners);
+                    default:
+                        break;
+                }
+            });
         } catch (e) {
             console.error(e);
         }
@@ -203,12 +207,10 @@ export default function Main() {
                                     slideMoBanners={slideMoBanners}
                                 />
                             )}
-
                         {/* <!-- // key visual --> */}
 
                         {/* <!-- recommended --> */}
-                        {recRightSwiper &&
-                            recommendedBanners.length > 0 &&
+                        {recommendedBanners.length > 0 &&
                             recommendedSections.length > 0 && (
                                 <MainRecommend
                                     recommendedBanners={recommendedBanners}
@@ -223,8 +225,8 @@ export default function Main() {
 
                         {/* <!-- event --> */}
                         {size &&
-                            eventBgMoBanners.length > 0 &&
-                            eventBgPcBanners.length > 0 &&
+                            eventBgMoBanners &&
+                            eventBgPcBanners &&
                             eventSections &&
                             eventBanners.length > 0 && (
                                 <MainEvent
