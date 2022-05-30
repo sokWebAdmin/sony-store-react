@@ -51,10 +51,8 @@ export default function Category({ match, history }) {
                                     changeCurrentCategoryByNo={
                                         changeCurrentCategoryByNo
                                     }
-                                ></CategoryHeader>
-                                <ProductList
-                                    category={currentCategory}
-                                ></ProductList>
+                                />
+                                <ProductList category={currentCategory} />
                             </>
                         )}
                     </div>

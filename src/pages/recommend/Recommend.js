@@ -65,7 +65,6 @@ export default function Recommend() {
         <>
             <SEO data={recommend} />
 
-            {/* <Controller> */}
             <div className='contents recommend'>
                 <div className='container'>
                     <div className='content'>
@@ -474,7 +473,6 @@ export default function Recommend() {
                     </div>
                 </div>
             </div>
-            {/* </Controller> */}
         </>
     );
 }
