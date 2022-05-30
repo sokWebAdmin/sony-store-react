@@ -7,7 +7,7 @@ import {DateUtils, getStrYear} from '../../utils/dateFormat';
 
 import '../../assets/scss/partials/payModal.scss';
 
-const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, setSgic}, ref) => {
+const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
   const changePaymentType = ({ pgType, payType }) => {
     setPayment({
       pgType,
@@ -17,27 +17,30 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, setSgic}, r
   };
 
   // const [sgicYn, setSgicYn] = useState('off');
-  const [sgicYn, setSgicYn] = useState('on');
+  const [sgicCheckOn, setSgicCheckOn] = useState('off');
+  const [sgicgenderradio, setSgicgenderradio] = useState('1');
   const [privateYn, setPrivateYn] = useState('N');
-  const onChangeSgicYn = (e) => setSgicYn(e.target.value);
+  const onChangeSgicYn = (e) => setSgicCheckOn(e.target.value);
+  const onChangeSgicgenderradio = (e) => setSgicgenderradio(e.target.value);
+  const onChangePrivateYn = (e) => setPrivateYn(e.target.value);
 
-  const sgicEmail = useRef();
-  const gender = useRef();
-  const privateAgree = useRef();
-  const sgicYear = useRef();
-  const sgicMonth = useRef();
-  const sgicDay = useRef();
+  // const sgicEmail = useRef();
+  // const gender = useRef();
+  // const privateAgree = useRef();
+  // const sgicYear = useRef();
+  // const sgicMonth = useRef();
+  // const sgicDay = useRef();
 
 
-  useImperativeHandle(ref, () => ({
-    fieldValidation () {
-      const refs = { sgicEmail, gender, privateAgree, sgicYear, sgicMonth, sgicDay };
-
-      if (sgicYn === 'on') {
-        return true;
-      }
-    },
-  }));
+  // useImperativeHandle( () => ({
+  //   fieldValidation () {
+  //     const refs = { sgicEmail, gender, privateAgree, sgicYear, sgicMonth, sgicDay };
+  //
+  //     if (sgicCheckOn === 'on') {
+  //       return true;
+  //     }
+  //   },
+  // }));
 
   const [viewInvoiceGuide, setViewInvoiceGuide] = useState(false);
   const [viewInvoicePublish, setViewInvoicePublish] = useState(false);
@@ -55,9 +58,9 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, setSgic}, r
       }
 
       for (let i = start; i < standard+plusLange; i++) {
-        result.push(<li>
-                      <a href={'#!'} className="opt_list">
-                        <div className="item">{i}</div>
+        result.push(<li key={"optYear"+i}>
+                      <a href={'#!'} key={"optYear"+i} className="opt_list">
+                        <div className="item" key={"optYear"+i}>{i}</div>
                       </a>
                     </li>);
       }
@@ -172,26 +175,26 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, setSgic}, r
                       </li>
                     </ul>
                   </div>
-                  <div className="cash_box">
-                    <strong className="cash_box_tit">소비자 피해보상보험 서비스</strong>
+                  <div className="sgic_box">
+                    <strong className="sgic_box_tit">소비자 피해보상보험 서비스</strong>
                     <div className="acc_radio">
                       <div className="radio_box">
-                        {/*<input type="radio" className="inp_radio" id="sgic_tab_radio1" value={'on'} checked={sgicYn === 'on'} onChange={onChangeSgicYn} name="sgictabradio"/>*/}
+                        <input type="radio" className="inp_radio" key={"sgic_tab_radio1"} id="sgic_tab_radio1" value={'on'} checked={sgicCheckOn === 'on'} onChange={onChangeSgicYn} name="sgictabradio"/>
                           <label htmlFor="sgic_tab_radio1" className="contentType">신청함</label>
                       </div>
                       <div className="radio_box">
-                        {/*<input type="radio" className="inp_radio" id="sgic_tab_radio2" value={'off'} checked={sgicYn === 'off'} onChange={onChangeSgicYn} name="sgictabradio" />*/}
+                        <input type="radio" className="inp_radio" key={"sgic_tab_radio2"} id="sgic_tab_radio2" value={'off'} checked={sgicCheckOn === 'off'} onChange={onChangeSgicYn} name="sgictabradio" />
                         <label htmlFor="sgic_tab_radio2" className="contentType">신청안함</label>
                       </div>
                     </div>
 
-                    {sgicYn === 'on' && <div className="sgic_box_result_cont sgic_tab_radio1 on">
-                      <input type="hidden" className="inp" id="sgic_email" ref={sgicEmail} value={'zespy225@daum.net'} />
-                      <input type="hidden" className="inp_radio" id="sgic_gender_radio1" ref={gender} name="sgicgenderradio" value={'1'} />
-                      <input type="hidden" className="inp_radio" id="sgic_agree_radio1" ref={privateAgree} value={'Y'} name="sgicagree" />
-                      <input type="hidden" className="inp" ref={sgicYear} id="sgic_year" value={'2022'} />
-                      <input type="hidden" className="inp" ref={sgicMonth} id="sgic_month" value={'05'} />
-                      <input type="hidden" className="inp" ref={sgicDay} id="sgic_day" value={'24'} />
+                    {sgicCheckOn === 'on' && <div className="sgic_box_result_cont sgic_tab_radio1">
+                      {/*<input type="hidden" className="inp" id="sgic_email" ref={sgicEmail} value={'zespy225@daum.net'} />*/}
+                      {/*<input type="hidden" className="inp_radio" id="sgic_gender_radio1" ref={gender} name="sgicgenderradio" value={'1'} />*/}
+                      {/*<input type="hidden" className="inp_radio" id="sgic_agree_radio1" ref={privateAgree} value={'Y'} name="sgicagree" />*/}
+                      {/*<input type="hidden" className="inp" ref={sgicYear} id="sgic_year" value={'2022'} />*/}
+                      {/*<input type="hidden" className="inp" ref={sgicMonth} id="sgic_month" value={'05'} />*/}
+                      {/*<input type="hidden" className="inp" ref={sgicDay} id="sgic_day" value={'24'} />*/}
 
                       <div className="acc_form">
                         <div className="acc_cell vat">
@@ -211,7 +214,7 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, setSgic}, r
 
                           <div className="select_ui_zone btm_line">
                             <a href={'#!'} className="selected_btn" data-default-text="선택">선택</a>
-                            <div className="select_inner" >
+                            <div className="select_inner" style={{display:"none"}}>
                               <ul className="select_opt">
                                 <li>
                                   <a href={'#!'} className="opt_list">
@@ -230,8 +233,7 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, setSgic}, r
 
                           <div className="select_ui_zone btm_line">
                             <a href={'#!'} className="selected_btn" data-default-text="선택">선택</a>
-                            {/*<div className="select_inner" style="display: none;">*/}
-                            <div className="select_inner">
+                            <div className="select_inner" style={{display:"none"}}>
                               <ul className="select_opt">
                                 <li>
                                   <a href={'#!'} className="opt_list">
@@ -257,11 +259,11 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, setSgic}, r
                         <div className="acc_cell parent">
                           <div className="acc_radio">
                             <div className="radio_box">
-                              {/*<input type="radio" className="inp_radio" id="sgic_gender_radio1" name="sgicgenderradio" />*/}
+                              <input type="radio" className="inp_radio" id="sgic_gender_radio1" name="sgicgenderradio" value={'1'} checked={sgicgenderradio === '1'} onChange={onChangeSgicgenderradio} />
                                 <label htmlFor="sgic_gender_radio1" className="contentType">남자</label>
                             </div>
                             <div className="radio_box">
-                              {/*<input type="radio" className="inp_radio" id="sgic_gender_radio2" name="sgicgenderradio" />*/}
+                              <input type="radio" className="inp_radio" id="sgic_gender_radio2" name="sgicgenderradio" value={'2'} checked={sgicgenderradio === '2'} onChange={onChangeSgicgenderradio} />
                                 <label htmlFor="sgic_gender_radio2" className="contentType">여자</label>
                             </div>
                           </div>
@@ -274,7 +276,7 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, setSgic}, r
                         </div>
                         <div className="acc_cell parent">
                           <div className="acc_inp type3">
-                            {/*<input type="text" className="inp" id="sgic_email" placeholder="(예 : sony@sony.co.kr)" />*/}
+                            <input type="text" className="inp" id="sgic_email" placeholder='(예 : sony@sony.co.kr)' />
                               <span className="focus_bg"></span>
                           </div>
                         </div>
@@ -287,11 +289,11 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, setSgic}, r
                         <div className="acc_cell parent">
                           <div className="acc_radio">
                             <div className="radio_box">
-                              {/*<input type="radio" className="inp_radio" id="sgic_agree_radio1" defaultChecked={privateYn === 'Y'} name="sgicagree" />*/}
+                              <input type="radio" className="inp_radio" id="sgic_agree_radio1" defaultChecked={privateYn === 'Y'} value={'Y'} name="sgicagree" onChange={onChangePrivateYn} />
                                 <label htmlFor="sgic_agree_radio1" className="contentType">동의함</label>
                             </div>
                             <div className="radio_box">
-                              {/*<input type="radio" className="inp_radio" id="sgic_agree_radio2" name="sgicagree" />*/}
+                              <input type="radio" className="inp_radio" id="sgic_agree_radio2" name="sgicagree" checked={privateYn === 'N'} value={'N'} onChange={onChangePrivateYn} />
                                 <label htmlFor="sgic_agree_radio2" className="contentType">동의안함</label>
                             </div>
                           </div>
@@ -381,6 +383,6 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, setSgic}, r
       </div>
     </>
   );
-});
+};
 
 export default PaymentForm;
