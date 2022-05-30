@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
     Navigation,
     Pagination,
@@ -10,8 +9,18 @@ import SwiperCore, {
 } from 'swiper/core';
 
 import SEO from 'components/SEO';
+import MainKV from 'components/Main/MainKV';
+import MainRecommend from 'components/Main/MainRecommend';
+import MainEvent from 'components/Main/MainEvent';
+import CustomerService from 'components/CustomerService';
 import Alert from 'components/common/Alert';
-import { useWindowSize, wonComma } from 'utils/utils';
+import { useWindowSize } from 'utils/utils';
+import {
+    getRecommendedBannerNames,
+    getSlideBannerNames,
+    getAcademyBannerNames,
+    getLinkTarget,
+} from 'utils/html';
 import { breakPoint } from 'utils/constants';
 import { splitStr } from 'utils/html';
 import { main } from 'const/seo';
@@ -50,58 +59,7 @@ export default function Main() {
     //6. 추천제품 상품섹션
     const [recommendedSections, setRecommendedSections] = useState([]);
 
-    const [eventSections, setEventSections] = useState([]);
-
-    const getRecommendedBannerNames = (bannerInfoList) => {
-        bannerInfoList.forEach((bannerInfo) => {
-            const bannerNameList = bannerInfo.banners[0].name.split('/');
-            bannerInfo.banners[0].nameList = bannerNameList.reduce(
-                (acc, bannerName, index) => {
-                    if (bannerNameList.length - 1 === index) {
-                        acc += `${bannerName}`;
-                    } else {
-                        acc += `${bannerName}<br />`;
-                    }
-                    return acc;
-                },
-                '',
-            );
-        });
-    };
-
-    const getSlideBannerNames = (bannerInfoList) => {
-        bannerInfoList.forEach((bannerInfo) => {
-            let bannerNameList = bannerInfo.banners[0].name.split('/');
-            bannerNameList = bannerNameList.map((name) => name.split(' '));
-            let count = 0;
-            bannerInfo.banners[0].nameList = bannerNameList.reduce(
-                (acc, bannerName) => {
-                    const nameHtml = bannerName.reduce((acc, name) => {
-                        acc += `<span class="copy-${count}"><span>${name}</span></span>`;
-                        count++;
-                        return acc;
-                    }, '');
-                    acc += `<div class="kv__head__copy">${nameHtml}</div>`;
-                    return acc;
-                },
-                '',
-            );
-        });
-    };
-
-    const getAcademyBannerNames = (bannerInfoList) => {
-        if (Object.keys(bannerInfoList).length === 0) return;
-        const bannerNames = bannerInfoList.banners[0].name.split('/');
-        bannerInfoList.banners[0].nameList = bannerNames.reduce(
-            (acc, bannerName, index) => {
-                const { length } = bannerNames;
-                acc +=
-                    index - 1 === length ? bannerName : bannerName + '<br />';
-                return acc;
-            },
-            '',
-        );
-    };
+    const [eventSections, setEventSections] = useState();
 
     //1. 배너 노출 api
     const getBanners = useCallback(async () => {
@@ -127,6 +85,7 @@ export default function Main() {
             const eventBanners =
                 data.find(({ code }) => code === eventMain)?.accounts || [];
             setEventBanners(eventBanners);
+
             const academyPcBanners =
                 data.find(({ code }) => code === academyPc)?.accounts[0] || {};
             getAcademyBannerNames(academyPcBanners);
@@ -222,12 +181,6 @@ export default function Main() {
         }
     }, [recRightSwiper, recLeftSwiper]);
 
-    const onClickServiceCenter = () => {
-        openAlert(
-            '고객님께서 원하시는 제품을<br />빠르고 정확하게 구매하실 수 있도록<br />도와드리겠습니다.<br/>고객지원센터: 1588-0911',
-        );
-    };
-
     return (
         <>
             <SEO data={main} />
@@ -236,624 +189,53 @@ export default function Main() {
                 <div id='container' className='container'>
                     <div className='content main'>
                         {/* <!-- key visual --> */}
-                        <div
-                            className={`kv swiper-container ${
-                                mPointer !== 'none' && mPointer
-                            }`}
-                            onMouseMove={(e) => {
-                                if (size.width > breakPoint) {
-                                    let halfWidth = size.width / 2;
-                                    let activeClass = 'none';
+                        {size &&
+                            slidePcBanners.length > 0 &&
+                            slideMoBanners.length > 0 && (
+                                <MainKV
+                                    size={size}
+                                    mPointer={mPointer}
+                                    setMPointer={setMPointer}
+                                    breakPoint={breakPoint}
+                                    topSwiper={topSwiper}
+                                    setTopSwiper={setTopSwiper}
+                                    slidePcBanners={slidePcBanners}
+                                    slideMoBanners={slideMoBanners}
+                                />
+                            )}
 
-                                    if (e.clientX < halfWidth) {
-                                        activeClass = 'hover-prev';
-                                    } else {
-                                        activeClass = 'hover-next';
-                                    }
-
-                                    setMPointer(activeClass);
-                                }
-                            }}
-                            onMouseLeave={() => {
-                                if (size.width > breakPoint) {
-                                    setMPointer('none');
-                                }
-                            }}
-                            onClick={() => {
-                                if (size.width > breakPoint) {
-                                    if (mPointer === 'hover-prev') {
-                                        if (topSwiper) {
-                                            topSwiper.slidePrev();
-                                        }
-                                    } else if (mPointer === 'hover-next') {
-                                        topSwiper.slideNext();
-                                    }
-                                }
-                            }}
-                        >
-                            {slidePcBanners.length > 0 &&
-                                slideMoBanners.length > 0 && (
-                                    <Swiper
-                                        className='swiper-wrapper'
-                                        onSwiper={setTopSwiper}
-                                        resizeObserver={true}
-                                        observer={true}
-                                        loop={true}
-                                        speed={600}
-                                        autoplay={{
-                                            delay: 20000,
-                                            disableOnInteraction: true,
-                                        }}
-                                        pagination={{
-                                            el: '.swiper-pagination',
-                                            type: 'custom',
-                                            renderCustom: (
-                                                swiper,
-                                                current,
-                                                total,
-                                            ) => {
-                                                let _current = current;
-                                                let _total = total;
-                                                if (current < 10)
-                                                    _current = '0' + current;
-                                                if (total < 10)
-                                                    _total = '0' + total;
-
-                                                return (
-                                                    "<span class='swiper-pagination-current'>No. " +
-                                                    _current +
-                                                    '</span>' +
-                                                    "<span class='swiper-pagination-total'>" +
-                                                    _total +
-                                                    '</span>'
-                                                );
-                                            },
-                                        }}
-                                    >
-                                        {slidePcBanners.map(
-                                            (bannerInfo, index) => (
-                                                <SwiperSlide
-                                                    key={index}
-                                                    className='swiper-slide video-slide'
-                                                    data-swiper-autoplay='10000'
-                                                    style={{
-                                                        backgroundImage:
-                                                            size.width >
-                                                            breakPoint
-                                                                ? bannerInfo
-                                                                      .banners[0]
-                                                                      .videoUrl ===
-                                                                      '' &&
-                                                                  `url(${bannerInfo.banners[0].imageUrl})`
-                                                                : slideMoBanners[
-                                                                      index
-                                                                  ].banners[0]
-                                                                      .videoUrl ===
-                                                                      '' &&
-                                                                  `url(${slideMoBanners[index]?.banners[0]?.imageUrl})`,
-                                                    }}
-                                                >
-                                                    {size.width > breakPoint
-                                                        ? bannerInfo.banners[0]
-                                                              .videoUrl !==
-                                                              '' && (
-                                                              <video
-                                                                  className='video-slide-player'
-                                                                  autoPlay
-                                                                  muted
-                                                                  playsInline
-                                                                  loop
-                                                              >
-                                                                  <source
-                                                                      src={
-                                                                          bannerInfo
-                                                                              .banners[0]
-                                                                              .videoUrl
-                                                                      }
-                                                                      type='video/mp4'
-                                                                  />
-                                                              </video>
-                                                          )
-                                                        : slideMoBanners[index]
-                                                              .banners[0]
-                                                              .videoUrl !==
-                                                              '' && (
-                                                              <video
-                                                                  className='video-slide-player'
-                                                                  autoPlay
-                                                                  muted
-                                                                  playsInline
-                                                                  loop
-                                                              >
-                                                                  <source
-                                                                      src={
-                                                                          slideMoBanners[
-                                                                              index
-                                                                          ]
-                                                                              .banners[0]
-                                                                              .videoUrl
-                                                                      }
-                                                                      type='video/mp4'
-                                                                  />
-                                                              </video>
-                                                          )}
-                                                    <div className='kv__slide'>
-                                                        {size.width >
-                                                        breakPoint ? (
-                                                            <div
-                                                                className='kv__head'
-                                                                dangerouslySetInnerHTML={{
-                                                                    __html: bannerInfo
-                                                                        .banners[0]
-                                                                        .nameList,
-                                                                }}
-                                                            />
-                                                        ) : (
-                                                            <div
-                                                                className='kv__head'
-                                                                dangerouslySetInnerHTML={{
-                                                                    __html: slideMoBanners[
-                                                                        index
-                                                                    ].banners[0]
-                                                                        .nameList,
-                                                                }}
-                                                            />
-                                                        )}
-
-                                                        <span className='kv__product'>
-                                                            <span
-                                                                dangerouslySetInnerHTML={{
-                                                                    __html: splitStr(
-                                                                        size.width >
-                                                                            breakPoint
-                                                                            ? bannerInfo
-                                                                                  .banners[0]
-                                                                                  .description
-                                                                            : slideMoBanners[
-                                                                                  index
-                                                                              ]
-                                                                                  .banners[0]
-                                                                                  .description,
-                                                                    ),
-                                                                }}
-                                                            />
-                                                        </span>
-                                                        {size.width > breakPoint
-                                                            ? bannerInfo
-                                                                  ?.banners[0]
-                                                                  ?.landingUrl !==
-                                                                  '//' && (
-                                                                  <Link
-                                                                      to={
-                                                                          bannerInfo
-                                                                              ?.banners[0]
-                                                                              ?.landingUrl
-                                                                      }
-                                                                      target={
-                                                                          bannerInfo
-                                                                              ?.banners[0]
-                                                                              .browerTargetType ===
-                                                                          'CURRENT'
-                                                                              ? '_self'
-                                                                              : '_blank'
-                                                                      }
-                                                                      className='kv__link'
-                                                                      style={{
-                                                                          padding:
-                                                                              '30px 10px 30px 0',
-                                                                      }}
-                                                                  >
-                                                                      <span>
-                                                                          자세히
-                                                                          보기
-                                                                      </span>
-                                                                  </Link>
-                                                              )
-                                                            : slideMoBanners[
-                                                                  index
-                                                              ]?.banners[0]
-                                                                  ?.landingUrl !==
-                                                                  '//' && (
-                                                                  <Link
-                                                                      to={
-                                                                          slideMoBanners[
-                                                                              index
-                                                                          ]
-                                                                              .banners[0]
-                                                                              ?.landingUrl
-                                                                      }
-                                                                      target={
-                                                                          slideMoBanners[
-                                                                              index
-                                                                          ]
-                                                                              .banners[0]
-                                                                              .browerTargetType ===
-                                                                          'CURRENT'
-                                                                              ? '_self'
-                                                                              : '_blank'
-                                                                      }
-                                                                      className='kv__link'
-                                                                      style={{
-                                                                          padding:
-                                                                              '30px 10px 30px 0',
-                                                                      }}
-                                                                  >
-                                                                      <span>
-                                                                          자세히
-                                                                          보기
-                                                                      </span>
-                                                                  </Link>
-                                                              )}
-                                                    </div>
-                                                </SwiperSlide>
-                                            ),
-                                        )}
-                                    </Swiper>
-                                )}
-                            <div className='swiper-pagination' />
-                        </div>
                         {/* <!-- // key visual --> */}
 
                         {/* <!-- recommended --> */}
-                        <div className='recommend'>
-                            <div className='recommend__bg__swiper swiper-container'>
-                                {recommendedBanners.length > 0 && (
-                                    <Swiper
-                                        className='swiper-wrapper'
-                                        onSwiper={setRecLeftSwiper}
-                                        slidesPerView={1.000000001}
-                                        observer={true}
-                                        resizeObserver={true}
-                                        loop={true}
-                                        speed={600}
-                                        spaceBetween={0}
-                                    >
-                                        {recommendedBanners.map(
-                                            (recommendedBanner, index) => (
-                                                <SwiperSlide
-                                                    key={index}
-                                                    className='swiper-slide'
-                                                    style={{
-                                                        backgroundImage: `url(${recommendedBanner?.banners[0]?.imageUrl})`,
-                                                    }}
-                                                />
-                                            ),
-                                        )}
-                                    </Swiper>
-                                )}
-                            </div>
-                            <div className='recommend__swiper swiper-container'>
-                                {recommendedBanners.length > 0 && (
-                                    <Swiper
-                                        className='swiper-wrapper'
-                                        onSwiper={setRecRightSwiper}
-                                        scrollbar={{
-                                            el: '.rec-scrollbar',
-                                            draggable: false,
-                                        }}
-                                        on={{
-                                            init: (swiper) => {
-                                                swiper.update();
-                                            },
-                                            resize: (swiper) => {
-                                                swiper.update();
-                                            },
-                                            update: (swiper) => {},
-                                        }}
-                                        observer={true}
-                                        resizeObserver={true}
-                                        loop={true}
-                                        speed={600}
-                                        slidesPerView={1.5}
-                                        spaceBetween={157}
-                                        breakpoints={{
-                                            320: {
-                                                slidesPerView: 1.5,
-                                                spaceBetween: 50,
-                                                allowTouchMove: true,
-                                            },
-                                            1281: {
-                                                slidesPerView: 1.5,
-                                                spaceBetween: 110,
-                                                allowTouchMove: false,
-                                            },
-                                        }}
-                                    >
-                                        {recommendedBanners.map(
-                                            (recommendedBanner, index) => (
-                                                <SwiperSlide
-                                                    className='recommend__item swiper-slide'
-                                                    key={index}
-                                                >
-                                                    <Link
-                                                        to={`product-view/${recommendedSections[index]?.productNo}`}
-                                                        target={
-                                                            recommendedBanner
-                                                                ?.banners[0]
-                                                                ?.browerTargetType ===
-                                                            'CURRENT'
-                                                                ? '_self'
-                                                                : '_blank'
-                                                        }
-                                                        onClick={(e) => {
-                                                            if (
-                                                                window.innerWidth >
-                                                                breakPoint
-                                                            ) {
-                                                                if (
-                                                                    e.currentTarget.parentElement.classList.contains(
-                                                                        'swiper-slide-next',
-                                                                    )
-                                                                ) {
-                                                                    e.preventDefault();
-                                                                    recRightSwiper.slideNext();
-                                                                }
-                                                            }
-                                                        }}
-                                                    >
-                                                        <span
-                                                            className='recommend__item__copy'
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: recommendedBanner
-                                                                    .banners[0]
-                                                                    .nameList,
-                                                            }}
-                                                        />
-                                                        <div
-                                                            className='recommend__item__pic'
-                                                            style={{
-                                                                textAlign:
-                                                                    'center',
-                                                            }}
-                                                        >
-                                                            <img
-                                                                src={
-                                                                    recommendedSections[
-                                                                        index
-                                                                    ]
-                                                                        ?.listImageUrls[0]
-                                                                }
-                                                                alt={`"${recommendedBanner?.banners[0]?.name}"`}
-                                                            />
-                                                        </div>
-                                                        <span className='recommend__item__desc'>
-                                                            {
-                                                                recommendedSections[
-                                                                    index
-                                                                ]?.productName
-                                                            }
-                                                        </span>
-                                                        <span className='recommend__item__name'>
-                                                            {
-                                                                recommendedSections[
-                                                                    index
-                                                                ]?.productNameEn
-                                                            }
-                                                        </span>
-                                                    </Link>
-                                                </SwiperSlide>
-                                            ),
-                                        )}
-                                    </Swiper>
-                                )}
-                                <div
-                                    className='swiper-scrollbar rec-scrollbar'
-                                    style={{ position: 'absolute' }}
+                        {recRightSwiper &&
+                            recommendedBanners.length > 0 &&
+                            recommendedSections.length > 0 && (
+                                <MainRecommend
+                                    recommendedBanners={recommendedBanners}
+                                    setRecLeftSwiper={setRecLeftSwiper}
+                                    setRecRightSwiper={setRecRightSwiper}
+                                    recRightSwiper={recRightSwiper}
+                                    recommendedSections={recommendedSections}
                                 />
-                            </div>
-                        </div>
+                            )}
+
                         {/* <!-- // recommended --> */}
 
                         {/* <!-- event --> */}
-                        <div className='event'>
-                            <h2 className='event__title'>EVENT</h2>
-                            <div className='event__list'>
-                                {((size.width > breakPoint &&
-                                    eventBgPcBanners?.banners) ||
-                                    (size.width <= breakPoint &&
-                                        eventBgMoBanners?.banners)) && (
-                                    <div
-                                        className='event__wrapper'
-                                        style={{
-                                            backgroundImage:
-                                                size.width > breakPoint
-                                                    ? `url(${eventBgPcBanners?.banners[0]?.imageUrl})`
-                                                    : `url(${eventBgMoBanners?.banners[0]?.imageUrl})`,
-                                        }}
-                                    >
-                                        <div className='event__main__info'>
-                                            <div className='event__copy'>
-                                                <p className='event__copy__head'>
-                                                    {eventSections?.label
-                                                        ?.split('/')
-                                                        .map(
-                                                            (
-                                                                eventLabel,
-                                                                index,
-                                                            ) => (
-                                                                <span
-                                                                    key={index}
-                                                                >
-                                                                    {eventLabel}
-                                                                </span>
-                                                            ),
-                                                        )}
-                                                </p>
-                                                <p className='event__copy__desc'>
-                                                    {
-                                                        eventSections?.sectionExplain
-                                                    }
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className='event__main swiper-container'>
-                                            <button
-                                                type='button'
-                                                className='swiper-button-prev'
-                                            />
-                                            {eventSections?.products?.length >
-                                                0 && (
-                                                <Swiper
-                                                    className='swiper-wrapper'
-                                                    slidesPerView={1}
-                                                    observer={true}
-                                                    resizeObserver={true}
-                                                    loop={true}
-                                                    speed={600}
-                                                    autoplay={{ delay: 5000 }}
-                                                    navigation={{
-                                                        nextEl: '.swiper-button-next',
-                                                        prevEl: '.swiper-button-prev',
-                                                    }}
-                                                >
-                                                    {eventSections?.products?.map(
-                                                        (
-                                                            eventSection,
-                                                            index,
-                                                        ) => (
-                                                            <SwiperSlide
-                                                                className='swiper-slide'
-                                                                key={index}
-                                                            >
-                                                                <Link
-                                                                    to={`product-view/${eventSection.productNo}`}
-                                                                    style={{
-                                                                        textAlign:
-                                                                            'center',
-                                                                    }}
-                                                                >
-                                                                    <img
-                                                                        src={
-                                                                            eventSection
-                                                                                ?.listImageUrls[0]
-                                                                        }
-                                                                        alt='상품이미지'
-                                                                    />
-                                                                </Link>
-                                                                <div className='event__main__inner'>
-                                                                    <div className='event__product'>
-                                                                        <span className='event__product__name'>
-                                                                            {
-                                                                                eventSection.productName
-                                                                            }
-                                                                        </span>
-                                                                        <span className='event__product__price'>
-                                                                            {wonComma(
-                                                                                eventSection.salePrice,
-                                                                            )}
-                                                                            원
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </SwiperSlide>
-                                                        ),
-                                                    )}
-                                                </Swiper>
-                                            )}
-                                            <button
-                                                type='button'
-                                                className='swiper-button-next'
-                                            />
-                                        </div>
-                                    </div>
-                                )}
-
-                                <div className='event__sub swiper-container'>
-                                    {eventBanners.length > 0 && (
-                                        <Swiper
-                                            className='swiper-wrapper'
-                                            slidesPerView={3}
-                                            observer={true}
-                                            resizeObserver={true}
-                                            centeredSlides={false}
-                                            spaceBetween={24}
-                                            speed={600}
-                                            scrollbar={{
-                                                el: '.event-scrollbar',
-                                                draggable: false,
-                                            }}
-                                            breakpoints={{
-                                                320: {
-                                                    slidesPerView: 1.2,
-                                                    spaceBetween: 15,
-                                                },
-                                                1281: {
-                                                    slidesPerView: 3,
-                                                    spaceBetween: 15,
-                                                },
-                                            }}
-                                        >
-                                            {eventBanners.map(
-                                                (eventBanner, index) => (
-                                                    <SwiperSlide
-                                                        key={index}
-                                                        className='swiper-slide'
-                                                        style={{
-                                                            backgroundImage: `url("${eventBanner?.banners[0]?.imageUrl}")`,
-                                                        }}
-                                                    >
-                                                        <Link
-                                                            to={
-                                                                eventBanner
-                                                                    ?.banners[0]
-                                                                    .landingUrl
-                                                            }
-                                                            target={
-                                                                eventBanner
-                                                                    ?.banners[0]
-                                                                    ?.browerTargetType ===
-                                                                'CURRENT'
-                                                                    ? '_self'
-                                                                    : '_blank'
-                                                            }
-                                                        >
-                                                            <div className='event__sub__inner'>
-                                                                <p className='event__copy__head'>
-                                                                    {eventBanner?.banners[0]?.name
-                                                                        ?.split(
-                                                                            '/',
-                                                                        )
-                                                                        ?.map(
-                                                                            (
-                                                                                bannerName,
-                                                                                index,
-                                                                            ) => (
-                                                                                <span
-                                                                                    key={
-                                                                                        index
-                                                                                    }
-                                                                                >
-                                                                                    {
-                                                                                        bannerName
-                                                                                    }
-                                                                                </span>
-                                                                            ),
-                                                                        )}
-                                                                </p>
-                                                                <p className='event__copy__desc'>
-                                                                    {
-                                                                        eventBanner
-                                                                            ?.banners[0]
-                                                                            ?.description
-                                                                    }
-                                                                </p>
-                                                            </div>
-                                                        </Link>
-                                                    </SwiperSlide>
-                                                ),
-                                            )}
-                                        </Swiper>
-                                    )}
-                                    <div
-                                        className='swiper-scrollbar event-scrollbar'
-                                        style={{ position: 'absolute' }}
-                                    />
-                                </div>
-                            </div>
-                            <Link to='event/list' className='btn__event__more'>
-                                더 보러 가기
-                            </Link>
-                        </div>
+                        {size &&
+                            eventBgMoBanners.length > 0 &&
+                            eventBgPcBanners.length > 0 &&
+                            eventSections &&
+                            eventBanners.length > 0 && (
+                                <MainEvent
+                                    size={size}
+                                    breakPoint={breakPoint}
+                                    eventBgMoBanners={eventBgMoBanners}
+                                    eventBgPcBanners={eventBgPcBanners}
+                                    eventSections={eventSections}
+                                    eventBanners={eventBanners}
+                                />
+                            )}
                         {/* <!-- // event --> */}
 
                         {/* <!-- product --> */}
@@ -903,6 +285,10 @@ export default function Main() {
                                     academyPcBanners?.banners ? (
                                         <h2
                                             className='main__banner__title'
+                                            style={{
+                                                color: academyPcBanners
+                                                    ?.banners[0]?.nameColor,
+                                            }}
                                             dangerouslySetInnerHTML={{
                                                 __html: academyPcBanners
                                                     ?.banners[0]?.nameList,
@@ -911,6 +297,10 @@ export default function Main() {
                                     ) : (
                                         <h2
                                             className='main__banner__title'
+                                            style={{
+                                                color: academyMoBanners
+                                                    ?.banners[0]?.nameColor,
+                                            }}
                                             dangerouslySetInnerHTML={{
                                                 __html: academyMoBanners
                                                     ?.banners[0]?.nameList,
@@ -925,13 +315,15 @@ export default function Main() {
                                                 academyPcBanners.banners[0]
                                                     ?.landingUrl
                                             }
-                                            target={
+                                            style={{
+                                                color: academyPcBanners
+                                                    ?.banners[0]?.nameColor,
+                                            }}
+                                            rel='noreferrer'
+                                            target={getLinkTarget(
                                                 academyPcBanners?.banners[0]
-                                                    ?.browerTargetType ===
-                                                'CURRENT'
-                                                    ? '_self'
-                                                    : '_blank'
-                                            }
+                                                    ?.browerTargetType,
+                                            )}
                                         >
                                             자세히 보기
                                         </a>
@@ -942,13 +334,15 @@ export default function Main() {
                                                 academyMoBanners.banners[0]
                                                     ?.landingUrl
                                             }
-                                            target={
+                                            style={{
+                                                color: academyMoBanners
+                                                    ?.banners[0]?.nameColor,
+                                            }}
+                                            rel='noreferrer'
+                                            target={getLinkTarget(
                                                 academyMoBanners?.banners[0]
-                                                    ?.browerTargetType ===
-                                                'CURRENT'
-                                                    ? '_self'
-                                                    : '_blank'
-                                            }
+                                                    ?.browerTargetType,
+                                            )}
                                         >
                                             자세히 보기
                                         </a>
@@ -959,41 +353,8 @@ export default function Main() {
                         {/* // academy banner */}
 
                         {/* customer service */}
-                        <div className='main__help'>
-                            <h2 className='main__help__title'>
-                                무엇을
-                                <br />
-                                도와드릴까요?
-                            </h2>
-                            <ul className='main__help__lists'>
-                                <li className='main__help__list notice'>
-                                    <Link to='/faq'>FAQ & 공지사항</Link>
-                                </li>
-                                <li className='main__help__list location'>
-                                    <Link to='/store-info'>매장안내</Link>
-                                </li>
-                                <li className='main__help__list customer'>
-                                    <a
-                                        href='javascript:void(0)'
-                                        onClick={onClickServiceCenter}
-                                    >
-                                        고객센터
-                                    </a>
-                                </li>
-                                <li className='main__help__list service'>
-                                    <a
-                                        href={
-                                            window.anchorProtocol +
-                                            'www.sony.co.kr/electronics/support'
-                                        }
-                                        onClick={window.openBrowser}
-                                        target='_blank'
-                                    >
-                                        제품지원
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        <CustomerService />
+
                         {/* customer service */}
                         {alertVisible && (
                             <Alert onClose={closeModal}>{alertMessage}</Alert>

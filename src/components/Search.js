@@ -22,13 +22,15 @@ export default function Search({ setSearchOpen }) {
 
         try {
             const { data } = await loadBanner(keyword);
+
             setFavoriteKeywords(
                 _.chain(data)
                     .flatMap(({ accounts }) => accounts)
                     .flatMap(({ banners }) => banners)
                     .take(10)
-                    .map(({ name, landingUrl }) => ({
+                    .map(({ name, nameColor, landingUrl }) => ({
                         label: name,
+                        labelColor: nameColor,
                         url: landingUrl,
                     }))
                     .value(),
@@ -119,14 +121,17 @@ export default function Search({ setSearchOpen }) {
                     <div className='search__keyword'>
                         <h3 className='search__title'>인기 검색어</h3>
                         <div className='search__keyword__list'>
-                            {favoriteKeywords.map(({ label, url }, idx) => (
-                                <Link
-                                    to={url || `/search-result/${label}`}
-                                    key={`${label}${idx}`}
-                                    className='search__keyword__item'
-                                    onClick={() => setSearchOpen(false)}
-                                >{`# ${label}`}</Link>
-                            ))}
+                            {favoriteKeywords.map(
+                                ({ label, labelColor, url }, idx) => (
+                                    <Link
+                                        to={url || `/search-result/${label}`}
+                                        key={`${label}${idx}`}
+                                        className='search__keyword__item'
+                                        onClick={() => setSearchOpen(false)}
+                                        style={{ color: labelColor }}
+                                    >{`# ${label}`}</Link>
+                                ),
+                            )}
                         </div>
                     </div>
                     <div className='search__recomm'>

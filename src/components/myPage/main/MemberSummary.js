@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
+
 import { toCurrencyString } from 'utils/unit';
 import { getCouponsSummary } from 'api/promotion';
 import { syncCoupon } from 'api/sony/coupon';
@@ -57,10 +59,13 @@ const MemberSummary = ({
                         </Link>
                     </li>
                     <li className='user_item mileage'>
-                        <a
-                            href='#mileage-tit'
+                        <HashLink
+                            smooth
+                            to='/my-page/#mileage-tit'
                             className='user_tabs'
-                            onClick={() => tabChange('mileage')}
+                            onClick={() => {
+                                tabChange('mileage');
+                            }}
                         >
                             <span className='ico_txt'>
                                 <span className='txt_arrow'>마일리지</span>
@@ -71,11 +76,12 @@ const MemberSummary = ({
                                 </span>
                                 M
                             </span>
-                        </a>
+                        </HashLink>
                     </li>
                     <li className='user_item coupon'>
-                        <a
-                            href='#coupon-tit'
+                        <HashLink
+                            smooth
+                            to='/my-page/#coupon-tit'
                             className='user_tabs'
                             onClick={() => tabChange('coupon')}
                         >
@@ -85,11 +91,12 @@ const MemberSummary = ({
                             <span className='val_txt'>
                                 <span className='val'>{couponCount}</span> 장
                             </span>
-                        </a>
+                        </HashLink>
                     </li>
                     <li className='user_item like'>
-                        <a
-                            href='#wish-tit'
+                        <HashLink
+                            smooth
+                            to='my-page/#wish-tit'
                             className='user_tabs'
                             onClick={() => tabChange('wish')}
                         >
@@ -99,7 +106,7 @@ const MemberSummary = ({
                             <span className='val_txt'>
                                 <span className='val'>{wishCount}</span>
                             </span>
-                        </a>
+                        </HashLink>
                     </li>
                 </ul>
             </div>
