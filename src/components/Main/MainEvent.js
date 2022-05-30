@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
+import { Fragment, memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { breakPoint } from 'utils/constants';
@@ -14,38 +14,65 @@ const MainEvent = ({
     eventSections,
     eventBanners,
 }) => {
+    const banners = useMemo(
+        () => (size.width > breakPoint ? eventBgPcBanners : eventBgMoBanners),
+        [size, eventBgPcBanners, eventBgMoBanners],
+    );
+    const history = useHistory();
+
+    const onEventClick = (url, target) => {
+        if (target === 'CURRENT') {
+            history.push(url);
+        } else {
+            window.open(url, '_blank');
+        }
+    };
     return (
         <div className='event'>
             <h2 className='event__title'>EVENT</h2>
             <div className='event__list'>
-                {((size.width > breakPoint && eventBgPcBanners?.banners) ||
-                    (size.width <= breakPoint &&
-                        eventBgMoBanners?.banners)) && (
+                {banners && (
                     <div
                         className='event__wrapper'
                         style={{
-                            backgroundImage:
-                                size.width > breakPoint
-                                    ? `url(${eventBgPcBanners?.banners[0]?.imageUrl})`
-                                    : `url(${eventBgMoBanners?.banners[0]?.imageUrl})`,
+                            backgroundImage: `url(${banners?.banners[0]?.imageUrl})`,
                         }}
+                        onClick={() =>
+                            onEventClick(
+                                banners?.banners[0]?.landingUrl,
+                                banners?.banners[0]?.browerTargetType,
+                            )
+                        }
                     >
                         <div className='event__main__info'>
                             <div className='event__copy'>
                                 <p className='event__copy__head'>
-                                    {eventSections?.label
-                                        ?.split('/')
-                                        .map((eventLabel, index) => (
-                                            <span key={index}>
-                                                {eventLabel}
-                                            </span>
+                                    {banners?.banners[0]?.name
+                                        .split('/')
+                                        .map((value, index) => (
+                                            <Fragment key={index}>
+                                                <span>{value}</span>
+                                            </Fragment>
                                         ))}
                                 </p>
                                 <p className='event__copy__desc'>
-                                    {eventSections?.sectionExplain}
+                                    {banners?.banners[0]?.description
+                                        .split('/')
+                                        .map((value, index) => (
+                                            <Fragment key={index}>
+                                                <span
+                                                    style={{
+                                                        display: 'block',
+                                                    }}
+                                                >
+                                                    {value}
+                                                </span>
+                                            </Fragment>
+                                        ))}
                                 </p>
                             </div>
                         </div>
+
                         <div className='event__main swiper-container'>
                             <button
                                 type='button'
