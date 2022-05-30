@@ -10,6 +10,7 @@ import { useAlert } from '../../../hooks';
 import gc from '../../../storage/guestCart';
 import HsValidator from '../../cart/HsValidator';
 import _ from 'lodash';
+import { debounce } from 'lodash';
 import orderPayment from '../../order/orderPayment';
 import { setCartCount, useHeaderDispatch } from '../../../context/header.context';
 
@@ -302,32 +303,11 @@ export default function ButtonGroup({
       e?.message && openAlert(e.message);
     }
   }
-
-  const handleClick = async (e, type) => {
+  const debounceClick = debounce( (productNo,type) => btnTypeEvent(productNo, type),100,);
+  const handleClick = (e, type) => {
     // main
     e.preventDefault();
-    
-    if (await isSaleable(productNo, type)) {  // 20220526 판매가능 여부 체크 로직 추가
-      switch (type) {
-        case 'gift':
-          gift();
-          break;
-        case 'order':
-          order();
-          break;
-        case 'cart':
-          cart();
-          break;
-        case 'wish':
-          wishHandler();
-          break;
-        case 'reserve':
-          order();
-          break;
-        default:
-          break;
-      }
-    }
+    debounceClick(productNo, type);
   };
 
   // hsValidation
@@ -371,15 +351,15 @@ export default function ButtonGroup({
   const isSoldOut = useMemo(() => saleStatus === 'SOLDOUT', [saleStatus]);
   const isBackOrdered = useMemo(() => saleStatus === 'READY', [saleStatus]);
 
-  async function isSaleable(productNo, type) {
-
+  async function btnTypeEvent(productNo, type) {
     const STOP_MSG        = "구매하실 수 없는 제품입니다.";
     const PROHIBITION_MSG = "구매하실 수 없는 제품입니다.";
     const FINISHED_MSG    = "판매 대기중인 상품입니다.";
     const SOLDOUT_MSG     = "상품의 재고가 충분하지 않습니다.";
     const ERROR_MSG       = "잠시 후 다시 시도해 주세요.";
 
-    try {
+    try { 
+
       if ((isLogin && ( type === 'wish')) || type === 'cart' || type === 'gift' ) {
         const { data } = await getProductDetail(productNo);
         const saleStatusType = data.status.saleStatusType;
@@ -388,29 +368,51 @@ export default function ButtonGroup({
         switch (saleStatusType) {
           case 'STOP': // 판매중지
             openAlert(STOP_MSG);
-            return false;
+            return;
           case 'PROHIBITION': // 판매금지
             openAlert(PROHIBITION_MSG);
-            return false;
+            return;
           case 'READY': // 판매대기
           case 'FINISHED': // 판매종료
             openAlert(FINISHED_MSG);
-            return false;
+            return;
           case 'ONSALE': // 판매중
-            isSoldOut && openAlert(SOLDOUT_MSG);
-            return !isSoldOut;
+            if(isSoldOut){
+              openAlert(SOLDOUT_MSG);
+              return;
+            }
+            break;
           default:
             break;
         }
       }
+
+      switch (type) {
+        case 'gift':
+          gift();
+          break;
+        case 'order':
+          order();
+          break;
+        case 'cart':
+          cart();
+          break;
+        case 'wish':
+          wishHandler();
+          break;
+        case 'reserve':
+          order();
+          break;
+        default:
+          break;
+      }
+
     }
     catch (e) {
       e?.message && console.log(e.message);
       openAlert(ERROR_MSG);
-      return false;
+      return;
     }
-
-    return true;
   };
 
   return (
