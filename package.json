@@ -88,6 +88,7 @@
         "react-player": "^2.9.0",
         "react-refresh": "^0.8.3",
         "react-router-dom": "^5.2.0",
+        "react-router-hash-link": "^2.4.3",
         "react-scrollmagic": "^2.3.0",
         "react-snap": "^1.23.0",
         "react-to-print": "^2.13.0",
