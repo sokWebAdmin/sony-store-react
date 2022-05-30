@@ -96,7 +96,7 @@ const MemberSummary = ({
                     <li className='user_item like'>
                         <HashLink
                             smooth
-                            to='my-page/#wish-tit'
+                            to='/my-page/#wish-tit'
                             className='user_tabs'
                             onClick={() => tabChange('wish')}
                         >

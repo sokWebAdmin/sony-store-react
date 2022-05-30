@@ -228,7 +228,7 @@ MainKV.propTypes = {
     breakPoint: PropTypes.number.isRequired,
     mPointer: PropTypes.oneOf(['none', 'hover-prev', 'hover-next']).isRequired,
     setMPointer: PropTypes.func.isRequired,
-    topSwiper: PropTypes.object.isRequired,
+    topSwiper: PropTypes.object,
     setTopSwiper: PropTypes.func.isRequired,
     slidePcBanners: PropTypes.array.isRequired,
     slideMoBanners: PropTypes.array.isRequired,
