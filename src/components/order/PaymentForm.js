@@ -1,13 +1,11 @@
 import { forwardRef, useImperativeHandle, useState, useRef } from 'react';
 
-import SelectBox from 'components/common/SelectBox';
 import paymentType from '../../const/paymentType';
 import InvoiceGuide from '../popup/InvoiceGuide';
 import InvoicePublish from '../popup/InvoicePublish';
 import {DateUtils, getStrYear} from '../../utils/dateFormat';
 
 import '../../assets/scss/partials/payModal.scss';
-import {setObjectState} from "../../utils/state";
 
 const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
   const changePaymentType = ({ pgType, payType }) => {
@@ -25,33 +23,14 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
   const onChangeSgicYn = (e) => setSgicCheckOn(e.target.value);
   const onChangeSgicgenderradio = (e) => setSgicgenderradio(e.target.value);
   const onChangePrivateYn = (e) => setPrivateYn(e.target.value);
-  const [year, setYear] = useState(0);
-  const [month, setMonth] = useState(0);
-  const [day, setDay] = useState(0);
 
-  const yearChangeParameter = (key, value) => {
-    if (value === year) {
-      alert('이미 선택된 옵션입니다.');
-    } else {
-      setYear(value);
-    }
-  };
+  // const sgicEmail = useRef();
+  // const gender = useRef();
+  // const privateAgree = useRef();
+  // const sgicYear = useRef();
+  // const sgicMonth = useRef();
+  // const sgicDay = useRef();
 
-  const monthChangeParameter = (key, value) => {
-    if (value === month) {
-      alert('이미 선택된 옵션입니다.');
-    } else {
-      setMonth(value);
-    }
-  };
-
-  const dayChangeParameter = (key, value) => {
-    if (value === day) {
-      alert('이미 선택된 옵션입니다.');
-    } else {
-      setDay(value);
-    }
-  };
 
   // useImperativeHandle( () => ({
   //   fieldValidation () {
@@ -78,18 +57,20 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
         start = 1;
       }
 
-      let num = 1;
       for (let i = start; i < standard+plusLange; i++) {
-        result.push({optionNo:num,label:i});
-        num++;
+        result.push(<li key={"optYear"+i}>
+                      <a href={'#!'} key={"optYear"+i} className="opt_list">
+                        <div className="item" key={"optYear"+i}>{i}</div>
+                      </a>
+                    </li>);
       }
       return result;
     };
 
-    return dateOptListrendering();
+    return <ul className="select_opt">{dateOptListrendering()}</ul>;
   }
 
-  function dayOptListrendering() {
+  function dayOptListrendering(year, month) {
     const dayOptListrendering = () => {
       const result = [];
 
@@ -97,12 +78,16 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
       date.getDate();
 
       for (let i = 1; i < date.getDate()+1; i++) {
-        result.push({optionNo:i,label:i});
+        result.push(<li>
+          <a href={'#!'} className="opt_list">
+            <div className="item">{i}</div>
+          </a>
+        </li>);
       }
       return result;
     };
 
-    return dayOptListrendering();
+    return <ul className="select_opt">{dayOptListrendering()}</ul>;
   }
 
   return (
@@ -203,7 +188,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                       </div>
                     </div>
 
-                    {sgicCheckOn === 'on' && <div className="sgic_box_result_cont sgic_tab_radio1 on">
+                    {sgicCheckOn === 'on' && <div className="sgic_box_result_cont sgic_tab_radio1">
                       {/*<input type="hidden" className="inp" id="sgic_email" ref={sgicEmail} value={'zespy225@daum.net'} />*/}
                       {/*<input type="hidden" className="inp_radio" id="sgic_gender_radio1" ref={gender} name="sgicgenderradio" value={'1'} />*/}
                       {/*<input type="hidden" className="inp_radio" id="sgic_agree_radio1" ref={privateAgree} value={'Y'} name="sgicagree" />*/}
@@ -216,87 +201,53 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                         <label htmlFor="sgic_birth">생년월일</label>
                         </div>
                         <div className="acc_cell parent">
-                          <SelectBox
-                              defaultInfo={{
-                                type: 'dropdown',
-                                placeholder:
-                                    '선택',
-                              }}
-                              selectOptions={dateOptListrendering(Number(getStrYear()), 100, -14)}
-                              selectOption={({ optionNo, label }) => {
-                                if (optionNo !== 1) {
-                                  yearChangeParameter(
-                                      'year',
-                                      label,
-                                  );
-                                  // setYear('');
-                                } else {
-                                  yearChangeParameter(
-                                      'year',
-                                      '',
-                                  );
+                          <div className="select_ui_zone btm_line">
+                            <a href={'#!'} className="selected_btn" data-default-text="선택"
+                            >선택</a>
+                            <div className="select_inner" style={{display:"none"}}>
+                              {
+                                dateOptListrendering(Number(getStrYear()), 100, -14)
                               }
-                              }}
-                          />
-
+                            </div>
+                          </div>
                           <span className="sgic_birth_txt">년</span>
 
-                          <SelectBox
-                              defaultInfo={{
-                                type: 'dropdown',
-                                placeholder:
-                                    '선택',
-                              }}
-                              selectOptions={dateOptListrendering(6, 6, 7)}
-                              selectOption={({ optionNo, label }) => {
-                                if (optionNo !== 1) {
-                                  monthChangeParameter(
-                                      'month',
-                                      label,
-                                  );
-                                  // setMonth('');
-                                } else {
-                                  monthChangeParameter(
-                                      'month',
-                                      '',
-                                  );
-                                }
-                              }}
-                          />
+                          <div className="select_ui_zone btm_line">
+                            <a href={'#!'} className="selected_btn" data-default-text="선택">선택</a>
+                            <div className="select_inner" style={{display:"none"}}>
+                              <ul className="select_opt">
+                                <li>
+                                  <a href={'#!'} className="opt_list">
+                                    <div className="item">01</div>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href={'#!'} className="opt_list">
+                                    <div className="item">02</div>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
                           <span className="sgic_birth_txt">월</span>
 
-                          {(year !== 0 && month !== 0)? (
-                           <>
-                             <SelectBox
-                                 defaultInfo={{
-                                   type: 'dropdown',
-                                   placeholder:
-                                       '선택',
-                                 }}
-                                 selectOptions={dayOptListrendering()}
-                                 selectOption={({ optionNo, label }) => {
-                                   if (optionNo !== 1) {
-                                     dayChangeParameter(
-                                         'day',
-                                         label,
-                                     );
-                                     // setDay('');
-                                   } else {
-                                     dayChangeParameter(
-                                         'day',
-                                         '',
-                                     );
-                                   }
-                                 }}
-                             />
-                           </>
-                          ) : (
-                            <>
                           <div className="select_ui_zone btm_line">
-                                <a href={"#!"} onClick={e => e.preventDefault()} className="selected_btn" data-default-text="선택">선택</a>
+                            <a href={'#!'} className="selected_btn" data-default-text="선택">선택</a>
+                            <div className="select_inner" style={{display:"none"}}>
+                              <ul className="select_opt">
+                                <li>
+                                  <a href={'#!'} className="opt_list">
+                                    <div className="item">01</div>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href={'#!'} className="opt_list">
+                                    <div className="item">02</div>
+                                  </a>
+                                </li>
+                              </ul>
                             </div>
-                            </>
-                            )}
+                          </div>
                           <span className="sgic_birth_txt">일</span>
                         </div>
                       </div>
@@ -364,7 +315,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                           <li>현금결제 시 순결제금액 기준에 보증보험 전자보증서를 발급받으실 수 있습니다.</li>
                           <li>본 보증서는 주문 시 신청한 고객에 한해 발급되며, 서비스 제공 기간 동안 유효합니다.</li>
                           <li>보증금액은 현 주문결제금액 기준으로 발급되며, 주문 변경으로 인한 재발급 및 다른 주문과의 합산발급은 되지 않습니다.</li>
-                          <li>보증보험 전자보증서에 대한 보다 상세한 사항은&nbsp;<a href={"http://www.usafe.co.kr/u_esafe.asp"}
+                          <li>보증보험 전자보증서에 대한 보다 상세한 사항은&nbsp;<a href="http://www.usafe.co.kr/u_esafe.asp"
                                                                 target="_blank" className="under_line"><em
                               className="color">여기</em></a>를 클릭하여 주시기 바랍니다.
                           </li>

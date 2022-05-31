@@ -1603,25 +1603,18 @@ body {
 .footer__legal__warning p:last-child {
   display: inline-block;
   margin-top: .5em;
-  margin-bottom: 1.5em;
-  padding-right: 3.5em;
+  padding-right: 3.5em
 }
 
 .footer__legal__warning p:last-child a {
-  color: #888;
-}
-
-.footer__legal__warning p:last-child a::after {
-  content: "";
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  margin-left: 4px;
-  margin-right: 12px;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
-  border-top: 1px solid #888;
-  border-right: 1px solid #888;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 33px;
+  height: 33px;
+  background: url("https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_gray.png") no-repeat 50%;
+  background-size: cover;
+  text-indent: -9999em
 }
 
 .footer__legal__warning p::before {
