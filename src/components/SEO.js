@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
+
 import Omniture from 'components/Omniture';
 import SonyHelmet from 'components/SonyHelmet';
 
 const SEO = ({ data }) => {
-    // TODO: 추후 별도 파일로 분리
-    const config = { title: 'SonyStore', description: '' };
-
     return (
         <>
             <SonyHelmet data={data} />
