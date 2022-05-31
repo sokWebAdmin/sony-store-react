@@ -27,7 +27,7 @@ export default function videoCourse() {
                                 <div className='video_wrap'>
                                     <ReactPlayer
                                         className='react-player'
-                                        url='https://www.youtube.com/embed/MQHGdefGaiI'
+                                        url='https://www.youtube.com/embed/56bt3K4LqxM'
                                         width='100%' // 플레이어 크기 (가로)
                                         height='100%' // 플레이어 크기 (세로)
                                         playing={false} // 자동 재생 off
@@ -38,7 +38,7 @@ export default function videoCourse() {
                                     />
                                 </div>
                                 <p className='course_video_tit'>
-                                    [강의] SRS-XB13 블루투스 연결방법(iOS)
+                                    [강의] WF-L900 (LinkBuds) 블루투스 연결방법 (안드로이드)
                                 </p>
                             </div>
                             <div className='course_video_list'>
@@ -48,11 +48,11 @@ export default function videoCourse() {
                                             <a
                                                 href={
                                                     window.anchorProtocol +
-                                                    'www.youtube.com/embed/g1Vtfa1dMow'
+                                                    'www.youtube.com/embed/HY_MJFStNsw'
                                                 }
                                                 onClick={window.openBrowser}
                                                 className='video_thumb_btn'
-                                                data-video-url='https://www.youtube.com/embed/g1Vtfa1dMow'
+                                                data-video-url='https://www.youtube.com/embed/HY_MJFStNsw'
                                                 target='_blank'
                                                 title='새창열림'
                                                 rel='noreferrer'
@@ -65,12 +65,7 @@ export default function videoCourse() {
                                             <div className='video_thumb_info'>
                                                 <span className='pos_center'>
                                                     <p className='tit'>
-                                                        [강의]ILCE_7SM3 (A7S3)
-                                                        드라이브 모드 활용하기
-                                                    </p>
-                                                    <p className='txt'>
-                                                        (브래킷모드
-                                                        연속,단일,WB,DRO)
+                                                        [강의] WF-L900 (LinkBuds) 헤드셋 재설정 방법
                                                     </p>
                                                 </span>
                                             </div>
@@ -81,11 +76,11 @@ export default function videoCourse() {
                                             <a
                                                 href={
                                                     window.anchorProtocol +
-                                                    'www.youtube.com/embed/LwyAfL_FTpQ'
+                                                    'www.youtube.com/embed/WsaWNbXUk4I'
                                                 }
                                                 onClick={window.openBrowser}
                                                 className='video_thumb_btn'
-                                                data-video-url='https://www.youtube.com/embed/LwyAfL_FTpQ'
+                                                data-video-url='https://www.youtube.com/embed/WsaWNbXUk4I'
                                                 target='_blank'
                                                 title='새창열림'
                                                 rel='noreferrer'
@@ -98,11 +93,7 @@ export default function videoCourse() {
                                             <div className='video_thumb_info'>
                                                 <span className='pos_center'>
                                                     <p className='tit'>
-                                                        [강의] WF-1000XM4 펌웨어
-                                                        업데이트하기
-                                                    </p>
-                                                    <p className='txt'>
-                                                        헤드셋 펌웨어 업데이트
+                                                        [강의] ILCE-7M4 Imaging Edge Mobile 이용하여 사진 내보내는 방법
                                                     </p>
                                                 </span>
                                             </div>
@@ -113,11 +104,11 @@ export default function videoCourse() {
                                             <a
                                                 href={
                                                     window.anchorProtocol +
-                                                    'www.youtube.com/embed/Ds_HCaXyWtI'
+                                                    'www.youtube.com/embed/0qV9wnWIsB8'
                                                 }
                                                 onClick={window.openBrowser}
                                                 className='video_thumb_btn'
-                                                data-video-url='https://www.youtube.com/embed/Ds_HCaXyWtI'
+                                                data-video-url='https://www.youtube.com/embed/0qV9wnWIsB8'
                                                 target='_blank'
                                                 title='새창열림'
                                                 rel='noreferrer'
@@ -130,12 +121,7 @@ export default function videoCourse() {
                                             <div className='video_thumb_info'>
                                                 <span className='pos_center'>
                                                     <p className='tit'>
-                                                        [강의] ILCE_7SM3 (a7s3)
-                                                        드라이브 모드 활용하기
-                                                    </p>
-                                                    <p className='txt'>
-                                                        (단일 촬영, 연속 촬영,
-                                                        셀프 타이머)
+                                                        [강의] ILCE-7M3 눈금표시 이용방법 (3분할, 사각선, 대각선+사각선)
                                                     </p>
                                                 </span>
                                             </div>
