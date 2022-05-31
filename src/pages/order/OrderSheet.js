@@ -46,12 +46,14 @@ const OrderSheet = ({ location }) => {
   const [paymentInfo, setPaymentInfo] = useState(null);
   const [recentAddresses, setRecentAddresses] = useState([]);
   const [sgic, setSgic] = useState({
-    sgicEmail : 'zespy225@daum.net'
-    ,gender : '1'
-    ,privateAgree : 'Y'
-    ,sgicDate : '20220524'
+    sgicEmail : ''
+    ,gender : ''
+    ,privateAgree : ''
+    ,sgicDate : ''
     ,
   });
+
+
 
   const orderCnt = useMemo(() => {
     return deliveryGroups
@@ -266,6 +268,7 @@ const OrderSheet = ({ location }) => {
       return;
     }
     const paymentInfo = getPaymentInfo();
+    // console.log(sgic);
     orderPayment.run(paymentInfo);
   };
 
@@ -380,7 +383,7 @@ const OrderSheet = ({ location }) => {
                       )}
 
                       <Accordion title={'결제 방법'} defaultVisible={true}>
-                        <PaymentForm payment={payment} setPayment={setPayment} orderSheetNo={orderSheetNo} setSgic={setSgic} ref={paymentForm} />
+                        <PaymentForm payment={payment} setPayment={setPayment} orderSheetNo={orderSheetNo} sgic={sgic} setSgic={setSgic} ref={paymentForm}  />
                       </Accordion>
 
                       {!isLogin && (

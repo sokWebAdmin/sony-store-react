@@ -1,4 +1,6 @@
-import { forwardRef, useImperativeHandle, useState, useRef } from 'react';
+import {forwardRef, useImperativeHandle, useState, useRef, useEffect} from 'react';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
 
 import SelectBox from 'components/common/SelectBox';
 import paymentType from '../../const/paymentType';
@@ -7,9 +9,8 @@ import InvoicePublish from '../popup/InvoicePublish';
 import {DateUtils, getStrYear} from '../../utils/dateFormat';
 
 import '../../assets/scss/partials/payModal.scss';
-import {setObjectState} from "../../utils/state";
 
-const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
+const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSgic }, ref) => {
   const changePaymentType = ({ pgType, payType }) => {
     setPayment({
       pgType,
@@ -18,16 +19,18 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
 
   };
 
-  // const [sgicYn, setSgicYn] = useState('off');
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
+  const [sgicEmail, setSgicEmail] = useState('');
   const [sgicCheckOn, setSgicCheckOn] = useState('off');
   const [sgicgenderradio, setSgicgenderradio] = useState('1');
   const [privateYn, setPrivateYn] = useState('N');
   const onChangeSgicYn = (e) => setSgicCheckOn(e.target.value);
   const onChangeSgicgenderradio = (e) => setSgicgenderradio(e.target.value);
   const onChangePrivateYn = (e) => setPrivateYn(e.target.value);
-  const [year, setYear] = useState(0);
-  const [month, setMonth] = useState(0);
-  const [day, setDay] = useState(0);
+  const handleSgicEmailChange = ({ target }) => setSgicEmail(target.value);
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
+  const [day, setDay] = useState('');
 
   const yearChangeParameter = (key, value) => {
     if (value === year) {
@@ -41,6 +44,9 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
     if (value === month) {
       alert('이미 선택된 옵션입니다.');
     } else {
+      if (Number(month) < 10) {
+        value = "0" + value;
+      }
       setMonth(value);
     }
   };
@@ -53,15 +59,74 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
     }
   };
 
-  // useImperativeHandle( () => ({
-  //   fieldValidation () {
-  //     const refs = { sgicEmail, gender, privateAgree, sgicYear, sgicMonth, sgicDay };
+  useEffect(() => {
+    setSgic({
+      sgicEmail : sgicEmail
+      ,gender : sgicgenderradio
+      ,privateAgree : privateYn
+      ,sgicDate : year+month+day
+      ,
+    })
+  },[sgicEmail, sgicgenderradio, privateYn, sgicCheckOn, day]);
+
+  useImperativeHandle(ref, () => ({
+    fieldValidation () {
+      const refs = { sgicEmail, sgicgenderradio, privateYn, year, month, day };
+
+      console.log(sgic);
+      if (sgicCheckOn === 'on') {
+
+        if (year === '' || month === '' || day === '') {
+          openAlert('생년월일을 확인 해주세요.');
+          return false;
+        }
+
+        if (sgicEmail === '') {
+          openAlert('전자 보증 신청 이메일이 공백입니다.');
+          return false;
+        }
+
+        if (privateYn === 'N') {
+          openAlert('개인정보 이용 동의하셔야 보험 서비스 이용 가능합니다.');
+          return false;
+        }
+      }
+
+      const emptyRef = Object.entries(refs).find(([k]) => !sgic[k])?.[1];
+      if (!emptyRef) {
+        return true;
+      }
+      return true;
+    },
+  }));
+
+
+
+  // const validation = (type) => {
   //
-  //     if (sgicCheckOn === 'on') {
-  //       return true;
-  //     }
-  //   },
-  // }));
+  //   const msgSetter = type === 'pw' ? setPwErrorText : setConfirmPwErrorText;
+  //
+  //
+  //   if (!state) {
+  //     msgSetter('비밀번호를 입력해주세요.');
+  //     return false;
+  //   }
+  //
+  //   if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{12,}$/.test(state)) {
+  //     msgSetter('대문자/소문자/숫자가 하나 이상 포함된 12자리를 입력해 주세요.\n');
+  //     return false;
+  //   }
+  //
+  //   if (pw && confirmPw && pw !== confirmPw) {
+  //     setConfirmPwErrorText('입력하신 비밀번호가 일치하지 않습니다.');
+  //     return false;
+  //   }
+  //
+  //   setPwErrorText('');
+  //   setConfirmPwErrorText('');
+  //
+  //   return true;
+  // };
 
   const [viewInvoiceGuide, setViewInvoiceGuide] = useState(false);
   const [viewInvoicePublish, setViewInvoicePublish] = useState(false);
@@ -93,7 +158,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
     const dayOptListrendering = () => {
       const result = [];
 
-      let date = new Date(year, month, 0);
+      let date = new Date(Number(year), Number(month), 0);
       date.getDate();
 
       for (let i = 1; i < date.getDate()+1; i++) {
@@ -107,6 +172,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
 
   return (
     <>
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       <div className="acc_form">
         <div className="acc_cell vat">
           <label htmlFor="payment1">결제 수단 선택</label>
@@ -325,7 +391,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                         </div>
                         <div className="acc_cell parent">
                           <div className="acc_inp type3">
-                            <input type="text" className="inp" id="sgic_email" placeholder='(예 : sony@sony.co.kr)' />
+                            <input type="text" className="inp" id="sgic_email" placeholder='(예 : sony@sony.co.kr)' onChange={handleSgicEmailChange} />
                               <span className="focus_bg"></span>
                           </div>
                         </div>
@@ -432,6 +498,6 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
       </div>
     </>
   );
-};
+})
 
 export default PaymentForm;
