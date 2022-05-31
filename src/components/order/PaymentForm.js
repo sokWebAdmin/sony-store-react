@@ -258,7 +258,7 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSg
                   </div>
                   <div className="sgic_box">
                     <strong className="sgic_box_tit">소비자 피해보상보험 서비스</strong>
-                    <div className="acc_radio">
+                    <div className="sgic_box_radio acc_radio">
                       <div className="radio_box">
                         <input type="radio" className="inp_radio" key={"sgic_tab_radio1"} id="sgic_tab_radio1" value={'on'} checked={sgicCheckOn === 'on'} onChange={onChangeSgicYn} name="sgictabradio"/>
                           <label htmlFor="sgic_tab_radio1" className="contentType">신청함</label>
@@ -281,7 +281,7 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSg
                         <div className="acc_cell vat">
                         <label htmlFor="sgic_birth">생년월일</label>
                         </div>
-                        <div className="acc_cell parent">
+                        <div className="acc_cell acc_select_wrap parent">
                           <SelectBox
                               defaultInfo={{
                                 type: 'dropdown',

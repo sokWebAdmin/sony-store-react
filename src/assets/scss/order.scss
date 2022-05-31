@@ -1531,6 +1531,11 @@
   }
 
   .acc_cell {
+    &.acc_select_wrap{
+      >div{
+        display:inline-block;
+      }
+    }
     &:first-child {
       width: 150px;
       @include under-pc {
