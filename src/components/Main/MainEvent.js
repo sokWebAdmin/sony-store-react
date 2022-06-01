@@ -35,6 +35,7 @@ const MainEvent = ({
                     <div
                         className='event__wrapper'
                         style={{
+                            cursor: 'pointer',
                             backgroundImage: `url(${banners?.banners[0]?.imageUrl})`,
                         }}
                         onClick={() =>
@@ -73,7 +74,12 @@ const MainEvent = ({
                             </div>
                         </div>
 
-                        <div className='event__main swiper-container'>
+                        <div
+                            className='event__main swiper-container'
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                        >
                             <button
                                 type='button'
                                 className='swiper-button-prev'
