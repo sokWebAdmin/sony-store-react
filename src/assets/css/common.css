@@ -1706,6 +1706,7 @@ body {
   width: 100%;
   padding: 16px;
   background-color: #222;
+  z-index: 120;
 }
 .footer__family__link__trigger {
   display: block;
