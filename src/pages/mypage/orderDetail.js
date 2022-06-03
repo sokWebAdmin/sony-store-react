@@ -81,7 +81,7 @@ export default function OrderDetail() {
 
     const [payInfo, setPayInfo] = useState({
         // 결제 정보
-        payType: '', // 가상계좌 VIRTUAL_ACCOUNT, 신용카드 CREDIT_CARD
+        payType: '', // 가상계좌 ESCROW_VIRTUAL_ACCOUNT, 신용카드 CREDIT_CARD
         cardInfo: null, // 가상계좌일 때 NUll
         bankInfo: null, // 신용카드일 때 Null
     });
@@ -141,7 +141,6 @@ export default function OrderDetail() {
             payInfo: { cardInfo, bankInfo },
             receiptInfos,
             orderOptionsGroupByPartner,
-            extraData,
         } = res.data;
 
         setOrderInfo({
@@ -154,7 +153,6 @@ export default function OrderDetail() {
             retrieveInvoiceUrl:
                 orderOptionsGroupByPartner[0].orderOptionsGroupByDelivery[0]
                     .retrieveInvoiceUrl,
-            extraData,
         });
 
         setClaimInfo(() => ({
@@ -263,19 +261,15 @@ export default function OrderDetail() {
             message: '',
             name: '',
         }));
-        console.log("cancel");
 
         if (status === 'ok') {
             if (confirm.name === 'cancel-confirm') {
-                debugger;
                 if (
-                    (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' || payInfo.payType === 'VIRTUAL_ACCOUNT') &&
+                    payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' &&
                     orderInfo?.defaultOrderStatusType !== 'DEPOSIT_WAIT'
                 ) {
-                    console.log("cancel");
                     setRefundAccountVisible(() => true);
                 } else {
-                    console.log("cancel");
                     _cancelOrder();
                 }
             }
@@ -344,13 +338,13 @@ export default function OrderDetail() {
 
             let message =
                 '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
-            if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' || payInfo.payType === 'VIRTUAL_ACCOUNT') {
+            if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
                 message +=
                     '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.';
             }
 
             openAlert(message, () => {
-                if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' || payInfo.payType === 'VIRTUAL_ACCOUNT') {
+                if (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT') {
                     return async () => {
                         const { data } = await _getOrderByOrderNo();
                         const { claimStatusType, claimNo } =
@@ -359,7 +353,7 @@ export default function OrderDetail() {
 
                         if (
                             !!claimNo &&
-                            (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' || payInfo.payType === 'VIRTUAL_ACCOUNT')
+                            payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT'
                         ) {
                             setClaimInfo(() => ({ claimStatusType, claimNo }));
                             setRefundAccountVisible(() => false);
@@ -377,7 +371,7 @@ export default function OrderDetail() {
         const orderStatus = orderProducts[0]?.orderStatusType;
 
         if (
-            (payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' || payInfo.payType === 'VIRTUAL_ACCOUNT') &&
+            payInfo.payType === 'ESCROW_VIRTUAL_ACCOUNT' &&
             !['DEPOSIT_WAIT', 'PAY_DONE'].includes(orderStatus)
         ) {
             openAlert('해당 주문의 취소/반품은 소니 고객센터에 문의해주세요');
@@ -455,7 +449,6 @@ export default function OrderDetail() {
                             amountInfo={amountInfo}
                             payInfo={payInfo}
                             receiptInfos={receiptInfos}
-                            orderData={orderInfo}
                         />
                         <div className='cont button_wrap'>
                             {/* 에스크로 '구매확정' 버튼. 재사용시 구매확정 이 잘되는지, 구매확정 시 returnUrl 등 테스트 필요 */}
