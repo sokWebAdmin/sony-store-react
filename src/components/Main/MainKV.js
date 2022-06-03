@@ -15,14 +15,14 @@ const MainKV = ({
     slideMoBanners,
     setTopSwiper,
 }) => {
-    const [banners, setBanners] = useState([]);
+    const [mainBanners, setMainBanners] = useState([]);
     const isWiderThenBreakPoint = useMemo(
         () => size.width > breakPoint,
         [breakPoint, size.width],
     );
 
     useEffect(() => {
-        setBanners(isWiderThenBreakPoint ? slidePcBanners : slideMoBanners);
+        setMainBanners(isWiderThenBreakPoint ? slidePcBanners : slideMoBanners);
     }, [isWiderThenBreakPoint, slidePcBanners, slideMoBanners]);
 
     const onMouseMoveHandler = (e) => {
@@ -96,7 +96,7 @@ const MainKV = ({
                     },
                 }}
             >
-                {banners.map(({ banners, accountNo }) => (
+                {mainBanners.map(({ banners, accountNo }) => (
                     <SwiperSlide
                         key={accountNo}
                         className='swiper-slide video-slide'
