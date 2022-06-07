@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -15,7 +15,15 @@ const MainKV = ({
     slideMoBanners,
     setTopSwiper,
 }) => {
-    const isWiderThenBreakPoint = (width, breakPoint) => width > breakPoint;
+    const [mainBanners, setMainBanners] = useState([]);
+    const isWiderThenBreakPoint = useMemo(
+        () => size.width > breakPoint,
+        [breakPoint, size.width],
+    );
+
+    useEffect(() => {
+        setMainBanners(isWiderThenBreakPoint ? slidePcBanners : slideMoBanners);
+    }, [isWiderThenBreakPoint, slidePcBanners, slideMoBanners]);
 
     const onMouseMoveHandler = (e) => {
         if (isWiderThenBreakPoint) {
@@ -68,149 +76,76 @@ const MainKV = ({
                     delay: 20000,
                     disableOnInteraction: true,
                 }}
+                initialSlide='1'
                 pagination={{
                     el: '.swiper-pagination',
                     type: 'custom',
-                    renderCustom: (swiper, current, total) => {
-                        let _current = current;
-                        let _total = total;
-                        if (current < 10) _current = '0' + current;
-                        if (total < 10) _total = '0' + total;
-
-                        return (
-                            "<span class='swiper-pagination-current'>No. " +
-                            _current +
-                            '</span>' +
-                            "<span class='swiper-pagination-total'>" +
-                            _total +
-                            '</span>'
-                        );
-                    },
+                    renderCustom: (_, current, total) =>
+                        `<span class='swiper-pagination-current'>
+                            No. ${current < 10 ? '0' + current : current}
+                        </span>
+                        <span class='swiper-pagination-total'>
+                            ${total < 10 ? '0' + total : total}
+                        </span>`,
                 }}
             >
-                {slidePcBanners.map(({ banners, accountNo }, index) => (
+                {mainBanners.map(({ banners, accountNo }) => (
                     <SwiperSlide
                         key={accountNo}
                         className='swiper-slide video-slide'
                         data-swiper-autoplay='10000'
                         style={{
-                            backgroundImage: isWiderThenBreakPoint
-                                ? banners[0].videoUrl === '' &&
-                                  `url(${banners[0].imageUrl})`
-                                : slideMoBanners[index].banners[0].videoUrl ===
-                                      '' &&
-                                  `url(${slideMoBanners[index]?.banners[0]?.imageUrl})`,
+                            backgroundImage: `url(${banners[0].imageUrl})`,
                         }}
                     >
-                        {isWiderThenBreakPoint
-                            ? banners[0].videoUrl !== '' && (
-                                  <video
-                                      className='video-slide-player'
-                                      autoPlay
-                                      muted
-                                      playsInline
-                                      loop
-                                  >
-                                      <source
-                                          src={banners[0].videoUrl}
-                                          type='video/mp4'
-                                      />
-                                  </video>
-                              )
-                            : slideMoBanners[index].banners[0].videoUrl !==
-                                  '' && (
-                                  <video
-                                      className='video-slide-player'
-                                      autoPlay
-                                      muted
-                                      playsInline
-                                      loop
-                                  >
-                                      <source
-                                          src={
-                                              slideMoBanners[index].banners[0]
-                                                  .videoUrl
-                                          }
-                                          type='video/mp4'
-                                      />
-                                  </video>
-                              )}
+                        <video
+                            className='video-slide-player'
+                            autoPlay
+                            muted
+                            playsInline
+                            loop
+                        >
+                            <source
+                                src={banners[0].videoUrl}
+                                type='video/mp4'
+                            />
+                        </video>
+
                         <div className='kv__slide'>
-                            {isWiderThenBreakPoint ? (
-                                <div
-                                    className='kv__head'
-                                    style={{
-                                        color: banners[0].nameColor,
-                                    }}
-                                    dangerouslySetInnerHTML={{
-                                        __html: banners[0].nameList,
-                                    }}
-                                />
-                            ) : (
-                                <div
-                                    className='kv__head'
-                                    style={{
-                                        color: banners[0].nameColor,
-                                    }}
-                                    dangerouslySetInnerHTML={{
-                                        __html: slideMoBanners[index].banners[0]
-                                            .nameList,
-                                    }}
-                                />
-                            )}
+                            <div
+                                className='kv__head'
+                                style={{
+                                    color: banners[0].nameColor,
+                                }}
+                                dangerouslySetInnerHTML={{
+                                    __html: banners[0].nameList,
+                                }}
+                            />
 
                             <span className='kv__product'>
                                 <span
                                     style={{
-                                        color: isWiderThenBreakPoint
-                                            ? banners[0].nameColor
-                                            : slideMoBanners[index].banners[0]
-                                                  .nameColor,
+                                        color: banners[0].nameColor,
                                     }}
                                 >
-                                    {isWiderThenBreakPoint
-                                        ? banners[0].description
-                                        : slideMoBanners[index].banners[0]
-                                              .description}
+                                    {banners[0].description}
                                 </span>
                             </span>
-                            {isWiderThenBreakPoint
-                                ? banners[0]?.landingUrl !== '//' && (
-                                      <Link
-                                          to={banners[0]?.landingUrl}
-                                          target={getLinkTarget(
-                                              banners[0].browerTargetType,
-                                          )}
-                                          className='kv__link'
-                                          style={{
-                                              color: banners[0].nameColor,
-                                              padding: '30px 10px 30px 0',
-                                          }}
-                                      >
-                                          <span>자세히 보기</span>
-                                      </Link>
-                                  )
-                                : slideMoBanners[index]?.banners[0]
-                                      ?.landingUrl !== '//' && (
-                                      <Link
-                                          to={
-                                              slideMoBanners[index].banners[0]
-                                                  ?.landingUrl
-                                          }
-                                          target={getLinkTarget(
-                                              slideMoBanners[index].banners[0]
-                                                  .browerTargetType,
-                                          )}
-                                          className='kv__link'
-                                          style={{
-                                              color: slideMoBanners[index]
-                                                  .banners[0].nameColor,
-                                              padding: '30px 10px 30px 0',
-                                          }}
-                                      >
-                                          <span>자세히 보기</span>
-                                      </Link>
-                                  )}
+                            {banners[0].landingUrl !== '//' && (
+                                <Link
+                                    to={banners[0].landingUrl}
+                                    target={getLinkTarget(
+                                        banners[0].browerTargetType,
+                                    )}
+                                    className='kv__link'
+                                    style={{
+                                        color: banners[0].nameColor,
+                                        padding: '30px 10px 30px 0',
+                                    }}
+                                >
+                                    <span>자세히 보기</span>
+                                </Link>
+                            )}
                         </div>
                     </SwiperSlide>
                 ))}
