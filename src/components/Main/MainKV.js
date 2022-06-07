@@ -76,24 +76,17 @@ const MainKV = ({
                     delay: 20000,
                     disableOnInteraction: true,
                 }}
+                initialSlide='1'
                 pagination={{
                     el: '.swiper-pagination',
                     type: 'custom',
-                    renderCustom: (swiper, current, total) => {
-                        let _current = current;
-                        let _total = total;
-                        if (current < 10) _current = '0' + current;
-                        if (total < 10) _total = '0' + total;
-
-                        return (
-                            "<span class='swiper-pagination-current'>No. " +
-                            _current +
-                            '</span>' +
-                            "<span class='swiper-pagination-total'>" +
-                            _total +
-                            '</span>'
-                        );
-                    },
+                    renderCustom: (_, current, total) =>
+                        `<span class='swiper-pagination-current'>
+                            No. ${current < 10 ? '0' + current : current}
+                        </span>
+                        <span class='swiper-pagination-total'>
+                            ${total < 10 ? '0' + total : total}
+                        </span>`,
                 }}
             >
                 {mainBanners.map(({ banners, accountNo }) => (
