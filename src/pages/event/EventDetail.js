@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import SEO from 'components/SEO';
 import EventProducts from 'components/event/EventProducts';
+import EventTopContent from 'components/event/EventTopContent';
 import { getEventByEventNo } from 'api/display';
 import { useMediaQuery } from 'hooks';
 
@@ -13,24 +14,12 @@ const EventDetail = () => {
 
     useEffect(() => {
         (async () => {
-            const response = await getEventByEventNo(eventNo, {
+            const { data } = await getEventByEventNo(eventNo, {
                 soldout: true,
             });
-            setEvent(response.data);
+            setEvent(data);
         })();
     }, [eventNo]);
-
-    const TopContent = ({ url, type }) => {
-        return (
-            <>
-                {type === 'FILE' ? (
-                    <img src={url} alt='' style={{ width: '100%' }} />
-                ) : (
-                    <div dangerouslySetInnerHTML={{ __html: url }} />
-                )}
-            </>
-        );
-    };
 
     return (
         <>
@@ -39,7 +28,7 @@ const EventDetail = () => {
                 <div className='contents events'>
                     <div className='container full'>
                         <div className='content employee'>
-                            <TopContent
+                            <EventTopContent
                                 url={
                                     onlyMo
                                         ? event.top.mobile.url
