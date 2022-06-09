@@ -15,10 +15,12 @@ import Notification from 'components/products/Notification';
 import Alert from 'components/common/Alert';
 import SectionMap from 'components/event/SectionMap';
 import GlobalContext from 'context/global.context';
+import { setCartCount, useHeaderDispatch } from 'context/header.context';
 import { ERROR_CODE_MAPPING_ROUTE, forGradeTags } from 'utils/constants';
-import { postCart, postOrderSheets } from 'api/order';
-import { getProductOptions } from 'api/product';
+import { postOrderSheets, postCart } from 'api/order';
+import { getProductDetail, getProductOptions } from 'api/product';
 import { useAlert, useMediaQuery } from 'hooks';
+import gc from 'storage/guestCart';
 import { SUCCESS } from 'const/httpStatus';
 
 const EventProducts = ({
@@ -37,6 +39,7 @@ const EventProducts = ({
     );
 
     const { isLogin } = useContext(GlobalContext);
+    const headerDispatch = useHeaderDispatch();
 
     const history = useHistory();
     const onlyMo = useMediaQuery('(max-width: 640px)');
@@ -165,30 +168,73 @@ const EventProducts = ({
     );
 
     // 장바구니 담기
-    const addToCart = useCallback(async (productNo) => {
-        const { data } = await getProductOptions(productNo);
+    const addToCart = useCallback(
+        async (productNo) => {
+            try {
+                const { data: productOptionData } = await getProductOptions(
+                    productNo,
+                );
 
-        const { status } = await postCart([
-            {
-                productNo: productNo,
-                optionNo: data.flatOptions[0].optionNo,
-                orderCnt: 1,
-                channelType: null,
-                optionInputs: [
-                    {
-                        inputLabel: data.flatOptions[0].label,
-                        inputValue: data.flatOptions[0].value,
-                    },
-                ],
-            },
-        ]);
+                if (isLogin) {
+                    const { status } = await postCart([
+                        {
+                            productNo,
+                            optionNo: productOptionData.flatOptions[0].optionNo,
+                            orderCnt: 1,
+                            channelType: null,
+                            optionInputs: [
+                                {
+                                    inputLabel:
+                                        productOptionData.flatOptions[0].label,
+                                    inputValue:
+                                        productOptionData.flatOptions[0].value,
+                                },
+                            ],
+                        },
+                    ]);
 
-        if (status === SUCCESS) {
-            setCartNotify(true);
-        } else {
-            alert('장바구니 담기에 실패하였습니다.');
-        }
-    }, []);
+                    if (status === SUCCESS) {
+                        setCartNotify(true);
+                    } else {
+                        alert('장바구니 담기에 실패하였습니다.');
+                    }
+                } else {
+                    // 비회원일때 한개씩 담기므로 그 전에 validation check 필요할듯
+                    const { data: productDetail } = await getProductDetail(
+                        productNo,
+                    );
+
+                    const getCartRequest = productOptionData.flatOptions.map(
+                        ({ buyCnt, ...rest }) => ({
+                            productNo,
+                            // orderCnt: buyCnt,
+                            orderCnt: 1, // 장바구니에 1개씩 담을 수 있도록
+                            channelType: null,
+                            optionInputs: null,
+                            ...rest,
+                            colors: null,
+                            disabled: false,
+                            disabledLabel: '',
+                            hsCode: '',
+                        }),
+                    );
+
+                    gc.set(
+                        getCartRequest.map((product) => ({
+                            ...product,
+                            hsCode: '',
+                        })),
+                    );
+                    gc.fetch();
+                    setCartNotify(true);
+                    setCartCount(headerDispatch, gc.items.length);
+                }
+            } catch (e) {
+                e?.message && openAlert(e.message);
+            }
+        },
+        [headerDispatch, isLogin, openAlert],
+    );
 
     // 선물하기
     const giftProduct = useCallback(
@@ -276,6 +322,7 @@ const EventProducts = ({
                                             products.map((product) => {
                                                 return (
                                                     <SectionMap
+                                                        key={product.productNo}
                                                         product={product}
                                                         gift={gift}
                                                         giftProduct={
