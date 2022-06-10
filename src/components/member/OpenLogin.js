@@ -9,7 +9,7 @@ import { getItem, KEY, removeItem, setAccessToken, setItem } from 'utils/token';
 import { generateRandomString } from 'utils/utils';
 import { getAgent } from 'utils/detectAgent';
 import { getUrlParam } from 'utils/location';
-import {  loginApi } from 'api/auth';
+import {  getOauthOpenId, loginApi } from 'api/auth';
 import { getProfile } from 'api/member';
 
 const label = {
@@ -104,14 +104,14 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
         openAlert('이미 가입된 계정이 있습니다.');
       } else {
         const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
-        const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
+        // const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
         // // TODO: OpenId AccessToken 발급하기 파라미터 확인
-        // const response = await getOauthOpenId({
-        //   provider: getItem('oauthProvider'),
-        //   code,
-        //   redirectUri: encodeURI(`${window.location.origin}/callback`),
-        //   state,
-        // })
+        const response = await getOauthOpenId({
+          provider: profileResult.redirectedProvider,
+          code: profileResult.code,
+          redirectUri: encodeURI(`${window.location.origin}/callback`),
+          state: profileResult.state,
+        });
         const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
 
         if (response.status !== 200) {
