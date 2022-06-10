@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useMallState } from '../../context/mall.context';
-import { getItem, KEY, removeItem, setAccessToken, setItem } from '../../utils/token';
-import { generateRandomString } from '../../utils/utils';
-import { getProfile } from '../../api/member';
-import Alert from '../common/Alert';
+import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import GlobalContext from '../../context/global.context';
-import { fetchMyProfile, setProfile, useProileDispatch } from '../../context/profile.context';
-import { loginApi } from '../../api/auth';
-import { getAgent } from '../../utils/detectAgent';
-import { getUrlParam } from '../../utils/location';
+
+import { useMallState } from 'context/mall.context';
+import GlobalContext from 'context/global.context';
+import { fetchMyProfile, setProfile, useProileDispatch } from 'context/profile.context';
+import Alert from 'components/common/Alert'
+import { getItem, KEY, removeItem, setAccessToken, setItem } from 'utils/token';
+import { generateRandomString } from 'utils/utils';
+import { getAgent } from 'utils/detectAgent';
+import { getUrlParam } from 'utils/location';
+import {  loginApi } from 'api/auth';
+import { getProfile } from 'api/member';
 
 const label = {
   naver: '네이버',
@@ -28,6 +29,10 @@ const OPEN_URL = {
 };
 
 const OpenLogin = ({ type, title, message, customCallback }) => {
+  console.log("🚀 ~ file: OpenLogin.js ~ line 32 ~ OpenLogin ~ customCallback", customCallback)
+  console.log("🚀 ~ file: OpenLogin.js ~ line 32 ~ OpenLogin ~ message", message)
+  console.log("🚀 ~ file: OpenLogin.js ~ line 32 ~ OpenLogin ~ title", title)
+  console.log("🚀 ~ file: OpenLogin.js ~ line 32 ~ OpenLogin ~ type", type)
   const history = useHistory();
   const { openIdJoinConfig } = useMallState();
   const { onChangeGlobal } = useContext(GlobalContext);
@@ -50,6 +55,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     setAlertMessage(message);
     setAlertCloseFun(onClose);
   };
+
   const closeModal = () => {
     setAlertVisible(false);
     alertCloseFunc?.();
@@ -87,6 +93,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   };
 
   const _openIdAuthCallback = async (errorCode, profileResult = null) => {
+    console.log("🚀 ~ file: OpenLogin.js ~ line 90 ~ const_openIdAuthCallback= ~ profileResult", profileResult)
     window.shopOauthCallback = null;
     removeItem('currentPath');
     removeItem('openIdProfile');
@@ -98,6 +105,13 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
       } else {
         const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
         const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
+        // // TODO: OpenId AccessToken 발급하기 파라미터 확인
+        // const response = await getOauthOpenId({
+        //   provider,
+        //   code,
+        //   redirectUri,
+        //   state,
+        // })
         const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
 
         if (response.status !== 200) {
@@ -187,9 +201,9 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
             {openIdData.map(({ provider, label }) => {
               return (
                 <li className={provider} key={provider}>
-                  <a href="javascript:void(0)" onClick={() => openIdLogin(provider)}>
+                  <button onClick={() => openIdLogin(provider)}>
                     {label}
-                  </a>
+                  </button>
                 </li>
               );
             })}
