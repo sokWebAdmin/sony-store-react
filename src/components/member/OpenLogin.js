@@ -107,9 +107,9 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
         const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
         // // TODO: OpenId AccessToken 발급하기 파라미터 확인
         // const response = await getOauthOpenId({
-        //   provider,
+        //   provider: getItem('oauthProvider'),
         //   code,
-        //   redirectUri,
+        //   redirectUri: encodeURI(`${window.location.origin}/callback`),
         //   state,
         // })
         const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';

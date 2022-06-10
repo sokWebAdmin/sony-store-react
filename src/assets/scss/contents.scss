@@ -3101,7 +3101,7 @@
         float: left;
         margin-left: 25px;
 
-        a {
+        button {
           display: block;
           padding-top: 56px;
           width: 48px;
@@ -3111,15 +3111,15 @@
         }
       }
 
-      .naver a {
+      .naver button {
         background: url(../images/common/ic_login_naver.svg) no-repeat 0 0;
       }
 
-      .kakao a {
+      .kakao button {
         background: url(../images/common/ic_login_kakao.svg) no-repeat 0 0;
       }
 
-      .facebook a {
+      .facebook button {
         background: url(../images/common/ic_login_facebook.svg) no-repeat 0 0;
       }
 

@@ -63,10 +63,12 @@ const Callback = () => {
             const accessCode = ['0000', '3000', '3001', '3002', '3012'];
             if (accessCode.includes(openIdProfile.errorCode)) {
                 if (!agent.isApp) {
-                    shopOauthCallback?.(
-                        openIdProfile.errorCode,
-                        openIdProfile.body,
-                    );
+                    shopOauthCallback?.(openIdProfile.errorCode, {
+                        ...openIdProfile.body,
+                        code,
+                        state,
+                        redirectedProvider,
+                    });
                     window.close();
                 } else {
                     setItem('openIdProfile', openIdProfile);
