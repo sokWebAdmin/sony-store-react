@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -11,8 +10,6 @@ import arrow from 'assets/images/common/arrow_recommend.png';
 const Event = ({ events }) => {
     SwiperCore.use([Navigation]);
     const history = useHistory();
-    const prevRef = useRef(null);
-    const nextRef = useRef(null);
 
     return (
         <div className='product_cont exhibitions_zone'>
@@ -27,22 +24,11 @@ const Event = ({ events }) => {
             >
                 <Swiper
                     className='swiper-wrapper'
-                    navigation={{
-                        prevEl: prevRef.current,
-                        nextEl: nextRef.current,
-                    }}
+                    slidesPerView={2}
                     spaceBetween={10}
-                    on={{
-                        init: (swiper) => {
-                            swiper.params.navigation.prevEl = prevRef.current;
-                            swiper.params.navigation.nextEl = nextRef.current;
-                            swiper.navigation.update();
-                        },
-                        beforeInit: (swiper) => {
-                            swiper.params.navigation.prevEl = prevRef.current;
-                            swiper.params.navigation.nextEl = nextRef.current;
-                            swiper.navigation.update();
-                        },
+                    navigation={{
+                        nextEl: '.event-next',
+                        prevEl: '.event-prev',
                     }}
                     breakpoints={{
                         320: {
@@ -118,16 +104,10 @@ const Event = ({ events }) => {
                         ),
                     )}
                     <div className='arrow_btn'>
-                        <button
-                            className='arrow swiper-button-prev'
-                            ref={prevRef}
-                        >
+                        <button className='arrow swiper-button-prev event-prev'>
                             <img src={arrow} alt='이전' />
                         </button>
-                        <button
-                            className='arrow swiper-button-next'
-                            ref={nextRef}
-                        >
+                        <button className='arrow swiper-button-next event-next'>
                             <img src={arrow} alt='다음' />
                         </button>
                     </div>

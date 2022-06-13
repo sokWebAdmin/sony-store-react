@@ -24,8 +24,8 @@ const RelatedProducts = ({ products, reset }) => {
                     slidesPerView={2}
                     spaceBetween={10}
                     navigation={{
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
+                        nextEl: '.related-products-next',
+                        prevEl: '.related-products-prev',
                     }}
                     breakpointsinverse={'true'}
                     breakpoints={{
@@ -52,8 +52,12 @@ const RelatedProducts = ({ products, reset }) => {
                         ))}
                     </>
                 </Swiper>
-                <div className='swiper-button-next'>다음</div>
-                <div className='swiper-button-prev'>이전</div>
+                <div className='swiper-button-next related-products-next'>
+                    다음
+                </div>
+                <div className='swiper-button-prev related-products-prev'>
+                    이전
+                </div>
             </div>
         </div>
     );
