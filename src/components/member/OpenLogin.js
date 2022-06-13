@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useMallState } from 'context/mall.context';
@@ -33,6 +33,16 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   console.log("🚀 ~ file: OpenLogin.js ~ line 32 ~ OpenLogin ~ message", message)
   console.log("🚀 ~ file: OpenLogin.js ~ line 32 ~ OpenLogin ~ title", title)
   console.log("🚀 ~ file: OpenLogin.js ~ line 32 ~ OpenLogin ~ type", type)
+  const ncpProvider = useMemo(() => {
+    return {
+      naver: 'ncp_naver',
+      kakao: 'ncp_kakao',
+      facebook: 'ncp_facebook',
+      line: 'ncp_line',
+      payco: 'ncp_payco',
+    }
+  }, []);
+
   const history = useHistory();
   const { openIdJoinConfig } = useMallState();
   const { onChangeGlobal } = useContext(GlobalContext);
@@ -166,7 +176,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
 
       // const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
       const response = await getOauthOpenId({
-        provider: profileResult.redirectedProvider,
+        provider: ncpProvider[profileResult.redirectedProvider],
         code: profileResult.code,
         redirectUri: encodeURI(`${window.location.origin}/callback`),
         state: profileResult.state,
