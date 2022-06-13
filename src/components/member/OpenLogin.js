@@ -93,6 +93,7 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
   };
 
   const _openIdAuthCallback = async (errorCode, profileResult = null) => {
+    console.log("🚀 ~ file: OpenLogin.js ~ line 96 ~ const_openIdAuthCallback= ~ errorCode", errorCode)
     console.log("🚀 ~ file: OpenLogin.js ~ line 90 ~ const_openIdAuthCallback= ~ profileResult", profileResult)
     window.shopOauthCallback = null;
     removeItem('currentPath');
@@ -163,7 +164,13 @@ const OpenLogin = ({ type, title, message, customCallback }) => {
     } else if (errorCode === '3001' || errorCode === '3002') {
       const redirectedProvider = getItem(KEY.OPENID_PROVIDER);
 
-      const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
+      // const response = await loginApi(profileResult.customerid, CLIENT_ID[redirectedProvider]);
+      const response = await getOauthOpenId({
+        provider: profileResult.redirectedProvider,
+        code: profileResult.code,
+        redirectUri: encodeURI(`${window.location.origin}/callback`),
+        state: profileResult.state,
+      });
       const code = response.data?.message ? JSON.parse(response.data.message).errorCode : '';
 
       if (response.status !== 200) {
