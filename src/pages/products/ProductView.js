@@ -252,7 +252,7 @@ export default function ProductView({ match }) {
                     : { pathParams: { productNo } };
 
             const { data } = await getEventByProductNo(query);
-            setProductEvents((prev) => [...prev, ...data]);
+            setProductEvents(data);
         },
         [productNos],
     );
