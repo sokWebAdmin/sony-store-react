@@ -120,13 +120,18 @@ const App = (props) => {
 
   const agent = getAgent();
 
-  console.log(agent);
-
-  if (agent.device === 'android') {
+  const varUA = navigator.userAgent.toLowerCase();
+  console.log(varUA);
+//안드로이드
+  if ( varUA.indexOf('android') > -1) {
+    // console.log("android");
     ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ANDROID);
-  } else if (agent.device === 'ios') {
+    //IOS
+  } else if ( varUA.indexOf("iphone") > -1||varUA.indexOf("ipad") > -1||varUA.indexOf("ipod") > -1 ) {
+    // console.log("ios");
     ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_IOS);
   } else {
+    // console.log("web");
     ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_WEB);
   }
 
