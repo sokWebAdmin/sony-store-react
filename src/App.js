@@ -113,8 +113,25 @@ import AppBar from './components/app/AppBar';
 
 import { openBrowser, openWindow } from './utils/openBrowser.js';
 
+import RouteChangeTracker from "./components/RouteChangeTracker";
+import ReactGA from "react-ga4";
+
 const App = (props) => {
+
   const agent = getAgent();
+
+  console.log(agent);
+
+  if (agent.device === 'android') {
+    ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ANDROID);
+  } else if (agent.device === 'ios') {
+    ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_IOS);
+  } else {
+    ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_WEB);
+  }
+
+  RouteChangeTracker();
+
   const history = useHistory();
 
   const dispatch = useMallDispatch();
