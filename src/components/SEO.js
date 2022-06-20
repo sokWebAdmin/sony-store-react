@@ -1,11 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import PropTypes from 'prop-types';
-import useScript from 'hooks/useScript';
 
 const SEO = ({ data }) => {
     const config = { title: 'SonyStore', description: '' };
-
-    // useScript('//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js');
 
     return (
         <Helmet>
