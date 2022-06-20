@@ -148,7 +148,7 @@ export default function EspMain() {
                                     ‘My SCS’메뉴에서 연장된 서비스 기간을 조회하실 수 있습니다.
                                 </li>
                                 <li>연장 서비스 플랜 상품은 정품 1개당 1회(1개)에 한해 구매하실 수 있습니다.</li>
-                                <li><strong>연장 서비스 플랜 적용은 상품 구매일로부터 영업일 기준 7일 이후 자동 적용됩니다.</strong></li>
+                                <li><strong>연장 서비스 플랜 적용은 상품 구매일로부터 7일 이후 자동 적용됩니다.</strong></li>
                                 <li><strong>연장 서비스 플랜 상품은 무형 상품으로 별도 배송되지 않습니다.</strong></li>
                             </ul>
                             <h3 className="espinfo__title2">고객지원센터를 통한 전화구매도 가능합니다!</h3>
@@ -174,7 +174,7 @@ export default function EspMain() {
                                 <ul className="list_dot">
                                     <li>단, 고객과실이나 천재지변으로 인한 손상의 경우 무상 수리에서 제외됩니다.</li>
                                     <li>본 연장 서비스 플랜은 제품 구매일로부터 1년 이내에 구입 가능합니다.</li>
-                                    <li><strong>연장 서비스 플랜 적용은 상품 구매일로부터 영업일 기준 7일 이후 자동 적용됩니다.</strong></li>
+                                    <li><strong>연장 서비스 플랜 적용은 상품 구매일로부터 7일 이후 자동 적용됩니다.</strong></li>
                                     <li><strong>연장 서비스 플랜 상품은 무형 상품으로 별도 배송되지 않습니다.</strong></li>
                                     <li><strong>본 상품은 타 상품과 함께 장바구니에 담으실 수 없습니다.</strong></li>
                                 </ul>
