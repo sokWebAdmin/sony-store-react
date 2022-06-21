@@ -24,6 +24,8 @@ export const profileMemberGrade = {
     vvip: { className: 'vvip', label: 'VVIP' },
 };
 
+export const forGradeTags = ['liveon', 'refurbish', 'employee', 'asc'];
+
 export const CONSULT_INDIVIDUAL = '1';
 export const CONSULT_COMPANY = '2';
 
@@ -34,3 +36,10 @@ export const CLIENT_ID = {
 };
 
 export const POPUP_Z_INDEX_START_AT = 990;
+
+export const ERROR_CODE_MAPPING_ROUTE = {
+    O8001: {
+        msg: `회원만 구매 가능한 상품입니다.<br/>로그인해 주세요.`,
+        route: '/member/login',
+    },
+};

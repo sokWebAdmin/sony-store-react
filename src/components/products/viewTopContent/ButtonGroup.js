@@ -3,13 +3,14 @@ import React, { useContext, useState, createRef, useEffect, useMemo, useRef } fr
 import { useHistory } from 'react-router';
 import GlobalContext from '../../../context/global.context';
 import { getCart, getCartCount, postCart, postOrderSheets } from '../../../api/order';
-import { postProfileLikeProducts } from '../../../api/product';
+import { postProfileLikeProducts, getProductDetail } from '../../../api/product';
 import Alert from '../../common/Alert';
 import Notification from '../Notification';
 import { useAlert } from '../../../hooks';
 import gc from '../../../storage/guestCart';
 import HsValidator from '../../cart/HsValidator';
 import _ from 'lodash';
+import { debounce } from 'lodash';
 import orderPayment from '../../order/orderPayment';
 import { setCartCount, useHeaderDispatch } from '../../../context/header.context';
 
@@ -302,40 +303,11 @@ export default function ButtonGroup({
       e?.message && openAlert(e.message);
     }
   }
-
+  const debounceClick = debounce( (productNo,type) => btnTypeEvent(productNo, type),100,);
   const handleClick = (e, type) => {
     // main
     e.preventDefault();
-
-    if ((isSoldOut || isBackOrdered) && (type === 'gift' || type === 'cart')) {
-      openAlert('상품의 재고가 충분하지 않습니다.');
-    }
-
-    if (isSoldOut) return;
-
-    switch (type) {
-      case 'gift':
-        if (isBackOrdered) {
-          return;
-        }
-        gift();
-        break;
-      case 'order':
-        order();
-        break;
-      case 'cart':
-        if (isBackOrdered) return;
-        cart();
-        break;
-      case 'wish':
-        wishHandler();
-        break;
-      case 'reserve':
-        order();
-        break;
-      default:
-        break;
-    }
+    debounceClick(productNo, type);
   };
 
   // hsValidation
@@ -378,6 +350,70 @@ export default function ButtonGroup({
 
   const isSoldOut = useMemo(() => saleStatus === 'SOLDOUT', [saleStatus]);
   const isBackOrdered = useMemo(() => saleStatus === 'READY', [saleStatus]);
+
+  async function btnTypeEvent(productNo, type) {
+    const STOP_MSG        = "구매하실 수 없는 제품입니다.";
+    const PROHIBITION_MSG = "구매하실 수 없는 제품입니다.";
+    const FINISHED_MSG    = "판매 대기중인 상품입니다.";
+    const SOLDOUT_MSG     = "상품의 재고가 충분하지 않습니다.";
+    const ERROR_MSG       = "잠시 후 다시 시도해 주세요.";
+
+    try { 
+
+      if ((isLogin && ( type === 'wish')) || type === 'cart' || type === 'gift' ) {
+        const { data } = await getProductDetail(productNo);
+        const saleStatusType = data.status.saleStatusType;
+        const isSoldOut = data.status.soldout;
+
+        switch (saleStatusType) {
+          case 'STOP': // 판매중지
+            openAlert(STOP_MSG);
+            return;
+          case 'PROHIBITION': // 판매금지
+            openAlert(PROHIBITION_MSG);
+            return;
+          case 'READY': // 판매대기
+          case 'FINISHED': // 판매종료
+            openAlert(FINISHED_MSG);
+            return;
+          case 'ONSALE': // 판매중
+            if(isSoldOut){
+              openAlert(SOLDOUT_MSG);
+              return;
+            }
+            break;
+          default:
+            break;
+        }
+      }
+
+      switch (type) {
+        case 'gift':
+          gift();
+          break;
+        case 'order':
+          order();
+          break;
+        case 'cart':
+          cart();
+          break;
+        case 'wish':
+          wishHandler();
+          break;
+        case 'reserve':
+          order();
+          break;
+        default:
+          break;
+      }
+
+    }
+    catch (e) {
+      e?.message && console.log(e.message);
+      openAlert(ERROR_MSG);
+      return;
+    }
+  };
 
   return (
     <>

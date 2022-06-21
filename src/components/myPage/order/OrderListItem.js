@@ -73,7 +73,7 @@ export default function OrderListItem({
   };
 
   const showRefundAccountInfo = (claimStatusType, payType) => {
-    return claimStatusType === 'CANCEL_REQUEST' && payType === 'ESCROW_VIRTUAL_ACCOUNT';
+    return claimStatusType === 'CANCEL_REQUEST' && (payType === 'ESCROW_VIRTUAL_ACCOUNT' || payType === 'VIRTUAL_ACCOUNT');
   };
 
   const onClickRefundAccount = () => setRefundAccountVisible(true);
@@ -92,7 +92,7 @@ export default function OrderListItem({
     if (status === 'ok') {
       let successMessage =
         '<strong>주문 취소 요청이 정상적으로 완료되었습니다.</strong><br />주문 취소 요청 후 최종 취소 접수까지는 약 1일 정도가 소요됩니다.';
-      if (payType === 'ESCROW_VIRTUAL_ACCOUNT') {
+      if (payType === 'ESCROW_VIRTUAL_ACCOUNT' || payType === 'VIRTUAL_ACCOUNT') {
         successMessage += '<br />환불받으실 계좌를 등록하시면 더욱 편리하게 환불받으실 수 있습니다.';
       }
 

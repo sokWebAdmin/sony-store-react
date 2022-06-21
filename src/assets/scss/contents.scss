@@ -449,6 +449,10 @@
     }
   }
 
+  .error_txt.character.error {
+    display: block;
+  }
+
   //swich btn
   .switchbtn {
     .switch {
@@ -749,6 +753,8 @@
       >div {
         margin: 0;
         width: 100%;
+        display: flex;
+        align-items: flex-start;
 
         .product {
           margin: 0;

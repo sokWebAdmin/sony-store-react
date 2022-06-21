@@ -117,8 +117,8 @@
           display: inline-block;
           width: 8px;
           height: 8px;
-          border-top: 2px solid #fff;
-          border-right: 2px solid #fff;
+          border-top: 2px solid;
+          border-right: 2px solid;
           transform: rotate(45deg) translate(3px, -5px);
           transition: opacity .5s cubic-bezier(0.83, 0, 0.17, 1) 2.9s;
         }
@@ -615,8 +615,8 @@
           width: .4em;
           height: .4em;
           margin-left: .2em;
-          border-top: 2px solid #222;
-          border-right: 2px solid #222;
+          border-top: 2px solid;
+          border-right: 2px solid;
           transform: rotate(45deg) translateY(-20%);
         }
       }
