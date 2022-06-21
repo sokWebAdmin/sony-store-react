@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { unescape } from 'lodash';
@@ -6,6 +6,7 @@ import { unescape } from 'lodash';
 import HsValidator from 'components/cart/HsValidator';
 import { toCurrencyString } from 'utils/unit';
 import { getSaleStatus } from 'utils/product';
+import { useMediaQuery } from 'hooks';
 
 const SectionMap = ({ product, gift, giftProduct, addToCart, hsValidator }) => {
     const history = useHistory();
@@ -23,6 +24,17 @@ const SectionMap = ({ product, gift, giftProduct, addToCart, hsValidator }) => {
 
     const discountPrice =
         product.immediateDiscountAmt + product.additionDiscountAmt;
+ 
+    const onlyMo = useMediaQuery('(max-width: 640px)');
+    const [win, setWin] = useState(window.innerWidth);
+    const getWidth = () => window.innerWidth;
+    
+    useEffect(() => {
+        const resizeListener = () => {
+            setWin(getWidth());
+        };
+        window.addEventListener("resize", resizeListener);
+    })
 
     return (
         <div className='product'>
@@ -105,7 +117,9 @@ const SectionMap = ({ product, gift, giftProduct, addToCart, hsValidator }) => {
                         onClick={() => addToCart(product.productNo)}
                         disabled={isSoldOut}
                     >
-                        {isSoldOut ? '일시품절' : '장바구니 담기'}
+
+                        {isSoldOut ? '일시품절' : win < 640 ? '장바구니' : onlyMo ? '장바구니' : '장바구니 담기'}
+
                     </button>
                     <HsValidator ref={hsValidator} />
                 </div>

@@ -4,37 +4,48 @@ import { render, hydrate } from 'react-dom';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
-import GlobalContext from "./context/global.context";
-import GlobalProvider from "./provider/GlobalProvider";
+import GlobalContext from './context/global.context';
+import GlobalProvider from './provider/GlobalProvider';
 
-import { ContextDevTool } from "react-context-devtool";
+import { ContextDevTool } from 'react-context-devtool';
+import { HelmetProvider } from 'react-helmet-async';
 
 const rootElement = document.getElementById('root');
 
 if (rootElement.hasChildNodes()) {
-  hydrate(
-    <GlobalProvider>
-      <BrowserRouter>
-        <React.StrictMode>
-            <ContextDevTool context={GlobalContext} displayName="context Display Name" />
-            <App />
-        </React.StrictMode>
-      </BrowserRouter>
-    </GlobalProvider>,
-    rootElement
-  );
+    hydrate(
+        <HelmetProvider>
+            <GlobalProvider>
+                <BrowserRouter>
+                    <React.StrictMode>
+                        <ContextDevTool
+                            context={GlobalContext}
+                            displayName='context Display Name'
+                        />
+                        <App />
+                    </React.StrictMode>
+                </BrowserRouter>
+            </GlobalProvider>
+        </HelmetProvider>,
+        rootElement,
+    );
 } else {
-  render(
-    <GlobalProvider>
-      <BrowserRouter>
-        <React.StrictMode>
-            <ContextDevTool context={GlobalContext} displayName="context Display Name" />
-            <App />
-        </React.StrictMode>
-      </BrowserRouter>
-    </GlobalProvider>,
-    rootElement
-  );
+    render(
+        <HelmetProvider>
+            <GlobalProvider>
+                <BrowserRouter>
+                    <React.StrictMode>
+                        <ContextDevTool
+                            context={GlobalContext}
+                            displayName='context Display Name'
+                        />
+                        <App />
+                    </React.StrictMode>
+                </BrowserRouter>
+            </GlobalProvider>
+        </HelmetProvider>,
+        rootElement,
+    );
 }
 
 // If you want to start measuring performance in your app, pass a function
