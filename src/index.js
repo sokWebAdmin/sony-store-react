@@ -12,6 +12,26 @@ import { HelmetProvider } from 'react-helmet-async';
 
 const rootElement = document.getElementById('root');
 
+function guid() {
+    function _s4() {
+        return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
+    }
+
+    const uuid = _s4() + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + _s4() + _s4();
+
+    setCookie("GA_TRACKING",uuid, "1");
+}
+
+function setCookie(c_name,value,exdays)
+{
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var c_value=value + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+    document.cookie=c_name + "=" + c_value;
+}
+
+guid();
+
 if (rootElement.hasChildNodes()) {
     hydrate(
         <HelmetProvider>
