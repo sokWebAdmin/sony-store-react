@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import {OnclickTracker} from "../ReactGA4Tracker";
 
 export default function Tabs({ tabs, tabState, setTabState, defaultState }) {
   useEffect(() => {
@@ -15,6 +16,7 @@ export default function Tabs({ tabs, tabState, setTabState, defaultState }) {
             onClick={(event) => {
               event.preventDefault();
               setTabState(tabName);
+              OnclickTracker(tabState, tabState);
             }}
           >
             {label}
