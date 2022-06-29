@@ -2,7 +2,7 @@ import qs from 'qs';
 import React, { useContext, useState, createRef, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from '../../../context/global.context';
-import { getCart, getCartCount, postCart, postOrderSheets } from '../../../api/order';
+import { getCart, getCartCount, postCart, postGuestCart, postOrderSheets } from '../../../api/order';
 import { postProfileLikeProducts, getProductDetail } from '../../../api/product';
 import Alert from '../../common/Alert';
 import Notification from '../Notification';
@@ -139,7 +139,11 @@ export default function ButtonGroup({
             ERROR_CODE_MAPPING_ROUTE[result.code]?.msg,
             () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route)),
           )
-        : openAlert(result?.message);
+        : (result.code === 'PPVE0011' 
+        ? openAlert('상품의 재고가 충분하지 않습니다.') : 
+          ((result.code === 'O8002' || result.code === 'O8003' || result.code === 'O8004' 
+          ? openAlert('최대 구매 가능갯수를 초과하였습니다.') :
+            openAlert(result?.message))));
     } else {
       history.push({
         pathname,
@@ -203,9 +207,32 @@ export default function ButtonGroup({
     try {
       if (isLogin) {
         const result = await postCart(products);
-        result?.error && result?.message && openAlert(result.message);
+        if (result?.data?.error && result?.data?.code) {
+          if (result.data.code === 'PPVE0011') {
+            openAlert("상품의 재고가 충분하지 않습니다.");
+            return;
+          }
+          if (result.data.code === 'O8002' || result.data.code === 'O8003' || result.data.code === 'O8004') {
+            alert('최대 구매 가능갯수를 초과하였습니다.');
+            return;
+          }
+        }
         getCartCount().then(({ data: { count } }) => setCartCount(headerDispatch, count));
       } else {
+        const resultGuest = await postGuestCart(products);
+        const guestData = resultGuest?.data;
+        
+        if (guestData?.invalidProducts?.length) {
+          let invProducts = guestData.invalidProducts;
+          for (let invProduct of invProducts) {
+            let invOptions = invProduct.orderProductOptions;
+            let soldOutOpt = invOptions.find(invOpt => invOpt.soldOut);
+            if (soldOutOpt?.soldOut) {
+                openAlert("상품의 재고가 충분하지 않습니다.");
+                return;
+            }
+          }
+        }
         gc.set(products.map((product) => ({ ...product, hsCode }))); // TODO.
         // 확인필요. @jk
         gc.fetch();

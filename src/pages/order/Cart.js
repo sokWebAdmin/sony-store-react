@@ -13,6 +13,8 @@ import Controller from 'components/cart/tableParticals/Controller';
 import ProductList from 'components/cart/tableParticals/ProductList';
 import TotalAmount from 'components/cart/tableParticals/TotalAmount';
 import Solicitation from 'components/popup/Solicitation';
+import Alert from 'components/common/Alert';
+import { useAlert } from 'hooks';
 import {
     getCart,
     postCart,
@@ -27,6 +29,7 @@ import 'assets/scss/contents.scss';
 import 'assets/scss/order.scss';
 
 const Cart = ({ location }) => {
+    const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
     const { isLogin } = useContext(GlobalContext);
     const headerDispatch = useHeaderDispatch();
     const history = useHistory();
@@ -106,7 +109,7 @@ const Cart = ({ location }) => {
                     if (data?.invalidProducts?.length) {
                         removeMemberCartMissingProduct(data.invalidProducts)
                             .then(() => {
-                                alert(
+                                openAlert(
                                     '구매 불가한 상품이 포함되어있어 제거 되었습니다.',
                                 );
                             })
@@ -200,7 +203,7 @@ const Cart = ({ location }) => {
         guestCartStorageItems,
     ) {
         if (guestCartStorageItems.length > availableProducts.length) {
-            alert('구매 불가한 상품이 포함되어있어 제거 되었습니다.');
+            openAlert('구매 불가한 상품이 포함되어있어 제거 되었습니다.');
             gcUpdate(availableProducts);
             window.location.reload();
         }
@@ -240,7 +243,7 @@ const Cart = ({ location }) => {
 
     const submit = () => {
         if (!checkedIndexes.length) {
-            alert('구매하실 상품을 선택하여 주세요.');
+            openAlert('구매하실 상품을 선택하여 주세요.');
             return;
         }
 
@@ -294,11 +297,12 @@ const Cart = ({ location }) => {
     const updateMemberCart = useCallback(async () => {
         try {
             const res = await putCart(putProducts);
+            const data = await fetchCart();
+            mapData(data);
             if (res.status === 400) {
                 return Promise.reject(res.data);
             }
-            const data = await fetchCart();
-            mapData(data);
+            
         } catch (err) {
             console.error(err);
         }
@@ -312,10 +316,20 @@ const Cart = ({ location }) => {
             const data = await fetchGuestCart(gc.items);
             const newProducts = getMappedData(data.deliveryGroups);
             if (beforeCountProducts.length !== newProducts.length) {
-                alert('상품의 재고가 충분치 않습니다.');
-                gcUpdate(beforeCountProducts);
-                window.location.reload();
-                return;
+                if (data?.invalidProducts?.length) {
+                    let invProducts = data.invalidProducts;
+                    for (let invProduct of invProducts) {
+                      let invOptions = invProduct.orderProductOptions;
+                      let soldOutOpt = invOptions.find(invOpt => invOpt.soldOut);
+                      if (soldOutOpt?.soldOut) {
+                        openAlert("상품의 재고가 충분하지 않습니다.");
+                        gcUpdate(beforeCountProducts);
+                        const beforeData = await fetchGuestCart(gc.items);
+                        mapData(beforeData);
+                        return;
+                      }
+                    }
+                }
             }
             mapData(data);
         } catch (err) {
@@ -342,13 +356,13 @@ const Cart = ({ location }) => {
             window.location.reload();
         }
         if (code === 'PPVE0011') {
-            alert('상품의 재고가 충분치 않습니다.');
+            openAlert('상품의 재고가 충분하지 않습니다.');
         }
         if (code === 'O8002' || code === 'O8003' || code === 'O8004') {
-            alert('최대 구매 가능갯수를 초과하였습니다.');
+            openAlert('최대 구매 가능갯수를 초과하였습니다.');
         }
-
-        window.location.reload();
+        // window.location.reload();
+        setWait(false);
     }
 
     const deleteMemberCart = useCallback(
@@ -455,6 +469,7 @@ const Cart = ({ location }) => {
 
     return (
         <>
+            {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
             <SEO data={{ title: '장바구니' }} />
             {wait && <Dimmed />}
             <div className='contents order'>
