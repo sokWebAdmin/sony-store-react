@@ -117,7 +117,9 @@ const SectionMap = ({ product, gift, giftProduct, addToCart, hsValidator }) => {
                         onClick={() => addToCart(product.productNo)}
                         disabled={isSoldOut}
                     >
+
                         {isSoldOut ? '일시품절' : win < 640 ? '장바구니' : onlyMo ? '장바구니' : '장바구니 담기'}
+
                     </button>
                     <HsValidator ref={hsValidator} />
                 </div>
