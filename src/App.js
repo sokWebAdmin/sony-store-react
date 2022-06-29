@@ -68,7 +68,6 @@ import InactiveAccounts from './pages/member/inactiveAccounts';
 import ActiveAccounts from './pages/member/activeAccounts';
 import LockedAccounts from './pages/member/lockedAccounts';
 import OpenLogin from './components/member/OpenLogin';
-import { getAccessToken, getGuestToken, removeAccessToken } from './utils/token';
 
 // app
 import PushList from './pages/app/PushList';
@@ -114,12 +113,32 @@ import AppBar from './components/app/AppBar';
 
 import { openBrowser, openWindow } from './utils/openBrowser.js';
 
-import {RouteChangeTracker, getCookie} from "./components/ReactGA4Tracker";
+import RouteChangeTracker from "./components/RouteChangeTracker";
 import ReactGA4 from "react-ga4";
 
 const App = (props) => {
 
   const agent = getAgent();
+
+//안드로이드
+//   if ( varUA.indexOf('android') > -1) {
+//     console.log("android"+process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ANDROID);
+//     curDevice = "android";
+//     trackId = process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ANDROID;
+//     //IOS
+//   } else if ( varUA.indexOf("iphone") > -1||varUA.indexOf("ipad") > -1||varUA.indexOf("ipod") > -1 ) {
+//     console.log("ios"+process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_IOS);
+//     curDevice = "ios";
+//     trackId = process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_IOS;
+//   } else {
+//     console.log("web"+process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_WEB);
+//     curDevice = "web";
+//     trackId = process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_WEB;
+//     // ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_IOS);
+//   }
+  ReactGA4.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING, {gaOptions:{userId:"curDevice"}});
+
+  RouteChangeTracker();
 
   const history = useHistory();
 
@@ -130,20 +149,6 @@ const App = (props) => {
   const { my, profile } = useProfileState();
 
   const categoryDispatch = useCategoryDispatch();
-  const gaTracking = getCookie("GA_TRACKING");
-
-  if (profile?.memberId === undefined) {
-    ReactGA4.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING,
-        {gaOptions: {userId:"guest",
-            clientId:gaTracking}});
-  } else {
-    ReactGA4.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING,
-        {gaOptions: {userId:profile.memberId,
-            clientId:gaTracking}});
-  }
-
-
-  RouteChangeTracker();
 
   useEffect(() => {
     window['anchorProtocol'] = 'https://';
