@@ -22,10 +22,10 @@ const Footer = ({ location, isAppBarEnabled, scrollAction }) => {
         () => ({
             zIndex:
                 location.pathname.includes('/order/sheet') ||
-                location.pathname.includes('/product-view')
+            location.pathname.includes('/product-view')
                     ? 100
                     : 900,
-            paddingBottom: '64px',
+                  paddingBottom: '64px',
         }),
         [location],
     );
@@ -222,33 +222,35 @@ const Footer = ({ location, isAppBarEnabled, scrollAction }) => {
                                 사이트맵
                             </Link>
                         </div>
-                        <div className='footer__legal__warning'>
+                        <div className="footer__legal__warning">
                             <p>
-                                본 사이트의 컨텐츠는 저작권법의 보호를 받는 바,
-                                상업적 목적의 무단전재, 복사, 배포 등을
-                                금합니다.
+                                본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.
                             </p>
                             <p>
-                                고객님의 안정한 거래를 위해 현금 등의 거래를
-                                통한 결제를 하실 경우,
-                                <br /> KG이니시스의 구매
-                                안전서비스(채무지급보증)를 이용하실 수 있습니다.
+                                <strong>소비자피해보상보험</strong> 고객님은 안전거래를 위해 현금 등으로 결제 시 저희 쇼핑몰에서 가입한 구매안전서비스를 이용하실 수 있습니다.<br/>
                                 <a
-                                    className='escrow'
                                 href={
                                     window.anchorProtocol +
-                                        'mark.inicis.com/mark/escrow_popup_v3.php?mid=SonyKoreat'
+                                    'mall.sgic.co.kr/csh/iutf/sh/shop/CSHINFO004VM0.mvc?tm=3&q_sk=2&q_sv=1068123810'
                                 }
                                    onClick={window.openBrowser}
-                                    style={{
-                                        backgroundImage:
-                                            'url(https://image.inicis.com/mkt/certmark/escrow/escrow_43x43_gray.png)',
-                                    }}
                                    target='_blank'
                                 rel='noopener noreferrer'
+                                className='arrow under_line'
                                 >
-                                    클릭하시면 이니시스 결제시스템의 유효성을
-                                    확인하실 수 있습니다.
+                                    서비스 가입 사실 확인
+                                </a>
+                                <a
+                                href={
+                                    window.anchorProtocol +
+                                    'www.usafe.co.kr/u_customer_issue.asp'
+                                }
+                                   onClick={window.openBrowser}
+                                   target='_blank'
+                                rel='noopener noreferrer'
+                                className='arrow under_line'
+                                >
+                                    구매상품 보험가입 확인
                                 </a>
                             </p>
                         </div>
