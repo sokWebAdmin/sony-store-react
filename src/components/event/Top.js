@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
     Autoplay,
@@ -9,10 +9,9 @@ import SwiperCore, {
     Scrollbar,
 } from 'swiper/core';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 
 import { loadBanner } from 'api/display';
-import { useMediaQuery } from 'hooks';
+import { useMediaQuery } from 'hooks/useMedeaQuery';
 import { bannerCode } from 'bannerCode';
 
 const EventTop = () => {
@@ -67,17 +66,7 @@ const EventTop = () => {
                             dangerouslySetInnerHTML={{
                                 __html: banner.description,
                             }}
-                        ></p>
-                        <p
-                            className='event_duration'
-                            style={{ color: banner.nameColor }}
-                        >
-                            {`${dayjs(banner.displayStartYmdt).format(
-                                'YYYY-MM-DD',
-                            )} ~ ${dayjs(banner.displayEndYmdt).format(
-                                'YYYY-MM-DD',
-                            )}`}
-                        </p>
+                        />
                         <div className='btn_article'>
                             <DetailLink
                                 to={banner.landingUrl}
@@ -94,43 +83,37 @@ const EventTop = () => {
         );
     };
 
+    const swiperParams = {
+        slidesPerView: 1,
+        loop: true,
+        speed: 600,
+        autoplay: {
+            delay: 6000,
+            disableOnInteraction: true,
+        },
+        initialSlide: 0,
+        navigation: {
+            nextEl: '.arrow.swiper-button-next',
+            prevEl: '.arrow.swiper-button-prev',
+        },
+        pagination: {
+            el: '.event-banner-pagination',
+            type: 'custom',
+            clickable: true,
+            renderCustom: (swiper, current, total) => {
+                const currentPage = current < 10 ? '0' + current : current;
+                const totalPage = total < 10 ? '0' + total : total;
+
+                return `<span class='swiper-pagination-current'>${currentPage}</span> / <span class='swiper-pagination-total'>${totalPage}</span>`;
+            },
+        },
+    };
+
     return (
         <>
             <div className='event_slider swiper-container'>
                 {banners.length > 0 && !underPc && (
-                    <Swiper
-                        className='swiper-wrapper'
-                        slidesPerView={1}
-                        loop={true}
-                        speed={600}
-                        autoplay={{
-                            delay: 6000,
-                            disableOnInteraction: true,
-                        }}
-                        initialSlide={0}
-                        navigation={{
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        }}
-                        pagination={{
-                            el: '.event-banner-pagination',
-                            type: 'custom',
-                            renderCustom: (swiper, current, total) => {
-                                let _current = current;
-                                let _total = total;
-                                if (current < 10) _current = '0' + current;
-                                if (total < 10) _total = '0' + total;
-                                return (
-                                    "<span class='swiper-pagination-current'>" +
-                                    _current +
-                                    '</span> / ' +
-                                    "<span class='swiper-pagination-total'>" +
-                                    _total +
-                                    '</span>'
-                                );
-                            },
-                        }}
-                    >
+                    <Swiper className='swiper-wrapper' {...swiperParams}>
                         {banners.map(BannerMap)}
                         <div className='arrow_btn'>
                             <button className='arrow swiper-button-prev'>
@@ -143,36 +126,7 @@ const EventTop = () => {
                     </Swiper>
                 )}
                 {bannersMo.length > 0 && underPc && (
-                    <Swiper
-                        className='swiper-wrapper'
-                        slidesPerView={1}
-                        loop={true}
-                        speed={600}
-                        autoplay={{ delay: 6000, disableOnInteraction: true }}
-                        initialSlide={0}
-                        navigation={{
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        }}
-                        pagination={{
-                            el: '.event-banner-pagination',
-                            type: 'custom',
-                            renderCustom: (swiper, current, total) => {
-                                let _current = current;
-                                let _total = total;
-                                if (current < 10) _current = '0' + current;
-                                if (total < 10) _total = '0' + total;
-                                return (
-                                    "<span class='swiper-pagination-current'>" +
-                                    _current +
-                                    '</span> / ' +
-                                    "<span class='swiper-pagination-total'>" +
-                                    _total +
-                                    '</span>'
-                                );
-                            },
-                        }}
-                    >
+                    <Swiper className='swiper-wrapper' {...swiperParams}>
                         {bannersMo.map(BannerMap)}
                         <div className='arrow_btn'>
                             <button className='arrow swiper-button-prev'>

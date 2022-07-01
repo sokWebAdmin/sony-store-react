@@ -1,4 +1,5 @@
 import moment, { Moment, MomentInput, unitOfTime } from 'moment'; // eslint-disable-line
+import dayjs from 'dayjs';
 
 export const getUnitDigitStr = (num) => {
   return num < 10 ? `0${num}` : `${num}`;
@@ -10,7 +11,9 @@ export function changeDateFormat(time, format) {
   }
   return moment(time).format(format);
 }
-
+export function getStrYear() {
+  return new Date().getFullYear();
+}
 export function getStrDate(date, format = 'YYYY-MM-DD') {
   return moment(date).format(format);
 }
@@ -223,4 +226,8 @@ export function toLocalDateStr(date) {
     month: 'long',
     day: 'numeric',
   });
+}
+
+export const formatDate = (date, format = 'YYYY.MM.DD') => {
+    return dayjs(date).format(format);
 }

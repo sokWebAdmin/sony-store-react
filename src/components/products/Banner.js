@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
+import PropTypes from 'prop-types';
 
-import { loadBanner } from 'api/display';
 import { getLinkTarget } from 'utils/html';
+import { loadBanner } from 'api/display';
 
-export default function Banner({ category }) {
+const Banner = ({ category }) => {
     const [banner, setBanner] = useState(null);
 
     useEffect(() => {
@@ -34,9 +35,9 @@ export default function Banner({ category }) {
                 console.error(e);
             }
         })();
-    }, [category.bannerSectionCodes]);
+    }, [category]);
 
-    const onButtonClick = (e) => {
+    const onClickDetail = (e) => {
         e.preventDefault();
 
         if (!!banner?.landingUrl) {
@@ -63,17 +64,19 @@ export default function Banner({ category }) {
                             dangerouslySetInnerHTML={{
                                 __html: banner.nameHtml,
                             }}
+                            style={{ color: banner.nameColor }}
                         ></div>
                         <div
                             className='product__banner__desc'
                             dangerouslySetInnerHTML={{
                                 __html: banner.descriptionHtml,
                             }}
+                            style={{ color: banner.nameColor }}
                         ></div>
                         <a
                             href='#'
                             className='product__banner__link'
-                            onClick={onButtonClick}
+                            onClick={onClickDetail}
                         >
                             자세히 보기
                         </a>
@@ -84,4 +87,22 @@ export default function Banner({ category }) {
             )}
         </>
     );
-}
+};
+
+Banner.propTypes = {
+    category: PropTypes.shape({
+        bannerSectionCodes: PropTypes.string.isRequired,
+        categoryNo: PropTypes.number.isRequired,
+        children: PropTypes.array.isRequired,
+        content: PropTypes.string.isRequired,
+        depth: PropTypes.number.isRequired,
+        icon: PropTypes.string.isRequired,
+        isAvailableMoveProductCompare: PropTypes.bool.isRequired,
+        label: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+    }),
+    changeCurrentCategoryByNo: PropTypes.func.isRequired,
+};
+
+export default memo(Banner);
+

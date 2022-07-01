@@ -94,7 +94,7 @@ export default function TobContent({
         <Benefits price={price} accumulationUseYn={productData?.baseInfo?.accumulationUseYn} />
 
         {hasColor && (
-          <ColorChip isSoldOut={isSoldOut} setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />
+          <ColorChip setSelectedOptionNo={setSelectedOptionNo} productGroup={productGroup} />
         )}
 
         {/* prd_select_wrap */}

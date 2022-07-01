@@ -10,8 +10,10 @@ import { useEffect, useState } from 'react';
  */
 export default function CountBox({ initialCount, maxCount, changedCount, errorMsg }) {
   const [count, setCount] = useState(initialCount);
-
+  
   useEffect(() => setCount(initialCount), [initialCount]);
+
+  maxCount = 99;
 
   const onMinusClickHandler = (event) => {
     event.preventDefault();
@@ -71,6 +73,6 @@ CountBox.defaultProps = {
   initialCount: 1,
   errorMsg: {
     min: '한개 이상 선택되어야 합니다.',
-    max: '상품의 재고가 충분하지 않습니다.',
+    max: '상품은 최대 99개까지 주문할 수 있습니다.',
   },
 };

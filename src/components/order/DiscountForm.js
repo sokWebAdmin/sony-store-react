@@ -62,16 +62,18 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
 
   const fetchProductData = useCallback(async (productNos) => {
     try {
-      const ret = await Promise.all(productNos.map((productNo) => getProductDetail(productNo)));
-      const products = ret.map(({ data }) => data);
-      let isAccumulationUse = true;
-      products.forEach(({ baseInfo }) => {
-        if (baseInfo?.accumulationUseYn === 'N') {
-          isAccumulationUse = false;
+      if (productNos) {
+        const ret = await Promise.all(productNos.map((productNo) => getProductDetail(productNo)));
+        const products = ret.map(({ data }) => data);
+        let isAccumulationUse = true;
+        products.forEach(({ baseInfo }) => {
+          if (baseInfo?.accumulationUseYn === 'N') {
+            isAccumulationUse = false;
+          }
+        });
+        if (isAccumulationUse === false) {
+          setAccumulationUse(false);
         }
-      });
-      if (isAccumulationUse === false) {
-        setAccumulationUse(false);
       }
     } catch (e) {
       console.error(e);
@@ -89,7 +91,7 @@ const DiscountForm = ({ discount, setDiscount, paymentInfo, orderSheetNo, orderP
     }
 
     try {
-      await fetchMyProfile(profileDispatch, { type: '30', customerid: profile.customerid });
+      await fetchMyProfile(profileDispatch, { type: '30', customerid: profile?.customerid });
       setFetchedLatestMileage(true);
     } catch (err) {
       console.error(err);

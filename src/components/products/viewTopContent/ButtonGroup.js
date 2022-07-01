@@ -2,14 +2,15 @@ import qs from 'qs';
 import React, { useContext, useState, createRef, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router';
 import GlobalContext from '../../../context/global.context';
-import { getCart, getCartCount, postCart, postOrderSheets } from '../../../api/order';
-import { postProfileLikeProducts } from '../../../api/product';
+import { getCart, getCartCount, postCart, postGuestCart, postOrderSheets } from '../../../api/order';
+import { postProfileLikeProducts, getProductDetail } from '../../../api/product';
 import Alert from '../../common/Alert';
 import Notification from '../Notification';
 import { useAlert } from '../../../hooks';
 import gc from '../../../storage/guestCart';
 import HsValidator from '../../cart/HsValidator';
 import _ from 'lodash';
+import { debounce } from 'lodash';
 import orderPayment from '../../order/orderPayment';
 import { setCartCount, useHeaderDispatch } from '../../../context/header.context';
 
@@ -138,7 +139,11 @@ export default function ButtonGroup({
             ERROR_CODE_MAPPING_ROUTE[result.code]?.msg,
             () => () => history.push(getHistoryInfo(ERROR_CODE_MAPPING_ROUTE[result.code]?.route)),
           )
-        : openAlert(result?.message);
+        : (result.code === 'PPVE0011' 
+        ? openAlert('상품의 재고가 충분하지 않습니다.') : 
+          ((result.code === 'O8002' || result.code === 'O8003' || result.code === 'O8004' 
+          ? openAlert('최대 구매 가능갯수를 초과하였습니다.') :
+            openAlert(result?.message))));
     } else {
       history.push({
         pathname,
@@ -202,9 +207,32 @@ export default function ButtonGroup({
     try {
       if (isLogin) {
         const result = await postCart(products);
-        result?.error && result?.message && openAlert(result.message);
+        if (result?.data?.error && result?.data?.code) {
+          if (result.data.code === 'PPVE0011') {
+            openAlert("상품의 재고가 충분하지 않습니다.");
+            return;
+          }
+          if (result.data.code === 'O8002' || result.data.code === 'O8003' || result.data.code === 'O8004') {
+            alert('최대 구매 가능갯수를 초과하였습니다.');
+            return;
+          }
+        }
         getCartCount().then(({ data: { count } }) => setCartCount(headerDispatch, count));
       } else {
+        const resultGuest = await postGuestCart(products);
+        const guestData = resultGuest?.data;
+        
+        if (guestData?.invalidProducts?.length) {
+          let invProducts = guestData.invalidProducts;
+          for (let invProduct of invProducts) {
+            let invOptions = invProduct.orderProductOptions;
+            let soldOutOpt = invOptions.find(invOpt => invOpt.soldOut);
+            if (soldOutOpt?.soldOut) {
+                openAlert("상품의 재고가 충분하지 않습니다.");
+                return;
+            }
+          }
+        }
         gc.set(products.map((product) => ({ ...product, hsCode }))); // TODO.
         // 확인필요. @jk
         gc.fetch();
@@ -302,40 +330,11 @@ export default function ButtonGroup({
       e?.message && openAlert(e.message);
     }
   }
-
+  const debounceClick = debounce( (productNo,type) => btnTypeEvent(productNo, type),100,);
   const handleClick = (e, type) => {
     // main
     e.preventDefault();
-
-    if ((isSoldOut || isBackOrdered) && (type === 'gift' || type === 'cart')) {
-      openAlert('상품의 재고가 충분하지 않습니다.');
-    }
-
-    if (isSoldOut) return;
-
-    switch (type) {
-      case 'gift':
-        if (isBackOrdered) {
-          return;
-        }
-        gift();
-        break;
-      case 'order':
-        order();
-        break;
-      case 'cart':
-        if (isBackOrdered) return;
-        cart();
-        break;
-      case 'wish':
-        wishHandler();
-        break;
-      case 'reserve':
-        order();
-        break;
-      default:
-        break;
-    }
+    debounceClick(productNo, type);
   };
 
   // hsValidation
@@ -378,6 +377,70 @@ export default function ButtonGroup({
 
   const isSoldOut = useMemo(() => saleStatus === 'SOLDOUT', [saleStatus]);
   const isBackOrdered = useMemo(() => saleStatus === 'READY', [saleStatus]);
+
+  async function btnTypeEvent(productNo, type) {
+    const STOP_MSG        = "구매하실 수 없는 제품입니다.";
+    const PROHIBITION_MSG = "구매하실 수 없는 제품입니다.";
+    const FINISHED_MSG    = "판매 대기중인 상품입니다.";
+    const SOLDOUT_MSG     = "상품의 재고가 충분하지 않습니다.";
+    const ERROR_MSG       = "잠시 후 다시 시도해 주세요.";
+
+    try { 
+
+      if ((isLogin && ( type === 'wish')) || type === 'cart' || type === 'gift' ) {
+        const { data } = await getProductDetail(productNo);
+        const saleStatusType = data.status.saleStatusType;
+        const isSoldOut = data.status.soldout;
+
+        switch (saleStatusType) {
+          case 'STOP': // 판매중지
+            openAlert(STOP_MSG);
+            return;
+          case 'PROHIBITION': // 판매금지
+            openAlert(PROHIBITION_MSG);
+            return;
+          case 'READY': // 판매대기
+          case 'FINISHED': // 판매종료
+            openAlert(FINISHED_MSG);
+            return;
+          case 'ONSALE': // 판매중
+            if(isSoldOut){
+              openAlert(SOLDOUT_MSG);
+              return;
+            }
+            break;
+          default:
+            break;
+        }
+      }
+
+      switch (type) {
+        case 'gift':
+          gift();
+          break;
+        case 'order':
+          order();
+          break;
+        case 'cart':
+          cart();
+          break;
+        case 'wish':
+          wishHandler();
+          break;
+        case 'reserve':
+          order();
+          break;
+        default:
+          break;
+      }
+
+    }
+    catch (e) {
+      e?.message && console.log(e.message);
+      openAlert(ERROR_MSG);
+      return;
+    }
+  };
 
   return (
     <>

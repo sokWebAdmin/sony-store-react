@@ -136,6 +136,8 @@
     padding:11px 24px;
     border:1px solid #ddd;
     background:#fbfbfb;
+    z-index: 10;
+
     .sign_txt{
       line-height:22px;
       letter-spacing:-0.3px;
@@ -400,15 +402,8 @@
   }
 
   .color_select {
-    &:after {
-      display: block;
-      clear: both;
-      content: "";
-    }
-
-    .tit {
-      float: left;
-    }
+    display: flex;
+    justify-content: space-between;
   }
 
   &.soldout {
@@ -431,7 +426,7 @@
 }
 
 .circle_color_box {
-  float: right;
+  display: flex;
 
   li {
     float: left;

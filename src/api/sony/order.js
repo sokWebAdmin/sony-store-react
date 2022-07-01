@@ -8,3 +8,6 @@ export const postInvoice = requestBody => request('IF_ORD_0004.do', 'post',
 
 export const getInvoice = basketid => request(
   'IF_ORD_0003.do', 'get', { basketid });
+
+export const isSgicExists = orderId => request(
+    'IF_ORD_0005.do', 'get', { orderId });
