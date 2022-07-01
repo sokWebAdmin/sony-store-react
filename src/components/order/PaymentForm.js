@@ -1,24 +1,178 @@
-import { useState } from 'react';
+import {forwardRef, useImperativeHandle, useState, useRef, useEffect} from 'react';
+import { useAlert } from '../../hooks';
+import Alert from '../../components/common/Alert';
 
+import SelectBox from 'components/common/SelectBox';
 import paymentType from '../../const/paymentType';
 import InvoiceGuide from '../popup/InvoiceGuide';
 import InvoicePublish from '../popup/InvoicePublish';
+import {DateUtils, getStrYear} from '../../utils/dateFormat';
 
 import '../../assets/scss/partials/payModal.scss';
 
-const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
+const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSgic }, ref) => {
   const changePaymentType = ({ pgType, payType }) => {
     setPayment({
       pgType,
       payType,
     });
+
   };
+
+  const { openAlert, closeModal, alertVisible, alertMessage } = useAlert();
+  const [sgicEmail, setSgicEmail] = useState('');
+  const [sgicCheckOn, setSgicCheckOn] = useState('off');
+  const [sgicgenderradio, setSgicgenderradio] = useState('1');
+  const [privateYn, setPrivateYn] = useState('N');
+  const onChangeSgicYn = (e) => setSgicCheckOn(e.target.value);
+  const onChangeSgicgenderradio = (e) => setSgicgenderradio(e.target.value);
+  const onChangePrivateYn = (e) => setPrivateYn(e.target.value);
+  const handleSgicEmailChange = ({ target }) => setSgicEmail(target.value);
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
+  const [day, setDay] = useState('');
+
+  const yearChangeParameter = (key, value) => {
+    if (value === year) {
+      alert('이미 선택된 옵션입니다.');
+    } else {
+      setYear(value);
+    }
+  };
+
+  const monthChangeParameter = (key, value) => {
+    if (value === month) {
+      alert('이미 선택된 옵션입니다.');
+    } else {
+      if (Number(month) < 10) {
+        value = "0" + value;
+      }
+      setMonth(value);
+    }
+  };
+
+  const dayChangeParameter = (key, value) => {
+    if (value === day) {
+      alert('이미 선택된 옵션입니다.');
+    } else {
+      setDay(value);
+    }
+  };
+
+  useEffect(() => {
+    setSgic({
+      sgicEmail : sgicEmail
+      ,gender : sgicgenderradio
+      ,privateAgree : privateYn
+      ,sgicDate : year+month+day
+      ,
+    })
+  },[sgicEmail, sgicgenderradio, privateYn, sgicCheckOn, day]);
+
+  useImperativeHandle(ref, () => ({
+    fieldValidation () {
+      const refs = { sgicEmail, sgicgenderradio, privateYn, year, month, day };
+
+      console.log(sgic);
+      if (sgicCheckOn === 'on') {
+
+        if (year === '' || month === '' || day === '') {
+          openAlert('생년월일을 확인 해주세요.');
+          return false;
+        }
+
+        if (sgicEmail === '') {
+          openAlert('전자 보증 신청 이메일이 공백입니다.');
+          return false;
+        }
+
+        if (privateYn === 'N') {
+          openAlert('개인정보 이용 동의하셔야 보험 서비스 이용 가능합니다.');
+          return false;
+        }
+      }
+
+      const emptyRef = Object.entries(refs).find(([k]) => !sgic[k])?.[1];
+      if (!emptyRef) {
+        return true;
+      }
+      return true;
+    },
+  }));
+
+
+
+  // const validation = (type) => {
+  //
+  //   const msgSetter = type === 'pw' ? setPwErrorText : setConfirmPwErrorText;
+  //
+  //
+  //   if (!state) {
+  //     msgSetter('비밀번호를 입력해주세요.');
+  //     return false;
+  //   }
+  //
+  //   if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{12,}$/.test(state)) {
+  //     msgSetter('대문자/소문자/숫자가 하나 이상 포함된 12자리를 입력해 주세요.\n');
+  //     return false;
+  //   }
+  //
+  //   if (pw && confirmPw && pw !== confirmPw) {
+  //     setConfirmPwErrorText('입력하신 비밀번호가 일치하지 않습니다.');
+  //     return false;
+  //   }
+  //
+  //   setPwErrorText('');
+  //   setConfirmPwErrorText('');
+  //
+  //   return true;
+  // };
 
   const [viewInvoiceGuide, setViewInvoiceGuide] = useState(false);
   const [viewInvoicePublish, setViewInvoicePublish] = useState(false);
 
+
+
+  function dateOptListrendering(standard, minusLange, plusLange) {
+
+    const dateOptListrendering = () => {
+      const result = [];
+
+      let start = standard-minusLange;
+      if (start === 0) {
+        start = 1;
+      }
+
+      let num = 1;
+      for (let i = start; i < standard+plusLange; i++) {
+        result.push({optionNo:num,label:i});
+        num++;
+      }
+      return result;
+    };
+
+    return dateOptListrendering();
+  }
+
+  function dayOptListrendering() {
+    const dayOptListrendering = () => {
+      const result = [];
+
+      let date = new Date(Number(year), Number(month), 0);
+      date.getDate();
+
+      for (let i = 1; i < date.getDate()+1; i++) {
+        result.push({optionNo:i,label:i});
+      }
+      return result;
+    };
+
+    return dayOptListrendering();
+  }
+
   return (
     <>
+      {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
       <div className="acc_form">
         <div className="acc_cell vat">
           <label htmlFor="payment1">결제 수단 선택</label>
@@ -43,7 +197,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
               }
             </div>
             <div className="tabResult">
-              {payment.payType !== 'ESCROW_VIRTUAL_ACCOUNT' && <div
+              {payment.payType !== 'VIRTUAL_ACCOUNT' && <div
                 className="result_cont radio_tab1 on">
                 <strong className="info_tit">신용카드 무이자 할부
                   유의사항</strong>
@@ -57,7 +211,7 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                   </li>
                 </ul>
               </div>}
-              {payment.payType === 'ESCROW_VIRTUAL_ACCOUNT' &&
+              {payment.payType === 'VIRTUAL_ACCOUNT' &&
               <div className="result_cont radio_tab2 on">
                 <div className="bg_recipe_box">
                   <strong className="info_tit2">전자 세금
@@ -105,19 +259,219 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                       </li>
                     </ul>
                   </div>
+                  <div className="sgic_box">
+                    <strong className="sgic_box_tit">소비자 피해보상보험 서비스</strong>
+                    <div className="sgic_box_radio acc_radio">
+                      <div className="radio_box">
+                        <input type="radio" className="inp_radio" key={"sgic_tab_radio1"} id="sgic_tab_radio1" value={'on'} checked={sgicCheckOn === 'on'} onChange={onChangeSgicYn} name="sgictabradio"/>
+                          <label htmlFor="sgic_tab_radio1" className="contentType">신청함</label>
+                      </div>
+                      <div className="radio_box">
+                        <input type="radio" className="inp_radio" key={"sgic_tab_radio2"} id="sgic_tab_radio2" value={'off'} checked={sgicCheckOn === 'off'} onChange={onChangeSgicYn} name="sgictabradio" />
+                        <label htmlFor="sgic_tab_radio2" className="contentType">신청안함</label>
+                      </div>
+                    </div>
+
+                    {sgicCheckOn === 'on' && <div className="sgic_box_result_cont sgic_tab_radio1 on">
+                      {/*<input type="hidden" className="inp" id="sgic_email" ref={sgicEmail} value={'zespy225@daum.net'} />*/}
+                      {/*<input type="hidden" className="inp_radio" id="sgic_gender_radio1" ref={gender} name="sgicgenderradio" value={'1'} />*/}
+                      {/*<input type="hidden" className="inp_radio" id="sgic_agree_radio1" ref={privateAgree} value={'Y'} name="sgicagree" />*/}
+                      {/*<input type="hidden" className="inp" ref={sgicYear} id="sgic_year" value={'2022'} />*/}
+                      {/*<input type="hidden" className="inp" ref={sgicMonth} id="sgic_month" value={'05'} />*/}
+                      {/*<input type="hidden" className="inp" ref={sgicDay} id="sgic_day" value={'24'} />*/}
+
+                      <div className="acc_form">
+                        <div className="acc_cell vat">
+                        <label htmlFor="sgic_birth">생년월일</label>
+                        </div>
+                        <div className="acc_cell acc_select_wrap parent">
+                          <SelectBox
+                              defaultInfo={{
+                                type: 'dropdown',
+                                placeholder:
+                                    '선택',
+                              }}
+                              selectOptions={dateOptListrendering(Number(getStrYear()), 100, -14)}
+                              selectOption={({ optionNo, label }) => {
+                                if (optionNo !== 1) {
+                                  yearChangeParameter(
+                                      'year',
+                                      label,
+                                  );
+                                  // setYear('');
+                                } else {
+                                  yearChangeParameter(
+                                      'year',
+                                      '',
+                                  );
+                              }
+                              }}
+                          />
+
+                          <span className="sgic_birth_txt">년</span>
+
+                          <SelectBox
+                              defaultInfo={{
+                                type: 'dropdown',
+                                placeholder:
+                                    '선택',
+                              }}
+                              selectOptions={dateOptListrendering(6, 6, 7)}
+                              selectOption={({ optionNo, label }) => {
+                                if (optionNo !== 1) {
+                                  monthChangeParameter(
+                                      'month',
+                                      label,
+                                  );
+                                  // setMonth('');
+                                } else {
+                                  monthChangeParameter(
+                                      'month',
+                                      '',
+                                  );
+                                }
+                              }}
+                          />
+                          <span className="sgic_birth_txt">월</span>
+
+                          {(year !== 0 && month !== 0)? (
+                           <>
+                             <SelectBox
+                                 defaultInfo={{
+                                   type: 'dropdown',
+                                   placeholder:
+                                       '선택',
+                                 }}
+                                 selectOptions={dayOptListrendering()}
+                                 selectOption={({ optionNo, label }) => {
+                                   if (optionNo !== 1) {
+                                     dayChangeParameter(
+                                         'day',
+                                         label,
+                                     );
+                                     // setDay('');
+                                   } else {
+                                     dayChangeParameter(
+                                         'day',
+                                         '',
+                                     );
+                                   }
+                                 }}
+                             />
+                           </>
+                          ) : (
+                            <>
+                          <div className="select_ui_zone btm_line">
+                                <a href={"#!"} onClick={e => e.preventDefault()} className="selected_btn" data-default-text="선택">선택</a>
+                            </div>
+                            </>
+                            )}
+                          <span className="sgic_birth_txt">일</span>
+                        </div>
+                      </div>
+
+                      <div className="acc_form">
+                        <div className="acc_cell vat">
+                          <label htmlFor="sgic_gender_radio1">성별</label>
+                        </div>
+                        <div className="acc_cell parent">
+                          <div className="acc_radio">
+                            <div className="radio_box">
+                              <input type="radio" className="inp_radio" id="sgic_gender_radio1" name="sgicgenderradio" value={'1'} checked={sgicgenderradio === '1'} onChange={onChangeSgicgenderradio} />
+                                <label htmlFor="sgic_gender_radio1" className="contentType">남자</label>
+                            </div>
+                            <div className="radio_box">
+                              <input type="radio" className="inp_radio" id="sgic_gender_radio2" name="sgicgenderradio" value={'2'} checked={sgicgenderradio === '2'} onChange={onChangeSgicgenderradio} />
+                                <label htmlFor="sgic_gender_radio2" className="contentType">여자</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="acc_form">
+                        <div className="acc_cell vat">
+                          <label htmlFor="sgic_email">이메일</label>
+                        </div>
+                        <div className="acc_cell parent">
+                          <div className="acc_inp type3">
+                            <input type="text" className="inp" id="sgic_email" placeholder='(예 : sony@sony.co.kr)' onChange={handleSgicEmailChange} />
+                              <span className="focus_bg"></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="acc_form">
+                        <div className="acc_cell vat">
+                          <label htmlFor="sgic_agree_radio1">개인정보 이용동의</label>
+                        </div>
+                        <div className="acc_cell parent">
+                          <div className="acc_radio">
+                            <div className="radio_box">
+                              <input type="radio" className="inp_radio" id="sgic_agree_radio1" defaultChecked={privateYn === 'Y'} value={'Y'} name="sgicagree" onChange={onChangePrivateYn} />
+                                <label htmlFor="sgic_agree_radio1" className="contentType">동의함</label>
+                            </div>
+                            <div className="radio_box">
+                              <input type="radio" className="inp_radio" id="sgic_agree_radio2" name="sgicagree" checked={privateYn === 'N'} value={'N'} onChange={onChangePrivateYn} />
+                                <label htmlFor="sgic_agree_radio2" className="contentType">동의안함</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="sgic_noti">
+                        <p className="sgic_noti_txt">입력하신 개인정보는 서울보증보험㈜의 증권발급을 위해 필요한 정보이며, 다른 용도로 사용되지 않습니다.</p>
+
+                        <ul className="list_dot">
+                          <li>고객님은 안전거래를 위해 현금 결제 시 소니스토어가 가입한 구매안전서비스 “소비자피해보상보험서비스”를 이용하실 수 있습니다.</li>
+                          <li>물품 대금결제 시 구매자의 피해보호를 위해 ㈜서울보증보험의 보증보험증권이 발급됩니다.</li>
+                          <li>구매안전서비스를 통하여 주문하시고 서울보증보험에서 발행하는 보험계약체결내역서를 반드시 확인하시기 바랍니다.</li>
+                          <li>보상대상 : 미배송, 반송/환불거부, 쇼핑몰부도</li>
+                          <li>보험기간 : 주문일로부터 37일간(37일 보증)</li>
+                          <li>본 전자보증을 신청하시면 물품대금 결제 시에 소비자에게 서울보증보험의 쇼핑몰보증보험 계약 체결서를 인터넷상으로 자동 발급하여, 인터넷 쇼핑몰에서 발행할 수 있는
+                            소비자 피해를 서울보증보험㈜가 보상하는 서비스 입니다.
+                          </li>
+                          <li>현금결제 시 순결제금액 기준에 보증보험 전자보증서를 발급받으실 수 있습니다.</li>
+                          <li>본 보증서는 주문 시 신청한 고객에 한해 발급되며, 서비스 제공 기간 동안 유효합니다.</li>
+                          <li>보증금액은 현 주문결제금액 기준으로 발급되며, 주문 변경으로 인한 재발급 및 다른 주문과의 합산발급은 되지 않습니다.</li>
+                          <li>보증보험 전자보증서에 대한 보다 상세한 사항은&nbsp;<a href={"http://www.usafe.co.kr/u_esafe.asp"}
+                                                                target="_blank" className="under_line"><em
+                              className="color">여기</em></a>를 클릭하여 주시기 바랍니다.
+                          </li>
+                        </ul>
+
+                        <div className="common__table__wrap">
+                          <table className="common__table" role="presentation">
+                            <caption>개인정보를 제공받는 자 등의 정보</caption>
+                            <colgroup>
+                              <col width="26%" />
+                                <col width="74%" />
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                              <th scope="row">제공받는 자</th>
+                              <td>㈜서울보증보험, ㈜유세이프</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">제공하는 항목</th>
+                              <td>구매자명,구매자 생년월일,구매자 성별,구매자 연락처 (일반전화 및 핸드폰),구매자 이메일,주문번호,배송지정보,주문금액</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">제공목적</th>
+                              <td>쇼핑몰 보증보험 가입 및 보험가입 제반사항</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">보유 및 이용기간</th>
+                              <td>개별서비스 제공기간</td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>}
+
+                  </div>
                 </div>
-                <strong className="info_tit3">[소비자
-                  피해보상보험
-                  서비스 안내]</strong>
-                <ul className="list_dot">
-                  <li>고객님은 안전거래를 위해 현금 결제 시 소니스토어가 가입한
-                    구매안전서비스 소비자피해보상보험서비스를 이용하실 수 있습니다.
-                  </li>
-                  <li>보상대상 : 미배송, 반송/환불거부, 쇼핑몰부도</li>
-                  <li>구매안전서비스를 통하여 주문하시고 서울보증보험에서 발행하는
-                    보험계약체결내역서를 반드시 확인하시기 바랍니다.
-                  </li>
-                </ul>
+
               </div>}
               <div className="result_cont radio_tab3">
                 <div className="check">
@@ -142,10 +496,11 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </>
   );
-};
+})
 
 export default PaymentForm;
