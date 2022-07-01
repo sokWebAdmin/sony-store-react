@@ -172,34 +172,37 @@ const OrderComplete = ({ location }) => {
                   <dd>{orderNo}</dd>
                 </dl>
               </div>
+
+              <ul className='list_star'>
+                <>
               {isLogin ? (
-                <ul className='list_star'>
                   <li>
                   주문하신 상품에 대한 배송 상태 등의 조회는 마이페이지에서 확인하실 수 있습니다.
                   </li>
-                  {/*2022-04-19 소비자 피해보상보험 서비스 영역 추가*/}
-                  {sgic === 'Y' && (
-                      <>
-                      <li>본 주문에 대한 소비자 피해보상보험 신청되었습니다.<br/>상세 신청 내역은
-                        <a href={
-                            window.anchorProtocol +
-                            'www.usafe.co.kr/u_customer_issue.asp'
-                        }
-                           onClick={window.openBrowser}
-                           target='_blank'
-                           rel='noopener noreferrer'
-                           className='under_line'>
-                        <em className="color">여기</em></a>에서 확인하실 수 있으며, 몇 분 소요될 수 있습니다.</li>
-                      <li>보증보험 전자보증서 발급의 경우 결제완료 후 최대 3~4시간이 소요될 수 있습니다.</li>
-                      </>
-                  )}
-                  {/*//2022-04-19 소비자 피해보상보험 서비스 영역 추가*/}
-                </ul>
-              ) : (
-                <p class="order_confirm_box__txt">
-                  비회원 구매 후 배송 조회는 위의 주문번호와 결제 시 입력하신 비밀번호(12자리)로 확인 가능합니다.
-                </p>
+              ) : ( <li>
+                    비회원 구매 후 배송 조회는 위의 주문번호와 결제 시 입력하신 비밀번호(12자리)로 확인 가능합니다.
+                  </li>)
+              }
+
+              {/*2022-04-19 소비자 피해보상보험 서비스 영역 추가*/}
+              {sgic === 'Y' && (
+                  <>
+                    <li>본 주문에 대한 소비자 피해보상보험 신청되었습니다.<br/>상세 신청 내역은 <a href={
+                        window.anchorProtocol +
+                        'www.usafe.co.kr/u_customer_issue.asp'
+                    }
+                      onClick={window.openBrowser}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='under_line'>
+                      <em className="color">여기</em></a>에서 확인하실 수 있으며, 몇 분 소요될 수 있습니다.</li>
+                    <li>보증보험 전자보증서 발급의 경우 결제완료 후 최대 3~4시간이 소요될 수 있습니다.</li>
+                  </>
               )}
+              {/*//2022-04-19 소비자 피해보상보험 서비스 영역 추가*/}
+                </>
+              </ul>
+
 
               <div className="btn_box">
                 <Link to="/" className="button button_negative" type="button">
