@@ -27,7 +27,7 @@ export default function videoCourse() {
                                 <div className='video_wrap'>
                                     <ReactPlayer
                                         className='react-player'
-                                        url='https://www.youtube.com/embed/56bt3K4LqxM'
+                                        url='https://www.youtube.com/embed/yVQZLeMNRiQ'
                                         width='100%' // 플레이어 크기 (가로)
                                         height='100%' // 플레이어 크기 (세로)
                                         playing={false} // 자동 재생 off
@@ -38,7 +38,7 @@ export default function videoCourse() {
                                     />
                                 </div>
                                 <p className='course_video_tit'>
-                                    [강의] WF-L900 (LinkBuds) 블루투스 연결방법 (안드로이드)
+                                    [강의] WH-1000XM5 블루투스 연결하기 (for 안드로이드 유저)
                                 </p>
                             </div>
                             <div className='course_video_list'>
@@ -48,11 +48,11 @@ export default function videoCourse() {
                                             <a
                                                 href={
                                                     window.anchorProtocol +
-                                                    'www.youtube.com/embed/HY_MJFStNsw'
+                                                    'www.youtube.com/embed/56bt3K4LqxM'
                                                 }
                                                 onClick={window.openBrowser}
                                                 className='video_thumb_btn'
-                                                data-video-url='https://www.youtube.com/embed/HY_MJFStNsw'
+                                                data-video-url='https://www.youtube.com/embed/56bt3K4LqxM'
                                                 target='_blank'
                                                 title='새창열림'
                                                 rel='noreferrer'
@@ -65,7 +65,7 @@ export default function videoCourse() {
                                             <div className='video_thumb_info'>
                                                 <span className='pos_center'>
                                                     <p className='tit'>
-                                                        [강의] WF-L900 (LinkBuds) 헤드셋 재설정 방법
+                                                        [강의] WF-L900 (LinkBuds) 블루투스 연결방법 (안드로이드)
                                                     </p>
                                                 </span>
                                             </div>
@@ -76,11 +76,11 @@ export default function videoCourse() {
                                             <a
                                                 href={
                                                     window.anchorProtocol +
-                                                    'www.youtube.com/embed/WsaWNbXUk4I'
+                                                    'www.youtube.com/embed/NgoM0EyzCmI'
                                                 }
                                                 onClick={window.openBrowser}
                                                 className='video_thumb_btn'
-                                                data-video-url='https://www.youtube.com/embed/WsaWNbXUk4I'
+                                                data-video-url='https://www.youtube.com/embed/NgoM0EyzCmI'
                                                 target='_blank'
                                                 title='새창열림'
                                                 rel='noreferrer'
@@ -93,7 +93,7 @@ export default function videoCourse() {
                                             <div className='video_thumb_info'>
                                                 <span className='pos_center'>
                                                     <p className='tit'>
-                                                        [강의] ILCE-7M4 Imaging Edge Mobile 이용하여 사진 내보내는 방법
+                                                        [강의] ILCE-7M4 원격 제어 촬영하기 1 (설정편)
                                                     </p>
                                                 </span>
                                             </div>
@@ -104,11 +104,11 @@ export default function videoCourse() {
                                             <a
                                                 href={
                                                     window.anchorProtocol +
-                                                    'www.youtube.com/embed/0qV9wnWIsB8'
+                                                    'www.youtube.com/embed/brouW8sgzTI'
                                                 }
                                                 onClick={window.openBrowser}
                                                 className='video_thumb_btn'
-                                                data-video-url='https://www.youtube.com/embed/0qV9wnWIsB8'
+                                                data-video-url='https://www.youtube.com/embed/brouW8sgzTI'
                                                 target='_blank'
                                                 title='새창열림'
                                                 rel='noreferrer'
@@ -121,7 +121,7 @@ export default function videoCourse() {
                                             <div className='video_thumb_info'>
                                                 <span className='pos_center'>
                                                     <p className='tit'>
-                                                        [강의] ILCE-7M3 눈금표시 이용방법 (3분할, 사각선, 대각선+사각선)
+                                                        [강의] ILCE-7M4, 위치 정보 아이콘별 3가지 문제 해결하기
                                                     </p>
                                                 </span>
                                             </div>
