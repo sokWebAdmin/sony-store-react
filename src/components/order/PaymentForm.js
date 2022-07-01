@@ -33,30 +33,18 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSg
   const [day, setDay] = useState('');
 
   const yearChangeParameter = (key, value) => {
-    if (value === year) {
-      alert('이미 선택된 옵션입니다.');
-    } else {
-      setYear(value);
-    }
+    setYear(value);
   };
 
   const monthChangeParameter = (key, value) => {
-    if (value === month) {
-      alert('이미 선택된 옵션입니다.');
-    } else {
-      if (Number(month) < 10) {
-        value = "0" + value;
-      }
-      setMonth(value);
+    if (Number(month) < 10) {
+      value = "0" + value;
     }
+    setMonth(value);
   };
 
   const dayChangeParameter = (key, value) => {
-    if (value === day) {
-      alert('이미 선택된 옵션입니다.');
-    } else {
-      setDay(value);
-    }
+    setDay(value);
   };
 
   useEffect(() => {
@@ -73,9 +61,7 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSg
     fieldValidation () {
       const refs = { sgicEmail, sgicgenderradio, privateYn, year, month, day };
 
-      console.log(sgic);
       if (sgicCheckOn === 'on') {
-
         if (year === '' || month === '' || day === '') {
           openAlert('생년월일을 확인 해주세요.');
           return false;
