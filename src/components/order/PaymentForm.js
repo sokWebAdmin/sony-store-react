@@ -2,7 +2,7 @@ import {forwardRef, useImperativeHandle, useState, useRef, useEffect} from 'reac
 import { useAlert } from '../../hooks';
 import Alert from '../../components/common/Alert';
 
-import SelectBox from 'components/common/SelectBox';
+import NewSelectBox from 'components/common/NewSelectBox';
 import paymentType from '../../const/paymentType';
 import InvoiceGuide from '../popup/InvoiceGuide';
 import InvoicePublish from '../popup/InvoicePublish';
@@ -24,13 +24,25 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSg
   const [sgicCheckOn, setSgicCheckOn] = useState('off');
   const [sgicgenderradio, setSgicgenderradio] = useState('1');
   const [privateYn, setPrivateYn] = useState('N');
-  const onChangeSgicYn = (e) => setSgicCheckOn(e.target.value);
   const onChangeSgicgenderradio = (e) => setSgicgenderradio(e.target.value);
   const onChangePrivateYn = (e) => setPrivateYn(e.target.value);
   const handleSgicEmailChange = ({ target }) => setSgicEmail(target.value);
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
+
+  const onChangeSgicYn = (e) => {
+    setSgicCheckOn(e.target.value);
+
+    if (e.target.value === 'off') {
+      setYear('');
+      setMonth('');
+      setDay('');
+      setSgicgenderradio('1');
+      setPrivateYn('N');
+      setSgicEmail('');
+    }
+  };
 
   const yearChangeParameter = (key, value) => {
     setYear(value);
@@ -268,7 +280,7 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSg
                         <label htmlFor="sgic_birth">생년월일</label>
                         </div>
                         <div className="acc_cell acc_select_wrap parent">
-                          <SelectBox
+                          <NewSelectBox
                               defaultInfo={{
                                 type: 'dropdown',
                                 placeholder:
@@ -293,7 +305,7 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSg
 
                           <span className="sgic_birth_txt">년</span>
 
-                          <SelectBox
+                          <NewSelectBox
                               defaultInfo={{
                                 type: 'dropdown',
                                 placeholder:
@@ -319,7 +331,7 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSg
 
                           {(year !== 0 && month !== 0)? (
                            <>
-                             <SelectBox
+                             <NewSelectBox
                                  defaultInfo={{
                                    type: 'dropdown',
                                    placeholder:
@@ -332,7 +344,6 @@ const PaymentForm = forwardRef(({ payment, setPayment, orderSheetNo, sgic, setSg
                                          'day',
                                          label,
                                      );
-                                     // setDay('');
                                    } else {
                                      dayChangeParameter(
                                          'day',
