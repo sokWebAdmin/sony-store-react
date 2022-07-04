@@ -1534,6 +1534,14 @@
     &.acc_select_wrap{
       >div{
         display:inline-block;
+        @include only-mo {
+          width:calc(50% - 40px);
+        }
+        &:first-child {
+          @include only-mo {
+            width:calc(100% - 40px);
+          }
+        }
       }
     }
     &:first-child {
@@ -1551,11 +1559,7 @@
         width:60px;
       }
       @include only-mo {
-        width:calc(50% - 40px);
-
-        &:first-child {
-          width:calc(100% - 40px);
-        }
+          width:100%;
       }
 
       .select_inner{
