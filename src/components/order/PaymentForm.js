@@ -69,6 +69,9 @@ const PaymentForm = ({ payment, setPayment, orderSheetNo }) => {
                     <li>구매 후 다음달 8일 이후에 요청되는 세금계산서는 발행이
                       불가합니다.
                     </li>
+                    <li>전자 세금계산서를 신청한 고객께서는 이니시스 결제창에서 <u>“현금영수증 발행”을 체크 해제</u> 하셔야 합니다. 
+                        세금계산서와 현금영수증을 모두 신청하신 경우 <u>둘 중 하나를 반드시 취소</u> 해야 합니다.
+                    </li>
                   </ul>
                   <div className="btn_recipe_box">
                     <button
