@@ -1890,10 +1890,6 @@ body {
     display: inline-block
   }
 
-  .footer__legal__warning br {
-    display: none
-  }
-
   .footer .address {
     clear: none;
     width: 100%;
