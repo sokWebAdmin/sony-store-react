@@ -18,7 +18,7 @@ const useScript = (src) => {
                 // Create script
                 script = document.createElement('script');
                 script.src = src;
-                script.async = true;
+                script.defer = true;
                 script.setAttribute('data-status', 'loading');
 
                 // Add script to document body
