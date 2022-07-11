@@ -1,8 +1,16 @@
+import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import PropTypes from 'prop-types';
+
+import useScript from 'hooks/useScript';
 
 const SEO = ({ data }) => {
     const config = { title: 'SonyStore', description: '' };
+
+    const location = useLocation();
+
+    useScript(
+        `//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js?path=${location.pathname}`,
+    );
 
     return (
         <Helmet>
@@ -65,42 +73,8 @@ const SEO = ({ data }) => {
             {data.itemprop?.image && (
                 <meta itemprop='image' content={data.itemprop.image || ''} />
             )}
-            {data.title && (
-                <script
-                    defer
-                    src='//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js'
-                ></script>
-            )}
         </Helmet>
     );
-};
-
-SEO.proTypes = {
-    data: {
-        title: PropTypes.string,
-        canonical: PropTypes.string,
-        meta: PropTypes.shape({
-            title: PropTypes.string,
-            description: PropTypes.string,
-            image: PropTypes.string,
-        }),
-        og: PropTypes.shape({
-            title: PropTypes.string,
-            description: PropTypes.string,
-            image: PropTypes.string,
-        }),
-        twitter: PropTypes.shape({
-            card: PropTypes.string,
-            title: PropTypes.string,
-            description: PropTypes.string,
-            image: PropTypes.string,
-        }),
-        itemprop: PropTypes.shape({
-            name: PropTypes.string,
-            description: PropTypes.string,
-            image: PropTypes.string,
-        }),
-    },
 };
 
 export default SEO;
