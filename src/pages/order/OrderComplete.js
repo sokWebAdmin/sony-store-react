@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useContext } from 'react';
+import React, { useMemo, useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import GlobalContext from '../../context/global.context';
@@ -6,18 +6,27 @@ import GlobalContext from '../../context/global.context';
 //SEO
 import SEOHelmet from '../../components/SEOHelmet';
 
+//api
+import {
+  getProfileOrderByOrderNo,
+  getGuestOrderByOrderNo,
+} from '../../api/order';
+
 //css
 import '../../assets/scss/contents.scss';
 import '../../assets/scss/order.scss';
 import { getUrlParam } from '../../utils/location';
 import gc from '../../storage/guestCart';
+import {useQuery} from "../../hooks";
 
 const OrderComplete = ({ location }) => {
   const history = useHistory();
 
+  const [sgic, setsgic] = useState('N');
   const { isLogin } = useContext(GlobalContext);
   const status = useMemo(() => getUrlParam('status'), [location]);
   const orderType = useMemo(() => getUrlParam('orderType'), [location]);
+  const payType = useMemo(() => getUrlParam('PayType'), [location]);
   const orderNo = useMemo(() => getUrlParam('orderNo'), [location]);
 
   const openSurvey = (e) => {
@@ -60,7 +69,53 @@ const OrderComplete = ({ location }) => {
     document.body.removeChild(form);
   };
 
-  useEffect(() => {
+  const _getOrderByOrderNo = () => {
+    const request = { path: { orderNo: orderNo } };
+    const getOrderByOrderNo = isLogin
+        ? getProfileOrderByOrderNo
+        : getGuestOrderByOrderNo;
+
+    return getOrderByOrderNo(request).then((res) => {
+      if (res.status === 400) {
+        alert('해당 주문을 찾을 수 없습니다.');
+        history.push('/member/login');
+      }
+      return res;
+    });
+  };
+
+  const setStates = (res) => {
+    if (res.status === 400) return;
+    const {orderNo,
+      // pgOrderNo,
+      // orderYmdt,
+      // defaultOrderStatusType,
+      // orderer: { ordererName, ordererContact1 },
+      // shippingAddress: {
+      //   receiverName,
+      //   receiverAddress,
+      //   receiverContact1,
+      //   receiverDetailAddress,
+      // },
+      // deliveryMemo,
+      // lastOrderAmount: {
+      //   totalProductAmt,
+      //   immediateDiscountAmt,
+      //   additionalDiscountAmt,
+      //   cartCouponDiscountAmt,
+      //   productCouponDiscountAmt,
+      //   subPayAmt,
+      //   payAmt,
+      // },
+      // payType,
+      // payInfo: { cardInfo, bankInfo },
+      // receiptInfos,
+      // orderOptionsGroupByPartner,
+      extraData,} = res.data;
+    setsgic(extraData.privateAgree);
+  }
+
+  useEffect(async () => {
     if (!orderNo) {
       alert('잘못된 접근입니다.');
       history.push('/');
@@ -70,6 +125,10 @@ const OrderComplete = ({ location }) => {
     if (!isLogin) {
       gc.cover([])
     }
+    if (payType === 'VIRTUAL_ACCOUNT') {
+      setStates(await _getOrderByOrderNo());
+    }
+
   }, [location]);
 
   return (
@@ -113,15 +172,37 @@ const OrderComplete = ({ location }) => {
                   <dd>{orderNo}</dd>
                 </dl>
               </div>
+
+              <ul className='list_star'>
+                <>
               {isLogin ? (
-                <p className="order_confirm_box__txt">
+                  <li>
                   주문하신 상품에 대한 배송 상태 등의 조회는 마이페이지에서 확인하실 수 있습니다.
-                </p>
-              ) : (
-                <p class="order_confirm_box__txt">
-                  비회원 구매 후 배송 조회는 위의 주문번호와 결제 시 입력하신 비밀번호(12자리)로 확인 가능합니다.
-                </p>
+                  </li>
+              ) : ( <li>
+                    비회원 구매 후 배송 조회는 위의 주문번호와 결제 시 입력하신 비밀번호(12자리)로 확인 가능합니다.
+                  </li>)
+              }
+
+              {/*2022-04-19 소비자 피해보상보험 서비스 영역 추가*/}
+              {sgic === 'Y' && (
+                  <>
+                    <li>본 주문에 대한 소비자 피해보상보험 신청되었습니다.<br/>상세 신청 내역은 <a href={
+                        window.anchorProtocol +
+                        'www.usafe.co.kr/u_customer_issue.asp'
+                    }
+                      onClick={window.openBrowser}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='under_line'>
+                      <em className="color">여기</em></a>에서 확인하실 수 있으며, 몇 분 소요될 수 있습니다.</li>
+                    <li>보증보험 전자보증서 발급의 경우 결제완료 후 최대 3~4시간이 소요될 수 있습니다.</li>
+                  </>
               )}
+              {/*//2022-04-19 소비자 피해보상보험 서비스 영역 추가*/}
+                </>
+              </ul>
+
 
               <div className="btn_box">
                 <Link to="/" className="button button_negative" type="button">
