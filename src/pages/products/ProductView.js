@@ -328,7 +328,7 @@ export default function ProductView({ match }) {
 
     const getTitle = useMemo(() => {
         if (!productData?.baseInfo?.productName) return;
-        const { productName } = productData.baseInfo;
+        const { productName, productNo } = productData.baseInfo;
 
         if (!productData.categories) return productName;
 
@@ -340,8 +340,8 @@ export default function ProductView({ match }) {
             .join(' : ')
             .value();
 
-        return `${categoryCode} : ${productData.baseInfo.productNo} : ${productData.baseInfo.productName}`;
-    }, [productData?.baseInfo?.productName]);
+        return `${categoryCode} : ${productNo} : ${productName}`;
+    }, [productData?.baseInfo, productData?.categories]);
 
     const hasEvents = useMemo(() => productEvents?.length > 0, [productEvents]);
 
@@ -373,7 +373,7 @@ export default function ProductView({ match }) {
 
     return (
         <>
-            <SEO data={{ title: getTitle }} />
+            {productData && <SEO data={{ title: getTitle }} />}
 
             <div className='contents product'>
                 {productData && (

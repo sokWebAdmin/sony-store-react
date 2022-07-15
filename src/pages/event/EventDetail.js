@@ -21,34 +21,34 @@ const EventDetail = () => {
         })();
     }, [eventNo]);
 
+    if (!event) {
+        return null;
+    }
+
     return (
         <>
             <SEO data={{ title: event?.label }} />
-            {event && (
-                <div className='contents events'>
-                    <div className='container full'>
-                        <div className='content employee'>
-                            <EventTopContent
-                                url={
-                                    onlyMo
-                                        ? event.top.mobile.url
-                                        : event.top.pc.url
-                                }
-                                type={
-                                    onlyMo
-                                        ? event.top.mobile.type
-                                        : event.top.pc.type
-                                }
-                            />
-                            <EventProducts
-                                event={event}
-                                gift={true}
-                                sectionImage={true}
-                            />
-                        </div>
+            <div className='contents events'>
+                <div className='container full'>
+                    <div className='content employee'>
+                        <EventTopContent
+                            url={
+                                onlyMo ? event.top.mobile.url : event.top.pc.url
+                            }
+                            type={
+                                onlyMo
+                                    ? event.top.mobile.type
+                                    : event.top.pc.type
+                            }
+                        />
+                        <EventProducts
+                            event={event}
+                            gift={true}
+                            sectionImage={true}
+                        />
                     </div>
                 </div>
-            )}
+            </div>
         </>
     );
 };

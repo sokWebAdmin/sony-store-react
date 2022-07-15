@@ -9,6 +9,11 @@ const SEOHelmet = ({ title, children }) => {
     useScript(
         `//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js?path=${location.pathname}`,
     );
+
+    if (!title) {
+        return null;
+    }
+
     return (
         <Helmet>
             <title>{title}</title>

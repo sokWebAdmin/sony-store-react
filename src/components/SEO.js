@@ -5,12 +5,15 @@ import useScript from 'hooks/useScript';
 
 const SEO = ({ data }) => {
     const config = { title: 'SonyStore', description: '' };
-
     const location = useLocation();
 
     useScript(
         `//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js?path=${location.pathname}`,
     );
+
+    if (!data) {
+        return null;
+    }
 
     return (
         <Helmet>

@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import SEOHelmet from 'components/SEOHelmet';
+import SEO from 'components/SEO';
 import Alert from 'components/common/Alert';
 import { useAlert } from 'hooks';
 import 'assets/scss/contents.scss';
@@ -57,7 +57,7 @@ export default function Agreement() {
 
     return (
         <>
-            <SEOHelmet title={'고객 서비스 : 구매상담동의'} />
+            <SEO data={{ title: '고객 서비스 : 구매상담동의' }} />
             {alertVisible && <Alert onClose={closeModal}>{alertMessage}</Alert>}
             <div className='contents support'>
                 <div className='container'>
