@@ -68,7 +68,7 @@ const SEO = ({ data }) => {
             {data.title && (
                 <script
                     defer
-                    src='//image.sony.co.kr/omniture/omni_dev/sonystore_code_2013.js'
+                    src='//image.sony.co.kr/omniture/real/sonystore_code_2013.js'
                 ></script>
             )}
         </Helmet>
