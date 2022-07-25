@@ -3,7 +3,7 @@ import React, { useContext, useState, createRef, useEffect, useMemo, useRef } fr
 import { useHistory } from 'react-router';
 import GlobalContext from '../../../context/global.context';
 import { getCart, getCartCount, postCart, postGuestCart, postOrderSheets } from '../../../api/order';
-import { postProfileLikeProducts, getProductDetail } from '../../../api/product';
+import { postProfileLikeProducts, postProductsSearchByNos } from '../../../api/product';
 import Alert from '../../common/Alert';
 import Notification from '../Notification';
 import { useAlert } from '../../../hooks';
@@ -306,8 +306,6 @@ export default function ButtonGroup({
     return true;
   }
 
-  const selectedOptionsProductNos = useMemo(() => selectedOption.map((o) => o.productNo), [selectedOption]);
-
   const wishHandler = () => {
     if (!isLogin) {
       setWishVisible(true);
@@ -377,6 +375,7 @@ export default function ButtonGroup({
 
   const isSoldOut = useMemo(() => saleStatus === 'SOLDOUT', [saleStatus]);
   const isBackOrdered = useMemo(() => saleStatus === 'READY', [saleStatus]);
+  const selectedOptionsProductNos = useMemo(() => selectedOption.map((o) => o.productNo), [selectedOption]); //selectedOptionsProductNos 22.07.25 수정
 
   async function btnTypeEvent(productNo, type) {
     const STOP_MSG        = "구매하실 수 없는 제품입니다.";
@@ -388,30 +387,44 @@ export default function ButtonGroup({
     try { 
 
       if ((isLogin && ( type === 'wish')) || type === 'cart' || type === 'gift' ) {
-        const { data } = await getProductDetail(productNo);
-        const saleStatusType = data.status.saleStatusType;
-        const isSoldOut = data.status.soldout;
 
-        switch (saleStatusType) {
-          case 'STOP': // 판매중지
-            openAlert(STOP_MSG);
-            return;
-          case 'PROHIBITION': // 판매금지
-            openAlert(PROHIBITION_MSG);
-            return;
-          case 'READY': // 판매대기
-          case 'FINISHED': // 판매종료
-            openAlert(FINISHED_MSG);
-            return;
-          case 'ONSALE': // 판매중
-            if(isSoldOut){
-              openAlert(SOLDOUT_MSG);
-              return;
-            }
-            break;
-          default:
-            break;
+        if (!canBuy) {
+          openAlert('옵션을 선택하세요.');
+          return
         }
+
+        const request = {
+          productNos: selectedOptionsProductNos,
+          hasOptionValues: true,
+        };
+
+        // 제품선택 옵션의 상품번호의 판매상태 체크로 변경 22.07.25
+        const { data } = await postProductsSearchByNos(request); //postProductsSearchByNos 변경 22.07.25
+
+        data.products.forEach((products) => {
+          const saleStatusType = products.status.saleStatusType;
+          const isSoldOut = products.status.soldout;
+          switch (saleStatusType) {
+            case 'STOP': // 판매중지
+              openAlert(STOP_MSG);
+              return;
+            case 'PROHIBITION': // 판매금지
+              openAlert(PROHIBITION_MSG);
+              return;
+            case 'READY': // 판매대기
+            case 'FINISHED': // 판매종료
+              openAlert(FINISHED_MSG);
+              return;
+            case 'ONSALE': // 판매중
+              if(isSoldOut){
+                openAlert(SOLDOUT_MSG);
+                return;
+              }
+              break;
+            default:
+              break;
+          }
+        });
       }
 
       switch (type) {

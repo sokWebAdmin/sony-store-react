@@ -50,3 +50,8 @@ export const postProfileLikeProducts = requestBody => {
 export const getProductsFavoriteKeywords = (size='10') => {
   return request('products/favoriteKeywords', 'get', { size }, null);
 }
+
+// 상품번호 리스트로 상품을 조회하는 API 추가 22.07.25 
+export const postProductsSearchByNos = requestBody => {
+  return request('products/search-by-nos', "post", null, requestBody); 
+};
