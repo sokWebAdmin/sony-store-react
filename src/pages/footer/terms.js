@@ -49,14 +49,15 @@ export default function Terms() {
                             <div className='list_box'>
                                 <p className='date'>
                                     <strong>
-                                        시행일자 :{' '}
+                                        시행일자 : 2022년 08월 01일
+                                        {/* 시행일자 :{' '}
                                         {historyVisible
                                             ? dayjs(
                                                   prevTerms?.enforcementDate,
                                               ).format('YYYY년 MM월 DD일')
                                             : dayjs(
                                                   activeTerms?.enforcementDate,
-                                              ).format('YYYY년 MM월 DD일')}
+                                              ).format('YYYY년 MM월 DD일')} */}
                                     </strong>
                                     <a
                                         href='#none'
@@ -639,42 +640,46 @@ export default function Terms() {
                                         {historyVisible ? (
                                             <>
                                                 <p>
-                                                    ※ 본 약관은 시행일자 :{' '}
+                                                    ※ 본 약관은 시행일자 : 2022년 08월 01일부터 적용됩니다.
+                                                    {/* ※ 본 약관은 시행일자 :{' '}
                                                     {dayjs(
                                                         prevTerms?.enforcementDate,
                                                     ).format(
                                                         'YYYY년 MM월 DD일',
                                                     )}
-                                                    부터 적용됩니다.
+                                                    부터 적용됩니다. */}
                                                 </p>
                                                 <strong className='caution_box--date'>
-                                                    직전변경일 :{' '}
+                                                    직전변경일 : 2021년 11월 12일
+                                                    {/* 직전변경일 :{' '}
                                                     {dayjs(
                                                         prevEnforcementDate,
                                                     ).format(
                                                         'YYYY년 MM월 DD일',
-                                                    )}
+                                                    )} */}
                                                 </strong>
                                             </>
                                         ) : (
                                             <>
                                                 <p>
-                                                    ※ 본 약관은 시행일자 :{' '}
+                                                    ※ 본 약관은 시행일자 : 2022년 08월 01일부터 적용됩니다.
+                                                    {/* ※ 본 약관은 시행일자 :{' '}
                                                     {dayjs(
                                                         activeTerms?.enforcementDate,
                                                     ).format(
                                                         'YYYY년 MM월 DD일',
                                                     )}
-                                                    부터 적용됩니다.
+                                                    부터 적용됩니다. */}
                                                 </p>
                                                 <strong className='caution_box--date'>
-                                                    직전변경일 :{' '}
+                                                    직전변경일 : 2021년 11월 12일
+                                                    {/* 직전변경일 :{' '}
                                                     {dayjs(
                                                         prevTerms?.enforcementDate ||
                                                             prevEnforcementDate,
                                                     ).format(
                                                         'YYYY년 MM월 DD일',
-                                                    )}
+                                                    )} */}
                                                 </strong>
                                             </>
                                         )}
